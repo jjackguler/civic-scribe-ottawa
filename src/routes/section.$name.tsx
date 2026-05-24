@@ -12,7 +12,7 @@ export const Route = createFileRoute("/section/$name")({
 function SectionPage() {
   const { name } = Route.useParams();
   const { locale } = useLocale();
-  const pretty = name.split("-").map(w => w[0].toUpperCase() + w.slice(1)).join(" ");
+  const pretty = name.split("-").map((w: string) => w[0].toUpperCase() + w.slice(1)).join(" ");
   const matches = ARTICLES.filter(a =>
     a.category.toLowerCase() === pretty.toLowerCase() ||
     a.kicker.en.toLowerCase() === pretty.toLowerCase()
