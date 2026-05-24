@@ -89,7 +89,7 @@ function ArticlePage() {
           <section className="mt-10 p-5 bg-secondary">
             <h3 className="kicker text-civic-red mb-3">{locale === "fr" ? "Sources" : "Sources"}</h3>
             <ul className="space-y-1 text-sm font-serif">
-              {article.sources.map((s, i) => <li key={i}>· {s.label}</li>)}
+              {article.sources.map((s: { label: string }, i: number) => <li key={i}>· {s.label}</li>)}
             </ul>
           </section>
         )}
