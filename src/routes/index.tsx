@@ -57,13 +57,52 @@ function Home() {
       <Header />
 
       <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-14">
-        {/* Hero */}
+        {/* Breaking news hero carousel */}
+        <BreakingHero />
+
+        {/* Lead stories under the hero */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           <div className="lg:col-span-7"><ArticleCard article={hero} variant="hero" /></div>
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
             {leads.map((a) => <ArticleCard key={a.slug} article={a} variant="lead" />)}
           </div>
         </section>
+
+        {/* Live map preview + Traffic Radio panel */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-8">
+            <RailHeader
+              kicker={locale === "fr" ? "Carte en direct" : "Live map"}
+              title={locale === "fr" ? "Ottawa, en ce moment" : "Ottawa, right now"}
+              live={t("liveNow", locale)}
+              action={<ViewAll to="/map" label={t("ottawaMap", locale)} />}
+            />
+            <InteractiveMap height="h-[380px]" />
+          </div>
+          <div className="lg:col-span-4">
+            <RailHeader
+              kicker={locale === "fr" ? "Radio" : "Radio"}
+              title={t("trafficRadio", locale)}
+              live={t("liveNow", locale)}
+              action={<ViewAll to="/radio" label={t("listenLive", locale)} />}
+            />
+            <TrafficRadio compact />
+          </div>
+        </section>
+
+        {/* Social trend wall */}
+        <section>
+          <RailHeader
+            kicker={locale === "fr" ? "Mur social" : "Social wall"}
+            title={t("socialTrends", locale)}
+            live={t("liveNow", locale)}
+            action={<ViewAll to="/social" label={t("viewAll", locale)} />}
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {TREND_ITEMS.slice(0, 4).map(tr => <SocialTrendCard key={tr.id} trend={tr} />)}
+          </div>
+        </section>
+
 
         {/* Today in Ottawa live carousel */}
         <section>
