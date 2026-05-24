@@ -397,18 +397,76 @@ export const SUBMISSIONS: Submission[] = [
 
 export const DONATION_TIERS = [5, 10, 25, 50, 100];
 
+export const DONATION_IMPACT: Record<number, Bilingual> = {
+  5:   { en: "Funds one bilingual fact-check verification.",        fr: "Finance une vérification bilingue." },
+  10:  { en: "Pays for one hour of court or council monitoring.",   fr: "Couvre une heure de surveillance des séances." },
+  25:  { en: "Translates one full investigation into French.",      fr: "Traduit une enquête complète en français." },
+  50:  { en: "Sends a reporter to one neighbourhood meeting.",      fr: "Envoie un reporter à une réunion de quartier." },
+  100: { en: "Underwrites a week of a citizen tip line.",           fr: "Finance une semaine de la ligne de signalement." },
+};
+
 export type NeighborhoodInfo = {
   name: Neighborhood;
   blurb: Bilingual;
+  character: Bilingual;
   population: string;
+  ward: string;
   reporter: string;
 };
-export const NEIGHBORHOOD_INFO: NeighborhoodInfo[] = NEIGHBORHOODS.map((n) => ({
-  name: n,
-  blurb: {
-    en: `Local reporting from ${n}: civic meetings, neighbourhood issues, events, and resident voices.`,
-    fr: `Reportages locaux de ${n} : réunions civiques, enjeux de quartier, événements et voix citoyennes.`,
-  },
-  population: ["28k", "31k", "12k", "21k", "16k", "19k", "23k", "17k", "118k", "126k", "98k", "172k", "44k", "11k", "9k", "8k", "115k", "82k"][NEIGHBORHOODS.indexOf(n)],
-  reporter: ["M.-C. Tremblay", "D. Okonkwo", "L. Boucher", "S. Lavigne", "R. Mohammadi", "A. Diallo", "A. Diallo", "P. Sharma", "P. Sharma", "M. Bélanger", "S. Lavigne", "D. Okonkwo", "L. Boucher", "M.-C. Tremblay", "R. Mohammadi", "L. Boucher", "M. Bélanger", "Community desk"][NEIGHBORHOODS.indexOf(n)],
-}));
+
+export const NEIGHBORHOOD_INFO: NeighborhoodInfo[] = [
+  { name: "Downtown", population: "28k", ward: "Ward 14 · Somerset", reporter: "M.-C. Tremblay",
+    blurb: { en: "Parliament, public service offices, the central library, and the daily rhythm of Ottawa's civic core.", fr: "Parlement, fonction publique, bibliothèque centrale et le pouls civique d'Ottawa." },
+    character: { en: "Civic & institutional", fr: "Civique et institutionnel" } },
+  { name: "Centretown", population: "31k", ward: "Ward 14 · Somerset", reporter: "D. Okonkwo",
+    blurb: { en: "Dense mid-rise blocks, Bank Street shopfronts, and a long-running fight over affordable family housing.", fr: "Quartier dense, vitrines de la rue Bank et long débat sur le logement familial abordable." },
+    character: { en: "Walkable urban core", fr: "Cœur urbain piéton" } },
+  { name: "ByWard Market", population: "12k", ward: "Ward 12 · Rideau-Vanier", reporter: "L. Boucher",
+    blurb: { en: "Heritage market stalls, French bistros, late-night murals, and the city's most-contested public-space debate.", fr: "Étals patrimoniaux, bistros français, murales nocturnes et débat sur l'espace public." },
+    character: { en: "Heritage & nightlife", fr: "Patrimoine et vie nocturne" } },
+  { name: "Glebe", population: "21k", ward: "Ward 17 · Capital", reporter: "S. Lavigne",
+    blurb: { en: "Tree-lined streets between the Rideau Canal and Lansdowne Park; school waitlists and traffic-calming dominate council mail.", fr: "Rues bordées d'arbres entre le canal Rideau et Lansdowne; listes d'attente scolaires et apaisement de la circulation dominent." },
+    character: { en: "Family & canal-side", fr: "Familles, bord du canal" } },
+  { name: "Westboro", population: "16k", ward: "Ward 15 · Kitchissippi", reporter: "R. Mohammadi",
+    blurb: { en: "Boutiques along Richmond Road, Kichi Sibi waterfront trails, and Ottawa's most-reported bike-lane safety hazard.", fr: "Boutiques de la rue Richmond, sentiers riverains et la piste cyclable la plus signalée pour sa dangerosité." },
+    character: { en: "Boutique & active", fr: "Commerces et plein air" } },
+  { name: "Hintonburg", population: "19k", ward: "Ward 15 · Kitchissippi", reporter: "A. Diallo",
+    blurb: { en: "Wellington West cafés, the Parkdale Market, indie galleries, and rising rent pressure on long-time residents.", fr: "Cafés de Wellington Ouest, marché Parkdale, galeries indépendantes et pression locative croissante." },
+    character: { en: "Arts & artisanal", fr: "Arts et artisanat" } },
+  { name: "Vanier", population: "23k", ward: "Ward 12 · Rideau-Vanier", reporter: "A. Diallo",
+    blurb: { en: "Historic Franco-Ontarian heart of Ottawa; community fridges, sugar shacks, and the country's most-bilingual main street.", fr: "Cœur franco-ontarien d'Ottawa; frigos communautaires, cabanes à sucre, rue principale la plus bilingue du pays." },
+    character: { en: "Franco-Ontarian", fr: "Franco-ontarien" } },
+  { name: "Sandy Hill", population: "17k", ward: "Ward 12 · Rideau-Vanier", reporter: "M.-C. Tremblay",
+    blurb: { en: "University of Ottawa students, embassies, and a constant rooming-house conversion debate.", fr: "Étudiants de l'Université d'Ottawa, ambassades et débat constant sur les maisons de chambres." },
+    character: { en: "University & embassies", fr: "Université et ambassades" } },
+  { name: "Kanata", population: "118k", ward: "Ward 4 · Kanata North", reporter: "P. Sharma",
+    blurb: { en: "Canada's largest tech park, the Sens' home arena, and a transit corridor still waiting for LRT Stage 3.", fr: "Le plus grand parc technologique du pays, l'aréna des Sénateurs et un corridor en attente du TLR phase 3." },
+    character: { en: "Tech & suburban", fr: "Technologie et banlieue" } },
+  { name: "Orleans", population: "126k", ward: "Ward 1 · Orléans East-Cumberland", reporter: "M. Bélanger",
+    blurb: { en: "East-end francophone hub, fast-growing subdivisions, and the city's longest commute conversation.", fr: "Pôle francophone de l'est, banlieues en croissance et la plus longue conversation sur les trajets." },
+    character: { en: "Francophone east", fr: "Est francophone" } },
+  { name: "Barrhaven", population: "98k", ward: "Ward 3 · Barrhaven West", reporter: "S. Lavigne",
+    blurb: { en: "Family suburbia with the fastest schoolboard growth and a long wait for Stage 3 light rail.", fr: "Banlieue familiale, croissance scolaire la plus rapide et longue attente du TLR phase 3." },
+    character: { en: "Growing suburb", fr: "Banlieue en croissance" } },
+  { name: "Nepean", population: "172k", ward: "Ward 9 · Knoxdale-Merivale", reporter: "D. Okonkwo",
+    blurb: { en: "Long-established west-side neighbourhoods, big-box corridors, and one of the city's busiest sports complexes.", fr: "Quartiers ouest établis, corridors commerciaux et l'un des complexes sportifs les plus fréquentés." },
+    character: { en: "Established west", fr: "Ouest établi" } },
+  { name: "Alta Vista", population: "44k", ward: "Ward 18 · Alta Vista", reporter: "L. Boucher",
+    blurb: { en: "Postwar bungalows, Ottawa Hospital General campus, and the city's most contested transit-priority corridor.", fr: "Bungalows d'après-guerre, Campus Général de l'Hôpital d'Ottawa et corridor prioritaire contesté." },
+    character: { en: "Hospital district", fr: "Quartier hospitalier" } },
+  { name: "Old Ottawa South", population: "11k", ward: "Ward 17 · Capital", reporter: "M.-C. Tremblay",
+    blurb: { en: "Bank Street south of the canal, Brewer Park, Carleton students, and one of Ottawa's quietest community fights.", fr: "Rue Bank au sud du canal, parc Brewer, étudiants de Carleton et lutte communautaire silencieuse." },
+    character: { en: "Riverside & student", fr: "Riverain et étudiant" } },
+  { name: "Little Italy", population: "9k", ward: "Ward 14 · Somerset", reporter: "R. Mohammadi",
+    blurb: { en: "Preston Street's restaurant strip, Dow's Lake skating, and a long-term plan to lid the Queensway.", fr: "Restaurants de la rue Preston, patinage au lac Dow's et plan pour couvrir le Queensway." },
+    character: { en: "Culinary corridor", fr: "Corridor culinaire" } },
+  { name: "Chinatown", population: "8k", ward: "Ward 14 · Somerset", reporter: "L. Boucher",
+    blurb: { en: "Somerset's heritage arch, the Asian-Canadian cultural district, and a busy pan-Asian small-business renewal.", fr: "Arche patrimoniale de Somerset, district culturel et renouvellement des PME asiatiques." },
+    character: { en: "Pan-Asian heritage", fr: "Patrimoine pan-asiatique" } },
+  { name: "Gloucester", population: "115k", ward: "Ward 2 · Orléans West-Innes", reporter: "M. Bélanger",
+    blurb: { en: "South-east industrial parks, big-box retail, and a fast-growing immigrant-served east-end strip.", fr: "Parcs industriels du sud-est, commerces et corridor en croissance pour nouveaux arrivants." },
+    character: { en: "Industrial east", fr: "Est industriel" } },
+  { name: "Rural Ottawa", population: "82k", ward: "Wards 5, 19, 20, 21", reporter: "Community desk",
+    blurb: { en: "Manotick, Greely, Carp, Osgoode, West Carleton-March: farms, rivers, septic & broadband gaps the city map often forgets.", fr: "Manotick, Greely, Carp, Osgoode, West Carleton-March : fermes, rivières, lacunes en internet et en eau." },
+    character: { en: "Farms & villages", fr: "Fermes et villages" } },
+];
