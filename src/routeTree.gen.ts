@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as YouthRouteImport } from './routes/youth'
 import { Route as WeatherRouteImport } from './routes/weather'
 import { Route as TrendDeskRouteImport } from './routes/trend-desk'
 import { Route as TrafficRouteImport } from './routes/traffic'
@@ -18,18 +19,28 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
 import { Route as LinkToStoryRouteImport } from './routes/link-to-story'
+import { Route as KidsRouteImport } from './routes/kids'
 import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as FactCheckRouteImport } from './routes/fact-check'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as DealsRouteImport } from './routes/deals'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SectionNameRouteImport } from './routes/section.$name'
 import { Route as NeighborhoodsSlugRouteImport } from './routes/neighborhoods.$slug'
+import { Route as GuideOttawaRouteImport } from './routes/guide.ottawa'
+import { Route as GuideCanadaRouteImport } from './routes/guide.canada'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
+const YouthRoute = YouthRouteImport.update({
+  id: '/youth',
+  path: '/youth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WeatherRoute = WeatherRouteImport.update({
   id: '/weather',
   path: '/weather',
@@ -75,6 +86,11 @@ const LinkToStoryRoute = LinkToStoryRouteImport.update({
   path: '/link-to-story',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KidsRoute = KidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JobsRoute = JobsRouteImport.update({
   id: '/jobs',
   path: '/jobs',
@@ -100,9 +116,19 @@ const DonateRoute = DonateRouteImport.update({
   path: '/donate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DealsRoute = DealsRouteImport.update({
+  id: '/deals',
+  path: '/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesRoute = ActivitiesRouteImport.update({
+  id: '/activities',
+  path: '/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -125,6 +151,16 @@ const NeighborhoodsSlugRoute = NeighborhoodsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => NeighborhoodsRoute,
 } as any)
+const GuideOttawaRoute = GuideOttawaRouteImport.update({
+  id: '/guide/ottawa',
+  path: '/guide/ottawa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuideCanadaRoute = GuideCanadaRouteImport.update({
+  id: '/guide/canada',
+  path: '/guide/canada',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
   id: '/article/$slug',
   path: '/article/$slug',
@@ -134,12 +170,15 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
+  '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
   '/jobs': typeof JobsRoute
+  '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
   '/pulse': typeof PulseRoute
@@ -149,19 +188,25 @@ export interface FileRoutesByFullPath {
   '/traffic': typeof TrafficRoute
   '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
+  '/youth': typeof YouthRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/guide/canada': typeof GuideCanadaRoute
+  '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
+  '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
   '/jobs': typeof JobsRoute
+  '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
   '/pulse': typeof PulseRoute
@@ -171,7 +216,10 @@ export interface FileRoutesByTo {
   '/traffic': typeof TrafficRoute
   '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
+  '/youth': typeof YouthRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/guide/canada': typeof GuideCanadaRoute
+  '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
 }
@@ -179,12 +227,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
+  '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
   '/jobs': typeof JobsRoute
+  '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
   '/pulse': typeof PulseRoute
@@ -194,7 +245,10 @@ export interface FileRoutesById {
   '/traffic': typeof TrafficRoute
   '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
+  '/youth': typeof YouthRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/guide/canada': typeof GuideCanadaRoute
+  '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
 }
@@ -203,12 +257,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/activities'
     | '/admin'
+    | '/deals'
     | '/donate'
     | '/events'
     | '/fact-check'
     | '/food'
     | '/jobs'
+    | '/kids'
     | '/link-to-story'
     | '/neighborhoods'
     | '/pulse'
@@ -218,19 +275,25 @@ export interface FileRouteTypes {
     | '/traffic'
     | '/trend-desk'
     | '/weather'
+    | '/youth'
     | '/article/$slug'
+    | '/guide/canada'
+    | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/activities'
     | '/admin'
+    | '/deals'
     | '/donate'
     | '/events'
     | '/fact-check'
     | '/food'
     | '/jobs'
+    | '/kids'
     | '/link-to-story'
     | '/neighborhoods'
     | '/pulse'
@@ -240,19 +303,25 @@ export interface FileRouteTypes {
     | '/traffic'
     | '/trend-desk'
     | '/weather'
+    | '/youth'
     | '/article/$slug'
+    | '/guide/canada'
+    | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/activities'
     | '/admin'
+    | '/deals'
     | '/donate'
     | '/events'
     | '/fact-check'
     | '/food'
     | '/jobs'
+    | '/kids'
     | '/link-to-story'
     | '/neighborhoods'
     | '/pulse'
@@ -262,7 +331,10 @@ export interface FileRouteTypes {
     | '/traffic'
     | '/trend-desk'
     | '/weather'
+    | '/youth'
     | '/article/$slug'
+    | '/guide/canada'
+    | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
   fileRoutesById: FileRoutesById
@@ -270,12 +342,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ActivitiesRoute: typeof ActivitiesRoute
   AdminRoute: typeof AdminRoute
+  DealsRoute: typeof DealsRoute
   DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
   FactCheckRoute: typeof FactCheckRoute
   FoodRoute: typeof FoodRoute
   JobsRoute: typeof JobsRoute
+  KidsRoute: typeof KidsRoute
   LinkToStoryRoute: typeof LinkToStoryRoute
   NeighborhoodsRoute: typeof NeighborhoodsRouteWithChildren
   PulseRoute: typeof PulseRoute
@@ -285,12 +360,22 @@ export interface RootRouteChildren {
   TrafficRoute: typeof TrafficRoute
   TrendDeskRoute: typeof TrendDeskRoute
   WeatherRoute: typeof WeatherRoute
+  YouthRoute: typeof YouthRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
+  GuideCanadaRoute: typeof GuideCanadaRoute
+  GuideOttawaRoute: typeof GuideOttawaRoute
   SectionNameRoute: typeof SectionNameRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/youth': {
+      id: '/youth'
+      path: '/youth'
+      fullPath: '/youth'
+      preLoaderRoute: typeof YouthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/weather': {
       id: '/weather'
       path: '/weather'
@@ -354,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LinkToStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kids': {
+      id: '/kids'
+      path: '/kids'
+      fullPath: '/kids'
+      preLoaderRoute: typeof KidsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/jobs': {
       id: '/jobs'
       path: '/jobs'
@@ -389,11 +481,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/deals': {
+      id: '/deals'
+      path: '/deals'
+      fullPath: '/deals'
+      preLoaderRoute: typeof DealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities': {
+      id: '/activities'
+      path: '/activities'
+      fullPath: '/activities'
+      preLoaderRoute: typeof ActivitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -424,6 +530,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NeighborhoodsSlugRouteImport
       parentRoute: typeof NeighborhoodsRoute
     }
+    '/guide/ottawa': {
+      id: '/guide/ottawa'
+      path: '/guide/ottawa'
+      fullPath: '/guide/ottawa'
+      preLoaderRoute: typeof GuideOttawaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guide/canada': {
+      id: '/guide/canada'
+      path: '/guide/canada'
+      fullPath: '/guide/canada'
+      preLoaderRoute: typeof GuideCanadaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/article/$slug': {
       id: '/article/$slug'
       path: '/article/$slug'
@@ -449,12 +569,15 @@ const NeighborhoodsRouteWithChildren = NeighborhoodsRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ActivitiesRoute: ActivitiesRoute,
   AdminRoute: AdminRoute,
+  DealsRoute: DealsRoute,
   DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
   FactCheckRoute: FactCheckRoute,
   FoodRoute: FoodRoute,
   JobsRoute: JobsRoute,
+  KidsRoute: KidsRoute,
   LinkToStoryRoute: LinkToStoryRoute,
   NeighborhoodsRoute: NeighborhoodsRouteWithChildren,
   PulseRoute: PulseRoute,
@@ -464,7 +587,10 @@ const rootRouteChildren: RootRouteChildren = {
   TrafficRoute: TrafficRoute,
   TrendDeskRoute: TrendDeskRoute,
   WeatherRoute: WeatherRoute,
+  YouthRoute: YouthRoute,
   ArticleSlugRoute: ArticleSlugRoute,
+  GuideCanadaRoute: GuideCanadaRoute,
+  GuideOttawaRoute: GuideOttawaRoute,
   SectionNameRoute: SectionNameRoute,
 }
 export const routeTree = rootRouteImport

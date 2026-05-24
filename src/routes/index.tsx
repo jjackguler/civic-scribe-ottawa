@@ -5,29 +5,28 @@ import { BreakingNewsBar } from "@/components/BreakingNewsBar";
 import { ArticleCard } from "@/components/ArticleCard";
 import { NeighborhoodMap } from "@/components/NeighborhoodMap";
 import { DonationPanel } from "@/components/DonationPanel";
-import { WeatherAlertsList } from "@/components/WeatherAlertCard";
 import { TrafficAlertsList } from "@/components/TrafficAlertCard";
+import { WeatherAlertsList } from "@/components/WeatherAlertCard";
 import { FactCheckCard } from "@/components/FactCheckCard";
-import { SolutionCard } from "@/components/SolutionCard";
-import { EventCard } from "@/components/EventCard";
-import { JobCard } from "@/components/JobCard";
-import { TrendCard } from "@/components/TrendCard";
-import { SportsCard } from "@/components/SportsCard";
-import { FoodCard } from "@/components/FoodCard";
 import { SectionTicker } from "@/components/LiveTicker";
-import { ARTICLES, FACT_CHECKS, SOLUTIONS, EVENTS, JOBS, TREND_ITEMS, SPORTS_EVENTS, FOOD_PLACES, TOPIC_CLUSTERS, LIVE_TICKERS } from "@/lib/data";
+import { Carousel, RailHeader } from "@/components/Carousel";
+import { ActivityCard } from "@/components/ActivityCard";
+import { DealCard } from "@/components/DealCard";
+import { PickCard } from "@/components/PickCard";
+import { GuideTopicCard } from "@/components/GuideTopicCard";
+import { CitizenReportItem } from "@/components/CitizenReportItem";
+import { ARTICLES, FACT_CHECKS, LIVE_TICKERS } from "@/lib/data";
+import { ACTIVITIES, DEALS, KIDS_PICKS, YOUTH_PICKS, OTTAWA_GUIDE, CANADA_GUIDE, CITIZEN_REPORTS } from "@/lib/guide-data";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
-import { Hash, TrendingUp } from "lucide-react";
-
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Ottawa Civic Ledger — Local news, street by street" },
-      { name: "description", content: "Verified bilingual local journalism for Ottawa: neighborhoods, fact-checks, solutions, traffic, weather, jobs and events." },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Ottawa Civic Ledger — Local guide, verified deals, citizen journalism" },
+    { name: "description", content: "Ottawa-first, Canada-wide. Verified local journalism, activity guides, family picks, youth events, and a deal tracker — bilingual and reader-funded." },
+    { property: "og:title", content: "Ottawa Civic Ledger" },
+    { property: "og:description", content: "Verified local journalism + a living guide to Ottawa." },
+  ]}),
   component: Home,
 });
 
@@ -35,15 +34,26 @@ function Home() {
   const { locale } = useLocale();
   const hero = ARTICLES[0];
   const leads = [ARTICLES[1], ARTICLES[2]];
-  const todayInOttawa = ARTICLES.slice(3, 7);
+  const todayItems = ARTICLES.slice(0, 8);
+  const weekendActivities = ACTIVITIES.filter(a => a.weekend).slice(0, 10);
+  const familyFree = [...KIDS_PICKS, ...ACTIVITIES.filter(a => a.audience.includes("family") && a.cost === "free")].slice(0, 8);
+  const youth = YOUTH_PICKS;
+  const deals = DEALS.slice(0, 8);
+  const canadaGuides = CANADA_GUIDE.slice(0, 6);
+
+  const ViewAll = ({ to, label }: { to: string; label: string }) => (
+    <Link to={to as any} className="text-[11px] uppercase tracking-wider font-semibold border-b border-ink pb-0.5 hover:text-civic-red">
+      {label} →
+    </Link>
+  );
 
   return (
     <div className="min-h-screen bg-paper text-foreground">
       <BreakingNewsBar />
       <Header />
 
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8">
-        {/* Hero grid */}
+      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-14">
+        {/* Hero */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           <div className="lg:col-span-7"><ArticleCard article={hero} variant="hero" /></div>
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
@@ -51,9 +61,38 @@ function Home() {
           </div>
         </section>
 
-        <hr className="my-12 border-rule" />
+        {/* Today in Ottawa live carousel */}
+        <section>
+          <RailHeader
+            kicker={t("todayInOttawa", locale)}
+            title={locale === "fr" ? "Aujourd'hui à Ottawa — en direct" : "Today in Ottawa — live"}
+            live={t("liveNow", locale)}
+            action={<ViewAll to="/pulse" label={t("viewAll", locale)} />}
+          />
+          <Carousel itemMinWidth={300}>
+            {todayItems.map(a => (
+              <div key={a.slug} className="carousel-item">
+                <ArticleCard article={a} />
+              </div>
+            ))}
+          </Carousel>
+        </section>
 
-        {/* Live row */}
+        {/* This Weekend rail */}
+        <section>
+          <RailHeader
+            kicker={locale === "fr" ? "Ce week-end" : "This weekend"}
+            title={t("thisWeekend", locale)}
+            action={<ViewAll to="/activities" label={t("activities", locale)} />}
+          />
+          <Carousel itemMinWidth={280}>
+            {weekendActivities.map(a => (
+              <div key={a.id} className="carousel-item"><ActivityCard a={a} compact /></div>
+            ))}
+          </Carousel>
+        </section>
+
+        {/* Live row: traffic + weather + ticker */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-4">
             <h2 className="kicker text-civic-red mb-3">{t("liveUpdates", locale)}</h2>
@@ -64,115 +103,112 @@ function Home() {
             <WeatherAlertsList />
           </div>
           <div className="lg:col-span-4">
-            <h2 className="kicker text-civic-red mb-3">{t("todayInOttawa", locale)}</h2>
-            <div className="bg-card border border-rule p-2">
-              {todayInOttawa.map((a) => (
-                <div key={a.slug} className="p-3"><ArticleCard article={a} variant="compact" /></div>
-              ))}
-            </div>
+            <h2 className="kicker text-civic-red mb-3">{locale === "fr" ? "Bonnes nouvelles" : "Good news"}</h2>
+            <SectionTicker label={locale === "fr" ? "BONNES NOUVELLES" : "GOOD NEWS"} items={LIVE_TICKERS.good} />
+            <div className="mt-3"><SectionTicker label={locale === "fr" ? "SPORTS" : "SPORTS"} items={LIVE_TICKERS.sports} /></div>
           </div>
         </section>
 
-        <hr className="my-12 border-rule" />
-
-        {/* Neighborhood section */}
+        {/* Family picks */}
         <section>
-          <div className="flex items-end justify-between gap-4 mb-6">
-            <div>
-              <span className="kicker text-civic-red">{t("neighborhoods", locale)}</span>
-              <h2 className="font-display text-3xl md:text-4xl mt-1">{t("whatsNear", locale)}</h2>
-              <p className="font-serif text-muted-foreground mt-2 max-w-2xl">
-                {locale === "fr"
-                  ? "Reportages quartier par quartier, signalements citoyens, événements, et ressources locales."
-                  : "Reporting block by block — citizen reports, events, traffic, and resources for every neighborhood."}
-              </p>
-            </div>
-            <Link to="/neighborhoods" className="hidden md:inline-flex text-xs uppercase tracking-wider font-semibold border-b border-ink pb-0.5">
-              {locale === "fr" ? "Tous les quartiers" : "All neighborhoods"} →
-            </Link>
-          </div>
+          <RailHeader
+            kicker={locale === "fr" ? "Enfants et famille" : "Kids & family"}
+            title={t("freeFamilyPicks", locale)}
+            action={<ViewAll to="/kids" label={t("kidsFamily", locale)} />}
+          />
+          <Carousel itemMinWidth={260}>
+            {familyFree.map((p: any) => (
+              <div key={p.id} className="carousel-item">
+                {"category" in p ? <PickCard p={p} /> : <ActivityCard a={p} compact />}
+              </div>
+            ))}
+          </Carousel>
+        </section>
+
+        {/* Youth picks */}
+        <section>
+          <RailHeader
+            kicker={locale === "fr" ? "Jeunesse" : "Youth"}
+            title={t("youthPicks", locale)}
+            action={<ViewAll to="/youth" label={t("youth", locale)} />}
+          />
+          <Carousel itemMinWidth={260}>
+            {youth.map(p => <div key={p.id} className="carousel-item"><PickCard p={p} /></div>)}
+          </Carousel>
+        </section>
+
+        {/* Neighborhood guides */}
+        <section>
+          <RailHeader
+            kicker={t("neighborhoods", locale)}
+            title={t("neighborhoodGuides", locale)}
+            action={<ViewAll to="/neighborhoods" label={t("viewAll", locale)} />}
+          />
           <NeighborhoodMap />
         </section>
 
-        <hr className="my-12 border-rule" />
+        {/* Latest verified deals */}
+        <section>
+          <RailHeader
+            kicker={locale === "fr" ? "Soldes et aubaines" : "Sales & deals"}
+            title={t("verifiedDeals", locale)}
+            live={locale === "fr" ? "Vérifié il y a quelques min" : "Updated minutes ago"}
+            action={<ViewAll to="/deals" label={t("deals", locale)} />}
+          />
+          <Carousel itemMinWidth={260}>
+            {deals.map(d => <div key={d.id} className="carousel-item"><DealCard d={d} /></div>)}
+          </Carousel>
+        </section>
 
-        {/* Fact check + solutions */}
+        {/* Canada-wide guides */}
+        <section>
+          <RailHeader
+            kicker={locale === "fr" ? "Pancanadien" : "Canada-wide"}
+            title={t("canadaWideGuides", locale)}
+            action={<ViewAll to="/guide/canada" label={t("canadaGuide", locale)} />}
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {canadaGuides.map(g => <GuideTopicCard key={g.id} g={g} />)}
+          </div>
+        </section>
+
+        {/* Citizen reports near you + donate */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-7">
-            <div className="flex items-end justify-between mb-5">
-              <div>
-                <span className="kicker text-civic-red">{t("factCheck", locale)}</span>
-                <h2 className="font-display text-3xl mt-1">{locale === "fr" ? "Ce qui est vrai, ce qui ne l'est pas" : "What's true, what isn't"}</h2>
-              </div>
-              <Link to="/fact-check" className="text-xs uppercase tracking-wider font-semibold border-b border-ink">{locale === "fr" ? "Tous" : "All"} →</Link>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {FACT_CHECKS.slice(0, 4).map((f) => <FactCheckCard key={f.id} fc={f} />)}
+            <RailHeader
+              kicker={locale === "fr" ? "Signalements citoyens" : "Citizen reports"}
+              title={t("citizenReportsNear", locale)}
+              live={locale === "fr" ? "Actif" : "Active"}
+              action={<ViewAll to="/submit" label={t("submit", locale)} />}
+            />
+            <div className="bg-card border border-rule p-4">
+              {CITIZEN_REPORTS.map(r => <CitizenReportItem key={r.id} r={r} />)}
             </div>
           </div>
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 space-y-6">
             <DonationPanel />
-            <div className="mt-6 bg-secondary p-5">
-              <span className="kicker text-civic-red">{t("submit", locale)}</span>
-              <h3 className="font-display text-xl mt-1">{locale === "fr" ? "Vous voyez quelque chose près de chez vous ?" : "See something on your block?"}</h3>
-              <p className="text-sm font-serif text-muted-foreground mt-2">
-                {locale === "fr" ? "Soumettez un reportage citoyen. Nos éditeurs vérifient et publient avec contexte." : "Submit a citizen report. Our editors verify and publish with context."}
-              </p>
-              <Link to="/submit" className="inline-block mt-3 border border-ink px-4 py-2 text-xs uppercase tracking-wider font-semibold hover:bg-ink hover:text-paper">
-                {t("submit", locale)}
+            <div className="bg-secondary p-5">
+              <span className="kicker text-civic-red">{t("factCheck", locale)}</span>
+              <h3 className="font-display text-xl mt-1">{locale === "fr" ? "Ce qui est vrai, ce qui ne l'est pas" : "What's true, what isn't"}</h3>
+              <div className="mt-3 grid gap-3">
+                {FACT_CHECKS.slice(0, 2).map(f => <FactCheckCard key={f.id} fc={f} />)}
+              </div>
+              <Link to="/fact-check" className="inline-block mt-3 text-[11px] uppercase tracking-wider font-semibold border-b border-ink">
+                {t("viewAll", locale)} →
               </Link>
             </div>
           </div>
         </section>
 
-        <hr className="my-12 border-rule" />
-
-        {/* Solutions */}
+        {/* Ottawa Guide topics */}
         <section>
-          <div className="flex items-end justify-between mb-5">
-            <div>
-              <span className="kicker text-solution">{t("solutions", locale)}</span>
-              <h2 className="font-display text-3xl mt-1">{locale === "fr" ? "Du problème à la solution" : "From problem to what works"}</h2>
-            </div>
-            <Link to="/solutions" className="text-xs uppercase tracking-wider font-semibold border-b border-ink">{locale === "fr" ? "Toutes" : "All"} →</Link>
-          </div>
-          <div className="grid lg:grid-cols-2 gap-6">
-            {SOLUTIONS.map((s) => <SolutionCard key={s.id} s={s} />)}
-          </div>
-        </section>
-
-        <hr className="my-12 border-rule" />
-
-        {/* More reporting */}
-        <section>
-          <div className="flex items-end justify-between mb-5">
-            <h2 className="font-display text-3xl">{locale === "fr" ? "Plus de reportages" : "More reporting"}</h2>
-            <span className="kicker text-muted-foreground">Ottawa · Canada · World</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            {ARTICLES.slice(3).map((a) => <ArticleCard key={a.slug} article={a} />)}
-          </div>
-        </section>
-
-        <hr className="my-12 border-rule" />
-
-        {/* Events + Jobs */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-6">
-            <div className="flex items-end justify-between mb-3">
-              <h2 className="font-display text-2xl">{t("events", locale)}</h2>
-              <Link to="/events" className="text-xs uppercase tracking-wider font-semibold border-b border-ink">{locale === "fr" ? "Tout" : "All"} →</Link>
-            </div>
-            <div>{EVENTS.slice(0, 4).map((e) => <EventCard key={e.id} event={e} />)}</div>
-          </div>
-          <div className="lg:col-span-6">
-            <div className="flex items-end justify-between mb-3">
-              <h2 className="font-display text-2xl">{t("jobs", locale)}</h2>
-              <Link to="/jobs" className="text-xs uppercase tracking-wider font-semibold border-b border-ink">{locale === "fr" ? "Tout" : "All"} →</Link>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {JOBS.slice(0, 4).map((j) => <JobCard key={j.id} job={j} />)}
-            </div>
+          <RailHeader
+            kicker={t("ottawaGuide", locale)}
+            title={locale === "fr" ? "L'essentiel pour vivre bien à Ottawa" : "The essentials for living well in Ottawa"}
+            action={<ViewAll to="/guide/ottawa" label={t("ottawaGuide", locale)} />}
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {OTTAWA_GUIDE.slice(0, 8).map(g => <GuideTopicCard key={g.id} g={g} />)}
           </div>
         </section>
       </main>
