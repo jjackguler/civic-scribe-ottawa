@@ -108,6 +108,23 @@ export const dict: Dict = {
   publishBtn: { en: "Publish", fr: "Publier" },
   rejectBtn: { en: "Reject", fr: "Rejeter" },
   needMore: { en: "Needs more evidence", fr: "Plus de preuves nécessaires" },
+
+  ottawaGuide: { en: "Ottawa Guide", fr: "Guide d'Ottawa" },
+  canadaGuide: { en: "Canada Guide", fr: "Guide du Canada" },
+  activities: { en: "Activities", fr: "Activités" },
+  kidsFamily: { en: "Kids & Family", fr: "Enfants et famille" },
+  youth: { en: "Youth", fr: "Jeunesse" },
+  deals: { en: "Sales & Deals", fr: "Soldes et aubaines" },
+  thisWeekend: { en: "This weekend in Ottawa", fr: "Ce week-end à Ottawa" },
+  freeFamilyPicks: { en: "Free & low-cost family picks", fr: "Sorties en famille gratuites" },
+  youthPicks: { en: "Youth picks", fr: "Sélection jeunesse" },
+  neighborhoodGuides: { en: "Neighborhood guides", fr: "Guides de quartier" },
+  verifiedDeals: { en: "Latest verified deals", fr: "Dernières aubaines vérifiées" },
+  canadaWideGuides: { en: "Canada-wide useful guides", fr: "Guides utiles à l'échelle du Canada" },
+  citizenReportsNear: { en: "Citizen reports near you", fr: "Signalements citoyens près de chez vous" },
+  viewAll: { en: "View all", fr: "Tout voir" },
+  liveNow: { en: "Live", fr: "En direct" },
+  more: { en: "More", fr: "Plus" },
 };
 
 export function t(key: keyof typeof dict, locale: Locale) {
