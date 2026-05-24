@@ -123,11 +123,17 @@
   h1, h2, h3, h4, .font-display, .headline {
     font-family: var(--font-display);
     letter-spacing: -0.015em;
+    font-feature-settings: "lnum", "kern", "liga";
   }
-  .font-serif { font-family: var(--font-serif); }
+  .font-serif { font-family: var(--font-serif); font-feature-settings: "kern", "liga", "onum"; }
   .font-sans { font-family: var(--font-sans); }
 
+  @media (max-width: 640px) {
+    h1, .font-display { letter-spacing: -0.02em; }
+  }
+
   ::selection { background: var(--civic-red); color: var(--primary-foreground); }
+  :focus-visible { outline: 2px solid var(--civic-red); outline-offset: 2px; }
 }
 
 @layer utilities {

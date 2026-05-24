@@ -45,6 +45,38 @@ export const dict: Dict = {
     en: "Independent civic journalism, supported by readers.",
     fr: "Journalisme civique indépendant, soutenu par les lecteurs.",
   },
+
+  all: { en: "All", fr: "Toutes" },
+  filterBy: { en: "Filter by", fr: "Filtrer par" },
+  status: { en: "Status", fr: "Statut" },
+  category: { en: "Category", fr: "Catégorie" },
+  noResults: { en: "No results match your filters.", fr: "Aucun résultat ne correspond à vos filtres." },
+  reset: { en: "Reset", fr: "Réinitialiser" },
+  resultsCount: { en: "results", fr: "résultats" },
+  searchPlaceholder: { en: "Search Ottawa coverage…", fr: "Rechercher dans la couverture…" },
+
+  by: { en: "By", fr: "Par" },
+  share: { en: "Share", fr: "Partager" },
+  correctionsPolicy: { en: "Corrections policy", fr: "Politique de correction" },
+  haveMoreInfo: { en: "Have more information?", fr: "Vous avez plus d'informations ?" },
+  readNext: { en: "Read next", fr: "À lire ensuite" },
+  sources: { en: "Sources", fr: "Sources" },
+
+  oneTime: { en: "One-time", fr: "Don unique" },
+  monthly: { en: "Monthly", fr: "Mensuel" },
+  whereGoes: { en: "Where your support goes", fr: "Où va votre soutien" },
+  fundingTransparency: { en: "Funding transparency", fr: "Transparence du financement" },
+  taxReceipt: { en: "Tax receipts issued for gifts over $20 CAD.", fr: "Reçus fiscaux pour les dons de plus de 20 $ CA." },
+  secureCheckout: { en: "Secure checkout (demonstration only — no payment is processed).", fr: "Paiement sécurisé (démonstration — aucun paiement traité)." },
+
+  submitTitle: { en: "Title", fr: "Titre" },
+  submitDescription: { en: "Description", fr: "Description" },
+  submitNeighborhood: { en: "Neighborhood", fr: "Quartier" },
+  submitCategory: { en: "Category", fr: "Catégorie" },
+  attachments: { en: "Attachments (photo, video, document)", fr: "Pièces jointes (photo, vidéo, document)" },
+  email: { en: "Email", fr: "Courriel" },
+  phone: { en: "Phone", fr: "Téléphone" },
+  submitStory: { en: "Submit story", fr: "Envoyer la soumission" },
 };
 
 export function t(key: keyof typeof dict, locale: Locale) {
