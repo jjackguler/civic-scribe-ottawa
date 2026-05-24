@@ -9,38 +9,300 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WeatherRouteImport } from './routes/weather'
+import { Route as TrafficRouteImport } from './routes/traffic'
+import { Route as SubmitRouteImport } from './routes/submit'
+import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
+import { Route as JobsRouteImport } from './routes/jobs'
+import { Route as FactCheckRouteImport } from './routes/fact-check'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as DonateRouteImport } from './routes/donate'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SectionNameRouteImport } from './routes/section.$name'
+import { Route as NeighborhoodsSlugRouteImport } from './routes/neighborhoods.$slug'
+import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
+const WeatherRoute = WeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrafficRoute = TrafficRouteImport.update({
+  id: '/traffic',
+  path: '/traffic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubmitRoute = SubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsRoute = SolutionsRouteImport.update({
+  id: '/solutions',
+  path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
+  id: '/neighborhoods',
+  path: '/neighborhoods',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsRoute = JobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FactCheckRoute = FactCheckRouteImport.update({
+  id: '/fact-check',
+  path: '/fact-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SectionNameRoute = SectionNameRouteImport.update({
+  id: '/section/$name',
+  path: '/section/$name',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NeighborhoodsSlugRoute = NeighborhoodsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NeighborhoodsRoute,
+} as any)
+const ArticleSlugRoute = ArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/fact-check': typeof FactCheckRoute
+  '/jobs': typeof JobsRoute
+  '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/solutions': typeof SolutionsRoute
+  '/submit': typeof SubmitRoute
+  '/traffic': typeof TrafficRoute
+  '/weather': typeof WeatherRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
+  '/section/$name': typeof SectionNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/fact-check': typeof FactCheckRoute
+  '/jobs': typeof JobsRoute
+  '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/solutions': typeof SolutionsRoute
+  '/submit': typeof SubmitRoute
+  '/traffic': typeof TrafficRoute
+  '/weather': typeof WeatherRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
+  '/section/$name': typeof SectionNameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/donate': typeof DonateRoute
+  '/events': typeof EventsRoute
+  '/fact-check': typeof FactCheckRoute
+  '/jobs': typeof JobsRoute
+  '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/solutions': typeof SolutionsRoute
+  '/submit': typeof SubmitRoute
+  '/traffic': typeof TrafficRoute
+  '/weather': typeof WeatherRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
+  '/section/$name': typeof SectionNameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/donate'
+    | '/events'
+    | '/fact-check'
+    | '/jobs'
+    | '/neighborhoods'
+    | '/solutions'
+    | '/submit'
+    | '/traffic'
+    | '/weather'
+    | '/article/$slug'
+    | '/neighborhoods/$slug'
+    | '/section/$name'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/donate'
+    | '/events'
+    | '/fact-check'
+    | '/jobs'
+    | '/neighborhoods'
+    | '/solutions'
+    | '/submit'
+    | '/traffic'
+    | '/weather'
+    | '/article/$slug'
+    | '/neighborhoods/$slug'
+    | '/section/$name'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/donate'
+    | '/events'
+    | '/fact-check'
+    | '/jobs'
+    | '/neighborhoods'
+    | '/solutions'
+    | '/submit'
+    | '/traffic'
+    | '/weather'
+    | '/article/$slug'
+    | '/neighborhoods/$slug'
+    | '/section/$name'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
+  DonateRoute: typeof DonateRoute
+  EventsRoute: typeof EventsRoute
+  FactCheckRoute: typeof FactCheckRoute
+  JobsRoute: typeof JobsRoute
+  NeighborhoodsRoute: typeof NeighborhoodsRouteWithChildren
+  SolutionsRoute: typeof SolutionsRoute
+  SubmitRoute: typeof SubmitRoute
+  TrafficRoute: typeof TrafficRoute
+  WeatherRoute: typeof WeatherRoute
+  ArticleSlugRoute: typeof ArticleSlugRoute
+  SectionNameRoute: typeof SectionNameRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/weather': {
+      id: '/weather'
+      path: '/weather'
+      fullPath: '/weather'
+      preLoaderRoute: typeof WeatherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/traffic': {
+      id: '/traffic'
+      path: '/traffic'
+      fullPath: '/traffic'
+      preLoaderRoute: typeof TrafficRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/submit': {
+      id: '/submit'
+      path: '/submit'
+      fullPath: '/submit'
+      preLoaderRoute: typeof SubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions': {
+      id: '/solutions'
+      path: '/solutions'
+      fullPath: '/solutions'
+      preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/neighborhoods': {
+      id: '/neighborhoods'
+      path: '/neighborhoods'
+      fullPath: '/neighborhoods'
+      preLoaderRoute: typeof NeighborhoodsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs': {
+      id: '/jobs'
+      path: '/jobs'
+      fullPath: '/jobs'
+      preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fact-check': {
+      id: '/fact-check'
+      path: '/fact-check'
+      fullPath: '/fact-check'
+      preLoaderRoute: typeof FactCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +310,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/section/$name': {
+      id: '/section/$name'
+      path: '/section/$name'
+      fullPath: '/section/$name'
+      preLoaderRoute: typeof SectionNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/neighborhoods/$slug': {
+      id: '/neighborhoods/$slug'
+      path: '/$slug'
+      fullPath: '/neighborhoods/$slug'
+      preLoaderRoute: typeof NeighborhoodsSlugRouteImport
+      parentRoute: typeof NeighborhoodsRoute
+    }
+    '/article/$slug': {
+      id: '/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/article/$slug'
+      preLoaderRoute: typeof ArticleSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface NeighborhoodsRouteChildren {
+  NeighborhoodsSlugRoute: typeof NeighborhoodsSlugRoute
+}
+
+const NeighborhoodsRouteChildren: NeighborhoodsRouteChildren = {
+  NeighborhoodsSlugRoute: NeighborhoodsSlugRoute,
+}
+
+const NeighborhoodsRouteWithChildren = NeighborhoodsRoute._addFileChildren(
+  NeighborhoodsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
+  DonateRoute: DonateRoute,
+  EventsRoute: EventsRoute,
+  FactCheckRoute: FactCheckRoute,
+  JobsRoute: JobsRoute,
+  NeighborhoodsRoute: NeighborhoodsRouteWithChildren,
+  SolutionsRoute: SolutionsRoute,
+  SubmitRoute: SubmitRoute,
+  TrafficRoute: TrafficRoute,
+  WeatherRoute: WeatherRoute,
+  ArticleSlugRoute: ArticleSlugRoute,
+  SectionNameRoute: SectionNameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
