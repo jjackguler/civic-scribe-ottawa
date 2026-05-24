@@ -13,6 +13,10 @@ const PLATFORM_STYLE: Record<Platform, { label: string; bg: string; fg: string }
   blog:      { label: "Blog",        bg: "bg-secondary", fg: "text-foreground" },
   newsletter:{ label: "Newsletter",  bg: "bg-secondary", fg: "text-foreground" },
   rss:       { label: "RSS",         bg: "bg-secondary", fg: "text-foreground" },
+  city:      { label: "City source", bg: "bg-river",     fg: "text-white" },
+  club:      { label: "Club",        bg: "bg-solution",  fg: "text-white" },
+  event:     { label: "Event",       bg: "bg-highlight", fg: "text-foreground" },
+  venue:     { label: "Venue",       bg: "bg-secondary", fg: "text-foreground" },
 };
 
 function minutesAgo(iso: string) {
