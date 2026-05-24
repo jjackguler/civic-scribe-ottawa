@@ -1,47 +1,32 @@
 import { Link } from "@tanstack/react-router";
-import { Search, Heart, PenSquare, Menu, X, ChevronDown } from "lucide-react";
+import { Search, Heart, PenSquare, Menu, X, Radio, AlertTriangle, MapPin, Car, Hash, Sparkles, Baby, GraduationCap, Tag, Flag } from "lucide-react";
 import { useState } from "react";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { LanguageToggle } from "./LanguageToggle";
 
-const PRIMARY: { key: any; to: string }[] = [
-  { key: "ottawaGuide", to: "/guide/ottawa" },
-  { key: "activities", to: "/activities" },
-  { key: "kidsFamily", to: "/kids" },
-  { key: "youth", to: "/youth" },
-  { key: "deals", to: "/deals" },
-  { key: "canadaGuide", to: "/guide/canada" },
-];
-
-const SECONDARY: { key: any; to: string }[] = [
-  { key: "pulse", to: "/pulse" },
-  { key: "neighborhoods", to: "/neighborhoods" },
-  { key: "politics", to: "/section/politics" },
-  { key: "factCheck", to: "/fact-check" },
-  { key: "solutions", to: "/solutions" },
-  { key: "sportsHub", to: "/sports" },
-  { key: "food", to: "/food" },
-  { key: "traffic", to: "/traffic" },
-  { key: "weather", to: "/weather" },
-  { key: "events", to: "/events" },
-  { key: "jobs", to: "/jobs" },
-  { key: "trendDesk", to: "/trend-desk" },
-  { key: "linkToStory", to: "/link-to-story" },
-  { key: "canada", to: "/section/canada" },
-  { key: "world", to: "/section/world" },
+const TABS: { key: any; to: string; icon: any; pulse?: boolean }[] = [
+  { key: "breakingNews",  to: "/breaking",      icon: AlertTriangle, pulse: true },
+  { key: "liveTraffic",   to: "/traffic",       icon: Car },
+  { key: "ottawaMap",     to: "/map",           icon: MapPin },
+  { key: "trafficRadio",  to: "/radio",         icon: Radio },
+  { key: "socialTrends",  to: "/social",        icon: Hash },
+  { key: "activities",    to: "/activities",    icon: Sparkles },
+  { key: "kidsFamily",    to: "/kids",          icon: Baby },
+  { key: "youth",         to: "/youth",         icon: GraduationCap },
+  { key: "deals",         to: "/deals",         icon: Tag },
+  { key: "canadaGuide",   to: "/guide/canada",  icon: Flag },
 ];
 
 export function Header() {
   const { locale } = useLocale();
   const [open, setOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
   const today = new Date().toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", {
     weekday: "long", year: "numeric", month: "long", day: "numeric",
   });
 
   return (
-    <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/80 rule-bottom">
+    <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85 rule-bottom">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="hidden md:flex items-center justify-between py-2 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
           <span>{today}</span>
@@ -49,14 +34,14 @@ export function Header() {
           <div className="flex items-center gap-4"><LanguageToggle /></div>
         </div>
 
-        <div className="flex items-center justify-between py-4 md:py-5 border-t border-rule">
+        <div className="flex items-center justify-between py-3 md:py-4 border-t border-rule">
           <button className="md:hidden p-2 -ml-2" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
           <div className="flex-1 md:flex-none text-center md:text-left">
             <Link to="/" className="inline-block group">
               <div className="kicker text-civic-red">Ottawa · Canada</div>
-              <h1 className="font-display text-2xl sm:text-3xl md:text-[2.6rem] leading-none tracking-tight">{t("brand", locale)}</h1>
+              <h1 className="font-display text-xl sm:text-2xl md:text-[2.2rem] leading-none tracking-tight">{t("brand", locale)}</h1>
             </Link>
           </div>
           <div className="flex items-center gap-2 md:gap-3">
@@ -71,52 +56,43 @@ export function Header() {
         </div>
 
         <nav className="hidden md:block border-t border-rule">
-          <ul className="flex items-center gap-1 lg:gap-2 py-2.5 text-sm">
-            {PRIMARY.map((s) => (
-              <li key={s.to}>
-                <Link to={s.to} className="inline-flex items-center px-3 py-1.5 font-semibold tracking-tight hover:text-civic-red transition-colors data-[status=active]:text-civic-red data-[status=active]:bg-secondary">
-                  {t(s.key, locale)}
-                </Link>
-              </li>
-            ))}
-            <li className="relative ml-auto">
-              <button
-                onClick={() => setMoreOpen(o => !o)}
-                onBlur={() => setTimeout(() => setMoreOpen(false), 150)}
-                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs uppercase tracking-wider font-semibold border border-rule hover:border-ink"
-              >
-                {t("more", locale)} <ChevronDown className="h-3 w-3" />
-              </button>
-              {moreOpen && (
-                <div className="absolute right-0 top-full mt-1 bg-paper border border-rule shadow-lg py-2 min-w-[260px] z-50">
-                  <ul className="grid grid-cols-2 gap-x-2">
-                    {SECONDARY.map(s => (
-                      <li key={s.to}>
-                        <Link to={s.to} onMouseDown={() => setMoreOpen(false)} className="block px-3 py-1.5 text-[13px] hover:text-civic-red hover:bg-secondary">
-                          {t(s.key, locale)}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-          </ul>
+          <div className="overflow-x-auto scrollbar-thin">
+            <ul className="flex items-center gap-1 py-2 text-[13px] min-w-max">
+              {TABS.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <li key={s.to}>
+                    <Link
+                      to={s.to as any}
+                      className="group inline-flex items-center gap-1.5 px-3 py-1.5 font-semibold tracking-tight hover:text-civic-red transition-colors data-[status=active]:text-civic-red data-[status=active]:bg-secondary whitespace-nowrap"
+                      activeProps={{ className: "text-civic-red bg-secondary" }}
+                    >
+                      <Icon className="h-3.5 w-3.5 opacity-70 group-hover:opacity-100" />
+                      {t(s.key, locale)}
+                      {s.pulse && <span className="ticker-dot ml-1" />}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </nav>
 
         {open && (
           <nav className="md:hidden pb-4 border-t border-rule">
-            <div className="pt-3 mb-2 kicker text-civic-red">{locale === "fr" ? "Découvrir" : "Discover"}</div>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-semibold">
-              {PRIMARY.map((s) => (
-                <li key={s.to}><Link to={s.to} onClick={() => setOpen(false)} className="block py-1">{t(s.key, locale)}</Link></li>
-              ))}
-            </ul>
-            <div className="mt-4 mb-2 kicker text-muted-foreground">{locale === "fr" ? "Salle de presse" : "Newsroom"}</div>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-              {SECONDARY.map((s) => (
-                <li key={s.to}><Link to={s.to} onClick={() => setOpen(false)} className="block py-1">{t(s.key, locale)}</Link></li>
-              ))}
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-2 pt-3 text-sm font-semibold">
+              {TABS.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <li key={s.to}>
+                    <Link to={s.to as any} onClick={() => setOpen(false)} className="flex items-center gap-2 py-1.5">
+                      <Icon className="h-4 w-4 text-civic-red" />
+                      {t(s.key, locale)}
+                      {s.pulse && <span className="ticker-dot ml-1" />}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
             <div className="flex gap-2 mt-4">
               <Link to="/donate" onClick={() => setOpen(false)} className="flex-1 text-center border border-ink py-2 text-xs uppercase tracking-wider font-semibold">{t("donate", locale)}</Link>
