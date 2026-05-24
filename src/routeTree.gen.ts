@@ -10,11 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WeatherRouteImport } from './routes/weather'
+import { Route as TrendDeskRouteImport } from './routes/trend-desk'
 import { Route as TrafficRouteImport } from './routes/traffic'
 import { Route as SubmitRouteImport } from './routes/submit'
+import { Route as SportsRouteImport } from './routes/sports'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
+import { Route as LinkToStoryRouteImport } from './routes/link-to-story'
 import { Route as JobsRouteImport } from './routes/jobs'
+import { Route as FoodRouteImport } from './routes/food'
 import { Route as FactCheckRouteImport } from './routes/fact-check'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DonateRouteImport } from './routes/donate'
@@ -30,6 +35,11 @@ const WeatherRoute = WeatherRouteImport.update({
   path: '/weather',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrendDeskRoute = TrendDeskRouteImport.update({
+  id: '/trend-desk',
+  path: '/trend-desk',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrafficRoute = TrafficRouteImport.update({
   id: '/traffic',
   path: '/traffic',
@@ -40,9 +50,19 @@ const SubmitRoute = SubmitRouteImport.update({
   path: '/submit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SportsRoute = SportsRouteImport.update({
+  id: '/sports',
+  path: '/sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PulseRoute = PulseRouteImport.update({
+  id: '/pulse',
+  path: '/pulse',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
@@ -50,9 +70,19 @@ const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
   path: '/neighborhoods',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LinkToStoryRoute = LinkToStoryRouteImport.update({
+  id: '/link-to-story',
+  path: '/link-to-story',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JobsRoute = JobsRouteImport.update({
   id: '/jobs',
   path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FoodRoute = FoodRouteImport.update({
+  id: '/food',
+  path: '/food',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FactCheckRoute = FactCheckRouteImport.update({
@@ -108,11 +138,16 @@ export interface FileRoutesByFullPath {
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
+  '/food': typeof FoodRoute
   '/jobs': typeof JobsRoute
+  '/link-to-story': typeof LinkToStoryRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/pulse': typeof PulseRoute
   '/solutions': typeof SolutionsRoute
+  '/sports': typeof SportsRoute
   '/submit': typeof SubmitRoute
   '/traffic': typeof TrafficRoute
+  '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
@@ -125,11 +160,16 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
+  '/food': typeof FoodRoute
   '/jobs': typeof JobsRoute
+  '/link-to-story': typeof LinkToStoryRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/pulse': typeof PulseRoute
   '/solutions': typeof SolutionsRoute
+  '/sports': typeof SportsRoute
   '/submit': typeof SubmitRoute
   '/traffic': typeof TrafficRoute
+  '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
@@ -143,11 +183,16 @@ export interface FileRoutesById {
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
+  '/food': typeof FoodRoute
   '/jobs': typeof JobsRoute
+  '/link-to-story': typeof LinkToStoryRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/pulse': typeof PulseRoute
   '/solutions': typeof SolutionsRoute
+  '/sports': typeof SportsRoute
   '/submit': typeof SubmitRoute
   '/traffic': typeof TrafficRoute
+  '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
@@ -162,11 +207,16 @@ export interface FileRouteTypes {
     | '/donate'
     | '/events'
     | '/fact-check'
+    | '/food'
     | '/jobs'
+    | '/link-to-story'
     | '/neighborhoods'
+    | '/pulse'
     | '/solutions'
+    | '/sports'
     | '/submit'
     | '/traffic'
+    | '/trend-desk'
     | '/weather'
     | '/article/$slug'
     | '/neighborhoods/$slug'
@@ -179,11 +229,16 @@ export interface FileRouteTypes {
     | '/donate'
     | '/events'
     | '/fact-check'
+    | '/food'
     | '/jobs'
+    | '/link-to-story'
     | '/neighborhoods'
+    | '/pulse'
     | '/solutions'
+    | '/sports'
     | '/submit'
     | '/traffic'
+    | '/trend-desk'
     | '/weather'
     | '/article/$slug'
     | '/neighborhoods/$slug'
@@ -196,11 +251,16 @@ export interface FileRouteTypes {
     | '/donate'
     | '/events'
     | '/fact-check'
+    | '/food'
     | '/jobs'
+    | '/link-to-story'
     | '/neighborhoods'
+    | '/pulse'
     | '/solutions'
+    | '/sports'
     | '/submit'
     | '/traffic'
+    | '/trend-desk'
     | '/weather'
     | '/article/$slug'
     | '/neighborhoods/$slug'
@@ -214,11 +274,16 @@ export interface RootRouteChildren {
   DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
   FactCheckRoute: typeof FactCheckRoute
+  FoodRoute: typeof FoodRoute
   JobsRoute: typeof JobsRoute
+  LinkToStoryRoute: typeof LinkToStoryRoute
   NeighborhoodsRoute: typeof NeighborhoodsRouteWithChildren
+  PulseRoute: typeof PulseRoute
   SolutionsRoute: typeof SolutionsRoute
+  SportsRoute: typeof SportsRoute
   SubmitRoute: typeof SubmitRoute
   TrafficRoute: typeof TrafficRoute
+  TrendDeskRoute: typeof TrendDeskRoute
   WeatherRoute: typeof WeatherRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
   SectionNameRoute: typeof SectionNameRoute
@@ -231,6 +296,13 @@ declare module '@tanstack/react-router' {
       path: '/weather'
       fullPath: '/weather'
       preLoaderRoute: typeof WeatherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trend-desk': {
+      id: '/trend-desk'
+      path: '/trend-desk'
+      fullPath: '/trend-desk'
+      preLoaderRoute: typeof TrendDeskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/traffic': {
@@ -247,11 +319,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sports': {
+      id: '/sports'
+      path: '/sports'
+      fullPath: '/sports'
+      preLoaderRoute: typeof SportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions': {
       id: '/solutions'
       path: '/solutions'
       fullPath: '/solutions'
       preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pulse': {
+      id: '/pulse'
+      path: '/pulse'
+      fullPath: '/pulse'
+      preLoaderRoute: typeof PulseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/neighborhoods': {
@@ -261,11 +347,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NeighborhoodsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/link-to-story': {
+      id: '/link-to-story'
+      path: '/link-to-story'
+      fullPath: '/link-to-story'
+      preLoaderRoute: typeof LinkToStoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/jobs': {
       id: '/jobs'
       path: '/jobs'
       fullPath: '/jobs'
       preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/food': {
+      id: '/food'
+      path: '/food'
+      fullPath: '/food'
+      preLoaderRoute: typeof FoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fact-check': {
@@ -353,11 +453,16 @@ const rootRouteChildren: RootRouteChildren = {
   DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
   FactCheckRoute: FactCheckRoute,
+  FoodRoute: FoodRoute,
   JobsRoute: JobsRoute,
+  LinkToStoryRoute: LinkToStoryRoute,
   NeighborhoodsRoute: NeighborhoodsRouteWithChildren,
+  PulseRoute: PulseRoute,
   SolutionsRoute: SolutionsRoute,
+  SportsRoute: SportsRoute,
   SubmitRoute: SubmitRoute,
   TrafficRoute: TrafficRoute,
+  TrendDeskRoute: TrendDeskRoute,
   WeatherRoute: WeatherRoute,
   ArticleSlugRoute: ArticleSlugRoute,
   SectionNameRoute: SectionNameRoute,

@@ -11,9 +11,15 @@ import { FactCheckCard } from "@/components/FactCheckCard";
 import { SolutionCard } from "@/components/SolutionCard";
 import { EventCard } from "@/components/EventCard";
 import { JobCard } from "@/components/JobCard";
-import { ARTICLES, FACT_CHECKS, SOLUTIONS, EVENTS, JOBS } from "@/lib/data";
+import { TrendCard } from "@/components/TrendCard";
+import { SportsCard } from "@/components/SportsCard";
+import { FoodCard } from "@/components/FoodCard";
+import { SectionTicker } from "@/components/LiveTicker";
+import { ARTICLES, FACT_CHECKS, SOLUTIONS, EVENTS, JOBS, TREND_ITEMS, SPORTS_EVENTS, FOOD_PLACES, TOPIC_CLUSTERS, LIVE_TICKERS } from "@/lib/data";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
+import { Hash, TrendingUp } from "lucide-react";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
