@@ -16,8 +16,11 @@ import { Route as TrafficRouteImport } from './routes/traffic'
 import { Route as SubmitRouteImport } from './routes/submit'
 import { Route as SportsRouteImport } from './routes/sports'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as SocialRouteImport } from './routes/social'
+import { Route as RadioRouteImport } from './routes/radio'
 import { Route as PulseRouteImport } from './routes/pulse'
 import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
+import { Route as MapRouteImport } from './routes/map'
 import { Route as LinkToStoryRouteImport } from './routes/link-to-story'
 import { Route as KidsRouteImport } from './routes/kids'
 import { Route as JobsRouteImport } from './routes/jobs'
@@ -26,6 +29,7 @@ import { Route as FactCheckRouteImport } from './routes/fact-check'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as BreakingRouteImport } from './routes/breaking'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AboutRouteImport } from './routes/about'
@@ -35,6 +39,7 @@ import { Route as NeighborhoodsSlugRouteImport } from './routes/neighborhoods.$s
 import { Route as GuideOttawaRouteImport } from './routes/guide.ottawa'
 import { Route as GuideCanadaRouteImport } from './routes/guide.canada'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as ApiPublicTrafficRadioRouteImport } from './routes/api/public/traffic-radio'
 
 const YouthRoute = YouthRouteImport.update({
   id: '/youth',
@@ -71,6 +76,16 @@ const SolutionsRoute = SolutionsRouteImport.update({
   path: '/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SocialRoute = SocialRouteImport.update({
+  id: '/social',
+  path: '/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadioRoute = RadioRouteImport.update({
+  id: '/radio',
+  path: '/radio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PulseRoute = PulseRouteImport.update({
   id: '/pulse',
   path: '/pulse',
@@ -79,6 +94,11 @@ const PulseRoute = PulseRouteImport.update({
 const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
   id: '/neighborhoods',
   path: '/neighborhoods',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinkToStoryRoute = LinkToStoryRouteImport.update({
@@ -119,6 +139,11 @@ const DonateRoute = DonateRouteImport.update({
 const DealsRoute = DealsRouteImport.update({
   id: '/deals',
   path: '/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BreakingRoute = BreakingRouteImport.update({
+  id: '/breaking',
+  path: '/breaking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -166,12 +191,18 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
   path: '/article/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTrafficRadioRoute = ApiPublicTrafficRadioRouteImport.update({
+  id: '/api/public/traffic-radio',
+  path: '/api/public/traffic-radio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
+  '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
@@ -180,8 +211,11 @@ export interface FileRoutesByFullPath {
   '/jobs': typeof JobsRoute
   '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
+  '/map': typeof MapRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
   '/pulse': typeof PulseRoute
+  '/radio': typeof RadioRoute
+  '/social': typeof SocialRoute
   '/solutions': typeof SolutionsRoute
   '/sports': typeof SportsRoute
   '/submit': typeof SubmitRoute
@@ -194,12 +228,14 @@ export interface FileRoutesByFullPath {
   '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
+  '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
+  '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
@@ -208,8 +244,11 @@ export interface FileRoutesByTo {
   '/jobs': typeof JobsRoute
   '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
+  '/map': typeof MapRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
   '/pulse': typeof PulseRoute
+  '/radio': typeof RadioRoute
+  '/social': typeof SocialRoute
   '/solutions': typeof SolutionsRoute
   '/sports': typeof SportsRoute
   '/submit': typeof SubmitRoute
@@ -222,6 +261,7 @@ export interface FileRoutesByTo {
   '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
+  '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -229,6 +269,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
+  '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
@@ -237,8 +278,11 @@ export interface FileRoutesById {
   '/jobs': typeof JobsRoute
   '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
+  '/map': typeof MapRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
   '/pulse': typeof PulseRoute
+  '/radio': typeof RadioRoute
+  '/social': typeof SocialRoute
   '/solutions': typeof SolutionsRoute
   '/sports': typeof SportsRoute
   '/submit': typeof SubmitRoute
@@ -251,6 +295,7 @@ export interface FileRoutesById {
   '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
+  '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -259,6 +304,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/activities'
     | '/admin'
+    | '/breaking'
     | '/deals'
     | '/donate'
     | '/events'
@@ -267,8 +313,11 @@ export interface FileRouteTypes {
     | '/jobs'
     | '/kids'
     | '/link-to-story'
+    | '/map'
     | '/neighborhoods'
     | '/pulse'
+    | '/radio'
+    | '/social'
     | '/solutions'
     | '/sports'
     | '/submit'
@@ -281,12 +330,14 @@ export interface FileRouteTypes {
     | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
+    | '/api/public/traffic-radio'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/activities'
     | '/admin'
+    | '/breaking'
     | '/deals'
     | '/donate'
     | '/events'
@@ -295,8 +346,11 @@ export interface FileRouteTypes {
     | '/jobs'
     | '/kids'
     | '/link-to-story'
+    | '/map'
     | '/neighborhoods'
     | '/pulse'
+    | '/radio'
+    | '/social'
     | '/solutions'
     | '/sports'
     | '/submit'
@@ -309,12 +363,14 @@ export interface FileRouteTypes {
     | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
+    | '/api/public/traffic-radio'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/activities'
     | '/admin'
+    | '/breaking'
     | '/deals'
     | '/donate'
     | '/events'
@@ -323,8 +379,11 @@ export interface FileRouteTypes {
     | '/jobs'
     | '/kids'
     | '/link-to-story'
+    | '/map'
     | '/neighborhoods'
     | '/pulse'
+    | '/radio'
+    | '/social'
     | '/solutions'
     | '/sports'
     | '/submit'
@@ -337,6 +396,7 @@ export interface FileRouteTypes {
     | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
+    | '/api/public/traffic-radio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -344,6 +404,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ActivitiesRoute: typeof ActivitiesRoute
   AdminRoute: typeof AdminRoute
+  BreakingRoute: typeof BreakingRoute
   DealsRoute: typeof DealsRoute
   DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
@@ -352,8 +413,11 @@ export interface RootRouteChildren {
   JobsRoute: typeof JobsRoute
   KidsRoute: typeof KidsRoute
   LinkToStoryRoute: typeof LinkToStoryRoute
+  MapRoute: typeof MapRoute
   NeighborhoodsRoute: typeof NeighborhoodsRouteWithChildren
   PulseRoute: typeof PulseRoute
+  RadioRoute: typeof RadioRoute
+  SocialRoute: typeof SocialRoute
   SolutionsRoute: typeof SolutionsRoute
   SportsRoute: typeof SportsRoute
   SubmitRoute: typeof SubmitRoute
@@ -365,6 +429,7 @@ export interface RootRouteChildren {
   GuideCanadaRoute: typeof GuideCanadaRoute
   GuideOttawaRoute: typeof GuideOttawaRoute
   SectionNameRoute: typeof SectionNameRoute
+  ApiPublicTrafficRadioRoute: typeof ApiPublicTrafficRadioRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -418,6 +483,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/social': {
+      id: '/social'
+      path: '/social'
+      fullPath: '/social'
+      preLoaderRoute: typeof SocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radio': {
+      id: '/radio'
+      path: '/radio'
+      fullPath: '/radio'
+      preLoaderRoute: typeof RadioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pulse': {
       id: '/pulse'
       path: '/pulse'
@@ -430,6 +509,13 @@ declare module '@tanstack/react-router' {
       path: '/neighborhoods'
       fullPath: '/neighborhoods'
       preLoaderRoute: typeof NeighborhoodsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/link-to-story': {
@@ -486,6 +572,13 @@ declare module '@tanstack/react-router' {
       path: '/deals'
       fullPath: '/deals'
       preLoaderRoute: typeof DealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/breaking': {
+      id: '/breaking'
+      path: '/breaking'
+      fullPath: '/breaking'
+      preLoaderRoute: typeof BreakingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -551,6 +644,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/traffic-radio': {
+      id: '/api/public/traffic-radio'
+      path: '/api/public/traffic-radio'
+      fullPath: '/api/public/traffic-radio'
+      preLoaderRoute: typeof ApiPublicTrafficRadioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -571,6 +671,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ActivitiesRoute: ActivitiesRoute,
   AdminRoute: AdminRoute,
+  BreakingRoute: BreakingRoute,
   DealsRoute: DealsRoute,
   DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
@@ -579,8 +680,11 @@ const rootRouteChildren: RootRouteChildren = {
   JobsRoute: JobsRoute,
   KidsRoute: KidsRoute,
   LinkToStoryRoute: LinkToStoryRoute,
+  MapRoute: MapRoute,
   NeighborhoodsRoute: NeighborhoodsRouteWithChildren,
   PulseRoute: PulseRoute,
+  RadioRoute: RadioRoute,
+  SocialRoute: SocialRoute,
   SolutionsRoute: SolutionsRoute,
   SportsRoute: SportsRoute,
   SubmitRoute: SubmitRoute,
@@ -592,6 +696,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuideCanadaRoute: GuideCanadaRoute,
   GuideOttawaRoute: GuideOttawaRoute,
   SectionNameRoute: SectionNameRoute,
+  ApiPublicTrafficRadioRoute: ApiPublicTrafficRadioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
