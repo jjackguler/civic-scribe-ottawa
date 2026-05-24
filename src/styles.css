@@ -173,3 +173,29 @@
     100% { box-shadow: 0 0 0 10px transparent; }
   }
 }
+
+@layer utilities {
+  @keyframes ticker-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-ticker-x { animation: ticker-x 50s linear infinite; }
+  .animate-ticker-x:hover { animation-play-state: paused; }
+  .animate-ticker-x-slow { animation: ticker-x 90s linear infinite; }
+  .animate-ticker-x-slow:hover { animation-play-state: paused; }
+
+  .pulse-ring {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--civic-red) 50%, transparent);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 color-mix(in oklab, var(--civic-red) 55%, transparent); }
+    100% { box-shadow: 0 0 0 14px transparent; }
+  }
+
+  .scroll-fade-x {
+    mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
