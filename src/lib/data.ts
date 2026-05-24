@@ -470,3 +470,555 @@ export const NEIGHBORHOOD_INFO: NeighborhoodInfo[] = [
     blurb: { en: "Manotick, Greely, Carp, Osgoode, West Carleton-March: farms, rivers, septic & broadband gaps the city map often forgets.", fr: "Manotick, Greely, Carp, Osgoode, West Carleton-March : fermes, rivières, lacunes en internet et en eau." },
     character: { en: "Farms & villages", fr: "Fermes et villages" } },
 ];
+
+// ============================================================================
+// LIVE OTTAWA PULSE — Social listening, trends, link-to-story, sports, food
+// ============================================================================
+
+export type Platform =
+  | "x" | "instagram" | "tiktok" | "facebook" | "reddit" | "youtube"
+  | "blog" | "newsletter" | "city" | "club" | "event" | "venue" | "rss";
+
+export type SignalStatus =
+  | "unverified"        // community signal, not yet checked
+  | "developing"        // editors looking into it
+  | "verified"          // confirmed with primary source
+  | "needs-context"     // partially true / missing key facts
+  | "misinformation"    // flagged risk
+  | "official";         // direct from official channel
+
+export type Sentiment = "positive" | "neutral" | "concerned" | "outraged" | "celebratory";
+export type Urgency = "low" | "medium" | "high" | "breaking";
+
+export type SocialFeedSource = {
+  id: string;
+  name: string;
+  handle?: string;
+  platform: Platform;
+  url: string;
+  type: "official" | "media" | "community" | "creator" | "business" | "club";
+  language: "en" | "fr" | "other";
+  credibility: number; // 0–100
+  followers?: string;
+  notes?: string;
+};
+
+export const SOCIAL_FEED_SOURCES: SocialFeedSource[] = [
+  { id: "src1", name: "City of Ottawa", handle: "@ottawacity", platform: "x", url: "https://x.com/ottawacity", type: "official", language: "en", credibility: 96, followers: "240k" },
+  { id: "src2", name: "Ville d'Ottawa", handle: "@villeottawa", platform: "x", url: "https://x.com/villeottawa", type: "official", language: "fr", credibility: 96, followers: "88k" },
+  { id: "src3", name: "OC Transpo", handle: "@oc_transpo", platform: "x", url: "https://x.com/oc_transpo", type: "official", language: "en", credibility: 94, followers: "162k" },
+  { id: "src4", name: "Ottawa Police Service", handle: "@ottawapolice", platform: "x", url: "https://x.com/ottawapolice", type: "official", language: "en", credibility: 93 },
+  { id: "src5", name: "r/Ottawa", platform: "reddit", url: "https://reddit.com/r/ottawa", type: "community", language: "en", credibility: 62, followers: "210k", notes: "High signal, requires editorial filtering" },
+  { id: "src6", name: "r/Vanier", platform: "reddit", url: "https://reddit.com/r/vanier", type: "community", language: "en", credibility: 58 },
+  { id: "src7", name: "Ottawa Senators", handle: "@Senators", platform: "x", url: "https://x.com/Senators", type: "club", language: "en", credibility: 90 },
+  { id: "src8", name: "Atlético Ottawa", handle: "@atleticoottawa", platform: "instagram", url: "https://instagram.com/atleticoottawa", type: "club", language: "en", credibility: 90 },
+  { id: "src9", name: "Ottawa Titans", platform: "instagram", url: "https://instagram.com/ottawatitans", type: "club", language: "en", credibility: 88 },
+  { id: "src10", name: "Ottawa BlackJacks", platform: "instagram", url: "https://instagram.com/ottawablackjacks", type: "club", language: "en", credibility: 88 },
+  { id: "src11", name: "Equator Coffee", platform: "instagram", url: "https://instagram.com/equatorcoffee", type: "business", language: "en", credibility: 80 },
+  { id: "src12", name: "Bar Robo", platform: "instagram", url: "https://instagram.com/barrobo", type: "business", language: "en", credibility: 78 },
+  { id: "src13", name: "Le Droit", platform: "rss", url: "https://www.ledroit.com/rss", type: "media", language: "fr", credibility: 92 },
+  { id: "src14", name: "Apt613", platform: "blog", url: "https://apt613.ca/feed", type: "media", language: "en", credibility: 84 },
+  { id: "src15", name: "Hintonburg Community Association", platform: "newsletter", url: "https://hintonburg.com", type: "community", language: "en", credibility: 86 },
+  { id: "src16", name: "Ottawa Tourism — Events", platform: "event", url: "https://ottawatourism.ca/events", type: "official", language: "en", credibility: 90 },
+  { id: "src17", name: "TikTok #OttawaEats", platform: "tiktok", url: "https://tiktok.com/tag/ottawaeats", type: "creator", language: "other", credibility: 55 },
+  { id: "src18", name: "YouTube — Ottawa Council Live", platform: "youtube", url: "https://youtube.com/@ottawacouncil", type: "official", language: "en", credibility: 95 },
+  { id: "src19", name: "Facebook — Glebe Parents", platform: "facebook", url: "https://facebook.com/groups/glebeparents", type: "community", language: "en", credibility: 60 },
+  { id: "src20", name: "Environment Canada — Ottawa", platform: "rss", url: "https://weather.gc.ca/rss/city/on-118_e.xml", type: "official", language: "en", credibility: 99 },
+];
+
+export type TrendItem = {
+  id: string;
+  topic: Bilingual;
+  summary: Bilingual;
+  hashtags: string[];
+  platforms: Platform[];
+  mentions: number;
+  delta: number; // % change last 6h
+  firstSeen: string;
+  lastUpdated: string;
+  neighborhood?: Neighborhood | "Citywide";
+  category: "politics" | "transit" | "sports" | "food" | "weather" | "safety" | "culture" | "education" | "housing" | "good-news" | "events";
+  sentiment: Sentiment;
+  urgency: Urgency;
+  status: SignalStatus;
+  misinfoRisk: "low" | "medium" | "high";
+  language: "en" | "fr" | "other";
+  sourceUrls: { platform: Platform; label: string; url: string }[];
+  needsReview: boolean;
+  canBecomeArticle: boolean;
+  needsFactCheck: boolean;
+  goodNews?: boolean;
+  affected?: Bilingual;
+  whatHappened?: Bilingual;
+  whatVerified?: Bilingual;
+  whatUnclear?: Bilingual;
+  localImpact?: Bilingual;
+  editorNote?: Bilingual;
+};
+
+export const TREND_ITEMS: TrendItem[] = [
+  {
+    id: "tr1",
+    topic: { en: "Pothole crater on Riverside Drive going viral", fr: "Cratère sur Riverside Drive devient viral" },
+    summary: { en: "Cyclists posting video of a deep pothole near Billings Bridge; city has not yet acknowledged.", fr: "Cyclistes diffusent une vidéo d'un nid-de-poule profond près de Billings Bridge; la ville n'a pas confirmé." },
+    hashtags: ["#ottnews", "#bikeottawa", "#ottroads"],
+    platforms: ["x", "reddit", "instagram"],
+    mentions: 1840, delta: 312,
+    firstSeen: "2026-05-24T13:00:00Z", lastUpdated: "2026-05-24T19:42:00Z",
+    neighborhood: "Alta Vista", category: "safety", sentiment: "concerned", urgency: "high",
+    status: "developing", misinfoRisk: "low", language: "en",
+    sourceUrls: [
+      { platform: "x", label: "@bikeottawa thread", url: "https://x.com/bikeottawa/status/0" },
+      { platform: "reddit", label: "r/Ottawa megathread", url: "https://reddit.com/r/ottawa" },
+    ],
+    needsReview: true, canBecomeArticle: true, needsFactCheck: false,
+    whatHappened: { en: "Multiple cyclists report a roughly 30cm-deep pothole opened after weekend rain.", fr: "Plusieurs cyclistes signalent un nid-de-poule d'environ 30 cm apparu après la pluie du week-end." },
+    whatVerified: { en: "Three independent videos geolocated to Riverside Dr near Billings Bridge.", fr: "Trois vidéos indépendantes géolocalisées sur Riverside Dr près de Billings Bridge." },
+    whatUnclear: { en: "Whether the city has dispatched a repair crew or barricaded the hazard.", fr: "Si la ville a dépêché une équipe ou installé une barricade." },
+    localImpact: { en: "Sits on a daily commuter route used by ~2,200 cyclists.", fr: "Sur un trajet quotidien emprunté par ~2 200 cyclistes." },
+  },
+  {
+    id: "tr2",
+    topic: { en: "Senators' Game 5 watch parties trending citywide", fr: "Soirées du Match 5 des Sénateurs en vogue" },
+    summary: { en: "Lansdowne, Hintonburg, and Barrhaven bars promoting free screenings; #GoSensGo top regional trend.", fr: "Lansdowne, Hintonburg et Barrhaven : projections gratuites; #GoSensGo en tête." },
+    hashtags: ["#GoSensGo", "#Sens", "#Ottawa"],
+    platforms: ["x", "instagram", "tiktok"],
+    mentions: 9420, delta: 178,
+    firstSeen: "2026-05-24T11:00:00Z", lastUpdated: "2026-05-24T20:10:00Z",
+    neighborhood: "Citywide", category: "sports", sentiment: "celebratory", urgency: "medium",
+    status: "verified", misinfoRisk: "low", language: "en",
+    sourceUrls: [
+      { platform: "x", label: "@Senators official", url: "https://x.com/Senators" },
+      { platform: "instagram", label: "Lansdowne Live IG", url: "https://instagram.com/lansdownelive" },
+    ],
+    needsReview: false, canBecomeArticle: true, needsFactCheck: false, goodNews: true,
+  },
+  {
+    id: "tr3",
+    topic: { en: "Claim: 'all Orleans night buses cancelled'", fr: "Affirmation : « tous les autobus de nuit d'Orléans sont annulés »" },
+    summary: { en: "Facebook post claims OC Transpo cut night service. Two late routes were merged; Route 305 still runs.", fr: "Publication Facebook : OC Transpo a coupé le service. Deux trajets fusionnés; Route 305 toujours active." },
+    hashtags: ["#octranspo", "#orleans"],
+    platforms: ["facebook", "reddit"],
+    mentions: 612, delta: 88,
+    firstSeen: "2026-05-23T22:00:00Z", lastUpdated: "2026-05-24T09:30:00Z",
+    neighborhood: "Orleans", category: "transit", sentiment: "outraged", urgency: "medium",
+    status: "misinformation", misinfoRisk: "high", language: "en",
+    sourceUrls: [{ platform: "facebook", label: "Orleans Community FB", url: "https://facebook.com/groups/orleansott" }],
+    needsReview: true, canBecomeArticle: false, needsFactCheck: true,
+  },
+  {
+    id: "tr4",
+    topic: { en: "New ramen spot in Chinatown drawing 90-minute lines", fr: "Nouveau ramen à Chinatown : files de 90 minutes" },
+    summary: { en: "TikTok creators posting from Somerset St West; restaurant unconfirmed by city business registry.", fr: "Créateurs TikTok publient depuis Somerset Ouest; restaurant non confirmé au registre commercial." },
+    hashtags: ["#ottawaeats", "#ramen", "#chinatownott"],
+    platforms: ["tiktok", "instagram"],
+    mentions: 2210, delta: 540,
+    firstSeen: "2026-05-22T18:00:00Z", lastUpdated: "2026-05-24T17:00:00Z",
+    neighborhood: "Chinatown", category: "food", sentiment: "positive", urgency: "low",
+    status: "unverified", misinfoRisk: "low", language: "other",
+    sourceUrls: [{ platform: "tiktok", label: "#ottawaeats", url: "https://tiktok.com/tag/ottawaeats" }],
+    needsReview: true, canBecomeArticle: true, needsFactCheck: false, goodNews: true,
+  },
+  {
+    id: "tr5",
+    topic: { en: "City Hall consultation on inclusionary zoning", fr: "Consultation municipale sur le zonage inclusif" },
+    summary: { en: "Live YouTube stream of council planning committee; deadline for written submissions June 11.", fr: "Diffusion YouTube du comité de planification; soumissions écrites jusqu'au 11 juin." },
+    hashtags: ["#ottcity", "#housingott"],
+    platforms: ["youtube", "x"],
+    mentions: 480, delta: 22,
+    firstSeen: "2026-05-24T09:00:00Z", lastUpdated: "2026-05-24T18:00:00Z",
+    neighborhood: "Centretown", category: "housing", sentiment: "neutral", urgency: "medium",
+    status: "official", misinfoRisk: "low", language: "en",
+    sourceUrls: [{ platform: "youtube", label: "Council livestream", url: "https://youtube.com/@ottawacouncil" }],
+    needsReview: false, canBecomeArticle: true, needsFactCheck: false,
+  },
+  {
+    id: "tr6",
+    topic: { en: "Freezing rain advisory: salt sales surge", fr: "Avis de pluie verglaçante : ventes de sel en hausse" },
+    summary: { en: "Hardware stores report 4x normal demand; ECCC warning active until 06:00.", fr: "Quincailleries : demande quadruplée; avis ECCC actif jusqu'à 6 h." },
+    hashtags: ["#ottwx", "#ottweather"],
+    platforms: ["x", "rss"],
+    mentions: 1320, delta: 210,
+    firstSeen: "2026-05-24T17:00:00Z", lastUpdated: "2026-05-24T20:15:00Z",
+    neighborhood: "Citywide", category: "weather", sentiment: "concerned", urgency: "breaking",
+    status: "official", misinfoRisk: "low", language: "en",
+    sourceUrls: [{ platform: "rss", label: "Environment Canada", url: "https://weather.gc.ca" }],
+    needsReview: false, canBecomeArticle: true, needsFactCheck: false,
+  },
+  {
+    id: "tr7",
+    topic: { en: "Vanier sugar shack reopens — community thread", fr: "Cabane à sucre de Vanier rouvre — fil communautaire" },
+    summary: { en: "Hundreds of bilingual reactions celebrating the reopening of a Franco-Ontarian institution.", fr: "Centaines de réactions bilingues célébrant la réouverture d'une institution franco-ontarienne." },
+    hashtags: ["#vanier", "#francoontarien"],
+    platforms: ["facebook", "instagram"],
+    mentions: 740, delta: 64,
+    firstSeen: "2026-05-23T15:00:00Z", lastUpdated: "2026-05-24T12:00:00Z",
+    neighborhood: "Vanier", category: "culture", sentiment: "celebratory", urgency: "low",
+    status: "verified", misinfoRisk: "low", language: "fr",
+    sourceUrls: [{ platform: "facebook", label: "Vanier BIA page", url: "https://facebook.com/vanierbia" }],
+    needsReview: false, canBecomeArticle: true, needsFactCheck: false, goodNews: true,
+  },
+  {
+    id: "tr8",
+    topic: { en: "Westboro bike lane safety petition crosses 5,000", fr: "Pétition sur la piste cyclable de Westboro dépasse 5 000" },
+    summary: { en: "Change.org petition gaining momentum after Ledger investigation; councillor responded on X.", fr: "Pétition Change.org en hausse après notre enquête; conseillère a répondu sur X." },
+    hashtags: ["#westboro", "#bikeottawa"],
+    platforms: ["x", "facebook"],
+    mentions: 980, delta: 56,
+    firstSeen: "2026-05-20T10:00:00Z", lastUpdated: "2026-05-24T16:00:00Z",
+    neighborhood: "Westboro", category: "safety", sentiment: "concerned", urgency: "medium",
+    status: "verified", misinfoRisk: "low", language: "en",
+    sourceUrls: [{ platform: "x", label: "Councillor response", url: "https://x.com" }],
+    needsReview: false, canBecomeArticle: true, needsFactCheck: false,
+  },
+];
+
+export type SubmittedLink = {
+  id: string;
+  url: string;
+  platform: Platform;
+  submittedBy: string;
+  submittedAt: string;
+  note?: string;
+  status: "queued" | "in-review" | "drafted" | "rejected" | "published";
+  neighborhood?: Neighborhood | "Citywide";
+  category?: TrendItem["category"];
+};
+
+export const SUBMITTED_LINKS: SubmittedLink[] = [
+  { id: "sl1", url: "https://x.com/bikeottawa/status/0", platform: "x", submittedBy: "reader@protonmail.com",
+    submittedAt: "2026-05-24T14:10:00Z", note: "Big pothole, three cyclists down today.",
+    status: "in-review", neighborhood: "Alta Vista", category: "safety" },
+  { id: "sl2", url: "https://tiktok.com/@foodieott/video/0", platform: "tiktok", submittedBy: "anonymous",
+    submittedAt: "2026-05-24T11:00:00Z", note: "New ramen place — worth verifying business licence.",
+    status: "queued", neighborhood: "Chinatown", category: "food" },
+  { id: "sl3", url: "https://reddit.com/r/ottawa/comments/0", platform: "reddit", submittedBy: "j.tremblay",
+    submittedAt: "2026-05-24T08:30:00Z", note: "Thread on Route 305 confusion — needs OC Transpo confirmation.",
+    status: "drafted", neighborhood: "Orleans", category: "transit" },
+  { id: "sl4", url: "https://instagram.com/p/0", platform: "instagram", submittedBy: "leah.k",
+    submittedAt: "2026-05-23T20:00:00Z", note: "Hintonburg block party photos.",
+    status: "published", neighborhood: "Hintonburg", category: "culture" },
+  { id: "sl5", url: "https://youtube.com/watch?v=0", platform: "youtube", submittedBy: "council-watcher",
+    submittedAt: "2026-05-24T09:45:00Z", note: "Clip from planning committee — councillor's housing remarks.",
+    status: "in-review", neighborhood: "Centretown", category: "housing" },
+];
+
+export type EditorialDraft = {
+  id: string;
+  fromLinkId?: string;
+  headline: Bilingual;
+  summary: Bilingual;
+  category: TrendItem["category"];
+  neighborhood?: Neighborhood | "Citywide";
+  source: string;
+  relatedLinks: string[];
+  verificationChecklist: { item: Bilingual; done: boolean }[];
+  publicInterest: Bilingual;
+  whoAffected: Bilingual;
+  whoToContact: string[];
+  suggestedQuestions: Bilingual[];
+  factCheckStatus: "not-started" | "pending" | "cleared" | "blocked";
+  state: "draft" | "needs-evidence" | "ready" | "published" | "rejected";
+  assignedTo?: string;
+};
+
+export const EDITORIAL_DRAFTS: EditorialDraft[] = [
+  {
+    id: "ed1", fromLinkId: "sl1",
+    headline: {
+      en: "Cyclists report deepening Riverside Drive pothole; city silent",
+      fr: "Cyclistes signalent un nid-de-poule grandissant sur Riverside; ville silencieuse",
+    },
+    summary: {
+      en: "A growing chorus on X and Reddit points to a 30cm pothole near Billings Bridge. The Ledger is verifying with 311 and Public Works.",
+      fr: "Témoignages convergents sur X et Reddit : nid-de-poule de 30 cm près de Billings Bridge. Vérification en cours auprès du 311 et des Travaux publics.",
+    },
+    category: "safety", neighborhood: "Alta Vista",
+    source: "Reader submission + bike advocacy thread",
+    relatedLinks: ["https://x.com/bikeottawa/status/0", "https://reddit.com/r/ottawa"],
+    verificationChecklist: [
+      { item: { en: "Geolocate at least two independent videos", fr: "Géolocaliser deux vidéos indépendantes" }, done: true },
+      { item: { en: "311 case number obtained", fr: "Numéro de dossier 311 obtenu" }, done: false },
+      { item: { en: "Public Works asked for repair timeline", fr: "Travaux publics : délai de réparation demandé" }, done: false },
+      { item: { en: "Councillor for Ward 18 asked for comment", fr: "Conseillère du quartier 18 sollicitée" }, done: false },
+    ],
+    publicInterest: { en: "Daily commuter safety on a route used by ~2,200 cyclists.", fr: "Sécurité quotidienne sur un trajet de ~2 200 cyclistes." },
+    whoAffected: { en: "Cyclists, scooter users, motorbike riders on Riverside Dr.", fr: "Cyclistes, trottinettes et motos sur Riverside Dr." },
+    whoToContact: ["311", "Ward 18 office", "Public Works — Roads", "Bike Ottawa"],
+    suggestedQuestions: [
+      { en: "When was the hazard first reported to 311?", fr: "Quand le danger a-t-il été signalé au 311 ?" },
+      { en: "Why hasn't a barricade been installed yet?", fr: "Pourquoi aucune barricade n'a été installée ?" },
+      { en: "What is the standard repair window for this severity?", fr: "Quel est le délai standard pour cette gravité ?" },
+    ],
+    factCheckStatus: "pending", state: "needs-evidence", assignedTo: "R. Mohammadi",
+  },
+  {
+    id: "ed2", fromLinkId: "sl2",
+    headline: {
+      en: "TikTok ramen line: is Chinatown's newest restaurant really open?",
+      fr: "File pour le ramen TikTok : ce restaurant de Chinatown est-il vraiment ouvert ?",
+    },
+    summary: {
+      en: "Viral TikTok clips show queues, but the city business registry has no current licence at the address. We're knocking on the door tomorrow.",
+      fr: "Vidéos TikTok virales montrent des files, mais le registre municipal n'a aucune licence active. Visite prévue demain.",
+    },
+    category: "food", neighborhood: "Chinatown",
+    source: "Reader-submitted TikTok",
+    relatedLinks: ["https://tiktok.com/tag/ottawaeats"],
+    verificationChecklist: [
+      { item: { en: "Confirm address on the city registry", fr: "Confirmer l'adresse au registre municipal" }, done: false },
+      { item: { en: "Public Health inspection check", fr: "Vérification Santé publique" }, done: false },
+      { item: { en: "Owner contacted for comment", fr: "Propriétaire contacté" }, done: false },
+    ],
+    publicInterest: { en: "Food safety + supporting verified small businesses.", fr: "Sécurité alimentaire + soutien aux PME vérifiées." },
+    whoAffected: { en: "Diners, neighbouring restaurants on Somerset St W.", fr: "Clients et restaurants voisins de Somerset Ouest." },
+    whoToContact: ["Ottawa Public Health", "Somerset Chinatown BIA", "Owner / operator"],
+    suggestedQuestions: [
+      { en: "Is this a pop-up, a full opening, or a soft launch?", fr: "S'agit-il d'un éphémère, d'une ouverture officielle ou d'un lancement discret ?" },
+    ],
+    factCheckStatus: "not-started", state: "draft", assignedTo: "L. Boucher",
+  },
+];
+
+export type NeighborhoodSignal = {
+  neighborhood: Neighborhood;
+  topIssues: Bilingual[];
+  trendingPosts: number;
+  submissions: number;
+  trafficNote?: Bilingual;
+  topEvent?: Bilingual;
+  topFood?: string;
+  sportsNote?: Bilingual;
+  serviceIssue?: Bilingual;
+  unresolved?: Bilingual;
+  proposedSolution?: Bilingual;
+  pulse: number; // 0–100 activity score
+};
+
+export const NEIGHBORHOOD_SIGNALS: NeighborhoodSignal[] = [
+  { neighborhood: "ByWard Market", pulse: 92, trendingPosts: 184, submissions: 12,
+    topIssues: [{ en: "Late-night noise on York St", fr: "Bruit nocturne rue York" }, { en: "Outdoor market vendor permits", fr: "Permis pour vendeurs extérieurs" }],
+    trafficNote: { en: "Wellington closed for film shoot 19:00–02:00", fr: "Wellington fermée pour tournage 19h–2h" },
+    topEvent: { en: "Late-night mural walk, Friday", fr: "Marche des murales nocturnes, vendredi" },
+    topFood: "Play Food & Wine", proposedSolution: { en: "Pilot a night-economy ombudsperson", fr: "Pilote : ombudsman de l'économie nocturne" } },
+  { neighborhood: "Centretown", pulse: 88, trendingPosts: 142, submissions: 18,
+    topIssues: [{ en: "Affordable housing vote", fr: "Vote sur le logement abordable" }, { en: "Unsafe Lisgar crossing", fr: "Traverse non sécuritaire Lisgar" }],
+    serviceIssue: { en: "Crosswalk signal timing on Lyon St", fr: "Synchronisation feux piétons rue Lyon" } },
+  { neighborhood: "Glebe", pulse: 71, trendingPosts: 96, submissions: 7,
+    topIssues: [{ en: "School waitlists", fr: "Listes d'attente scolaires" }, { en: "Bank St lane reduction", fr: "Réduction de voies rue Bank" }],
+    topEvent: { en: "Senators watch party at Lansdowne", fr: "Soirée Sénateurs à Lansdowne" } },
+  { neighborhood: "Westboro", pulse: 79, trendingPosts: 110, submissions: 9,
+    topIssues: [{ en: "Bike lane safety petition", fr: "Pétition piste cyclable" }],
+    serviceIssue: { en: "Repeated near-misses at Richmond/Churchill", fr: "Quasi-accidents répétés Richmond/Churchill" } },
+  { neighborhood: "Hintonburg", pulse: 74, trendingPosts: 88, submissions: 11,
+    topIssues: [{ en: "Rising commercial rents", fr: "Hausse des loyers commerciaux" }],
+    topFood: "Bar Robo", topEvent: { en: "Parkdale Market opening", fr: "Ouverture marché Parkdale" } },
+  { neighborhood: "Vanier", pulse: 68, trendingPosts: 72, submissions: 14,
+    topIssues: [{ en: "Community fridge expansion", fr: "Expansion frigos communautaires" }, { en: "Sugar shack reopening", fr: "Réouverture cabane à sucre" }] },
+  { neighborhood: "Sandy Hill", pulse: 63, trendingPosts: 58, submissions: 6,
+    topIssues: [{ en: "Rooming-house conversions", fr: "Conversions maisons de chambres" }] },
+  { neighborhood: "Kanata", pulse: 81, trendingPosts: 124, submissions: 9,
+    topIssues: [{ en: "Tech sector layoffs", fr: "Licenciements tech" }, { en: "LRT Stage 3 timeline", fr: "Calendrier TLR phase 3" }] },
+  { neighborhood: "Orleans", pulse: 77, trendingPosts: 102, submissions: 13,
+    topIssues: [{ en: "Night-bus confusion (misinfo)", fr: "Confusion bus nuit (désinfo)" }, { en: "School bus delays", fr: "Retards d'autobus scolaires" }] },
+  { neighborhood: "Barrhaven", pulse: 64, trendingPosts: 70, submissions: 5,
+    topIssues: [{ en: "New school overcrowding", fr: "Surpopulation école neuve" }] },
+  { neighborhood: "Nepean", pulse: 58, trendingPosts: 54, submissions: 4,
+    topIssues: [{ en: "Sports complex booking shortage", fr: "Pénurie réservations complexe sportif" }] },
+  { neighborhood: "Alta Vista", pulse: 73, trendingPosts: 86, submissions: 8,
+    topIssues: [{ en: "Riverside Dr pothole hazard", fr: "Nid-de-poule Riverside Dr" }],
+    serviceIssue: { en: "Pothole + 311 response delay", fr: "Nid-de-poule + retard du 311" } },
+  { neighborhood: "Little Italy", pulse: 66, trendingPosts: 64, submissions: 5,
+    topIssues: [{ en: "Preston St patio season", fr: "Saison des terrasses Preston" }], topFood: "Pub Italia" },
+  { neighborhood: "Chinatown", pulse: 82, trendingPosts: 118, submissions: 7,
+    topIssues: [{ en: "Viral ramen line — unverified", fr: "File ramen virale — non vérifié" }], topFood: "(unverified) new ramen spot" },
+  { neighborhood: "Old Ottawa South", pulse: 52, trendingPosts: 40, submissions: 3,
+    topIssues: [{ en: "Brewer Park field schedule", fr: "Horaire terrains parc Brewer" }] },
+  { neighborhood: "Downtown", pulse: 89, trendingPosts: 160, submissions: 16,
+    topIssues: [{ en: "LRT Line 1 disruption", fr: "Perturbation Ligne 1" }, { en: "Wellington closure", fr: "Fermeture Wellington" }] },
+  { neighborhood: "Gloucester", pulse: 49, trendingPosts: 34, submissions: 2,
+    topIssues: [{ en: "Big-box parking lot flooding", fr: "Inondations stationnement commercial" }] },
+  { neighborhood: "Rural Ottawa", pulse: 44, trendingPosts: 28, submissions: 6,
+    topIssues: [{ en: "Broadband gaps", fr: "Lacunes Internet" }, { en: "Wildfire smoke drift", fr: "Dérive de fumée de feux" }] },
+];
+
+export type SportsEvent = {
+  id: string;
+  team: string;
+  league: "NHL" | "PWHL" | "CPL" | "FrontierLeague" | "CEBL" | "USports" | "Community" | "Youth" | "School";
+  opponent?: string;
+  kind: "match" | "result" | "tournament" | "highlight";
+  date: string;
+  venue: string;
+  neighborhood: Neighborhood | "Citywide";
+  status: "scheduled" | "live" | "final";
+  score?: string;
+  ticketUrl?: string;
+  social?: { platform: Platform; url: string; mentions?: number };
+  blurb: Bilingual;
+};
+
+export const SPORTS_EVENTS: SportsEvent[] = [
+  { id: "sp1", team: "Ottawa Senators", league: "NHL", opponent: "Toronto Maple Leafs", kind: "match",
+    date: "2026-05-26T19:00:00Z", venue: "Canadian Tire Centre", neighborhood: "Kanata", status: "scheduled",
+    ticketUrl: "https://nhl.com/senators", social: { platform: "x", url: "https://x.com/Senators", mentions: 9420 },
+    blurb: { en: "Game 5 of the second round. Watch parties citywide.", fr: "Match 5 du 2e tour. Soirées partout en ville." } },
+  { id: "sp2", team: "Atlético Ottawa", league: "CPL", opponent: "Forge FC", kind: "result",
+    date: "2026-05-23T20:00:00Z", venue: "TD Place", neighborhood: "Glebe", status: "final", score: "2–1",
+    social: { platform: "instagram", url: "https://instagram.com/atleticoottawa", mentions: 2100 },
+    blurb: { en: "Late header secures three points in front of 12,300 fans.", fr: "Tête tardive : trois points devant 12 300 partisans." } },
+  { id: "sp3", team: "Ottawa Titans", league: "FrontierLeague", opponent: "New York Boulders", kind: "match",
+    date: "2026-05-27T18:30:00Z", venue: "Ottawa Stadium", neighborhood: "Gloucester", status: "scheduled",
+    ticketUrl: "https://ottawatitans.com", blurb: { en: "Friday-night baseball under the lights.", fr: "Baseball du vendredi soir sous les projecteurs." } },
+  { id: "sp4", team: "Ottawa BlackJacks", league: "CEBL", opponent: "Niagara River Lions", kind: "match",
+    date: "2026-05-30T19:00:00Z", venue: "TD Place Arena", neighborhood: "Glebe", status: "scheduled",
+    blurb: { en: "CEBL season opener. Free youth entry with adult ticket.", fr: "Ouverture de saison CEBL. Entrée jeunesse gratuite avec billet adulte." } },
+  { id: "sp5", team: "PWHL Showcase Ottawa", league: "PWHL", kind: "tournament",
+    date: "2026-06-08T13:00:00Z", venue: "TD Place Arena", neighborhood: "Glebe", status: "scheduled",
+    blurb: { en: "Women's hockey showcase featuring Montréal and Toronto clubs.", fr: "Vitrine de hockey féminin : clubs de Montréal et Toronto." } },
+  { id: "sp6", team: "uOttawa Gee-Gees", league: "USports", opponent: "Carleton Ravens", kind: "match",
+    date: "2026-09-12T19:30:00Z", venue: "Lansdowne Stadium", neighborhood: "Glebe", status: "scheduled",
+    blurb: { en: "Panda Game — Ottawa's biggest university rivalry.", fr: "Match Panda — la plus grande rivalité universitaire d'Ottawa." } },
+  { id: "sp7", team: "Hintonburg Cup (U13 soccer)", league: "Youth", kind: "tournament",
+    date: "2026-06-14T09:00:00Z", venue: "Laroche Park", neighborhood: "Hintonburg", status: "scheduled",
+    blurb: { en: "Neighbourhood youth tournament, 24 teams, bilingual coaching.", fr: "Tournoi jeunesse de quartier, 24 équipes, encadrement bilingue." } },
+  { id: "sp8", team: "Orleans Minor Hockey playoffs", league: "Community", kind: "tournament",
+    date: "2026-05-31T08:00:00Z", venue: "Bob MacQuarrie Rec Complex", neighborhood: "Orleans", status: "scheduled",
+    blurb: { en: "Four divisions, finals televised on local cable.", fr: "Quatre divisions, finales télédiffusées localement." } },
+  { id: "sp9", team: "Highlight — Vanier youth basketball", league: "School", kind: "highlight",
+    date: "2026-05-22T16:00:00Z", venue: "École secondaire De La Salle", neighborhood: "Vanier", status: "final",
+    blurb: { en: "Grade 9 player drops 38 points; coach calls it the best she's seen.", fr: "Joueuse de secondaire 3 inscrit 38 points; meilleure performance selon l'entraîneuse." } },
+];
+
+export type FoodPlace = {
+  id: string;
+  name: string;
+  cuisine: string;
+  neighborhood: Neighborhood;
+  priceRange: "$" | "$$" | "$$$";
+  openNow: boolean;
+  newOpening?: boolean;
+  tags: ("coffee" | "bakery" | "halal" | "vegan" | "vegetarian" | "filter-coffee" | "brunch" | "late-night")[];
+  popularOn: Platform[];
+  rating: number;             // out of 5
+  reviews: number;
+  inspection?: { date: string; status: "pass" | "minor" | "major" };
+  recommendedBy: "community" | "editor" | "sponsored" | "trend";
+  blurb: Bilingual;
+  image: string;
+  verified: boolean;
+};
+
+export const FOOD_PLACES: FoodPlace[] = [
+  { id: "fp1", name: "Equator Coffee — Preston", cuisine: "Coffee & espresso", neighborhood: "Little Italy",
+    priceRange: "$", openNow: true, tags: ["coffee", "filter-coffee", "vegetarian"], popularOn: ["instagram"],
+    rating: 4.7, reviews: 612, inspection: { date: "2026-04-12", status: "pass" }, recommendedBy: "editor",
+    blurb: { en: "Single-origin filter coffee and a quiet upstairs work bar.", fr: "Café filtre d'origine unique et bar de travail tranquille à l'étage." },
+    image: img("1495474472287-4d71bcdd2085"), verified: true },
+  { id: "fp2", name: "Bar Robo", cuisine: "Cocktails & small plates", neighborhood: "Hintonburg",
+    priceRange: "$$", openNow: true, tags: ["late-night", "vegetarian"], popularOn: ["instagram", "tiktok"],
+    rating: 4.6, reviews: 480, inspection: { date: "2026-03-04", status: "pass" }, recommendedBy: "community",
+    blurb: { en: "Wellington West's quietly excellent late-night option.", fr: "L'excellente option discrète de fin de soirée à Wellington Ouest." },
+    image: img("1514933651103-005eec06c04b"), verified: true },
+  { id: "fp3", name: "Shawarma Palace", cuisine: "Lebanese", neighborhood: "Centretown",
+    priceRange: "$", openNow: true, tags: ["halal", "late-night"], popularOn: ["facebook"],
+    rating: 4.5, reviews: 1820, inspection: { date: "2026-02-15", status: "pass" }, recommendedBy: "community",
+    blurb: { en: "An Ottawa institution; lines move fast even at 2am.", fr: "Une institution; les files avancent vite même à 2h." },
+    image: img("1565299624946-b28f40a0ae38"), verified: true },
+  { id: "fp4", name: "Pure Kitchen", cuisine: "Plant-based", neighborhood: "Westboro",
+    priceRange: "$$", openNow: true, tags: ["vegan", "vegetarian", "brunch"], popularOn: ["instagram"],
+    rating: 4.4, reviews: 980, inspection: { date: "2026-01-22", status: "pass" }, recommendedBy: "editor",
+    blurb: { en: "Bowls, toasts, and weekend brunch with the city's best matcha.", fr: "Bols, rôties et brunch avec le meilleur matcha de la ville." },
+    image: img("1546069901-ba9599a7e63c"), verified: true },
+  { id: "fp5", name: "New Chinatown ramen (unverified)", cuisine: "Japanese ramen", neighborhood: "Chinatown",
+    priceRange: "$$", openNow: false, newOpening: true, tags: ["late-night"], popularOn: ["tiktok"],
+    rating: 0, reviews: 0, recommendedBy: "trend",
+    blurb: { en: "Going viral on TikTok. We're verifying the business licence before recommending.", fr: "Viral sur TikTok. Vérification de la licence avant recommandation." },
+    image: img("1569718212165-3a8278d5f624"), verified: false },
+  { id: "fp6", name: "Art-Is-In Bakery", cuisine: "Bakery & sandwiches", neighborhood: "Hintonburg",
+    priceRange: "$$", openNow: true, tags: ["bakery", "vegetarian"], popularOn: ["instagram"],
+    rating: 4.7, reviews: 2210, inspection: { date: "2026-04-30", status: "pass" }, recommendedBy: "editor",
+    blurb: { en: "Sourdough, Saturday queues, and the loaves that started a city trend.", fr: "Levain, files du samedi, et les pains qui ont lancé une tendance." },
+    image: img("1568376794508-ae52c6ab3929"), verified: true },
+  { id: "fp7", name: "Café Mio — Vanier", cuisine: "Café & boulangerie", neighborhood: "Vanier",
+    priceRange: "$", openNow: true, tags: ["coffee", "bakery"], popularOn: ["facebook"],
+    rating: 4.5, reviews: 230, inspection: { date: "2026-03-19", status: "pass" }, recommendedBy: "community",
+    blurb: { en: "Bilingual neighbourhood café with morning regulars.", fr: "Café de quartier bilingue avec habitués du matin." },
+    image: img("1521017432531-fbd92d768814"), verified: true },
+  { id: "fp8", name: "El Camino", cuisine: "Tacos & mezcal", neighborhood: "Centretown",
+    priceRange: "$$", openNow: true, tags: ["late-night"], popularOn: ["instagram"],
+    rating: 4.4, reviews: 1340, inspection: { date: "2026-02-28", status: "pass" }, recommendedBy: "sponsored",
+    blurb: { en: "Late-night tacos on Elgin; sponsored placement clearly labelled.", fr: "Tacos de fin de soirée rue Elgin; emplacement commandité clairement étiqueté." },
+    image: img("1551504734-5ee1c4a1479b"), verified: true },
+];
+
+export type LiveTickerItem = {
+  id: string;
+  label: Bilingual;
+  text: Bilingual;
+  tone: "neutral" | "alert" | "good" | "sport" | "food" | "transit" | "weather";
+  href?: string;
+  source?: string;
+  time?: string;
+};
+
+export const LIVE_TICKERS: Record<string, LiveTickerItem[]> = {
+  breaking: [
+    { id: "br1", label: { en: "TRANSIT", fr: "TRANSPORT" }, tone: "transit",
+      text: { en: "OC Transpo: Line 1 single-tracking until midnight", fr: "OC Transpo : Ligne 1 voie unique jusqu'à minuit" }, source: "@oc_transpo", time: "20:42" },
+    { id: "br2", label: { en: "WEATHER", fr: "MÉTÉO" }, tone: "weather",
+      text: { en: "ECCC freezing rain warning until 06:00", fr: "ECCC : avertissement de pluie verglaçante jusqu'à 6 h" }, source: "ECCC", time: "20:30" },
+    { id: "br3", label: { en: "CITY", fr: "VILLE" }, tone: "alert",
+      text: { en: "Council approves 312 affordable units on Bank St", fr: "Conseil approuve 312 logements abordables rue Bank" }, source: "Council livestream", time: "20:15" },
+    { id: "br4", label: { en: "SPORT", fr: "SPORT" }, tone: "sport",
+      text: { en: "Atlético Ottawa 2–1 Forge FC, late header", fr: "Atlético Ottawa 2–1 Forge FC, tête tardive" }, source: "@atleticoottawa", time: "20:01" },
+    { id: "br5", label: { en: "GOOD NEWS", fr: "BONNE NOUVELLE" }, tone: "good",
+      text: { en: "Vanier community fridge network doubles in size", fr: "Le réseau de frigos communautaires de Vanier double" }, source: "Community report", time: "19:50" },
+  ],
+  sports: [
+    { id: "sp-t1", label: { en: "NHL", fr: "LNH" }, tone: "sport", text: { en: "Sens Game 5 tonight, 19:00 — Canadian Tire Centre", fr: "Match 5 des Sens ce soir, 19h — Centre Canadian Tire" } },
+    { id: "sp-t2", label: { en: "CPL", fr: "PCL" }, tone: "sport", text: { en: "Atlético Ottawa 2–1 Forge FC (FT)", fr: "Atlético Ottawa 2–1 Forge FC (Final)" } },
+    { id: "sp-t3", label: { en: "PWHL", fr: "PWHL" }, tone: "sport", text: { en: "Women's hockey showcase June 8, TD Place", fr: "Vitrine hockey féminin 8 juin, Place TD" } },
+    { id: "sp-t4", label: { en: "YOUTH", fr: "JEUNESSE" }, tone: "sport", text: { en: "Hintonburg Cup U13: 24 teams, June 14", fr: "Coupe Hintonburg U13 : 24 équipes, 14 juin" } },
+    { id: "sp-t5", label: { en: "CEBL", fr: "CEBL" }, tone: "sport", text: { en: "BlackJacks season opener, May 30", fr: "Ouverture BlackJacks, 30 mai" } },
+  ],
+  food: [
+    { id: "fd1", label: { en: "TRENDING", fr: "EN VOGUE" }, tone: "food", text: { en: "TikTok ramen line on Somerset — verification pending", fr: "File ramen TikTok rue Somerset — vérification en cours" } },
+    { id: "fd2", label: { en: "NEW", fr: "NOUVEAU" }, tone: "food", text: { en: "Art-Is-In opens Vanier outpost this Saturday", fr: "Art-Is-In ouvre une succursale à Vanier samedi" } },
+    { id: "fd3", label: { en: "COFFEE", fr: "CAFÉ" }, tone: "food", text: { en: "Equator unveils single-origin Ethiopian filter", fr: "Equator dévoile un filtre éthiopien d'origine unique" } },
+    { id: "fd4", label: { en: "PATIO", fr: "TERRASSE" }, tone: "food", text: { en: "Preston St patios all open by Friday", fr: "Terrasses de Preston toutes ouvertes vendredi" } },
+  ],
+  good: [
+    { id: "gd1", label: { en: "VANIER", fr: "VANIER" }, tone: "good", text: { en: "Community fridges feed 900 families a week", fr: "Frigos communautaires : 900 familles par semaine" } },
+    { id: "gd2", label: { en: "GLEBE", fr: "GLEBE" }, tone: "good", text: { en: "Free outdoor screening of Sens Game 5", fr: "Projection extérieure gratuite du Match 5" } },
+    { id: "gd3", label: { en: "WESTBORO", fr: "WESTBORO" }, tone: "good", text: { en: "Resident-led bike safety petition crosses 5,000", fr: "Pétition citoyenne sécurité vélo dépasse 5 000" } },
+  ],
+  canada: [
+    { id: "ca1", label: { en: "OTTAWA-OTT", fr: "OTTAWA-OTT" }, tone: "neutral", text: { en: "Federal-provincial housing accord signed in Toronto", fr: "Accord fédéral-provincial sur le logement signé à Toronto" } },
+    { id: "ca2", label: { en: "FR", fr: "FR" }, tone: "neutral", text: { en: "Bill C-13 French language guidance update", fr: "Mise à jour des directives sur la langue française (C-13)" } },
+  ],
+  world: [
+    { id: "wo1", label: { en: "EU", fr: "UE" }, tone: "neutral", text: { en: "EU election turnout sets 25-year record", fr: "Participation aux élections UE : record sur 25 ans" } },
+    { id: "wo2", label: { en: "CLIMATE", fr: "CLIMAT" }, tone: "neutral", text: { en: "Arctic ice extent 11% below 2010s average", fr: "Glace arctique : 11 % sous la moyenne 2010" } },
+  ],
+};
+
+export type TopicCluster = {
+  id: string;
+  label: Bilingual;
+  hashtags: string[];
+  count: number;
+  delta: number;
+  category: TrendItem["category"];
+};
+
+export const TOPIC_CLUSTERS: TopicCluster[] = [
+  { id: "tc1", label: { en: "Affordable housing", fr: "Logement abordable" }, hashtags: ["#housingott", "#ottcity"], count: 1840, delta: 64, category: "housing" },
+  { id: "tc2", label: { en: "Bike safety", fr: "Sécurité vélo" }, hashtags: ["#bikeottawa"], count: 1320, delta: 88, category: "safety" },
+  { id: "tc3", label: { en: "Sens playoffs", fr: "Séries des Sénateurs" }, hashtags: ["#GoSensGo"], count: 9420, delta: 178, category: "sports" },
+  { id: "tc4", label: { en: "Ottawa eats", fr: "Bouffe d'Ottawa" }, hashtags: ["#ottawaeats", "#ramenott"], count: 2210, delta: 240, category: "food" },
+  { id: "tc5", label: { en: "Freezing rain", fr: "Pluie verglaçante" }, hashtags: ["#ottwx"], count: 1280, delta: 312, category: "weather" },
+  { id: "tc6", label: { en: "Franco-Ontarien", fr: "Franco-Ontarien" }, hashtags: ["#francoontarien"], count: 740, delta: 22, category: "culture" },
+  { id: "tc7", label: { en: "School waitlists", fr: "Listes d'attente scolaires" }, hashtags: ["#ottschools"], count: 510, delta: 12, category: "education" },
+  { id: "tc8", label: { en: "Misinformation watch", fr: "Veille désinformation" }, hashtags: ["#factcheckott"], count: 412, delta: 30, category: "politics" },
+];

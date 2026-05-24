@@ -7,21 +7,23 @@ import { LanguageToggle } from "./LanguageToggle";
 
 const SECTIONS: { key: any; to: string }[] = [
   { key: "ottawa", to: "/" },
+  { key: "pulse", to: "/pulse" },
+  { key: "trendDesk", to: "/trend-desk" },
   { key: "neighborhoods", to: "/neighborhoods" },
-  { key: "canada", to: "/section/canada" },
-  { key: "world", to: "/section/world" },
+  { key: "sportsHub", to: "/sports" },
+  { key: "food", to: "/food" },
   { key: "politics", to: "/section/politics" },
   { key: "traffic", to: "/traffic" },
   { key: "weather", to: "/weather" },
-  { key: "sports", to: "/section/sports" },
-  { key: "arts", to: "/section/arts" },
   { key: "events", to: "/events" },
   { key: "jobs", to: "/jobs" },
-  { key: "education", to: "/section/education" },
   { key: "factCheck", to: "/fact-check" },
   { key: "solutions", to: "/solutions" },
-  { key: "goodNews", to: "/section/good-news" },
+  { key: "linkToStory", to: "/link-to-story" },
+  { key: "canada", to: "/section/canada" },
+  { key: "world", to: "/section/world" },
 ];
+
 
 export function Header() {
   const { locale } = useLocale();
