@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle, ArrowRight, Clock } from "lucide-react";
 import { ARTICLES, TRAFFIC_ALERTS, WEATHER_ALERTS, safeTransitImage } from "@/lib/data";
+import { NewsImage } from "@/components/NewsImage";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 
@@ -73,7 +74,8 @@ export function BreakingHero() {
             key={c.id}
             className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
-            <img src={c.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} />
+            <NewsImage src={c.image || ""} headline={c.title} alt="" className="absolute inset-0 w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} />
+            {i === 0 && c.image && <link rel="preload" as="image" href={c.image} />}
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
             <div className="absolute inset-0 flex items-end">
               <div className="max-w-3xl p-6 sm:p-10 text-paper">
