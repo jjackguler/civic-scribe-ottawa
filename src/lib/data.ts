@@ -968,7 +968,15 @@ export const FOOD_PLACES: FoodPlace[] = [
     rating: 4.4, reviews: 1340, inspection: { date: "2026-02-28", status: "pass" }, recommendedBy: "sponsored",
     blurb: { en: "Late-night tacos on Elgin; sponsored placement clearly labelled.", fr: "Tacos de fin de soirée rue Elgin; emplacement commandité clairement étiqueté." },
     image: img("1551504734-5ee1c4a1479b"), verified: true },
+  // Permanent featured local pick — community-requested.
+  { id: "fp-taksim", name: "Taksim Sweets & Bakes", cuisine: "Turkish bakery & sweets", neighborhood: "Centretown",
+    priceRange: "$", openNow: true, tags: ["bakery", "coffee"], popularOn: ["instagram", "facebook"],
+    rating: 0, reviews: 0, recommendedBy: "editor",
+    blurb: { en: "Family-run Turkish bakery — baklava, simit and Turkish coffee. A permanent local pick.", fr: "Boulangerie turque familiale — baklava, simit et café turc. Coup de cœur local permanent." },
+    image: img("1509440159596-0249088772ff"), verified: true },
 ];
+
+
 
 export type LiveTickerItem = {
   id: string;

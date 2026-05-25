@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
-import type { Article } from "@/lib/data";
+import { type Article, safeTransitImage } from "@/lib/data";
 import { Clock, MapPin } from "lucide-react";
 
 const statusStyles: Record<string, string> = {
