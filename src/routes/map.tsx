@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageShell, PageHero } from "@/components/PageShell";
-import { LeafletMap, SIGNAL_STYLES } from "@/components/LeafletMap";
+import { LeafletMap, SIGNAL_STYLES } from "@/components/LeafletMapClient";
 import { generateMockSignals, OTTAWA_NEIGHBORHOODS } from "@/lib/map-signals";
 import { useLocale } from "@/lib/locale-context";
 import type { SignalType, SignalVerification, MapSignal } from "@/types/database";

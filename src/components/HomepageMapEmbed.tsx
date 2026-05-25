@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { LeafletMap, SIGNAL_STYLES } from "./LeafletMap";
+import { LeafletMap, SIGNAL_STYLES } from "./LeafletMapClient";
 import { generateMockSignals } from "@/lib/map-signals";
 import type { SignalType, MapSignal } from "@/types/database";
 import { useLocale } from "@/lib/locale-context";
