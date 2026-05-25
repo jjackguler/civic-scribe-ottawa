@@ -20,6 +20,7 @@ import { OttawaLivePanel } from "@/components/OttawaLivePanel";
 import { YourStreetsPanel } from "@/components/YourStreetsPanel";
 import { TrafficRadio } from "@/components/TrafficRadio";
 import { SocialTrendCard } from "@/components/SocialTrendCard";
+import { HomepageMapEmbed } from "@/components/HomepageMapEmbed";
 import { ARTICLES, FACT_CHECKS, LIVE_TICKERS, TREND_ITEMS } from "@/lib/data";
 import { ACTIVITIES, DEALS, KIDS_PICKS, YOUTH_PICKS, OTTAWA_GUIDE, CANADA_GUIDE, CITIZEN_REPORTS } from "@/lib/guide-data";
 import { useLocale } from "@/lib/locale-context";
