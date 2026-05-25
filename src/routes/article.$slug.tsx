@@ -5,6 +5,8 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { StatusBadge, ArticleCard } from "@/components/ArticleCard";
 import { DonationPanel } from "@/components/DonationPanel";
+import { NewsImage } from "@/components/NewsImage";
+import { safeTransitImage } from "@/lib/data";
 import { Clock, MapPin, Share2, PenSquare, AlertCircle } from "lucide-react";
 
 export const Route = createFileRoute("/article/$slug")({
@@ -55,7 +57,7 @@ function ArticlePage() {
         </div>
 
         <figure className="my-8 -mx-4 sm:mx-0">
-          <img src={article.image} alt="" className="w-full aspect-[16/10] object-cover" />
+          <NewsImage src={safeTransitImage(article.image, article.kicker.en)} headline={article.title.en} alt="" className="w-full aspect-[16/10] object-cover" />
           <figcaption className="text-xs text-muted-foreground mt-2 font-serif italic px-4 sm:px-0">
             {locale === "fr" ? "Photo : Archives du Registre Civique" : "Photo: Ottawa Civic Ledger archives"}
           </figcaption>
