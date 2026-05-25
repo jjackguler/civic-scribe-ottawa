@@ -16,7 +16,8 @@ import { DealCard } from "@/components/DealCard";
 import { PickCard } from "@/components/PickCard";
 import { GuideTopicCard } from "@/components/GuideTopicCard";
 import { CitizenReportItem } from "@/components/CitizenReportItem";
-import { InteractiveMap } from "@/components/InteractiveMap";
+import { OttawaLivePanel } from "@/components/OttawaLivePanel";
+import { YourStreetsPanel } from "@/components/YourStreetsPanel";
 import { TrafficRadio } from "@/components/TrafficRadio";
 import { SocialTrendCard } from "@/components/SocialTrendCard";
 import { ARTICLES, FACT_CHECKS, LIVE_TICKERS, TREND_ITEMS } from "@/lib/data";
@@ -57,7 +58,7 @@ function Home() {
       <Header />
 
       <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-14">
-        {/* Breaking news hero carousel */}
+        {/* 1. THE SPLASH (lead story) */}
         <BreakingHero />
 
         {/* Lead stories under the hero */}
@@ -68,26 +69,23 @@ function Home() {
           </div>
         </section>
 
-        {/* Live map preview + Traffic Radio panel */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-8">
-            <RailHeader
-              kicker={locale === "fr" ? "Carte en direct" : "Live map"}
-              title={locale === "fr" ? "Ottawa, en ce moment" : "Ottawa, right now"}
-              live={t("liveNow", locale)}
-              action={<ViewAll to="/map" label={t("ottawaMap", locale)} />}
-            />
-            <InteractiveMap height="h-[380px]" />
-          </div>
-          <div className="lg:col-span-4">
-            <RailHeader
-              kicker={locale === "fr" ? "Radio" : "Radio"}
-              title={t("trafficRadio", locale)}
-              live={t("liveNow", locale)}
-              action={<ViewAll to="/radio" label={t("listenLive", locale)} />}
-            />
-            <TrafficRadio compact />
-          </div>
+        {/* 2. YOUR STREETS — hyperlocal ward spotlight */}
+        <YourStreetsPanel />
+
+        {/* 3. OTTAWA LIVE — unified neighborhoods/traffic/transit/places panel */}
+        <section>
+          <RailHeader
+            kicker={locale === "fr" ? "Tableau de bord" : "City dashboard"}
+            title={locale === "fr" ? "Ottawa, en direct" : "Ottawa, live"}
+            live={t("liveNow", locale)}
+            action={<ViewAll to="/map" label={t("ottawaMap", locale)} />}
+          />
+          <OttawaLivePanel />
+        </section>
+
+        {/* Traffic radio companion strip */}
+        <section>
+          <TrafficRadio compact />
         </section>
 
         {/* Social trend wall */}
