@@ -6,7 +6,7 @@ const LeafletMapInner = lazy(() =>
   import("./LeafletMap").then(m => ({ default: m.LeafletMap }))
 );
 
-export { SIGNAL_STYLES } from "./LeafletMap";
+export { SIGNAL_STYLES } from "@/lib/signal-styles";
 
 interface Props {
   signals: MapSignal[];
