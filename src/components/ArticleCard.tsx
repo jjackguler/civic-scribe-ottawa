@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
-import type { Article } from "@/lib/data";
+import { type Article, safeTransitImage } from "@/lib/data";
 import { Clock, MapPin } from "lucide-react";
 
 const statusStyles: Record<string, string> = {
@@ -36,7 +36,7 @@ export function ArticleCard({
       <article className="group">
         <Link to={to} className="block">
           <div className="aspect-[16/10] overflow-hidden bg-muted mb-5">
-            <img src={article.image} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+            <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
           </div>
           <div className="flex items-center gap-2 mb-3">
             <span className="kicker text-civic-red">{article.kicker[locale]}</span>
@@ -59,7 +59,7 @@ export function ArticleCard({
       <article className="group">
         <Link to={to} className="block">
           <div className="aspect-[4/3] overflow-hidden bg-muted mb-4">
-            <img src={article.image} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+            <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
           </div>
           <span className="kicker text-civic-red">{article.kicker[locale]}</span>
           <h3 className="font-display text-2xl leading-tight mt-2 group-hover:text-civic-red transition-colors">
@@ -96,7 +96,7 @@ export function ArticleCard({
           <Meta article={article} className="mt-2" />
         </Link>
         <Link to={to} className="block aspect-square overflow-hidden bg-muted">
-          <img src={article.image} alt="" className="w-full h-full object-cover" loading="lazy" />
+          <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover" loading="lazy" />
         </Link>
       </article>
     );
@@ -106,7 +106,7 @@ export function ArticleCard({
     <article className="group">
       <Link to={to} className="block">
         <div className="aspect-[3/2] overflow-hidden bg-muted mb-3">
-          <img src={article.image} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+          <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
         </div>
         <span className="kicker text-civic-red">{article.kicker[locale]}</span>
         <h3 className="font-display text-xl leading-snug mt-1 group-hover:text-civic-red transition-colors">
@@ -120,6 +120,7 @@ export function ArticleCard({
 
 function Meta({ article, className = "" }: { article: Article; className?: string }) {
   const { locale } = useLocale();
+  const hasSource = Array.isArray(article.sources) && article.sources.length > 0;
   return (
     <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground font-sans ${className}`}>
       <span>By {article.byline}</span>
@@ -128,6 +129,11 @@ function Meta({ article, className = "" }: { article: Article; className?: strin
         <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{article.neighborhood}</span>
       )}
       {article.language === "bilingual" && <span className="border border-rule px-1 text-[9px] tracking-wider">EN / FR</span>}
+      {!hasSource && (
+        <span className="border border-highlight/50 bg-highlight/10 text-highlight px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-semibold">
+          {locale === "fr" ? "Soumis par un citoyen · vérification en cours" : "Citizen submitted · awaiting verification"}
+        </span>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle, ArrowRight, Clock } from "lucide-react";
-import { ARTICLES, TRAFFIC_ALERTS, WEATHER_ALERTS } from "@/lib/data";
+import { ARTICLES, TRAFFIC_ALERTS, WEATHER_ALERTS, safeTransitImage } from "@/lib/data";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 
@@ -22,7 +22,7 @@ export function BreakingHero() {
       id: "b-hero",
       kicker: locale === "fr" ? "À LA UNE" : "BREAKING",
       title: ARTICLES[0].title[locale],
-      image: ARTICLES[0].image,
+      image: safeTransitImage(ARTICLES[0].image, ARTICLES[0].kicker.en),
       href: `/article/${ARTICLES[0].slug}`,
       urgent: true,
       ts: ARTICLES[0].updatedAt ?? ARTICLES[0].publishedAt,

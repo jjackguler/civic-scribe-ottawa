@@ -109,16 +109,18 @@ export function InteractiveMap({ height = "h-[480px]" }: { height?: string }) {
         <span className="ml-auto text-[11px] text-muted-foreground">
           {hasGoogle
             ? (locale === "fr" ? "Google Maps · données en direct" : "Google Maps · live data")
-            : (locale === "fr" ? "Carte interactive (démonstration) · prête pour l'API Google Maps" : "Interactive map (demo) · Google Maps API ready")}
+            : apiKey
+              ? (locale === "fr" ? "Chargement de Google Maps…" : "Loading Google Maps…")
+              : (locale === "fr" ? "Carte indisponible — clé VITE_GOOGLE_MAPS_API_KEY manquante" : "Map unavailable — VITE_GOOGLE_MAPS_API_KEY not configured")}
         </span>
       </div>
 
       <div className="relative">
-        {/* Real Google Maps container */}
-        <div ref={mapRef} className={`${height} w-full ${hasGoogle ? "block" : "hidden"}`} />
+        {/* Real Google Maps container — always rendered when key is present so the JS API has a target */}
+        <div ref={mapRef} className={`${height} w-full ${apiKey ? "block" : "hidden"} bg-[oklch(0.94_0.02_220)]`} />
 
-        {/* Mock map fallback */}
-        {!hasGoogle && (
+        {/* Mock map fallback ONLY when no API key is configured */}
+        {!apiKey && (
           <div className={`relative ${height} w-full bg-[oklch(0.94_0.02_220)] overflow-hidden`}>
             {/* Stylised street grid */}
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">

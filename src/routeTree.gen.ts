@@ -40,6 +40,7 @@ import { Route as GuideOttawaRouteImport } from './routes/guide.ottawa'
 import { Route as GuideCanadaRouteImport } from './routes/guide.canada'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as ApiPublicTrafficRadioRouteImport } from './routes/api/public/traffic-radio'
+import { Route as ApiPublicOttawaTrafficRouteImport } from './routes/api/public/ottawa-traffic'
 
 const YouthRoute = YouthRouteImport.update({
   id: '/youth',
@@ -196,6 +197,11 @@ const ApiPublicTrafficRadioRoute = ApiPublicTrafficRadioRouteImport.update({
   path: '/api/public/traffic-radio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicOttawaTrafficRoute = ApiPublicOttawaTrafficRouteImport.update({
+  id: '/api/public/ottawa-traffic',
+  path: '/api/public/ottawa-traffic',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -228,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
+  '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
 }
 export interface FileRoutesByTo {
@@ -261,6 +268,7 @@ export interface FileRoutesByTo {
   '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
+  '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
 }
 export interface FileRoutesById {
@@ -295,6 +303,7 @@ export interface FileRoutesById {
   '/guide/ottawa': typeof GuideOttawaRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
   '/section/$name': typeof SectionNameRoute
+  '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
 }
 export interface FileRouteTypes {
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
+    | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -363,6 +373,7 @@ export interface FileRouteTypes {
     | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
+    | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
   id:
     | '__root__'
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/guide/ottawa'
     | '/neighborhoods/$slug'
     | '/section/$name'
+    | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
   fileRoutesById: FileRoutesById
 }
@@ -429,6 +441,7 @@ export interface RootRouteChildren {
   GuideCanadaRoute: typeof GuideCanadaRoute
   GuideOttawaRoute: typeof GuideOttawaRoute
   SectionNameRoute: typeof SectionNameRoute
+  ApiPublicOttawaTrafficRoute: typeof ApiPublicOttawaTrafficRoute
   ApiPublicTrafficRadioRoute: typeof ApiPublicTrafficRadioRoute
 }
 
@@ -651,6 +664,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicTrafficRadioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ottawa-traffic': {
+      id: '/api/public/ottawa-traffic'
+      path: '/api/public/ottawa-traffic'
+      fullPath: '/api/public/ottawa-traffic'
+      preLoaderRoute: typeof ApiPublicOttawaTrafficRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -696,6 +716,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuideCanadaRoute: GuideCanadaRoute,
   GuideOttawaRoute: GuideOttawaRoute,
   SectionNameRoute: SectionNameRoute,
+  ApiPublicOttawaTrafficRoute: ApiPublicOttawaTrafficRoute,
   ApiPublicTrafficRadioRoute: ApiPublicTrafficRadioRoute,
 }
 export const routeTree = rootRouteImport
