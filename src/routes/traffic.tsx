@@ -1,17 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { PageShell, PageHero } from "@/components/PageShell";
 import { TRAFFIC_ALERTS } from "@/lib/data";
 import { TrafficAlertCard } from "@/components/TrafficAlertCard";
 import { InteractiveMap } from "@/components/InteractiveMap";
 import { useLocale } from "@/lib/locale-context";
+import { RefreshCcw, AlertOctagon, Construction, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/traffic")({
   head: () => ({ meta: [{ title: "Traffic & Transit — Ottawa Civic Ledger" }] }),
   component: TrafficPage,
 });
 
+type OttEvent = {
+  id: string; type: string; title: string; description?: string;
+  location?: string; severity?: string; lat?: number; lng?: number;
+  startTime?: string; updated?: string;
+};
+
 function TrafficPage() {
   const { locale } = useLocale();
+  const [events, setEvents] = useState<OttEvent[]>([]);
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  async function load() {
+    setLoading(true); setError(null);
+    try {
+      const res = await fetch(`/api/public/ottawa-traffic?locale=${locale}`);
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.error ?? "Failed to load");
+      setEvents(json.events ?? []);
+      setFetchedAt(json.fetchedAt ?? null);
+    } catch (e: any) {
+      setError(e?.message ?? "Failed to load City of Ottawa feed");
+    } finally { setLoading(false); }
+  }
+  useEffect(() => { load(); /* eslint-disable-next-line */ }, [locale]);
+
   return (
     <PageShell>
       <PageHero
@@ -37,10 +64,53 @@ function TrafficPage() {
         </aside>
       </div>
 
-      <h2 className="kicker text-civic-red mb-3">{locale === "fr" ? "Tous les incidents" : "All incidents"}</h2>
+      {/* Live City of Ottawa traffic events */}
+      <div className="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
+        <h2 className="kicker text-civic-red">{locale === "fr" ? "Événements — Ville d'Ottawa" : "Live events — City of Ottawa"}</h2>
+        <div className="flex items-center gap-3 text-[11px] text-muted-foreground font-sans">
+          {fetchedAt && (
+            <span>
+              {locale === "fr" ? "Dernière mise à jour de la Ville d'Ottawa" : "Last updated from City of Ottawa"} ·{" "}
+              {new Date(fetchedAt).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}
+            </span>
+          )}
+          <button onClick={load} disabled={loading} className="inline-flex items-center gap-1 border border-rule hover:border-ink px-2 py-1 disabled:opacity-50">
+            <RefreshCcw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} /> {locale === "fr" ? "Actualiser" : "Refresh"}
+          </button>
+        </div>
+      </div>
+      <div className="bg-card border border-rule p-5 mb-8">
+        {loading && <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Chargement du flux de la Ville…" : "Loading City of Ottawa feed…"}</p>}
+        {error && <p className="text-sm text-civic-red font-sans">{error}</p>}
+        {!loading && !error && events.length === 0 && (
+          <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Aucun événement actif." : "No active events."}</p>
+        )}
+        <ul className="divide-y divide-rule">
+          {events.slice(0, 25).map(ev => {
+            const Icon = /construction/i.test(ev.type) ? Construction : /event|special/i.test(ev.type) ? Calendar : AlertOctagon;
+            const sevColor = /high|major/i.test(String(ev.severity)) ? "text-civic-red" : /medium|moderate/i.test(String(ev.severity)) ? "text-highlight" : "text-solution";
+            return (
+              <li key={ev.id} className="py-3 flex items-start gap-3">
+                <Icon className={`h-4 w-4 mt-1 ${sevColor}`} />
+                <div className="min-w-0">
+                  <div className="font-serif text-sm leading-snug">{ev.title}</div>
+                  <div className="text-[11px] text-muted-foreground font-sans mt-0.5">
+                    {ev.location && <span>{typeof ev.location === "string" ? ev.location : JSON.stringify(ev.location)}</span>}
+                    {ev.updated && <span> · {new Date(ev.updated).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</span>}
+                    <span className={`ml-2 uppercase tracking-wider ${sevColor}`}>{String(ev.severity ?? "")}</span>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      <h2 className="kicker text-civic-red mb-3">{locale === "fr" ? "Tous les incidents (éditorial)" : "All incidents (editorial)"}</h2>
       <div className="bg-card border border-rule p-5">
         {TRAFFIC_ALERTS.map(a => <TrafficAlertCard key={a.id} alert={a} />)}
       </div>
     </PageShell>
   );
 }
+
