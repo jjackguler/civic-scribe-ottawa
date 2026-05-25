@@ -116,11 +116,11 @@ export function InteractiveMap({ height = "h-[480px]" }: { height?: string }) {
       </div>
 
       <div className="relative">
-        {/* Real Google Maps container */}
-        <div ref={mapRef} className={`${height} w-full ${hasGoogle ? "block" : "hidden"}`} />
+        {/* Real Google Maps container — always rendered when key is present so the JS API has a target */}
+        <div ref={mapRef} className={`${height} w-full ${apiKey ? "block" : "hidden"} bg-[oklch(0.94_0.02_220)]`} />
 
-        {/* Mock map fallback */}
-        {!hasGoogle && (
+        {/* Mock map fallback ONLY when no API key is configured */}
+        {!apiKey && (
           <div className={`relative ${height} w-full bg-[oklch(0.94_0.02_220)] overflow-hidden`}>
             {/* Stylised street grid */}
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
