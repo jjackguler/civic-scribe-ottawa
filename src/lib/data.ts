@@ -32,6 +32,22 @@ export type Article = {
 const img = (id: string, w = 1400, h = 900) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
 
+// Hard block on imagery that has been misidentified as Ottawa transit.
+// Freight-train, intercity-rail, and other non-OC-Transpo photos belong here.
+export const BLOCKED_TRANSIT_IMAGE_IDS = ["1474487548417-781cb71495f3"];
+
+// Neutral civic placeholder for Transit category when no validated image is available.
+export const NEUTRAL_TRANSIT_PLACEHOLDER =
+  "https://images.unsplash.com/photo-1503614472-8c93d56cd87b?auto=format&fit=crop&w=1400&h=900&q=80";
+
+/** Return a safe image URL for a Transit story; swaps blocked IDs for a neutral placeholder. */
+export function safeTransitImage(url: string | undefined, category?: string): string {
+  const fallback = NEUTRAL_TRANSIT_PLACEHOLDER;
+  if (!url) return category === "Traffic" || category === "Transit" ? fallback : "";
+  if (BLOCKED_TRANSIT_IMAGE_IDS.some(id => url.includes(id))) return fallback;
+  return url;
+}
+
 export const ARTICLES: Article[] = [
   {
     slug: "lrt-line-1-evening-disruption",
@@ -52,7 +68,9 @@ export const ARTICLES: Article[] = [
     neighborhood: "Downtown",
     language: "bilingual",
     status: "verified",
-    image: img("1474487548417-781cb71495f3"),
+    // NOTE: do not use the freight-train image (1474487548417-781cb71495f3) for OC Transpo /
+    // O-Train stories — see BLOCKED_TRANSIT_IMAGE_IDS / safeTransitImage() below.
+    image: img("1503614472-8c93d56cd87b"),
     hero: true,
     pullQuote: {
       en: "Riders should plan an extra 25 minutes for downtown connections tonight.",
