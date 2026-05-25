@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
+import { NewsImage } from "@/components/NewsImage";
 import type { Pick } from "@/lib/guide-data";
 
 export function PickCard({ p }: { p: Pick }) {
@@ -9,7 +10,7 @@ export function PickCard({ p }: { p: Pick }) {
   return (
     <article className="group bg-card border border-rule h-full flex flex-col overflow-hidden hover:border-ink transition-colors">
       <div className="aspect-[16/10] overflow-hidden bg-muted relative">
-        <img src={p.image} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+        <NewsImage src={p.image} headline={p.title.en} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
         <span className="absolute top-2 left-2 bg-paper/95 px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold">{p.category[locale]}</span>
         <button onClick={() => setSaved(s => !s)} aria-label="Save"
           className="absolute top-2 right-2 h-8 w-8 grid place-items-center bg-paper/95 hover:bg-ink hover:text-paper transition-colors">
