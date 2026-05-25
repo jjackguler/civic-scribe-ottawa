@@ -120,6 +120,7 @@ export function ArticleCard({
 
 function Meta({ article, className = "" }: { article: Article; className?: string }) {
   const { locale } = useLocale();
+  const hasSource = Array.isArray(article.sources) && article.sources.length > 0;
   return (
     <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground font-sans ${className}`}>
       <span>By {article.byline}</span>
@@ -128,6 +129,11 @@ function Meta({ article, className = "" }: { article: Article; className?: strin
         <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{article.neighborhood}</span>
       )}
       {article.language === "bilingual" && <span className="border border-rule px-1 text-[9px] tracking-wider">EN / FR</span>}
+      {!hasSource && (
+        <span className="border border-highlight/50 bg-highlight/10 text-highlight px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-semibold">
+          {locale === "fr" ? "Soumis par un citoyen · vérification en cours" : "Citizen submitted · awaiting verification"}
+        </span>
+      )}
     </div>
   );
 }

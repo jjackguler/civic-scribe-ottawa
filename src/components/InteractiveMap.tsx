@@ -109,7 +109,9 @@ export function InteractiveMap({ height = "h-[480px]" }: { height?: string }) {
         <span className="ml-auto text-[11px] text-muted-foreground">
           {hasGoogle
             ? (locale === "fr" ? "Google Maps · données en direct" : "Google Maps · live data")
-            : (locale === "fr" ? "Carte interactive (démonstration) · prête pour l'API Google Maps" : "Interactive map (demo) · Google Maps API ready")}
+            : apiKey
+              ? (locale === "fr" ? "Chargement de Google Maps…" : "Loading Google Maps…")
+              : (locale === "fr" ? "Carte indisponible — clé VITE_GOOGLE_MAPS_API_KEY manquante" : "Map unavailable — VITE_GOOGLE_MAPS_API_KEY not configured")}
         </span>
       </div>
 
