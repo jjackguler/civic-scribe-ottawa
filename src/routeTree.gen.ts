@@ -27,6 +27,7 @@ import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as FactCheckRouteImport } from './routes/fact-check'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as BreakingRouteImport } from './routes/breaking'
@@ -132,6 +133,11 @@ const EventsRoute = EventsRouteImport.update({
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EthicsRoute = EthicsRouteImport.update({
+  id: '/ethics',
+  path: '/ethics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
   path: '/donate',
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
+  '/ethics': typeof EthicsRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
@@ -245,6 +252,7 @@ export interface FileRoutesByTo {
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
+  '/ethics': typeof EthicsRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
@@ -280,6 +288,7 @@ export interface FileRoutesById {
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
+  '/ethics': typeof EthicsRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/breaking'
     | '/deals'
     | '/donate'
+    | '/ethics'
     | '/events'
     | '/fact-check'
     | '/food'
@@ -350,6 +360,7 @@ export interface FileRouteTypes {
     | '/breaking'
     | '/deals'
     | '/donate'
+    | '/ethics'
     | '/events'
     | '/fact-check'
     | '/food'
@@ -384,6 +395,7 @@ export interface FileRouteTypes {
     | '/breaking'
     | '/deals'
     | '/donate'
+    | '/ethics'
     | '/events'
     | '/fact-check'
     | '/food'
@@ -419,6 +431,7 @@ export interface RootRouteChildren {
   BreakingRoute: typeof BreakingRoute
   DealsRoute: typeof DealsRoute
   DonateRoute: typeof DonateRoute
+  EthicsRoute: typeof EthicsRoute
   EventsRoute: typeof EventsRoute
   FactCheckRoute: typeof FactCheckRoute
   FoodRoute: typeof FoodRoute
@@ -573,6 +586,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ethics': {
+      id: '/ethics'
+      path: '/ethics'
+      fullPath: '/ethics'
+      preLoaderRoute: typeof EthicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/donate': {
       id: '/donate'
       path: '/donate'
@@ -694,6 +714,7 @@ const rootRouteChildren: RootRouteChildren = {
   BreakingRoute: BreakingRoute,
   DealsRoute: DealsRoute,
   DonateRoute: DonateRoute,
+  EthicsRoute: EthicsRoute,
   EventsRoute: EventsRoute,
   FactCheckRoute: FactCheckRoute,
   FoodRoute: FoodRoute,
@@ -722,13 +743,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
