@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { type Article, safeTransitImage } from "@/lib/data";
+import { NewsImage } from "@/components/NewsImage";
 import { Clock, MapPin } from "lucide-react";
 
 const statusStyles: Record<string, string> = {
@@ -36,7 +37,7 @@ export function ArticleCard({
       <article className="group">
         <Link to={to} className="block">
           <div className="aspect-[16/10] overflow-hidden bg-muted mb-5">
-            <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+            <NewsImage src={safeTransitImage(article.image, article.kicker.en)} headline={article.title.en} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
           </div>
           <div className="flex items-center gap-2 mb-3">
             <span className="kicker text-civic-red">{article.kicker[locale]}</span>
@@ -59,7 +60,7 @@ export function ArticleCard({
       <article className="group">
         <Link to={to} className="block">
           <div className="aspect-[4/3] overflow-hidden bg-muted mb-4">
-            <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+            <NewsImage src={safeTransitImage(article.image, article.kicker.en)} headline={article.title.en} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
           </div>
           <span className="kicker text-civic-red">{article.kicker[locale]}</span>
           <h3 className="font-display text-2xl leading-tight mt-2 group-hover:text-civic-red transition-colors">
@@ -96,7 +97,7 @@ export function ArticleCard({
           <Meta article={article} className="mt-2" />
         </Link>
         <Link to={to} className="block aspect-square overflow-hidden bg-muted">
-          <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover" loading="lazy" />
+          <NewsImage src={safeTransitImage(article.image, article.kicker.en)} headline={article.title.en} alt="" className="w-full h-full object-cover" loading="lazy" />
         </Link>
       </article>
     );
@@ -106,7 +107,7 @@ export function ArticleCard({
     <article className="group">
       <Link to={to} className="block">
         <div className="aspect-[3/2] overflow-hidden bg-muted mb-3">
-          <img src={safeTransitImage(article.image, article.kicker.en)} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+          <NewsImage src={safeTransitImage(article.image, article.kicker.en)} headline={article.title.en} alt="" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
         </div>
         <span className="kicker text-civic-red">{article.kicker[locale]}</span>
         <h3 className="font-display text-xl leading-snug mt-1 group-hover:text-civic-red transition-colors">

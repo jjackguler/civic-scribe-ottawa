@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MapPin, Clock, Bookmark, BookmarkCheck, Accessibility, Train } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
+import { NewsImage } from "@/components/NewsImage";
 import type { Activity } from "@/lib/guide-data";
 
 const costLabel: Record<Activity["cost"], { en: string; fr: string }> = {
@@ -16,7 +17,7 @@ export function ActivityCard({ a, compact = false }: { a: Activity; compact?: bo
   return (
     <article className="group bg-card border border-rule h-full flex flex-col overflow-hidden hover:border-ink transition-colors">
       <div className={`relative overflow-hidden bg-muted ${compact ? "aspect-[4/3]" : "aspect-[16/10]"}`}>
-        <img src={a.image} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+        <NewsImage src={a.image} headline={a.title.en} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
         <span className="absolute top-2 left-2 bg-paper/95 backdrop-blur px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold">
           {costLabel[a.cost][locale]}
         </span>

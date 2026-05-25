@@ -1,5 +1,6 @@
 import { useLocale } from "@/lib/locale-context";
 import type { FoodPlace } from "@/lib/data";
+import { NewsImage } from "@/components/NewsImage";
 import { MapPin, Star, ShieldCheck, AlertTriangle, Flame } from "lucide-react";
 
 export function FoodCard({ p }: { p: FoodPlace }) {
@@ -7,7 +8,7 @@ export function FoodCard({ p }: { p: FoodPlace }) {
   return (
     <article className="bg-card border border-rule overflow-hidden flex flex-col group">
       <div className="aspect-[5/3] overflow-hidden bg-muted relative">
-        <img src={p.image} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
+        <NewsImage src={p.image} headline={p.name} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
         <div className="absolute top-2 left-2 flex flex-wrap gap-1">
           {p.newOpening && <span className="bg-civic-red text-white text-[10px] uppercase tracking-wider px-1.5 py-0.5 font-bold">New</span>}
           {p.recommendedBy === "trend" && <span className="bg-highlight text-ink text-[10px] uppercase tracking-wider px-1.5 py-0.5 font-bold inline-flex items-center gap-1"><Flame className="h-3 w-3" />Trending</span>}

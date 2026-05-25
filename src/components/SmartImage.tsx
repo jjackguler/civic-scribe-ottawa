@@ -39,12 +39,10 @@ export function SmartImage({
   const { pad, w, h } = ratioMap[aspectRatio];
   const stableSeed = seed ?? String(hash(query));
   const chain = useMemo(() => {
-    const q = encodeURIComponent(query.trim());
     return [
-      `https://source.unsplash.com/${w}x${h}/?${q},ottawa`,
       `https://picsum.photos/seed/${encodeURIComponent(stableSeed)}/${w}/${h}`,
     ];
-  }, [query, w, h, stableSeed]);
+  }, [w, h, stableSeed]);
 
   const [idx, setIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);

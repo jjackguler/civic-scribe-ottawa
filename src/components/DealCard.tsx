@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tag, MapPin, Clock, AlertCircle, Bookmark, BookmarkCheck } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
+import { NewsImage } from "@/components/NewsImage";
 import type { Deal } from "@/lib/guide-data";
 
 export function DealCard({ d }: { d: Deal }) {
@@ -13,7 +14,7 @@ export function DealCard({ d }: { d: Deal }) {
   return (
     <article className="group bg-card border border-rule h-full flex flex-col overflow-hidden hover:border-ink transition-colors">
       <div className="aspect-[4/3] overflow-hidden bg-muted relative">
-        <img src={d.image} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+        <NewsImage src={d.image} headline={d.retailer} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
         <div className="absolute top-2 left-2 flex items-center gap-2">
           <span className="bg-ink text-paper px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold">{d.retailer}</span>
           {d.savings && <span className="bg-civic-red text-paper px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold">-{d.savings}</span>}
