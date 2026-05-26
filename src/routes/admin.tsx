@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHero } from "@/components/PageShell";
 import { SUBMISSIONS, FACT_CHECKS, ARTICLES } from "@/lib/data";
 import { useLocale } from "@/lib/locale-context";
@@ -45,6 +45,12 @@ function AdminPage() {
         title={locale === "fr" ? "Salle de rédaction" : "Newsroom"}
         dek={locale === "fr" ? "Aperçu conceptuel du flux éditorial : triage, vérification, publication." : "Conceptual preview of the editorial workflow: triage, verification, publication."}
       />
+
+      <div className="mb-6 flex flex-wrap gap-2">
+        <Link to="/admin/sources" className="inline-flex items-center gap-2 border border-ink px-3 py-2 text-[11px] uppercase tracking-wider font-semibold hover:bg-ink hover:text-paper">
+          Source dashboard →
+        </Link>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
         {stats.map(({ label, n, Icon, tone }) => (
