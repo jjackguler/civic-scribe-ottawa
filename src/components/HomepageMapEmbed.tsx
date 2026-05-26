@@ -16,7 +16,13 @@ const COMPACT_TYPES: SignalType[] = [
 
 export function HomepageMapEmbed() {
   const { locale } = useLocale();
-  const base = useMemo(() => generateMockSignals(120), []);
+  const base = useMemo<MapSignal[]>(() => [
+    ...generateMockSignals(120),
+    ...generate311Signals(40),
+    ...generateRoadClosureSignals(),
+    ...generateParksEnvironmentSignals(),
+    ...publicSafetyPublished(generatePublicSafetySignals()),
+  ], []);
   const [signals, setSignals] = useState<MapSignal[]>(base);
   const [active, setActive] = useState<Set<SignalType>>(new Set(COMPACT_TYPES));
 
