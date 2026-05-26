@@ -40,6 +40,7 @@ import { Route as NeighborhoodsSlugRouteImport } from './routes/neighborhoods.$s
 import { Route as GuideOttawaRouteImport } from './routes/guide.ottawa'
 import { Route as GuideCanadaRouteImport } from './routes/guide.canada'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as AdminSourcesRouteImport } from './routes/admin.sources'
 import { Route as ApiPublicTrafficRadioRouteImport } from './routes/api/public/traffic-radio'
 import { Route as ApiPublicOttawaTrafficRouteImport } from './routes/api/public/ottawa-traffic'
 
@@ -198,6 +199,11 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
   path: '/article/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSourcesRoute = AdminSourcesRouteImport.update({
+  id: '/sources',
+  path: '/sources',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApiPublicTrafficRadioRoute = ApiPublicTrafficRadioRouteImport.update({
   id: '/api/public/traffic-radio',
   path: '/api/public/traffic-radio',
@@ -213,7 +219,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
@@ -236,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
   '/youth': typeof YouthRoute
+  '/admin/sources': typeof AdminSourcesRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/guide/canada': typeof GuideCanadaRoute
   '/guide/ottawa': typeof GuideOttawaRoute
@@ -248,7 +255,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
@@ -271,6 +278,7 @@ export interface FileRoutesByTo {
   '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
   '/youth': typeof YouthRoute
+  '/admin/sources': typeof AdminSourcesRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/guide/canada': typeof GuideCanadaRoute
   '/guide/ottawa': typeof GuideOttawaRoute
@@ -284,7 +292,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
@@ -307,6 +315,7 @@ export interface FileRoutesById {
   '/trend-desk': typeof TrendDeskRoute
   '/weather': typeof WeatherRoute
   '/youth': typeof YouthRoute
+  '/admin/sources': typeof AdminSourcesRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/guide/canada': typeof GuideCanadaRoute
   '/guide/ottawa': typeof GuideOttawaRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/trend-desk'
     | '/weather'
     | '/youth'
+    | '/admin/sources'
     | '/article/$slug'
     | '/guide/canada'
     | '/guide/ottawa'
@@ -379,6 +389,7 @@ export interface FileRouteTypes {
     | '/trend-desk'
     | '/weather'
     | '/youth'
+    | '/admin/sources'
     | '/article/$slug'
     | '/guide/canada'
     | '/guide/ottawa'
@@ -414,6 +425,7 @@ export interface FileRouteTypes {
     | '/trend-desk'
     | '/weather'
     | '/youth'
+    | '/admin/sources'
     | '/article/$slug'
     | '/guide/canada'
     | '/guide/ottawa'
@@ -427,7 +439,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ActivitiesRoute: typeof ActivitiesRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BreakingRoute: typeof BreakingRoute
   DealsRoute: typeof DealsRoute
   DonateRoute: typeof DonateRoute
@@ -677,6 +689,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/sources': {
+      id: '/admin/sources'
+      path: '/sources'
+      fullPath: '/admin/sources'
+      preLoaderRoute: typeof AdminSourcesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/public/traffic-radio': {
       id: '/api/public/traffic-radio'
       path: '/api/public/traffic-radio'
@@ -694,6 +713,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminSourcesRoute: typeof AdminSourcesRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminSourcesRoute: AdminSourcesRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface NeighborhoodsRouteChildren {
   NeighborhoodsSlugRoute: typeof NeighborhoodsSlugRoute
 }
@@ -710,7 +739,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ActivitiesRoute: ActivitiesRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   BreakingRoute: BreakingRoute,
   DealsRoute: DealsRoute,
   DonateRoute: DonateRoute,
