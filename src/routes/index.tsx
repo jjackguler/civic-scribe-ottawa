@@ -84,6 +84,22 @@ function Home() {
           <HomepageMapEmbed />
         </section>
 
+        {/* 3b. OPEN CIVIC ISSUES — 311 tracker */}
+        <section className="grid lg:grid-cols-2 gap-6">
+          <OpenIssuesTracker />
+          <div className="bg-card border border-rule p-5">
+            <h3 className="kicker text-civic-red mb-2">{locale === "fr" ? "Sources civiques — direct" : "Civic sources — live"}</h3>
+            <p className="font-serif text-sm text-muted-foreground mb-3">
+              {locale === "fr"
+                ? "Nous regroupons des sources officielles gratuites — Ville d'Ottawa, Ontario 511, Environnement Canada, CCN, services 311. Les éléments sensibles de sécurité publique sont retenus pour révision éditoriale."
+                : "We aggregate free official sources — City of Ottawa, Ontario 511, Environment Canada, NCC, 311 services. Sensitive public-safety items are held for editorial review."}
+            </p>
+            <Link to="/admin/sources" className="text-[11px] uppercase tracking-wider font-semibold border-b border-ink pb-0.5 hover:text-civic-red">
+              {locale === "fr" ? "Tableau des sources" : "Source dashboard"} →
+            </Link>
+          </div>
+        </section>
+
         {/* 4. OTTAWA LIVE — unified neighborhoods/traffic/transit/places panel */}
         <section>
           <RailHeader
