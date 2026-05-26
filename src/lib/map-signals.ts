@@ -87,7 +87,7 @@ export function generateMockSignals(count = 120): MapSignal[] {
   for (let i = 0; i < count; i++) {
     const n = OTTAWA_NEIGHBORHOODS[Math.floor(rng() * OTTAWA_NEIGHBORHOODS.length)];
     const type = TYPES[Math.floor(rng() * TYPES.length)];
-    const titles = SAMPLE_TITLES[type];
+    const titles = SAMPLE_TITLES[type] ?? ["Civic update"];
     const title = titles[Math.floor(rng() * titles.length)];
     const jitter = () => (rng() - 0.5) * 0.025;
     const created = new Date(now - Math.floor(rng() * 1000 * 60 * 60 * 24 * 3)).toISOString();
@@ -99,8 +99,8 @@ export function generateMockSignals(count = 120): MapSignal[] {
       lat: n.lat + jitter(),
       lng: n.lng + jitter(),
       neighborhood: n.name,
-      urgency: URGENCY_BY_TYPE[type],
-      verification: VERIFICATION_BY_TYPE[type],
+      urgency: URGENCY_BY_TYPE[type] ?? "low",
+      verification: VERIFICATION_BY_TYPE[type] ?? "verified",
       source_type: type === "citizen-report" || type === "unresolved" ? "citizen" :
                    type === "fact-check" ? "editorial" :
                    type === "traffic" || type === "transit" || type === "weather-alert" || type === "public-safety" ? "official" : "editorial",
