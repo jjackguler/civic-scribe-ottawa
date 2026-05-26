@@ -2,11 +2,16 @@ import { useMemo, useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { LeafletMap, SIGNAL_STYLES } from "./LeafletMapClient";
 import { generateMockSignals } from "@/lib/map-signals";
+import { generate311Signals } from "@/lib/ingest/ottawa-311";
+import { generateRoadClosureSignals } from "@/lib/ingest/road-closures";
+import { generateParksEnvironmentSignals } from "@/lib/ingest/parks-environment";
+import { generatePublicSafetySignals, publicSafetyPublished } from "@/lib/ingest/public-safety";
 import type { SignalType, MapSignal } from "@/types/database";
 import { useLocale } from "@/lib/locale-context";
 
 const COMPACT_TYPES: SignalType[] = [
   "breaking-news", "traffic", "transit", "weather-alert", "citizen-report", "good-news",
+  "open-issue", "road-closure", "parks-alert", "public-safety",
 ];
 
 export function HomepageMapEmbed() {
