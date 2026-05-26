@@ -2,16 +2,27 @@ import { useMemo, useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { LeafletMap, SIGNAL_STYLES } from "./LeafletMapClient";
 import { generateMockSignals } from "@/lib/map-signals";
+import { generate311Signals } from "@/lib/ingest/ottawa-311";
+import { generateRoadClosureSignals } from "@/lib/ingest/road-closures";
+import { generateParksEnvironmentSignals } from "@/lib/ingest/parks-environment";
+import { generatePublicSafetySignals, publicSafetyPublished } from "@/lib/ingest/public-safety";
 import type { SignalType, MapSignal } from "@/types/database";
 import { useLocale } from "@/lib/locale-context";
 
 const COMPACT_TYPES: SignalType[] = [
   "breaking-news", "traffic", "transit", "weather-alert", "citizen-report", "good-news",
+  "open-issue", "road-closure", "parks-alert", "public-safety",
 ];
 
 export function HomepageMapEmbed() {
   const { locale } = useLocale();
-  const base = useMemo(() => generateMockSignals(120), []);
+  const base = useMemo<MapSignal[]>(() => [
+    ...generateMockSignals(120),
+    ...generate311Signals(40),
+    ...generateRoadClosureSignals(),
+    ...generateParksEnvironmentSignals(),
+    ...publicSafetyPublished(generatePublicSafetySignals()),
+  ], []);
   const [signals, setSignals] = useState<MapSignal[]>(base);
   const [active, setActive] = useState<Set<SignalType>>(new Set(COMPACT_TYPES));
 

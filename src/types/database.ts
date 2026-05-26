@@ -3,7 +3,9 @@
 export type SignalType =
   | "citizen-report" | "breaking-news" | "traffic" | "transit" | "weather-alert"
   | "food" | "sports" | "event" | "public-safety" | "good-news"
-  | "fact-check" | "unresolved" | "solved";
+  | "fact-check" | "unresolved" | "solved"
+  // Phase: ingestion expansion
+  | "open-issue" | "road-closure" | "parks-alert" | "health-recall" | "school-closure";
 
 export type SignalUrgency = "low" | "medium" | "high" | "critical";
 
@@ -12,6 +14,36 @@ export type SignalVerification =
   | "needs-fact-check" | "official-source" | "editor-reviewed";
 
 export type SignalSourceType = "editorial" | "citizen" | "official" | "rss-external" | "ai-assisted";
+
+/**
+ * Trauma-informed safety classification. Items tagged with any of the
+ * "hold_for_editor"-equivalent classes must NOT be auto-published.
+ */
+export type SafetyClassification =
+  | "routine_public_notice"
+  | "traffic_or_closure"
+  | "public_health_alert"
+  | "weather_or_environment_alert"
+  | "school_closure_official"
+  | "police_release_sensitive"
+  | "involves_minor"
+  | "involves_victim"
+  | "involves_suspect"
+  | "violent_crime"
+  | "homicide_or_death"
+  | "sexual_violence"
+  | "domestic_violence"
+  | "missing_person"
+  | "active_investigation"
+  | "court_or_publication_ban_risk"
+  | "hold_for_editor";
+
+export type PublishStatus =
+  | "auto_published"
+  | "hold_for_editor"
+  | "editor_approved"
+  | "editor_rejected"
+  | "expired";
 
 export interface MapSignal {
   id: string;
@@ -26,12 +58,17 @@ export interface MapSignal {
   source_type: SignalSourceType;
   source_url?: string;
   source_name?: string;
+  source_group?: string;
+  safety_classifications?: SafetyClassification[];
+  publish_status?: PublishStatus;
   image_url?: string;
   image_alt?: string;
   image_consent_status?: "owner-confirmed" | "cc-licensed" | "ai-generated" | "editorial-stock";
   related_story_ids?: string[];
   editor_notes?: string;
   community_action_steps?: string[];
+  // 311 Open Issues lifecycle
+  issue_status?: "reported" | "acknowledged" | "in_progress" | "resolved";
   created_at: string;
   updated_at: string;
   expires_at?: string;
@@ -69,4 +106,22 @@ export interface EditorialReview {
   fact_checks_performed: string[];
   sources_verified: string[];
   decision_at: string;
+}
+
+export type SourceStatus =
+  | "working" | "discovered" | "failed" | "manual_config_required" | "disabled";
+
+export interface SourceConfig {
+  id: string;
+  group: string;
+  name: string;
+  url: string;
+  discovered_url?: string;
+  status: SourceStatus;
+  enabled: boolean;
+  refresh_interval_minutes: number;
+  last_sync_at?: string;
+  next_sync_at?: string;
+  notes?: string;
+  sensitive_items_pending?: number;
 }

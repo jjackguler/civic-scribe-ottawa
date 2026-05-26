@@ -41,7 +41,7 @@ const TYPES: SignalType[] = [
   "unresolved", "solved",
 ];
 
-const SAMPLE_TITLES: Record<SignalType, string[]> = {
+const SAMPLE_TITLES: Partial<Record<SignalType, string[]>> = {
   "citizen-report": ["Pothole on Bank St near Fifth", "Broken streetlight, dim crosswalk", "Graffiti tagged overnight", "Missing recycling pickup"],
   "breaking-news": ["Council passes new transit funding plan", "Major water main break downtown", "Premier visits Ottawa city hall"],
   "traffic": ["Hwy 417 EB slowdown — 15 min", "Bank St lane closure, construction", "Bridge backlog into Gatineau"],
@@ -57,7 +57,7 @@ const SAMPLE_TITLES: Record<SignalType, string[]> = {
   "solved": ["Pothole filled by City crew", "Streetlight repaired Tues", "Crosswalk paint refreshed"],
 };
 
-const URGENCY_BY_TYPE: Record<SignalType, MapSignal["urgency"]> = {
+const URGENCY_BY_TYPE: Partial<Record<SignalType, MapSignal["urgency"]>> = {
   "breaking-news": "critical", "public-safety": "critical",
   "traffic": "high", "transit": "high", "weather-alert": "high",
   "fact-check": "medium", "unresolved": "medium", "event": "medium",
@@ -65,7 +65,7 @@ const URGENCY_BY_TYPE: Record<SignalType, MapSignal["urgency"]> = {
   "good-news": "low", "solved": "low",
 };
 
-const VERIFICATION_BY_TYPE: Record<SignalType, MapSignal["verification"]> = {
+const VERIFICATION_BY_TYPE: Partial<Record<SignalType, MapSignal["verification"]>> = {
   "breaking-news": "developing", "public-safety": "official-source",
   "traffic": "official-source", "transit": "official-source",
   "weather-alert": "official-source", "fact-check": "editor-reviewed",
@@ -87,7 +87,7 @@ export function generateMockSignals(count = 120): MapSignal[] {
   for (let i = 0; i < count; i++) {
     const n = OTTAWA_NEIGHBORHOODS[Math.floor(rng() * OTTAWA_NEIGHBORHOODS.length)];
     const type = TYPES[Math.floor(rng() * TYPES.length)];
-    const titles = SAMPLE_TITLES[type];
+    const titles = SAMPLE_TITLES[type] ?? ["Civic update"];
     const title = titles[Math.floor(rng() * titles.length)];
     const jitter = () => (rng() - 0.5) * 0.025;
     const created = new Date(now - Math.floor(rng() * 1000 * 60 * 60 * 24 * 3)).toISOString();
@@ -99,8 +99,8 @@ export function generateMockSignals(count = 120): MapSignal[] {
       lat: n.lat + jitter(),
       lng: n.lng + jitter(),
       neighborhood: n.name,
-      urgency: URGENCY_BY_TYPE[type],
-      verification: VERIFICATION_BY_TYPE[type],
+      urgency: URGENCY_BY_TYPE[type] ?? "low",
+      verification: VERIFICATION_BY_TYPE[type] ?? "verified",
       source_type: type === "citizen-report" || type === "unresolved" ? "citizen" :
                    type === "fact-check" ? "editorial" :
                    type === "traffic" || type === "transit" || type === "weather-alert" || type === "public-safety" ? "official" : "editorial",
