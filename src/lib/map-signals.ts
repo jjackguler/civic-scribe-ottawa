@@ -41,7 +41,7 @@ const TYPES: SignalType[] = [
   "unresolved", "solved",
 ];
 
-const SAMPLE_TITLES: Record<SignalType, string[]> = {
+const SAMPLE_TITLES: Partial<Record<SignalType, string[]>> = {
   "citizen-report": ["Pothole on Bank St near Fifth", "Broken streetlight, dim crosswalk", "Graffiti tagged overnight", "Missing recycling pickup"],
   "breaking-news": ["Council passes new transit funding plan", "Major water main break downtown", "Premier visits Ottawa city hall"],
   "traffic": ["Hwy 417 EB slowdown — 15 min", "Bank St lane closure, construction", "Bridge backlog into Gatineau"],
@@ -57,7 +57,7 @@ const SAMPLE_TITLES: Record<SignalType, string[]> = {
   "solved": ["Pothole filled by City crew", "Streetlight repaired Tues", "Crosswalk paint refreshed"],
 };
 
-const URGENCY_BY_TYPE: Record<SignalType, MapSignal["urgency"]> = {
+const URGENCY_BY_TYPE: Partial<Record<SignalType, MapSignal["urgency"]>> = {
   "breaking-news": "critical", "public-safety": "critical",
   "traffic": "high", "transit": "high", "weather-alert": "high",
   "fact-check": "medium", "unresolved": "medium", "event": "medium",
@@ -65,7 +65,7 @@ const URGENCY_BY_TYPE: Record<SignalType, MapSignal["urgency"]> = {
   "good-news": "low", "solved": "low",
 };
 
-const VERIFICATION_BY_TYPE: Record<SignalType, MapSignal["verification"]> = {
+const VERIFICATION_BY_TYPE: Partial<Record<SignalType, MapSignal["verification"]>> = {
   "breaking-news": "developing", "public-safety": "official-source",
   "traffic": "official-source", "transit": "official-source",
   "weather-alert": "official-source", "fact-check": "editor-reviewed",
