@@ -18,4 +18,9 @@ export const SIGNAL_STYLES: Record<SignalType, { Icon: any; color: string; label
   "fact-check":      { Icon: Search,         color: "#0F1419", label: "Fact check" },
   "unresolved":      { Icon: AlertTriangle,  color: "#E8A317", label: "Unresolved" },
   "solved":          { Icon: CheckCircle,    color: "#3A7D44", label: "Solved" },
+  "open-issue":      { Icon: AlertTriangle,  color: "#3A7D44", label: "Open civic issue" },
+  "road-closure":    { Icon: Car,            color: "#C8102E", label: "Road closure" },
+  "parks-alert":     { Icon: CloudRain,      color: "#3A7D44", label: "Parks & environment" },
+  "health-recall":   { Icon: Shield,         color: "#1E5F8E", label: "Health recall" },
+  "school-closure":  { Icon: AlertCircle,    color: "#E8A317", label: "School closure" },
 };
