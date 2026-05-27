@@ -109,52 +109,82 @@ function TrafficPage() {
       </div>
 
       {tab === "incidents" && (
-        <div className="bg-card border border-rule p-5">
-          <div className="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
+        <div className="space-y-4">
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <h2 className="kicker text-civic-red">{locale === "fr" ? "Ville d'Ottawa · en direct" : "City of Ottawa · live"}</h2>
             <div className="flex items-center gap-3 text-[11px] text-muted-foreground font-sans">
-              {fetchedAt && <span>{new Date(fetchedAt).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</span>}
+              {fetchedAt && <span>{locale === "fr" ? "Récupéré " : "Fetched "}{new Date(fetchedAt).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</span>}
               <button onClick={load} disabled={loading} className="inline-flex items-center gap-1 border border-rule hover:border-ink px-2 py-1 disabled:opacity-50">
                 <RefreshCcw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} /> {locale === "fr" ? "Actualiser" : "Refresh"}
               </button>
             </div>
           </div>
-          {loading && <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Chargement…" : "Loading City of Ottawa feed…"}</p>}
+
+          {loading && <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Chargement du flux Ville d'Ottawa…" : "Loading City of Ottawa feed…"}</p>}
+
           {error && !loading && (
-            <div className="mb-3 border border-highlight bg-highlight/10 p-3 text-xs font-sans">
-              <div className="font-semibold text-ink mb-1">
+            <div className="border-l-4 border-civic-red bg-civic-red/5 p-4 text-sm font-sans">
+              <div className="flex items-center gap-2 font-display text-base text-ink mb-1">
+                <AlertOctagon className="h-4 w-4 text-civic-red" />
                 {locale === "fr" ? "Flux officiel temporairement indisponible" : "Official feed temporarily unavailable"}
               </div>
-              <div className="text-muted-foreground">
+              <div className="text-muted-foreground text-[13px]">
                 {locale === "fr"
-                  ? `Affichage d'échantillons en cache marqués (sample). Dernière tentative : ${new Date().toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA")}. Statut source : ${error}.`
-                  : `Showing cached sample records (marked "sample"). Last attempt: ${new Date().toLocaleTimeString("en-CA")}. Source status: ${error}.`}
+                  ? `Affichage de fiches d'échantillon clairement étiquetées « ÉCHANTILLON ». Dernière tentative : ${new Date().toLocaleTimeString("fr-CA")}. Statut source : ${error}.`
+                  : `Showing clearly labelled sample records marked "SAMPLE". Last attempt: ${new Date().toLocaleTimeString("en-CA")}. Source status: ${error}.`}
               </div>
             </div>
           )}
+
           {!loading && !error && events.length === 0 && (
             <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Aucun événement actif." : "No active events."}</p>
           )}
-          <ul className="divide-y divide-rule">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {events.slice(0, 25).map(ev => {
               const Icon = /construction/i.test(ev.type) ? Construction : /event|special/i.test(ev.type) ? Calendar : AlertOctagon;
-              const sevColor = /high|major/i.test(String(ev.severity)) ? "text-civic-red" : /medium|moderate/i.test(String(ev.severity)) ? "text-highlight" : "text-solution";
+              const isHigh = /high|major/i.test(String(ev.severity));
+              const isMed = /medium|moderate/i.test(String(ev.severity));
+              const impactCls = isHigh ? "bg-civic-red text-paper" : isMed ? "bg-highlight text-foreground" : "bg-solution/20 text-solution";
+              const impactLabel = isHigh ? (locale === "fr" ? "Élevé" : "High") : isMed ? (locale === "fr" ? "Modéré" : "Medium") : (locale === "fr" ? "Faible" : "Low");
+              const sample = ev.isSample;
               return (
-                <li key={ev.id} className="py-3 flex items-start gap-3">
-                  <Icon className={`h-4 w-4 mt-1 ${sevColor}`} />
-                  <div className="min-w-0">
-                    <div className="font-serif text-sm leading-snug">{ev.title}</div>
-                    <div className="text-[11px] text-muted-foreground font-sans mt-0.5">
-                      {ev.location && <span>{typeof ev.location === "string" ? ev.location : JSON.stringify(ev.location)}</span>}
-                      {ev.updated && <span> · {new Date(ev.updated).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</span>}
-                    </div>
+                <article key={ev.id} className={`relative bg-card border ${sample ? "border-highlight border-dashed" : "border-rule"} p-4 flex flex-col gap-2`}>
+                  {sample && (
+                    <span className="absolute top-2 right-2 text-[9px] uppercase tracking-widest font-bold bg-highlight px-1.5 py-0.5">
+                      {locale === "fr" ? "Échantillon" : "Sample"}
+                    </span>
+                  )}
+                  <div className="flex items-start gap-2">
+                    <Icon className="h-4 w-4 mt-0.5 text-civic-red shrink-0" />
+                    <h3 className="font-display text-base leading-snug pr-12">{ev.title}</h3>
                   </div>
-                </li>
+                  {ev.location && (
+                    <div className="text-[12px] text-muted-foreground font-sans">
+                      <span className="font-semibold text-ink">{locale === "fr" ? "Lieu" : "Location"}: </span>{typeof ev.location === "string" ? ev.location : JSON.stringify(ev.location)}
+                    </div>
+                  )}
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] font-sans text-muted-foreground">
+                    <div><span className="font-semibold text-ink">{locale === "fr" ? "Impact" : "Impact"}: </span>
+                      <span className={`inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${impactCls}`}>{impactLabel}</span>
+                    </div>
+                    <div><span className="font-semibold text-ink">{locale === "fr" ? "Source" : "Source"}: </span>{ev.source ?? (locale === "fr" ? "Ville d'Ottawa" : "City of Ottawa")}</div>
+                    {ev.updated && <div><span className="font-semibold text-ink">{locale === "fr" ? "Maj" : "Updated"}: </span>{new Date(ev.updated).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</div>}
+                    {ev.endTime && <div><span className="font-semibold text-ink">{locale === "fr" ? "Prévu fin" : "Expected end"}: </span>{new Date(ev.endTime).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</div>}
+                  </div>
+                  <div className="pt-2 mt-auto border-t border-rule flex items-center gap-2 text-[10px] uppercase tracking-wider">
+                    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 border font-bold ${sample ? "border-highlight text-foreground bg-highlight/20" : "border-solution/40 text-solution bg-solution/10"}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${sample ? "bg-highlight" : "bg-solution animate-pulse"}`} />
+                      {sample ? (locale === "fr" ? "Statut source : hors ligne" : "Source status: offline") : (locale === "fr" ? "Statut source : en direct" : "Source status: live")}
+                    </span>
+                  </div>
+                </article>
               );
             })}
-          </ul>
+          </div>
         </div>
       )}
+
 
       {tab === "closures" && (
         <div className="bg-card border border-rule">
