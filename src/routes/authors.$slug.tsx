@@ -24,7 +24,7 @@ export const Route = createFileRoute("/authors/$slug")({
             <p className="font-serif text-muted-foreground">No articles published yet.</p>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
-              {articles.map(a => <EditorialCard key={`${a.type}-${a.slug}`} a={a} />)}
+              {articles.map((a: any) => <EditorialCard key={`${a.type}-${a.slug}`} a={a} />)}
             </div>
           )}
         </div>
