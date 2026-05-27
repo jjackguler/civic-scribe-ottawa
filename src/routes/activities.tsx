@@ -56,6 +56,19 @@ function ActivitiesPage() {
           : "Museums, libraries, parks, festivals, sports, workshops, and free events."}
       />
 
+      {/* Source / status legend */}
+      <div className="bg-secondary border-l-2 border-civic-red px-4 py-3 mb-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[11px] font-sans">
+        <span className="kicker text-civic-red">{locale === "fr" ? "Sources" : "Sources"}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 bg-civic-red" />{locale === "fr" ? "Éditeur (vérifié)" : "Editor (verified)"}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 bg-river" />{locale === "fr" ? "Ville d'Ottawa" : "City of Ottawa"}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 bg-solution" />{locale === "fr" ? "Soumission citoyen (revue)" : "Citizen submission (reviewed)"}</span>
+        <span className="ml-auto text-muted-foreground italic">
+          {locale === "fr"
+            ? "Confidentialité : aucune adresse précise n'est publiée. Vérifiez les heures avant de partir."
+            : "Privacy-safe: no precise home addresses are published. Confirm hours before you leave."}
+        </span>
+      </div>
+
       <div className="sticky top-[140px] md:top-[180px] z-20 -mx-4 sm:mx-0 mb-6 bg-paper/95 backdrop-blur py-2 rule-bottom">
         <div className="flex items-center gap-2 px-4 sm:px-0 overflow-x-auto no-scrollbar">
           {CHIPS.map(c => {
