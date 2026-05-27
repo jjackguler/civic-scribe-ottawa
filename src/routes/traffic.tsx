@@ -119,7 +119,18 @@ function TrafficPage() {
             </div>
           </div>
           {loading && <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Chargement…" : "Loading City of Ottawa feed…"}</p>}
-          {error && <p className="text-sm text-civic-red font-sans">{error}</p>}
+          {error && !loading && (
+            <div className="mb-3 border border-highlight bg-highlight/10 p-3 text-xs font-sans">
+              <div className="font-semibold text-ink mb-1">
+                {locale === "fr" ? "Flux officiel temporairement indisponible" : "Official feed temporarily unavailable"}
+              </div>
+              <div className="text-muted-foreground">
+                {locale === "fr"
+                  ? `Affichage d'échantillons en cache marqués (sample). Dernière tentative : ${new Date().toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA")}. Statut source : ${error}.`
+                  : `Showing cached sample records (marked "sample"). Last attempt: ${new Date().toLocaleTimeString("en-CA")}. Source status: ${error}.`}
+              </div>
+            </div>
+          )}
           {!loading && !error && events.length === 0 && (
             <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Aucun événement actif." : "No active events."}</p>
           )}
