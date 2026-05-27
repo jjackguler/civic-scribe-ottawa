@@ -1,21 +1,22 @@
 import { Link } from "@tanstack/react-router";
-import { Search, Heart, PenSquare, Menu, X, Radio, AlertTriangle, MapPin, Car, Hash, Sparkles, Baby, GraduationCap, Tag, Flag } from "lucide-react";
+import { Search, Heart, PenSquare, Menu, X, AlertTriangle, MapPin, Car, Hash, MessageSquare, Mic2, Lightbulb, Palette, Calendar, Newspaper } from "lucide-react";
 import { useState } from "react";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { LanguageToggle } from "./LanguageToggle";
 
-const TABS: { key: any; to: string; icon: any; pulse?: boolean }[] = [
-  { key: "breakingNews",  to: "/breaking",      icon: AlertTriangle, pulse: true },
-  { key: "liveTraffic",   to: "/traffic",       icon: Car },
-  { key: "ottawaMap",     to: "/map",           icon: MapPin },
-  { key: "trafficRadio",  to: "/radio",         icon: Radio },
-  { key: "socialTrends",  to: "/social",        icon: Hash },
-  { key: "activities",    to: "/activities",    icon: Sparkles },
-  { key: "kidsFamily",    to: "/kids",          icon: Baby },
-  { key: "youth",         to: "/youth",         icon: GraduationCap },
-  { key: "deals",         to: "/deals",         icon: Tag },
-  { key: "canadaGuide",   to: "/guide/canada",  icon: Flag },
+const TABS: { label: string; to: string; icon: any; pulse?: boolean }[] = [
+  { label: "News",          to: "/",              icon: Newspaper, pulse: true },
+  { label: "Ottawa Map",    to: "/map",           icon: MapPin },
+  { label: "Social Trends", to: "/social",        icon: Hash },
+  { label: "Traffic",       to: "/traffic",       icon: Car },
+  { label: "Interviews",    to: "/interviews",    icon: Mic2 },
+  { label: "Opinion",       to: "/opinion",       icon: MessageSquare },
+  { label: "Culture",       to: "/editorial",     icon: Palette },
+  { label: "Cartoons",      to: "/cartoons",      icon: Palette },
+  { label: "Solutions",     to: "/solutions",     icon: Lightbulb },
+  { label: "Events",        to: "/events",        icon: Calendar },
+  { label: "Letters",       to: "/letters",       icon: PenSquare },
 ];
 
 export function Header() {
@@ -61,14 +62,14 @@ export function Header() {
               {TABS.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <li key={s.to}>
+                  <li key={s.to + s.label}>
                     <Link
                       to={s.to as any}
                       className="group inline-flex items-center gap-1.5 px-3 py-1.5 font-semibold tracking-tight hover:text-civic-red transition-colors data-[status=active]:text-civic-red data-[status=active]:bg-secondary whitespace-nowrap"
                       activeProps={{ className: "text-civic-red bg-secondary" }}
                     >
                       <Icon className="h-3.5 w-3.5 opacity-70 group-hover:opacity-100" />
-                      {t(s.key, locale)}
+                      {s.label}
                       {s.pulse && <span className="ticker-dot ml-1" />}
                     </Link>
                   </li>
@@ -84,10 +85,10 @@ export function Header() {
               {TABS.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <li key={s.to}>
+                  <li key={s.to + s.label}>
                     <Link to={s.to as any} onClick={() => setOpen(false)} className="flex items-center gap-2 py-1.5">
                       <Icon className="h-4 w-4 text-civic-red" />
-                      {t(s.key, locale)}
+                      {s.label}
                       {s.pulse && <span className="ticker-dot ml-1" />}
                     </Link>
                   </li>
