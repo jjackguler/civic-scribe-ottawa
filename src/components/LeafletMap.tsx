@@ -57,9 +57,11 @@ interface Props {
   dark?: boolean;
   showLiveBadge?: boolean;
   compact?: boolean;
+  onSelect?: (signal: MapSignal) => void;
+  liveBadgeLabel?: string;
 }
 
-export function LeafletMap({ signals, height = "500px", dark = false, showLiveBadge = true, compact = false }: Props) {
+export function LeafletMap({ signals, height = "500px", dark = false, showLiveBadge = true, compact = false, onSelect, liveBadgeLabel }: Props) {
   const [bounds, setBounds] = useState<L.LatLngBounds | null>(null);
 
   const visible = useMemo(() => {
@@ -96,7 +98,12 @@ export function LeafletMap({ signals, height = "500px", dark = false, showLiveBa
           {visible.map(s => {
             const urgent = s.urgency === "critical" || s.urgency === "high";
             return (
-              <Marker key={s.id} position={[s.lat, s.lng]} icon={makeDivIcon(s.type, urgent)}>
+              <Marker
+                key={s.id}
+                position={[s.lat, s.lng]}
+                icon={makeDivIcon(s.type, urgent)}
+                eventHandlers={onSelect ? { click: () => onSelect(s) } : undefined}
+              >
                 <Popup>
                   <div style={{ minWidth: 220, fontFamily: "Inter, sans-serif" }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", color: SIGNAL_STYLES[s.type].color, fontWeight: 700 }}>
@@ -126,7 +133,7 @@ export function LeafletMap({ signals, height = "500px", dark = false, showLiveBa
       {showLiveBadge && (
         <div className="absolute top-3 left-3 z-[400] bg-paper border border-ink px-2.5 py-1 text-[10px] uppercase tracking-wider font-semibold flex items-center gap-1.5 shadow">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-civic-red animate-pulse" />
-          Prototype · Mock live data
+          {liveBadgeLabel ?? "Live · sample data"}
         </div>
       )}
     </div>

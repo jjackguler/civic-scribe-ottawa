@@ -60,6 +60,22 @@ function Home() {
       <Header />
 
       <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-14">
+        {/* Civic action strip — promote core utilities above the fold */}
+        <section className="grid grid-cols-1 md:grid-cols-3 border border-rule bg-card divide-y md:divide-y-0 md:divide-x divide-rule">
+          <Link to="/submit" className="p-5 hover:bg-secondary/40 transition-colors">
+            <div className="kicker text-civic-red">{locale === "fr" ? "Vous avez vu quelque chose ?" : "Saw something on your block?"}</div>
+            <div className="font-display text-xl mt-2">{locale === "fr" ? "Signaler un problème de quartier →" : "Report a neighborhood issue →"}</div>
+          </Link>
+          <Link to="/map" className="p-5 hover:bg-secondary/40 transition-colors">
+            <div className="kicker text-river">{locale === "fr" ? "Carte vivante" : "Live editorial map"}</div>
+            <div className="font-display text-xl mt-2">{locale === "fr" ? "Ouvrir la carte d'Ottawa →" : "Open the Ottawa live map →"}</div>
+          </Link>
+          <Link to="/traffic" className="p-5 hover:bg-secondary/40 transition-colors">
+            <div className="kicker text-solution">{locale === "fr" ? "311 · circulation · météo" : "311 · traffic · weather"}</div>
+            <div className="font-display text-xl mt-2">{locale === "fr" ? "Tableau civique en direct →" : "Today's civic signals →"}</div>
+          </Link>
+        </section>
+
         {/* 1. THE SPLASH (lead story) */}
         <BreakingHero />
 

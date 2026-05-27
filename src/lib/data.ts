@@ -28,17 +28,19 @@ export type Article = {
   sources?: { label: string; url?: string }[];
 };
 
-// Unsplash editorial photos (royalty-free, no key required)
-const img = (id: string, w = 1400, h = 900) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
+// Deterministic editorial placeholder — replaces external stock photography
+// across the article corpus. The NewsImage wrapper still shows the headline
+// as overlay text on the newsprint SVG via its onError chain when needed.
+import { newsprintDataURI } from "./image-fallback";
+const _ACCENTS = ["#8b1d24", "#1E5F8E", "#2F5233", "#B87333", "#0F1419", "#A0202C"];
+const _hash = (id: string) => _ACCENTS[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % _ACCENTS.length];
+const img = (id: string, _w = 1400, _h = 900) => `newsprint:${_hash(id)}`;
 
-// Hard block on imagery that has been misidentified as Ottawa transit.
-// Freight-train, intercity-rail, and other non-OC-Transpo photos belong here.
+// Legacy hard-block list kept for any caller that still passes Unsplash IDs.
 export const BLOCKED_TRANSIT_IMAGE_IDS = ["1474487548417-781cb71495f3"];
 
 // Neutral civic placeholder for Transit category when no validated image is available.
-export const NEUTRAL_TRANSIT_PLACEHOLDER =
-  "https://images.unsplash.com/photo-1503614472-8c93d56cd87b?auto=format&fit=crop&w=1400&h=900&q=80";
+export const NEUTRAL_TRANSIT_PLACEHOLDER = newsprintDataURI("OC Transpo", 1400, 900, "#1E5F8E");
 
 /** Return a safe image URL for a Transit story; swaps blocked IDs for a neutral placeholder. */
 export function safeTransitImage(url: string | undefined, category?: string): string {

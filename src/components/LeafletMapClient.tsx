@@ -14,6 +14,8 @@ interface Props {
   dark?: boolean;
   showLiveBadge?: boolean;
   compact?: boolean;
+  onSelect?: (signal: MapSignal) => void;
+  liveBadgeLabel?: string;
 }
 
 export function LeafletMap(props: Props) {
