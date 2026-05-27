@@ -28,6 +28,7 @@ import { Route as FoodRouteImport } from './routes/food'
 import { Route as FactCheckRouteImport } from './routes/fact-check'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as EthicsRouteImport } from './routes/ethics'
+import { Route as EditorialRouteImport } from './routes/editorial'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as BreakingRouteImport } from './routes/breaking'
@@ -139,6 +140,11 @@ const EthicsRoute = EthicsRouteImport.update({
   path: '/ethics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditorialRoute = EditorialRouteImport.update({
+  id: '/editorial',
+  path: '/editorial',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
   path: '/donate',
@@ -222,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
+  '/editorial': typeof EditorialRoute
   '/ethics': typeof EthicsRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
@@ -258,6 +265,7 @@ export interface FileRoutesByTo {
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
+  '/editorial': typeof EditorialRoute
   '/ethics': typeof EthicsRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
@@ -295,6 +303,7 @@ export interface FileRoutesById {
   '/breaking': typeof BreakingRoute
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
+  '/editorial': typeof EditorialRoute
   '/ethics': typeof EthicsRoute
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/breaking'
     | '/deals'
     | '/donate'
+    | '/editorial'
     | '/ethics'
     | '/events'
     | '/fact-check'
@@ -369,6 +379,7 @@ export interface FileRouteTypes {
     | '/breaking'
     | '/deals'
     | '/donate'
+    | '/editorial'
     | '/ethics'
     | '/events'
     | '/fact-check'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/breaking'
     | '/deals'
     | '/donate'
+    | '/editorial'
     | '/ethics'
     | '/events'
     | '/fact-check'
@@ -442,6 +454,7 @@ export interface RootRouteChildren {
   BreakingRoute: typeof BreakingRoute
   DealsRoute: typeof DealsRoute
   DonateRoute: typeof DonateRoute
+  EditorialRoute: typeof EditorialRoute
   EthicsRoute: typeof EthicsRoute
   EventsRoute: typeof EventsRoute
   FactCheckRoute: typeof FactCheckRoute
@@ -606,6 +619,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EthicsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/editorial': {
+      id: '/editorial'
+      path: '/editorial'
+      fullPath: '/editorial'
+      preLoaderRoute: typeof EditorialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/donate': {
       id: '/donate'
       path: '/donate'
@@ -733,6 +753,7 @@ const rootRouteChildren: RootRouteChildren = {
   BreakingRoute: BreakingRoute,
   DealsRoute: DealsRoute,
   DonateRoute: DonateRoute,
+  EditorialRoute: EditorialRoute,
   EthicsRoute: EthicsRoute,
   EventsRoute: EventsRoute,
   FactCheckRoute: FactCheckRoute,
