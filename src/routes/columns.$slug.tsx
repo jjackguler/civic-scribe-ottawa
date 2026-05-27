@@ -27,7 +27,7 @@ export const Route = createFileRoute("/columns/$slug")({
           {columnist && <div className="mt-4 text-sm uppercase tracking-wider">By <Link to="/authors/$slug" params={{ slug: columnist.slug }} className="underline hover:text-civic-red">{columnist.name}</Link></div>}
         </header>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {entries.map(e => <EditorialCard key={e.slug} a={e} />)}
+          {entries.map((e: any) => <EditorialCard key={e.slug} a={e} />)}
         </div>
       </PageShell>
     );

@@ -19,11 +19,13 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SocialRouteImport } from './routes/social'
 import { Route as RadioRouteImport } from './routes/radio'
 import { Route as PulseRouteImport } from './routes/pulse'
+import { Route as OpinionRouteImport } from './routes/opinion'
 import { Route as NeighborhoodsRouteImport } from './routes/neighborhoods'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as LinkToStoryRouteImport } from './routes/link-to-story'
 import { Route as KidsRouteImport } from './routes/kids'
 import { Route as JobsRouteImport } from './routes/jobs'
+import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as FactCheckRouteImport } from './routes/fact-check'
 import { Route as EventsRouteImport } from './routes/events'
@@ -31,17 +33,22 @@ import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as EditorialRouteImport } from './routes/editorial'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as ColumnsRouteImport } from './routes/columns'
 import { Route as BreakingRouteImport } from './routes/breaking'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SectionNameRouteImport } from './routes/section.$name'
+import { Route as OpinionSlugRouteImport } from './routes/opinion.$slug'
 import { Route as NeighborhoodsSlugRouteImport } from './routes/neighborhoods.$slug'
+import { Route as InterviewsSlugRouteImport } from './routes/interviews.$slug'
 import { Route as GuideOttawaRouteImport } from './routes/guide.ottawa'
 import { Route as GuideCanadaRouteImport } from './routes/guide.canada'
+import { Route as ColumnsSlugRouteImport } from './routes/columns.$slug'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as AdminSourcesRouteImport } from './routes/admin.sources'
+import { Route as ColumnsSlugEntryRouteImport } from './routes/columns.$slug.$entry'
 import { Route as ApiPublicTrafficRadioRouteImport } from './routes/api/public/traffic-radio'
 import { Route as ApiPublicOttawaTrafficRouteImport } from './routes/api/public/ottawa-traffic'
 
@@ -95,6 +102,11 @@ const PulseRoute = PulseRouteImport.update({
   path: '/pulse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OpinionRoute = OpinionRouteImport.update({
+  id: '/opinion',
+  path: '/opinion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NeighborhoodsRoute = NeighborhoodsRouteImport.update({
   id: '/neighborhoods',
   path: '/neighborhoods',
@@ -118,6 +130,11 @@ const KidsRoute = KidsRouteImport.update({
 const JobsRoute = JobsRouteImport.update({
   id: '/jobs',
   path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewsRoute = InterviewsRouteImport.update({
+  id: '/interviews',
+  path: '/interviews',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FoodRoute = FoodRouteImport.update({
@@ -155,6 +172,11 @@ const DealsRoute = DealsRouteImport.update({
   path: '/deals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ColumnsRoute = ColumnsRouteImport.update({
+  id: '/columns',
+  path: '/columns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BreakingRoute = BreakingRouteImport.update({
   id: '/breaking',
   path: '/breaking',
@@ -185,10 +207,20 @@ const SectionNameRoute = SectionNameRouteImport.update({
   path: '/section/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OpinionSlugRoute = OpinionSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => OpinionRoute,
+} as any)
 const NeighborhoodsSlugRoute = NeighborhoodsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => NeighborhoodsRoute,
+} as any)
+const InterviewsSlugRoute = InterviewsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => InterviewsRoute,
 } as any)
 const GuideOttawaRoute = GuideOttawaRouteImport.update({
   id: '/guide/ottawa',
@@ -200,6 +232,11 @@ const GuideCanadaRoute = GuideCanadaRouteImport.update({
   path: '/guide/canada',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ColumnsSlugRoute = ColumnsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ColumnsRoute,
+} as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
   id: '/article/$slug',
   path: '/article/$slug',
@@ -209,6 +246,11 @@ const AdminSourcesRoute = AdminSourcesRouteImport.update({
   id: '/admin/sources',
   path: '/admin/sources',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ColumnsSlugEntryRoute = ColumnsSlugEntryRouteImport.update({
+  id: '/$entry',
+  path: '/$entry',
+  getParentRoute: () => ColumnsSlugRoute,
 } as any)
 const ApiPublicTrafficRadioRoute = ApiPublicTrafficRadioRouteImport.update({
   id: '/api/public/traffic-radio',
@@ -226,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/breaking': typeof BreakingRoute
+  '/columns': typeof ColumnsRouteWithChildren
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/editorial': typeof EditorialRoute
@@ -233,11 +276,13 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
+  '/interviews': typeof InterviewsRouteWithChildren
   '/jobs': typeof JobsRoute
   '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
   '/map': typeof MapRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/opinion': typeof OpinionRouteWithChildren
   '/pulse': typeof PulseRoute
   '/radio': typeof RadioRoute
   '/social': typeof SocialRoute
@@ -250,19 +295,24 @@ export interface FileRoutesByFullPath {
   '/youth': typeof YouthRoute
   '/admin/sources': typeof AdminSourcesRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/columns/$slug': typeof ColumnsSlugRouteWithChildren
   '/guide/canada': typeof GuideCanadaRoute
   '/guide/ottawa': typeof GuideOttawaRoute
+  '/interviews/$slug': typeof InterviewsSlugRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
+  '/opinion/$slug': typeof OpinionSlugRoute
   '/section/$name': typeof SectionNameRoute
   '/admin/': typeof AdminIndexRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
+  '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/breaking': typeof BreakingRoute
+  '/columns': typeof ColumnsRouteWithChildren
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/editorial': typeof EditorialRoute
@@ -270,11 +320,13 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
+  '/interviews': typeof InterviewsRouteWithChildren
   '/jobs': typeof JobsRoute
   '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
   '/map': typeof MapRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/opinion': typeof OpinionRouteWithChildren
   '/pulse': typeof PulseRoute
   '/radio': typeof RadioRoute
   '/social': typeof SocialRoute
@@ -287,13 +339,17 @@ export interface FileRoutesByTo {
   '/youth': typeof YouthRoute
   '/admin/sources': typeof AdminSourcesRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/columns/$slug': typeof ColumnsSlugRouteWithChildren
   '/guide/canada': typeof GuideCanadaRoute
   '/guide/ottawa': typeof GuideOttawaRoute
+  '/interviews/$slug': typeof InterviewsSlugRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
+  '/opinion/$slug': typeof OpinionSlugRoute
   '/section/$name': typeof SectionNameRoute
   '/admin': typeof AdminIndexRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
+  '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -301,6 +357,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
   '/breaking': typeof BreakingRoute
+  '/columns': typeof ColumnsRouteWithChildren
   '/deals': typeof DealsRoute
   '/donate': typeof DonateRoute
   '/editorial': typeof EditorialRoute
@@ -308,11 +365,13 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/fact-check': typeof FactCheckRoute
   '/food': typeof FoodRoute
+  '/interviews': typeof InterviewsRouteWithChildren
   '/jobs': typeof JobsRoute
   '/kids': typeof KidsRoute
   '/link-to-story': typeof LinkToStoryRoute
   '/map': typeof MapRoute
   '/neighborhoods': typeof NeighborhoodsRouteWithChildren
+  '/opinion': typeof OpinionRouteWithChildren
   '/pulse': typeof PulseRoute
   '/radio': typeof RadioRoute
   '/social': typeof SocialRoute
@@ -325,13 +384,17 @@ export interface FileRoutesById {
   '/youth': typeof YouthRoute
   '/admin/sources': typeof AdminSourcesRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/columns/$slug': typeof ColumnsSlugRouteWithChildren
   '/guide/canada': typeof GuideCanadaRoute
   '/guide/ottawa': typeof GuideOttawaRoute
+  '/interviews/$slug': typeof InterviewsSlugRoute
   '/neighborhoods/$slug': typeof NeighborhoodsSlugRoute
+  '/opinion/$slug': typeof OpinionSlugRoute
   '/section/$name': typeof SectionNameRoute
   '/admin/': typeof AdminIndexRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
+  '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -340,6 +403,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/activities'
     | '/breaking'
+    | '/columns'
     | '/deals'
     | '/donate'
     | '/editorial'
@@ -347,11 +411,13 @@ export interface FileRouteTypes {
     | '/events'
     | '/fact-check'
     | '/food'
+    | '/interviews'
     | '/jobs'
     | '/kids'
     | '/link-to-story'
     | '/map'
     | '/neighborhoods'
+    | '/opinion'
     | '/pulse'
     | '/radio'
     | '/social'
@@ -364,19 +430,24 @@ export interface FileRouteTypes {
     | '/youth'
     | '/admin/sources'
     | '/article/$slug'
+    | '/columns/$slug'
     | '/guide/canada'
     | '/guide/ottawa'
+    | '/interviews/$slug'
     | '/neighborhoods/$slug'
+    | '/opinion/$slug'
     | '/section/$name'
     | '/admin/'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
+    | '/columns/$slug/$entry'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/activities'
     | '/breaking'
+    | '/columns'
     | '/deals'
     | '/donate'
     | '/editorial'
@@ -384,11 +455,13 @@ export interface FileRouteTypes {
     | '/events'
     | '/fact-check'
     | '/food'
+    | '/interviews'
     | '/jobs'
     | '/kids'
     | '/link-to-story'
     | '/map'
     | '/neighborhoods'
+    | '/opinion'
     | '/pulse'
     | '/radio'
     | '/social'
@@ -401,19 +474,24 @@ export interface FileRouteTypes {
     | '/youth'
     | '/admin/sources'
     | '/article/$slug'
+    | '/columns/$slug'
     | '/guide/canada'
     | '/guide/ottawa'
+    | '/interviews/$slug'
     | '/neighborhoods/$slug'
+    | '/opinion/$slug'
     | '/section/$name'
     | '/admin'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
+    | '/columns/$slug/$entry'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/activities'
     | '/breaking'
+    | '/columns'
     | '/deals'
     | '/donate'
     | '/editorial'
@@ -421,11 +499,13 @@ export interface FileRouteTypes {
     | '/events'
     | '/fact-check'
     | '/food'
+    | '/interviews'
     | '/jobs'
     | '/kids'
     | '/link-to-story'
     | '/map'
     | '/neighborhoods'
+    | '/opinion'
     | '/pulse'
     | '/radio'
     | '/social'
@@ -438,13 +518,17 @@ export interface FileRouteTypes {
     | '/youth'
     | '/admin/sources'
     | '/article/$slug'
+    | '/columns/$slug'
     | '/guide/canada'
     | '/guide/ottawa'
+    | '/interviews/$slug'
     | '/neighborhoods/$slug'
+    | '/opinion/$slug'
     | '/section/$name'
     | '/admin/'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
+    | '/columns/$slug/$entry'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -452,6 +536,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ActivitiesRoute: typeof ActivitiesRoute
   BreakingRoute: typeof BreakingRoute
+  ColumnsRoute: typeof ColumnsRouteWithChildren
   DealsRoute: typeof DealsRoute
   DonateRoute: typeof DonateRoute
   EditorialRoute: typeof EditorialRoute
@@ -459,11 +544,13 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   FactCheckRoute: typeof FactCheckRoute
   FoodRoute: typeof FoodRoute
+  InterviewsRoute: typeof InterviewsRouteWithChildren
   JobsRoute: typeof JobsRoute
   KidsRoute: typeof KidsRoute
   LinkToStoryRoute: typeof LinkToStoryRoute
   MapRoute: typeof MapRoute
   NeighborhoodsRoute: typeof NeighborhoodsRouteWithChildren
+  OpinionRoute: typeof OpinionRouteWithChildren
   PulseRoute: typeof PulseRoute
   RadioRoute: typeof RadioRoute
   SocialRoute: typeof SocialRoute
@@ -556,6 +643,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PulseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/opinion': {
+      id: '/opinion'
+      path: '/opinion'
+      fullPath: '/opinion'
+      preLoaderRoute: typeof OpinionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/neighborhoods': {
       id: '/neighborhoods'
       path: '/neighborhoods'
@@ -589,6 +683,13 @@ declare module '@tanstack/react-router' {
       path: '/jobs'
       fullPath: '/jobs'
       preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interviews': {
+      id: '/interviews'
+      path: '/interviews'
+      fullPath: '/interviews'
+      preLoaderRoute: typeof InterviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/food': {
@@ -640,6 +741,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DealsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/columns': {
+      id: '/columns'
+      path: '/columns'
+      fullPath: '/columns'
+      preLoaderRoute: typeof ColumnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/breaking': {
       id: '/breaking'
       path: '/breaking'
@@ -682,12 +790,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SectionNameRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/opinion/$slug': {
+      id: '/opinion/$slug'
+      path: '/$slug'
+      fullPath: '/opinion/$slug'
+      preLoaderRoute: typeof OpinionSlugRouteImport
+      parentRoute: typeof OpinionRoute
+    }
     '/neighborhoods/$slug': {
       id: '/neighborhoods/$slug'
       path: '/$slug'
       fullPath: '/neighborhoods/$slug'
       preLoaderRoute: typeof NeighborhoodsSlugRouteImport
       parentRoute: typeof NeighborhoodsRoute
+    }
+    '/interviews/$slug': {
+      id: '/interviews/$slug'
+      path: '/$slug'
+      fullPath: '/interviews/$slug'
+      preLoaderRoute: typeof InterviewsSlugRouteImport
+      parentRoute: typeof InterviewsRoute
     }
     '/guide/ottawa': {
       id: '/guide/ottawa'
@@ -703,6 +825,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideCanadaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/columns/$slug': {
+      id: '/columns/$slug'
+      path: '/$slug'
+      fullPath: '/columns/$slug'
+      preLoaderRoute: typeof ColumnsSlugRouteImport
+      parentRoute: typeof ColumnsRoute
+    }
     '/article/$slug': {
       id: '/article/$slug'
       path: '/article/$slug'
@@ -716,6 +845,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/sources'
       preLoaderRoute: typeof AdminSourcesRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/columns/$slug/$entry': {
+      id: '/columns/$slug/$entry'
+      path: '/$entry'
+      fullPath: '/columns/$slug/$entry'
+      preLoaderRoute: typeof ColumnsSlugEntryRouteImport
+      parentRoute: typeof ColumnsSlugRoute
     }
     '/api/public/traffic-radio': {
       id: '/api/public/traffic-radio'
@@ -734,6 +870,41 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ColumnsSlugRouteChildren {
+  ColumnsSlugEntryRoute: typeof ColumnsSlugEntryRoute
+}
+
+const ColumnsSlugRouteChildren: ColumnsSlugRouteChildren = {
+  ColumnsSlugEntryRoute: ColumnsSlugEntryRoute,
+}
+
+const ColumnsSlugRouteWithChildren = ColumnsSlugRoute._addFileChildren(
+  ColumnsSlugRouteChildren,
+)
+
+interface ColumnsRouteChildren {
+  ColumnsSlugRoute: typeof ColumnsSlugRouteWithChildren
+}
+
+const ColumnsRouteChildren: ColumnsRouteChildren = {
+  ColumnsSlugRoute: ColumnsSlugRouteWithChildren,
+}
+
+const ColumnsRouteWithChildren =
+  ColumnsRoute._addFileChildren(ColumnsRouteChildren)
+
+interface InterviewsRouteChildren {
+  InterviewsSlugRoute: typeof InterviewsSlugRoute
+}
+
+const InterviewsRouteChildren: InterviewsRouteChildren = {
+  InterviewsSlugRoute: InterviewsSlugRoute,
+}
+
+const InterviewsRouteWithChildren = InterviewsRoute._addFileChildren(
+  InterviewsRouteChildren,
+)
+
 interface NeighborhoodsRouteChildren {
   NeighborhoodsSlugRoute: typeof NeighborhoodsSlugRoute
 }
@@ -746,11 +917,23 @@ const NeighborhoodsRouteWithChildren = NeighborhoodsRoute._addFileChildren(
   NeighborhoodsRouteChildren,
 )
 
+interface OpinionRouteChildren {
+  OpinionSlugRoute: typeof OpinionSlugRoute
+}
+
+const OpinionRouteChildren: OpinionRouteChildren = {
+  OpinionSlugRoute: OpinionSlugRoute,
+}
+
+const OpinionRouteWithChildren =
+  OpinionRoute._addFileChildren(OpinionRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ActivitiesRoute: ActivitiesRoute,
   BreakingRoute: BreakingRoute,
+  ColumnsRoute: ColumnsRouteWithChildren,
   DealsRoute: DealsRoute,
   DonateRoute: DonateRoute,
   EditorialRoute: EditorialRoute,
@@ -758,11 +941,13 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   FactCheckRoute: FactCheckRoute,
   FoodRoute: FoodRoute,
+  InterviewsRoute: InterviewsRouteWithChildren,
   JobsRoute: JobsRoute,
   KidsRoute: KidsRoute,
   LinkToStoryRoute: LinkToStoryRoute,
   MapRoute: MapRoute,
   NeighborhoodsRoute: NeighborhoodsRouteWithChildren,
+  OpinionRoute: OpinionRouteWithChildren,
   PulseRoute: PulseRoute,
   RadioRoute: RadioRoute,
   SocialRoute: SocialRoute,
