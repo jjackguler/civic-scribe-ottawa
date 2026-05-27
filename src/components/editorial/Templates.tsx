@@ -61,12 +61,13 @@ function ArticleFooter({ article }: { article: AnyEditorial }) {
 
 // ───────────────── News ─────────────────
 export function NewsTemplate({ a }: { a: NewsArticle }) {
+  const { locale } = useLocale();
   return (
     <article className="max-w-3xl mx-auto">
       <ArticleHeader article={a} />
       <Hero article={a} />
       <Prose blocks={a.body_blocks} />
-      {a.pull_quote && <PullQuote>{useLocale().locale === "fr" ? a.pull_quote.fr : a.pull_quote.en}</PullQuote>}
+      {a.pull_quote && <PullQuote>{a.pull_quote[locale]}</PullQuote>}
       <ArticleFooter article={a} />
     </article>
   );
