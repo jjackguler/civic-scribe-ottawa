@@ -34,7 +34,7 @@ export type Article = {
 import { newsprintDataURI } from "./image-fallback";
 const _ACCENTS = ["#8b1d24", "#1E5F8E", "#2F5233", "#B87333", "#0F1419", "#A0202C"];
 const _hash = (id: string) => _ACCENTS[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % _ACCENTS.length];
-const img = (id: string, w = 1400, h = 900) => newsprintDataURI("", w, h, _hash(id));
+const img = (id: string, _w = 1400, _h = 900) => `newsprint:${_hash(id)}`;
 
 // Legacy hard-block list kept for any caller that still passes Unsplash IDs.
 export const BLOCKED_TRANSIT_IMAGE_IDS = ["1474487548417-781cb71495f3"];
