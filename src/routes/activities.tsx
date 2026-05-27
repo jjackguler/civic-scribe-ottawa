@@ -6,21 +6,22 @@ import { ACTIVITIES, type Activity } from "@/lib/guide-data";
 import { useLocale } from "@/lib/locale-context";
 import { Map as MapIcon, List } from "lucide-react";
 
-type Chip = { id: string; label: { en: string; fr: string }; match: (a: Activity) => boolean };
+type Chip = { id: string; group: "when" | "cost" | "where" | "audience" | "access"; label: { en: string; fr: string }; match: (a: Activity) => boolean };
 
 const CHIPS: Chip[] = [
-  { id: "today",    label: { en: "Today",     fr: "Aujourd'hui" },   match: a => a.todayOpen },
-  { id: "weekend",  label: { en: "Weekend",   fr: "Week-end" },      match: a => a.weekend },
-  { id: "free",     label: { en: "Free",      fr: "Gratuit" },       match: a => a.cost === "free" },
-  { id: "under20",  label: { en: "Under $20", fr: "Moins de 20 $" }, match: a => a.cost === "free" || a.cost === "under-20" },
-  { id: "kids",     label: { en: "Kids",      fr: "Enfants" },       match: a => a.audience.includes("kids") },
-  { id: "family",   label: { en: "Family",    fr: "Famille" },       match: a => a.audience.includes("family") },
-  { id: "teens",    label: { en: "Teens",     fr: "Ados" },          match: a => a.audience.includes("teens") },
-  { id: "indoor",   label: { en: "Indoor",    fr: "Intérieur" },     match: a => a.indoor },
-  { id: "outdoor",  label: { en: "Outdoor",   fr: "Extérieur" },     match: a => !a.indoor },
-  { id: "access",   label: { en: "Accessible", fr: "Accessible" },   match: a => a.accessible },
-  { id: "french",   label: { en: "FR friendly", fr: "Bilingue" },    match: a => a.frenchFriendly },
-  { id: "transit",  label: { en: "Transit",   fr: "Transport" },     match: a => a.transitFriendly },
+  { id: "today",    group: "when",     label: { en: "Today",      fr: "Aujourd'hui" },   match: a => a.todayOpen },
+  { id: "weekend",  group: "when",     label: { en: "Weekend",    fr: "Week-end" },      match: a => a.weekend },
+  { id: "free",     group: "cost",     label: { en: "Free",       fr: "Gratuit" },       match: a => a.cost === "free" },
+  { id: "under20",  group: "cost",     label: { en: "Under $20",  fr: "Moins de 20 $" }, match: a => a.cost === "free" || a.cost === "under-20" },
+  { id: "kids",     group: "audience", label: { en: "Kids (0–11)",   fr: "Enfants (0–11)" }, match: a => a.audience.includes("kids") },
+  { id: "family",   group: "audience", label: { en: "Family",     fr: "Famille" },       match: a => a.audience.includes("family") },
+  { id: "teens",    group: "audience", label: { en: "Teens (12–17)", fr: "Ados (12–17)" }, match: a => a.audience.includes("teens") },
+  { id: "all-ages", group: "audience", label: { en: "All ages",   fr: "Tous âges" },     match: a => a.audience.includes("all-ages") },
+  { id: "indoor",   group: "where",    label: { en: "Indoor",     fr: "Intérieur" },     match: a => a.indoor },
+  { id: "outdoor",  group: "where",    label: { en: "Outdoor",    fr: "Extérieur" },     match: a => !a.indoor },
+  { id: "access",   group: "access",   label: { en: "Accessible", fr: "Accessible" },    match: a => a.accessible },
+  { id: "french",   group: "access",   label: { en: "Bilingual",  fr: "Bilingue" },      match: a => a.frenchFriendly },
+  { id: "transit",  group: "access",   label: { en: "Transit",    fr: "Transport" },     match: a => a.transitFriendly },
 ];
 
 export const Route = createFileRoute("/activities")({
