@@ -4,7 +4,7 @@ import { newsprintDataURI } from "./image-fallback";
 // Deterministic editorial placeholder. No external stock photos, no random selection.
 const ACCENTS = ["#8b1d24", "#1E5F8E", "#2F5233", "#B87333", "#0F1419", "#A0202C"];
 const hashAccent = (id: string) => ACCENTS[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % ACCENTS.length];
-const img = (id: string, w = 1200, h = 800) => newsprintDataURI("", w, h, hashAccent(id));
+const img = (id: string, _w = 1200, _h = 800) => `newsprint:${hashAccent(id)}`;
 
 // ============ ACTIVITIES ============
 export type ActivityAudience = "kids" | "family" | "teens" | "adults" | "all-ages";
