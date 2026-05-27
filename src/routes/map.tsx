@@ -27,10 +27,13 @@ function MapPage() {
   const [activeVerif, setActiveVerif] = useState<Set<SignalVerification>>(new Set(VERIFICATION_OPTIONS));
   const [neighborhood, setNeighborhood] = useState<string>("all");
   const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState<MapSignal | null>(null);
 
   const filtered = useMemo<MapSignal[]>(() => {
     const q = query.trim().toLowerCase();
+    // Public map never exposes raw sensitive public-safety items.
     return allSignals.filter(s =>
+      s.type !== "public-safety" &&
       activeTypes.has(s.type) &&
       activeVerif.has(s.verification) &&
       (neighborhood === "all" || s.neighborhood === neighborhood) &&
