@@ -106,12 +106,14 @@ export function InteractiveMap({ height = "h-[480px]" }: { height?: string }) {
             <Icon className="h-3 w-3" /> {l}
           </button>
         ))}
-        <span className="ml-auto text-[11px] text-muted-foreground">
+        <span className="ml-auto text-[11px] text-muted-foreground max-w-[60%] text-right">
           {hasGoogle
             ? (locale === "fr" ? "Google Maps · données en direct" : "Google Maps · live data")
             : apiKey
               ? (locale === "fr" ? "Chargement de Google Maps…" : "Loading Google Maps…")
-              : (locale === "fr" ? "Carte indisponible — clé VITE_GOOGLE_MAPS_API_KEY manquante" : "Map unavailable — VITE_GOOGLE_MAPS_API_KEY not configured")}
+              : (locale === "fr"
+                  ? "Couche Google Live Traffic désactivée. Sources officielles gratuites : Ville d'Ottawa, Ontario 511, OC Transpo, Environnement Canada."
+                  : "Google live traffic layer is disabled. Using free official sources: City of Ottawa, Ontario 511, OC Transpo, Environment Canada.")}
         </span>
       </div>
 

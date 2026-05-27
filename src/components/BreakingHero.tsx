@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle, ArrowRight, Clock } from "lucide-react";
-import { ARTICLES, TRAFFIC_ALERTS, WEATHER_ALERTS, safeTransitImage } from "@/lib/data";
-import { NewsImage } from "@/components/NewsImage";
+import { ARTICLES, TRAFFIC_ALERTS, WEATHER_ALERTS } from "@/lib/data";
+import { newsprintDataURI } from "@/lib/image-fallback";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 
@@ -10,10 +10,19 @@ type BreakingCard = {
   id: string;
   kicker: string;
   title: string;
-  image?: string;
+  image: string;
   href: string;
   urgent?: boolean;
   ts: string;
+};
+
+// Deterministic SVG placeholders keyed to category color. No random selection,
+// no external dependency — guaranteed to render on SSR and client identically.
+const ACCENT = {
+  breaking: "#C8102E",
+  weather:  "#1E5F8E",
+  traffic:  "#B8860B",
+  housing:  "#2F5233",
 };
 
 export function BreakingHero() {
@@ -23,7 +32,7 @@ export function BreakingHero() {
       id: "b-hero",
       kicker: locale === "fr" ? "À LA UNE" : "BREAKING",
       title: ARTICLES[0].title[locale],
-      image: safeTransitImage(ARTICLES[0].image, ARTICLES[0].kicker.en),
+      image: newsprintDataURI(ARTICLES[0].title.en, 1600, 900, ACCENT.breaking),
       href: `/article/${ARTICLES[0].slug}`,
       urgent: true,
       ts: ARTICLES[0].updatedAt ?? ARTICLES[0].publishedAt,
@@ -32,7 +41,7 @@ export function BreakingHero() {
       id: w.id,
       kicker: locale === "fr" ? "MÉTÉO · URGENT" : "WEATHER · URGENT",
       title: w.title[locale],
-      image: "https://images.unsplash.com/photo-1457269449834-928af64c684d?auto=format&fit=crop&w=1400&h=900&q=80",
+      image: newsprintDataURI(w.title.en, 1600, 900, ACCENT.weather),
       href: "/weather",
       urgent: true,
       ts: w.issuedAt,
@@ -41,7 +50,7 @@ export function BreakingHero() {
       id: a.id,
       kicker: locale === "fr" ? "TRAFIC · EN COURS" : "TRAFFIC · DEVELOPING",
       title: a.title[locale],
-      image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1400&h=900&q=80",
+      image: newsprintDataURI(a.title.en, 1600, 900, ACCENT.traffic),
       href: "/traffic",
       urgent: a.impact === "high",
       ts: a.until,
@@ -52,19 +61,22 @@ export function BreakingHero() {
       title: locale === "fr"
         ? "Le conseil tient un vote serré sur 312 logements abordables à Centretown"
         : "Council holds knife-edge vote on 312 affordable units in Centretown",
-      image: "https://images.unsplash.com/photo-1503614472-8c93d56cd87b?auto=format&fit=crop&w=1400&h=900&q=80",
+      image: newsprintDataURI("Council holds knife-edge vote on affordable housing", 1600, 900, ACCENT.housing),
       href: "/article/centretown-affordable-housing-vote",
-      ts: new Date(Date.now() - 11 * 60000).toISOString(),
+      urgent: false,
+      ts: "2026-05-24T12:00:00Z",
     },
   ];
 
   const [idx, setIdx] = useState(0);
+  // Defer the interval start to after hydration to avoid SSR mismatch.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
+    if (!mounted) return;
     const i = setInterval(() => setIdx(v => (v + 1) % cards.length), 6500);
     return () => clearInterval(i);
-  }, [cards.length]);
-
-  const card = cards[idx];
+  }, [mounted, cards.length]);
 
   return (
     <section className="relative overflow-hidden border border-rule bg-ink">
@@ -74,8 +86,7 @@ export function BreakingHero() {
             key={c.id}
             className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
-            <NewsImage src={c.image || ""} headline={c.title} alt="" className="absolute inset-0 w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} />
-            {i === 0 && c.image && <link rel="preload" as="image" href={c.image} />}
+            <img src={c.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
             <div className="absolute inset-0 flex items-end">
               <div className="max-w-3xl p-6 sm:p-10 text-paper">
@@ -83,10 +94,10 @@ export function BreakingHero() {
                   {c.urgent && <AlertTriangle className="h-3 w-3" />}
                   {c.kicker}
                 </div>
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-[1.05] mt-3">
-                  <Link to={c.href as any} className="hover:underline underline-offset-4">{c.title}</Link>
-                </h2>
-                <div className="flex items-center gap-4 mt-4 text-sm text-paper/85">
+                <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl leading-[1.05] mt-3 max-w-2xl">
+                  {c.title}
+                </h1>
+                <div className="mt-5 flex flex-wrap items-center gap-4 text-xs text-paper/85">
                   <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" />{new Date(c.ts).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</span>
                   <Link to={c.href as any} className="inline-flex items-center gap-1 font-semibold border-b border-paper/60 hover:border-paper pb-0.5">
                     {locale === "fr" ? "Suivre l'histoire" : "Follow the story"} <ArrowRight className="h-3.5 w-3.5" />
