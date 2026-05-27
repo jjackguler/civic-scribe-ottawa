@@ -126,7 +126,70 @@ function MapPage() {
 
         {/* Map + list */}
         <div className="lg:col-span-9 space-y-4">
-          <LeafletMap signals={filtered} height="calc(100vh - 220px)" />
+          <div className="grid lg:grid-cols-3 gap-4">
+            <div className="lg:col-span-2">
+              <LeafletMap
+                signals={filtered}
+                height="calc(100vh - 220px)"
+                onSelect={setSelected}
+                liveBadgeLabel={locale === "fr" ? "Carte vivante · échantillons" : "Live editorial map · sample data"}
+              />
+            </div>
+            <aside className="border border-rule bg-card flex flex-col">
+              {selected ? (
+                <>
+                  <div className="px-4 py-3 rule-bottom flex items-baseline justify-between gap-2">
+                    <span className="kicker" style={{ color: SIGNAL_STYLES[selected.type].color }}>
+                      {SIGNAL_STYLES[selected.type].label}
+                    </span>
+                    <button onClick={() => setSelected(null)} className="text-[11px] text-muted-foreground hover:text-ink">×</button>
+                  </div>
+                  <div className="p-4 space-y-3 flex-1 overflow-auto">
+                    <h3 className="font-display text-xl leading-snug">{selected.title}</h3>
+                    <p className="font-serif text-sm text-muted-foreground">{selected.summary}</p>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground space-y-1">
+                      <div>· {selected.neighborhood}</div>
+                      <div>· {selected.verification.replace("-", " ")}</div>
+                      {selected.source_name && <div>· {selected.source_name}</div>}
+                    </div>
+                    {selected.source_url && (
+                      <a href={selected.source_url} target="_blank" rel="noreferrer" className="inline-block text-[11px] uppercase tracking-wider font-semibold border-b border-ink">
+                        {locale === "fr" ? "Source officielle →" : "Official source →"}
+                      </a>
+                    )}
+                  </div>
+                  <a href="/submit" className="block text-center px-4 py-3 bg-civic-red text-paper text-[11px] uppercase tracking-wider font-bold hover:bg-ink">
+                    {locale === "fr" ? "Signaler un problème ici" : "Report a problem here"}
+                  </a>
+                </>
+              ) : (
+                <div className="p-5 flex-1 flex flex-col">
+                  <div className="kicker text-muted-foreground mb-2">{locale === "fr" ? "Légende" : "Legend"}</div>
+                  <ul className="space-y-1.5 text-[11px]">
+                    {ALL_TYPES.slice(0, 12).map(t => {
+                      const { Icon, color, label } = SIGNAL_STYLES[t];
+                      return (
+                        <li key={t} className="flex items-center gap-2">
+                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full" style={{ background: color }}>
+                            <Icon size={11} color="#fff" />
+                          </span>
+                          <span className="font-sans">{label}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p className="text-[11px] text-muted-foreground mt-4 font-serif italic">
+                    {locale === "fr"
+                      ? "Cliquez sur un marqueur pour ouvrir le détail. Les éléments sensibles de sécurité publique n'apparaissent jamais publiquement."
+                      : "Click any marker for details. Sensitive public-safety items never appear on the public map."}
+                  </p>
+                  <a href="/submit" className="mt-auto block text-center px-4 py-3 border border-ink text-[11px] uppercase tracking-wider font-bold hover:bg-ink hover:text-paper">
+                    {locale === "fr" ? "Signaler un problème" : "Report a problem"}
+                  </a>
+                </div>
+              )}
+            </aside>
+          </div>
           <div className="border border-rule bg-card">
             <div className="px-3 py-2 border-b border-rule kicker text-civic-red">
               {locale === "fr" ? "Liste — signaux visibles" : "Signal list — current view"}
@@ -135,7 +198,7 @@ function MapPage() {
               {filtered.slice(0, 30).map(s => {
                 const { Icon, color, label } = SIGNAL_STYLES[s.type];
                 return (
-                  <li key={s.id} className="px-3 py-2 flex items-start gap-3 hover:bg-secondary/50">
+                  <li key={s.id} className="px-3 py-2 flex items-start gap-3 hover:bg-secondary/50 cursor-pointer" onClick={() => setSelected(s)}>
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full shrink-0" style={{ background: color }}>
                       <Icon size={12} color="#fff" />
                     </span>
