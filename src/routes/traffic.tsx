@@ -17,16 +17,17 @@ export const Route = createFileRoute("/traffic")({
 type OttEvent = {
   id: string; type: string; title: string; description?: string;
   location?: string; severity?: string; lat?: number; lng?: number;
-  startTime?: string; updated?: string;
+  startTime?: string; updated?: string; endTime?: string; source?: string;
+  isSample?: boolean;
 };
 
 // Mock fallback used only when the official feed is unreachable.
-// Clearly labelled in the UI so readers can tell it apart from live data.
 const SAMPLE_EVENTS: OttEvent[] = [
-  { id: "s1", type: "construction", title: "Bank St lane closures — water main repair (sample)", location: "Bank St at Gladstone Ave", severity: "medium", updated: "2026-05-24T18:30:00Z" },
-  { id: "s2", type: "incident", title: "Collision cleared — Hwy 417 EB at Nicholas (sample)", location: "Hwy 417 EB", severity: "low", updated: "2026-05-24T17:15:00Z" },
-  { id: "s3", type: "construction", title: "Portage Bridge — scheduled lane reduction (sample)", location: "Portage Bridge", severity: "medium", updated: "2026-05-24T15:00:00Z" },
-  { id: "s4", type: "incident", title: "Signal repair on Hunt Club Rd EB (sample)", location: "Hunt Club Rd", severity: "low", updated: "2026-05-24T13:45:00Z" },
+  { id: "s1", type: "construction", title: "Bank St lane closures — water main repair", location: "Bank St at Gladstone Ave, Centretown", severity: "medium", source: "City of Ottawa", updated: "2026-05-24T18:30:00Z", endTime: "2026-05-31T22:00:00Z", isSample: true },
+  { id: "s2", type: "incident", title: "Collision cleared — Hwy 417 EB at Nicholas", location: "Hwy 417 EB · Sandy Hill", severity: "low", source: "Ontario 511", updated: "2026-05-24T17:15:00Z", endTime: "2026-05-24T17:45:00Z", isSample: true },
+  { id: "s3", type: "construction", title: "Portage Bridge — scheduled lane reduction", location: "Portage Bridge · Downtown", severity: "medium", source: "NCC", updated: "2026-05-24T15:00:00Z", endTime: "2026-06-04T20:00:00Z", isSample: true },
+  { id: "s4", type: "incident", title: "Signal repair on Hunt Club Rd EB near Riverside", location: "Hunt Club Rd EB · Alta Vista", severity: "low", source: "City of Ottawa", updated: "2026-05-24T13:45:00Z", endTime: "2026-05-24T19:00:00Z", isSample: true },
+  { id: "s5", type: "construction", title: "Slater St bus lane work, weekday off-peak", location: "Slater St between Bay & Bronson · Centretown", severity: "low", source: "City of Ottawa", updated: "2026-05-24T11:20:00Z", endTime: "2026-06-21T18:00:00Z", isSample: true },
 ];
 
 type Tab = "incidents" | "closures" | "transit" | "weather" | "citizen" | "google";
