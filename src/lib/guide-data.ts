@@ -312,3 +312,203 @@ export const CITIZEN_REPORTS: CitizenReport[] = [
   { id: "cr5", title: { en: "Coyote sighting near Hampton Park", fr: "Coyote aperçu près du parc Hampton" }, neighborhood: "Westboro", category: { en: "Wildlife", fr: "Faune" }, minutesAgo: 70, status: "developing", by: "P. Tremblay" },
   { id: "cr6", title: { en: "Library wifi extended evenings, Carlingwood", fr: "Wifi prolongé en soirée, Carlingwood" }, neighborhood: "Nepean", category: { en: "Services", fr: "Services" }, minutesAgo: 110, status: "verified", by: "OPL notice" },
 ];
+
+// ============ CANADA GUIDE — SECTIONED ESSENTIALS ============
+export type CanadaSourceStatus = "verified" | "official" | "review-pending" | "community";
+export type CanadaCard = {
+  id: string;
+  title: Bilingual;
+  blurb: Bilingual;
+  icon: string;
+  href: string;
+  source: { label: string; url?: string };
+  status: CanadaSourceStatus;
+  updated: string; // ISO
+  ottawaTip?: Bilingual;
+};
+export type CanadaSection = {
+  id: string;
+  kicker: Bilingual;
+  title: Bilingual;
+  dek: Bilingual;
+  cards: CanadaCard[];
+};
+
+const CG = (id: string, t: Bilingual, b: Bilingual, icon: string, src: { label: string; url?: string }, status: CanadaSourceStatus, updated: string, tip?: Bilingual, href = "#"): CanadaCard =>
+  ({ id, title: t, blurb: b, icon, href, source: src, status, updated, ottawaTip: tip });
+
+export const CANADA_GUIDE_SECTIONS: CanadaSection[] = [
+  {
+    id: "newcomer",
+    kicker: { en: "Newcomer essentials", fr: "Essentiels nouveaux arrivants" },
+    title: { en: "First 30 days in Canada", fr: "Vos 30 premiers jours au Canada" },
+    dek: { en: "ID, banking, phones, transit — the practical sequence that unlocks everything else.", fr: "Pièces d'identité, banque, téléphone, transport — la séquence pratique qui débloque le reste." },
+    cards: [
+      CG("nc1", { en: "Get your SIN (Social Insurance Number)", fr: "Obtenir votre NAS" },
+         { en: "Free, in-person at Service Canada (Wellington St W). Bring passport + immigration document. Usually same-day.", fr: "Gratuit, en personne à Service Canada (Wellington O.). Passeport + document d'immigration. Souvent le jour même." },
+         "IdCard", { label: "Service Canada", url: "https://www.canada.ca/en/employment-social-development/services/sin.html" },
+         "official", "2026-05-12",
+         { en: "Ottawa office: 110 Wellington St W. Arrive at 8:15am to skip lines.", fr: "Bureau d'Ottawa : 110, rue Wellington O. Arrivez vers 8 h 15 pour éviter la file." }),
+      CG("nc2", { en: "Open a no-fee newcomer bank account", fr: "Ouvrir un compte sans frais pour nouveaux arrivants" },
+         { en: "RBC, Scotiabank, TD, BMO and CIBC all offer no-fee newcomer chequing accounts for the first 12 months. Bring SIN + passport.", fr: "RBC, Banque Scotia, TD, BMO et CIBC offrent un compte chèques sans frais 12 mois. Apportez NAS + passeport." },
+         "Wallet", { label: "Financial Consumer Agency of Canada", url: "https://www.canada.ca/en/financial-consumer-agency.html" },
+         "verified", "2026-05-02",
+         { en: "Most Ottawa branches book newcomer appointments in EN/FR within 48h.", fr: "La plupart des succursales d'Ottawa fixent un rendez-vous bilingue en 48 h." }),
+      CG("nc3", { en: "Get a Presto card (OC Transpo + STO)", fr: "Obtenir une carte Presto (OC Transpo + STO)" },
+         { en: "$6 card, refillable online. Discounted monthly passes for students, seniors, and equity pass holders.", fr: "Carte 6 $, rechargeable en ligne. Tarifs réduits étudiants, aînés, laissez-passer équité." },
+         "Train", { label: "OC Transpo", url: "https://www.octranspo.com/en/fares/presto-card/" },
+         "official", "2026-05-22"),
+      CG("nc4", { en: "Find settlement help in Ottawa", fr: "Trouver de l'aide à l'établissement à Ottawa" },
+         { en: "OCISO, Catholic Centre for Immigrants, and Centre Espoir Sophie offer free EN/FR settlement counsellors, job search, language assessments.", fr: "OCISO, Centre catholique pour immigrants, Centre Espoir Sophie offrent du counseling, recherche d'emploi, évaluations linguistiques gratuites." },
+         "Users", { label: "IRCC — Find services", url: "https://ircc.canada.ca/english/newcomers/services/" },
+         "verified", "2026-04-29",
+         { en: "OCISO youth program: weekly drop-ins for 13–24 in Centretown.", fr: "Programme jeunesse OCISO : accueil hebdo pour 13–24 ans au centre-ville." }),
+    ],
+  },
+  {
+    id: "health",
+    kicker: { en: "Health care", fr: "Soins de santé" },
+    title: { en: "Doctors, OHIP, walk-ins, telehealth", fr: "Médecins, OHIP, cliniques sans RV, télésanté" },
+    dek: { en: "OHIP covers most doctor visits and hospital care in Ontario. Here's how to get on it and what to do while you wait.", fr: "L'OHIP couvre la majorité des visites médicales et hospitalières en Ontario. Voici comment l'obtenir et quoi faire en attendant." },
+    cards: [
+      CG("h1", { en: "Apply for OHIP (Ontario Health card)", fr: "Demander la carte santé de l'Ontario (OHIP)" },
+         { en: "Required: proof of Ontario residency, identity, status in Canada. Most new residents are covered after a 3-month wait; refugees and some workers are covered immediately.", fr: "Requis : preuve de résidence ontarienne, identité, statut au Canada. La plupart des nouveaux résidents sont couverts après 3 mois; réfugiés et certains travailleurs immédiatement." },
+         "HeartPulse", { label: "Ontario.ca — OHIP", url: "https://www.ontario.ca/page/apply-ohip-and-get-health-card" },
+         "official", "2026-05-15",
+         { en: "Ottawa ServiceOntario: 110 Laurier W and 2680 Queensview Dr. Book ahead.", fr: "ServiceOntario à Ottawa : 110 Laurier O et 2680 Queensview. Prenez rendez-vous." }),
+      CG("h2", { en: "Find a family doctor — Health Care Connect", fr: "Trouver un médecin de famille — Accès Soins" },
+         { en: "Free provincial registry. Average wait in Ottawa is long, but registering puts you on the list and unlocks interim nurse calls.", fr: "Registre provincial gratuit. L'attente à Ottawa est longue, mais l'inscription débloque un suivi infirmier intérimaire." },
+         "Stethoscope", { label: "Health Care Connect", url: "https://www.ontario.ca/page/find-family-doctor-or-nurse-practitioner" },
+         "official", "2026-04-18"),
+      CG("h3", { en: "Use Health Connect Ontario (24/7 nurse)", fr: "Santé Connexion Ontario (infirmière 24/7)" },
+         { en: "Call 811 or chat online. Free, confidential, bilingual. Triages whether you need a clinic, ER, or self-care.", fr: "Composez 811 ou clavardez. Gratuit, confidentiel, bilingue. Indique si vous avez besoin d'une clinique, urgence ou soins à domicile." },
+         "Phone", { label: "Health Connect Ontario", url: "https://www.ontario.ca/page/get-medical-advice-health-connect-ontario" },
+         "official", "2026-05-20"),
+      CG("h4", { en: "Walk-in clinics in Ottawa", fr: "Cliniques sans rendez-vous à Ottawa" },
+         { en: "Use Medimap.ca for live walk-in wait times across Ottawa. Many close by 5pm; same-day virtual options listed.", fr: "Medimap.ca affiche les temps d'attente en direct à Ottawa. Plusieurs ferment à 17 h; options virtuelles le jour même." },
+         "MapPin", { label: "Medimap", url: "https://medimap.ca/ontario/ottawa" },
+         "verified", "2026-05-23"),
+    ],
+  },
+  {
+    id: "taxes",
+    kicker: { en: "Money & taxes", fr: "Argent et impôts" },
+    title: { en: "CRA, GST/HST credit, free tax help", fr: "ARC, crédit TPS/TVH, aide gratuite" },
+    dek: { en: "Filing a return — even with no income — unlocks the GST/HST credit, Canada Child Benefit, and Ontario Trillium Benefit.", fr: "Produire une déclaration — même sans revenu — débloque le crédit TPS/TVH, l'ACE et la prestation Trillium." },
+    cards: [
+      CG("tx1", { en: "Free tax clinics (CVITP)", fr: "Cliniques d'impôts gratuites (PCBMI)" },
+         { en: "Volunteers file simple returns for free if your household income is modest. Several Ottawa sites run Feb–April; some year-round.", fr: "Des bénévoles produisent gratuitement des déclarations simples pour revenus modestes. Plusieurs sites à Ottawa entre fév. et avril; certains à l'année." },
+         "Calculator", { label: "CRA — Free tax clinics", url: "https://www.canada.ca/en/revenue-agency/services/tax/individuals/community-volunteer-income-tax-program.html" },
+         "official", "2026-04-30",
+         { en: "Ottawa hosts: Centretown Community Health Centre, OCISO, Nepean Rideau Osgoode CRC.", fr: "Hôtes à Ottawa : CSC Centretown, OCISO, CRC Nepean-Rideau-Osgoode." }),
+      CG("tx2", { en: "Get a CRA My Account", fr: "Ouvrir Mon dossier ARC" },
+         { en: "Track refunds, benefits, RRSP room. Sign in with banking partner for instant access — paper PIN takes 2–3 weeks.", fr: "Suivre remboursements, prestations, REER. Connectez-vous via un partenaire bancaire pour un accès instantané — le NIP papier prend 2–3 semaines." },
+         "User", { label: "CRA — My Account", url: "https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-individuals/account-individuals.html" },
+         "official", "2026-05-10"),
+      CG("tx3", { en: "GST/HST credit & Canada Child Benefit", fr: "Crédit TPS/TVH et Allocation canadienne pour enfants" },
+         { en: "Quarterly tax-free payments. You only need to file a tax return to be assessed; no separate application.", fr: "Versements trimestriels non imposables. Il suffit de produire une déclaration; aucune demande distincte." },
+         "Coins", { label: "CRA — Benefits", url: "https://www.canada.ca/en/revenue-agency/services/child-family-benefits.html" },
+         "official", "2026-05-01"),
+      CG("tx4", { en: "Ontario Trillium Benefit (rent & energy)", fr: "Prestation Trillium de l'Ontario (loyer et énergie)" },
+         { en: "Monthly payment helping with rent, property tax, energy, and sales tax. Renters: keep your landlord's name + total rent paid on file.", fr: "Versement mensuel pour loyer, taxe foncière, énergie et taxe de vente. Locataires : gardez le nom du propriétaire et le loyer total." },
+         "Home", { label: "Ontario — Trillium", url: "https://www.ontario.ca/page/ontario-trillium-benefit" },
+         "official", "2026-04-22"),
+    ],
+  },
+  {
+    id: "housing",
+    kicker: { en: "Housing", fr: "Logement" },
+    title: { en: "Renting, leases, tenant rights", fr: "Location, baux, droits du locataire" },
+    dek: { en: "Ontario uses a standard lease and caps most annual rent increases. Know your rights before you sign.", fr: "L'Ontario impose un bail standard et plafonne la majorité des hausses annuelles. Connaissez vos droits avant de signer." },
+    cards: [
+      CG("hs1", { en: "Standard Lease — required by law", fr: "Bail standard — obligatoire" },
+         { en: "Most Ontario landlords must use the standard lease (Form 2229E). If yours doesn't, you can legally withhold rent until you receive one.", fr: "La plupart des propriétaires doivent utiliser le bail standard (2229E). Sinon, vous pouvez légalement retenir le loyer jusqu'à réception." },
+         "FileText", { label: "Ontario — Standard Lease", url: "https://www.ontario.ca/page/standard-lease" },
+         "official", "2026-04-15"),
+      CG("hs2", { en: "Rent increase guideline (2.5% in 2026)", fr: "Hausse de loyer (2,5 % en 2026)" },
+         { en: "Landlords can raise rent once every 12 months by the provincial guideline, with 90 days written notice on Form N1.", fr: "Le propriétaire peut augmenter le loyer une fois par 12 mois selon le taux provincial, avec préavis écrit de 90 jours (N1)." },
+         "TrendingUp", { label: "Landlord & Tenant Board", url: "https://tribunalsontario.ca/ltb/" },
+         "official", "2026-05-05"),
+      CG("hs3", { en: "Ottawa Community Legal Services — tenant help", fr: "Services juridiques communautaires d'Ottawa — locataires" },
+         { en: "Free legal advice for low-income tenants facing eviction, repairs, or above-guideline increases.", fr: "Conseils juridiques gratuits pour locataires à faible revenu (éviction, réparations, hausses au-delà du seuil)." },
+         "Scale", { label: "OCLS", url: "https://ottawacommunitylegalservices.ca/" },
+         "verified", "2026-05-08"),
+      CG("hs4", { en: "Find rental listings without scams", fr: "Trouver des annonces sans arnaques" },
+         { en: "Stick to Kijiji, Rentals.ca, Facebook Marketplace with verified profiles, and Ottawa Community Housing waitlist. Never wire deposits before viewing.", fr: "Privilégiez Kijiji, Rentals.ca, Marketplace avec profils vérifiés, et la liste d'attente du Logement communautaire d'Ottawa. Jamais de virement sans visite." },
+         "Search", { label: "Ottawa Community Housing", url: "https://och-lco.ca/" },
+         "verified", "2026-05-18"),
+    ],
+  },
+  {
+    id: "jobs",
+    kicker: { en: "Work", fr: "Emploi" },
+    title: { en: "Jobs, credentials, employment standards", fr: "Emplois, équivalences, normes du travail" },
+    dek: { en: "Federal job bank, free credential evaluation, and the Employment Standards Act protect you in every Ontario workplace.", fr: "Le Guichet-Emplois fédéral, l'évaluation gratuite des diplômes et la Loi sur les normes d'emploi vous protègent en Ontario." },
+    cards: [
+      CG("j1", { en: "Job Bank — federal listings", fr: "Guichet-Emplois — offres fédérales" },
+         { en: "Free, government-run. Filter by city, language, NOC code. Includes wage and trends data per role.", fr: "Gratuit, fédéral. Filtres par ville, langue, code CNP. Données sur salaires et tendances." },
+         "Briefcase", { label: "Job Bank", url: "https://www.jobbank.gc.ca/" },
+         "official", "2026-05-25"),
+      CG("j2", { en: "Get foreign credentials recognized", fr: "Faire reconnaître ses diplômes" },
+         { en: "World Education Services (WES) is the most-accepted evaluator for Ontario employers and regulated colleges.", fr: "World Education Services (WES) est l'évaluateur le plus accepté par les employeurs et les ordres professionnels en Ontario." },
+         "Award", { label: "WES Canada", url: "https://www.wes.org/ca/" },
+         "verified", "2026-04-20"),
+      CG("j3", { en: "Know your rights — Employment Standards Act", fr: "Connaître vos droits — Loi sur les normes d'emploi" },
+         { en: "Minimum wage, overtime after 44h/week, paid public holidays, vacation pay, termination notice — all set by Ontario law, not your boss.", fr: "Salaire minimum, heures sup. après 44 h, congés fériés payés, vacances, préavis — tout est fixé par la loi ontarienne." },
+         "ShieldCheck", { label: "Ontario — ESA", url: "https://www.ontario.ca/document/your-guide-employment-standards-act-0" },
+         "official", "2026-05-03"),
+      CG("j4", { en: "Free job-search programs in Ottawa", fr: "Programmes gratuits de recherche d'emploi à Ottawa" },
+         { en: "Employment Ontario centres (YMCA-YWCA, Causeway, La Cité collégiale) offer free coaching, résumé reviews, workshops in EN/FR.", fr: "Emploi Ontario (YMCA-YWCA, Causeway, La Cité collégiale) offre coaching, révision de CV et ateliers gratuits en EN/FR." },
+         "Users", { label: "Employment Ontario", url: "https://www.ontario.ca/page/employment-ontario" },
+         "verified", "2026-05-11"),
+    ],
+  },
+  {
+    id: "schools",
+    kicker: { en: "Schools & childcare", fr: "Écoles et garde d'enfants" },
+    title: { en: "Public, Catholic, francophone, daycare subsidies", fr: "Public, catholique, francophone, subventions garderie" },
+    dek: { en: "Four publicly funded school boards serve Ottawa. $10/day childcare (CWELCC) cuts daycare fees in licensed centres.", fr: "Quatre conseils scolaires publics à Ottawa. Garderie à 10 $/jour (PAGSJE) dans les centres agréés." },
+    cards: [
+      CG("sc1", { en: "Four Ottawa school boards", fr: "Quatre conseils scolaires à Ottawa" },
+         { en: "OCDSB (English public), OCSB (English Catholic), CEPEO (French public), CECCE (French Catholic). Enrol via the board's online portal.", fr: "OCDSB (public anglais), OCSB (catholique anglais), CEPEO (public français), CECCE (catholique français). Inscription en ligne par conseil." },
+         "GraduationCap", { label: "OCDSB", url: "https://www.ocdsb.ca/" },
+         "official", "2026-04-25"),
+      CG("sc2", { en: "French immersion — high demand", fr: "Immersion française — forte demande" },
+         { en: "Early French Immersion starts in Senior Kindergarten in most OCDSB schools. Register by the Jan 31 deadline; some catchments use lotteries.", fr: "L'immersion précoce commence à la maternelle 2e année dans la plupart des écoles OCDSB. Inscription avant le 31 janvier; certaines aires par tirage." },
+         "Languages", { label: "OCDSB — Immersion", url: "https://www.ocdsb.ca/" },
+         "verified", "2026-04-30"),
+      CG("sc3", { en: "$10/day childcare (CWELCC)", fr: "Garderie à 10 $/jour (PAGSJE)" },
+         { en: "Federal-provincial program is rolling out at licensed centres. Waitlists are long; register at multiple centres at once.", fr: "Programme fédéral-provincial dans les centres agréés. Listes d'attente longues; inscrivez-vous à plusieurs centres." },
+         "Baby", { label: "Ontario — Affordable childcare", url: "https://www.ontario.ca/page/affordable-child-care" },
+         "official", "2026-05-07"),
+      CG("sc4", { en: "Childcare fee subsidies (City of Ottawa)", fr: "Subvention de garde d'enfants (Ville d'Ottawa)" },
+         { en: "Income-tested subsidy administered by the City for licensed care. Apply online; processing usually under 30 days.", fr: "Subvention selon le revenu, administrée par la Ville pour garde agréée. Demande en ligne; traitement < 30 jours." },
+         "Wallet", { label: "City of Ottawa — Fee subsidy", url: "https://ottawa.ca/en/family-and-social-services" },
+         "official", "2026-04-28"),
+    ],
+  },
+  {
+    id: "legal",
+    kicker: { en: "Legal & community help", fr: "Aide juridique et communautaire" },
+    title: { en: "Free legal advice, 211, crisis & community lines", fr: "Aide juridique gratuite, 211, lignes de crise et communautaires" },
+    dek: { en: "If you need help fast — tenant, family, immigration, mental health — these lines are free, confidential, and bilingual.", fr: "Pour de l'aide rapide — logement, famille, immigration, santé mentale — ces lignes sont gratuites, confidentielles et bilingues." },
+    cards: [
+      CG("lg1", { en: "211 Ontario — find local services", fr: "211 Ontario — trouver des services locaux" },
+         { en: "Free 24/7 helpline and chat connecting you to housing, food, mental health, newcomer, and family supports near you.", fr: "Ligne 24/7 gratuite et clavardage reliant logement, alimentation, santé mentale, nouveaux arrivants et famille." },
+         "Phone", { label: "211 Ontario", url: "https://211ontario.ca/" },
+         "official", "2026-05-22"),
+      CG("lg2", { en: "Legal Aid Ontario — free certificates", fr: "Aide juridique Ontario — certificats gratuits" },
+         { en: "Covers criminal, family, refugee, mental health, and tenant cases for low-income Ontarians. Apply by phone or online.", fr: "Couvre droit criminel, familial, des réfugiés, santé mentale et locataires pour faibles revenus. Demande par téléphone ou en ligne." },
+         "Scale", { label: "Legal Aid Ontario", url: "https://www.legalaid.on.ca/" },
+         "official", "2026-04-19"),
+      CG("lg3", { en: "Mental Health Crisis Line (Ottawa)", fr: "Ligne de crise en santé mentale (Ottawa)" },
+         { en: "613-722-6914 (city) / 1-866-996-0991 (region). 24/7 confidential support. For immediate danger call 9-8-8.", fr: "613-722-6914 (ville) / 1-866-996-0991 (région). Soutien confidentiel 24/7. Danger immédiat : 9-8-8." },
+         "HeartPulse", { label: "Ottawa Mental Health Crisis Line", url: "https://www.crisisline.ca/" },
+         "official", "2026-05-19"),
+      CG("lg4", { en: "Pro bono immigration help", fr: "Aide gratuite en immigration" },
+         { en: "Refugee Hub (uOttawa) and Catholic Centre for Immigrants offer free consultations. Avoid unauthorized 'consultants' charging fees.", fr: "Refugee Hub (Université d'Ottawa) et Centre catholique pour immigrants : consultations gratuites. Méfiez-vous des « consultants » non autorisés." },
+         "Globe", { label: "Refugee Hub", url: "https://refugeehub.ca/" },
+         "verified", "2026-05-06"),
+    ],
+  },
+];
