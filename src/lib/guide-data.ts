@@ -1,7 +1,10 @@
 import type { Bilingual, Neighborhood } from "./data";
+import { newsprintDataURI } from "./image-fallback";
 
-const img = (id: string, w = 1200, h = 800) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
+// Deterministic editorial placeholder. No external stock photos, no random selection.
+const ACCENTS = ["#8b1d24", "#1E5F8E", "#2F5233", "#B87333", "#0F1419", "#A0202C"];
+const hashAccent = (id: string) => ACCENTS[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % ACCENTS.length];
+const img = (id: string, w = 1200, h = 800) => newsprintDataURI("", w, h, hashAccent(id));
 
 // ============ ACTIVITIES ============
 export type ActivityAudience = "kids" | "family" | "teens" | "adults" | "all-ages";
