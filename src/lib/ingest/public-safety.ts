@@ -25,17 +25,20 @@ export function generatePublicSafetySignals(): MapSignal[] {
       id: `ps-${i}`,
       type: "public-safety",
       title: display,
+      // Public-facing summary: broad civic guidance only. Strip names/addresses
+      // from the upstream description. Sensitive items get a neutral notice.
       summary: hold
-        ? "Sensitive incident under review. We are withholding identifying details pending editor review and verification."
-        : item.summary,
-      lat: n.lat + (Math.random() - 0.5) * 0.01,
-      lng: n.lng + (Math.random() - 0.5) * 0.01,
+        ? `Sensitive incident under editorial review in the ${n.name} area. Identifying details (names, addresses, suspect/victim/minor information) are withheld pending verification.`
+        : item.summary.replace(/\b\d{1,5}\s+[A-Z][a-z]+(?:\s[A-Z][a-z]+)*\s+(St|Street|Rd|Road|Ave|Avenue|Blvd|Drive|Dr)\b/g, "[address withheld]"),
+      // Broad neighbourhood only — no precise coordinates. Snap to the neighbourhood centroid.
+      lat: n.lat,
+      lng: n.lng,
       neighborhood: n.name,
       urgency: hold ? "high" : "medium",
       verification: "official-source",
       source_type: "official",
       source_name: item.source,
-      // Per safety rule 4/10: never link to original if it might expose identifying details.
+      // Per safety rule: never link to original if it might expose identifying details.
       source_url: hold ? undefined : item.source_url,
       source_group: "public-safety",
       safety_classifications: tags,

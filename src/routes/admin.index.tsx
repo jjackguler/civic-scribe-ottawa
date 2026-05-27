@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/locale-context";
 import { useState } from "react";
 import { Check, X, Eye, ShieldCheck, FileText, Inbox, CheckSquare, Archive } from "lucide-react";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/admin/")({
   head: () => ({ meta: [{ title: "Editor Dashboard (preview) — Ottawa Civic Ledger" }] }),
   component: AdminPage,
 });

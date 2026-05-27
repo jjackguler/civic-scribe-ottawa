@@ -20,6 +20,15 @@ type OttEvent = {
   startTime?: string; updated?: string;
 };
 
+// Mock fallback used only when the official feed is unreachable.
+// Clearly labelled in the UI so readers can tell it apart from live data.
+const SAMPLE_EVENTS: OttEvent[] = [
+  { id: "s1", type: "construction", title: "Bank St lane closures — water main repair (sample)", location: "Bank St at Gladstone Ave", severity: "medium", updated: "2026-05-24T18:30:00Z" },
+  { id: "s2", type: "incident", title: "Collision cleared — Hwy 417 EB at Nicholas (sample)", location: "Hwy 417 EB", severity: "low", updated: "2026-05-24T17:15:00Z" },
+  { id: "s3", type: "construction", title: "Portage Bridge — scheduled lane reduction (sample)", location: "Portage Bridge", severity: "medium", updated: "2026-05-24T15:00:00Z" },
+  { id: "s4", type: "incident", title: "Signal repair on Hunt Club Rd EB (sample)", location: "Hunt Club Rd", severity: "low", updated: "2026-05-24T13:45:00Z" },
+];
+
 type Tab = "incidents" | "closures" | "transit" | "weather" | "citizen" | "google";
 
 function TrafficPage() {
@@ -35,15 +44,23 @@ function TrafficPage() {
 
   async function load() {
     setLoading(true); setError(null);
+    // Hard 8s timeout so we never sit in "Loading…" forever.
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 8000);
     try {
-      const res = await fetch(`/api/public/ottawa-traffic?locale=${locale}`);
+      const res = await fetch(`/api/public/ottawa-traffic?locale=${locale}`, { signal: ctrl.signal });
       const json = await res.json();
       if (!json.ok) throw new Error(json.error ?? "Failed to load");
       setEvents(json.events ?? []);
       setFetchedAt(json.fetchedAt ?? null);
     } catch (e: any) {
-      setError(e?.message ?? "Failed to load City of Ottawa feed");
-    } finally { setLoading(false); }
+      setError(e?.name === "AbortError"
+        ? (locale === "fr" ? "Délai dépassé" : "Timed out")
+        : (e?.message ?? "Failed to load City of Ottawa feed"));
+      // Fallback sample so the page never sits empty.
+      setEvents(SAMPLE_EVENTS);
+      setFetchedAt(null);
+    } finally { clearTimeout(timer); setLoading(false); }
   }
   useEffect(() => { load(); /* eslint-disable-next-line */ }, [locale]);
 
@@ -102,7 +119,18 @@ function TrafficPage() {
             </div>
           </div>
           {loading && <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Chargement…" : "Loading City of Ottawa feed…"}</p>}
-          {error && <p className="text-sm text-civic-red font-sans">{error}</p>}
+          {error && !loading && (
+            <div className="mb-3 border border-highlight bg-highlight/10 p-3 text-xs font-sans">
+              <div className="font-semibold text-ink mb-1">
+                {locale === "fr" ? "Flux officiel temporairement indisponible" : "Official feed temporarily unavailable"}
+              </div>
+              <div className="text-muted-foreground">
+                {locale === "fr"
+                  ? `Affichage d'échantillons en cache marqués (sample). Dernière tentative : ${new Date().toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA")}. Statut source : ${error}.`
+                  : `Showing cached sample records (marked "sample"). Last attempt: ${new Date().toLocaleTimeString("en-CA")}. Source status: ${error}.`}
+              </div>
+            </div>
+          )}
           {!loading && !error && events.length === 0 && (
             <p className="text-sm text-muted-foreground font-sans">{locale === "fr" ? "Aucun événement actif." : "No active events."}</p>
           )}
