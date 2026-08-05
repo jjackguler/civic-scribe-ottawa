@@ -74,6 +74,7 @@ import { Route as AdminSourcesRouteImport } from './routes/admin.sources'
 import { Route as ColumnsSlugEntryRouteImport } from './routes/columns.$slug.$entry'
 import { Route as ApiPublicTrafficRadioRouteImport } from './routes/api/public/traffic-radio'
 import { Route as ApiPublicOttawaTrafficRouteImport } from './routes/api/public/ottawa-traffic'
+import { Route as ApiPublicNewsFeedsRouteImport } from './routes/api/public/news-feeds'
 
 const YouthRoute = YouthRouteImport.update({
   id: '/youth',
@@ -400,6 +401,11 @@ const ApiPublicOttawaTrafficRoute = ApiPublicOttawaTrafficRouteImport.update({
   path: '/api/public/ottawa-traffic',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicNewsFeedsRoute = ApiPublicNewsFeedsRouteImport.update({
+  id: '/api/public/news-feeds',
+  path: '/api/public/news-feeds',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -464,6 +470,7 @@ export interface FileRoutesByFullPath {
   '/satire/$slug': typeof SatireSlugRoute
   '/section/$name': typeof SectionNameRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/news-feeds': typeof ApiPublicNewsFeedsRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
   '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
@@ -531,6 +538,7 @@ export interface FileRoutesByTo {
   '/satire/$slug': typeof SatireSlugRoute
   '/section/$name': typeof SectionNameRoute
   '/admin': typeof AdminIndexRoute
+  '/api/public/news-feeds': typeof ApiPublicNewsFeedsRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
   '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
@@ -599,6 +607,7 @@ export interface FileRoutesById {
   '/satire/$slug': typeof SatireSlugRoute
   '/section/$name': typeof SectionNameRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/news-feeds': typeof ApiPublicNewsFeedsRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
   '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
@@ -668,6 +677,7 @@ export interface FileRouteTypes {
     | '/satire/$slug'
     | '/section/$name'
     | '/admin/'
+    | '/api/public/news-feeds'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
     | '/columns/$slug/$entry'
@@ -735,6 +745,7 @@ export interface FileRouteTypes {
     | '/satire/$slug'
     | '/section/$name'
     | '/admin'
+    | '/api/public/news-feeds'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
     | '/columns/$slug/$entry'
@@ -802,6 +813,7 @@ export interface FileRouteTypes {
     | '/satire/$slug'
     | '/section/$name'
     | '/admin/'
+    | '/api/public/news-feeds'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
     | '/columns/$slug/$entry'
@@ -855,6 +867,7 @@ export interface RootRouteChildren {
   GuideOttawaRoute: typeof GuideOttawaRoute
   SectionNameRoute: typeof SectionNameRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  ApiPublicNewsFeedsRoute: typeof ApiPublicNewsFeedsRoute
   ApiPublicOttawaTrafficRoute: typeof ApiPublicOttawaTrafficRoute
   ApiPublicTrafficRadioRoute: typeof ApiPublicTrafficRadioRoute
 }
@@ -1316,6 +1329,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicOttawaTrafficRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/news-feeds': {
+      id: '/api/public/news-feeds'
+      path: '/api/public/news-feeds'
+      fullPath: '/api/public/news-feeds'
+      preLoaderRoute: typeof ApiPublicNewsFeedsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1552,19 +1572,10 @@ const rootRouteChildren: RootRouteChildren = {
   GuideOttawaRoute: GuideOttawaRoute,
   SectionNameRoute: SectionNameRoute,
   AdminIndexRoute: AdminIndexRoute,
+  ApiPublicNewsFeedsRoute: ApiPublicNewsFeedsRoute,
   ApiPublicOttawaTrafficRoute: ApiPublicOttawaTrafficRoute,
   ApiPublicTrafficRadioRoute: ApiPublicTrafficRadioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

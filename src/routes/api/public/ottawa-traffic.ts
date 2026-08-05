@@ -27,19 +27,35 @@ async function fetchUpstream(locale: "en" | "fr") {
   try { raw = JSON.parse(text); } catch { raw = { events: [] }; }
   const events = Array.isArray(raw?.events) ? raw.events : Array.isArray(raw) ? raw : [];
   // Normalise a small, safe subset.
+  const coordsOf = (e: any): { lat?: number; lng?: number } => {
+    const raw = e?.geodata?.coordinates ?? e?.coordinates;
+    let c: any = raw;
+    if (typeof raw === "string") { try { c = JSON.parse(raw); } catch { c = undefined; } }
+    if (Array.isArray(c) && typeof c[0] === "number" && typeof c[1] === "number") {
+      // GeoJSON order: [lng, lat]
+      return { lng: c[0], lat: c[1] };
+    }
+    if (Array.isArray(c) && Array.isArray(c[0])) return coordsOf({ geodata: { coordinates: c[0] } });
+    if (typeof e.latitude === "number" && typeof e.longitude === "number") return { lat: e.latitude, lng: e.longitude };
+    if (typeof e.lat === "number" && typeof e.lng === "number") return { lat: e.lat, lng: e.lng };
+    return {};
+  };
   const normalised = events
-    .map((e: any) => ({
-      id: String(e.id ?? e.eventId ?? e.uuid ?? Math.random()),
-      type: String(e.type ?? e.category ?? "incident"),
-      title: String(e.title ?? e.description ?? e.name ?? "Traffic event"),
-      description: e.description ? String(e.description) : undefined,
-      location: e.location ?? e.roadwayName ?? e.address ?? undefined,
-      severity: e.severity ?? e.priority ?? "unknown",
-      lat: typeof e.latitude === "number" ? e.latitude : typeof e.lat === "number" ? e.lat : undefined,
-      lng: typeof e.longitude === "number" ? e.longitude : typeof e.lng === "number" ? e.lng : undefined,
-      startTime: e.startTime ?? e.start ?? e.created ?? undefined,
-      updated: e.lastUpdated ?? e.updated ?? e.modified ?? undefined,
-    }))
+    .map((e: any) => {
+      const { lat, lng } = coordsOf(e);
+      return {
+        id: String(e.id ?? e.eventId ?? e.uuid ?? ""),
+        type: String(e.eventType ?? e.type ?? e.category ?? "incident").toLowerCase(),
+        title: String(e.headline ?? e.title ?? e.description ?? e.name ?? "Traffic event"),
+        description: e.message ? String(e.message).trim() : e.description ? String(e.description) : undefined,
+        location: e.headline ?? e.location ?? e.roadwayName ?? e.address ?? undefined,
+        severity: String(e.priority ?? e.severity ?? "unknown").toLowerCase(),
+        lat, lng,
+        startTime: e.schedule?.[0]?.startDateTime ?? e.startTime ?? e.start ?? e.created ?? undefined,
+        updated: e.updated ?? e.lastUpdated ?? e.modified ?? undefined,
+      };
+    })
+    .filter((e: any) => e.id)
     .sort((a: any, b: any) => {
       const sev = (x: string) => ({ high: 3, major: 3, medium: 2, moderate: 2, low: 1, minor: 1 } as any)[String(x).toLowerCase()] ?? 0;
       const s = sev(b.severity) - sev(a.severity);

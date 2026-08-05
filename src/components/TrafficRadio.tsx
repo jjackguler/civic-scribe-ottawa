@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Play, Square, Volume2, Radio, RefreshCcw, Mic2, FileText, ListChecks } from "lucide-react";
 import { TRAFFIC_ALERTS, WEATHER_ALERTS } from "@/lib/data";
 import { useLocale } from "@/lib/locale-context";
@@ -43,6 +43,11 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
   const [vol, setVol] = useState(0.8);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
   const [speechAvailable, setSpeechAvailable] = useState(false);
+  const [mode, setMode] = useState<"idle" | "voice" | "browser">("idle");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioUrlRef = useRef<string | null>(null);
   const { script, lines, sources } = useMemo(() => buildBulletin(locale), [locale, updatedAt]);
 
   useEffect(() => {
@@ -52,11 +57,17 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
+      if (audioRef.current) audioRef.current.pause();
+      if (audioUrlRef.current) URL.revokeObjectURL(audioUrlRef.current);
     };
   }, []);
 
-  function speak() {
-    if (!speechAvailable) return;
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = vol;
+  }, [vol]);
+
+  function speakLocally() {
+    if (!speechAvailable) { setPlaying(false); return; }
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(script);
     utter.lang = locale === "fr" ? "fr-CA" : "en-CA";
@@ -70,18 +81,59 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
     utter.onend = () => setPlaying(false);
     utter.onerror = () => setPlaying(false);
     window.speechSynthesis.speak(utter);
+    setMode("browser");
     setPlaying(true);
+  }
+
+  async function speak() {
+    setErr(null);
+    setBusy(true);
+    try {
+      const res = await fetch("/api/public/traffic-radio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ script, locale }),
+      });
+      const ct = res.headers.get("content-type") ?? "";
+      if (res.ok && ct.includes("audio")) {
+        const blob = await res.blob();
+        if (audioUrlRef.current) URL.revokeObjectURL(audioUrlRef.current);
+        const url = URL.createObjectURL(blob);
+        audioUrlRef.current = url;
+        const el = audioRef.current ?? new Audio();
+        audioRef.current = el;
+        el.src = url;
+        el.volume = vol;
+        el.onended = () => setPlaying(false);
+        el.onerror = () => setPlaying(false);
+        await el.play();
+        setMode("voice");
+        setPlaying(true);
+        return;
+      }
+      // Mock mode (no ELEVENLABS_API_KEY server-side) or an upstream error.
+      const json = await res.json().catch(() => null);
+      if (json && json.ok === false && json.error) setErr(String(json.error).slice(0, 160));
+      speakLocally();
+    } catch {
+      setErr(locale === "fr" ? "Service vocal injoignable." : "Voice service unreachable.");
+      speakLocally();
+    } finally {
+      setBusy(false);
+    }
   }
 
   function stop() {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
     setPlaying(false);
   }
 
   function regenerate() {
     stop();
+    setMode("idle");
     setUpdatedAt(new Date());
   }
 
@@ -102,22 +154,33 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
         </div>
         <h3 className="font-display text-2xl leading-tight">{locale === "fr" ? "Bulletin de circulation d'Ottawa" : "Ottawa traffic bulletin"}</h3>
         <p className="text-paper/70 text-xs mt-1 font-sans italic">
-          {locale === "fr"
-            ? "Démo générée localement avec la synthèse vocale de votre navigateur. Aucun service vocal payant n'est utilisé."
-            : "Demo generated locally using your browser's built-in speech synthesis. No paid voice service is in use."}
+          {mode === "browser"
+            ? (locale === "fr"
+              ? "Démo générée localement avec la synthèse vocale de votre navigateur."
+              : "Demo generated locally using your browser's speech synthesis.")
+            : mode === "voice"
+              ? (locale === "fr"
+                ? "Voix de studio générée — annonceur radio d'Ottawa."
+                : "Studio voice generated — calm Ottawa radio announcer.")
+              : (locale === "fr"
+                ? "Bulletin construit à partir des alertes de circulation et météo en cours."
+                : "Bulletin built from current traffic and weather alerts.")}
+          {err && <span className="ml-2 text-civic-red not-italic">{err}</span>}
         </p>
 
         <div className="mt-4 flex items-center gap-3 flex-wrap">
           <button
             onClick={playing ? stop : speak}
-            disabled={!speechAvailable}
+            disabled={busy}
             className="inline-flex items-center gap-2 bg-civic-red hover:bg-paper hover:text-civic-red transition-colors px-3 h-11 text-sm font-semibold uppercase tracking-wider disabled:opacity-40"
             aria-label={playing ? "Stop" : (locale === "fr" ? "Générer le bulletin démo" : "Generate demo bulletin")}
           >
             {playing ? <Square className="h-4 w-4" /> : <Play className="h-4 w-4" />}
             {playing
               ? (locale === "fr" ? "Arrêter" : "Stop")
-              : (locale === "fr" ? "Générer le bulletin démo" : "Generate demo bulletin")}
+              : busy
+                ? (locale === "fr" ? "Génération…" : "Generating…")
+                : (locale === "fr" ? "Générer le bulletin" : "Generate bulletin")}
           </button>
           <div className="flex items-center gap-2 flex-1 min-w-[180px]">
             <Volume2 className="h-3.5 w-3.5 text-paper/70" />
@@ -138,7 +201,7 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
 
         <div className="text-[11px] text-paper/60 mt-2">
           {t("latestUpdate", locale)} · {minsAgo === 0 ? (locale === "fr" ? "à l'instant" : "just now") : `${minsAgo} ${t("minAgo", locale)}`}
-          {!speechAvailable && (
+          {!speechAvailable && mode === "browser" && (
             <span className="ml-2 text-civic-red">
               {locale === "fr" ? "· Synthèse vocale indisponible dans ce navigateur" : "· Speech synthesis unavailable in this browser"}
             </span>

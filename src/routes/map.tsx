@@ -6,6 +6,7 @@ import { generateMockSignals, OTTAWA_NEIGHBORHOODS } from "@/lib/map-signals";
 import { useLocale } from "@/lib/locale-context";
 import type { SignalType, SignalVerification, MapSignal } from "@/types/database";
 import { Search as SearchIcon } from "lucide-react";
+import { useOttawaTraffic } from "@/lib/use-ottawa-traffic";
 
 export const Route = createFileRoute("/map")({
   head: () => ({ meta: [
@@ -22,7 +23,9 @@ const VERIFICATION_OPTIONS: SignalVerification[] = [
 
 function MapPage() {
   const { locale } = useLocale();
-  const allSignals = useMemo(() => generateMockSignals(160), []);
+  const mockSignals = useMemo(() => generateMockSignals(160), []);
+  const { mapped: liveTraffic, unmapped: unmappedTraffic } = useOttawaTraffic(locale);
+  const allSignals = useMemo(() => [...liveTraffic, ...mockSignals], [liveTraffic, mockSignals]);
   const [activeTypes, setActiveTypes] = useState<Set<SignalType>>(new Set(ALL_TYPES));
   const [activeVerif, setActiveVerif] = useState<Set<SignalVerification>>(new Set(VERIFICATION_OPTIONS));
   const [neighborhood, setNeighborhood] = useState<string>("all");
@@ -121,7 +124,28 @@ function MapPage() {
 
           <div className="text-[11px] text-muted-foreground border-t border-rule pt-3">
             {filtered.length} {locale === "fr" ? "signaux visibles" : "signals shown"} · {allSignals.length} {locale === "fr" ? "au total" : "total"}
+            {liveTraffic.length > 0 && (
+              <div className="mt-1 text-civic-red font-semibold">
+                {liveTraffic.length} {locale === "fr" ? "incidents en direct (Ville d'Ottawa)" : "live incidents (City of Ottawa)"}
+              </div>
+            )}
           </div>
+
+          {unmappedTraffic.length > 0 && (
+            <div className="border-t border-rule pt-3">
+              <label className="kicker text-civic-red mb-2 block">
+                {locale === "fr" ? "Signalés, sans localisation" : "Reported, location not mapped"}
+              </label>
+              <ul className="text-[11px] text-muted-foreground space-y-1.5 max-h-48 overflow-auto">
+                {unmappedTraffic.slice(0, 20).map(e => (
+                  <li key={e.id} className="leading-snug">
+                    <span className="font-semibold text-foreground">{e.title}</span>
+                    {typeof e.location === "string" && <span> — {e.location}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </aside>
 
         {/* Map + list */}
@@ -132,7 +156,9 @@ function MapPage() {
                 signals={filtered}
                 height="calc(100vh - 220px)"
                 onSelect={setSelected}
-                liveBadgeLabel={locale === "fr" ? "Carte vivante · échantillons" : "Live editorial map · sample data"}
+                liveBadgeLabel={liveTraffic.length > 0
+                  ? (locale === "fr" ? "Circulation en direct · Ville d'Ottawa" : "Live traffic · City of Ottawa")
+                  : (locale === "fr" ? "Carte vivante · échantillons" : "Live editorial map · sample data")}
               />
             </div>
             <aside className="border border-rule bg-card flex flex-col">
