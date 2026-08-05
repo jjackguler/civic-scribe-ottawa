@@ -42,6 +42,11 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { locale } = useLocale();
+  const { items: liveItems } = useLiveFeed();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  // Hero carousel shows #1 in rotation; the grid below picks up #2–#5.
+  const liveLeads = liveItems.slice(1, 5);
   const hero = ARTICLES[0];
   const leads = [ARTICLES[1], ARTICLES[2]];
   const todayItems = ARTICLES.slice(0, 8);
