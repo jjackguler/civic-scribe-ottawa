@@ -1,28 +1,29 @@
+import { useEffect, useState } from "react";
 import { Clock, ExternalLink } from "lucide-react";
 import { LiveImage } from "@/components/LiveImage";
 import { useLocale } from "@/lib/locale-context";
 import { regionKicker, type FeedItem } from "@/lib/use-live-feed";
 
-/** Client-only relative time (avoids SSR/client clock mismatch). */
-function useRelative(iso: string) {
-  const { locale } = useLocale();
-  if (typeof window === "undefined") return "";
+function relative(iso: string, locale: "en" | "fr") {
   const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
   if (!isFinite(m)) return "";
   // Upstream clocks can run slightly ahead of ours — treat that as brand new.
   if (m < 1) return locale === "fr" ? "À l'instant" : "Just now";
-  if (m < 60) return `${Math.max(1, m)} ${locale === "fr" ? "min" : "min ago"}`;
+  if (m < 60) return `${m} ${locale === "fr" ? "min" : "min ago"}`;
   const h = Math.round(m / 60);
   if (h < 24) return `${h} ${locale === "fr" ? "h" : "h ago"}`;
   return `${Math.round(h / 24)} ${locale === "fr" ? "j" : "d ago"}`;
 }
 
 export function LiveStoryCard({
-  item, variant = "lead", mounted,
-}: { item: FeedItem; variant?: "hero" | "lead"; mounted: boolean }) {
+  item, variant = "lead",
+}: { item: FeedItem; variant?: "hero" | "lead"; mounted?: boolean }) {
   const { locale } = useLocale();
-  const rel = useRelative(item.publishedAt);
+  // Relative time is computed after mount only — server/client clocks differ.
+  const [rel, setRel] = useState("");
+  useEffect(() => { setRel(relative(item.publishedAt, locale)); }, [item.publishedAt, locale]);
   const label = item.region === "canada" ? "CANADA" : "OTTAWA";
+
 
   return (
     <article className="group">
