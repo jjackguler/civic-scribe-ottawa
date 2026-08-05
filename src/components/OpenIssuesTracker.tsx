@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { generate311Signals } from "@/lib/ingest/ottawa-311";
 import { ExternalLink, MapPin } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
@@ -12,7 +12,9 @@ const STATUS_LABEL: Record<string, { en: string; fr: string; tone: string }> = {
 
 export function OpenIssuesTracker() {
   const { locale } = useLocale();
-  const all = useMemo(() => generate311Signals(60), []);
+  // Generated from the current clock — client-only to avoid SSR date mismatch.
+  const [all, setAll] = useState<ReturnType<typeof generate311Signals>>([]);
+  useEffect(() => { setAll(generate311Signals(60)); }, []);
   const [filter, setFilter] = useState<"all" | "reported" | "acknowledged" | "in_progress" | "resolved">("all");
 
   const counts = useMemo(() => ({

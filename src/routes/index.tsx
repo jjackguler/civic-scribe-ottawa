@@ -21,6 +21,9 @@ import { YourStreetsPanel } from "@/components/YourStreetsPanel";
 import { TrafficRadio } from "@/components/TrafficRadio";
 import { SocialTrendCard } from "@/components/SocialTrendCard";
 import { HomepageMapEmbed } from "@/components/HomepageMapEmbed";
+import { LiveStoryCard } from "@/components/LiveStoryCard";
+import { useLiveFeed } from "@/lib/use-live-feed";
+import { useEffect, useState } from "react";
 import { OpenIssuesTracker } from "@/components/OpenIssuesTracker";
 import { ARTICLES, FACT_CHECKS, LIVE_TICKERS, TREND_ITEMS } from "@/lib/data";
 import { ACTIVITIES, DEALS, KIDS_PICKS, YOUTH_PICKS, OTTAWA_GUIDE, CANADA_GUIDE, CITIZEN_REPORTS } from "@/lib/guide-data";
@@ -39,6 +42,11 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { locale } = useLocale();
+  const { items: liveItems } = useLiveFeed();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  // Hero carousel shows #1 in rotation; the grid below picks up #2–#5.
+  const liveLeads = liveItems.slice(1, 5);
   const hero = ARTICLES[0];
   const leads = [ARTICLES[1], ARTICLES[2]];
   const todayItems = ARTICLES.slice(0, 8);
@@ -79,12 +87,25 @@ function Home() {
         {/* 1. THE SPLASH (lead story) */}
         <BreakingHero />
 
-        {/* Lead stories under the hero */}
+        {/* Lead stories under the hero — live merged feed, items #2–#5 */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-          <div className="lg:col-span-7"><ArticleCard article={hero} variant="hero" /></div>
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
-            {leads.map((a) => <ArticleCard key={a.slug} article={a} variant="lead" />)}
-          </div>
+          {liveLeads.length > 0 ? (
+            <>
+              <div className="lg:col-span-7">
+                <LiveStoryCard item={liveLeads[0]} variant="hero" mounted={mounted} />
+              </div>
+              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
+                {liveLeads.slice(1, 4).map(i => <LiveStoryCard key={i.id} item={i} mounted={mounted} />)}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="lg:col-span-7"><ArticleCard article={hero} variant="hero" /></div>
+              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
+                {leads.map((a) => <ArticleCard key={a.slug} article={a} variant="lead" />)}
+              </div>
+            </>
+          )}
         </section>
 
         {/* 2. YOUR STREETS — hyperlocal ward spotlight */}
