@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, ArrowRight, Clock, ExternalLink } from "lucide-react";
 import { ARTICLES } from "@/lib/data";
-import { newsprintDataURI } from "@/lib/image-fallback";
+import { LiveImage } from "@/components/LiveImage";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
-import { useLiveFeed, regionAccent, regionBadge, type FeedItem } from "@/lib/use-live-feed";
+import { useLiveFeed, regionBadge, type FeedItem } from "@/lib/use-live-feed";
 
 type BreakingCard = {
   id: string;
   kicker: string;
   region: "ottawa" | "canada";
   title: string;
-  image: string;
+  image?: string;
   href: string;
   external: boolean;
   urgent: boolean;
@@ -25,7 +25,8 @@ function toCard(item: FeedItem): BreakingCard {
     kicker: item.region === "canada" ? `CANADA · ${item.source}` : `OTTAWA · ${item.source}`,
     region: item.region,
     title: item.title,
-    image: item.image || newsprintDataURI(item.title, 1600, 900, regionAccent(item.region)),
+    // No placeholder here — LiveImage owns the headline-over-accent fallback.
+    image: item.image,
     href: item.link,
     external: true,
     urgent: item.urgent,
@@ -40,7 +41,6 @@ function fallbackCards(locale: "en" | "fr"): BreakingCard[] {
     kicker: locale === "fr" ? "À LA UNE" : "BREAKING",
     region: "ottawa" as const,
     title: a.title[locale],
-    image: newsprintDataURI(a.title.en, 1600, 900, "#C8102E"),
     href: `/article/${a.slug}`,
     external: false,
     urgent: true,
@@ -119,13 +119,15 @@ export function BreakingHero() {
             key={c.id}
             className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
-            <img
+            <LiveImage
               src={c.image}
+              headline={c.title}
+              region={c.region}
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
               loading={i === 0 ? "eager" : "lazy"}
-              onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = newsprintDataURI(c.title, 1600, 900, regionAccent(c.region)); }}
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
             <div className="absolute inset-0 flex items-end">
               <div className="max-w-3xl p-6 sm:p-10 text-paper">

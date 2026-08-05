@@ -6,13 +6,17 @@ import { t } from "@/lib/i18n";
 
 type SourceRef = { id: string; kind: "traffic" | "weather"; label: string; origin: string };
 
-function buildBulletin(locale: "en" | "fr") {
-  const time = new Date().toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" });
+// `now` is null during SSR/first render — the clock only exists client-side,
+// otherwise server and browser timezones produce different text (hydration mismatch).
+function buildBulletin(locale: "en" | "fr", now: Date | null) {
+  const time = now
+    ? now.toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" })
+    : null;
   const lines: string[] = [];
   const sources: SourceRef[] = [];
 
   if (locale === "fr") {
-    lines.push(`Bulletin circulation Ottawa, il est ${time}. Voici votre point de trafic.`);
+    lines.push(time ? `Bulletin circulation Ottawa, il est ${time}. Voici votre point de trafic.` : "Bulletin circulation Ottawa. Voici votre point de trafic.");
     TRAFFIC_ALERTS.forEach(a => {
       lines.push(`${a.location} : ${a.title.fr}. Impact ${a.impact}.`);
       sources.push({ id: a.id, kind: "traffic", label: `${a.location} — ${a.title.fr}`, origin: "Ville d'Ottawa / 511 Ontario (démo)" });
@@ -23,7 +27,7 @@ function buildBulletin(locale: "en" | "fr") {
     });
     lines.push("Conduisez prudemment. Prochain bulletin dans dix minutes.");
   } else {
-    lines.push(`Ottawa traffic bulletin, the time is ${time}. Here's your commute update.`);
+    lines.push(time ? `Ottawa traffic bulletin, the time is ${time}. Here's your commute update.` : "Ottawa traffic bulletin. Here's your commute update.");
     TRAFFIC_ALERTS.forEach(a => {
       lines.push(`${a.location}: ${a.title.en}. ${a.impact} impact.`);
       sources.push({ id: a.id, kind: "traffic", label: `${a.location} — ${a.title.en}`, origin: "City of Ottawa / 511 Ontario (demo)" });
@@ -48,7 +52,7 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
   const [err, setErr] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = useRef<string | null>(null);
-  const { script, lines, sources } = useMemo(() => buildBulletin(locale), [locale, updatedAt]);
+  const { script, lines, sources } = useMemo(() => buildBulletin(locale, updatedAt), [locale, updatedAt]);
 
   useEffect(() => {
     setUpdatedAt(new Date());
