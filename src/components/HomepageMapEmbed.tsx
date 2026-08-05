@@ -8,6 +8,7 @@ import { generateParksEnvironmentSignals } from "@/lib/ingest/parks-environment"
 import { generatePublicSafetySignals, publicSafetyPublished } from "@/lib/ingest/public-safety";
 import type { SignalType, MapSignal } from "@/types/database";
 import { useLocale } from "@/lib/locale-context";
+import { useOttawaTraffic } from "@/lib/use-ottawa-traffic";
 
 const COMPACT_TYPES: SignalType[] = [
   "breaking-news", "traffic", "transit", "weather-alert", "citizen-report", "good-news",
@@ -23,6 +24,7 @@ export function HomepageMapEmbed() {
     ...generateParksEnvironmentSignals(),
     ...publicSafetyPublished(generatePublicSafetySignals()),
   ], []);
+  const { mapped: liveTraffic } = useOttawaTraffic(locale);
   const [signals, setSignals] = useState<MapSignal[]>(base);
   const [active, setActive] = useState<Set<SignalType>>(new Set(COMPACT_TYPES));
 
@@ -43,12 +45,14 @@ export function HomepageMapEmbed() {
     return () => clearInterval(i);
   }, []);
 
+  const withLive = useMemo(() => [...liveTraffic, ...signals], [liveTraffic, signals]);
+
   const filtered = useMemo(
-    () => signals.filter(s =>
+    () => withLive.filter(s =>
       active.has(s.type) &&
       (s.verification === "verified" || s.verification === "developing" || s.verification === "official-source" || s.verification === "editor-reviewed")
     ),
-    [signals, active]
+    [withLive, active]
   );
 
   const toggle = (t: SignalType) => {
@@ -77,7 +81,14 @@ export function HomepageMapEmbed() {
           {locale === "fr" ? "Ouvrir la carte complète" : "Open full map"} →
         </Link>
       </div>
-      <LeafletMap signals={filtered} height="500px" compact />
+      <LeafletMap
+        signals={filtered}
+        height="500px"
+        compact
+        liveBadgeLabel={liveTraffic.length > 0
+          ? (locale === "fr" ? "Circulation en direct · Ville d'Ottawa" : "Live traffic · City of Ottawa")
+          : (locale === "fr" ? "Carte vivante · échantillons" : "Live editorial map · sample data")}
+      />
     </div>
   );
 }

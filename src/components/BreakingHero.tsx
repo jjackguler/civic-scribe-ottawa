@@ -1,96 +1,135 @@
-import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { AlertTriangle, ArrowRight, Clock } from "lucide-react";
-import { ARTICLES, TRAFFIC_ALERTS, WEATHER_ALERTS } from "@/lib/data";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AlertTriangle, ArrowRight, Clock, ExternalLink } from "lucide-react";
+import { ARTICLES } from "@/lib/data";
 import { newsprintDataURI } from "@/lib/image-fallback";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
+import { useLiveFeed, regionAccent, regionBadge, type FeedItem } from "@/lib/use-live-feed";
 
 type BreakingCard = {
   id: string;
   kicker: string;
+  region: "ottawa" | "canada";
   title: string;
   image: string;
   href: string;
-  urgent?: boolean;
+  external: boolean;
+  urgent: boolean;
+  source?: string;
   ts: string;
 };
 
-// Deterministic SVG placeholders keyed to category color. No random selection,
-// no external dependency — guaranteed to render on SSR and client identically.
-const ACCENT = {
-  breaking: "#C8102E",
-  weather:  "#1E5F8E",
-  traffic:  "#B8860B",
-  housing:  "#2F5233",
-};
+function toCard(item: FeedItem): BreakingCard {
+  return {
+    id: item.id,
+    kicker: item.region === "canada" ? `CANADA · ${item.source}` : `OTTAWA · ${item.source}`,
+    region: item.region,
+    title: item.title,
+    image: item.image || newsprintDataURI(item.title, 1600, 900, regionAccent(item.region)),
+    href: item.link,
+    external: true,
+    urgent: item.urgent,
+    source: item.source,
+    ts: item.publishedAt,
+  };
+}
+
+function fallbackCards(locale: "en" | "fr"): BreakingCard[] {
+  return ARTICLES.slice(0, 3).map(a => ({
+    id: a.slug,
+    kicker: locale === "fr" ? "À LA UNE" : "BREAKING",
+    region: "ottawa" as const,
+    title: a.title[locale],
+    image: newsprintDataURI(a.title.en, 1600, 900, "#C8102E"),
+    href: `/article/${a.slug}`,
+    external: false,
+    urgent: true,
+    ts: a.updatedAt ?? a.publishedAt,
+  }));
+}
 
 export function BreakingHero() {
   const { locale } = useLocale();
-  const cards: BreakingCard[] = [
-    {
-      id: "b-hero",
-      kicker: locale === "fr" ? "À LA UNE" : "BREAKING",
-      title: ARTICLES[0].title[locale],
-      image: newsprintDataURI(ARTICLES[0].title.en, 1600, 900, ACCENT.breaking),
-      href: `/article/${ARTICLES[0].slug}`,
-      urgent: true,
-      ts: ARTICLES[0].updatedAt ?? ARTICLES[0].publishedAt,
-    },
-    ...WEATHER_ALERTS.slice(0, 1).map(w => ({
-      id: w.id,
-      kicker: locale === "fr" ? "MÉTÉO · URGENT" : "WEATHER · URGENT",
-      title: w.title[locale],
-      image: newsprintDataURI(w.title.en, 1600, 900, ACCENT.weather),
-      href: "/weather",
-      urgent: true,
-      ts: w.issuedAt,
-    })),
-    ...TRAFFIC_ALERTS.slice(0, 1).map(a => ({
-      id: a.id,
-      kicker: locale === "fr" ? "TRAFIC · EN COURS" : "TRAFFIC · DEVELOPING",
-      title: a.title[locale],
-      image: newsprintDataURI(a.title.en, 1600, 900, ACCENT.traffic),
-      href: "/traffic",
-      urgent: a.impact === "high",
-      ts: a.until,
-    })),
-    {
-      id: "b-canal",
-      kicker: locale === "fr" ? "EN DÉVELOPPEMENT" : "DEVELOPING",
-      title: locale === "fr"
-        ? "Le conseil tient un vote serré sur 312 logements abordables à Centretown"
-        : "Council holds knife-edge vote on 312 affordable units in Centretown",
-      image: newsprintDataURI("Council holds knife-edge vote on affordable housing", 1600, 900, ACCENT.housing),
-      href: "/article/centretown-affordable-housing-vote",
-      urgent: false,
-      ts: "2026-05-24T12:00:00Z",
-    },
-  ];
+  const { items, loading } = useLiveFeed();
+
+  const live = useMemo(() => items.slice(0, 5).map(toCard), [items]);
+  const fallback = useMemo(() => fallbackCards(locale), [locale]);
+
+  // Cards only swap between slides, never mid-transition.
+  const [cards, setCards] = useState<BreakingCard[]>(fallback);
+  const pendingRef = useRef<BreakingCard[] | null>(null);
+  useEffect(() => {
+    const next = live.length > 0 ? live : fallback;
+    if (cards.length === 0) { setCards(next); return; }
+    pendingRef.current = next;
+    // Adopt immediately when the current list is only the placeholder set.
+    if (cards === fallback || cards[0]?.id === fallback[0]?.id) {
+      setCards(next);
+      pendingRef.current = null;
+    }
+  }, [live, fallback]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [idx, setIdx] = useState(0);
-  // Defer the interval start to after hydration to avoid SSR mismatch.
+  const [paused, setPaused] = useState(false);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [reduced, setReduced] = useState(false);
+
   useEffect(() => {
-    if (!mounted) return;
-    const i = setInterval(() => setIdx(v => (v + 1) % cards.length), 6500);
+    setMounted(true);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const on = () => setReduced(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || paused || reduced || cards.length < 2) return;
+    const i = setInterval(() => {
+      // Apply any queued re-ranking at the slide boundary.
+      if (pendingRef.current) {
+        setCards(pendingRef.current);
+        pendingRef.current = null;
+        setIdx(0);
+        return;
+      }
+      setIdx(v => (v + 1) % cards.length);
+    }, 8000);
     return () => clearInterval(i);
-  }, [mounted, cards.length]);
+  }, [mounted, paused, reduced, cards.length]);
+
+  useEffect(() => { if (idx >= cards.length) setIdx(0); }, [cards.length, idx]);
+
+  const fmt = (ts: string) =>
+    new Date(ts).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", {
+      hour: "2-digit", minute: "2-digit", month: "short", day: "numeric",
+    });
 
   return (
-    <section className="relative overflow-hidden border border-rule bg-ink">
+    <section
+      className="relative overflow-hidden border border-rule bg-ink"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
       <div className="relative h-[420px] sm:h-[480px] lg:h-[540px]">
         {cards.map((c, i) => (
           <div
             key={c.id}
             className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
-            <img src={c.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading={i === 0 ? "eager" : "lazy"} />
+            <img
+              src={c.image}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              loading={i === 0 ? "eager" : "lazy"}
+              onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = newsprintDataURI(c.title, 1600, 900, regionAccent(c.region)); }}
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
             <div className="absolute inset-0 flex items-end">
               <div className="max-w-3xl p-6 sm:p-10 text-paper">
-                <div className={`inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] font-bold px-2.5 py-1 ${c.urgent ? "bg-civic-red text-white" : "bg-paper/15 text-paper"}`}>
+                <div className={`inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] font-bold px-2.5 py-1 ${c.urgent ? regionBadge(c.region) : "bg-paper/15 text-paper"}`}>
                   {c.urgent && <AlertTriangle className="h-3 w-3" />}
                   {c.kicker}
                 </div>
@@ -98,10 +137,18 @@ export function BreakingHero() {
                   {c.title}
                 </h1>
                 <div className="mt-5 flex flex-wrap items-center gap-4 text-xs text-paper/85">
-                  <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" />{new Date(c.ts).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric" })}</span>
-                  <Link to={c.href as any} className="inline-flex items-center gap-1 font-semibold border-b border-paper/60 hover:border-paper pb-0.5">
-                    {locale === "fr" ? "Suivre l'histoire" : "Follow the story"} <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
+                  {/* Rendered after hydration only — server/client timezones differ. */}
+                  <span className="inline-flex items-center gap-1.5 min-h-4">
+                    <Clock className="h-3.5 w-3.5" />{mounted ? fmt(c.ts) : ""}
+                  </span>
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="inline-flex items-center gap-1 font-semibold border-b border-paper/60 hover:border-paper pb-0.5"
+                  >
+                    {locale === "fr" ? "Suivre l'histoire" : "Follow the story"}
+                    {c.external ? <ExternalLink className="h-3.5 w-3.5" /> : <ArrowRight className="h-3.5 w-3.5" />}
+                  </a>
                 </div>
               </div>
             </div>
@@ -118,21 +165,22 @@ export function BreakingHero() {
             />
           ))}
         </div>
+
+        {mounted && loading && (
+          <div className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.18em] text-paper/70">
+            {locale === "fr" ? "Chargement des fils…" : "Loading live feeds…"}
+          </div>
+        )}
       </div>
 
       {/* Developing-story timeline strip */}
       <div className="bg-paper border-t border-rule px-4 sm:px-6 py-3 flex items-start gap-4 overflow-x-auto">
         <div className="shrink-0 kicker text-civic-red flex items-center gap-1.5"><span className="ticker-dot" /> {t("developingStory", locale)}</div>
         <ol className="flex items-start gap-6 text-xs">
-          {[
-            { time: "20:42", text: locale === "fr" ? "Bus de remplacement en route, fréquence 7–9 min" : "Replacement buses en route, every 7–9 min" },
-            { time: "20:15", text: locale === "fr" ? "OC Transpo confirme une défaillance d'aiguillage" : "OC Transpo confirms switch fault near Bayview" },
-            { time: "19:58", text: locale === "fr" ? "Premier rapport citoyen — quai Tunney's Pasture" : "First citizen report — Tunney's Pasture platform" },
-            { time: "19:42", text: locale === "fr" ? "Capteurs OC Transpo détectent une anomalie" : "OC Transpo sensors flag anomaly" },
-          ].map((s, i) => (
-            <li key={i} className="shrink-0 max-w-[220px]">
-              <div className="font-sans font-bold text-civic-red">{s.time}</div>
-              <div className="font-serif text-foreground leading-snug">{s.text}</div>
+          {(cards.length > 1 ? cards.slice(0, 4) : []).map((c) => (
+            <li key={`strip-${c.id}`} className="shrink-0 max-w-[240px]">
+              <div className={`font-sans font-bold ${c.region === "canada" ? "text-river" : "text-civic-red"}`}>{c.source ?? "Ottawa"}</div>
+              <div className="font-serif text-foreground leading-snug line-clamp-2">{c.title}</div>
             </li>
           ))}
         </ol>
