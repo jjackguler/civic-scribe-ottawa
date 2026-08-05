@@ -8,7 +8,9 @@ function useRelative(iso: string) {
   const { locale } = useLocale();
   if (typeof window === "undefined") return "";
   const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
-  if (!isFinite(m) || m < 0) return "";
+  if (!isFinite(m)) return "";
+  // Upstream clocks can run slightly ahead of ours — treat that as brand new.
+  if (m < 1) return locale === "fr" ? "À l'instant" : "Just now";
   if (m < 60) return `${Math.max(1, m)} ${locale === "fr" ? "min" : "min ago"}`;
   const h = Math.round(m / 60);
   if (h < 24) return `${h} ${locale === "fr" ? "h" : "h ago"}`;
