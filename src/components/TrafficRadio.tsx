@@ -27,7 +27,7 @@ function buildBulletin(locale: "en" | "fr", now: Date | null) {
     });
     lines.push("Conduisez prudemment. Prochain bulletin dans dix minutes.");
   } else {
-    lines.push(`Ottawa traffic bulletin, the time is ${time}. Here's your commute update.`);
+    lines.push(time ? `Ottawa traffic bulletin, the time is ${time}. Here's your commute update.` : "Ottawa traffic bulletin. Here's your commute update.");
     TRAFFIC_ALERTS.forEach(a => {
       lines.push(`${a.location}: ${a.title.en}. ${a.impact} impact.`);
       sources.push({ id: a.id, kind: "traffic", label: `${a.location} — ${a.title.en}`, origin: "City of Ottawa / 511 Ontario (demo)" });
