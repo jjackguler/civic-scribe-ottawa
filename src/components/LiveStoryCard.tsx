@@ -45,7 +45,7 @@ export function LiveStoryCard({
         </h3>
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground font-sans">
           <span className="inline-flex items-center gap-1 min-h-4">
-            <Clock className="h-3 w-3" />{mounted ? rel : ""}
+            <Clock className="h-3 w-3" />{rel}
           </span>
           <span className="inline-flex items-center gap-1">
             {locale === "fr" ? "Lire à la source" : "Read at source"} <ExternalLink className="h-3 w-3" />
