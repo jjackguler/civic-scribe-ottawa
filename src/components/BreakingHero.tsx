@@ -119,13 +119,15 @@ export function BreakingHero() {
             key={c.id}
             className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
-            <img
+            <LiveImage
               src={c.image}
+              headline={c.title}
+              region={c.region}
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
               loading={i === 0 ? "eager" : "lazy"}
-              onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = newsprintDataURI(c.title, 1600, 900, regionAccent(c.region)); }}
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
             <div className="absolute inset-0 flex items-end">
               <div className="max-w-3xl p-6 sm:p-10 text-paper">
