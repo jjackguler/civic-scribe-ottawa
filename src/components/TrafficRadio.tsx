@@ -52,7 +52,7 @@ export function TrafficRadio({ compact = false }: { compact?: boolean }) {
   const [err, setErr] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = useRef<string | null>(null);
-  const { script, lines, sources } = useMemo(() => buildBulletin(locale), [locale, updatedAt]);
+  const { script, lines, sources } = useMemo(() => buildBulletin(locale, updatedAt), [locale, updatedAt]);
 
   useEffect(() => {
     setUpdatedAt(new Date());
