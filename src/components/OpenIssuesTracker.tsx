@@ -37,10 +37,16 @@ export function OpenIssuesTracker() {
               : "Civic service requests. Locations generalized to protect privacy."}
           </p>
         </div>
-        <a href="https://open.ottawa.ca" target="_blank" rel="noopener noreferrer"
-           className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold text-river hover:underline">
-          {locale === "fr" ? "Source : Open Ottawa" : "Source: Open Ottawa"} <ExternalLink className="h-3 w-3" />
-        </a>
+        <div className="flex flex-col items-end gap-1">
+          <a href="https://open.ottawa.ca" target="_blank" rel="noopener noreferrer"
+             className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold text-river hover:underline">
+            {locale === "fr" ? "Portail : Open Ottawa" : "Portal: Open Ottawa"} <ExternalLink className="h-3 w-3" />
+          </a>
+          <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground italic"
+                title={locale === "fr" ? "Données simulées — pas encore connectées au flux réel d'Open Ottawa" : "Simulated data — not yet wired to the live Open Ottawa dataset"}>
+            {locale === "fr" ? "Données d'exemple · Prototype" : "Sample data · Prototype"}
+          </span>
+        </div>
       </header>
 
       <div className="grid grid-cols-4 gap-px bg-rule">

@@ -1,0 +1,38 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>City Hall</title>
+<desc>Stylized civic building with columns, document and ballot box — Ottawa Civic Ledger</desc>
+  <defs>
+    
+    <pattern id="dots-cityhall" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="7" r="2.1" fill="#B87333" opacity="0.55"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="1600" height="900" fill="#F5F0E6"/>
+  <rect x="0" y="0" width="1600" height="900" fill="url(#dots-cityhall)"/>
+  <polygon points="80.0,102.8 182.9,102.5 285.7,77.6 388.6,78.4 491.4,99.4 594.3,96.6 697.1,94.8 800.0,84.6 902.9,93.0 1005.7,93.0 1108.6,92.3 1211.4,80.4 1314.3,88.1 1417.1,87.0 1520.0,96.2 1520.0,723.9 1417.1,722.6 1314.3,711.2 1211.4,708.5 1108.6,703.5 1005.7,697.0 902.9,696.8 800.0,709.0 697.1,704.9 594.3,706.6 491.4,721.0 388.6,710.7 285.7,711.7 182.9,702.6 80.0,696.7" fill="#E5DDC8" opacity="0.9" transform="rotate(-1.2 800.0 450.0)"/>
+  <polygon points="180.0,159.3 268.6,157.5 357.1,152.8 445.7,167.3 534.3,150.1 622.9,160.1 711.4,168.0 800.0,151.6 888.6,161.1 977.1,162.3 1065.7,150.8 1154.3,157.6 1242.9,164.1 1331.4,159.0 1420.0,164.5 1420.0,633.1 1331.4,634.8 1242.9,632.2 1154.3,640.1 1065.7,648.5 977.1,641.8 888.6,645.5 800.0,637.7 711.4,644.9 622.9,632.0 534.3,635.8 445.7,643.5 357.1,644.5 268.6,638.4 180.0,631.8" fill="#B87333" opacity="0.10"/>
+  <rect x="64" y="64" width="4" height="772" fill="#1A1A1A" opacity="0.15"/>
+  <text x="100" y="838" font-family="Georgia, serif" font-size="22" font-style="italic" fill="#1A1A1A" opacity="0.55">Ottawa Civic Ledger — representative illustration</text>
+  <rect x="100" y="86" width="18" height="18" fill="#B87333"/>
+  <text x="128" y="101" font-family="Arial, sans-serif" font-size="16" letter-spacing="3" fill="#1A1A1A" opacity="0.7">CITY HALL</text>
+
+    <g transform="translate(430,260)">
+      <polygon points="310,0 620,120 0,120" fill="#B87333"/>
+      <rect x="20" y="120" width="580" height="26" fill="#1A1A1A" opacity="0.75"/>
+      <rect x="40" y="150" width="46" height="220" fill="#B87333"/><rect x="122" y="150" width="46" height="220" fill="#B87333"/><rect x="204" y="150" width="46" height="220" fill="#B87333"/><rect x="286" y="150" width="46" height="220" fill="#B87333"/><rect x="368" y="150" width="46" height="220" fill="#B87333"/><rect x="450" y="150" width="46" height="220" fill="#B87333"/><rect x="532" y="150" width="46" height="220" fill="#B87333"/>
+      <rect x="0" y="372" width="620" height="34" fill="#1A1A1A" opacity="0.85"/>
+    </g>
+    <g transform="translate(1120,470) rotate(8)">
+      <rect x="-90" y="-10" width="200" height="150" rx="6" fill="#F5F0E6" stroke="#1A1A1A" stroke-width="3"/>
+      <rect x="-100" y="-30" width="200" height="150" rx="6" fill="#F5F0E6" stroke="#1A1A1A" stroke-width="3"/>
+      <line x1="-80" y1="10" x2="60" y2="10" stroke="#1A1A1A" stroke-width="4" opacity="0.4"/>
+      <line x1="-80" y1="34" x2="60" y2="34" stroke="#1A1A1A" stroke-width="4" opacity="0.4"/>
+      <line x1="-80" y1="58" x2="20" y2="58" stroke="#1A1A1A" stroke-width="4" opacity="0.4"/>
+      <polygon points="40,-30 90,-30 90,60 65,35 40,60" fill="#C8102E"/>
+    </g>
+    <g transform="translate(250,560)">
+      <rect x="0" y="30" width="150" height="110" fill="#1A1A1A" opacity="0.85"/>
+      <polygon points="-10,0 160,0 150,30 0,30" fill="#B87333"/>
+      <rect x="60" y="8" width="30" height="10" fill="#F5F0E6"/>
+    </g>
+</svg>
