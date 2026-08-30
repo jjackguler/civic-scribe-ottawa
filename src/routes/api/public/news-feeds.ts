@@ -29,9 +29,22 @@ const g = globalThis as unknown as { __ottNews?: CacheEntry };
 const TTL_MS = 5 * 60 * 1000;
 const UA = "Mozilla/5.0 (compatible; OttawaCivicLedger/1.0; +civic-news)";
 
-const SOURCES: { name: string; region: FeedRegion; url: string; filter?: (title: string, author: string) => boolean }[] = [
+const SOURCES: { name: string; region: FeedRegion; url: string; headers?: Record<string, string>; filter?: (title: string, author: string) => boolean }[] = [
   { name: "CBC Ottawa", region: "ottawa", url: "https://www.cbc.ca/webfeed/rss/rss-canada-ottawa" },
-  { name: "City of Ottawa", region: "ottawa", url: "https://ottawa.ca/en/rss.xml" },
+  {
+    name: "City of Ottawa",
+    region: "ottawa",
+    url: "https://ottawa.ca/en/rss.xml",
+    // ottawa.ca sits behind Imperva bot protection — a fuller, real-browser
+    // header set sometimes gets through where a bare User-Agent doesn't.
+    // If this still fails, this source should simply be removed rather
+    // than left permanently red in the admin dashboard.
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      "Accept-Language": "en-CA,en;q=0.9",
+      "Referer": "https://ottawa.ca/",
+    },
+  },
   { name: "Global News Ottawa", region: "ottawa", url: "https://globalnews.ca/ottawa/feed/" },
   { name: "CTV News Ottawa", region: "ottawa", url: "https://www.ctvnews.ca/arc/outboundfeeds/rss/category/ottawa/?outputType=xml" },
   {
@@ -117,7 +130,13 @@ async function fetchAll(): Promise<Payload> {
   const results = await Promise.all(
     SOURCES.map(async (src): Promise<{ status: SourceStatus; items: FeedItem[] }> => {
       try {
-        const res = await fetch(src.url, { headers: { "User-Agent": UA, Accept: "application/rss+xml, application/xml, text/xml, */*" } });
+        const res = await fetch(src.url, {
+          headers: {
+            "User-Agent": UA,
+            Accept: "application/rss+xml, application/xml, text/xml, */*",
+            ...src.headers,
+          },
+        });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const xml = await res.text();
         if (!/<(rss|feed)[\s>]/i.test(xml)) throw new Error("Not an XML feed (blocked or HTML response)");

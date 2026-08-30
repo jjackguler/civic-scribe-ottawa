@@ -1,5 +1,4 @@
-import { newsprintDataURI } from "@/lib/image-fallback";
-import { regionAccent, type FeedRegion } from "@/lib/use-live-feed";
+import { type FeedRegion } from "@/lib/use-live-feed";
 
 interface Props extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
   src?: string | null;
@@ -9,13 +8,14 @@ interface Props extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
 
 /**
  * Image for live RSS items.
- * A missing / empty / non-http src never reaches the DOM — we render the
- * newsprint SVG with the headline on the region accent colour instead.
- * Remote images that fail to load fall back to the same SVG on error.
+ * A missing / empty / non-http src never reaches the DOM — we render a
+ * real editorial illustration (region-specific) instead of a blank box.
+ * Remote images that fail to load fall back to the same illustration on error.
  */
 export function LiveImage({ src, headline, region = "ottawa", alt = "", ...rest }: Props) {
-  const accent = regionAccent(region);
-  const placeholder = newsprintDataURI(headline, 1200, 800, accent);
+  const placeholder = region === "canada"
+    ? "/illustrations/canada-federal.svg"
+    : "/illustrations/general-ottawa.svg";
   const usable = typeof src === "string" && /^(https?:)?\/\//.test(src.trim());
   return (
     <img

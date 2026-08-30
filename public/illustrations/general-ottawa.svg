@@ -1,0 +1,50 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Ottawa</title>
+<desc>Stylized Ottawa skyline, Rideau Canal ribbon and maple leaf — Ottawa Civic Ledger</desc>
+  <defs>
+    
+    <pattern id="dots-general" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="7" r="2.1" fill="#1E5F8E" opacity="0.55"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="1600" height="900" fill="#F5F0E6"/>
+  <rect x="0" y="0" width="1600" height="900" fill="url(#dots-general)"/>
+  <polygon points="80.0,82.3 182.9,102.9 285.7,79.5 388.6,95.7 491.4,78.4 594.3,82.9 697.1,104.0 800.0,81.9 902.9,94.0 1005.7,88.9 1108.6,88.7 1211.4,89.9 1314.3,81.4 1417.1,99.3 1520.0,78.5 1520.0,702.6 1417.1,696.6 1314.3,703.5 1211.4,707.4 1108.6,721.3 1005.7,706.6 902.9,699.2 800.0,703.2 697.1,723.8 594.3,697.8 491.4,713.4 388.6,706.6 285.7,714.5 182.9,705.5 80.0,715.4" fill="#E5DDC8" opacity="0.9" transform="rotate(-1.2 800.0 450.0)"/>
+  <polygon points="180.0,169.3 268.6,150.2 357.1,164.7 445.7,153.2 534.3,169.7 622.9,150.3 711.4,167.6 800.0,163.6 888.6,167.1 977.1,170.0 1065.7,154.8 1154.3,156.8 1242.9,164.2 1331.4,155.6 1420.0,155.3 1420.0,634.6 1331.4,647.2 1242.9,647.5 1154.3,646.0 1065.7,634.5 977.1,648.5 888.6,640.2 800.0,634.6 711.4,639.1 622.9,638.4 534.3,631.6 445.7,641.3 357.1,637.2 268.6,641.4 180.0,648.6" fill="#1E5F8E" opacity="0.10"/>
+  <rect x="64" y="64" width="4" height="772" fill="#1A1A1A" opacity="0.15"/>
+  <text x="100" y="838" font-family="Georgia, serif" font-size="22" font-style="italic" fill="#1A1A1A" opacity="0.55">Ottawa Civic Ledger — representative illustration</text>
+  <rect x="100" y="86" width="18" height="18" fill="#1E5F8E"/>
+  <text x="128" y="101" font-family="Arial, sans-serif" font-size="16" letter-spacing="3" fill="#1A1A1A" opacity="0.7">OTTAWA</text>
+<rect x="120" y="540" width="80" height="220" fill="#1A1A1A" opacity="0.16"/><rect x="210" y="460" width="110" height="300" fill="#1A1A1A" opacity="0.16"/><rect x="330" y="580" width="70" height="180" fill="#1A1A1A" opacity="0.16"/><rect x="1200" y="500" width="90" height="260" fill="#1A1A1A" opacity="0.16"/><rect x="1300" y="440" width="120" height="320" fill="#1A1A1A" opacity="0.16"/><rect x="1430" y="570" width="70" height="190" fill="#1A1A1A" opacity="0.16"/>
+    <g transform="translate(760,150)">
+      <rect x="-30" y="200" width="60" height="380" fill="#1A1A1A" opacity="0.22"/>
+      <polygon points="0,0 46,120 -46,120" fill="#1A1A1A" opacity="0.25"/>
+      <rect x="-46" y="120" width="92" height="90" fill="#1A1A1A" opacity="0.22"/>
+    </g><path d="M 60 760 Q 400 690 760 750 T 1540 720" stroke="#1E5F8E" stroke-width="46" fill="none" opacity="0.55" stroke-linecap="round"/><path d="M 60 760 Q 400 690 760 750 T 1540 720" stroke="#F5F0E6" stroke-width="10" fill="none" opacity="0.5" stroke-dasharray="4 26" stroke-linecap="round"/><g transform="translate(1200,410)"><path d="
+M 0,-95
+L 12,-55
+L 45,-70
+L 38,-38
+L 78,-48
+L 55,-15
+L 90,-5
+L 55,15
+L 72,50
+L 30,35
+L 22,60
+L 8,30
+L 0,55
+L -8,30
+L -22,60
+L -30,35
+L -72,50
+L -55,15
+L -90,-5
+L -55,-15
+L -78,-48
+L -38,-38
+L -45,-70
+L -12,-55
+Z
+" transform="scale(1.35)" fill="#C8102E" stroke="#1A1A1A" stroke-width="3" stroke-linejoin="round"/><rect x="-6" y="67.5" width="12" height="45.900000000000006" transform="scale(1)" fill="#C8102E" stroke="#1A1A1A" stroke-width="3"/></g>
+</svg>
