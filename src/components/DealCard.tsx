@@ -19,6 +19,11 @@ export function DealCard({ d }: { d: Deal }) {
           <span className="bg-ink text-paper px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold">{d.retailer}</span>
           {d.savings && <span className="bg-civic-red text-paper px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold">-{d.savings}</span>}
         </div>
+        <div className="absolute bottom-2 left-2">
+          <span className="bg-paper/95 border border-rule px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-muted-foreground" title={locale === "fr" ? "Exemple — prix non vérifié en temps réel par un fournisseur payant" : "Sample listing — pricing not independently verified via a live retailer feed"}>
+            {locale === "fr" ? "Exemple" : "Sample"}
+          </span>
+        </div>
         <button
           aria-label={saved ? "Unsave" : "Save"}
           onClick={() => setSaved(s => !s)}
@@ -50,7 +55,7 @@ export function DealCard({ d }: { d: Deal }) {
         </div>
         <div className="text-[10px] uppercase tracking-wider text-muted-foreground/70 flex items-center gap-1.5">
           <Clock className="h-3 w-3" />
-          {locale === "fr" ? "Vérifié il y a" : "Verified"} {d.verifiedMinutesAgo}m {locale === "fr" ? "" : "ago"}
+          {locale === "fr" ? "Exemple ajouté il y a" : "Sample added"} {d.verifiedMinutesAgo}m {locale === "fr" ? "" : "ago"}
         </div>
       </div>
     </article>

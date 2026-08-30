@@ -16,11 +16,16 @@ export function FactCheckCard({ fc }: { fc: FactCheck }) {
   const Icon = s.Icon;
   return (
     <article className="bg-card border border-rule p-5 flex flex-col">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <span className={`inline-flex items-center gap-1.5 px-2 py-1 text-[11px] uppercase tracking-wider font-bold ${s.color}`}>
           <Icon className="h-3 w-3" />{s.label[locale]}
         </span>
-        <span className="text-[11px] text-muted-foreground">{new Date(fc.updatedAt).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA")}</span>
+        <span className="inline-flex items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground border border-rule px-1.5 py-0.5" title={locale === "fr" ? "Exemple de démonstration, pas une vérification réelle" : "Demonstration example, not a real fact-check"}>
+            {locale === "fr" ? "Exemple" : "Sample"}
+          </span>
+          <span className="text-[11px] text-muted-foreground">{new Date(fc.updatedAt).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA")}</span>
+        </span>
       </div>
       <blockquote className="font-display text-xl leading-snug mt-4 border-l-2 border-civic-red pl-4">
         {fc.claim[locale]}
