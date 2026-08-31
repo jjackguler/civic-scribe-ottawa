@@ -89,11 +89,3 @@ export function WeatherAlertsList() {
     </div>
   );
 }
-
-export function WeatherAlertsList() {
-  return (
-    <div className="space-y-3">
-      {WEATHER_ALERTS.map((a) => <WeatherAlertCard key={a.id} alert={a} />)}
-    </div>
-  );
-}

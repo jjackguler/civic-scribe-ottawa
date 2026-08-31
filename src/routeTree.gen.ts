@@ -72,6 +72,7 @@ import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as AnalysisSlugRouteImport } from './routes/analysis.$slug'
 import { Route as AdminSourcesRouteImport } from './routes/admin.sources'
 import { Route as ColumnsSlugEntryRouteImport } from './routes/columns.$slug.$entry'
+import { Route as ApiPublicWeatherAlertsRouteImport } from './routes/api/public/weather-alerts'
 import { Route as ApiPublicTrafficRadioRouteImport } from './routes/api/public/traffic-radio'
 import { Route as ApiPublicOttawaTrafficRouteImport } from './routes/api/public/ottawa-traffic'
 import { Route as ApiPublicNewsFeedsRouteImport } from './routes/api/public/news-feeds'
@@ -391,6 +392,11 @@ const ColumnsSlugEntryRoute = ColumnsSlugEntryRouteImport.update({
   path: '/$entry',
   getParentRoute: () => ColumnsSlugRoute,
 } as any)
+const ApiPublicWeatherAlertsRoute = ApiPublicWeatherAlertsRouteImport.update({
+  id: '/api/public/weather-alerts',
+  path: '/api/public/weather-alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicTrafficRadioRoute = ApiPublicTrafficRadioRouteImport.update({
   id: '/api/public/traffic-radio',
   path: '/api/public/traffic-radio',
@@ -473,6 +479,7 @@ export interface FileRoutesByFullPath {
   '/api/public/news-feeds': typeof ApiPublicNewsFeedsRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
+  '/api/public/weather-alerts': typeof ApiPublicWeatherAlertsRoute
   '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
 }
 export interface FileRoutesByTo {
@@ -541,6 +548,7 @@ export interface FileRoutesByTo {
   '/api/public/news-feeds': typeof ApiPublicNewsFeedsRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
+  '/api/public/weather-alerts': typeof ApiPublicWeatherAlertsRoute
   '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
 }
 export interface FileRoutesById {
@@ -610,6 +618,7 @@ export interface FileRoutesById {
   '/api/public/news-feeds': typeof ApiPublicNewsFeedsRoute
   '/api/public/ottawa-traffic': typeof ApiPublicOttawaTrafficRoute
   '/api/public/traffic-radio': typeof ApiPublicTrafficRadioRoute
+  '/api/public/weather-alerts': typeof ApiPublicWeatherAlertsRoute
   '/columns/$slug/$entry': typeof ColumnsSlugEntryRoute
 }
 export interface FileRouteTypes {
@@ -680,6 +689,7 @@ export interface FileRouteTypes {
     | '/api/public/news-feeds'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
+    | '/api/public/weather-alerts'
     | '/columns/$slug/$entry'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -748,6 +758,7 @@ export interface FileRouteTypes {
     | '/api/public/news-feeds'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
+    | '/api/public/weather-alerts'
     | '/columns/$slug/$entry'
   id:
     | '__root__'
@@ -816,6 +827,7 @@ export interface FileRouteTypes {
     | '/api/public/news-feeds'
     | '/api/public/ottawa-traffic'
     | '/api/public/traffic-radio'
+    | '/api/public/weather-alerts'
     | '/columns/$slug/$entry'
   fileRoutesById: FileRoutesById
 }
@@ -870,6 +882,7 @@ export interface RootRouteChildren {
   ApiPublicNewsFeedsRoute: typeof ApiPublicNewsFeedsRoute
   ApiPublicOttawaTrafficRoute: typeof ApiPublicOttawaTrafficRoute
   ApiPublicTrafficRadioRoute: typeof ApiPublicTrafficRadioRoute
+  ApiPublicWeatherAlertsRoute: typeof ApiPublicWeatherAlertsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1315,6 +1328,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ColumnsSlugEntryRouteImport
       parentRoute: typeof ColumnsSlugRoute
     }
+    '/api/public/weather-alerts': {
+      id: '/api/public/weather-alerts'
+      path: '/api/public/weather-alerts'
+      fullPath: '/api/public/weather-alerts'
+      preLoaderRoute: typeof ApiPublicWeatherAlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/traffic-radio': {
       id: '/api/public/traffic-radio'
       path: '/api/public/traffic-radio'
@@ -1575,7 +1595,18 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicNewsFeedsRoute: ApiPublicNewsFeedsRoute,
   ApiPublicOttawaTrafficRoute: ApiPublicOttawaTrafficRoute,
   ApiPublicTrafficRadioRoute: ApiPublicTrafficRadioRoute,
+  ApiPublicWeatherAlertsRoute: ApiPublicWeatherAlertsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
