@@ -100,7 +100,9 @@ export const Route = createFileRoute("/api/public/weather-alerts")({
           if (cached) {
             return Response.json({ cached: true, stale: true, fetchedAt: new Date(cached.ts).toISOString(), ...cached.payload, error: "Upstream unavailable, served cache." });
           }
-          return Response.json({ ok: false, items: [], error: String(e?.message ?? e) }, { status: 502 });
+          // Return 200 with ok:false — an upstream outage is not an app error,
+          // and a 5xx here trips the global error overlay / blank screen.
+          return Response.json({ ok: false, items: [], error: String(e?.message ?? e) });
         }
       },
     },
