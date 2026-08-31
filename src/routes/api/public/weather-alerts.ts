@@ -24,8 +24,9 @@ const g = globalThis as unknown as { __ottWeather?: CacheEntry };
 const TTL_MS = 10 * 60 * 1000;
 const UA = "Mozilla/5.0 (compatible; OttawaCivicLedger/1.0; +civic-news)";
 
-// English feed for Ottawa (on-118). French: meteo.gc.ca/rss/warning/on-118_f.xml
-const FEED_URL = "https://weather.gc.ca/rss/warning/on-118_e.xml";
+// Environment Canada alerts feed for Ottawa (coordinate-based; the legacy
+// on-118 warning URLs now 404). French: meteo.gc.ca/rss/alerts/45.42_-75.69_f.xml
+const FEED_URL = "https://weather.gc.ca/rss/alerts/45.42_-75.69_e.xml";
 
 function decode(s: string) {
   return s
