@@ -24,8 +24,9 @@ const g = globalThis as unknown as { __ottWeather?: CacheEntry };
 const TTL_MS = 10 * 60 * 1000;
 const UA = "Mozilla/5.0 (compatible; OttawaCivicLedger/1.0; +civic-news)";
 
-// English feed for Ottawa (on-118). French: meteo.gc.ca/rss/warning/on-118_f.xml
-const FEED_URL = "https://weather.gc.ca/rss/warning/on-118_e.xml";
+// Environment Canada alerts feed for Ottawa (coordinate-based; the legacy
+// on-118 warning URLs now 404). French: meteo.gc.ca/rss/alerts/45.42_-75.69_f.xml
+const FEED_URL = "https://weather.gc.ca/rss/alerts/45.42_-75.69_e.xml";
 
 function decode(s: string) {
   return s
@@ -100,7 +101,9 @@ export const Route = createFileRoute("/api/public/weather-alerts")({
           if (cached) {
             return Response.json({ cached: true, stale: true, fetchedAt: new Date(cached.ts).toISOString(), ...cached.payload, error: "Upstream unavailable, served cache." });
           }
-          return Response.json({ ok: false, items: [], error: String(e?.message ?? e) }, { status: 502 });
+          // Return 200 with ok:false — an upstream outage is not an app error,
+          // and a 5xx here trips the global error overlay / blank screen.
+          return Response.json({ ok: false, items: [], error: String(e?.message ?? e) });
         }
       },
     },
