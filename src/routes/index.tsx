@@ -9,6 +9,7 @@ import { PROGRAMS } from "@/lib/funding";
 import { GUIDES } from "@/lib/guides";
 import { TOOLS } from "@/lib/tools";
 import { EDITORIALS } from "@/lib/editorials";
+import { SOCIAL_PICKS } from "@/lib/social";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -42,7 +43,9 @@ function Home() {
   const { locale, pick } = useLocale();
 
   const all = byLocale(data?.stories ?? [], locale);
-  const news = diversify(all.filter(s => !s.gov));
+  const news = diversify(all.filter(s => !s.gov && s.kind !== "trending"));
+  const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 6);
+  const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
   const photo = news.filter(s => s.image);
   const used = new Set<string>();
 
@@ -121,6 +124,66 @@ function Home() {
             <div className="order-2 lg:order-3 grid gap-6 sm:grid-cols-3 lg:grid-cols-1 content-start">
               {right.map(s => <StoryCard key={s.id} s={s} />)}
             </div>
+          </div>
+        </section>
+      )}
+
+      {(hn.length > 0 || papers.length > 0 || SOCIAL_PICKS.length > 0) && (
+        <section className="container-mw mt-12">
+          <ZoneHead title={t("trending", locale)} action={<MoreLink to="/news" section="trending" />} />
+          <div className={`grid gap-x-8 gap-y-10 ${SOCIAL_PICKS.length > 0 ? "lg:grid-cols-3" : "lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]"}`}>
+            {hn.length > 0 && (
+              <div>
+                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{t("mostDiscussed", locale)}</h3>
+                <ol>
+                  {hn.map((s, i) => (
+                    <li key={s.id} className="flex gap-4 py-3 border-b border-line last:border-0">
+                      <span className="hl text-[1.7rem] text-live w-7 shrink-0 leading-none pt-0.5" aria-hidden="true">{i + 1}</span>
+                      <div className="min-w-0">
+                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="font-semibold leading-snug hover:underline">{s.title}</a>
+                        <p className="meta mt-1 flex flex-wrap gap-x-2.5">
+                          <span>{s.summary}</span>
+                          <a href={s.popularity?.discussUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                            {s.popularity?.score} {t("points", locale)} · {s.popularity?.comments ?? 0} {t("comments", locale)}
+                          </a>
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <p className="meta mt-2">{locale === "fr" ? "Classement selon les votes sur Hacker News, 3 derniers jours." : "Ranked by Hacker News votes over the last 3 days."}</p>
+              </div>
+            )}
+            {papers.length > 0 && (
+              <div>
+                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{t("trendingPapers", locale)}</h3>
+                <ul>
+                  {papers.map(s => (
+                    <li key={s.id} className="py-3 border-b border-line last:border-0">
+                      <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
+                        <p className="font-semibold leading-snug group-hover:underline">{s.title}</p>
+                        <p className="meta mt-1">Hugging Face Papers · {s.popularity?.score} {t("upvotes", locale)}</p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {SOCIAL_PICKS.length > 0 && (
+              <div>
+                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{t("socialPicks", locale)}</h3>
+                <ul>
+                  {SOCIAL_PICKS.slice(0, 5).map(p => (
+                    <li key={p.url} className="py-3 border-b border-line last:border-0">
+                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="group block">
+                        <p className="meta"><span className="font-semibold text-ink/80">{p.author}</span> · {p.platform === "x" ? "X" : p.platform === "linkedin" ? "LinkedIn" : p.platform === "youtube" ? "YouTube" : ""}</p>
+                        <p className="font-semibold leading-snug mt-0.5 group-hover:underline">{pick(p.why)}</p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </section>
       )}

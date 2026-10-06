@@ -6,7 +6,7 @@ import { t } from "@/lib/i18n";
 export function LiveTicker() {
   const { locale } = useLocale();
   const { data } = useAiNews(undefined);
-  const items = diversify(byLocale(data?.stories ?? [], locale).filter(s => !s.gov), 1, 14).slice(0, 14);
+  const items = diversify(byLocale(data?.stories ?? [], locale).filter(s => !s.gov && s.kind !== "trending"), 1, 14).slice(0, 14);
 
   return (
     <div className="flex items-center gap-3 flex-1 min-w-0">

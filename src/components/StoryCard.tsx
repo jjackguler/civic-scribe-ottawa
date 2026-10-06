@@ -20,6 +20,12 @@ export function StoryMeta({ s, className = "" }: { s: Story; className?: string 
     <p className={`meta flex flex-wrap gap-x-2.5 gap-y-1 ${className}`}>
       <span className="font-semibold text-ink/80">{s.source}</span>
       <time dateTime={s.publishedAt} suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
+      {s.popularity && (
+        <span>
+          {s.popularity.score} {s.sourceId === "hn" ? (locale === "fr" ? "points" : "points") : (locale === "fr" ? "votes" : "upvotes")}
+          {s.popularity.comments ? ` · ${s.popularity.comments} ${locale === "fr" ? "commentaires" : "comments"}` : ""}
+        </span>
+      )}
     </p>
   );
 }

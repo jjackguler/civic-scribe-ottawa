@@ -33,7 +33,7 @@ function NewsPage() {
   const [limit, setLimit] = useState(24);
 
   const all = byLocale(data?.stories ?? [], locale);
-  const list = diversify(section ? all.filter(s => inSection(s, section)) : all.filter(s => !s.gov), 3, 12);
+  const list = diversify(section ? all.filter(s => inSection(s, section)) : all.filter(s => !s.gov && s.kind !== "trending"), 3, 12);
   const current = SECTIONS.find(x => x.id === section);
   const okSources = data?.sources.filter(s => s.ok).length ?? 0;
 

@@ -12,6 +12,7 @@ Live AI news for Canada, in English and French: a headline wire from public publ
 | AI tools | `src/lib/tools.ts` |
 | Guides | `src/lib/guides.ts` |
 | Editor's desk columns (e.g. your LinkedIn articles) | `src/lib/editorials.ts` — add a new object at the top of `EDITORIALS` |
+| Social media picks (popular X / LinkedIn posts, added by hand) | `src/lib/social.ts` |
 | Interface text (EN/FR) | `src/lib/i18n.ts` |
 
 ## Standards

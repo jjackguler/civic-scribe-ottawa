@@ -71,6 +71,13 @@ export const dict = {
   minister: { en: "Minister of Artificial Intelligence and Digital Innovation", fr: "Ministre de l'Intelligence artificielle et de l'Innovation numérique" },
   noItems: { en: "Nothing new here in the last 30 days.", fr: "Rien de nouveau ici depuis 30 jours." },
   menu: { en: "Menu", fr: "Menu" },
+  trending: { en: "Trending", fr: "Tendances" },
+  mostDiscussed: { en: "Most discussed by developers", fr: "Les plus discutés par les développeurs" },
+  trendingPapers: { en: "Trending research papers", fr: "Articles de recherche populaires" },
+  socialPicks: { en: "Worth seeing on social media", fr: "À voir sur les réseaux sociaux" },
+  points: { en: "points", fr: "points" },
+  comments: { en: "comments", fr: "commentaires" },
+  upvotes: { en: "upvotes", fr: "votes" },
 } satisfies Record<string, Bi>;
 
 export type DictKey = keyof typeof dict;

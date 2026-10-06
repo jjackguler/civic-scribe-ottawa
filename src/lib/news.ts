@@ -42,7 +42,7 @@ export const TOPICS: { id: Topic | "canada"; label: Bi }[] = [
   { id: "society", label: { en: "Society", fr: "Société" } },
 ];
 
-export type SectionId = "canada" | "world" | "government" | "ministry" | "labs" | "analysis" | Topic;
+export type SectionId = "canada" | "world" | "government" | "ministry" | "labs" | "analysis" | "trending" | Topic;
 
 /** Sections of the news page, in navigation order. */
 export const SECTIONS: { id: SectionId; label: Bi }[] = [
@@ -57,17 +57,19 @@ export const SECTIONS: { id: SectionId; label: Bi }[] = [
   { id: "society", label: { en: "Society", fr: "Société" } },
   { id: "labs", label: { en: "AI labs", fr: "Laboratoires" } },
   { id: "analysis", label: { en: "Analysis", fr: "Analyses" } },
+  { id: "trending", label: { en: "Trending", fr: "Tendances" } },
 ];
 
 export function inSection(s: Story, id: SectionId): boolean {
   switch (id) {
-    case "canada": return s.region === "canada" && !s.gov;
+    case "canada": return s.region === "canada" && !s.gov && s.kind !== "trending";
     case "world": return s.region === "world" && s.kind === "news";
     case "government": return s.gov || s.level != null;
     case "ministry": return s.minister;
     case "labs": return s.kind === "lab";
     case "analysis": return s.kind === "analysis";
-    default: return s.topic === id && !s.gov;
+    case "trending": return s.kind === "trending";
+    default: return s.topic === id && !s.gov && s.kind !== "trending";
   }
 }
 

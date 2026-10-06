@@ -23,6 +23,8 @@ export type Story = {
   level: Level | null;
   /** Release from, or coverage of, Canada's Minister of AI and Digital Innovation. */
   minister: boolean;
+  /** Community signal for trending items: Hacker News points/comments or paper upvotes. */
+  popularity?: { score: number; comments?: number; discussUrl?: string };
 };
 
 export type SourceStatus = { id: string; name: string; ok: boolean; count: number; checkedAt?: string; error?: string };
@@ -125,6 +127,7 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
     let link = stripTags(raw(b, "link"));
     if (!link) link = b.match(/<link[^>]*href=["']([^"']+)["']/i)?.[1] ?? "";
     if (!/^https?:\/\//.test(link)) continue;
+    if (src.linkRewrite && link.startsWith(src.linkRewrite[0])) link = src.linkRewrite[1] + link.slice(src.linkRewrite[0].length);
 
     const summary = truncate(stripTags(raw(b, "description") || raw(b, "summary") || raw(b, "content")));
     const text = `${title} ${summary}`;
@@ -187,8 +190,87 @@ async function lookupOgImage(link: string): Promise<string | null> {
   return img;
 }
 
+function baseStory(src: NewsSource, title: string, link: string, date: Date, extra: Partial<Story> = {}): Story {
+  const text = `${title} ${extra.summary ?? ""}`;
+  return {
+    id: hash(link), title, summary: "", link, source: src.name, sourceId: src.id,
+    region: CANADA_RE.test(text) ? "canada" : src.region, topic: topicOf(text, src), lang: src.lang,
+    publishedAt: date.toISOString(), image: null, kind: src.kind, gov: false, lab: src.kind === "lab",
+    level: null, minister: MINISTER_RE.test(text), ...extra,
+  };
+}
+
+/** Anthropic has no feed; its newsroom page lists date, category and title for each post. */
+function parseAnthropic(html: string, src: NewsSource): Story[] {
+  const out: Story[] = [];
+  const seen = new Set<string>();
+  for (const m of html.matchAll(/<a[^>]+href="(\/news\/[a-z0-9-]+)"[^>]*>([\s\S]*?)<\/a>/g)) {
+    if (seen.has(m[1])) continue;
+    const parts = m[2].split(/<[^>]+>/).map(x => stripTags(x)).filter(Boolean);
+    const dateIdx = parts.findIndex(x => /^[A-Z][a-z]{2} \d{1,2}, \d{4}$/.test(x));
+    if (dateIdx < 0) continue;
+    const date = new Date(parts[dateIdx] + " 12:00 UTC");
+    const title = parts.slice(dateIdx + 1).sort((a, b) => b.length - a.length)[0];
+    if (!title || isNaN(date.getTime()) || date.getTime() < Date.now() - MAX_AGE_DAYS * 86400000) continue;
+    seen.add(m[1]);
+    out.push(baseStory(src, title, "https://www.anthropic.com" + m[1], date));
+  }
+  return out.slice(0, 12);
+}
+
+/** Hacker News (Algolia API): AI stories the tech community is upvoting. */
+function parseHN(json: any, src: NewsSource): Story[] {
+  const out: Story[] = [];
+  for (const h of json?.hits ?? []) {
+    if (!h?.title || !h.objectID) continue;
+    const discussUrl = `https://news.ycombinator.com/item?id=${h.objectID}`;
+    const link = typeof h.url === "string" && /^https?:\/\//.test(h.url) ? h.url : discussUrl;
+    let via = "news.ycombinator.com";
+    try { via = new URL(link).hostname.replace(/^www\./, ""); } catch {}
+    const date = new Date(h.created_at);
+    if (isNaN(date.getTime())) continue;
+    out.push(baseStory(src, stripTags(h.title), link, date, {
+      summary: via,
+      popularity: { score: Number(h.points) || 0, comments: Number(h.num_comments) || 0, discussUrl },
+    }));
+  }
+  return out.sort((a, b) => (b.popularity!.score - a.popularity!.score)).slice(0, 15);
+}
+
+/** Hugging Face daily papers: research the community is upvoting today. */
+function parseHFPapers(json: any, src: NewsSource): Story[] {
+  const out: Story[] = [];
+  for (const x of Array.isArray(json) ? json : []) {
+    const p = x?.paper ?? {};
+    const id = p.id ?? x?.id;
+    const title = stripTags(x?.title ?? p.title ?? "");
+    const date = new Date(x?.publishedAt ?? p.publishedAt ?? "");
+    if (!id || !title || isNaN(date.getTime())) continue;
+    out.push(baseStory(src, title, `https://huggingface.co/papers/${id}`, date, {
+      summary: truncate(stripTags(p.summary ?? ""), 200),
+      topic: "research",
+      image: typeof x?.thumbnail === "string" && /^https?:\/\//.test(x.thumbnail) ? x.thumbnail : null,
+      popularity: { score: Number(p.upvotes ?? x?.upvotes) || 0, comments: Number(x?.numComments) || undefined },
+    }));
+  }
+  return out.sort((a, b) => (b.popularity!.score - a.popularity!.score)).slice(0, 12);
+}
+
 async function fetchSource(src: NewsSource): Promise<SourceCache> {
   try {
+    if (src.format === "hn") {
+      const since = Math.floor(Date.now() / 1000) - 3 * 86400;
+      const json = JSON.parse(await fetchText(`${src.url}&numericFilters=points%3E60,created_at_i%3E${since}`, 6000));
+      return { ts: Date.now(), ok: true, stories: parseHN(json, src) };
+    }
+    if (src.format === "hf-papers") {
+      return { ts: Date.now(), ok: true, stories: parseHFPapers(JSON.parse(await fetchText(src.url, 6000)), src) };
+    }
+    if (src.format === "anthropic-html") {
+      const stories = parseAnthropic(await fetchText(src.url, 6000), src);
+      if (!stories.length) throw new Error("Page layout changed");
+      return { ts: Date.now(), ok: true, stories };
+    }
     const xml = await fetchText(src.url, 6000);
     if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(xml)) throw new Error("Not a feed (blocked or HTML)");
     return { ts: Date.now(), ok: true, stories: parseFeed(xml, src) };
@@ -228,7 +310,7 @@ async function buildPayload(): Promise<NewsPayload> {
   const byKey = new Map<string, Story>();
   for (const src of NEWS_SOURCES) {
     for (const s of cache.get(src.id)?.stories ?? []) {
-      const k = titleKey(s.title);
+      const k = (s.kind === "trending" ? "t:" : "") + titleKey(s.title);
       const seen = byKey.get(k);
       if (!seen) { byKey.set(k, { ...s }); continue; }
       seen.minister ||= s.minister;
@@ -242,14 +324,15 @@ async function buildPayload(): Promise<NewsPayload> {
   const keep = new Set<Story>();
   all.filter(s => s.minister).slice(0, 50).forEach(s => keep.add(s));
   all.filter(s => s.gov).slice(0, 50).forEach(s => keep.add(s));
-  all.filter(s => !s.gov).slice(0, 140).forEach(s => keep.add(s));
+  all.filter(s => s.kind === "trending").forEach(s => keep.add(s));
+  all.filter(s => !s.gov && s.kind !== "trending").slice(0, 140).forEach(s => keep.add(s));
   const stories = all.filter(s => keep.has(s));
 
   // Fill missing photos from the publisher's own og:image, newest first.
   const og = (g.__ogCache ??= new Map());
   for (const s of stories) if (!s.image && og.get(s.link)) s.image = og.get(s.link)!;
   const ogBudget = Math.max(0, Math.min(MAX_OG_LOOKUPS, SUBREQUEST_BUDGET - due.length));
-  const needImage = stories.filter(s => !s.image && !s.gov && !og.has(s.link)).slice(0, ogBudget);
+  const needImage = stories.filter(s => !s.image && !s.gov && s.kind !== "trending" && !og.has(s.link)).slice(0, ogBudget);
   await Promise.all(needImage.map(async s => { s.image = await lookupOgImage(s.link); }));
 
   const sources: SourceStatus[] = NEWS_SOURCES.map(src => {

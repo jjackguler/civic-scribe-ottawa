@@ -10,7 +10,7 @@
 
 export type Region = "canada" | "world";
 export type Topic = "policy" | "business" | "research" | "products" | "society";
-export type Kind = "news" | "gov" | "lab" | "analysis";
+export type Kind = "news" | "gov" | "lab" | "analysis" | "trending";
 export type Level = "federal" | "provincial" | "municipal";
 
 export type NewsSource = {
@@ -30,6 +30,10 @@ export type NewsSource = {
   minister?: boolean;
   /** Feeds that rarely change are re-checked every 30 minutes instead of every 8. */
   slow?: boolean;
+  /** How to read the source. Defaults to RSS/Atom. */
+  format?: "rss" | "anthropic-html" | "hn" | "hf-papers";
+  /** Rewrite links from a CMS origin to the public site: [from, to]. */
+  linkRewrite?: [string, string];
 };
 
 const GC_NEWS = "https://api.io.canada.ca/io-server/gc/news";
@@ -56,12 +60,16 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "techcrunch", name: "TechCrunch", url: "https://techcrunch.com/category/artificial-intelligence/feed/", home: "https://techcrunch.com/category/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "verge", name: "The Verge", url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", home: "https://www.theverge.com/ai-artificial-intelligence", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "mittr", name: "MIT Technology Review", url: "https://www.technologyreview.com/topic/artificial-intelligence/feed", home: "https://www.technologyreview.com/topic/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
-  { id: "forbes", name: "Forbes", url: "https://www.forbes.com/innovation/feed2", home: "https://www.forbes.com/ai/", region: "world", lang: "en", kind: "analysis", aiOnly: false },
   { id: "wired", name: "Wired", url: "https://www.wired.com/feed/tag/ai/latest/rss", home: "https://www.wired.com/tag/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "ars", name: "Ars Technica", url: "https://arstechnica.com/ai/feed/", home: "https://arstechnica.com/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "venturebeat", name: "VentureBeat", url: "https://venturebeat.com/category/ai/feed/", home: "https://venturebeat.com/category/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
 
+  // ── What the tech community is reading (popularity signals) ────────────
+  { id: "hn", name: "Hacker News", url: "https://hn.algolia.com/api/v1/search_by_date?query=AI&tags=story&hitsPerPage=40", home: "https://news.ycombinator.com", region: "world", lang: "en", kind: "trending", aiOnly: true, format: "hn" },
+  { id: "hf-papers", name: "Hugging Face Papers", url: "https://huggingface.co/api/daily_papers?limit=30", home: "https://huggingface.co/papers", region: "world", lang: "en", kind: "trending", aiOnly: true, format: "hf-papers", slow: true },
+
   // ── AI labs and company blogs ───────────────────────────────────────────
+  { id: "anthropic", name: "Anthropic", url: "https://www.anthropic.com/news", home: "https://www.anthropic.com/news", region: "world", lang: "en", kind: "lab", aiOnly: true, format: "anthropic-html" },
   { id: "openai", name: "OpenAI", url: "https://openai.com/news/rss.xml", home: "https://openai.com/news/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "deepmind", name: "Google DeepMind", url: "https://deepmind.google/blog/feed", home: "https://deepmind.google/discover/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "google-ai", name: "Google AI", url: "https://blog.google/technology/ai/rss/", home: "https://blog.google/technology/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true },
@@ -80,6 +88,7 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "cbc-bc", name: "CBC British Columbia", url: "https://www.cbc.ca/webfeed/rss/rss-canada-britishcolumbia", home: "https://www.cbc.ca/news/canada/british-columbia", region: "canada", lang: "en", kind: "news", aiOnly: false, slow: true },
 
   // ── Analysis, newsletters and research writing ──────────────────────────
+  { id: "the-batch", name: "The Batch", url: "https://charonhub.deeplearning.ai/rss/", home: "https://www.deeplearning.ai/the-batch/", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true, linkRewrite: ["https://charonhub.deeplearning.ai/", "https://www.deeplearning.ai/the-batch/"] },
   { id: "importai", name: "Import AI", url: "https://importai.substack.com/feed", home: "https://importai.substack.com", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true },
   { id: "oneuseful", name: "One Useful Thing", url: "https://www.oneusefulthing.org/feed", home: "https://www.oneusefulthing.org", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true },
   { id: "lastweekin", name: "Last Week in AI", url: "https://lastweekin.ai/feed", home: "https://lastweekin.ai", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true },
@@ -90,9 +99,7 @@ export const NEWS_SOURCES: NewsSource[] = [
 
 /** Followed but without a public feed — linked from the About page. */
 export const NO_FEED_SOURCES = [
-  { name: "Anthropic", home: "https://www.anthropic.com/news" },
   { name: "Stanford HAI", home: "https://hai.stanford.edu/news" },
-  { name: "The Batch (DeepLearning.AI)", home: "https://www.deeplearning.ai/the-batch/" },
   { name: "TIME — AI", home: "https://time.com/section/tech/" },
   { name: "The Wall Street Journal — Tech", home: "https://www.wsj.com/tech" },
 ];
