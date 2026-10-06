@@ -1,325 +1,213 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BreakingNewsBar } from "@/components/BreakingNewsBar";
-import { BreakingHero } from "@/components/BreakingHero";
-import { ArticleCard } from "@/components/ArticleCard";
-import { NeighborhoodMap } from "@/components/NeighborhoodMap";
-import { DonationPanel } from "@/components/DonationPanel";
-import { TrafficAlertsList } from "@/components/TrafficAlertCard";
-import { WeatherAlertsList } from "@/components/WeatherAlertCard";
-import { FactCheckCard } from "@/components/FactCheckCard";
-import { SectionTicker } from "@/components/LiveTicker";
-import { Carousel, RailHeader } from "@/components/Carousel";
-import { ActivityCard } from "@/components/ActivityCard";
-import { DealCard } from "@/components/DealCard";
-import { PickCard } from "@/components/PickCard";
-import { GuideTopicCard } from "@/components/GuideTopicCard";
-import { CitizenReportItem } from "@/components/CitizenReportItem";
-import { OttawaLivePanel } from "@/components/OttawaLivePanel";
-import { YourStreetsPanel } from "@/components/YourStreetsPanel";
-import { TrafficRadio } from "@/components/TrafficRadio";
-import { SocialTrendCard } from "@/components/SocialTrendCard";
-import { HomepageMapEmbed } from "@/components/HomepageMapEmbed";
-import { LiveStoryCard } from "@/components/LiveStoryCard";
-import { useLiveFeed } from "@/lib/use-live-feed";
-import { useEffect, useState } from "react";
-import { OpenIssuesTracker } from "@/components/OpenIssuesTracker";
-import { ARTICLES, FACT_CHECKS, LIVE_TICKERS, TREND_ITEMS } from "@/lib/data";
-import { ACTIVITIES, DEALS, KIDS_PICKS, YOUTH_PICKS, OTTAWA_GUIDE, CANADA_GUIDE, CITIZEN_REPORTS } from "@/lib/guide-data";
+import { ArrowRight } from "lucide-react";
+import { PageShell, SectionHead } from "@/components/PageShell";
+import { HeroCarousel } from "@/components/HeroCarousel";
+import { LatestRail } from "@/components/LatestRail";
+import { StoryCard } from "@/components/StoryCard";
+import { FundingCard } from "@/components/FundingCard";
+import { getAiNewsFast, useAiNews, byLocale, timeAgo, useNow, TOPICS, type Story } from "@/lib/news";
+import { PROGRAMS } from "@/lib/funding";
+import { GUIDES } from "@/lib/guides";
+import { TOOLS } from "@/lib/tools";
+import { EDITORIALS } from "@/lib/editorials";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
+import { SITE } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [
-    { title: "Ottawa Civic Ledger — Local guide, verified deals, citizen journalism" },
-    { name: "description", content: "Ottawa-first, Canada-wide. Verified local journalism, activity guides, family picks, youth events, and a deal tracker — bilingual and reader-funded." },
-    { property: "og:title", content: "Ottawa Civic Ledger" },
-    { property: "og:description", content: "Verified local journalism + a living guide to Ottawa." },
-  ]}),
+  loader: () => getAiNewsFast(),
+  head: () => ({
+    meta: [
+      { title: `${SITE.name} — AI news for Canada, live` },
+      { name: "description", content: SITE.description.en },
+    ],
+  }),
   component: Home,
 });
 
-function Home() {
-  const { locale } = useLocale();
-  const { items: liveItems } = useLiveFeed();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  // Hero carousel shows #1 in rotation; the grid below picks up #2–#5.
-  const liveLeads = liveItems.slice(1, 5);
-  const hero = ARTICLES[0];
-  const leads = [ARTICLES[1], ARTICLES[2]];
-  const todayItems = ARTICLES.slice(0, 8);
-  const weekendActivities = ACTIVITIES.filter(a => a.weekend).slice(0, 10);
-  const familyFree = [...KIDS_PICKS, ...ACTIVITIES.filter(a => a.audience.includes("family") && a.cost === "free")].slice(0, 8);
-  const youth = YOUTH_PICKS;
-  const deals = DEALS.slice(0, 8);
-  const canadaGuides = CANADA_GUIDE.slice(0, 6);
+function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => boolean = () => true) {
+  const out: Story[] = [];
+  for (const s of pool) {
+    if (out.length >= n) break;
+    if (used.has(s.id) || !pred(s)) continue;
+    used.add(s.id);
+    out.push(s);
+  }
+  return out;
+}
 
-  const ViewAll = ({ to, label }: { to: string; label: string }) => (
-    <Link to={to as any} className="text-[11px] uppercase tracking-wider font-semibold border-b border-ink pb-0.5 hover:text-civic-red">
-      {label} →
-    </Link>
-  );
+function Home() {
+  const initial = Route.useLoaderData();
+  const { data, isError } = useAiNews(initial);
+  const { locale, pick } = useLocale();
+  const now = useNow();
+
+  const all = byLocale(data?.stories ?? [], locale);
+  const photo = all.filter(s => s.image && !s.gov);
+  const used = new Set<string>();
+
+  const heroSlides = take(photo, used, 5);
+  const top = take(photo, used, 4);
+  const canadaLead = take(all, used, 1, s => s.region === "canada" && !s.gov && !!s.image);
+  const canadaMore = take(all, used, 4, s => s.region === "canada" && !s.gov);
+  const gov = all.filter(s => s.gov).slice(0, 6);
+  const labs = take(photo, used, 3, s => s.lab);
+  const sections = (["policy", "business", "research", "products"] as const).map(topic => ({
+    topic,
+    label: TOPICS.find(x => x.id === topic)!.label,
+    stories: take(all, used, 4, s => s.topic === topic && !s.gov),
+  })).filter(x => x.stories.length > 0);
+
+  const funding = PROGRAMS.filter(p => p.status === "open" || p.status === "ongoing").slice(0, 3);
+  const latestEditorial = EDITORIALS[0];
+  const loading = !data && !isError;
 
   return (
-    <div className="min-h-screen bg-paper text-foreground">
-      <BreakingNewsBar />
-      <Header />
+    <PageShell>
+      <h1 className="sr-only">{SITE.name} — {SITE.tagline[locale]}</h1>
 
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-14">
-        {/* Civic action strip — promote core utilities above the fold */}
-        <section className="grid grid-cols-1 md:grid-cols-3 border border-rule bg-card divide-y md:divide-y-0 md:divide-x divide-rule">
-          <Link to="/submit" className="p-5 hover:bg-secondary/40 transition-colors">
-            <div className="kicker text-civic-red">{locale === "fr" ? "Vous avez vu quelque chose ?" : "Saw something on your block?"}</div>
-            <div className="font-display text-xl mt-2">{locale === "fr" ? "Signaler un problème de quartier →" : "Report a neighborhood issue →"}</div>
-          </Link>
-          <Link to="/map" className="p-5 hover:bg-secondary/40 transition-colors">
-            <div className="kicker text-river">{locale === "fr" ? "Carte vivante" : "Live editorial map"}</div>
-            <div className="font-display text-xl mt-2">{locale === "fr" ? "Ouvrir la carte d'Ottawa →" : "Open the Ottawa live map →"}</div>
-          </Link>
-          <Link to="/traffic" className="p-5 hover:bg-secondary/40 transition-colors">
-            <div className="kicker text-solution">{locale === "fr" ? "311 · circulation · météo" : "311 · traffic · weather"}</div>
-            <div className="font-display text-xl mt-2">{locale === "fr" ? "Tableau civique en direct →" : "Today's civic signals →"}</div>
-          </Link>
+      {/* Front page: rotating lead photo + running latest list */}
+      <section className="container-mw pt-6">
+        {all.length === 0 ? (
+          <div className="rounded-[8px] bg-surface border border-line p-10 text-center">
+            <span className="live-dot inline-block" aria-hidden="true" />
+            <p className="hl text-2xl mt-4">{loading ? t("loading", locale) : t("feedDown", locale)}</p>
+          </div>
+        ) : (
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+            {heroSlides.length > 0
+              ? <HeroCarousel stories={heroSlides} />
+              : <div className="rounded-[8px] bg-surface border border-line p-8"><StoryCard s={all[0]} variant="lead" /></div>}
+            <LatestRail stories={all} fetchedAt={data?.fetchedAt} />
+          </div>
+        )}
+      </section>
+
+      {top.length > 0 && (
+        <section className="container-mw mt-12">
+          <SectionHead title={t("topStories", locale)} action={<MoreLink to="/news" />} />
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {top.map(s => <StoryCard key={s.id} s={s} />)}
+          </div>
         </section>
+      )}
 
-        {/* 1. THE SPLASH (lead story) */}
-        <BreakingHero />
-
-        {/* Lead stories under the hero — live merged feed, items #2–#5 */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-          {liveLeads.length > 0 ? (
-            <>
-              <div className="lg:col-span-7">
-                <LiveStoryCard item={liveLeads[0]} variant="hero" mounted={mounted} />
+      {(canadaLead.length > 0 || canadaMore.length > 0 || gov.length > 0) && (
+        <section className="container-mw mt-16">
+          <SectionHead title={t("canadaDesk", locale)} action={<MoreLink to="/news" search={{ topic: "canada" }} />} />
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+            <div className="grid gap-8 md:grid-cols-2">
+              {canadaLead[0] && <div className="md:col-span-2"><StoryCard s={canadaLead[0]} variant="lead" showTopic={false} /></div>}
+              {canadaMore.map(s => <StoryCard key={s.id} s={s} variant="row" showTopic={false} />)}
+            </div>
+            {gov.length > 0 && (
+              <div className="bg-surface border border-line rounded-[8px] p-5 self-start">
+                <h3 className="hl text-[1.25rem] mb-1">{t("govAnnouncements", locale)}</h3>
+                <p className="meta mb-3">Canada.ca</p>
+                <ul>
+                  {gov.map(s => (
+                    <li key={s.id} className="py-3 border-t border-line">
+                      <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
+                        <p className="font-semibold leading-snug group-hover:text-lake">{s.title}</p>
+                        <p className="meta mt-1" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
-                {liveLeads.slice(1, 4).map(i => <LiveStoryCard key={i.id} item={i} mounted={mounted} />)}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="lg:col-span-7"><ArticleCard article={hero} variant="hero" /></div>
-              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-6 lg:border-l lg:border-rule lg:pl-10">
-                {leads.map((a) => <ArticleCard key={a.slug} article={a} variant="lead" />)}
-              </div>
-            </>
-          )}
+            )}
+          </div>
         </section>
+      )}
 
-        {/* 2. YOUR STREETS — hyperlocal ward spotlight */}
-        <YourStreetsPanel />
+      <section className="mt-16 bg-ice">
+        <div className="container-mw py-14">
+          <SectionHead title={t("moneyForAi", locale)} sub={t("moneyForAiSub", locale)} action={<MoreLink to="/funding" />} />
+          <div className="grid gap-6 md:grid-cols-3">
+            {funding.map(p => <FundingCard key={p.id} p={p} compact />)}
+          </div>
+        </div>
+      </section>
 
-        {/* 3. OTTAWA LIVE MAP — editorial Leaflet embed */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Carte vivante" : "Live editorial map"}
-            title={locale === "fr" ? "Ottawa, en direct sur la carte" : "Ottawa, live on the map"}
-            live={t("liveNow", locale)}
-            action={<ViewAll to="/map" label={t("ottawaMap", locale)} />}
-          />
-          <HomepageMapEmbed />
+      {labs.length > 0 && (
+        <section className="container-mw mt-16">
+          <SectionHead title={t("researchLabs", locale)} />
+          <div className="grid gap-x-6 gap-y-10 md:grid-cols-3">
+            {labs.map(s => <StoryCard key={s.id} s={s} showTopic={false} />)}
+          </div>
         </section>
+      )}
 
-        {/* 3b. OPEN CIVIC ISSUES — 311 tracker */}
-        <section className="grid lg:grid-cols-2 gap-6">
-          <OpenIssuesTracker />
-          <div className="bg-card border border-rule p-5">
-            <h3 className="kicker text-civic-red mb-2">{locale === "fr" ? "Sources civiques — direct" : "Civic sources — live"}</h3>
-            <p className="font-serif text-sm text-muted-foreground mb-3">
-              {locale === "fr"
-                ? "Nous regroupons des sources officielles gratuites — Ville d'Ottawa, Ontario 511, Environnement Canada, CCN, services 311. Les éléments sensibles de sécurité publique sont retenus pour révision éditoriale."
-                : "We aggregate free official sources — City of Ottawa, Ontario 511, Environment Canada, NCC, 311 services. Sensitive public-safety items are held for editorial review."}
-            </p>
-            <Link to="/admin/sources" className="text-[11px] uppercase tracking-wider font-semibold border-b border-ink pb-0.5 hover:text-civic-red">
-              {locale === "fr" ? "Tableau des sources" : "Source dashboard"} →
+      {sections.length > 0 && (
+        <section className="container-mw mt-16">
+          <div className="grid gap-x-8 gap-y-12 md:grid-cols-2 xl:grid-cols-4">
+            {sections.map(sec => (
+              <div key={sec.topic}>
+                <Link to="/news" search={{ topic: sec.topic }} className="hl text-[1.4rem] hover:text-lake inline-flex items-center gap-2 pb-2 mb-2 border-b-[3px] border-ink w-full">
+                  {pick(sec.label)}
+                </Link>
+                <div className="grid gap-5 mt-3">
+                  {sec.stories.map((s, n) => <StoryCard key={s.id} s={s} variant={n === 0 && s.image ? "card" : "text"} showTopic={false} />)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="container-mw mt-20">
+        <SectionHead title={t("startHere", locale)} sub={t("startHereSub", locale)} action={<MoreLink to="/learn" />} />
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+          <ol className="grid gap-px bg-line rounded-[8px] overflow-hidden border border-line">
+            {GUIDES.map(g => (
+              <li key={g.slug} className="bg-surface">
+                <Link to="/learn/$slug" params={{ slug: g.slug }} className="group flex items-start gap-5 p-5 hover:bg-ice/50">
+                  <div className="flex-1">
+                    <p className="hl text-[1.25rem] group-hover:text-lake">{pick(g.title)}</p>
+                    <p className="dek text-[0.98rem] mt-1">{pick(g.dek)}</p>
+                  </div>
+                  <span className="meta whitespace-nowrap pt-1">{g.minutes} {t("minRead", locale)}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+          <div>
+            <h3 className="hl text-[1.25rem] mb-3">{t("bestTools", locale)}</h3>
+            <ul className="grid gap-2">
+              {TOOLS.filter(x => ["ChatGPT", "Claude", "Gemini", "Perplexity", "DeepL", "Canva", "NotebookLM"].includes(x.name)).map(tool => (
+                <li key={tool.name}>
+                  <a href={tool.url} target="_blank" rel="noopener noreferrer" className="group flex gap-3 items-baseline bg-surface border border-line rounded-[6px] px-4 py-3 hover:border-ink">
+                    <span className="font-bold min-w-[6.5rem] group-hover:text-lake">{tool.name}</span>
+                    <span className="text-[0.92rem] text-muted-ink leading-snug">{pick(tool.goodFor)}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <Link to="/tools" className="inline-flex items-center gap-1.5 mt-4 font-semibold text-lake hover:underline">
+              {t("seeAll", locale)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {latestEditorial && (
+        <section className="container-mw mt-20">
+          <Link to="/editor/$slug" params={{ slug: latestEditorial.slug }} className="group block bg-ink text-white rounded-[8px] p-8 sm:p-12">
+            <p className="text-white/70 font-semibold">{t("editorsDesk", locale)}</p>
+            <h2 className="hl text-[2rem] sm:text-[2.8rem] mt-2 max-w-3xl group-hover:underline decoration-2">{pick(latestEditorial.title)}</h2>
+            <p className="font-serif text-[1.15rem] text-white/80 mt-4 max-w-2xl leading-relaxed">{pick(latestEditorial.dek)}</p>
+          </Link>
         </section>
+      )}
+    </PageShell>
+  );
+}
 
-        {/* 4. OTTAWA LIVE — unified neighborhoods/traffic/transit/places panel */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Tableau de bord" : "City dashboard"}
-            title={locale === "fr" ? "Ottawa, en direct" : "Ottawa, live"}
-            live={t("liveNow", locale)}
-          />
-          <OttawaLivePanel />
-        </section>
-
-        {/* Traffic radio companion strip */}
-        <section>
-          <TrafficRadio compact />
-        </section>
-
-        {/* Social trend wall */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Mur social" : "Social wall"}
-            title={t("socialTrends", locale)}
-            live={t("liveNow", locale)}
-            action={<ViewAll to="/social" label={t("viewAll", locale)} />}
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {TREND_ITEMS.slice(0, 4).map(tr => <SocialTrendCard key={tr.id} trend={tr} />)}
-          </div>
-        </section>
-
-
-        {/* Today in Ottawa live carousel */}
-        <section>
-          <RailHeader
-            kicker={t("todayInOttawa", locale)}
-            title={locale === "fr" ? "Aujourd'hui à Ottawa — en direct" : "Today in Ottawa — live"}
-            live={t("liveNow", locale)}
-            action={<ViewAll to="/pulse" label={t("viewAll", locale)} />}
-          />
-          <Carousel itemMinWidth={300}>
-            {todayItems.map(a => (
-              <div key={a.slug} className="carousel-item">
-                <ArticleCard article={a} />
-              </div>
-            ))}
-          </Carousel>
-        </section>
-
-        {/* This Weekend rail */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Ce week-end" : "This weekend"}
-            title={t("thisWeekend", locale)}
-            action={<ViewAll to="/activities" label={t("activities", locale)} />}
-          />
-          <Carousel itemMinWidth={280}>
-            {weekendActivities.map(a => (
-              <div key={a.id} className="carousel-item"><ActivityCard a={a} compact /></div>
-            ))}
-          </Carousel>
-        </section>
-
-        {/* Live row: traffic + weather + ticker */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-4">
-            <h2 className="kicker text-civic-red mb-3">{t("liveUpdates", locale)}</h2>
-            <TrafficAlertsList />
-          </div>
-          <div className="lg:col-span-4">
-            <h2 className="kicker text-civic-red mb-3">{t("weather", locale)}</h2>
-            <WeatherAlertsList />
-          </div>
-          <div className="lg:col-span-4">
-            <h2 className="kicker text-civic-red mb-3">{locale === "fr" ? "Bonnes nouvelles" : "Good news"}</h2>
-            <SectionTicker label={locale === "fr" ? "BONNES NOUVELLES" : "GOOD NEWS"} items={LIVE_TICKERS.good} />
-            <div className="mt-3"><SectionTicker label={locale === "fr" ? "SPORTS" : "SPORTS"} items={LIVE_TICKERS.sports} /></div>
-          </div>
-        </section>
-
-        {/* Family picks */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Enfants et famille" : "Kids & family"}
-            title={t("freeFamilyPicks", locale)}
-            action={<ViewAll to="/kids" label={t("kidsFamily", locale)} />}
-          />
-          <Carousel itemMinWidth={260}>
-            {familyFree.map((p: any) => (
-              <div key={p.id} className="carousel-item">
-                {"category" in p ? <PickCard p={p} /> : <ActivityCard a={p} compact />}
-              </div>
-            ))}
-          </Carousel>
-        </section>
-
-        {/* Youth picks */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Jeunesse" : "Youth"}
-            title={t("youthPicks", locale)}
-            action={<ViewAll to="/youth" label={t("youth", locale)} />}
-          />
-          <Carousel itemMinWidth={260}>
-            {youth.map(p => <div key={p.id} className="carousel-item"><PickCard p={p} /></div>)}
-          </Carousel>
-        </section>
-
-        {/* Neighborhood guides */}
-        <section>
-          <RailHeader
-            kicker={t("neighborhoods", locale)}
-            title={t("neighborhoodGuides", locale)}
-            action={<ViewAll to="/neighborhoods" label={t("viewAll", locale)} />}
-          />
-          <NeighborhoodMap />
-        </section>
-
-        {/* Latest verified deals */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Soldes et aubaines" : "Sales & deals"}
-            title={t("verifiedDeals", locale)}
-            live={locale === "fr" ? "Vérifié il y a quelques min" : "Updated minutes ago"}
-            action={<ViewAll to="/deals" label={t("deals", locale)} />}
-          />
-          <Carousel itemMinWidth={260}>
-            {deals.map(d => <div key={d.id} className="carousel-item"><DealCard d={d} /></div>)}
-          </Carousel>
-        </section>
-
-        {/* Canada-wide guides */}
-        <section>
-          <RailHeader
-            kicker={locale === "fr" ? "Pancanadien" : "Canada-wide"}
-            title={t("canadaWideGuides", locale)}
-            action={<ViewAll to="/guide/canada" label={t("canadaGuide", locale)} />}
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {canadaGuides.map(g => <GuideTopicCard key={g.id} g={g} />)}
-          </div>
-        </section>
-
-        {/* Citizen reports near you + donate */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-7">
-            <RailHeader
-              kicker={locale === "fr" ? "Signalements citoyens" : "Citizen reports"}
-              title={t("citizenReportsNear", locale)}
-              live={locale === "fr" ? "Actif" : "Active"}
-              action={<ViewAll to="/submit" label={t("submit", locale)} />}
-            />
-            <div className="bg-card border border-rule p-4">
-              {CITIZEN_REPORTS.map(r => <CitizenReportItem key={r.id} r={r} />)}
-            </div>
-          </div>
-          <div className="lg:col-span-5 space-y-6">
-            <DonationPanel />
-            <div className="bg-secondary p-5">
-              <span className="kicker text-civic-red">{t("factCheck", locale)}</span>
-              <h3 className="font-display text-xl mt-1">{locale === "fr" ? "Ce qui est vrai, ce qui ne l'est pas" : "What's true, what isn't"}</h3>
-              <div className="mt-3 grid gap-3">
-                {FACT_CHECKS.slice(0, 2).map(f => <FactCheckCard key={f.id} fc={f} />)}
-              </div>
-              <Link to="/fact-check" className="inline-block mt-3 text-[11px] uppercase tracking-wider font-semibold border-b border-ink">
-                {t("viewAll", locale)} →
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Ottawa Guide topics */}
-        <section>
-          <RailHeader
-            kicker={t("ottawaGuide", locale)}
-            title={locale === "fr" ? "L'essentiel pour vivre bien à Ottawa" : "The essentials for living well in Ottawa"}
-            action={<ViewAll to="/guide/ottawa" label={t("ottawaGuide", locale)} />}
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {OTTAWA_GUIDE.slice(0, 8).map(g => <GuideTopicCard key={g.id} g={g} />)}
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
+function MoreLink({ to, search }: { to: "/news" | "/funding" | "/learn"; search?: Record<string, string> }) {
+  const { locale } = useLocale();
+  return (
+    <Link to={to} search={search as any} className="inline-flex items-center gap-1.5 font-semibold text-lake hover:underline">
+      {t("seeAll", locale)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+    </Link>
   );
 }

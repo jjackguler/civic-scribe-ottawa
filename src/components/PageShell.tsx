@@ -1,28 +1,35 @@
-import { BreakingNewsBar } from "@/components/BreakingNewsBar";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import type { ReactNode } from "react";
+import { SiteHeader } from "./SiteHeader";
+import { SiteFooter } from "./SiteFooter";
 
-export function PageShell({ children, narrow = false }: { children: ReactNode; narrow?: boolean }) {
+export function PageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-paper text-foreground">
-      <BreakingNewsBar />
-      <Header />
-      <main className={`mx-auto px-4 sm:px-6 lg:px-10 py-10 ${narrow ? "max-w-3xl" : "max-w-[1400px]"}`}>
-        {children}
-      </main>
-      <Footer />
+    <div className="min-h-screen flex flex-col">
+      <SiteHeader />
+      <main id="main" className="flex-1">{children}</main>
+      <SiteFooter />
     </div>
   );
 }
 
-export function PageHero({ kicker, title, dek }: { kicker: string; title: string; dek?: string }) {
+export function PageIntro({ title, dek, children }: { title: string; dek?: string; children?: ReactNode }) {
   return (
-    <header className="mb-10 max-w-4xl">
-      <div className="kicker text-civic-red">{kicker}</div>
-      <h1 className="font-display text-4xl md:text-6xl leading-[1.02] tracking-tight mt-2">{title}</h1>
-      {dek && <p className="font-serif text-lg md:text-xl text-muted-foreground mt-4">{dek}</p>}
-      <div className="h-px bg-rule mt-8" />
-    </header>
+    <div className="container-mw pt-10 pb-8 border-b border-line">
+      <h1 className="hl text-[2.4rem] sm:text-[3.2rem] text-ink max-w-4xl">{title}</h1>
+      {dek && <p className="dek text-[1.2rem] mt-3 max-w-3xl">{dek}</p>}
+      {children}
+    </div>
+  );
+}
+
+export function SectionHead({ title, sub, action }: { title: string; sub?: string; action?: ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
+      <div>
+        <h2 className="hl text-[1.75rem] sm:text-[2rem] text-ink">{title}</h2>
+        {sub && <p className="dek mt-1 max-w-2xl">{sub}</p>}
+      </div>
+      {action}
+    </div>
   );
 }
