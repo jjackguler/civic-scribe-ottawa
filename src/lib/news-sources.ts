@@ -56,7 +56,7 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "techcrunch", name: "TechCrunch", url: "https://techcrunch.com/category/artificial-intelligence/feed/", home: "https://techcrunch.com/category/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "verge", name: "The Verge", url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", home: "https://www.theverge.com/ai-artificial-intelligence", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "mittr", name: "MIT Technology Review", url: "https://www.technologyreview.com/topic/artificial-intelligence/feed", home: "https://www.technologyreview.com/topic/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
-  { id: "forbes", name: "Forbes", url: "https://www.forbes.com/innovation/feed2", home: "https://www.forbes.com/ai/", region: "world", lang: "en", kind: "news", aiOnly: false },
+  { id: "forbes", name: "Forbes", url: "https://www.forbes.com/innovation/feed2", home: "https://www.forbes.com/ai/", region: "world", lang: "en", kind: "analysis", aiOnly: false },
   { id: "wired", name: "Wired", url: "https://www.wired.com/feed/tag/ai/latest/rss", home: "https://www.wired.com/tag/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "ars", name: "Ars Technica", url: "https://arstechnica.com/ai/feed/", home: "https://arstechnica.com/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "venturebeat", name: "VentureBeat", url: "https://venturebeat.com/category/ai/feed/", home: "https://venturebeat.com/category/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },

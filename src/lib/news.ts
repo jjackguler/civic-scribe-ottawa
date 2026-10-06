@@ -113,3 +113,26 @@ export function byLocale(stories: Story[], locale: Locale) {
   if (locale === "en") return stories;
   return [...stories.filter(s => s.lang === "fr"), ...stories.filter(s => s.lang !== "fr")];
 }
+
+/**
+ * Keep one prolific publisher from filling the top of a list: within each
+ * window of `window` stories, a source appears at most `max` times; the
+ * overflow moves further down (nothing is dropped).
+ */
+export function diversify(stories: Story[], max = 2, window = 12): Story[] {
+  const out: Story[] = [];
+  let queue = [...stories];
+  while (queue.length) {
+    const counts = new Map<string, number>();
+    const deferred: Story[] = [];
+    let taken = 0;
+    for (const s of queue) {
+      const c = counts.get(s.source) ?? 0;
+      if (taken < window && c < max) { out.push(s); counts.set(s.source, c + 1); taken++; }
+      else deferred.push(s);
+    }
+    if (deferred.length === queue.length) { out.push(...deferred); break; }
+    queue = deferred;
+  }
+  return out;
+}

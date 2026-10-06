@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageIntro } from "@/components/PageShell";
 import { StoryCard } from "@/components/StoryCard";
-import { getAiNewsFast, useAiNews, byLocale, SECTIONS, inSection, timeAgo, useNow, type SectionId } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, SECTIONS, inSection, timeAgo, useNow, type SectionId } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -33,7 +33,7 @@ function NewsPage() {
   const [limit, setLimit] = useState(24);
 
   const all = byLocale(data?.stories ?? [], locale);
-  const list = section ? all.filter(s => inSection(s, section)) : all.filter(s => !s.gov);
+  const list = diversify(section ? all.filter(s => inSection(s, section)) : all.filter(s => !s.gov), 3, 12);
   const current = SECTIONS.find(x => x.id === section);
   const okSources = data?.sources.filter(s => s.ok).length ?? 0;
 

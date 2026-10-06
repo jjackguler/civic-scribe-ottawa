@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { LatestRail } from "@/components/LatestRail";
 import { StoryCard } from "@/components/StoryCard";
-import { getAiNewsFast, useAiNews, byLocale, timeAgo, useNow, LEVEL_LABEL, type Story, type SectionId } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, timeAgo, useNow, LEVEL_LABEL, type Story, type SectionId } from "@/lib/news";
 import { PROGRAMS } from "@/lib/funding";
 import { GUIDES } from "@/lib/guides";
 import { TOOLS } from "@/lib/tools";
@@ -42,7 +42,7 @@ function Home() {
   const { locale, pick } = useLocale();
 
   const all = byLocale(data?.stories ?? [], locale);
-  const news = all.filter(s => !s.gov);
+  const news = diversify(all.filter(s => !s.gov));
   const photo = news.filter(s => s.image);
   const used = new Set<string>();
 
