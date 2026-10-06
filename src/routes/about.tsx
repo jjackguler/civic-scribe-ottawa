@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageIntro } from "@/components/PageShell";
-import { NEWS_SOURCES } from "@/lib/news-sources";
+import { NEWS_SOURCES, NO_FEED_SOURCES, type Kind } from "@/lib/news-sources";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 
@@ -37,6 +37,13 @@ const RULES = [
   },
 ];
 
+const KINDS: { id: Kind; label: { en: string; fr: string } }[] = [
+  { id: "gov", label: { en: "Governments", fr: "Gouvernements" } },
+  { id: "news", label: { en: "Newsrooms", fr: "Salles de nouvelles" } },
+  { id: "lab", label: { en: "AI labs", fr: "Laboratoires d'IA" } },
+  { id: "analysis", label: { en: "Analysis and newsletters", fr: "Analyses et infolettres" } },
+];
+
 function About() {
   const { locale, pick } = useLocale();
   return (
@@ -51,13 +58,23 @@ function About() {
         </section>
         <section>
           <h2 className="hl text-[1.8rem] pb-2 mb-4 border-b-[3px] border-ink">{locale === "fr" ? "Nos sources" : "Where the news comes from"}</h2>
-          <ul className="grid gap-2">
-            {NEWS_SOURCES.map(s => (
-              <li key={s.id} className="flex justify-between gap-3 bg-surface border border-line rounded-[6px] px-4 py-2.5">
-                <span className="font-semibold">{s.name}</span>
-                <span className="meta">{s.region === "canada" ? "Canada" : locale === "fr" ? "International" : "International"}</span>
-              </li>
-            ))}
+          {KINDS.map(k => {
+            const list = NEWS_SOURCES.filter(s => s.kind === k.id);
+            const seen = new Set<string>();
+            return (
+              <div key={k.id} className="mb-6">
+                <h3 className="font-bold mb-1">{pick(k.label)}</h3>
+                <ul className="text-[0.95rem] leading-relaxed">
+                  {list.filter(s => !seen.has(s.name) && seen.add(s.name)).map(s => (
+                    <li key={s.id}><a href={s.home} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a></li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+          <h3 className="font-bold mb-1">{locale === "fr" ? "Suivis sans fil RSS public" : "Followed, no public feed"}</h3>
+          <ul className="text-[0.95rem] leading-relaxed">
+            {NO_FEED_SOURCES.map(s => <li key={s.name}><a href={s.home} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a></li>)}
           </ul>
         </section>
       </div>

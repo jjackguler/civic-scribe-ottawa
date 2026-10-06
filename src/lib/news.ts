@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { NewsPayload, Story } from "./news-engine";
-import type { Topic } from "./news-sources";
+import type { Topic, Level } from "./news-sources";
 import type { Bi, Locale } from "./i18n";
 
 export type { Story, NewsPayload };
@@ -41,6 +41,41 @@ export const TOPICS: { id: Topic | "canada"; label: Bi }[] = [
   { id: "products", label: { en: "Products", fr: "Produits" } },
   { id: "society", label: { en: "Society", fr: "Société" } },
 ];
+
+export type SectionId = "canada" | "world" | "government" | "ministry" | "labs" | "analysis" | Topic;
+
+/** Sections of the news page, in navigation order. */
+export const SECTIONS: { id: SectionId; label: Bi }[] = [
+  { id: "canada", label: { en: "Canada", fr: "Canada" } },
+  { id: "world", label: { en: "World", fr: "Monde" } },
+  { id: "government", label: { en: "Government", fr: "Gouvernement" } },
+  { id: "ministry", label: { en: "AI Ministry", fr: "Ministère de l'IA" } },
+  { id: "business", label: { en: "Business", fr: "Affaires" } },
+  { id: "research", label: { en: "Research", fr: "Recherche" } },
+  { id: "products", label: { en: "Products", fr: "Produits" } },
+  { id: "policy", label: { en: "Policy", fr: "Politique" } },
+  { id: "society", label: { en: "Society", fr: "Société" } },
+  { id: "labs", label: { en: "AI labs", fr: "Laboratoires" } },
+  { id: "analysis", label: { en: "Analysis", fr: "Analyses" } },
+];
+
+export function inSection(s: Story, id: SectionId): boolean {
+  switch (id) {
+    case "canada": return s.region === "canada" && !s.gov;
+    case "world": return s.region === "world" && s.kind === "news";
+    case "government": return s.gov || s.level != null;
+    case "ministry": return s.minister;
+    case "labs": return s.kind === "lab";
+    case "analysis": return s.kind === "analysis";
+    default: return s.topic === id && !s.gov;
+  }
+}
+
+export const LEVEL_LABEL: Record<Level, Bi> = {
+  federal: { en: "Federal", fr: "Fédéral" },
+  provincial: { en: "Provincial", fr: "Provincial" },
+  municipal: { en: "Municipal", fr: "Municipal" },
+};
 
 export function topicLabel(topic: Topic, locale: Locale) {
   return TOPICS.find(t => t.id === topic)?.label[locale] ?? topic;

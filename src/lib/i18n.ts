@@ -56,6 +56,21 @@ export const dict = {
   goodFor: { en: "Good for", fr: "Idéal pour" },
   minRead: { en: "min read", fr: "min de lecture" },
   backTo: { en: "Back to", fr: "Retour à" },
+  world: { en: "World", fr: "Monde" },
+  government: { en: "Government", fr: "Gouvernement" },
+  ministry: { en: "AI Ministry", fr: "Ministère de l'IA" },
+  business: { en: "Business", fr: "Affaires" },
+  research: { en: "Research", fr: "Recherche" },
+  labs: { en: "AI labs", fr: "Laboratoires" },
+  analysis: { en: "Analysis", fr: "Analyses" },
+  resources: { en: "Guides and resources", fr: "Guides et ressources" },
+  officialReleases: { en: "Official releases", fr: "Communiqués officiels" },
+  inTheNews: { en: "In the news", fr: "Dans l'actualité" },
+  moreHeadlines: { en: "More headlines", fr: "Autres manchettes" },
+  trackerTitle: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" },
+  minister: { en: "Minister of Artificial Intelligence and Digital Innovation", fr: "Ministre de l'Intelligence artificielle et de l'Innovation numérique" },
+  noItems: { en: "Nothing new here in the last 30 days.", fr: "Rien de nouveau ici depuis 30 jours." },
+  menu: { en: "Menu", fr: "Menu" },
 } satisfies Record<string, Bi>;
 
 export type DictKey = keyof typeof dict;

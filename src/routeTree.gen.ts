@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as MinistryRouteImport } from './routes/ministry'
+import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as FundingRouteImport } from './routes/funding'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -27,6 +29,16 @@ const ToolsRoute = ToolsRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinistryRoute = MinistryRouteImport.update({
+  id: '/ministry',
+  path: '/ministry',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernmentRoute = GovernmentRouteImport.update({
+  id: '/government',
+  path: '/government',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FundingRoute = FundingRouteImport.update({
@@ -69,6 +81,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/funding': typeof FundingRoute
+  '/government': typeof GovernmentRoute
+  '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
   '/tools': typeof ToolsRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -80,6 +94,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/funding': typeof FundingRoute
+  '/government': typeof GovernmentRoute
+  '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
   '/tools': typeof ToolsRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -92,6 +108,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/funding': typeof FundingRoute
+  '/government': typeof GovernmentRoute
+  '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
   '/tools': typeof ToolsRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -105,6 +123,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/funding'
+    | '/government'
+    | '/ministry'
     | '/news'
     | '/tools'
     | '/editor/$slug'
@@ -116,6 +136,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/funding'
+    | '/government'
+    | '/ministry'
     | '/news'
     | '/tools'
     | '/editor/$slug'
@@ -127,6 +149,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/funding'
+    | '/government'
+    | '/ministry'
     | '/news'
     | '/tools'
     | '/editor/$slug'
@@ -139,6 +163,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   FundingRoute: typeof FundingRoute
+  GovernmentRoute: typeof GovernmentRoute
+  MinistryRoute: typeof MinistryRoute
   NewsRoute: typeof NewsRoute
   ToolsRoute: typeof ToolsRoute
   EditorSlugRoute: typeof EditorSlugRoute
@@ -161,6 +187,20 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ministry': {
+      id: '/ministry'
+      path: '/ministry'
+      fullPath: '/ministry'
+      preLoaderRoute: typeof MinistryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/government': {
+      id: '/government'
+      path: '/government'
+      fullPath: '/government'
+      preLoaderRoute: typeof GovernmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/funding': {
@@ -219,6 +259,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   FundingRoute: FundingRoute,
+  GovernmentRoute: GovernmentRoute,
+  MinistryRoute: MinistryRoute,
   NewsRoute: NewsRoute,
   ToolsRoute: ToolsRoute,
   EditorSlugRoute: EditorSlugRoute,

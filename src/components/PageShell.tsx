@@ -33,3 +33,13 @@ export function SectionHead({ title, sub, action }: { title: string; sub?: strin
     </div>
   );
 }
+
+/** Front-page zone header: heavy rule, section title, optional link. */
+export function ZoneHead({ title, action, dark = false }: { title: ReactNode; action?: ReactNode; dark?: boolean }) {
+  return (
+    <div className={`flex items-end justify-between gap-3 pt-3 mb-5 border-t-[4px] ${dark ? "border-white" : "border-ink"}`}>
+      <h2 className={`hl text-[1.6rem] sm:text-[1.9rem] ${dark ? "text-white" : "text-ink"}`}>{title}</h2>
+      {action}
+    </div>
+  );
+}

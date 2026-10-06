@@ -2,7 +2,7 @@
  * Server-side AI news aggregator. Imported only from the server function in
  * news.ts, so none of this ships to the browser.
  */
-import { NEWS_SOURCES, type NewsSource, type Region, type Topic } from "./news-sources";
+import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
 
 export type Story = {
   id: string;
@@ -16,22 +16,37 @@ export type Story = {
   lang: "en" | "fr";
   publishedAt: string;
   image: string | null;
+  kind: Kind;
   gov: boolean;
   lab: boolean;
+  /** Government level: set for government feeds, or inferred for news about a city or province. */
+  level: Level | null;
+  /** Release from, or coverage of, Canada's Minister of AI and Digital Innovation. */
+  minister: boolean;
 };
 
-export type SourceStatus = { id: string; name: string; ok: boolean; count: number; error?: string };
+export type SourceStatus = { id: string; name: string; ok: boolean; count: number; checkedAt?: string; error?: string };
 export type NewsPayload = { stories: Story[]; sources: SourceStatus[]; fetchedAt: string };
 
 const UA = "Mozilla/5.0 (compatible; MapleWireNews/1.0; +https://maplewire.ca)";
-const CACHE_MS = 8 * 60 * 1000;
+const CACHE_MS = 3 * 60 * 1000;          // rebuild the payload at most every 3 minutes
+const FAST_TTL = 8 * 60 * 1000;           // newsroom feeds
+const SLOW_TTL = 30 * 60 * 1000;          // feeds that rarely change
 const MAX_AGE_DAYS = 30;
-const MAX_OG_LOOKUPS = 20;
+const MINISTER_MAX_AGE_DAYS = 120;        // the ministry tracker keeps a longer record
+// Cloudflare Workers cap outgoing requests per invocation, so each rebuild
+// spends a fixed budget: overdue feeds first, then publisher photos.
+const SUBREQUEST_BUDGET = 44;
+const MAX_FEEDS_PER_RUN = 30;
+const MAX_OG_LOOKUPS = 14;
+
+type SourceCache = { ts: number; ok: boolean; stories: Story[]; error?: string };
 
 const g = globalThis as unknown as {
   __mwNews?: { ts: number; payload: NewsPayload };
   __mwNewsInflight?: Promise<NewsPayload>;
   __ogCache?: Map<string, string | null>;
+  __mwSrc?: Map<string, SourceCache>;
 };
 
 // ── text helpers ────────────────────────────────────────────────────────────
@@ -79,14 +94,17 @@ function firstImage(block: string): string | null {
 }
 
 // ── classification ──────────────────────────────────────────────────────────
-const AI_RE = /\b(A\.?I\.?|artificial intelligence|machine learning|deep learning|neural net\w*|LLMs?|large language models?|generative|chatbots?|ChatGPT|OpenAI|Anthropic|Claude|Gemini|Copilot|Mistral|Cohere|DeepSeek|Llama|Nvidia|GPUs?|data cent(?:er|re)s?|humanoid robots?|AI agents?|intelligence artificielle|IA)\b/;
+const AI_RE = /\b(A\.?I\.?|artificial intelligence|machine learning|deep learning|neural net\w*|LLMs?|large language models?|generative|chatbots?|ChatGPT|OpenAI|Anthropic|Claude AI|Google Gemini|Gemini AI|Copilot|Mistral AI|Cohere|DeepSeek|Nvidia|data cent(?:er|re)s?|humanoid robots?|AI agents?|intelligence artificielle|IA|IAG|apprentissage automatique|robots? conversationnels?|centres? de données)\b/;
+const MINISTER_RE = /(Evan Solomon|Minister Solomon|ministre Solomon|Minister of Artificial Intelligence|ministre de l[’']Intelligence artificielle|AI minister|ministre de l[’']IA)/i;
+const MUNI_RE = /\b(city council|councill?ors?|mayor|municipal\w*|city hall|City of [A-Z][a-z]+|Ville de|conseil municipal|maire|mairesse|police services? board|school boards?|TTC|OC Transpo|STM)\b/;
+const PROV_RE = /\b(premier|provincial|provinces?|Queen's Park|Legislative Assembly|Assemblée nationale|gouvernement du Québec|Quebec government|Ontario government|B\.C\. government|Alberta government|Doug Ford|David Eby|Danielle Smith)\b/i;
 const CANADA_RE = /\b(Canada|Canadian|Canadians|Ottawa|Toronto|Montr[ée]al|Vancouver|Calgary|Edmonton|Waterloo|Ontario|Qu[ée]bec|Alberta|British Columbia|Manitoba|Saskatchewan|Nova Scotia|New Brunswick|Mila|Vector Institute|Amii|Cohere|Carney|Solomon|Shopify)\b/i;
 
 function topicOf(text: string, src: NewsSource): Topic {
-  if (src.gov) return "policy";
+  if (src.kind === "gov") return "policy";
   if (/\b(regulat\w*|laws?|legislat\w*|bill C-|government|minister|parliament|senate|congress|EU\b|ban(?:s|ned)?|lawsuits?|court|copyright|safety|privacy|election|sovereign|strategy|policy|politique)\b/i.test(text)) return "policy";
   if (/\b(raises?|raised|funding round|Series [A-E]|invest\w*|startups?|acqui\w+|valuation|IPO|revenue|layoffs?|jobs?|hiring|billion|million|stock|shares|market)\b/i.test(text)) return "business";
-  if (src.lab || /\b(research\w*|study|studies|paper|benchmark|open[- ]source|open-weight|scientists?|universit\w+|model)\b/i.test(text)) return "research";
+  if (src.kind === "lab" || /\b(research\w*|study|studies|paper|benchmark|open[- ]source|open-weight|scientists?|universit\w+|model)\b/i.test(text)) return "research";
   if (/\b(launch\w*|releases?|released|feature|app|update|rolls? out|available|announc\w+|devices?|glasses|phone)\b/i.test(text)) return "products";
   return "society";
 }
@@ -100,7 +118,7 @@ function hash(s: string) {
 function parseFeed(xml: string, src: NewsSource): Story[] {
   const blocks = xml.match(/<item[\s>][\s\S]*?<\/item>|<entry[\s>][\s\S]*?<\/entry>/gi) ?? [];
   const out: Story[] = [];
-  const cutoff = Date.now() - MAX_AGE_DAYS * 86400000;
+  const cutoff = Date.now() - (src.minister ? MINISTER_MAX_AGE_DAYS : MAX_AGE_DAYS) * 86400000;
   for (const b of blocks) {
     const title = stripTags(raw(b, "title"));
     if (!title) continue;
@@ -117,6 +135,7 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
     if (!d || isNaN(d.getTime()) || d.getTime() < cutoff || d.getTime() > Date.now() + 3600000) continue;
 
     const region: Region = src.region === "canada" || CANADA_RE.test(text) ? "canada" : "world";
+    const level: Level | null = src.level ?? (region !== "canada" ? null : MUNI_RE.test(text) ? "municipal" : PROV_RE.test(text) ? "provincial" : null);
     out.push({
       id: hash(link),
       title,
@@ -128,12 +147,15 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
       topic: topicOf(text, src),
       lang: src.lang,
       publishedAt: d.toISOString(),
-      image: src.gov ? null : firstImage(b),
-      gov: !!src.gov,
-      lab: !!src.lab,
+      image: src.kind === "gov" ? null : firstImage(b),
+      kind: src.kind,
+      gov: src.kind === "gov",
+      lab: src.kind === "lab",
+      level,
+      minister: !!src.minister || MINISTER_RE.test(text),
     });
   }
-  return out.slice(0, 30);
+  return out.slice(0, src.minister ? 40 : 30);
 }
 
 async function fetchText(url: string, ms: number) {
@@ -165,37 +187,76 @@ async function lookupOgImage(link: string): Promise<string | null> {
   return img;
 }
 
-async function buildPayload(): Promise<NewsPayload> {
-  const results = await Promise.all(
-    NEWS_SOURCES.map(async (src) => {
-      try {
-        const xml = await fetchText(src.url, 6000);
-        if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(xml)) throw new Error("Not a feed (blocked or HTML)");
-        const stories = parseFeed(xml, src);
-        return { status: { id: src.id, name: src.name, ok: true, count: stories.length } as SourceStatus, stories };
-      } catch (e: any) {
-        return { status: { id: src.id, name: src.name, ok: false, count: 0, error: String(e?.message ?? e) } as SourceStatus, stories: [] as Story[] };
-      }
-    }),
-  );
+async function fetchSource(src: NewsSource): Promise<SourceCache> {
+  try {
+    const xml = await fetchText(src.url, 6000);
+    if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(xml)) throw new Error("Not a feed (blocked or HTML)");
+    return { ts: Date.now(), ok: true, stories: parseFeed(xml, src) };
+  } catch (e: any) {
+    return { ts: Date.now(), ok: false, stories: [], error: String(e?.message ?? e) };
+  }
+}
 
-  const seen = new Set<string>();
-  const stories = results
-    .flatMap(r => r.stories)
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .filter(s => {
-      const k = s.title.toLowerCase().replace(/[^a-z0-9àâçéèêëîïôûùüÿœ]+/g, " ").trim();
-      if (seen.has(k)) return false;
-      seen.add(k);
-      return true;
+const titleKey = (t: string) => t.toLowerCase().replace(/[^a-z0-9àâçéèêëîïôûùüÿœ]+/g, " ").trim();
+
+async function buildPayload(): Promise<NewsPayload> {
+  const cache = (g.__mwSrc ??= new Map());
+  const now = Date.now();
+
+  // Which feeds are due? Never-fetched first, then the most overdue.
+  const due = NEWS_SOURCES
+    .map((src, order) => {
+      const c = cache.get(src.id);
+      const ttl = src.slow ? SLOW_TTL : FAST_TTL;
+      const age = c ? now - c.ts : Infinity;
+      // A failed feed is retried sooner, but not on every rebuild.
+      const effTtl = c && !c.ok ? Math.min(ttl, 5 * 60 * 1000) : ttl;
+      return { src, order, overdue: age - effTtl };
     })
-    .slice(0, 90);
+    .filter(x => x.overdue >= 0)
+    .sort((a, b) => (b.overdue === Infinity ? 1 : 0) - (a.overdue === Infinity ? 1 : 0) || a.order - b.order)
+    .slice(0, MAX_FEEDS_PER_RUN);
+
+  const fresh = await Promise.all(due.map(async ({ src }) => [src.id, await fetchSource(src)] as const));
+  for (const [id, c] of fresh) {
+    const prev = cache.get(id);
+    // Keep the last good stories if a refresh fails.
+    cache.set(id, c.ok || !prev ? c : { ...prev, ts: c.ts, ok: false, error: c.error });
+  }
+
+  // Merge every source's stories; duplicates (same headline) are merged, keeping flags.
+  const byKey = new Map<string, Story>();
+  for (const src of NEWS_SOURCES) {
+    for (const s of cache.get(src.id)?.stories ?? []) {
+      const k = titleKey(s.title);
+      const seen = byKey.get(k);
+      if (!seen) { byKey.set(k, { ...s }); continue; }
+      seen.minister ||= s.minister;
+      seen.level ??= s.level;
+      seen.image ??= s.image;
+    }
+  }
+  const all = [...byKey.values()].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+  // Government releases and the ministry record are kept in full; the rest is capped.
+  const keep = new Set<Story>();
+  all.filter(s => s.minister).slice(0, 50).forEach(s => keep.add(s));
+  all.filter(s => s.gov).slice(0, 50).forEach(s => keep.add(s));
+  all.filter(s => !s.gov).slice(0, 140).forEach(s => keep.add(s));
+  const stories = all.filter(s => keep.has(s));
 
   // Fill missing photos from the publisher's own og:image, newest first.
-  const needImage = stories.filter(s => !s.image && !s.gov).slice(0, MAX_OG_LOOKUPS);
+  const og = (g.__ogCache ??= new Map());
+  for (const s of stories) if (!s.image && og.get(s.link)) s.image = og.get(s.link)!;
+  const ogBudget = Math.max(0, Math.min(MAX_OG_LOOKUPS, SUBREQUEST_BUDGET - due.length));
+  const needImage = stories.filter(s => !s.image && !s.gov && !og.has(s.link)).slice(0, ogBudget);
   await Promise.all(needImage.map(async s => { s.image = await lookupOgImage(s.link); }));
 
-  return { stories, sources: results.map(r => r.status), fetchedAt: new Date().toISOString() };
+  const sources: SourceStatus[] = NEWS_SOURCES.map(src => {
+    const c = cache.get(src.id);
+    return { id: src.id, name: src.name, ok: !!c?.ok, count: c?.stories.length ?? 0, checkedAt: c ? new Date(c.ts).toISOString() : undefined, error: c?.error };
+  });
+  return { stories, sources, fetchedAt: new Date().toISOString() };
 }
 
 export async function loadNews(): Promise<NewsPayload> {

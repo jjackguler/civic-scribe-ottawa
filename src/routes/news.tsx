@@ -2,17 +2,18 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageIntro } from "@/components/PageShell";
 import { StoryCard } from "@/components/StoryCard";
-import { getAiNewsFast, useAiNews, byLocale, TOPICS, timeAgo, useNow } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, SECTIONS, inSection, timeAgo, useNow, type SectionId } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 
-type Search = { topic?: string };
+type Search = { section?: SectionId };
 
 export const Route = createFileRoute("/news")({
-  validateSearch: (s: Record<string, unknown>): Search => ({
-    topic: typeof s.topic === "string" && TOPICS.some(x => x.id === s.topic) ? s.topic : undefined,
-  }),
+  validateSearch: (s: Record<string, unknown>): Search => {
+    const v = s.section ?? s.topic;
+    return { section: typeof v === "string" && SECTIONS.some(x => x.id === v) ? (v as SectionId) : undefined };
+  },
   loader: () => getAiNewsFast(),
   head: () => ({
     meta: [
@@ -25,14 +26,15 @@ export const Route = createFileRoute("/news")({
 
 function NewsPage() {
   const initial = Route.useLoaderData();
-  const { topic } = Route.useSearch();
+  const { section } = Route.useSearch();
   const { data } = useAiNews(initial);
   const { locale, pick } = useLocale();
   const now = useNow();
   const [limit, setLimit] = useState(24);
 
-  const all = byLocale(data?.stories ?? [], locale).filter(s => !s.gov || topic === "policy" || topic === "canada");
-  const list = !topic ? all : topic === "canada" ? all.filter(s => s.region === "canada") : all.filter(s => s.topic === topic);
+  const all = byLocale(data?.stories ?? [], locale);
+  const list = section ? all.filter(s => inSection(s, section)) : all.filter(s => !s.gov);
+  const current = SECTIONS.find(x => x.id === section);
   const okSources = data?.sources.filter(s => s.ok).length ?? 0;
 
   const chip = (active: boolean) =>
@@ -41,15 +43,15 @@ function NewsPage() {
   return (
     <PageShell>
       <PageIntro
-        title={locale === "fr" ? "Actualités IA, en direct" : "AI news, live"}
+        title={current ? pick(current.label) : locale === "fr" ? "Actualités IA, en direct" : "AI news, live"}
         dek={locale === "fr"
           ? "Manchettes d'éditeurs canadiens et internationaux, mises à jour toute la journée. Chaque article renvoie à sa source."
           : "Headlines from Canadian and international publishers, refreshed through the day. Every story links to its original source."}
       >
-        <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Topics">
-          <Link to="/news" search={{}} className={chip(!topic)}>{t("all", locale)}</Link>
-          {TOPICS.map(x => (
-            <Link key={x.id} to="/news" search={{ topic: x.id }} className={chip(topic === x.id)}>{pick(x.label)}</Link>
+        <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Sections">
+          <Link to="/news" search={{}} className={chip(!section)}>{t("all", locale)}</Link>
+          {SECTIONS.map(x => (
+            <Link key={x.id} to="/news" search={{ section: x.id }} className={chip(section === x.id)}>{pick(x.label)}</Link>
           ))}
         </div>
         {data && (

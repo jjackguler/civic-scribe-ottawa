@@ -10,7 +10,7 @@ export const SITE = {
     fr: "Le fil de presse IA du Canada",
   },
   description: {
-    en: "Live AI news for Canada, government AI funding explained, the best AI tools, and plain-language guides to get started.",
-    fr: "Actualités IA en direct pour le Canada, financement public en IA expliqué, les meilleurs outils et des guides simples pour commencer.",
+    en: "Live artificial intelligence news for Canada: the AI Ministry, governments from Ottawa to city hall, Canadian and global newsrooms, and the labs building AI.",
+    fr: "Actualités en intelligence artificielle en direct pour le Canada : le ministère de l'IA, les gouvernements d'Ottawa aux hôtels de ville, les salles de nouvelles et les laboratoires.",
   },
 } as const;

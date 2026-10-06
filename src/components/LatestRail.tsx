@@ -32,9 +32,9 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
   };
 
   return (
-    <aside className="bg-surface rounded-[8px] border border-line flex flex-col h-full">
-      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-line">
-        <h2 className="hl text-[1.35rem] flex items-center gap-2.5">
+    <aside className="flex flex-col">
+      <div className="flex items-center justify-between pb-2 border-b-[3px] border-ink">
+        <h2 className="hl text-[1.3rem] flex items-center gap-2.5">
           <span className="live-dot" aria-hidden="true" />
           {t("latest", locale)}
         </h2>
@@ -48,21 +48,21 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
       {pending.length > 0 && (
         <button
           onClick={reveal}
-          className="mx-5 mt-3 rounded-full bg-live text-white text-sm font-semibold py-2 hover:brightness-110"
+          className="mt-3 rounded-full bg-live text-white text-sm font-semibold py-2 hover:brightness-110"
         >
           {t("showNew", locale, { n: pending.length })}
         </button>
       )}
 
-      <ol className="flex-1 overflow-y-auto px-5 py-1 lg:max-h-[640px]">
+      <ol className="flex-1">
         {shown.slice(0, limit).map(s => (
-          <li key={s.id} className={`py-3 border-b border-line last:border-0 ${fresh.has(s.id) ? "flash-new" : ""}`}>
+          <li key={s.id} className={`py-2.5 border-b border-line last:border-0 ${fresh.has(s.id) ? "flash-new" : ""}`}>
             <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
               <p className="meta mb-0.5 flex gap-2">
                 <time dateTime={s.publishedAt} className="font-semibold text-live" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
                 <span>{s.source}</span>
               </p>
-              <p className="font-semibold leading-snug text-[1rem] group-hover:text-lake">{s.title}</p>
+              <p className="font-semibold leading-snug text-[0.97rem] group-hover:underline">{s.title}</p>
             </a>
           </li>
         ))}
