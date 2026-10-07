@@ -27,6 +27,7 @@ import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 
 const WatchRoute = WatchRouteImport.update({
@@ -119,6 +120,11 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditorToolsRoute = EditorToolsRouteImport.update({
+  id: '/editor/tools',
+  path: '/editor/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EditorSlugRoute = EditorSlugRouteImport.update({
   id: '/editor/$slug',
   path: '/editor/$slug',
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
+  '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/editor/': typeof EditorIndexRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
+  '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/editor': typeof EditorIndexRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
+  '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/editor/': typeof EditorIndexRoute
@@ -207,6 +216,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/watch'
     | '/editor/$slug'
+    | '/editor/tools'
     | '/learn/$slug'
     | '/story/$id'
     | '/editor/'
@@ -228,6 +238,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/watch'
     | '/editor/$slug'
+    | '/editor/tools'
     | '/learn/$slug'
     | '/story/$id'
     | '/editor'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/watch'
     | '/editor/$slug'
+    | '/editor/tools'
     | '/learn/$slug'
     | '/story/$id'
     | '/editor/'
@@ -271,6 +283,7 @@ export interface RootRouteChildren {
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
   EditorSlugRoute: typeof EditorSlugRoute
+  EditorToolsRoute: typeof EditorToolsRoute
   LearnSlugRoute: typeof LearnSlugRoute
   StoryIdRoute: typeof StoryIdRoute
   EditorIndexRoute: typeof EditorIndexRoute
@@ -405,6 +418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/editor/tools': {
+      id: '/editor/tools'
+      path: '/editor/tools'
+      fullPath: '/editor/tools'
+      preLoaderRoute: typeof EditorToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/editor/$slug': {
       id: '/editor/$slug'
       path: '/editor/$slug'
@@ -431,6 +451,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,
   EditorSlugRoute: EditorSlugRoute,
+  EditorToolsRoute: EditorToolsRoute,
   LearnSlugRoute: LearnSlugRoute,
   StoryIdRoute: StoryIdRoute,
   EditorIndexRoute: EditorIndexRoute,

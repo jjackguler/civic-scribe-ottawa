@@ -7,6 +7,7 @@ import { useAiNews } from "@/lib/news";
 import { useMedia } from "@/lib/media";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
+import { t } from "@/lib/i18n";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -88,7 +89,10 @@ function About() {
           <ul className="text-[0.95rem] leading-relaxed">
             {NO_FEED_SOURCES.map(s => <li key={s.name}><a href={s.home} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a></li>)}
           </ul>
-          <p className="mt-6"><Link to="/standards" className="text-lake font-semibold hover:underline">{locale === "fr" ? "Lire nos normes éditoriales" : "Read our editorial standards"}</Link></p>
+          <p className="mt-6">
+            <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="text-lake font-semibold hover:underline">{t("builtWithClaude", locale)}</a>
+          </p>
+          <p className="mt-2"><Link to="/standards" className="text-lake font-semibold hover:underline">{locale === "fr" ? "Lire nos normes éditoriales" : "Read our editorial standards"}</Link></p>
         </section>
       </div>
       <DeskStatus />

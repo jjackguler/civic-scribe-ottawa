@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Story } from "@/lib/news";
 import { timeAgo, useNow, display } from "@/lib/news";
-import { StoryLink } from "./StoryCard";
+import { StoryLink, TranslatedNote } from "./StoryCard";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 
@@ -63,7 +63,10 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
                 <time dateTime={s.publishedAt} className="font-semibold text-live" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
                 <span>{s.source}</span>
               </p>
-              <p className="font-semibold leading-snug text-[0.97rem] group-hover:underline">{display(s, locale).title}</p>
+              {(() => { const d = display(s, locale); return (<>
+                <p className="font-semibold leading-snug text-[0.97rem] group-hover:underline" title={d.translated ? d.original : undefined}>{d.title}</p>
+                {d.translated && <TranslatedNote original={d.original} compact />}
+              </>); })()}
             </StoryLink>
           </li>
         ))}

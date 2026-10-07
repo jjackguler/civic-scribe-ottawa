@@ -21,10 +21,23 @@ The world's AI newspaper, live, in English and French: news from public publishe
 
 ## Standards
 
-- Headlines come only from publishers' public feeds and always link to the original. No generated or rewritten news.
+- Headlines come only from publishers' public feeds and always link to the original. Headlines are never rewritten; machine translations are labelled and link to the original.
 - Photos are the publisher's own and are credited; if one fails to load, the story shows without a picture.
 - Opinion stays on the Editor's desk and is labelled as opinion.
 - Ads are labelled "Advertisement"; sponsored content is labelled and never placed in the news feed. Full policy: `/standards`.
+
+## How we use Claude
+
+Claude (Anthropic) is used for exactly four things:
+
+1. **Translation** — EN↔FR headlines and summaries, labelled "Translated with Claude" on every item, with the original headline shown and the link to the publisher unchanged.
+2. **Grouping** — checks whether headlines grouped as one event really are the same event, and splits them if not. It only groups; it writes nothing.
+3. **Funding-page change detection** — compares official program pages with `src/lib/funding.ts` and reports what an editor should re-verify. It never edits the file.
+4. **Newsletter drafting** — drafts The Morning Broadsheet for an editor to review before sending.
+
+Claude never writes, rewrites or invents news. Headlines and photos remain the publishers' own. Every Claude output is labelled or reviewed by a human editor before publication.
+
+Setup: add `ANTHROPIC_API_KEY` and `EDITOR_PASSCODE` in Project Settings → Secrets (optional `MAX_DAILY_CLAUDE_CALLS`, default 300). Without the key the site works exactly as before. Editor tools live at `/editor/tools` (not linked, noindex).
 
 ## Development
 

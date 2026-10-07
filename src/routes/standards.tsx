@@ -25,8 +25,19 @@ const SECTIONS: { h: Bi; p: Bi[] }[] = [
   {
     h: { en: "Software files stories; it doesn't write them", fr: "Le logiciel classe les nouvelles; il ne les écrit pas" },
     p: [
-      { en: "We don't use AI to write or rewrite news. Our software sorts stories into desks using published keyword rules, and groups headlines that describe the same event so you can see every outlet's coverage side by side.", fr: "Nous n'utilisons pas l'IA pour écrire ou réécrire les nouvelles. Notre logiciel classe les nouvelles par section selon des règles de mots-clés et regroupe les titres qui décrivent le même événement, pour comparer la couverture de chaque média." },
+      { en: "Headlines are never rewritten. Our software sorts stories into desks using published keyword rules, and groups headlines that describe the same event so you can see every outlet's coverage side by side. Machine translations are labelled on every item and link to the original.", fr: "Les titres ne sont jamais réécrits. Notre logiciel classe les nouvelles par section selon des règles de mots-clés et regroupe les titres qui décrivent le même événement, pour comparer la couverture de chaque média. Les traductions automatiques sont identifiées sur chaque article et renvoient à l'original." },
       { en: "The lead story is the event the most newsrooms are reporting right now. “Developing” means three or more outlets reported it in the last six hours.", fr: "La nouvelle principale est l'événement que le plus de médias rapportent en ce moment. « En développement » signifie qu'au moins trois médias l'ont rapporté dans les six dernières heures." },
+    ],
+  },
+  {
+    h: { en: "How we use Claude", fr: "Comment nous utilisons Claude" },
+    p: [
+      { en: "We use Claude, an AI model made by Anthropic, for exactly four things:", fr: "Nous utilisons Claude, un modèle d'IA d'Anthropic, pour exactement quatre choses :" },
+      { en: "1. Translation. English headlines and summaries are translated for French readers, and French ones for English readers. Every translated item is labelled “Translated with Claude”, shows the original headline, and links to the publisher.", fr: "1. Traduction. Les titres et résumés anglais sont traduits pour les lecteurs francophones, et inversement. Chaque élément traduit porte la mention « Traduit avec Claude », affiche le titre original et renvoie à l'éditeur." },
+      { en: "2. Grouping. Claude checks whether headlines our software grouped together really report the same event, and separates the ones that don't. It only groups; it writes nothing.", fr: "2. Regroupement. Claude vérifie si les titres regroupés par notre logiciel rapportent vraiment le même événement, et sépare ceux qui ne le font pas. Il ne fait que regrouper; il n'écrit rien." },
+      { en: "3. Funding-page change detection. Claude compares official program pages with our funding listings and tells an editor what may need re-checking. It never edits a listing; an editor verifies and updates it.", fr: "3. Détection des changements sur les pages de financement. Claude compare les pages officielles des programmes avec nos fiches et signale à la rédaction ce qui pourrait devoir être revérifié. Il ne modifie jamais une fiche; un éditeur vérifie et la met à jour." },
+      { en: "4. Newsletter drafting. Claude drafts The Morning Broadsheet from publisher headlines and summaries. An editor reviews every draft before it is sent.", fr: "4. Rédaction de l'infolettre. Claude prépare un brouillon du Morning Broadsheet à partir des titres et résumés des éditeurs. Un éditeur relit chaque brouillon avant l'envoi." },
+      { en: "Claude never writes, rewrites or invents news. Headlines and photos remain the publishers' own. Every Claude output is labelled or reviewed by a human editor before publication.", fr: "Claude n'écrit, ne réécrit et n'invente jamais de nouvelles. Les titres et les photos restent ceux des éditeurs. Chaque production de Claude est identifiée ou relue par un éditeur avant publication." },
     ],
   },
   {

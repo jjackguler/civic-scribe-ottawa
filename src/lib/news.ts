@@ -1,10 +1,27 @@
 import { createServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { NewsPayload, Story } from "./news-engine";
 import type { Topic, Level } from "./news-sources";
 import { deskFor } from "./desk";
 import type { Bi, Locale } from "./i18n";
+import { getTranslation } from "./translations";
+import { refineClusters } from "./claude.functions";
+
+/** Claude second pass on the top front-page clusters; falls back to the heuristic. */
+export function useRefinedClusters(clusters: Cluster[]): Cluster[] {
+  const cands = clusters.filter(c => c.stories.length >= 2).slice(0, 12)
+    .map(c => ({ id: c.id, ids: c.stories.slice(0, 12).map(s => s.id) }));
+  const sig = cands.map(c => c.id + ":" + c.ids.join(",")).join("|");
+  const { data } = useQuery({
+    queryKey: ["cluster-refine", sig],
+    queryFn: () => refineClusters({ data: { clusters: cands } }).catch(() => ({})),
+    enabled: cands.length > 0,
+    staleTime: 30 * 60_000,
+    retry: false,
+  });
+  return useMemo(() => applyRefinement(clusters, data), [clusters, data]);
+}
 
 export type { Story, NewsPayload };
 
@@ -219,14 +236,46 @@ export function diversify(stories: Story[], max = 2, window = 12): Story[] {
   return out;
 }
 
-/** Headline and summary to show: the editor's desk version when there is one. */
+/**
+ * Headline and summary to show: the editor's desk version when there is one,
+ * otherwise a labelled Claude translation when the reader's language differs,
+ * otherwise the publisher's own. Links, sources, dates and credits never change.
+ */
 export function display(s: Story, locale: Locale) {
   const d = deskFor(s.link);
   // Keep product names like GPT-6 on one line (non-breaking hyphen; same text).
   const keep = (t: string) => t.replace(/([A-Za-z])-(\d)/g, "$1\u2011$2");
+  const tr = !d && s.lang !== locale ? getTranslation(locale, s.id) : undefined;
   return {
-    title: keep(d ? d.headline[locale] : s.title),
-    summary: d?.dek ? d.dek[locale] : s.summary,
+    title: keep(d ? d.headline[locale] : tr ? tr.title : s.title),
+    summary: d?.dek ? d.dek[locale] : tr ? (tr.summary || s.summary) : s.summary,
     edited: !!d,
+    translated: !!tr,
+    original: s.title,
   };
+}
+
+/** Rebuild a cluster from a subset of its stories (used after Claude splits one). */
+export function makeCluster(group: Story[]): Cluster {
+  const sorted = [...group].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  const sources = new Set(sorted.map(s => s.source)).size;
+  const lead = sorted.find(s => s.image && s.kind === "news") ?? sorted.find(s => s.image) ?? sorted[0];
+  return { id: lead.id, lead, stories: [lead, ...sorted.filter(s => s !== lead)], sources, latest: sorted[0].publishedAt };
+}
+
+/** Apply Claude's same-event groups to heuristic clusters; anything unanswered stays as is. */
+export function applyRefinement(clusters: Cluster[], splits: Record<string, string[][]> | undefined): Cluster[] {
+  if (!splits || Object.keys(splits).length === 0) return clusters;
+  const now = Date.now();
+  const out: Cluster[] = [];
+  for (const c of clusters) {
+    const groups = splits[c.id];
+    if (!groups || groups.length <= 1) { out.push(c); continue; }
+    const byId = new Map(c.stories.map(s => [s.id, s]));
+    for (const g of groups) {
+      const members = g.map(id => byId.get(id)).filter((s): s is Story => !!s);
+      if (members.length) out.push(makeCluster(members));
+    }
+  }
+  return out.sort((a, b) => score(b, now) - score(a, now));
 }

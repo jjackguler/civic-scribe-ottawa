@@ -8,7 +8,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
 import {
-  getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isFrontPool, display,
+  getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
 } from "@/lib/news";
 import { useMedia, type MediaItem } from "@/lib/media";
@@ -56,7 +56,8 @@ function Home() {
 
   const all = byLocale(data?.stories ?? [], locale);
   const news = diversify(all.filter(isFrontPool));
-  const clusters = useMemo(() => clusterStories(all), [data, locale]); // eslint-disable-line react-hooks/exhaustive-deps
+  const heuristic = useMemo(() => clusterStories(all), [data, locale]); // eslint-disable-line react-hooks/exhaustive-deps
+  const clusters = useRefinedClusters(heuristic);
   const used = new Set<string>();
 
   // Lead: the event most newsrooms are covering. Falls back to the newest photo story.

@@ -83,6 +83,12 @@ function StoryPage() {
                 {fr ? `Titre de la rédaction. Titre original de ${s.source} :` : `Headline by our editors. Original headline from ${s.source}:`} <span className="italic">“{s.title}”</span>
               </p>
             )}
+            {d.translated && (
+              <p className="meta mt-3">
+                <span className="font-semibold">{fr ? "Traduit avec Claude." : "Translated with Claude."}</span>{" "}
+                {fr ? `Titre original de ${s.source} :` : `Original headline from ${s.source}:`} <span className="italic">“{s.title}”</span>
+              </p>
+            )}
             <StoryMeta s={s} className="mt-3 text-[0.9rem]" />
 
             {s.image && (

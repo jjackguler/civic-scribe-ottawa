@@ -58,6 +58,7 @@ export function SiteFooter() {
         <div className="container-mw py-5 text-sm text-white/55 flex flex-wrap gap-x-6 gap-y-1">
           <span>© {year} {SITE.name}</span>
           <span>{fr ? "Les titres, extraits, photos et vidéos appartiennent à leurs éditeurs." : "Headlines, excerpts, photos and videos belong to their publishers."}</span>
+          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline">{t("builtWithClaude", locale)}</a>
         </div>
       </div>
     </footer>
