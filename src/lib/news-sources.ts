@@ -89,6 +89,7 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "roadtovr", name: "Road to VR", url: "https://www.roadtovr.com/feed/", home: "https://www.roadtovr.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "immersive", slow: true },
   { id: "robotreport", name: "The Robot Report", url: "https://www.therobotreport.com/feed/", home: "https://www.therobotreport.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "robotics", slow: true },
   { id: "dcd", name: "DatacenterDynamics", url: "https://www.datacenterdynamics.com/en/rss/", home: "https://www.datacenterdynamics.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "infrastructure", slow: true },
+  { id: "vector", name: "Vector Institute", url: "https://vectorinstitute.ai/feed/", home: "https://vectorinstitute.ai", region: "canada", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "aws-ml", name: "AWS Machine Learning", url: "https://aws.amazon.com/blogs/machine-learning/feed/", home: "https://aws.amazon.com/blogs/machine-learning/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
 
   // ── Provincial and municipal governments (AI items only) ────────────────
@@ -96,6 +97,12 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "bc-gov", name: "Government of B.C.", url: "https://news.gov.bc.ca/feed", home: "https://news.gov.bc.ca", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "provincial", slow: true },
   { id: "toronto", name: "City of Toronto", url: "https://www.toronto.ca/news/feed/", home: "https://www.toronto.ca/news/", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "municipal", slow: true },
   { id: "calgary", name: "City of Calgary", url: "https://newsroom.calgary.ca/feed/", home: "https://newsroom.calgary.ca", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "municipal", slow: true },
+  // Added 2026-10-07 after testing each feed (see docs/feed-terms.md for terms of use).
+  { id: "alberta", name: "Government of Alberta", url: "https://www.alberta.ca/NewsRoom/newsroom.cfm?numDaysBack=365&deptID=0", home: "https://www.alberta.ca/news", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "provincial", slow: true },
+  { id: "quebec", name: "Gouvernement du Québec", url: "https://www.quebec.ca/fil-de-presse.rss", home: "https://www.quebec.ca/nouvelles", region: "canada", lang: "fr", kind: "gov", aiOnly: false, level: "provincial", slow: true },
+  { id: "ottawa", name: "City of Ottawa", url: "https://ottawa.ca/en/news.rss", home: "https://ottawa.ca/en/news", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "municipal", slow: true },
+  { id: "opc", name: "Office of the Privacy Commissioner of Canada", url: "https://www.priv.gc.ca/en/rss/news/", home: "https://www.priv.gc.ca/en/", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "federal", slow: true },
+  { id: "canadabuys-ai", name: "CanadaBuys — AI tenders", url: "https://canadabuys.canada.ca/en/search-feed?words=%22artificial%20intelligence%22&status%5B87%5D=87", home: "https://canadabuys.canada.ca/en/tender-opportunities", region: "canada", lang: "en", kind: "gov", aiOnly: true, level: "federal", slow: true },
 
   // ── Local newsrooms (AI stories about cities and provinces) ─────────────
   { id: "cbc-toronto", name: "CBC Toronto", url: "https://www.cbc.ca/webfeed/rss/rss-canada-toronto", home: "https://www.cbc.ca/news/canada/toronto", region: "canada", lang: "en", kind: "news", aiOnly: false, slow: true },
@@ -118,4 +125,8 @@ export const NO_FEED_SOURCES = [
   { name: "Stanford HAI", home: "https://hai.stanford.edu/news" },
   { name: "TIME — AI", home: "https://time.com/section/tech/" },
   { name: "The Wall Street Journal — Tech", home: "https://www.wsj.com/tech" },
+  // Checked 2026-10-07: no working news feed.
+  { name: "Mila", home: "https://mila.quebec/en/news" },
+  { name: "Amii", home: "https://www.amii.ca/updates-insights" },
+  { name: "Cohere", home: "https://cohere.com/blog" },
 ];

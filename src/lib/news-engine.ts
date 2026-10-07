@@ -4,6 +4,7 @@
  */
 import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
 import { AI_RE, tagsOf } from "./classify";
+import { displayFor } from "./rights";
 
 export type Story = {
   id: string;
@@ -116,15 +117,18 @@ function hash(s: string) {
   return (h >>> 0).toString(36);
 }
 
-function parseFeed(xml: string, src: NewsSource): Story[] {
+export function parseFeed(xml: string, src: NewsSource): Story[] {
   const blocks = xml.match(/<item[\s>][\s\S]*?<\/item>|<entry[\s>][\s\S]*?<\/entry>/gi) ?? [];
   const out: Story[] = [];
   const cutoff = Date.now() - (src.minister ? MINISTER_MAX_AGE_DAYS : MAX_AGE_DAYS) * 86400000;
   for (const b of blocks) {
-    const title = stripTags(raw(b, "title"));
+    // Québec marks reissued releases "/R E P R I S E --"; drop that and stray spacing.
+    const title = stripTags(raw(b, "title")).replace(/^\/?\s*R\s?E\s?P\s?R\s?I\s?S\s?E\s*-+\s*/i, "").replace(/\s+/g, " ").trim();
     if (!title) continue;
     let link = stripTags(raw(b, "link"));
     if (!link) link = b.match(/<link[^>]*href=["']([^"']+)["']/i)?.[1] ?? "";
+    // Some government feeds give site-relative links.
+    if (link.startsWith("/")) { try { link = new URL(link, src.home).href; } catch { continue; } }
     if (!/^https?:\/\//.test(link)) continue;
     if (src.linkRewrite && link.startsWith(src.linkRewrite[0])) link = src.linkRewrite[1] + link.slice(src.linkRewrite[0].length);
 
@@ -140,10 +144,11 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
     const region: Region = src.region === "canada" || CANADA_RE.test(text) ? "canada" : "world";
     const level: Level | null = src.level ?? (region !== "canada" ? null : MUNI_RE.test(text) ? "municipal" : PROV_RE.test(text) ? "provincial" : null);
     const tags = tagsFor(text, src);
+    const full = displayFor(src.id) === "full";
     out.push({
       id: hash(link),
       title,
-      summary: summary === title ? "" : summary,
+      summary: !full || summary === title ? "" : summary,
       link,
       source: src.name,
       sourceId: src.id,
@@ -152,7 +157,7 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
       tags,
       lang: src.lang,
       publishedAt: d.toISOString(),
-      image: src.kind === "gov" ? null : firstImage(b),
+      image: src.kind === "gov" || !full ? null : firstImage(b),
       // A specialist newsroom's AI stories join the main news file.
       kind: src.kind === "beat" && aboutAi ? "news" : src.kind,
       gov: src.kind === "gov",
@@ -339,7 +344,7 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
       if (!seen) { byKey.set(k, { ...s }); continue; }
       seen.minister ||= s.minister;
       seen.level ??= s.level;
-      seen.image ??= s.image;
+      // Never borrow another publisher's photo: the caption credits the story's own source.
     }
   }
   const all = [...byKey.values()].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
@@ -355,9 +360,10 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
 
   // Fill missing photos from the publisher's own og:image, newest first.
   const og = (g.__ogCache ??= new Map());
-  for (const s of stories) if (!s.image && og.get(s.link)) s.image = og.get(s.link)!;
+  const photoOk = (s: Story) => displayFor(s.sourceId) === "full";
+  for (const s of stories) if (!s.image && photoOk(s) && og.get(s.link)) s.image = og.get(s.link)!;
   const ogBudget = Math.max(0, Math.min(MAX_OG_LOOKUPS, SUBREQUEST_BUDGET - due.length));
-  const needImage = stories.filter(s => !s.image && !s.gov && s.kind !== "trending" && !og.has(s.link)).slice(0, ogBudget);
+  const needImage = stories.filter(s => !s.image && photoOk(s) && !s.gov && s.kind !== "trending" && !og.has(s.link)).slice(0, ogBudget);
   if (fetchFeeds) await withTimeout(Promise.all(needImage.map(async s => { s.image = await lookupOgImage(s.link); })), 5000, []);
 
   const sources: SourceStatus[] = NEWS_SOURCES.map(src => {

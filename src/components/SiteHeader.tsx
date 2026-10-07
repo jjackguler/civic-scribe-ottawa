@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { LiveTicker } from "./LiveTicker";
 import { useLocale } from "@/lib/locale-context";
@@ -120,6 +120,14 @@ export function SiteHeader() {
             {MAIN.slice(1).map(barLink)}
             {toggle("more", locale === "fr" ? "Plus" : "More")}
           </nav>
+          <Link
+            to="/search"
+            aria-label={locale === "fr" ? "Rechercher" : "Search"}
+            title={locale === "fr" ? "Rechercher" : "Search"}
+            className={`ml-auto xl:ml-1 p-2 -mr-2 xl:mr-0 rounded-[4px] ${loc.pathname === "/search" ? "text-brass" : "text-white/85 hover:text-white"}`}
+          >
+            <Search className="h-5 w-5" aria-hidden="true" />
+          </Link>
 
           {menu === "topics" && (
             <div className="absolute right-4 md:right-7 top-full w-[min(760px,calc(100vw-32px))] bg-night-2 border-t-[3px] border-brass shadow-xl">

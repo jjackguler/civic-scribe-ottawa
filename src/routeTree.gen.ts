@@ -14,6 +14,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
@@ -57,6 +58,11 @@ const StandardsRoute = StandardsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RssDotxmlRoute = RssDotxmlRouteImport.update({
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/privacy'
     | '/rss.xml'
+    | '/search'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/privacy'
     | '/rss.xml'
+    | '/search'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -302,6 +313,7 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/privacy'
     | '/rss.xml'
+    | '/search'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -329,6 +341,7 @@ export interface RootRouteChildren {
   NewsletterRoute: typeof NewsletterRoute
   PrivacyRoute: typeof PrivacyRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
+  SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   TermsRoute: typeof TermsRoute
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rss.xml': {
@@ -529,6 +549,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewsletterRoute: NewsletterRoute,
   PrivacyRoute: PrivacyRoute,
   RssDotxmlRoute: RssDotxmlRoute,
+  SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   TermsRoute: TermsRoute,
