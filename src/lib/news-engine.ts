@@ -313,7 +313,14 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
   const cache = (g.__mwSrc ??= new Map());
   const now = Date.now();
 
-  // Which feeds are due? Never-fetched first, then the most overdue.
+  // Which feeds are due? A fresh Cloudflare isolate starts with an empty cache,
+  // so order matters: never-fetched regular feeds first, then never-fetched slow
+  // feeds in an order that rotates every few minutes (so every slow feed gets its
+  // turn across isolates instead of the same ones always missing the budget),
+  // then the most overdue.
+  const slowIds = NEWS_SOURCES.filter(s => s.slow).map(s => s.id);
+  const spare = Math.max(1, MAX_FEEDS_PER_RUN - (NEWS_SOURCES.length - slowIds.length));
+  const shift = (Math.floor(now / (3 * 60 * 1000)) * spare) % Math.max(1, slowIds.length);
   const due = NEWS_SOURCES
     .map((src, order) => {
       const c = cache.get(src.id);
@@ -321,10 +328,15 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
       const age = c ? now - c.ts : Infinity;
       // A failed feed is retried sooner, but not on every rebuild.
       const effTtl = c && !c.ok ? Math.min(ttl, 5 * 60 * 1000) : ttl;
-      return { src, order, overdue: age - effTtl };
+      const overdue = age - effTtl;
+      const group = !c ? (src.slow ? 1 : 0) : 2;
+      const rank = !c
+        ? src.slow ? (slowIds.indexOf(src.id) - shift + slowIds.length) % slowIds.length : order
+        : -overdue;
+      return { src, overdue, group, rank };
     })
     .filter(x => fetchFeeds && x.overdue >= 0)
-    .sort((a, b) => (b.overdue === Infinity ? 1 : 0) - (a.overdue === Infinity ? 1 : 0) || a.order - b.order)
+    .sort((a, b) => a.group - b.group || a.rank - b.rank)
     .slice(0, MAX_FEEDS_PER_RUN);
 
   const fresh = await Promise.all(due.map(async ({ src }) =>
