@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouterState } from "@tanstack/react-router";
 import { ExternalLink, Link2, Check, Flag } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
@@ -206,8 +206,10 @@ function Share({ title }: { title: string }) {
 function ReportError({ title }: { title: string }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
-  const [url, setUrl] = useState("");
-  useEffect(() => setUrl(window.location.href), []);
+  const publicHref = useRouterState({ select: st => st.location.publicHref ?? st.location.href });
+  const [origin, setOrigin] = useState("");
+  useEffect(() => setOrigin(window.location.origin), []);
+  const url = `${origin}${publicHref}`;
   const label = fr ? "Signaler une erreur" : "Report an error";
   const mail = editorMailto(
     fr ? `Erreur signalée : ${title}` : `Error report: ${title}`,

@@ -10,8 +10,9 @@ import { EDITORIALS } from "./editorials";
 import { TOPICS } from "./news";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
 
+// XML 1.0 forbids most control characters; one in a feed item would break the whole file.
 const esc = (s: string) =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+  s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 
 /** The news desk as it stands, without waiting long for slow feeds. */
 async function currentNews(): Promise<NewsPayload | null> {

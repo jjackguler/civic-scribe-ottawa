@@ -97,7 +97,8 @@ export function seoHead(match: MatchLike, page: PageSeo) {
       ];
 
   const ld = page.jsonLd?.(locale, url) ?? [];
-  const scripts = ld.map(obj => ({ type: "application/ld+json", children: JSON.stringify(obj) }));
+  // Escape "<" so text from a feed can never close the script tag.
+  const scripts = ld.map(obj => ({ type: "application/ld+json", children: JSON.stringify(obj).replace(/</g, "\\u003c") }));
 
   return { meta, links, scripts };
 }

@@ -35,7 +35,7 @@ const MORE: Item[] = [
 ];
 
 export function SiteHeader() {
-  const { locale, setLocale, pick } = useLocale();
+  const { locale, pick } = useLocale();
   const loc = useRouterState({ select: s => s.location });
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState<null | "topics" | "more">(null);
@@ -96,7 +96,6 @@ export function SiteHeader() {
             <a
               href={localePath(loc.href, locale === "en" ? "fr" : "en")}
               hrefLang={locale === "en" ? "fr" : "en"}
-              onClick={e => { if (e.metaKey || e.ctrlKey || e.shiftKey) return; e.preventDefault(); setLocale(locale === "en" ? "fr" : "en"); }}
               className="font-semibold text-white hover:text-brass"
               lang={locale === "en" ? "fr" : "en"}
             >

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter, useRouterState } from "@tanstack/react-router";
+import { useRouterState } from "@tanstack/react-router";
 import { isFrPath, localePath, stripFr } from "./seo";
 import type { Bi, Locale } from "./i18n";
 import type { NewsPayload } from "./news-engine";
@@ -24,7 +24,6 @@ function visibleIds(payload: NewsPayload | undefined, locale: Locale): string[] 
  * crawlable French version. Switching language moves to the other URL.
  */
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const router = useRouter();
   const publicHref = useRouterState({ select: s => s.location.publicHref ?? s.location.href });
   const locale: Locale = isFrPath(publicHref) ? "fr" : "en";
   const [trVersion, setTrVersion] = useState(0);
@@ -58,9 +57,10 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     return () => { cancelled = true; clearTimeout(timer); if (inflight.current === sig) inflight.current = null; };
   }, [locale, newsTick, qc]);
 
+  // Switching language loads the other URL in full, so every link, title and tag is rebuilt for it.
   const setLocale = (l: Locale) => {
     if (l === locale) return;
-    router.history.push(localePath(stripFr(publicHref), l));
+    window.location.assign(localePath(stripFr(publicHref), l));
   };
 
   return (
