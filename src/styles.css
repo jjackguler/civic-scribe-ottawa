@@ -5,20 +5,24 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Maple Wire design tokens
-  ink     #0E2235  deep lake navy — text, chrome
-  paper   #F5F7F6  overcast-snow page
-  surface #FFFFFF  cards
-  ice     #E4EDF0  quiet panels (funding, guides)
-  line    #D6DEE2  dividers
-  muted   #546572  secondary text
-  lake    #16607F  links, topics
-  live    #D3322B  ONLY for live / breaking signals
-  spruce  #2B6A4E  "open" / positive status
+  AI Broadsheet design tokens
+  ink       #10191B  text (deep teal-black)
+  night     #0B2A2F  masthead, Watch band, Interviews cards — the "broadcast" colour
+  night-2   #123A40  raised surfaces on night
+  paper     #F4F5F2  page
+  surface   #FFFFFF  cards
+  ice       #E5EBE9  quiet panels
+  line      #D6DDDA  dividers
+  muted     #56635F  secondary text
+  lake      #0E6A70  links, desk names (teal)
+  brass     #C9A24D  the house mark: rules and badges on night only
+  brass-ink #85641A  brass for small text on light backgrounds
+  live      #D7372F  ONLY for live / developing signals
+  spruce    #2B6A4E  "open" / positive status
 */
 @theme inline {
-  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Newsreader", Georgia, serif;
 
   --radius-sm: 3px;
@@ -35,6 +39,10 @@
   --color-lake: var(--lake);
   --color-live: var(--live);
   --color-spruce: var(--spruce);
+  --color-night: var(--night);
+  --color-night-2: var(--night-2);
+  --color-brass: var(--brass);
+  --color-brass-ink: var(--brass-ink);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -59,14 +67,18 @@
 
 :root {
   --radius: 5px;
-  --ink: #0e2235;
-  --paper: #f5f7f6;
+  --ink: #10191b;
+  --night: #0b2a2f;
+  --night-2: #123a40;
+  --paper: #f4f5f2;
   --surface: #ffffff;
-  --ice: #e4edf0;
-  --line: #d6dee2;
-  --muted-ink: #546572;
-  --lake: #16607f;
-  --live: #d3322b;
+  --ice: #e5ebe9;
+  --line: #d6ddda;
+  --muted-ink: #56635f;
+  --lake: #0e6a70;
+  --brass: #c9a24d;
+  --brass-ink: #85641a;
+  --live: #d7372f;
   --spruce: #2b6a4e;
 
   --background: var(--paper);
@@ -107,15 +119,21 @@
 
 @layer components {
   /* News headlines: semi-condensed, heavy, tight — built to scan fast. */
+  /* News headlines: a heavy grotesk built for newsprint, set tight to scan fast. */
   .hl {
     font-family: var(--font-display);
-    font-stretch: 84%;
-    font-weight: 760;
-    letter-spacing: -0.012em;
-    line-height: 1.06;
+    font-weight: 750;
+    letter-spacing: -0.018em;
+    line-height: 1.08;
     text-wrap: balance;
   }
-  .hl-wide { font-stretch: 112%; font-weight: 800; letter-spacing: -0.02em; }
+  /* Section names and the wordmark: the serif voice of the paper. */
+  .masthead-serif {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
   .dek {
     font-family: var(--font-serif);
     font-size: 1.0625rem;
@@ -123,7 +141,7 @@
     color: var(--muted-ink);
   }
   .prose-mw p { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.7; margin: 0 0 1.15em; max-width: 68ch; }
-  .prose-mw h2 { font-family: var(--font-display); font-stretch: 90%; font-weight: 760; font-size: 1.5rem; line-height: 1.2; margin: 2em 0 .6em; }
+  .prose-mw h2 { font-family: var(--font-display); font-weight: 750; font-size: 1.5rem; line-height: 1.2; margin: 2em 0 .6em; }
   .prose-mw ul { font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.6; margin: 0 0 1.3em; padding-left: 1.2em; list-style: disc; max-width: 66ch; }
   .prose-mw li { margin: .45em 0; }
   .topic { font-weight: 650; font-size: 0.8125rem; color: var(--lake); }
@@ -151,6 +169,7 @@
   .flash-new { animation: mw-flash 2.4s ease-out 1; }
 
   .img-cover { width: 100%; height: 100%; object-fit: cover; }
+  .ad-label { font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--muted-ink); }
 }
 
 @media (prefers-reduced-motion: reduce) {

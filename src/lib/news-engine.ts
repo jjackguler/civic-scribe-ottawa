@@ -3,6 +3,7 @@
  * news.ts, so none of this ships to the browser.
  */
 import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
+import { AI_RE, tagsOf } from "./classify";
 
 export type Story = {
   id: string;
@@ -12,7 +13,10 @@ export type Story = {
   source: string;
   sourceId: string;
   region: Region;
+  /** Primary desk. */
   topic: Topic;
+  /** Every desk the story belongs to (primary first). */
+  tags: Topic[];
   lang: "en" | "fr";
   publishedAt: string;
   image: string | null;
@@ -30,7 +34,7 @@ export type Story = {
 export type SourceStatus = { id: string; name: string; ok: boolean; count: number; checkedAt?: string; error?: string };
 export type NewsPayload = { stories: Story[]; sources: SourceStatus[]; fetchedAt: string };
 
-const UA = "Mozilla/5.0 (compatible; MapleWireNews/1.0; +https://maplewire.ca)";
+const UA = "Mozilla/5.0 (compatible; AIBroadsheet/1.0; +https://aibroadsheet.com)";
 const CACHE_MS = 3 * 60 * 1000;          // rebuild the payload at most every 3 minutes
 const FAST_TTL = 8 * 60 * 1000;           // newsroom feeds
 const SLOW_TTL = 30 * 60 * 1000;          // feeds that rarely change
@@ -96,19 +100,14 @@ function firstImage(block: string): string | null {
 }
 
 // ── classification ──────────────────────────────────────────────────────────
-const AI_RE = /\b(A\.?I\.?|artificial intelligence|machine learning|deep learning|neural net\w*|LLMs?|large language models?|generative|chatbots?|ChatGPT|OpenAI|Anthropic|Claude AI|Google Gemini|Gemini AI|Copilot|Mistral AI|Cohere|DeepSeek|Nvidia|data cent(?:er|re)s?|humanoid robots?|AI agents?|intelligence artificielle|IA|IAG|apprentissage automatique|robots? conversationnels?|centres? de données)\b/;
 const MINISTER_RE = /(Evan Solomon|Minister Solomon|ministre Solomon|Minister of Artificial Intelligence|ministre de l[’']Intelligence artificielle|AI minister|ministre de l[’']IA)/i;
 const MUNI_RE = /\b(city council|councill?ors?|mayor|municipal\w*|city hall|City of [A-Z][a-z]+|Ville de|conseil municipal|maire|mairesse|police services? board|school boards?|TTC|OC Transpo|STM)\b/;
 const PROV_RE = /\b(premier|provincial|provinces?|Queen's Park|Legislative Assembly|Assemblée nationale|gouvernement du Québec|Quebec government|Ontario government|B\.C\. government|Alberta government|Doug Ford|David Eby|Danielle Smith)\b/i;
 const CANADA_RE = /\b(Canada|Canadian|Canadians|Ottawa|Toronto|Montr[ée]al|Vancouver|Calgary|Edmonton|Waterloo|Ontario|Qu[ée]bec|Alberta|British Columbia|Manitoba|Saskatchewan|Nova Scotia|New Brunswick|Mila|Vector Institute|Amii|Cohere|Carney|Solomon|Shopify)\b/i;
 
-function topicOf(text: string, src: NewsSource): Topic {
-  if (src.kind === "gov") return "policy";
-  if (/\b(regulat\w*|laws?|legislat\w*|bill C-|government|minister|parliament|senate|congress|EU\b|ban(?:s|ned)?|lawsuits?|court|copyright|safety|privacy|election|sovereign|strategy|policy|politique)\b/i.test(text)) return "policy";
-  if (/\b(raises?|raised|funding round|Series [A-E]|invest\w*|startups?|acqui\w+|valuation|IPO|revenue|layoffs?|jobs?|hiring|billion|million|stock|shares|market)\b/i.test(text)) return "business";
-  if (src.kind === "lab" || /\b(research\w*|study|studies|paper|benchmark|open[- ]source|open-weight|scientists?|universit\w+|model)\b/i.test(text)) return "research";
-  if (/\b(launch\w*|releases?|released|feature|app|update|rolls? out|available|announc\w+|devices?|glasses|phone)\b/i.test(text)) return "products";
-  return "society";
+function tagsFor(text: string, src: NewsSource): Topic[] {
+  if (src.kind === "gov") return (["policy", ...tagsOf(text).filter(t => t !== "policy")] as Topic[]).slice(0, 4);
+  return tagsOf(text, src.beat);
 }
 
 function hash(s: string) {
@@ -131,7 +130,8 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
 
     const summary = truncate(stripTags(raw(b, "description") || raw(b, "summary") || raw(b, "content")));
     const text = `${title} ${summary}`;
-    if (!src.aiOnly && !AI_RE.test(text)) continue;
+    const aboutAi = src.aiOnly || AI_RE.test(text);
+    if (!aboutAi && !src.beat) continue;
 
     const dateRaw = stripTags(raw(b, "pubDate") || raw(b, "published") || raw(b, "updated") || raw(b, "dc:date"));
     const d = dateRaw ? new Date(dateRaw) : null;
@@ -139,6 +139,7 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
 
     const region: Region = src.region === "canada" || CANADA_RE.test(text) ? "canada" : "world";
     const level: Level | null = src.level ?? (region !== "canada" ? null : MUNI_RE.test(text) ? "municipal" : PROV_RE.test(text) ? "provincial" : null);
+    const tags = tagsFor(text, src);
     out.push({
       id: hash(link),
       title,
@@ -147,11 +148,13 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
       source: src.name,
       sourceId: src.id,
       region,
-      topic: topicOf(text, src),
+      topic: tags[0],
+      tags,
       lang: src.lang,
       publishedAt: d.toISOString(),
       image: src.kind === "gov" ? null : firstImage(b),
-      kind: src.kind,
+      // A specialist newsroom's AI stories join the main news file.
+      kind: src.kind === "beat" && aboutAi ? "news" : src.kind,
       gov: src.kind === "gov",
       lab: src.kind === "lab",
       level,
@@ -167,7 +170,26 @@ async function fetchText(url: string, ms: number) {
     signal: AbortSignal.timeout(ms),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
+  return readCapped(res, 600_000);
+}
+
+/** Feeds list newest first, so the first ~600 KB holds everything we use. */
+export async function readCapped(res: Response, maxBytes: number): Promise<string> {
+  if (!res.body) return (await res.text()).slice(0, maxBytes);
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  while (size < maxBytes) {
+    const { done, value } = await reader.read();
+    if (done || !value) break;
+    chunks.push(value);
+    size += value.byteLength;
+  }
+  reader.cancel().catch(() => {});
+  const buf = new Uint8Array(size);
+  let off = 0;
+  for (const c of chunks) { buf.set(c, off); off += c.byteLength; }
+  return new TextDecoder("utf-8").decode(buf);
 }
 
 /** Publisher's own share photo (og:image) for stories whose feed carried none. */
@@ -192,9 +214,10 @@ async function lookupOgImage(link: string): Promise<string | null> {
 
 function baseStory(src: NewsSource, title: string, link: string, date: Date, extra: Partial<Story> = {}): Story {
   const text = `${title} ${extra.summary ?? ""}`;
+  const tags = extra.topic ? [extra.topic, ...tagsOf(text).filter(t => t !== extra.topic)].slice(0, 4) : tagsFor(text, src);
   return {
     id: hash(link), title, summary: "", link, source: src.name, sourceId: src.id,
-    region: CANADA_RE.test(text) ? "canada" : src.region, topic: topicOf(text, src), lang: src.lang,
+    region: CANADA_RE.test(text) ? "canada" : src.region, topic: tags[0], tags, lang: src.lang,
     publishedAt: date.toISOString(), image: null, kind: src.kind, gov: false, lab: src.kind === "lab",
     level: null, minister: MINISTER_RE.test(text), ...extra,
   };
@@ -325,7 +348,8 @@ async function buildPayload(): Promise<NewsPayload> {
   all.filter(s => s.minister).slice(0, 50).forEach(s => keep.add(s));
   all.filter(s => s.gov).slice(0, 50).forEach(s => keep.add(s));
   all.filter(s => s.kind === "trending").forEach(s => keep.add(s));
-  all.filter(s => !s.gov && s.kind !== "trending").slice(0, 140).forEach(s => keep.add(s));
+  all.filter(s => s.kind === "beat").slice(0, 40).forEach(s => keep.add(s));
+  all.filter(s => !s.gov && s.kind !== "trending" && s.kind !== "beat").slice(0, 160).forEach(s => keep.add(s));
   const stories = all.filter(s => keep.has(s));
 
   // Fill missing photos from the publisher's own og:image, newest first.

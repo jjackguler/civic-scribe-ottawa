@@ -9,7 +9,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("maplewire-locale");
+      const saved = localStorage.getItem("aibroadsheet-locale");
       if (saved === "en" || saved === "fr") {
         setLocaleState(saved);
         document.documentElement.lang = saved;
@@ -22,7 +22,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const setLocale = (l: Locale) => {
     setLocaleState(l);
-    try { localStorage.setItem("maplewire-locale", l); } catch {}
+    try { localStorage.setItem("aibroadsheet-locale", l); } catch {}
     if (typeof document !== "undefined") document.documentElement.lang = l;
   };
 

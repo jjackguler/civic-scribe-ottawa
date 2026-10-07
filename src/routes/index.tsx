@@ -1,24 +1,32 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Landmark, BookOpen, Wrench, Coins } from "lucide-react";
-import type { ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { LatestRail } from "@/components/LatestRail";
-import { StoryCard } from "@/components/StoryCard";
-import { getAiNewsFast, useAiNews, byLocale, diversify, timeAgo, useNow, LEVEL_LABEL, type Story, type SectionId } from "@/lib/news";
-import { PROGRAMS } from "@/lib/funding";
+import { StoryCard, StoryLink, StoryMeta, CoverageBadge } from "@/components/StoryCard";
+import { AdSlot } from "@/components/AdSlot";
+import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
+import { NewsletterBox } from "@/components/NewsletterBox";
+import {
+  getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isFrontPool, display,
+  TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
+} from "@/lib/news";
+import { useMedia, type MediaItem } from "@/lib/media";
 import { GUIDES } from "@/lib/guides";
 import { TOOLS } from "@/lib/tools";
+import { PROGRAMS } from "@/lib/funding";
 import { EDITORIALS } from "@/lib/editorials";
 import { SOCIAL_PICKS } from "@/lib/social";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import type { Topic } from "@/lib/news-sources";
 
 export const Route = createFileRoute("/")({
   loader: () => getAiNewsFast(),
   head: () => ({
     meta: [
-      { title: `${SITE.name} — AI news for Canada, live` },
+      { title: `${SITE.name} — ${SITE.tagline.en}` },
       { name: "description", content: SITE.description.en },
     ],
   }),
@@ -37,108 +45,199 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
   return out;
 }
 
+/** The desks shown as a grid on the front page, in order. */
+const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
+
 function Home() {
   const initial = Route.useLoaderData();
   const { data, isError } = useAiNews(initial);
+  const { data: media } = useMedia();
   const { locale, pick } = useLocale();
 
   const all = byLocale(data?.stories ?? [], locale);
-  const news = diversify(all.filter(s => !s.gov && s.kind !== "trending"));
-  const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 6);
-  const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
-  const photo = news.filter(s => s.image);
+  const news = diversify(all.filter(isFrontPool));
+  const clusters = useMemo(() => clusterStories(all), [data, locale]); // eslint-disable-line react-hooks/exhaustive-deps
   const used = new Set<string>();
 
-  // Front zone. Lead: the newest Canadian photo story among the ten newest photo stories.
-  const lead = take(photo.slice(0, 10), used, 1, s => s.region === "canada")[0] ?? take(photo, used, 1)[0];
-  const related = lead ? take(news, used, 3, s => s.topic === lead.topic) : [];
-  const right = take(photo, used, 3);
+  // Lead: the event most newsrooms are covering. Falls back to the newest photo story.
+  const top = clusters.find(c => c.sources >= 2 && c.lead.image) ?? clusters.find(c => c.sources >= 2);
+  const lead = top?.lead ?? news.find(s => s.image) ?? news[0];
+  if (lead) used.add(lead.id);
+  const coverage = top ? top.stories.filter(s => s.id !== lead?.id).slice(0, 4) : [];
+  coverage.forEach(s => used.add(s.id));
+  const related = top ? [] : take(news, used, 3, s => !!lead && s.topic === lead.topic);
+  const photo = news.filter(s => s.image);
+  const right = take(photo, used, 2);
 
-  // AI Ministry tracker
-  const official = all.filter(s => s.minister && s.gov);
-  const coverage = all.filter(s => s.minister && !s.gov).slice(0, 4);
+  // More top stories: the next clusters with two or more outlets.
+  const more = clusters
+    .filter(c => c !== top && c.sources >= 2 && !used.has(c.lead.id))
+    .slice(0, 4);
+  more.forEach(c => c.stories.forEach(s => used.add(s.id)));
+  const moreFill = take(photo, used, Math.max(0, 4 - more.length));
 
-  const canadaPhotos = take(photo, used, 3, s => s.region === "canada");
-  const canadaList = take(news, used, 6, s => s.region === "canada");
+  const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 6);
+  const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
 
-  // Government by level: official releases plus newsroom coverage tagged to that level.
-  const govCols = (["federal", "provincial", "municipal"] as const).map(level => ({
-    level,
-    items: all.filter(s => s.level === level).slice(0, 5),
-  }));
+  const desks = FRONT_DESKS.map(id => {
+    const pool = all.filter(s => inSection(s, id));
+    const items = take(diversify(pool, 1, 8), used, 4, s => s.kind !== "trending");
+    return { id, items };
+  }).filter(d => d.items.length > 0);
 
-  const world = take(photo, used, 4, s => s.region === "world" && s.kind === "news");
-  const worldList = take(news, used, 5, s => s.region === "world" && s.kind === "news");
-
-  type Zone = { id: SectionId; title: string; stories: Story[] };
-  const zones = ([
-    { id: "business", title: t("business", locale), stories: take(news, used, 4, s => s.topic === "business") },
-    { id: "research", title: t("research", locale), stories: take(news, used, 4, s => s.topic === "research" && s.kind !== "analysis") },
-    { id: "products", title: locale === "fr" ? "Produits" : "Products", stories: take(news, used, 4, s => s.topic === "products") },
-    { id: "society", title: locale === "fr" ? "Société" : "Society", stories: take(news, used, 4, s => s.topic === "society" || s.topic === "policy") },
-  ] as Zone[]).filter(z => z.stories.length > 0);
-
+  const official = take(all, used, 3, s => s.minister && s.gov);
+  const ministerNews = take(all, used, 3, s => s.minister && !s.gov);
+  const govCols = (["federal", "provincial", "municipal"] as const).map(level => ({ level, items: all.filter(s => s.level === level).slice(0, 4) }));
+  const canada = take(news, used, 5, s => s.region === "canada");
   const labs = take(news, used, 4, s => s.kind === "lab");
   const analysis = take(news, used, 4, s => s.kind === "analysis");
+
+  const deskCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const tp of TOPICS) m.set(tp.id, all.filter(s => inSection(s, tp.id)).length);
+    return m;
+  }, [data, locale]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Media desk
+  const items = media?.items ?? [];
+  const videos = items.filter(m => m.type === "video");
+  const newsroomVideos = videos.filter(v => v.newsroom && !v.interview);
+  const watchList = [...newsroomVideos.slice(0, 3), ...videos.filter(v => !v.newsroom && !v.interview).slice(0, 2)]
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  const interviews = items.filter(m => m.interview).slice(0, 3);
+  const episodes = items.filter(m => m.type === "audio" && !interviews.includes(m)).slice(0, 4);
 
   const loading = !data && !isError;
   const editorial = EDITORIALS[0];
   const openPrograms = PROGRAMS.filter(p => p.status === "open" || p.status === "ongoing").length;
+  const developing = top && isDeveloping(top) ? top : null;
 
   return (
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.tagline[locale]}</h1>
 
+      {developing && (
+        <div className="bg-live text-white">
+          <StoryLink s={developing.lead} className="container-mw flex items-center gap-3 py-2.5 group">
+            <span className="shrink-0 font-bold text-[0.8rem] bg-white text-live px-2 py-0.5">{locale === "fr" ? "EN DÉVELOPPEMENT" : "DEVELOPING"}</span>
+            <span className="font-semibold leading-snug truncate group-hover:underline">{display(developing.lead, locale).title}</span>
+            <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{developing.sources} {locale === "fr" ? "médias" : "outlets"}</span>
+          </StoryLink>
+        </div>
+      )}
+
+      <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-5" />
+
       {news.length === 0 ? (
         <section className="container-mw pt-10">
-          <div className="border-t-[4px] border-ink pt-10 pb-16 text-center">
+          <div className="border-t-[3px] border-night pt-10 pb-16 text-center">
             <span className="live-dot inline-block" aria-hidden="true" />
             <p className="hl text-2xl mt-4">{loading ? t("loading", locale) : t("feedDown", locale)}</p>
           </div>
         </section>
       ) : (
         <section className="container-mw pt-6">
-          <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[260px_minmax(0,1fr)_300px]">
+          <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[250px_minmax(0,1fr)_300px]">
             <div className="order-3 lg:order-1">
-              <LatestRail stories={news} fetchedAt={data?.fetchedAt} limit={11} />
+              <LatestRail stories={news} fetchedAt={data?.fetchedAt} limit={12} />
             </div>
 
             <div className="order-1 lg:order-2 lg:border-x lg:border-line lg:px-7">
-              {lead && <StoryCard s={lead} variant="hero" eager />}
+              {lead && (
+                <StoryCard
+                  s={lead}
+                  variant="hero"
+                  eager
+                  badge={top ? <CoverageBadge outlets={top.sources} developing={isDeveloping(top)} /> : undefined}
+                />
+              )}
+              {coverage.length > 0 && (
+                <div className="mt-5">
+                  <p className="text-[0.8rem] font-bold text-muted-ink pb-1.5 border-b border-line">
+                    {locale === "fr" ? "Couverture complète" : "Full coverage"}
+                  </p>
+                  <ul>
+                    {coverage.map(s => (
+                      <li key={s.id} className="py-2.5 border-b border-line">
+                        <StoryLink s={s} className="group flex gap-3">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brass" aria-hidden="true" />
+                          <span className="leading-snug">
+                            <span className="font-semibold group-hover:underline">{display(s, locale).title}</span>{" "}
+                            <span className="meta whitespace-nowrap">— {s.source}</span>
+                          </span>
+                        </StoryLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {related.length > 0 && (
-                <ul className="mt-5 border-t border-line">
-                  {related.map(s => (
-                    <li key={s.id} className="py-2.5 border-b border-line">
-                      <a href={s.link} target="_blank" rel="noopener noreferrer" className="group flex gap-3">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-live" aria-hidden="true" />
-                        <span className="font-semibold leading-snug group-hover:underline">
-                          {s.title} <span className="meta font-normal whitespace-nowrap">— {s.source}</span>
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-5 border-t border-line">
+                  {related.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
+                </div>
               )}
             </div>
 
-            <div className="order-2 lg:order-3 grid gap-6 sm:grid-cols-3 lg:grid-cols-1 content-start">
+            <div className="order-2 lg:order-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-1 content-start">
               {right.map(s => <StoryCard key={s.id} s={s} />)}
+              <AdSlot size="mpu" placement="home-right" className="sm:col-span-2 lg:col-span-1" />
             </div>
           </div>
         </section>
       )}
 
-      {(hn.length > 0 || papers.length > 0 || SOCIAL_PICKS.length > 0) && (
+      {(more.length > 0 || moreFill.length > 0) && (
         <section className="container-mw mt-12">
+          <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
+          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {more.map(c => (
+              <StoryCard key={c.id} s={c.lead} variant={c.lead.image ? "card" : "text"} badge={<CoverageBadge outlets={c.sources} developing={isDeveloping(c)} />} showTopic={false} />
+            ))}
+            {moreFill.map(s => <StoryCard key={s.id} s={s} />)}
+          </div>
+        </section>
+      )}
+
+      {watchList.length > 0 && <WatchBand videos={watchList} />}
+
+      <section className="container-mw mt-12">
+        <ZoneHead title={locale === "fr" ? "Les sections" : "The desks"} sub={locale === "fr" ? "Chaque nouvelle est classée par sujet, comme dans une vraie salle de rédaction." : "Every story is filed to a desk, the way a newsroom works."} />
+        <ul className="flex flex-wrap gap-2">
+          {TOPICS.map(tp => (
+            <li key={tp.id}>
+              <Link to="/news" search={{ section: tp.id }} className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-[0.92rem] font-semibold hover:border-night">
+                {pick(tp.label)}
+                <span className="text-muted-ink font-normal tabular-nums">{deskCounts.get(tp.id) ?? 0}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {interviews.length > 0 && (
+        <section className="container-mw mt-14">
+          <ZoneHead title={locale === "fr" ? "Entrevues" : "Featured interviews"} action={<MoreLink to="/interviews" />} />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="md:col-span-2"><InterviewCard m={interviews[0]} large /></div>
+              {interviews.slice(1).map(m => <InterviewCard key={m.id} m={m} />)}
+            </div>
+            <AdSlot size="halfpage" placement="home-interviews" className="hidden lg:flex" />
+          </div>
+        </section>
+      )}
+
+      {(hn.length > 0 || papers.length > 0 || SOCIAL_PICKS.length > 0) && (
+        <section className="container-mw mt-14">
           <ZoneHead title={t("trending", locale)} action={<MoreLink to="/news" section="trending" />} />
-          <div className={`grid gap-x-8 gap-y-10 ${SOCIAL_PICKS.length > 0 ? "lg:grid-cols-3" : "lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]"}`}>
+          <div className="grid gap-x-8 gap-y-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             {hn.length > 0 && (
               <div>
-                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{t("mostDiscussed", locale)}</h3>
+                <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{t("mostDiscussed", locale)}</h3>
                 <ol>
                   {hn.map((s, i) => (
                     <li key={s.id} className="flex gap-4 py-3 border-b border-line last:border-0">
-                      <span className="hl text-[1.7rem] text-live w-7 shrink-0 leading-none pt-0.5" aria-hidden="true">{i + 1}</span>
+                      <span className="masthead-serif text-[1.8rem] text-brass-ink w-7 shrink-0 leading-none" aria-hidden="true">{i + 1}</span>
                       <div className="min-w-0">
                         <a href={s.link} target="_blank" rel="noopener noreferrer" className="font-semibold leading-snug hover:underline">{s.title}</a>
                         <p className="meta mt-1 flex flex-wrap gap-x-2.5">
@@ -154,106 +253,98 @@ function Home() {
                 <p className="meta mt-2">{locale === "fr" ? "Classement selon les votes sur Hacker News, 3 derniers jours." : "Ranked by Hacker News votes over the last 3 days."}</p>
               </div>
             )}
-            {papers.length > 0 && (
-              <div>
-                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{t("trendingPapers", locale)}</h3>
-                <ul>
-                  {papers.map(s => (
-                    <li key={s.id} className="py-3 border-b border-line last:border-0">
-                      <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
-                        <p className="font-semibold leading-snug group-hover:underline">{s.title}</p>
-                        <p className="meta mt-1">Hugging Face Papers · {s.popularity?.score} {t("upvotes", locale)}</p>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {SOCIAL_PICKS.length > 0 && (
-              <div>
-                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{t("socialPicks", locale)}</h3>
-                <ul>
-                  {SOCIAL_PICKS.slice(0, 5).map(p => (
-                    <li key={p.url} className="py-3 border-b border-line last:border-0">
-                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="group block">
-                        <p className="meta"><span className="font-semibold text-ink/80">{p.author}</span> · {p.platform === "x" ? "X" : p.platform === "linkedin" ? "LinkedIn" : p.platform === "youtube" ? "YouTube" : ""}</p>
-                        <p className="font-semibold leading-snug mt-0.5 group-hover:underline">{pick(p.why)}</p>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* AI Ministry tracker */}
-      {(official.length > 0 || coverage.length > 0) && (
-        <section className="mt-12 bg-ink text-white">
-          <div className="container-mw py-10">
-            <ZoneHead
-              dark
-              title={<span className="flex items-center gap-3"><Landmark className="h-7 w-7" aria-hidden="true" />{t("trackerTitle", locale)}</span>}
-              action={<MoreLink to="/ministry" dark />}
-            />
-            <p className="text-white/70 -mt-2 mb-6">{t("minister", locale)} · Evan Solomon</p>
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-              <div>
-                <p className="font-semibold text-white/70 mb-2">{t("officialReleases", locale)}</p>
-                {official[0] && (
-                  <a href={official[0].link} target="_blank" rel="noopener noreferrer" className="group block pb-5 border-b border-white/20">
-                    <h3 className="hl text-[1.6rem] sm:text-[2.1rem] group-hover:underline decoration-2">{official[0].title}</h3>
-                    {official[0].summary && <p className="font-serif text-white/80 mt-2 text-[1.05rem] leading-relaxed line-clamp-3">{official[0].summary}</p>}
-                    <DarkMeta s={official[0]} />
-                  </a>
-                )}
-                <ul>
-                  {official.slice(1, 5).map(s => (
-                    <li key={s.id} className="py-3 border-b border-white/20 last:border-0">
-                      <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
-                        <p className="font-semibold leading-snug group-hover:underline">{s.title}</p>
-                        <DarkMeta s={s} />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="lg:border-l lg:border-white/20 lg:pl-8">
-                <p className="font-semibold text-white/70 mb-2">{t("inTheNews", locale)}</p>
-                {coverage.length === 0 ? (
-                  <p className="text-white/60">{t("noItems", locale)}</p>
-                ) : (
+            <div className="grid gap-10 content-start">
+              {papers.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{t("trendingPapers", locale)}</h3>
                   <ul>
-                    {coverage.map(s => (
-                      <li key={s.id} className="py-3 border-b border-white/20 last:border-0">
-                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="group flex gap-3 items-start">
-                          <div className="flex-1">
-                            <p className="font-semibold leading-snug group-hover:underline">{s.title}</p>
-                            <DarkMeta s={s} />
-                          </div>
-                          {s.image && <img src={s.image} alt="" loading="lazy" referrerPolicy="no-referrer" className="w-24 aspect-[16/10] object-cover rounded-[3px]" onError={e => (e.currentTarget.style.display = "none")} />}
+                    {papers.map(s => (
+                      <li key={s.id} className="py-3 border-b border-line last:border-0">
+                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
+                          <p className="font-semibold leading-snug group-hover:underline">{s.title}</p>
+                          <p className="meta mt-1">Hugging Face Papers · {s.popularity?.score} {t("upvotes", locale)}</p>
                         </a>
                       </li>
                     ))}
                   </ul>
-                )}
-              </div>
+                </div>
+              )}
+              {SOCIAL_PICKS.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{t("socialPicks", locale)}</h3>
+                  <ul>
+                    {SOCIAL_PICKS.slice(0, 5).map(p => (
+                      <li key={p.url} className="py-3 border-b border-line last:border-0">
+                        <a href={p.url} target="_blank" rel="noopener noreferrer" className="group block">
+                          <p className="meta"><span className="font-semibold text-ink/80">{p.author}</span> · {p.platform === "x" ? "X" : p.platform === "linkedin" ? "LinkedIn" : p.platform === "youtube" ? "YouTube" : ""}</p>
+                          <p className="font-semibold leading-snug mt-0.5 group-hover:underline">{pick(p.why)}</p>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </section>
       )}
 
-      {(canadaPhotos.length > 0 || canadaList.length > 0) && (
-        <section className="container-mw mt-12">
-          <ZoneHead title={t("canadaDesk", locale)} action={<MoreLink to="/news" section="canada" />} />
-          <div className="grid gap-x-7 gap-y-8 md:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1fr)]">
-            {canadaPhotos[0] && <div className="md:col-span-2 lg:col-span-1"><StoryCard s={canadaPhotos[0]} variant="card" showTopic={false} /></div>}
-            <div className="grid gap-6 content-start">
-              {canadaPhotos.slice(1).map(s => <StoryCard key={s.id} s={s} showTopic={false} />)}
+      {desks.length > 0 && (
+        <section className="container-mw mt-14">
+          <div className="grid gap-x-7 gap-y-12 md:grid-cols-2 xl:grid-cols-4">
+            {desks.map(d => (
+              <div key={d.id}>
+                <ZoneHead title={<span className="block text-[1.35rem] sm:text-[1.5rem] leading-tight">{pick(TOPICS.find(x => x.id === d.id)!.label)}</span>} action={<MoreLink to="/news" section={d.id} compact />} />
+                {d.items[0] && <StoryCard s={d.items[0]} variant={d.items[0].image ? "card" : "text"} showTopic={false} />}
+                <div className="mt-3">
+                  {d.items.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <AdSlot size="billboard" placement="home-mid" className="container-mw mt-14" />
+
+      {episodes.length > 0 && (
+        <section className="container-mw mt-14">
+          <ZoneHead title={locale === "fr" ? "À écouter" : "Listen"} action={<MoreLink to="/listen" />} />
+          <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
+            {episodes.map(a => <AudioEpisode key={a.id} a={a} compact />)}
+          </div>
+        </section>
+      )}
+
+      <section className="mt-14 bg-night text-white">
+        <div className="container-mw py-12">
+          <NewsletterBox />
+        </div>
+      </section>
+
+      {(official.length > 0 || ministerNews.length > 0 || canada.length > 0) && (
+        <section className="container-mw mt-14">
+          <div className="grid gap-x-8 gap-y-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+            <div>
+              <ZoneHead
+                title={<span className="flex items-center gap-2.5"><Landmark className="h-6 w-6 text-brass-ink" aria-hidden="true" />{t("trackerTitle", locale)}</span>}
+                action={<MoreLink to="/ministry" />}
+                sub={`${t("minister", locale)} · Evan Solomon`}
+              />
+              {official[0] && (
+                <StoryLink s={official[0]} className="group block pb-4 border-b border-line">
+                  <p className="topic mb-1">{t("officialReleases", locale)}</p>
+                  <h3 className="hl text-[1.5rem] sm:text-[1.8rem] group-hover:underline decoration-2">{official[0].title}</h3>
+                  {official[0].summary && <p className="dek mt-2 line-clamp-2">{official[0].summary}</p>}
+                  <StoryMeta s={official[0]} className="mt-1.5" />
+                </StoryLink>
+              )}
+              {[...official.slice(1), ...ministerNews].map(s => <StoryCard key={s.id} s={s} variant="list" />)}
             </div>
             <div>
-              {canadaList.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
+              <ZoneHead title={t("canadaDesk", locale)} action={<MoreLink to="/news" section="canada" />} />
+              {canada[0] && <StoryCard s={canada[0]} variant={canada[0].image ? "card" : "text"} showTopic={false} />}
+              <div className="mt-3">{canada.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}</div>
             </div>
           </div>
         </section>
@@ -265,7 +356,7 @@ function Home() {
           <div className="grid gap-x-7 gap-y-8 md:grid-cols-3">
             {govCols.map(col => (
               <div key={col.level}>
-                <h3 className="font-bold text-[1.05rem] pb-1 mb-1 border-b-2 border-ink">{pick(LEVEL_LABEL[col.level])}</h3>
+                <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{pick(LEVEL_LABEL[col.level])}</h3>
                 {col.items.length === 0
                   ? <p className="meta py-3">{t("noItems", locale)}</p>
                   : col.items.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
@@ -275,50 +366,25 @@ function Home() {
         </section>
       )}
 
-      {world.length > 0 && (
+      {(labs.length > 0 || analysis.length > 0) && (
         <section className="container-mw mt-14">
-          <ZoneHead title={t("world", locale)} action={<MoreLink to="/news" section="world" />} />
-          <div className="grid gap-x-7 gap-y-8 sm:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,1fr))_minmax(0,1.1fr)]">
-            {world.slice(0, 3).map(s => <StoryCard key={s.id} s={s} />)}
-            <div className="sm:col-span-2 lg:col-span-1">
-              {[...world.slice(3), ...worldList].map(s => <StoryCard key={s.id} s={s} variant="list" />)}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {zones.length > 0 && (
-        <section className="container-mw mt-14">
-          <div className="grid gap-x-7 gap-y-12 md:grid-cols-2 xl:grid-cols-4">
-            {zones.map(z => (
-              <div key={z.id}>
-                <ZoneHead title={z.title} action={<MoreLink to="/news" section={z.id} compact />} />
-                {z.stories[0] && <StoryCard s={z.stories[0]} variant={z.stories[0].image ? "card" : "text"} showTopic={false} />}
-                <div className="mt-3">
-                  {z.stories.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}
+          <div className="grid gap-x-8 gap-y-12 lg:grid-cols-2">
+            {labs.length > 0 && (
+              <div>
+                <ZoneHead title={t("researchLabs", locale)} action={<MoreLink to="/news" section="labs" />} />
+                <div className="grid gap-6 sm:grid-cols-2">
+                  {labs.map(s => <StoryCard key={s.id} s={s} variant={s.image ? "card" : "text"} showTopic={false} />)}
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {labs.length > 0 && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={t("researchLabs", locale)} action={<MoreLink to="/news" section="labs" />} />
-          <div className="grid gap-x-7 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-            {labs.map(s => <StoryCard key={s.id} s={s} variant={s.image ? "card" : "text"} showTopic={false} />)}
-          </div>
-        </section>
-      )}
-
-      {analysis.length > 0 && (
-        <section className="mt-14 bg-ice">
-          <div className="container-mw py-10">
-            <ZoneHead title={t("analysis", locale)} action={<MoreLink to="/news" section="analysis" />} />
-            <div className="grid gap-x-7 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-              {analysis.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}
-            </div>
+            )}
+            {analysis.length > 0 && (
+              <div>
+                <ZoneHead title={t("analysis", locale)} action={<MoreLink to="/news" section="analysis" />} />
+                <div className="grid gap-6 sm:grid-cols-2">
+                  {analysis.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
@@ -327,7 +393,7 @@ function Home() {
         <section className="container-mw mt-14">
           <ZoneHead title={t("editorsDesk", locale)} action={<MoreLink to="/editor" />} />
           <Link to="/editor/$slug" params={{ slug: editorial.slug }} className="group grid gap-2 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:gap-8 items-end">
-            <h3 className="hl text-[1.9rem] sm:text-[2.4rem] group-hover:underline decoration-2">{pick(editorial.title)}</h3>
+            <h3 className="masthead-serif text-[2rem] sm:text-[2.6rem] leading-[1.08] group-hover:underline decoration-2">{pick(editorial.title)}</h3>
             <p className="dek">{pick(editorial.dek)}</p>
           </Link>
         </section>
@@ -341,27 +407,49 @@ function Home() {
           <Resource to="/tools" icon={<Wrench className="h-5 w-5" />} title={t("bestTools", locale)}
             text={locale === "fr" ? `${TOOLS.length} outils classés selon ce que vous voulez faire.` : `${TOOLS.length} tools, grouped by what you want to get done.`} />
           <Resource to="/funding" icon={<Coins className="h-5 w-5" />} title={t("moneyForAi", locale)}
-            text={locale === "fr" ? `${openPrograms} programmes ouverts ou continus, vérifiés sur les pages officielles.` : `${openPrograms} open or ongoing programs, checked against official pages.`} />
+            text={locale === "fr" ? `${openPrograms} programmes canadiens ouverts ou continus, vérifiés sur les pages officielles.` : `${openPrograms} open or ongoing Canadian programs, checked against official pages.`} />
         </div>
       </section>
     </PageShell>
   );
 }
 
-function DarkMeta({ s }: { s: Story }) {
+/** Dark broadcast band: one player, a running list beside it. */
+function WatchBand({ videos }: { videos: MediaItem[] }) {
   const { locale } = useLocale();
-  const now = useNow();
+  const [current, setCurrent] = useState(0);
+  const v = videos[Math.min(current, videos.length - 1)];
   return (
-    <p className="text-[0.8rem] text-white/60 mt-1.5 flex gap-2.5">
-      <span className="font-semibold text-white/80">{s.source}</span>
-      <time dateTime={s.publishedAt} suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
-    </p>
+    <section className="mt-14 bg-night text-white">
+      <div className="container-mw py-10">
+        <ZoneHead
+          dark
+          title={<span className="flex items-center gap-3"><span className="live-dot" aria-hidden="true" />{locale === "fr" ? "Vidéos" : "Watch"}</span>}
+          action={<MoreLink to="/watch" dark />}
+          sub={locale === "fr" ? "Les reportages IA des grandes chaînes, des laboratoires et des créateurs, dans le lecteur de l'éditeur." : "AI reports from broadcasters, labs and explainers, in each publisher's own player."}
+        />
+        <div className="grid gap-7 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
+          <div>
+            <VideoPlayer key={v.id} v={v} />
+            <h3 className="hl text-[1.5rem] sm:text-[1.9rem] mt-4">{v.title}</h3>
+            <MediaMeta m={v} dark className="mt-2" />
+          </div>
+          <ul className="grid gap-4 content-start">
+            {videos.map((x, i) => (
+              <li key={x.id}>
+                <VideoTile v={x} dark active={i === current} onSelect={() => setCurrent(i)} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
   );
 }
 
 function Resource({ to, icon, title, text }: { to: "/learn" | "/tools" | "/funding"; icon: ReactNode; title: string; text: string }) {
   return (
-    <Link to={to} className="group flex gap-3 items-start border border-line bg-surface rounded-[4px] p-4 hover:border-ink">
+    <Link to={to} className="group flex gap-3 items-start border border-line bg-surface rounded-[4px] p-4 hover:border-night">
       <span className="mt-0.5 text-lake" aria-hidden="true">{icon}</span>
       <span>
         <span className="block font-bold group-hover:underline">{title}</span>
@@ -371,13 +459,13 @@ function Resource({ to, icon, title, text }: { to: "/learn" | "/tools" | "/fundi
   );
 }
 
-function MoreLink({ to, section, dark = false, compact = false }: { to: "/news" | "/government" | "/ministry" | "/editor"; section?: SectionId; dark?: boolean; compact?: boolean }) {
+export function MoreLink({ to, section, dark = false, compact = false }: { to: "/news" | "/government" | "/ministry" | "/editor" | "/watch" | "/listen" | "/interviews"; section?: SectionId; dark?: boolean; compact?: boolean }) {
   const { locale } = useLocale();
   return (
     <Link
       to={to}
       search={section ? ({ section } as never) : undefined}
-      className={`inline-flex items-center gap-1 font-semibold text-[0.9rem] whitespace-nowrap hover:underline ${dark ? "text-white" : "text-lake"}`}
+      className={`inline-flex items-center gap-1 font-semibold text-[0.9rem] whitespace-nowrap hover:underline ${dark ? "text-brass" : "text-lake"}`}
       aria-label={compact ? t("seeAll", locale) : undefined}
     >
       {compact ? null : t("seeAll", locale)} <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { NewsPayload, Story } from "./news-engine";
 import type { Topic, Level } from "./news-sources";
+import { deskFor } from "./desk";
 import type { Bi, Locale } from "./i18n";
 
 export type { Story, NewsPayload };
@@ -33,28 +34,32 @@ export function useAiNews(initial: NewsPayload | null | undefined) {
   });
 }
 
-export const TOPICS: { id: Topic | "canada"; label: Bi }[] = [
-  { id: "canada", label: { en: "Canada", fr: "Canada" } },
-  { id: "policy", label: { en: "Policy", fr: "Politique" } },
-  { id: "business", label: { en: "Business", fr: "Affaires" } },
-  { id: "research", label: { en: "Research", fr: "Recherche" } },
-  { id: "products", label: { en: "Products", fr: "Produits" } },
-  { id: "society", label: { en: "Society", fr: "Société" } },
+/** Topic desks, in menu order. */
+export const TOPICS: { id: Topic; label: Bi }[] = [
+  { id: "agents", label: { en: "AI assistants & agents", fr: "Assistants et agents IA" } },
+  { id: "applications", label: { en: "Applications", fr: "Applications" } },
+  { id: "immersive", label: { en: "AR, VR & immersive", fr: "RA, RV et immersif" } },
+  { id: "data", label: { en: "Data & analytics", fr: "Données et analytique" } },
+  { id: "infrastructure", label: { en: "Infrastructure & chips", fr: "Infrastructures et puces" } },
+  { id: "research", label: { en: "Machine learning & research", fr: "Apprentissage automatique et recherche" } },
+  { id: "people", label: { en: "People & skills", fr: "Personnes et compétences" } },
+  { id: "responsible", label: { en: "Responsible AI", fr: "IA responsable" } },
+  { id: "policy", label: { en: "Policy & regulation", fr: "Politiques et réglementation" } },
+  { id: "business", label: { en: "Business & funding", fr: "Affaires et financement" } },
+  { id: "sustainability", label: { en: "Sustainability", fr: "Durabilité" } },
+  { id: "robotics", label: { en: "Robotics", fr: "Robotique" } },
+  { id: "health", label: { en: "Health & science", fr: "Santé et sciences" } },
 ];
 
 export type SectionId = "canada" | "world" | "government" | "ministry" | "labs" | "analysis" | "trending" | Topic;
 
 /** Sections of the news page, in navigation order. */
 export const SECTIONS: { id: SectionId; label: Bi }[] = [
-  { id: "canada", label: { en: "Canada", fr: "Canada" } },
   { id: "world", label: { en: "World", fr: "Monde" } },
+  { id: "canada", label: { en: "Canada", fr: "Canada" } },
+  ...TOPICS,
   { id: "government", label: { en: "Government", fr: "Gouvernement" } },
   { id: "ministry", label: { en: "AI Ministry", fr: "Ministère de l'IA" } },
-  { id: "business", label: { en: "Business", fr: "Affaires" } },
-  { id: "research", label: { en: "Research", fr: "Recherche" } },
-  { id: "products", label: { en: "Products", fr: "Produits" } },
-  { id: "policy", label: { en: "Policy", fr: "Politique" } },
-  { id: "society", label: { en: "Society", fr: "Société" } },
   { id: "labs", label: { en: "AI labs", fr: "Laboratoires" } },
   { id: "analysis", label: { en: "Analysis", fr: "Analyses" } },
   { id: "trending", label: { en: "Trending", fr: "Tendances" } },
@@ -62,16 +67,19 @@ export const SECTIONS: { id: SectionId; label: Bi }[] = [
 
 export function inSection(s: Story, id: SectionId): boolean {
   switch (id) {
-    case "canada": return s.region === "canada" && !s.gov && s.kind !== "trending";
+    case "canada": return s.region === "canada" && !s.gov && s.kind !== "trending" && s.kind !== "beat";
     case "world": return s.region === "world" && s.kind === "news";
     case "government": return s.gov || s.level != null;
     case "ministry": return s.minister;
     case "labs": return s.kind === "lab";
     case "analysis": return s.kind === "analysis";
     case "trending": return s.kind === "trending";
-    default: return s.topic === id && !s.gov && s.kind !== "trending";
+    default: return (s.tags ?? [s.topic]).includes(id) && !s.gov && s.kind !== "trending";
   }
 }
+
+/** Front-page pool: newsroom, lab and analysis stories about AI. */
+export const isFrontPool = (s: Story) => !s.gov && s.kind !== "trending" && s.kind !== "beat";
 
 export const LEVEL_LABEL: Record<Level, Bi> = {
   federal: { en: "Federal", fr: "Fédéral" },
@@ -81,6 +89,78 @@ export const LEVEL_LABEL: Record<Level, Bi> = {
 
 export function topicLabel(topic: Topic, locale: Locale) {
   return TOPICS.find(t => t.id === topic)?.label[locale] ?? topic;
+}
+
+export function sectionLabel(id: SectionId, locale: Locale) {
+  return SECTIONS.find(x => x.id === id)?.label[locale] ?? id;
+}
+
+// ── Story clusters ──────────────────────────────────────────────────────────
+// When several newsrooms cover the same event, their headlines share rare
+// words (names, products, numbers). Clusters drive the front page: the story
+// most outlets are covering right now leads, the way an editor would judge it.
+
+const STOP = new Set(("the a an and or but of to in on for with at by from as is are was were be been it its this that these those " +
+  "new news says say said will would could can may might how why what when who which into over after about more than just now " +
+  "ai artificial intelligence report reports first big top week today year years its it's here there their they them his her " +
+  "le la les des du de et en un une pour sur dans avec par est sont au aux ia").split(" "));
+
+function tokens(title: string): string[] {
+  return [...new Set(title.toLowerCase().replace(/['’]s\b/g, "").split(/[^a-z0-9àâçéèêëîïôûùüÿœ.-]+/)
+    .map(w => w.replace(/^[.-]+|[.-]+$/g, ""))
+    .filter(w => w.length >= 3 && !STOP.has(w)))];
+}
+
+export type Cluster = { id: string; lead: Story; stories: Story[]; sources: number; latest: string };
+
+export function clusterStories(stories: Story[], hours = 48): Cluster[] {
+  const now = Date.now();
+  const pool = stories.filter(s => isFrontPool(s) && now - new Date(s.publishedAt).getTime() < hours * 3600000);
+  const toks = pool.map(s => tokens(s.title));
+  const df = new Map<string, number>();
+  for (const ts of toks) for (const t of ts) df.set(t, (df.get(t) ?? 0) + 1);
+  // A word is "telling" when few stories use it (it names this event), or
+  // when it is a product/version name like gpt-6 or llama-4.
+  const rareMax = Math.max(3, Math.round(pool.length * 0.08));
+  const product = (t: string) => /[a-z]-?\d|\d-?[a-z]{2,}/.test(t) && !/^\$?\d+(\.\d+)?[kmb]?$/.test(t);
+  const telling = (t: string) => product(t) || (df.get(t) ?? 0) <= rareMax;
+
+  const parent = pool.map((_, i) => i);
+  const find = (i: number): number => (parent[i] === i ? i : (parent[i] = find(parent[i])));
+  for (let i = 0; i < pool.length; i++) {
+    const a = new Set(toks[i]);
+    for (let j = i + 1; j < pool.length; j++) {
+      if (pool[i].source === pool[j].source) continue;
+      const shared = toks[j].filter(t => a.has(t));
+      if (shared.length < 2) continue;
+      const strong = shared.filter(telling).length;
+      const hasProduct = shared.some(product);
+      // Conservative on purpose: a wrong "full coverage" list is worse than a missed one.
+      if (strong >= 2 || (strong >= 1 && shared.length >= 3) || hasProduct) parent[find(i)] = find(j);
+    }
+  }
+  const groups = new Map<number, Story[]>();
+  pool.forEach((s, i) => { const r = find(i); groups.set(r, [...(groups.get(r) ?? []), s]); });
+
+  return [...groups.values()]
+    .map(group => {
+      const sorted = [...group].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+      const sources = new Set(sorted.map(s => s.source)).size;
+      const lead = sorted.find(s => s.image && s.kind === "news") ?? sorted.find(s => s.image) ?? sorted[0];
+      return { id: lead.id, lead, stories: [lead, ...sorted.filter(s => s !== lead)], sources, latest: sorted[0].publishedAt };
+    })
+    .sort((a, b) => score(b, now) - score(a, now));
+}
+
+function score(c: Cluster, now: number) {
+  const ageH = (now - new Date(c.latest).getTime()) / 3600000;
+  return c.sources * 2 - ageH / 6 + (c.lead.image ? 0.5 : 0);
+}
+
+/** A story is "developing" when three or more newsrooms reported it in the last six hours. */
+export function isDeveloping(c: Cluster, now = Date.now()) {
+  const recent = c.stories.filter(s => now - new Date(s.publishedAt).getTime() < 6 * 3600000);
+  return new Set(recent.map(s => s.source)).size >= 3;
 }
 
 /** Ticks once a minute so relative times stay fresh; null during SSR to avoid hydration drift. */
@@ -137,4 +217,16 @@ export function diversify(stories: Story[], max = 2, window = 12): Story[] {
     queue = deferred;
   }
   return out;
+}
+
+/** Headline and summary to show: the editor's desk version when there is one. */
+export function display(s: Story, locale: Locale) {
+  const d = deskFor(s.link);
+  // Keep product names like GPT-6 on one line (non-breaking hyphen; same text).
+  const keep = (t: string) => t.replace(/([A-Za-z])-(\d)/g, "$1\u2011$2");
+  return {
+    title: keep(d ? d.headline[locale] : s.title),
+    summary: d?.dek ? d.dek[locale] : s.summary,
+    edited: !!d,
+  };
 }

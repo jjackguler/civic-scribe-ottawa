@@ -9,21 +9,49 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as StandardsRouteImport } from './routes/standards'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as MinistryRouteImport } from './routes/ministry'
+import { Route as ListenRouteImport } from './routes/listen'
+import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as FundingRouteImport } from './routes/funding'
+import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
+import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 
+const WatchRoute = WatchRouteImport.update({
+  id: '/watch',
+  path: '/watch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsRoute = ToolsRouteImport.update({
   id: '/tools',
   path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StandardsRoute = StandardsRouteImport.update({
+  id: '/standards',
+  path: '/standards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsletterRoute = NewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsRoute = NewsRouteImport.update({
@@ -36,6 +64,16 @@ const MinistryRoute = MinistryRouteImport.update({
   path: '/ministry',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListenRoute = ListenRouteImport.update({
+  id: '/listen',
+  path: '/listen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewsRoute = InterviewsRouteImport.update({
+  id: '/interviews',
+  path: '/interviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GovernmentRoute = GovernmentRouteImport.update({
   id: '/government',
   path: '/government',
@@ -44,6 +82,11 @@ const GovernmentRoute = GovernmentRouteImport.update({
 const FundingRoute = FundingRouteImport.update({
   id: '/funding',
   path: '/funding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdvertiseRoute = AdvertiseRouteImport.update({
+  id: '/advertise',
+  path: '/advertise',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -66,6 +109,11 @@ const EditorIndexRoute = EditorIndexRouteImport.update({
   path: '/editor/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StoryIdRoute = StoryIdRouteImport.update({
+  id: '/story/$id',
+  path: '/story/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnSlugRoute = LearnSlugRouteImport.update({
   id: '/learn/$slug',
   path: '/learn/$slug',
@@ -80,26 +128,42 @@ const EditorSlugRoute = EditorSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/advertise': typeof AdvertiseRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/interviews': typeof InterviewsRoute
+  '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
+  '/newsletter': typeof NewsletterRoute
+  '/privacy': typeof PrivacyRoute
+  '/standards': typeof StandardsRoute
   '/tools': typeof ToolsRoute
+  '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/story/$id': typeof StoryIdRoute
   '/editor/': typeof EditorIndexRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/advertise': typeof AdvertiseRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/interviews': typeof InterviewsRoute
+  '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
+  '/newsletter': typeof NewsletterRoute
+  '/privacy': typeof PrivacyRoute
+  '/standards': typeof StandardsRoute
   '/tools': typeof ToolsRoute
+  '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/story/$id': typeof StoryIdRoute
   '/editor': typeof EditorIndexRoute
   '/learn': typeof LearnIndexRoute
 }
@@ -107,13 +171,21 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/advertise': typeof AdvertiseRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/interviews': typeof InterviewsRoute
+  '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
+  '/newsletter': typeof NewsletterRoute
+  '/privacy': typeof PrivacyRoute
+  '/standards': typeof StandardsRoute
   '/tools': typeof ToolsRoute
+  '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/story/$id': typeof StoryIdRoute
   '/editor/': typeof EditorIndexRoute
   '/learn/': typeof LearnIndexRoute
 }
@@ -122,39 +194,63 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/advertise'
     | '/funding'
     | '/government'
+    | '/interviews'
+    | '/listen'
     | '/ministry'
     | '/news'
+    | '/newsletter'
+    | '/privacy'
+    | '/standards'
     | '/tools'
+    | '/watch'
     | '/editor/$slug'
     | '/learn/$slug'
+    | '/story/$id'
     | '/editor/'
     | '/learn/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/advertise'
     | '/funding'
     | '/government'
+    | '/interviews'
+    | '/listen'
     | '/ministry'
     | '/news'
+    | '/newsletter'
+    | '/privacy'
+    | '/standards'
     | '/tools'
+    | '/watch'
     | '/editor/$slug'
     | '/learn/$slug'
+    | '/story/$id'
     | '/editor'
     | '/learn'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/advertise'
     | '/funding'
     | '/government'
+    | '/interviews'
+    | '/listen'
     | '/ministry'
     | '/news'
+    | '/newsletter'
+    | '/privacy'
+    | '/standards'
     | '/tools'
+    | '/watch'
     | '/editor/$slug'
     | '/learn/$slug'
+    | '/story/$id'
     | '/editor/'
     | '/learn/'
   fileRoutesById: FileRoutesById
@@ -162,24 +258,60 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdvertiseRoute: typeof AdvertiseRoute
   FundingRoute: typeof FundingRoute
   GovernmentRoute: typeof GovernmentRoute
+  InterviewsRoute: typeof InterviewsRoute
+  ListenRoute: typeof ListenRoute
   MinistryRoute: typeof MinistryRoute
   NewsRoute: typeof NewsRoute
+  NewsletterRoute: typeof NewsletterRoute
+  PrivacyRoute: typeof PrivacyRoute
+  StandardsRoute: typeof StandardsRoute
   ToolsRoute: typeof ToolsRoute
+  WatchRoute: typeof WatchRoute
   EditorSlugRoute: typeof EditorSlugRoute
   LearnSlugRoute: typeof LearnSlugRoute
+  StoryIdRoute: typeof StoryIdRoute
   EditorIndexRoute: typeof EditorIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/watch': {
+      id: '/watch'
+      path: '/watch'
+      fullPath: '/watch'
+      preLoaderRoute: typeof WatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools': {
       id: '/tools'
       path: '/tools'
       fullPath: '/tools'
       preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/standards': {
+      id: '/standards'
+      path: '/standards'
+      fullPath: '/standards'
+      preLoaderRoute: typeof StandardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newsletter': {
+      id: '/newsletter'
+      path: '/newsletter'
+      fullPath: '/newsletter'
+      preLoaderRoute: typeof NewsletterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news': {
@@ -196,6 +328,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MinistryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/listen': {
+      id: '/listen'
+      path: '/listen'
+      fullPath: '/listen'
+      preLoaderRoute: typeof ListenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interviews': {
+      id: '/interviews'
+      path: '/interviews'
+      fullPath: '/interviews'
+      preLoaderRoute: typeof InterviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/government': {
       id: '/government'
       path: '/government'
@@ -208,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/funding'
       fullPath: '/funding'
       preLoaderRoute: typeof FundingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/advertise': {
+      id: '/advertise'
+      path: '/advertise'
+      fullPath: '/advertise'
+      preLoaderRoute: typeof AdvertiseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -238,6 +391,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/story/$id': {
+      id: '/story/$id'
+      path: '/story/$id'
+      fullPath: '/story/$id'
+      preLoaderRoute: typeof StoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn/$slug': {
       id: '/learn/$slug'
       path: '/learn/$slug'
@@ -258,13 +418,21 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdvertiseRoute: AdvertiseRoute,
   FundingRoute: FundingRoute,
   GovernmentRoute: GovernmentRoute,
+  InterviewsRoute: InterviewsRoute,
+  ListenRoute: ListenRoute,
   MinistryRoute: MinistryRoute,
   NewsRoute: NewsRoute,
+  NewsletterRoute: NewsletterRoute,
+  PrivacyRoute: PrivacyRoute,
+  StandardsRoute: StandardsRoute,
   ToolsRoute: ToolsRoute,
+  WatchRoute: WatchRoute,
   EditorSlugRoute: EditorSlugRoute,
   LearnSlugRoute: LearnSlugRoute,
+  StoryIdRoute: StoryIdRoute,
   EditorIndexRoute: EditorIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
 }

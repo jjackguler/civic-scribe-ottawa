@@ -4,13 +4,14 @@ import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scrip
 import appCss from "../styles.css?url";
 import { LocaleProvider } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
+import { ADSENSE_CLIENT } from "@/lib/ads";
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-paper px-4">
       <div className="max-w-md text-center">
         <p className="topic">404</p>
-        <h1 className="hl text-5xl mt-2">This page isn't on the wire</h1>
+        <h1 className="hl text-5xl mt-2">This page isn't in today's paper</h1>
         <p className="dek mt-4">It may have moved. The latest AI news is on the front page.</p>
         <Link to="/" className="inline-flex mt-6 bg-ink text-white px-5 py-2.5 rounded-[5px] font-semibold hover:bg-lake">
           Go to the front page
@@ -44,12 +45,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: `${SITE.name} — ${SITE.tagline.en}` },
       { name: "description", content: SITE.description.en },
-      { name: "theme-color", content: "#0E2235" },
+      { name: "theme-color", content: "#0B2A2F" },
       { property: "og:site_name", content: SITE.name },
       { property: "og:title", content: `${SITE.name} — ${SITE.tagline.en}` },
       { property: "og:description", content: SITE.description.en },
       { property: "og:type", content: "website" },
-      { property: "og:locale", content: "en_CA" },
+      { property: "og:locale", content: "en_US" },
       { property: "og:locale:alternate", content: "fr_CA" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -60,7 +61,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap",
       },
     ],
     scripts: [
@@ -71,11 +72,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "NewsMediaOrganization",
           name: SITE.name,
           url: `https://${SITE.domain}`,
+          logo: `https://${SITE.domain}/favicon.svg`,
           description: SITE.description.en,
-          areaServed: "CA",
-          inLanguage: ["en-CA", "fr-CA"],
+          inLanguage: ["en", "fr"],
+          publishingPrinciples: `https://${SITE.domain}/standards`,
+          correctionsPolicy: `https://${SITE.domain}/standards`,
+          email: SITE.email.editor,
         }),
       },
+      ...(ADSENSE_CLIENT
+        ? [{ src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`, async: true, crossOrigin: "anonymous" as const }]
+        : []),
     ],
   }),
   shellComponent: RootShell,

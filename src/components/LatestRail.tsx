@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Story } from "@/lib/news";
-import { timeAgo, useNow } from "@/lib/news";
+import { timeAgo, useNow, display } from "@/lib/news";
+import { StoryLink } from "./StoryCard";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 
@@ -33,7 +34,7 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
 
   return (
     <aside className="flex flex-col">
-      <div className="flex items-center justify-between pb-2 border-b-[3px] border-ink">
+      <div className="flex items-center justify-between pb-2 border-b-[3px] border-night">
         <h2 className="hl text-[1.3rem] flex items-center gap-2.5">
           <span className="live-dot" aria-hidden="true" />
           {t("latest", locale)}
@@ -57,13 +58,13 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
       <ol className="flex-1">
         {shown.slice(0, limit).map(s => (
           <li key={s.id} className={`py-2.5 border-b border-line last:border-0 ${fresh.has(s.id) ? "flash-new" : ""}`}>
-            <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
+            <StoryLink s={s} className="group block">
               <p className="meta mb-0.5 flex gap-2">
                 <time dateTime={s.publishedAt} className="font-semibold text-live" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
                 <span>{s.source}</span>
               </p>
-              <p className="font-semibold leading-snug text-[0.97rem] group-hover:underline">{s.title}</p>
-            </a>
+              <p className="font-semibold leading-snug text-[0.97rem] group-hover:underline">{display(s, locale).title}</p>
+            </StoryLink>
           </li>
         ))}
       </ol>

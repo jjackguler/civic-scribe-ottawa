@@ -4,13 +4,18 @@
  * the publish time, a link back to the original, and the publisher's own
  * photo (with credit). Full articles always stay on the publisher's site.
  *
- * Every feed below was opened and checked on 2026-10-06.
+ * Every feed below was opened and checked on 2026-10-06 (The Decoder and
+ * AI News are confirmed from the live site's source status page).
  * To add a source: append an entry. A feed that fails never blocks the rest.
  */
 
 export type Region = "canada" | "world";
-export type Topic = "policy" | "business" | "research" | "products" | "society";
-export type Kind = "news" | "gov" | "lab" | "analysis" | "trending";
+/** Topic desks, modelled on how trade publications organise AI coverage. */
+export type Topic =
+  | "agents" | "applications" | "immersive" | "data" | "infrastructure" | "research"
+  | "people" | "responsible" | "policy" | "business" | "sustainability" | "robotics" | "health";
+/** "beat" = a specialist newsroom (VR, robotics, data centres): shown on its topic desk; on the front page only when the story is about AI. */
+export type Kind = "news" | "gov" | "lab" | "analysis" | "trending" | "beat";
 export type Level = "federal" | "provincial" | "municipal";
 
 export type NewsSource = {
@@ -34,6 +39,8 @@ export type NewsSource = {
   format?: "rss" | "anthropic-html" | "hn" | "hf-papers";
   /** Rewrite links from a CMS origin to the public site: [from, to]. */
   linkRewrite?: [string, string];
+  /** Specialist newsroom: every item is kept and filed under this topic desk. */
+  beat?: Topic;
 };
 
 const GC_NEWS = "https://api.io.canada.ca/io-server/gc/news";
@@ -62,6 +69,9 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "mittr", name: "MIT Technology Review", url: "https://www.technologyreview.com/topic/artificial-intelligence/feed", home: "https://www.technologyreview.com/topic/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "wired", name: "Wired", url: "https://www.wired.com/feed/tag/ai/latest/rss", home: "https://www.wired.com/tag/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "ars", name: "Ars Technica", url: "https://arstechnica.com/ai/feed/", home: "https://arstechnica.com/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
+  { id: "ieee", name: "IEEE Spectrum", url: "https://spectrum.ieee.org/feeds/topic/artificial-intelligence.rss", home: "https://spectrum.ieee.org/topic/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
+  { id: "decoder", name: "The Decoder", url: "https://the-decoder.com/feed/", home: "https://the-decoder.com", region: "world", lang: "en", kind: "news", aiOnly: true },
+  { id: "ai-news", name: "AI News", url: "https://www.artificialintelligence-news.com/feed/", home: "https://www.artificialintelligence-news.com", region: "world", lang: "en", kind: "news", aiOnly: true, slow: true },
   { id: "venturebeat", name: "VentureBeat", url: "https://venturebeat.com/category/ai/feed/", home: "https://venturebeat.com/category/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
 
   // ── What the tech community is reading (popularity signals) ────────────
@@ -74,6 +84,13 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "deepmind", name: "Google DeepMind", url: "https://deepmind.google/blog/feed", home: "https://deepmind.google/discover/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "google-ai", name: "Google AI", url: "https://blog.google/technology/ai/rss/", home: "https://blog.google/technology/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "huggingface", name: "Hugging Face", url: "https://huggingface.co/blog/feed.xml", home: "https://huggingface.co/blog", region: "world", lang: "en", kind: "lab", aiOnly: true },
+
+  // ── Specialist beats: immersive tech, robotics, data centres ───────────
+  { id: "uploadvr", name: "UploadVR", url: "https://www.uploadvr.com/rss/", home: "https://www.uploadvr.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "immersive", slow: true },
+  { id: "roadtovr", name: "Road to VR", url: "https://www.roadtovr.com/feed/", home: "https://www.roadtovr.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "immersive", slow: true },
+  { id: "robotreport", name: "The Robot Report", url: "https://www.therobotreport.com/feed/", home: "https://www.therobotreport.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "robotics", slow: true },
+  { id: "dcd", name: "DatacenterDynamics", url: "https://www.datacenterdynamics.com/en/rss/", home: "https://www.datacenterdynamics.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "infrastructure", slow: true },
+  { id: "aws-ml", name: "AWS Machine Learning", url: "https://aws.amazon.com/blogs/machine-learning/feed/", home: "https://aws.amazon.com/blogs/machine-learning/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
 
   // ── Provincial and municipal governments (AI items only) ────────────────
   { id: "ontario", name: "Government of Ontario", url: "https://news.ontario.ca/opo/en/rss/news.rss", home: "https://news.ontario.ca", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "provincial", slow: true },

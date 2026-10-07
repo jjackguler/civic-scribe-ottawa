@@ -18,32 +18,32 @@ export type Editorial = {
 
 export const EDITORIALS: Editorial[] = [
   {
-    slug: "why-maple-wire",
+    slug: "a-newsroom-of-one",
     date: "2026-10-06",
     title: {
-      en: "Why we started an AI news wire for Canadians",
-      fr: "Pourquoi nous avons lancé un fil de presse IA pour les Canadiens",
+      en: "A newsroom of one, built like a broadcaster",
+      fr: "Une salle de rédaction d'une personne, bâtie comme un diffuseur",
     },
     dek: {
-      en: "AI is changing work, public services and everyday life faster than most of us can follow. Canadians deserve one calm place to keep up.",
-      fr: "L'IA transforme le travail, les services publics et la vie quotidienne plus vite que nous ne pouvons suivre. Les Canadiens méritent un endroit calme pour s'y retrouver.",
+      en: "AI Broadsheet is a test of an idea: with the right tools and strict rules, one editor can run a live, trustworthy AI newspaper.",
+      fr: "AI Broadsheet met une idée à l'épreuve : avec les bons outils et des règles strictes, un seul éditeur peut faire vivre un journal de l'IA fiable et en direct.",
     },
     body: [
       {
-        en: "Every week brings a new model, a new government program, a new warning. Most coverage is written for engineers or investors. Very little of it answers the questions people actually ask: what does this mean for my job, my business, my family — and is there help available?",
-        fr: "Chaque semaine apporte un nouveau modèle, un nouveau programme public, un nouvel avertissement. La plupart des reportages s'adressent aux ingénieurs ou aux investisseurs. Peu répondent aux vraies questions : qu'est-ce que cela change pour mon emploi, mon entreprise, ma famille — et existe-t-il de l'aide?",
+        en: "Artificial intelligence is now the busiest beat in news. Every hour brings a model release, a funding round, a lawsuit, a government announcement, a video demo, a three-hour interview. Big newsrooms put whole teams on it. Most readers still can't find one place that shows them all of it, calmly, with the sources in plain view.",
+        fr: "L'intelligence artificielle est devenue le sujet le plus chargé de l'actualité. Chaque heure apporte un nouveau modèle, une levée de fonds, une poursuite, une annonce gouvernementale, une démo vidéo, une entrevue de trois heures. Les grandes rédactions y consacrent des équipes entières. La plupart des lecteurs ne trouvent toujours pas un seul endroit qui montre tout cela calmement, avec les sources bien en vue.",
       },
       {
-        en: "Maple Wire gathers AI news from Canadian and international publishers, always linking back to the original reporting. Next to the headlines, we keep a plain-language list of public funding for AI projects, a short list of tools worth trying, and guides that assume no technical background.",
-        fr: "Maple Wire rassemble l'actualité IA d'éditeurs canadiens et internationaux, avec toujours un lien vers le reportage original. À côté des manchettes, nous tenons une liste claire du financement public pour les projets en IA, une courte liste d'outils à essayer et des guides qui ne demandent aucune connaissance technique.",
+        en: "AI Broadsheet follows dozens of newsrooms, AI labs, governments, broadcasters' video channels and podcasts around the clock. The front page leads with the story the most outlets are reporting, and every story page puts their coverage side by side so you can compare.",
+        fr: "AI Broadsheet suit en continu des dizaines de salles de nouvelles, laboratoires d'IA, gouvernements, chaînes vidéo et balados. La une s'ouvre sur la nouvelle que le plus de médias rapportent, et chaque page d'article place leur couverture côte à côte pour que vous puissiez comparer.",
       },
       {
-        en: "Our rules are simple. We don't invent facts. Every funding program on this site links to its official page and shows the date we last checked it. Headlines come from named publishers. When we give an opinion, it lives here, on the editor's desk, clearly labelled.",
-        fr: "Nos règles sont simples. Nous n'inventons pas de faits. Chaque programme de financement renvoie à sa page officielle avec la date de notre dernière vérification. Les manchettes viennent d'éditeurs nommés. Quand nous donnons notre opinion, c'est ici, au mot de la rédaction, clairement identifié.",
+        en: "The rules are what make it trustworthy. Software sorts the news; it never writes it. Every headline comes from a named publisher and links to the original. Every photo and video is credited. Opinion lives here, on the editor's desk, and nowhere else. Advertising pays for the work and never touches it.",
+        fr: "Ce sont les règles qui rendent le tout fiable. Le logiciel classe les nouvelles; il ne les écrit jamais. Chaque titre vient d'un éditeur nommé et renvoie à l'original. Chaque photo et vidéo est créditée. L'opinion se trouve ici, au mot de la rédaction, et nulle part ailleurs. La publicité finance le travail sans jamais y toucher.",
       },
       {
-        en: "If you run a small business, work in the public sector, teach, study or are simply curious, this is for you. Tell us what you want explained next.",
-        fr: "Si vous dirigez une petite entreprise, travaillez dans le secteur public, enseignez, étudiez ou êtes simplement curieux, ce site est pour vous. Dites-nous ce que vous aimeriez qu'on explique ensuite.",
+        en: "Tell us what we're missing — a source we should follow, a desk we should add, a story we filed in the wrong place. A newsroom of one depends on its readers.",
+        fr: "Dites-nous ce qui manque — une source à suivre, une section à ajouter, une nouvelle mal classée. Une salle de rédaction d'une personne compte sur ses lecteurs.",
       },
     ],
   },

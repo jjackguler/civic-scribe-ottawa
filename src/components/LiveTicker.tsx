@@ -1,4 +1,5 @@
-import { useAiNews, byLocale, diversify } from "@/lib/news";
+import { Link } from "@tanstack/react-router";
+import { useAiNews, byLocale, diversify, isFrontPool, display } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 
@@ -6,7 +7,7 @@ import { t } from "@/lib/i18n";
 export function LiveTicker() {
   const { locale } = useLocale();
   const { data } = useAiNews(undefined);
-  const items = diversify(byLocale(data?.stories ?? [], locale).filter(s => !s.gov && s.kind !== "trending"), 1, 14).slice(0, 14);
+  const items = diversify(byLocale(data?.stories ?? [], locale).filter(isFrontPool), 1, 14).slice(0, 14);
 
   return (
     <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -18,18 +19,17 @@ export function LiveTicker() {
         {items.length > 0 ? (
           <div className="flex w-max gap-10 animate-ticker whitespace-nowrap pl-3">
             {[...items, ...items].map((s, i) => (
-              <a
+              <Link
                 key={`${s.id}-${i}`}
-                href={s.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                to="/story/$id"
+                params={{ id: s.id }}
                 className="hover:underline font-semibold text-ink"
                 tabIndex={i >= items.length ? -1 : 0}
                 aria-hidden={i >= items.length ? true : undefined}
               >
                 <span className="text-muted-ink font-normal mr-2">{s.source}</span>
-                {s.title}
-              </a>
+                {display(s, locale).title}
+              </Link>
             ))}
           </div>
         ) : (
