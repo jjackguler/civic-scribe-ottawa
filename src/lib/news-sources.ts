@@ -4,8 +4,8 @@
  * the publish time, a link back to the original, and the publisher's own
  * photo (with credit). Full articles always stay on the publisher's site.
  *
- * Every feed below was opened and checked on 2026-10-06 (The Decoder and
- * AI News are confirmed from the live site's source status page).
+ * Every feed below was checked on 2026-10-06; the live state of each one is
+ * shown on the About page under "Desk status".
  * To add a source: append an entry. A feed that fails never blocks the rest.
  */
 
@@ -71,7 +71,6 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "ars", name: "Ars Technica", url: "https://arstechnica.com/ai/feed/", home: "https://arstechnica.com/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "ieee", name: "IEEE Spectrum", url: "https://spectrum.ieee.org/feeds/topic/artificial-intelligence.rss", home: "https://spectrum.ieee.org/topic/artificial-intelligence/", region: "world", lang: "en", kind: "news", aiOnly: true },
   { id: "decoder", name: "The Decoder", url: "https://the-decoder.com/feed/", home: "https://the-decoder.com", region: "world", lang: "en", kind: "news", aiOnly: true },
-  { id: "ai-news", name: "AI News", url: "https://www.artificialintelligence-news.com/feed/", home: "https://www.artificialintelligence-news.com", region: "world", lang: "en", kind: "news", aiOnly: true, slow: true },
   { id: "venturebeat", name: "VentureBeat", url: "https://venturebeat.com/category/ai/feed/", home: "https://venturebeat.com/category/ai/", region: "world", lang: "en", kind: "news", aiOnly: true },
 
   // ── What the tech community is reading (popularity signals) ────────────
