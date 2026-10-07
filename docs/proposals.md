@@ -1,5 +1,14 @@
 # Proposals (not implemented — need the owner's approval)
 
+## 0. Share the news desk across Cloudflare isolates (most urgent)
+
+**Seen live on 2026-10-07:** every Cloudflare isolate keeps its own copy of the desk in memory. A fresh isolate starts empty and needs several seconds to fetch feeds, and it only gets through the first ~30 feeds before it is replaced. Effects: the RSS feed was briefly empty, and slower feeds (provincial and city governments, CBC city desks, the new Canadian sources) rarely appear. The feed order now rotates so each fresh isolate fetches a different slice, and RSS answers 503 instead of an empty feed. Those are stopgaps.
+
+**Proposal.** Store the built desk (the JSON payload, ~200–400 KB) and each feed's last result in a shared store, so every isolate starts warm:
+- **Cloudflare Cache API** (`caches.default`): no setup or bindings, shared per data centre. Cheapest first step, if Lovable's hosting exposes it.
+- **Workers KV**: shared worldwide, needs a namespace binding.
+Either one also fixes most of the "story has left the live desk" cases below.
+
 ## 1. Story archive so story pages stay up (audit item 16)
 
 **Problem.** Stories live only in memory (`globalThis`) for ~30 days. After that, or after a cold start on a new Cloudflare isolate, `/story/$id` shows "This story has left the live desk". Google will have indexed those URLs; when they turn thin or empty, the site looks low-quality to search and to ad reviewers.
