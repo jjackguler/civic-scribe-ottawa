@@ -8,14 +8,14 @@ import { useMedia } from "@/lib/media";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { t } from "@/lib/i18n";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: `About and standards — ${SITE.name}` },
-      { name: "description", content: `How ${SITE.name} finds, checks and credits AI news, video and podcasts — and every source we follow.` },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `About and standards — ${SITE.name}`, fr: `À propos et normes — ${SITE.name}` },
+      description: { en: `How ${SITE.name} finds, checks and credits AI news, video and podcasts — who runs it, and every source we follow.`, fr: `Comment ${SITE.name} trouve, vérifie et crédite l'actualité, les vidéos et les balados sur l'IA — qui le dirige, et toutes nos sources.` },
+    }),
   component: About,
 });
 

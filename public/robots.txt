@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /editor/tools
+Disallow: /fr/editor/tools
 
 Sitemap: https://aibroadsheet.com/sitemap.xml

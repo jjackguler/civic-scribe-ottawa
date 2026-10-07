@@ -3,14 +3,14 @@ import { PageShell, PageIntro } from "@/components/PageShell";
 import { useLocale } from "@/lib/locale-context";
 import type { Bi } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/standards")({
-  head: () => ({
-    meta: [
-      { title: `Editorial standards — ${SITE.name}` },
-      { name: "description", content: `How ${SITE.name} chooses, credits and corrects the AI news it publishes, and how advertising is kept apart from it.` },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Editorial standards — ${SITE.name}`, fr: `Normes éditoriales — ${SITE.name}` },
+      description: { en: `How ${SITE.name} chooses, credits and corrects the AI news it publishes, and how advertising is kept apart from it.`, fr: `Comment ${SITE.name} choisit, crédite et corrige les nouvelles en IA qu'il publie, et comment la publicité en reste séparée.` },
+    }),
   component: Standards,
 });
 

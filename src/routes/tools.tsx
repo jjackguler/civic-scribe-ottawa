@@ -5,14 +5,14 @@ import { TOOLS, TOOL_CATEGORIES } from "@/lib/tools";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/tools")({
-  head: () => ({
-    meta: [
-      { title: `The best AI tools to try — ${SITE.name}` },
-      { name: "description", content: "A short, practical list of AI tools for everyday life and work — assistants, research, translation, design, meetings and building apps." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `The best AI tools to try — ${SITE.name}`, fr: `Les meilleurs outils d'IA à essayer — ${SITE.name}` },
+      description: { en: `A short, practical list of AI tools for everyday life and work — assistants, research, translation, design, meetings and building apps.`, fr: `Une courte liste pratique d'outils d'IA pour la vie et le travail — assistants, recherche, traduction, design, réunions et création d'applications.` },
+    }),
   component: ToolsPage,
 });
 

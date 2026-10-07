@@ -7,14 +7,14 @@ import { MEDIA_SOURCES } from "@/lib/media-sources";
 import { useLocale } from "@/lib/locale-context";
 import type { Bi } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/advertise")({
-  head: () => ({
-    meta: [
-      { title: `Advertise with ${SITE.name} — media kit` },
-      { name: "description", content: `Reach the people building, buying and regulating AI. Display, desk and video sponsorships, interview series and newsletter placements on ${SITE.name}.` },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Advertise with ${SITE.name}: media kit — ${SITE.name}`, fr: `Annoncer sur ${SITE.name} : trousse média — ${SITE.name}` },
+      description: { en: `Reach the people building, buying and regulating AI. Display, desk and video sponsorships, interview series and newsletter placements on ${SITE.name}.`, fr: `Rejoignez ceux qui bâtissent, achètent et encadrent l'IA. Affichage, commandites de sections et de vidéos, séries d'entrevues et infolettre sur ${SITE.name}.` },
+    }),
   component: Advertise,
 });
 

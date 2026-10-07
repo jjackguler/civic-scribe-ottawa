@@ -3,14 +3,14 @@ import { PageShell } from "@/components/PageShell";
 import { NewsletterBox } from "@/components/NewsletterBox";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/newsletter")({
-  head: () => ({
-    meta: [
-      { title: `The Morning Broadsheet newsletter — ${SITE.name}` },
-      { name: "description", content: "The AI stories that matter, in your inbox each morning. Checked sources, links to the originals, nothing made up." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `The Morning Broadsheet newsletter — ${SITE.name}`, fr: `L'infolettre The Morning Broadsheet — ${SITE.name}` },
+      description: { en: `The AI stories that matter, in your inbox each morning. Checked sources, links to the originals, nothing made up.`, fr: `Les nouvelles en IA qui comptent, dans votre boîte chaque matin. Sources vérifiées, liens vers les originaux, rien d'inventé.` },
+    }),
   component: Newsletter,
 });
 

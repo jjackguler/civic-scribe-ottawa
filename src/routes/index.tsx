@@ -21,15 +21,30 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import type { Topic } from "@/lib/news-sources";
+import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: () => getAiNewsFast(),
-  head: () => ({
-    meta: [
-      { title: `${SITE.name} — ${SITE.tagline.en}` },
-      { name: "description", content: SITE.description.en },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `${SITE.name} — ${SITE.tagline.en}`, fr: `${SITE.name} — ${SITE.tagline.fr}` },
+      description: SITE.description,
+      jsonLd: (locale) => [
+        organizationLd(locale),
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE.name,
+          url: absUrl("/", locale),
+          inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${absUrl("/search", locale)}?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        },
+      ],
+    }),
   component: Home,
 });
 

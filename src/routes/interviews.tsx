@@ -7,15 +7,15 @@ import { getMediaFast, useMedia } from "@/lib/media";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/interviews")({
   loader: () => getMediaFast(),
-  head: () => ({
-    meta: [
-      { title: `AI interviews: founders, researchers and leaders — ${SITE.name}` },
-      { name: "description", content: "Long-form conversations with the people building and governing AI, on video and audio." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `AI interviews: founders, researchers and leaders — ${SITE.name}`, fr: `Entrevues IA : fondateurs, chercheurs et dirigeants — ${SITE.name}` },
+      description: { en: `Long-form conversations with the people building and governing AI, on video and audio.`, fr: `De longues conversations avec ceux qui bâtissent et encadrent l'IA, en vidéo et en audio.` },
+    }),
   component: InterviewsPage,
 });
 

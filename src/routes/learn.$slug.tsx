@@ -5,6 +5,7 @@ import { GUIDES } from "@/lib/guides";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead, publisherRef, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/learn/$slug")({
   loader: ({ params }) => {
@@ -12,13 +13,27 @@ export const Route = createFileRoute("/learn/$slug")({
     if (!guide) throw notFound();
     return guide.slug;
   },
-  head: ({ params }) => {
+  head: ({ match, params }) => {
     const g = GUIDES.find(x => x.slug === params.slug);
-    return {
-      meta: g
-        ? [{ title: `${g.title.en} — ${SITE.name}` }, { name: "description", content: g.dek.en }, { property: "og:type", content: "article" }]
-        : [{ title: SITE.name }],
-    };
+    if (!g) return seoHead(match, { title: SITE.name, description: SITE.description, noindex: true });
+    return seoHead(match, {
+      title: { en: `${g.title.en} — ${SITE.name}`, fr: `${g.title.fr} — ${SITE.name}` },
+      description: g.dek,
+      type: "article",
+      jsonLd: (locale, url) => [{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: g.title[locale],
+        description: g.dek[locale],
+        url,
+        mainEntityOfPage: url,
+        inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
+        timeRequired: `PT${g.minutes}M`,
+        author: { "@type": "Organization", name: SITE.name },
+        publisher: publisherRef,
+        image: DEFAULT_OG_IMAGE,
+      }],
+    });
   },
   component: GuidePage,
 });

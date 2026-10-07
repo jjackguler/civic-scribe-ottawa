@@ -5,6 +5,7 @@ import { EDITORIALS, formatDate } from "@/lib/editorials";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead, publisherRef, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/editor/$slug")({
   loader: ({ params }) => {
@@ -12,13 +13,28 @@ export const Route = createFileRoute("/editor/$slug")({
     if (!e) throw notFound();
     return e.slug;
   },
-  head: ({ params }) => {
+  head: ({ match, params }) => {
     const e = EDITORIALS.find(x => x.slug === params.slug);
-    return {
-      meta: e
-        ? [{ title: `${e.title.en} — ${SITE.name}` }, { name: "description", content: e.dek.en }, { property: "og:type", content: "article" }]
-        : [{ title: SITE.name }],
-    };
+    if (!e) return seoHead(match, { title: SITE.name, description: SITE.description, noindex: true });
+    return seoHead(match, {
+      title: { en: `${e.title.en} — ${SITE.name}`, fr: `${e.title.fr} — ${SITE.name}` },
+      description: e.dek,
+      type: "article",
+      publishedTime: e.date,
+      jsonLd: (locale, url) => [{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: e.title[locale],
+        description: e.dek[locale],
+        url,
+        mainEntityOfPage: url,
+        datePublished: e.date,
+        inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
+        author: SITE.editor.name ? { "@type": "Person", name: SITE.editor.name } : { "@type": "Organization", name: SITE.name },
+        publisher: publisherRef,
+        image: DEFAULT_OG_IMAGE,
+      }],
+    });
   },
   component: EditorialPage,
 });

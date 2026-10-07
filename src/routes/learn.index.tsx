@@ -4,14 +4,14 @@ import { GUIDES } from "@/lib/guides";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/learn/")({
-  head: () => ({
-    meta: [
-      { title: `Learn AI: plain-language guides — ${SITE.name}` },
-      { name: "description", content: "Short, practical guides to start using AI safely at home and at work, and to find AI funding in Canada." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Learn AI: plain-language guides — ${SITE.name}`, fr: `Apprendre l'IA : guides en langage clair — ${SITE.name}` },
+      description: { en: `Short, practical guides to start using AI safely at home and at work, and to find AI funding in Canada.`, fr: `De courts guides pratiques pour utiliser l'IA en toute sécurité à la maison et au travail, et trouver du financement en IA au Canada.` },
+    }),
   component: LearnIndex,
 });
 

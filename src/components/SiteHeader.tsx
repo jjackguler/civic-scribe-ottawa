@@ -7,6 +7,7 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { TOPICS, type SectionId } from "@/lib/news";
 import { SITE } from "@/lib/site";
+import { localePath } from "@/lib/seo";
 import type { Bi } from "@/lib/i18n";
 
 type Item = { label: Bi; to: string; section?: SectionId };
@@ -92,9 +93,15 @@ export function SiteHeader() {
             <Link to="/advertise" className="hover:text-white">{locale === "fr" ? "Annoncer" : "Advertise"}</Link>
             <Link to="/newsletter" className="hidden sm:inline hover:text-white">{locale === "fr" ? "Infolettre" : "Newsletter"}</Link>
             <Link to="/standards" className="hidden md:inline hover:text-white">{locale === "fr" ? "Nos normes" : "Our standards"}</Link>
-            <button onClick={() => setLocale(locale === "en" ? "fr" : "en")} className="font-semibold text-white hover:text-brass" lang={locale === "en" ? "fr" : "en"}>
+            <a
+              href={localePath(loc.href, locale === "en" ? "fr" : "en")}
+              hrefLang={locale === "en" ? "fr" : "en"}
+              onClick={e => { if (e.metaKey || e.ctrlKey || e.shiftKey) return; e.preventDefault(); setLocale(locale === "en" ? "fr" : "en"); }}
+              className="font-semibold text-white hover:text-brass"
+              lang={locale === "en" ? "fr" : "en"}
+            >
               {t("lang", locale)}
-            </button>
+            </a>
           </nav>
         </div>
       </div>

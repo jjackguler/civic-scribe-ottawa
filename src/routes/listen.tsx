@@ -7,15 +7,15 @@ import { MEDIA_SOURCES } from "@/lib/media-sources";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/listen")({
   loader: () => getMediaFast(),
-  head: () => ({
-    meta: [
-      { title: `AI podcasts: the latest episodes — ${SITE.name}` },
-      { name: "description", content: "New episodes from the most-listened AI podcasts, playable right here: Hard Fork, Lex Fridman, Dwarkesh, Latent Space, No Priors and more." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `AI podcasts: the latest episodes — ${SITE.name}`, fr: `Balados IA : les derniers épisodes — ${SITE.name}` },
+      description: { en: `New episodes from the most-listened AI podcasts, playable right here: Hard Fork, Lex Fridman, Dwarkesh, Latent Space, No Priors and more.`, fr: `Les nouveaux épisodes des balados IA les plus écoutés, à écouter ici : Hard Fork, Lex Fridman, Dwarkesh, Latent Space, No Priors et plus.` },
+    }),
   component: ListenPage,
 });
 

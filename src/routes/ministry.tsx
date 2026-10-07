@@ -6,15 +6,15 @@ import { getAiNewsFast, useAiNews, byLocale, timeAgo, useNow, type Story } from 
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/ministry")({
   loader: () => getAiNewsFast(),
-  head: () => ({
-    meta: [
-      { title: `AI Ministry tracker: Minister Evan Solomon — ${SITE.name}` },
-      { name: "description", content: "Every official release from Canada's Minister of Artificial Intelligence and Digital Innovation, plus news coverage of the ministry, updated through the day." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `AI Ministry tracker: Minister Evan Solomon — ${SITE.name}`, fr: `Suivi du ministère de l'IA : le ministre Evan Solomon — ${SITE.name}` },
+      description: { en: `Every official release from Canada's Minister of Artificial Intelligence and Digital Innovation, plus news coverage of the ministry, updated through the day.`, fr: `Chaque communiqué officiel du ministre de l'Intelligence artificielle et de l'Innovation numérique du Canada, et la couverture médiatique du ministère, mis à jour au fil de la journée.` },
+    }),
   component: MinistryPage,
 });
 

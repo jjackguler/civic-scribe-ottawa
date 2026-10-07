@@ -7,17 +7,17 @@ import { getMediaFast, useMedia } from "@/lib/media";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 type Filter = "all" | "newsroom" | "explainers" | "interviews";
 
 export const Route = createFileRoute("/watch")({
   loader: () => getMediaFast(),
-  head: () => ({
-    meta: [
-      { title: `Watch: AI news video — ${SITE.name}` },
-      { name: "description", content: "The latest artificial intelligence video from broadcasters, AI labs, explainers and interview shows, in one place." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Watch: AI news video — ${SITE.name}`, fr: `Vidéos : l’actualité de l’IA — ${SITE.name}` },
+      description: { en: `The latest artificial intelligence video from broadcasters, AI labs, explainers and interview shows, in one place.`, fr: `Les dernières vidéos sur l'intelligence artificielle des télédiffuseurs, laboratoires, vulgarisateurs et émissions d'entrevues, au même endroit.` },
+    }),
   component: WatchPage,
 });
 

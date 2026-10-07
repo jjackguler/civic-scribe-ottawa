@@ -6,14 +6,14 @@ import { PROGRAMS, AUDIENCE_LABEL, type Program } from "@/lib/funding";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/funding")({
-  head: () => ({
-    meta: [
-      { title: `AI funding and grants in Canada — ${SITE.name}` },
-      { name: "description", content: "Federal and provincial programs that fund AI adoption, compute, talent and research in Canada — who qualifies and how to start, checked against official pages." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `AI funding and grants in Canada — ${SITE.name}`, fr: `Financement et subventions en IA au Canada — ${SITE.name}` },
+      description: { en: `Federal and provincial programs that fund AI adoption, compute, talent and research in Canada — who qualifies and how to start, checked against official pages.`, fr: `Programmes fédéraux et provinciaux qui financent l'adoption de l'IA, le calcul, les talents et la recherche au Canada — admissibilité et démarches, vérifiées sur les pages officielles.` },
+    }),
   component: FundingPage,
 });
 

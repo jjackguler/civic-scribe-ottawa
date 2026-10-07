@@ -10,13 +10,13 @@ import { SITE } from "@/lib/site";
 export function NewsletterBox({ variant = "band" }: { variant?: "band" | "card" }) {
   const { locale } = useLocale();
   const [email, setEmail] = useState("");
-  const ready = !!SITE.newsletterUrl;
+  const ready = !!SITE.newsletter.url;
   const fr = locale === "fr";
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!ready) return;
-    const url = new URL("/subscribe", SITE.newsletterUrl);
+    const url = new URL("/subscribe", SITE.newsletter.url);
     url.searchParams.set("email", email);
     window.open(url.toString(), "_blank", "noopener");
   };

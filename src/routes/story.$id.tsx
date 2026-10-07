@@ -11,24 +11,39 @@ import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDevelo
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead, publisherRef, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/story/$id")({
   loader: async ({ params }) => {
     const payload = await getAiNewsFast();
     return { payload, story: payload?.stories.find(s => s.id === params.id) ?? null };
   },
-  head: ({ loaderData }) => {
+  head: ({ match, loaderData }) => {
     const s = loaderData?.story;
-    return {
-      meta: s
-        ? [
-            { title: `${s.title} — ${SITE.name}` },
-            { name: "description", content: s.summary || `${s.source}: ${s.title}` },
-            { property: "og:title", content: s.title },
-            { property: "og:description", content: s.summary || `Reported by ${s.source}` },
-          ]
-        : [{ title: `Story — ${SITE.name}` }, { name: "robots", content: "noindex" }],
-    };
+    if (!s) return seoHead(match, { title: { en: `Story — ${SITE.name}`, fr: `Nouvelle — ${SITE.name}` }, description: SITE.description, noindex: true });
+    const description = s.summary || `${s.source}: ${s.title}`;
+    return seoHead(match, {
+      title: `${s.title} — ${SITE.name}`,
+      description,
+      image: s.image,
+      type: "article",
+      publishedTime: s.publishedAt,
+      jsonLd: (locale, url) => [{
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        headline: s.title.slice(0, 110),
+        description,
+        url,
+        mainEntityOfPage: url,
+        datePublished: s.publishedAt,
+        inLanguage: s.lang === "fr" ? "fr-CA" : "en",
+        image: s.image ? [s.image] : [DEFAULT_OG_IMAGE],
+        // The reporting is the publisher's; we credit it and link to it.
+        author: { "@type": "Organization", name: s.source },
+        isBasedOn: s.link,
+        publisher: publisherRef,
+      }],
+    });
   },
   component: StoryPage,
 });

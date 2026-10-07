@@ -6,15 +6,15 @@ import { NEWS_SOURCES } from "@/lib/news-sources";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/government")({
   loader: () => getAiNewsFast(),
-  head: () => ({
-    meta: [
-      { title: `AI and government in Canada: federal, provincial, municipal — ${SITE.name}` },
-      { name: "description", content: "Artificial intelligence announcements from the Government of Canada, provinces and cities, with news coverage of AI in public services." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `AI and government in Canada: federal, provincial, municipal — ${SITE.name}`, fr: `L'IA et les gouvernements au Canada : fédéral, provincial, municipal — ${SITE.name}` },
+      description: { en: `Artificial intelligence announcements from the Government of Canada, provinces and cities, with news coverage of AI in public services.`, fr: `Annonces sur l'intelligence artificielle du gouvernement du Canada, des provinces et des villes, et la couverture de l'IA dans les services publics.` },
+    }),
   component: GovernmentPage,
 });
 

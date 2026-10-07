@@ -4,14 +4,14 @@ import { EDITORIALS, formatDate } from "@/lib/editorials";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/editor/")({
-  head: () => ({
-    meta: [
-      { title: `Editor's desk — ${SITE.name}` },
-      { name: "description", content: "Opinion and analysis on artificial intelligence in Canada from the editor." },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Editor's desk — ${SITE.name}`, fr: `Mot de la rédaction — ${SITE.name}` },
+      description: { en: `Opinion and analysis on artificial intelligence from the editor of ${SITE.name}.`, fr: `Opinions et analyses sur l'intelligence artificielle par la rédaction de ${SITE.name}.` },
+    }),
   component: EditorIndex,
 });
 

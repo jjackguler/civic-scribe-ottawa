@@ -5,19 +5,15 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { editorUnlock, fundingCheck, newsletterDraft, type FundingReport } from "@/lib/editor.functions";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/editor/tools")({
-  head: () => ({
-    meta: [
-      { title: `Desk tools — ${SITE.name}` },
-      { name: "description", content: "Internal editor tools." },
-      { name: "robots", content: "noindex, nofollow" },
-      { property: "og:title", content: `Desk tools — ${SITE.name}` },
-      { property: "og:description", content: "Internal editor tools." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Desk tools — ${SITE.name}`, fr: `Outils de la rédaction — ${SITE.name}` },
+      description: { en: `Internal editor tools.`, fr: `Outils internes de la rédaction.` },
+      noindex: true,
+    }),
   component: Tools,
 });
 

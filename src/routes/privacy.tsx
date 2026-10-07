@@ -4,14 +4,14 @@ import { ADSENSE_CLIENT } from "@/lib/ads";
 import { useLocale } from "@/lib/locale-context";
 import type { Bi } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({
-    meta: [
-      { title: `Privacy — ${SITE.name}` },
-      { name: "description", content: `What ${SITE.name} collects (very little), and what third parties such as YouTube and advertisers may collect.` },
-    ],
-  }),
+  head: ({ match }) =>
+    seoHead(match, {
+      title: { en: `Privacy — ${SITE.name}`, fr: `Confidentialité — ${SITE.name}` },
+      description: { en: `What ${SITE.name} collects (very little), how we use Claude, and what third parties such as YouTube, analytics and advertisers may collect.`, fr: `Ce que ${SITE.name} recueille (très peu), comment nous utilisons Claude, et ce que des tiers comme YouTube, l'outil de mesure et les annonceurs peuvent recueillir.` },
+    }),
   component: Privacy,
 });
 

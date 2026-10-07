@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as StandardsRouteImport } from './routes/standards'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as NewsRouteImport } from './routes/news'
@@ -43,6 +45,16 @@ const ToolsRoute = ToolsRouteImport.update({
 const StandardsRoute = StandardsRouteImport.update({
   id: '/standards',
   path: '/standards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -143,6 +155,8 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
+  '/rss.xml': typeof RssDotxmlRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
@@ -165,6 +179,8 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
+  '/rss.xml': typeof RssDotxmlRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
@@ -188,6 +204,8 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
+  '/rss.xml': typeof RssDotxmlRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
@@ -212,6 +230,8 @@ export interface FileRouteTypes {
     | '/news'
     | '/newsletter'
     | '/privacy'
+    | '/rss.xml'
+    | '/sitemap.xml'
     | '/standards'
     | '/tools'
     | '/watch'
@@ -234,6 +254,8 @@ export interface FileRouteTypes {
     | '/news'
     | '/newsletter'
     | '/privacy'
+    | '/rss.xml'
+    | '/sitemap.xml'
     | '/standards'
     | '/tools'
     | '/watch'
@@ -256,6 +278,8 @@ export interface FileRouteTypes {
     | '/news'
     | '/newsletter'
     | '/privacy'
+    | '/rss.xml'
+    | '/sitemap.xml'
     | '/standards'
     | '/tools'
     | '/watch'
@@ -279,6 +303,8 @@ export interface RootRouteChildren {
   NewsRoute: typeof NewsRoute
   NewsletterRoute: typeof NewsletterRoute
   PrivacyRoute: typeof PrivacyRoute
+  RssDotxmlRoute: typeof RssDotxmlRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
@@ -311,6 +337,20 @@ declare module '@tanstack/react-router' {
       path: '/standards'
       fullPath: '/standards'
       preLoaderRoute: typeof StandardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -447,6 +487,8 @@ const rootRouteChildren: RootRouteChildren = {
   NewsRoute: NewsRoute,
   NewsletterRoute: NewsletterRoute,
   PrivacyRoute: PrivacyRoute,
+  RssDotxmlRoute: RssDotxmlRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,

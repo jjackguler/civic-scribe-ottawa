@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter, useRouterState } from "@tanstack/react-router";
+import { isFrPath, localePath, stripFr } from "./seo";
 import type { Bi, Locale } from "./i18n";
 import type { NewsPayload } from "./news-engine";
 import { hasTranslation, putTranslations } from "./translations";
@@ -17,25 +19,23 @@ function visibleIds(payload: NewsPayload | undefined, locale: Locale): string[] 
     .map(s => s.id);
 }
 
+/**
+ * The language comes from the URL (/fr/... is French), so every page has a
+ * crawlable French version. Switching language moves to the other URL.
+ */
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
+  const router = useRouter();
+  const publicHref = useRouterState({ select: s => s.location.publicHref ?? s.location.href });
+  const locale: Locale = isFrPath(publicHref) ? "fr" : "en";
   const [trVersion, setTrVersion] = useState(0);
   const [newsTick, setNewsTick] = useState(0);
   const qc = useQueryClient();
   const inflight = useRef<string | null>(null);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("aibroadsheet-locale");
-      if (saved === "en" || saved === "fr") {
-        setLocaleState(saved);
-        document.documentElement.lang = saved;
-      } else if (navigator.language?.toLowerCase().startsWith("fr")) {
-        setLocaleState("fr");
-        document.documentElement.lang = "fr";
-      }
-    } catch {}
-  }, []);
+    document.documentElement.lang = locale === "fr" ? "fr-CA" : "en-CA";
+    try { localStorage.setItem("aibroadsheet-locale", locale); } catch {}
+  }, [locale]);
 
   // Re-check when the news query updates.
   useEffect(() => qc.getQueryCache().subscribe(e => {
@@ -60,9 +60,9 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   }, [locale, newsTick, qc]);
 
   const setLocale = (l: Locale) => {
-    setLocaleState(l);
+    if (l === locale) return;
     try { localStorage.setItem("aibroadsheet-locale", l); } catch {}
-    if (typeof document !== "undefined") document.documentElement.lang = l;
+    router.history.push(localePath(stripFr(publicHref), l));
   };
 
   return (

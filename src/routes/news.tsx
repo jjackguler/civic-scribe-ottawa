@@ -7,6 +7,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { seoHead } from "@/lib/seo";
 
 type Search = { section?: SectionId };
 
@@ -16,12 +17,19 @@ export const Route = createFileRoute("/news")({
     return { section: typeof v === "string" && SECTIONS.some(x => x.id === v) ? (v as SectionId) : undefined };
   },
   loader: () => getAiNewsFast(),
-  head: () => ({
-    meta: [
-      { title: `AI news, live — ${SITE.name}` },
-      { name: "description", content: "The latest artificial intelligence news from the world's newsrooms, labs and governments, filed by topic and updated through the day." },
-    ],
-  }),
+  head: ({ match }) => {
+    const section = SECTIONS.find(x => x.id === (match.search as { section?: string }).section);
+    return seoHead(match, {
+      title: section
+        ? { en: `${section.label.en}: AI news — ${SITE.name}`, fr: `${section.label.fr} : actualité IA — ${SITE.name}` }
+        : { en: `AI news, live — ${SITE.name}`, fr: `Actualité IA en direct — ${SITE.name}` },
+      description: {
+        en: "The latest artificial intelligence news from the world's newsrooms, labs and governments, filed by topic and updated through the day.",
+        fr: "Les dernières nouvelles sur l'intelligence artificielle des salles de rédaction, laboratoires et gouvernements du monde, classées par thème et mises à jour au fil de la journée.",
+      },
+      canonicalSearch: section ? `?section=${section.id}` : "",
+    });
+  },
   component: NewsPage,
 });
 
