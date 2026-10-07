@@ -34,7 +34,6 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = locale === "fr" ? "fr-CA" : "en-CA";
-    try { localStorage.setItem("aibroadsheet-locale", locale); } catch {}
   }, [locale]);
 
   // Re-check when the news query updates.
@@ -61,7 +60,6 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const setLocale = (l: Locale) => {
     if (l === locale) return;
-    try { localStorage.setItem("aibroadsheet-locale", l); } catch {}
     router.history.push(localePath(stripFr(publicHref), l));
   };
 

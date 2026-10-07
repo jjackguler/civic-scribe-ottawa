@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ExternalLink, Link2, Check } from "lucide-react";
+import { ExternalLink, Link2, Check, Flag } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { StoryCard, StoryLink, StoryMeta, CoverageBadge, storyKicker } from "@/components/StoryCard";
@@ -11,6 +11,7 @@ import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDevelo
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { editorMailto } from "@/lib/contact";
 import { seoHead, publisherRef, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const Route = createFileRoute("/story/$id")({
@@ -155,6 +156,7 @@ function StoryPage() {
                 : `${SITE.name} gathers stories from newsrooms, labs and governments. We don't rewrite the facts: the headline, excerpt and photo belong to the publisher credited above. `}
               <Link to="/standards" className="text-lake font-semibold hover:underline">{fr ? "Nos normes" : "Our standards"}</Link>
             </p>
+            <ReportError title={s.title} />
 
             {more.length > 0 && (
               <section className="mt-12">
@@ -197,5 +199,24 @@ function Share({ title }: { title: string }) {
         {copied ? (locale === "fr" ? "Lien copié" : "Link copied") : (locale === "fr" ? "Copier le lien" : "Copy link")}
       </button>
     </div>
+  );
+}
+
+/** "Report an error": opens an email with the page address filled in, or the corrections page while no inbox is set. */
+function ReportError({ title }: { title: string }) {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+  const [url, setUrl] = useState("");
+  useEffect(() => setUrl(window.location.href), []);
+  const label = fr ? "Signaler une erreur" : "Report an error";
+  const mail = editorMailto(
+    fr ? `Erreur signalée : ${title}` : `Error report: ${title}`,
+    fr ? `Page : ${url}\n\nCe qui est inexact :\n` : `Page: ${url}\n\nWhat is wrong:\n`,
+  );
+  const cls = "inline-flex items-center gap-1.5 mt-4 text-[0.92rem] font-semibold text-muted-ink hover:text-ink underline underline-offset-2";
+  return mail ? (
+    <a href={mail} className={cls}><Flag className="h-4 w-4" aria-hidden="true" />{label}</a>
+  ) : (
+    <Link to="/corrections" hash="report" className={cls}><Flag className="h-4 w-4" aria-hidden="true" />{label}</Link>
   );
 }

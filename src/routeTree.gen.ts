@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
@@ -22,6 +23,7 @@ import { Route as ListenRouteImport } from './routes/listen'
 import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as FundingRouteImport } from './routes/funding'
+import { Route as CorrectionsRouteImport } from './routes/corrections'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -40,6 +42,11 @@ const WatchRoute = WatchRouteImport.update({
 const ToolsRoute = ToolsRouteImport.update({
   id: '/tools',
   path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StandardsRoute = StandardsRouteImport.update({
@@ -97,6 +104,11 @@ const FundingRoute = FundingRouteImport.update({
   path: '/funding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CorrectionsRoute = CorrectionsRouteImport.update({
+  id: '/corrections',
+  path: '/corrections',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdvertiseRoute = AdvertiseRouteImport.update({
   id: '/advertise',
   path: '/advertise',
@@ -147,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/corrections': typeof CorrectionsRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
   '/interviews': typeof InterviewsRoute
@@ -158,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
+  '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -171,6 +185,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/corrections': typeof CorrectionsRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
   '/interviews': typeof InterviewsRoute
@@ -182,6 +197,7 @@ export interface FileRoutesByTo {
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
+  '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -196,6 +212,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/corrections': typeof CorrectionsRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
   '/interviews': typeof InterviewsRoute
@@ -207,6 +224,7 @@ export interface FileRoutesById {
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
+  '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -222,6 +240,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/corrections'
     | '/funding'
     | '/government'
     | '/interviews'
@@ -233,6 +252,7 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/standards'
+    | '/terms'
     | '/tools'
     | '/watch'
     | '/editor/$slug'
@@ -246,6 +266,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/corrections'
     | '/funding'
     | '/government'
     | '/interviews'
@@ -257,6 +278,7 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/standards'
+    | '/terms'
     | '/tools'
     | '/watch'
     | '/editor/$slug'
@@ -270,6 +292,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/corrections'
     | '/funding'
     | '/government'
     | '/interviews'
@@ -281,6 +304,7 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/standards'
+    | '/terms'
     | '/tools'
     | '/watch'
     | '/editor/$slug'
@@ -295,6 +319,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdvertiseRoute: typeof AdvertiseRoute
+  CorrectionsRoute: typeof CorrectionsRoute
   FundingRoute: typeof FundingRoute
   GovernmentRoute: typeof GovernmentRoute
   InterviewsRoute: typeof InterviewsRoute
@@ -306,6 +331,7 @@ export interface RootRouteChildren {
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
+  TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
   EditorSlugRoute: typeof EditorSlugRoute
@@ -330,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/tools'
       fullPath: '/tools'
       preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/standards': {
@@ -409,6 +442,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FundingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/corrections': {
+      id: '/corrections'
+      path: '/corrections'
+      fullPath: '/corrections'
+      preLoaderRoute: typeof CorrectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/advertise': {
       id: '/advertise'
       path: '/advertise'
@@ -479,6 +519,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdvertiseRoute: AdvertiseRoute,
+  CorrectionsRoute: CorrectionsRoute,
   FundingRoute: FundingRoute,
   GovernmentRoute: GovernmentRoute,
   InterviewsRoute: InterviewsRoute,
@@ -490,6 +531,7 @@ const rootRouteChildren: RootRouteChildren = {
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
+  TermsRoute: TermsRoute,
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,
   EditorSlugRoute: EditorSlugRoute,

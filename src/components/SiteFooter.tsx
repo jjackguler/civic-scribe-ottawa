@@ -4,6 +4,7 @@ import { useLocale } from "@/lib/locale-context";
 import { TOPICS } from "@/lib/news";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { editorMailto } from "@/lib/contact";
 
 export function SiteFooter() {
   const { locale, pick } = useLocale();
@@ -11,6 +12,8 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
   const head = "font-bold text-white mb-3";
   const link = "text-white/75 hover:text-white hover:underline";
+  const mail = editorMailto();
+  const social = ([["LinkedIn", SITE.social.linkedin], ["X", SITE.social.x], ["YouTube", SITE.social.youtube]] as const).filter(([, href]) => !!href);
   return (
     <footer className="mt-20 bg-night text-white">
       <div className="container-mw pt-12 pb-10 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
@@ -18,6 +21,15 @@ export function SiteFooter() {
           <Logo inverse />
           <p className="mt-4 max-w-md text-white/75 font-serif text-[1.05rem] leading-relaxed">{SITE.description[locale]}</p>
           <p className="mt-4 text-sm text-white/55 max-w-md">{t("sourcesNote", locale)}</p>
+          {social.length > 0 && (
+            <ul className="mt-5 flex flex-wrap gap-2" aria-label={fr ? "Réseaux sociaux" : "Social media"}>
+              {social.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} target="_blank" rel="noopener noreferrer me" className="inline-flex items-center h-9 px-3 rounded-[4px] border border-white/25 text-[0.9rem] font-semibold text-white/85 hover:border-brass hover:text-white">{label}</a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <nav aria-label={fr ? "Thèmes" : "Topics"}>
           <p className={head}>{fr ? "Thèmes" : "Topics"}</p>
@@ -49,14 +61,17 @@ export function SiteFooter() {
             <li><Link to="/newsletter" className={link}>{fr ? "Infolettre" : "Newsletter"}</Link></li>
             <li><Link to="/standards" className={link}>{fr ? "Normes éditoriales" : "Editorial standards"}</Link></li>
             <li><Link to="/about" className={link}>{fr ? "À propos et sources" : "About and sources"}</Link></li>
+            <li><Link to="/corrections" className={link}>{fr ? "Corrections" : "Corrections"}</Link></li>
             <li><Link to="/privacy" className={link}>{fr ? "Confidentialité" : "Privacy"}</Link></li>
-            <li><a href={`mailto:${SITE.email.editor}`} className={link}>{fr ? "Écrire à la rédaction" : "Contact the editor"}</a></li>
+            <li><Link to="/terms" className={link}>{fr ? "Conditions d'utilisation" : "Terms of use"}</Link></li>
+            <li><a href={fr ? "/fr/rss.xml" : "/rss.xml"} className={link}>RSS</a></li>
+            {mail && <li><a href={mail} className={link}>{fr ? "Écrire à la rédaction" : "Contact the editor"}</a></li>}
           </ul>
         </nav>
       </div>
       <div className="border-t border-white/15">
         <div className="container-mw py-5 text-sm text-white/55 flex flex-wrap gap-x-6 gap-y-1">
-          <span>© {year} {SITE.name}</span>
+          <span>© {year} {SITE.publisher.name}</span>
           <span>{fr ? "Les titres, extraits, photos et vidéos appartiennent à leurs éditeurs." : "Headlines, excerpts, photos and videos belong to their publishers."}</span>
           <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline">{t("builtWithClaude", locale)}</a>
         </div>

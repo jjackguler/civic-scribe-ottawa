@@ -61,7 +61,7 @@ const SECTIONS: { h: Bi; p: Bi[] }[] = [
   {
     h: { en: "Corrections", fr: "Corrections" },
     p: [
-      { en: `If something on our pages is wrong — a headline filed under the wrong desk, a broken credit, an error in our own writing — email ${SITE.email.editor}. We fix it and note the correction on anything we wrote ourselves. Errors in a publisher's article belong to that publisher; we'll point you to them.`, fr: `Si quelque chose est inexact sur nos pages — une nouvelle mal classée, un crédit manquant, une erreur dans nos propres textes — écrivez à ${SITE.email.editor}. Nous corrigeons et signalons la correction sur nos propres textes. Les erreurs dans l'article d'un éditeur relèvent de cet éditeur; nous vous dirigerons vers lui.` },
+      { en: `If something on our pages is wrong — a headline filed under the wrong desk, a broken credit, an error in our own writing — use the “Report an error” link on any story page. We fix it and log every correction to our own work, dated, on the corrections page. Errors in a publisher's article belong to that publisher; we'll point you to them.`, fr: `Si quelque chose est inexact sur nos pages — une nouvelle mal classée, un crédit manquant, une erreur dans nos propres textes — utilisez le lien « Signaler une erreur » de chaque page de nouvelle. Nous corrigeons et consignons chaque correction de notre propre travail, datée, sur la page Corrections. Les erreurs dans l'article d'un éditeur relèvent de cet éditeur; nous vous dirigerons vers lui.` },
     ],
   },
 ];

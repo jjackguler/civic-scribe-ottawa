@@ -11,6 +11,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: "band" | "card" 
   const { locale } = useLocale();
   const [email, setEmail] = useState("");
   const ready = !!SITE.newsletter.url;
+  const provider = SITE.newsletter.provider;
   const fr = locale === "fr";
 
   const submit = (e: React.FormEvent) => {
@@ -49,9 +50,11 @@ export function NewsletterBox({ variant = "band" }: { variant?: "band" | "card" 
             {ready ? (fr ? "M'abonner" : "Subscribe") : (fr ? "Bientôt" : "Opening soon")}
           </button>
         </div>
-        <p className="text-white/55 text-[0.82rem] mt-2">
+        <p className="text-white/55 text-[0.82rem] mt-2 max-w-[52ch]">
           {ready
-            ? (fr ? "Gratuit. Désabonnement en un clic." : "Free. Unsubscribe in one click.")
+            ? (fr
+                ? `Gratuit. Vous confirmez votre abonnement sur la page ${provider ? `de ${provider}` : "de notre fournisseur"}; nous ne conservons jamais votre courriel. Désabonnement en un clic.`
+                : `Free. You confirm your subscription on ${provider ? `${provider}'s` : "our provider's"} page; we never store your email. Unsubscribe in one click.`)
             : (fr ? "Les inscriptions ouvrent avec le premier numéro." : "Sign-ups open with the first issue.")}
         </p>
       </form>
