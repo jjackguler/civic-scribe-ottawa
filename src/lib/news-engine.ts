@@ -170,22 +170,39 @@ async function fetchText(url: string, ms: number) {
     signal: AbortSignal.timeout(ms),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return readCapped(res, 600_000);
+  return readCapped(res, 600_000, ms);
 }
 
-/** Feeds list newest first, so the first ~600 KB holds everything we use. */
-export async function readCapped(res: Response, maxBytes: number): Promise<string> {
-  if (!res.body) return (await res.text()).slice(0, maxBytes);
+/** Resolve to `fallback` if `p` takes longer than `ms`. */
+export function withTimeout<T>(p: Promise<T>, ms: number, fallback: T): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  return Promise.race([
+    p.finally(() => clearTimeout(timer)),
+    new Promise<T>(r => { timer = setTimeout(() => r(fallback), ms); }),
+  ]);
+}
+
+/**
+ * Feeds list newest first, so the first few hundred KB hold everything we
+ * use. Reading stops at maxBytes or after ms, whichever comes first, so a
+ * stalled response can never hang a rebuild.
+ */
+export async function readCapped(res: Response, maxBytes: number, ms = 6000): Promise<string> {
+  if (!res.body) return (await withTimeout(res.text(), ms, "")).slice(0, maxBytes);
   const reader = res.body.getReader();
   const chunks: Uint8Array[] = [];
   let size = 0;
+  const deadline = Date.now() + ms;
   while (size < maxBytes) {
-    const { done, value } = await reader.read();
-    if (done || !value) break;
-    chunks.push(value);
-    size += value.byteLength;
+    const left = deadline - Date.now();
+    if (left <= 0) break;
+    const r = await withTimeout(reader.read(), left, { done: true, value: undefined } as ReadableStreamReadResult<Uint8Array>);
+    if (r.done || !r.value) break;
+    chunks.push(r.value);
+    size += r.value.byteLength;
   }
-  reader.cancel().catch(() => {});
+  // Release the connection right away: Workers allow only a few open at once.
+  try { await withTimeout(reader.cancel().catch(() => {}), 1000, undefined); } catch {}
   const buf = new Uint8Array(size);
   let off = 0;
   for (const c of chunks) { buf.set(c, off); off += c.byteLength; }
@@ -304,7 +321,7 @@ async function fetchSource(src: NewsSource): Promise<SourceCache> {
 
 const titleKey = (t: string) => t.toLowerCase().replace(/[^a-z0-9àâçéèêëîïôûùüÿœ]+/g, " ").trim();
 
-async function buildPayload(): Promise<NewsPayload> {
+async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
   const cache = (g.__mwSrc ??= new Map());
   const now = Date.now();
 
@@ -318,11 +335,12 @@ async function buildPayload(): Promise<NewsPayload> {
       const effTtl = c && !c.ok ? Math.min(ttl, 5 * 60 * 1000) : ttl;
       return { src, order, overdue: age - effTtl };
     })
-    .filter(x => x.overdue >= 0)
+    .filter(x => fetchFeeds && x.overdue >= 0)
     .sort((a, b) => (b.overdue === Infinity ? 1 : 0) - (a.overdue === Infinity ? 1 : 0) || a.order - b.order)
     .slice(0, MAX_FEEDS_PER_RUN);
 
-  const fresh = await Promise.all(due.map(async ({ src }) => [src.id, await fetchSource(src)] as const));
+  const fresh = await Promise.all(due.map(async ({ src }) =>
+    [src.id, await withTimeout(fetchSource(src), 9000, { ts: Date.now(), ok: false, stories: [], error: "Timed out" } as SourceCache)] as const));
   for (const [id, c] of fresh) {
     const prev = cache.get(id);
     // Keep the last good stories if a refresh fails.
@@ -357,7 +375,7 @@ async function buildPayload(): Promise<NewsPayload> {
   for (const s of stories) if (!s.image && og.get(s.link)) s.image = og.get(s.link)!;
   const ogBudget = Math.max(0, Math.min(MAX_OG_LOOKUPS, SUBREQUEST_BUDGET - due.length));
   const needImage = stories.filter(s => !s.image && !s.gov && s.kind !== "trending" && !og.has(s.link)).slice(0, ogBudget);
-  await Promise.all(needImage.map(async s => { s.image = await lookupOgImage(s.link); }));
+  if (fetchFeeds) await withTimeout(Promise.all(needImage.map(async s => { s.image = await lookupOgImage(s.link); })), 5000, []);
 
   const sources: SourceStatus[] = NEWS_SOURCES.map(src => {
     const c = cache.get(src.id);
@@ -370,7 +388,9 @@ export async function loadNews(): Promise<NewsPayload> {
   const cached = g.__mwNews;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   if (g.__mwNewsInflight) return g.__mwNewsInflight;
-  g.__mwNewsInflight = buildPayload()
+  // If the rebuild runs long, publish whatever the feeds have delivered so far.
+  g.__mwNewsInflight = withTimeout(buildPayload(), 14000, null as unknown as NewsPayload)
+    .then(p => p ?? buildPayload(false))
     .then(payload => {
       if (payload.stories.length > 0) g.__mwNews = { ts: Date.now(), payload };
       return payload.stories.length > 0 || !cached ? payload : cached.payload;

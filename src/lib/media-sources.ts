@@ -32,7 +32,6 @@ const yt = (id: string, name: string, ref: string, extra: Partial<MediaSource> =
 export const MEDIA_SOURCES: MediaSource[] = [
   // ── Broadcast and newsroom channels (AI stories only) ───────────────────
   yt("yt-cnbc", "CNBC Television", "UCrp_UI8XtuYfpiqluWLD7Lw", { newsroom: true }),
-  yt("yt-bloomberg-tech", "Bloomberg Technology", "UCrM7B7SL_g1edFOnmj-SDKg", { newsroom: true }),
   yt("yt-bloomberg-tv", "Bloomberg Television", "UCIALMKvObZNtJ6AmdCLP7Lg", { newsroom: true }),
   yt("yt-cnn", "CNN", "UCupvZG-5ko_eiXAupbDfxWw", { newsroom: true }),
   yt("yt-reuters", "Reuters", "UChqUTb7kYRX8-EiaN3XFrSQ", { newsroom: true }),

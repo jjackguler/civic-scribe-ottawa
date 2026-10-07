@@ -4,7 +4,7 @@
  */
 import { MEDIA_SOURCES, type MediaSource } from "./media-sources";
 import { AI_RE, AI_TALK_RE, INTERVIEW_RE, tagsOf } from "./classify";
-import { readCapped } from "./news-engine";
+import { readCapped, withTimeout } from "./news-engine";
 import type { Topic } from "./news-sources";
 
 export type MediaItem = {
@@ -163,7 +163,7 @@ async function fetchSource(src: MediaSource): Promise<Cache> {
       signal: AbortSignal.timeout(7000),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const xml = await readCapped(res, src.type === "podcast" ? 450_000 : 300_000);
+    const xml = await readCapped(res, src.type === "podcast" ? 450_000 : 300_000, 7000);
     if (!/<(rss|feed)[\s>]/i.test(xml)) throw new Error("Not a feed");
     const { items, feedTitle } = src.type === "youtube" ? parseYouTube(xml, src) : parsePodcast(xml, src);
     return { ts: Date.now(), ok: true, items, feedTitle };
@@ -178,7 +178,8 @@ async function build(): Promise<MediaPayload> {
   const due = MEDIA_SOURCES
     .filter(s => { const c = cache.get(s.id); return !c || now - c.ts > (c.ok ? SOURCE_TTL : 6 * 60 * 1000); })
     .slice(0, MAX_FETCH_PER_RUN);
-  const fresh = await Promise.all(due.map(async s => [s.id, await fetchSource(s)] as const));
+  const fresh = await Promise.all(due.map(async s =>
+    [s.id, await withTimeout(fetchSource(s), 10000, { ts: Date.now(), ok: false, items: [], error: "Timed out" } as Cache)] as const));
   for (const [id, c] of fresh) {
     const prev = cache.get(id);
     cache.set(id, c.ok || !prev ? c : { ...prev, ts: c.ts, ok: false, error: c.error });
@@ -205,7 +206,8 @@ export async function loadMedia(): Promise<MediaPayload> {
   const cached = g.__abMedia;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   if (g.__abMediaInflight) return g.__abMediaInflight;
-  g.__abMediaInflight = build()
+  g.__abMediaInflight = withTimeout(build(), 15000, null as unknown as MediaPayload)
+    .then(p => p ?? cached?.payload ?? { items: [], sources: [], fetchedAt: new Date().toISOString() })
     .then(p => {
       if (p.items.length > 0) g.__abMedia = { ts: Date.now(), payload: p };
       return p.items.length > 0 || !cached ? p : cached.payload;
