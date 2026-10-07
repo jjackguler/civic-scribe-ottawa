@@ -16,7 +16,8 @@ const esc = (s: string) =>
 
 /** The news desk as it stands, without waiting long for slow feeds. */
 async function currentNews(): Promise<NewsPayload | null> {
-  return withTimeout(loadNews().catch(() => null), 8000, null);
+  // A cold isolate needs up to ~14 s to build the desk (loadNews has its own limit).
+  return withTimeout(loadNews().catch(() => null), 16000, null);
 }
 
 const isPublic = (s: Story) => s.kind !== "trending" && s.kind !== "beat";
@@ -81,10 +82,12 @@ function excerpt(s: string, max = 240) {
   return `${cut.slice(0, cut.lastIndexOf(" "))}…`;
 }
 
-export async function buildRss(locale: Locale): Promise<string> {
+/** null when the desk has no stories yet (cold start): the route answers 503 so readers keep their last copy. */
+export async function buildRss(locale: Locale): Promise<string | null> {
   const fr = locale === "fr";
   const news = await currentNews();
   const all = (news?.stories ?? []).filter(isPublic);
+  if (all.length === 0) return null;
   // French readers get French-language sources first, as on the site.
   const ordered = fr ? [...all.filter(s => s.lang === "fr"), ...all.filter(s => s.lang !== "fr")] : all;
   const items = ordered
