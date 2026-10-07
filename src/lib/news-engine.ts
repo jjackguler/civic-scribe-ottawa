@@ -165,10 +165,12 @@ function parseFeed(xml: string, src: NewsSource): Story[] {
 }
 
 async function fetchText(url: string, ms: number) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms + 2000);
   const res = await fetch(url, {
     headers: { "User-Agent": UA, Accept: "application/rss+xml, application/atom+xml, application/xml, text/xml, text/html, */*" },
-    signal: AbortSignal.timeout(ms),
-  });
+    signal: ctrl.signal,
+  }).finally(() => clearTimeout(timer));
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return readCapped(res, 600_000, ms);
 }
@@ -183,30 +185,11 @@ export function withTimeout<T>(p: Promise<T>, ms: number, fallback: T): Promise<
 }
 
 /**
- * Feeds list newest first, so the first few hundred KB hold everything we
- * use. Reading stops at maxBytes or after ms, whichever comes first, so a
- * stalled response can never hang a rebuild.
+ * Read a response body, giving up after `ms`. Only the first `maxBytes`
+ * characters are parsed (feeds list newest first).
  */
 export async function readCapped(res: Response, maxBytes: number, ms = 6000): Promise<string> {
-  if (!res.body) return (await withTimeout(res.text(), ms, "")).slice(0, maxBytes);
-  const reader = res.body.getReader();
-  const chunks: Uint8Array[] = [];
-  let size = 0;
-  const deadline = Date.now() + ms;
-  while (size < maxBytes) {
-    const left = deadline - Date.now();
-    if (left <= 0) break;
-    const r = await withTimeout(reader.read(), left, { done: true, value: undefined } as ReadableStreamReadResult<Uint8Array>);
-    if (r.done || !r.value) break;
-    chunks.push(r.value);
-    size += r.value.byteLength;
-  }
-  // Release the connection right away: Workers allow only a few open at once.
-  try { await withTimeout(reader.cancel().catch(() => {}), 1000, undefined); } catch {}
-  const buf = new Uint8Array(size);
-  let off = 0;
-  for (const c of chunks) { buf.set(c, off); off += c.byteLength; }
-  return new TextDecoder("utf-8").decode(buf);
+  return (await withTimeout(res.text(), ms, "")).slice(0, maxBytes);
 }
 
 /** Publisher's own share photo (og:image) for stories whose feed carried none. */
