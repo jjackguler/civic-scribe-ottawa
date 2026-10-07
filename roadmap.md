@@ -1,8 +1,13 @@
 # Roadmap
 
-- [ ] Claude setup: claude.server.ts (fetch, cache, daily cap, timeout, JSON) + ANTHROPIC_API_KEY / EDITOR_PASSCODE secrets
-- [ ] Feature 1: EN↔FR headline translation, labelled, via display()
-- [ ] Feature 2: Claude refinement of top front-page clusters
-- [ ] Feature 3: passcode-protected editor tools (funding check, newsletter draft)
-- [ ] Feature 4: "How we use Claude" on /standards + README, footer + /about credit, i18n strings
-- [ ] Verify pages render
+Done
+- [x] Claude features: labelled EN↔FR translation, cluster refinement, passcode-gated editor tools, disclosures
+- [x] Crawlable /fr URLs, canonical + hreflang, share cards, JSON-LD, dynamic sitemap, RSS (EN/FR)
+- [x] Search; tested Canadian feeds (Ottawa, Québec, Alberta, OPC, Vector, CanadaBuys AI tenders)
+- [x] Trust pages: terms, corrections, who runs this, privacy (Claude, CASL, analytics)
+
+Next (owner decisions)
+- [ ] Display mode per source before ads — docs/feed-terms.md, src/lib/rights.ts
+- [ ] Story archive in D1 and a global Claude cap in KV — docs/proposals.md
+- [ ] Verify and add funding candidates — docs/funding-todo.md
+- [ ] Original-content rhythm and AdSense — docs/ad-readiness.md

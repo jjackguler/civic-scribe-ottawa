@@ -16,8 +16,21 @@ The world's AI newspaper, live, in English and French: news from public publishe
 | Video channels and podcasts | `src/lib/media-sources.ts` |
 | Your own headline for a big story (shown with the original underneath) | `src/lib/desk.ts` |
 | Ads: direct campaigns, Google AdSense IDs | `src/lib/ads.ts` (+ `public/ads.txt` once AdSense approves you) |
-| Newsletter address, contact emails | `src/lib/site.ts` |
+| Owner details, newsletter, contact emails, analytics token, social links (TODO values) | `src/lib/site.ts` |
+| Full story or headline-only per publisher | `src/lib/rights.ts` (see `docs/feed-terms.md`) |
+| Corrections log | `src/lib/corrections.ts` |
 | Interface text (EN/FR) | `src/lib/i18n.ts` |
+
+## Languages and SEO
+
+English pages live at `/path`, French at `/fr/path` (router rewrite in `src/router.tsx`). Every page sets its title, canonical URL, hreflang alternates, share card and JSON-LD through `seoHead()` in `src/lib/seo.ts`. `/sitemap.xml`, `/rss.xml` and `/fr/rss.xml` are built live from the news desk.
+
+## Docs
+
+- `docs/ad-readiness.md` — what advertising needs, and the owner checklist
+- `docs/feed-terms.md` — what each publisher's feed terms say
+- `docs/proposals.md` — story archive (D1) and global Claude cap (KV), awaiting approval
+- `docs/funding-todo.md` — funding programs to verify before adding
 
 ## Standards
 
