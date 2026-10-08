@@ -255,7 +255,15 @@ def main():
         # URLS="name.ext=https://... name2.ext=https://..." — files the owner asked for (their own work)
         for pair in os.environ.get("URLS", "").split():
             name, url = pair.split("=", 1)
-            data = get(url, binary=True, timeout=180)
+            data = None
+            for ua in ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36", UA):
+                try:
+                    req = urllib.request.Request(url, headers={"User-Agent": ua, "Referer": "https://suno.com/", "Accept": "audio/mpeg,*/*"})
+                    with urllib.request.urlopen(req, timeout=180) as r:
+                        data = r.read()
+                    break
+                except Exception as e:  # noqa: BLE001
+                    log("  try", ua[:20], repr(e)[:120])
             if data:
                 with open(os.path.join(OUT, "music", name), "wb") as f:
                     f.write(data)

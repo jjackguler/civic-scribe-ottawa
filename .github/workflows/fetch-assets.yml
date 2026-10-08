@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ../assets-out
-          ONLY=url URLS="suno-record-whole.mp3=https://cdn1.suno.ai/bd28d8dd-594a-4491-a6b9-0e3d556c4595.mp3 suno-record-whole-cover.jpeg=https://cdn2.suno.ai/image_large_bd28d8dd-594a-4491-a6b9-0e3d556c4595.jpeg" BUDGET_SEC=600 python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=url URLS="suno-record-whole.mp3=https://cdn1.suno.ai/bd28d8dd-594a-4491-a6b9-0e3d556c4595.mp3 suno-record-whole-b.mp3=https://cdn2.suno.ai/bd28d8dd-594a-4491-a6b9-0e3d556c4595.mp3" BUDGET_SEC=600 python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         if: always()
