@@ -60,7 +60,9 @@ async function main() {
   const silent = join(work, "titles-video.mp4");
   await run("ffmpeg", ["-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", join(work, "tparts.txt"), "-c", "copy", silent]);
   if (music) {
-    await run("ffmpeg", ["-y", "-loglevel", "error", "-i", silent, "-i", music, "-filter_complex", `[1:a]atrim=0:${cfg.duration},afade=t=in:d=1.5,afade=t=out:st=${cfg.duration - 3}:d=3,loudnorm=I=-16:TP=-1.5[a]`, "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", resolve(outPath)]);
+    // A finished music edit (cfg.music) wants only short safety fades; a raw bed gets long ones.
+    const fi = cfg.music?.fadeIn ?? 1.5, fo = cfg.music?.fadeOut ?? 3;
+    await run("ffmpeg", ["-y", "-loglevel", "error", "-i", silent, "-i", music, "-filter_complex", `[1:a]atrim=0:${cfg.duration},afade=t=in:d=${fi},afade=t=out:st=${cfg.duration - fo}:d=${fo},loudnorm=I=-16:TP=-1.5[a]`, "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", resolve(outPath)]);
   } else await run("ffmpeg", ["-y", "-loglevel", "error", "-i", silent, "-c", "copy", resolve(outPath)]);
   console.log(`rendered ${outPath} (${cfg.duration}s)`);
 }

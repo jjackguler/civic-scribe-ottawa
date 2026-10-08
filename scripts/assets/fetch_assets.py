@@ -68,7 +68,13 @@ def strip_html(s):
 PD_OK = re.compile(r"^(public domain|pd|cc0|no restrictions)", re.I)
 
 
-def commons(query, folder, limit=8, min_w=900):
+# Portraits of real people (editorial use): public domain, CC0, CC BY (no ShareAlike) or
+# the UK Open Government Licence, always credited. "Personality rights" warnings are
+# expected on portraits of living people and are fine for news use; trademark flags are not.
+PEOPLE_OK = re.compile(r"^(public domain|pd|cc0|no restrictions|cc by \d|cc-by-\d|cc by$|ogl|open government)", re.I)
+
+
+def commons(query, folder, limit=8, min_w=900, lic_ok=PD_OK, people=False):
     api = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode({
         "action": "query", "format": "json", "generator": "search", "gsrnamespace": 6,
         "gsrsearch": f"{query} filetype:bitmap", "gsrlimit": 30,
@@ -86,9 +92,9 @@ def commons(query, folder, limit=8, min_w=900):
         md = ii.get("extmetadata", {})
         lic = strip_html(md.get("LicenseShortName", {}).get("value", ""))
         restr = strip_html(md.get("Restrictions", {}).get("value", ""))
-        if not PD_OK.match(lic) or ii.get("width", 0) < min_w or ii.get("mime") not in ("image/jpeg", "image/png", "image/tiff"):
+        if not lic_ok.match(lic) or "sa" in lic.lower().replace("usa", "").split() or "-sa" in lic.lower() or ii.get("width", 0) < min_w or ii.get("mime") not in ("image/jpeg", "image/png", "image/tiff"):
             continue
-        if restr and restr.lower() not in ("", "none"):
+        if restr and restr.lower() not in ("", "none") and not (people and set(restr.lower().replace(",", " ").split()) <= {"personality"}):
             continue  # trademark/personality-rights flags: skip to be safe
         url = ii.get("thumburl") or ii.get("url")
         data = get(url, binary=True)
@@ -270,6 +276,12 @@ def main():
                 CREDITS.append({"file": f"music/{name}", "source": url, "author": "Deep Cave Records (owner's Suno account)", "license": "Owner's own Suno creation"})
                 log(f"url {name}: {len(data)} bytes")
         save_meta()
+    if only == "people":
+        os.makedirs(os.path.join(OUT, "people"), exist_ok=True)
+        for q in os.environ.get("PEOPLE", "").split(";"):
+            if q.strip() and not over_budget():
+                commons(q.strip(), "people", limit=int(os.environ.get("PER", "6")), min_w=700, lic_ok=PEOPLE_OK, people=True)
+                save_meta()
     if only == "intro":
         os.makedirs(os.path.join(OUT, "intro"), exist_ok=True)
         for q in INTRO_QUERIES:
