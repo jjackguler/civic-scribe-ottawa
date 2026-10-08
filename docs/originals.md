@@ -58,7 +58,7 @@ Locally: `cd scripts/originals && npm ci && npx playwright install chromium && n
 - Every name and number spoken or shown must appear in the publishers' text.
 - Each video names its sources on the last card and in the description, and links them on the site.
 - AI voice and AI illustrations are disclosed on the card, in the description and on the site.
-- No real people's likeness or voice, no logos.
+- No cloned or real people's voices, no logos. AI-generated images never show people. Archive photos of people are public domain historical images, used as illustration only and never cast as the subject of a story.
 
 ## Collage style (v2)
 
