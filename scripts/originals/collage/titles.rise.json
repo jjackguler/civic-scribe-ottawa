@@ -1,0 +1,25 @@
+{
+  "name": "AI Broadsheet — The Rise (title sequence)",
+  "duration": 64,
+  "shots": [
+    { "t0": 0, "t1": 7.5, "bg": "clouds", "fig": "lathe", "fill": "towers", "fill2": "birds", "h": 1500 },
+    { "t0": 7.5, "t1": 15, "bg": "refinery", "fig": "steel", "fill": "ibm", "h": 1560, "x": 330 },
+    { "t0": 15, "t1": 22.5, "bg": "cumulus", "fig": "drafter", "fill": "linomachines", "h": 1150, "y": 520 },
+    { "t0": 22.5, "t1": 30, "bg": "railyard", "fig": "librarian", "fill": "pleiades", "fill2": "birds", "h": 1200, "y": 480 },
+    { "t0": 30, "t1": 37.5, "bg": "dam", "fig": "operator", "fill": "generators", "h": 1350, "y": 420 },
+    { "t0": 37.5, "t1": 45, "bg": "clouds", "fig": "photographer", "fill": "lightning", "h": 1450 },
+    { "t0": 45, "t1": 52.5, "bg": "refinery2", "over": "radio" },
+    { "t0": 52.5, "t1": 64, "bg": "towers", "over": "birds" }
+  ],
+  "texts": [
+    { "t0": 2.0, "t1": 6.4, "pos": "left:80px;top:300px;width:820px", "cls": "say", "cred": "AI Broadsheet presents", "html": "The machines learned to read." },
+    { "t0": 9.5, "t1": 13.8, "pos": "left:80px;top:1380px;width:900px", "cls": "say", "html": "Then they learned to write." },
+    { "t0": 17, "t1": 21.5, "pos": "left:80px;top:300px;width:900px", "cls": "say", "html": "Every story now has<br>a second author." },
+    { "t0": 24.5, "t1": 29, "pos": "left:80px;top:300px;width:900px", "cls": "say", "html": "Somebody has to<br>read the machines." },
+    { "t0": 32, "t1": 36.5, "pos": "left:80px;top:1460px;width:900px", "cls": "say", "cred": "Our first rule", "html": "Written from the reporting." },
+    { "t0": 39.5, "t1": 44, "pos": "left:80px;top:300px;width:900px", "cls": "say", "cred": "Our second rule", "html": "Checked against the source." },
+    { "t0": 47, "t1": 51.5, "pos": "left:80px;top:1380px;width:900px", "cls": "say", "cred": "And we tell you", "html": "When the voice<br>isn't human." },
+    { "t0": 54.5, "t1": 62.6, "pos": "top:780px", "cls": "title", "html": "AI Broadsheet", "track": [0.04, 0.12], "fade": 1.4 },
+    { "t0": 56.5, "t1": 62.6, "pos": "top:900px", "cls": "sub", "html": "A new language for the news.", "fade": 1.2 }
+  ]
+}
