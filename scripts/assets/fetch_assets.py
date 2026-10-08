@@ -251,6 +251,17 @@ def main():
             commons(q, "photos", limit=6)
         for q in NEWSPRINT_QUERIES:
             commons(q, "newsprint", limit=3, min_w=1200)
+    if only == "url":
+        # URLS="name.ext=https://... name2.ext=https://..." — files the owner asked for (their own work)
+        for pair in os.environ.get("URLS", "").split():
+            name, url = pair.split("=", 1)
+            data = get(url, binary=True, timeout=180)
+            if data:
+                with open(os.path.join(OUT, "music", name), "wb") as f:
+                    f.write(data)
+                CREDITS.append({"file": f"music/{name}", "source": url, "author": "Deep Cave Records (owner's Suno account)", "license": "Owner's own Suno creation"})
+                log(f"url {name}: {len(data)} bytes")
+        save_meta()
     if only == "intro":
         os.makedirs(os.path.join(OUT, "intro"), exist_ok=True)
         for q in INTRO_QUERIES:
