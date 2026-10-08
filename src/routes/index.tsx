@@ -10,6 +10,8 @@ import { NewsletterBox } from "@/components/NewsletterBox";
 import { LiveHero, type HeroSlide } from "@/components/LiveHero";
 import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
+import { useOriginals, getOriginalsFast } from "@/lib/originals";
+import { OriginalCard } from "@/components/Originals";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
@@ -28,8 +30,8 @@ import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const [news, pulse] = await Promise.all([getAiNewsFast(), getPulseFast()]);
-    return { news, pulse };
+    const [news, pulse, originals] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast()]);
+    return { news, pulse, originals };
   },
   head: ({ match }) =>
     seoHead(match, {
@@ -70,7 +72,8 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
 
 function Home() {
-  const { news: initial, pulse: initialPulse } = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse, originals: initialOriginals } = Route.useLoaderData();
+  const { data: originals } = useOriginals(initialOriginals);
   const { data, isError } = useAiNews(initial);
   const { data: pulse } = usePulse(initialPulse);
   const { data: media } = useMedia();
@@ -211,6 +214,23 @@ function Home() {
             action={<MoreLink to="/showcase" />}
           />
           <Showcase pulse={pulse} />
+        </section>
+      )}
+
+      {(originals?.items.length ?? 0) > 0 && (
+        <section className="mt-14 bg-signal text-signal-ink">
+          <div className="container-mw py-10">
+            <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
+              <div>
+                <h2 className="masthead-serif text-[2.2rem] sm:text-[2.8rem] leading-none">{locale === "fr" ? "Explicatifs" : "Explainers"}</h2>
+                <p className="font-semibold mt-2">{locale === "fr" ? "L'actualité IA du jour en une minute. Deux par jour." : "Today's AI news in a minute. Two a day."}</p>
+              </div>
+              <Link to="/originals" className="inline-flex items-center gap-1 font-bold underline underline-offset-4 decoration-2">{locale === "fr" ? "Tous les explicatifs" : "All explainers"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+            </div>
+            <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
+              {originals!.items.slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
+            </div>
+          </div>
         </section>
       )}
 

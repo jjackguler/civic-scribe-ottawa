@@ -18,6 +18,7 @@ import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as OriginalsRouteImport } from './routes/originals'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
 import { Route as NewsRouteImport } from './routes/news'
@@ -81,6 +82,11 @@ const RssDotxmlRoute = RssDotxmlRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OriginalsRoute = OriginalsRouteImport.update({
+  id: '/originals',
+  path: '/originals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsletterRoute = NewsletterRouteImport.update({
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
+  '/originals': typeof OriginalsRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
@@ -223,6 +230,7 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
+  '/originals': typeof OriginalsRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
@@ -254,6 +262,7 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
+  '/originals': typeof OriginalsRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
@@ -286,6 +295,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
+    | '/originals'
     | '/privacy'
     | '/rss.xml'
     | '/search'
@@ -316,6 +326,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
+    | '/originals'
     | '/privacy'
     | '/rss.xml'
     | '/search'
@@ -346,6 +357,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
+    | '/originals'
     | '/privacy'
     | '/rss.xml'
     | '/search'
@@ -377,6 +389,7 @@ export interface RootRouteChildren {
   NewsRoute: typeof NewsRoute
   NewsSitemapDotxmlRoute: typeof NewsSitemapDotxmlRoute
   NewsletterRoute: typeof NewsletterRoute
+  OriginalsRoute: typeof OriginalsRoute
   PrivacyRoute: typeof PrivacyRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SearchRoute: typeof SearchRoute
@@ -457,6 +470,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/originals': {
+      id: '/originals'
+      path: '/originals'
+      fullPath: '/originals'
+      preLoaderRoute: typeof OriginalsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/newsletter': {
@@ -609,6 +629,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewsRoute: NewsRoute,
   NewsSitemapDotxmlRoute: NewsSitemapDotxmlRoute,
   NewsletterRoute: NewsletterRoute,
+  OriginalsRoute: OriginalsRoute,
   PrivacyRoute: PrivacyRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SearchRoute: SearchRoute,

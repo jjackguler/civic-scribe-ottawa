@@ -1,0 +1,97 @@
+# AI Broadsheet Originals: one short explainer video, twice a day.
+# Setup: docs/originals.md. Needs repository secrets ANTHROPIC_API_KEY and
+# ELEVENLABS_API_KEY; GEMINI_API_KEY and the YOUTUBE_* secrets are optional.
+name: Originals
+
+on:
+  schedule:
+    - cron: "30 11 * * *"   # 07:30 Toronto (EDT)
+    - cron: "30 21 * * *"   # 17:30 Toronto (EDT)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Render a test video without calling any API"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: originals
+  cancel-in-progress: false
+
+jobs:
+  explainer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the media branch (manifest)
+        run: |
+          git fetch origin media:media 2>/dev/null || true
+          if git show-ref --quiet refs/heads/media; then
+            git worktree add ../media media
+          else
+            git worktree add --detach ../media
+            cd ../media && git checkout --orphan media && git rm -rf . >/dev/null 2>&1 || true
+          fi
+          mkdir -p ../media/originals
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install tools
+        working-directory: scripts/originals
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Make the explainer
+        working-directory: scripts/originals
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          ORIGINALS_PRIVACY: ${{ vars.ORIGINALS_PRIVACY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+        run: |
+          npx tsx run.ts ${{ inputs.dry_run && '--dry-run' || '' }} --out out --manifest ../../../media/originals/manifest.json
+
+      - name: Keep a copy of the video (GitHub release)
+        if: ${{ hashFiles('scripts/originals/out/entry.json') != '' && !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ID=$(node -p "require('./scripts/originals/out/entry.json').id")
+          gh release create "original-$ID" scripts/originals/out/explainer.mp4 scripts/originals/out/poster.jpg \
+            --title "Original $ID" --notes-file scripts/originals/out/description.txt --latest=false
+
+      - name: Publish the manifest
+        if: ${{ !inputs.dry_run }}
+        run: |
+          cd ../media
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "AI Broadsheet Originals"
+            git config user.email "actions@users.noreply.github.com"
+            git add originals/manifest.json
+            git commit -m "Originals: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push origin media
+          else
+            echo "No new explainer."
+          fi
+
+      - name: Upload the test render
+        if: ${{ inputs.dry_run }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dry-run
+          path: scripts/originals/out/explainer.mp4

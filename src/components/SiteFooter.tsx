@@ -44,6 +44,7 @@ export function SiteFooter() {
           <ul className="grid gap-1.5 text-[0.92rem]">
             <li><Link to="/news" className={link}>{fr ? "En continu" : "Latest"}</Link></li>
             <li><Link to="/watch" className={link}>{fr ? "Vidéos" : "Watch"}</Link></li>
+            <li><Link to="/originals" className={link}>{fr ? "Explicatifs" : "Explainers"}</Link></li>
             <li><Link to="/showcase" className={link}>{fr ? "Fait avec l'IA" : "Made with AI"}</Link></li>
             <li><Link to="/interviews" className={link}>{fr ? "Entrevues" : "Interviews"}</Link></li>
             <li><Link to="/listen" className={link}>{fr ? "Balados" : "Podcasts"}</Link></li>

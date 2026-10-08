@@ -15,15 +15,16 @@ type Item = { label: Bi; to: string; section?: SectionId };
 const MAIN: Item[] = [
   { label: { en: "Latest", fr: "En continu" }, to: "/news" },
   { label: { en: "Watch", fr: "Vidéos" }, to: "/watch" },
+  { label: { en: "Explainers", fr: "Explicatifs" }, to: "/originals" },
   { label: { en: "Made with AI", fr: "Fait avec l'IA" }, to: "/showcase" },
   { label: { en: "Interviews", fr: "Entrevues" }, to: "/interviews" },
   { label: { en: "Podcasts", fr: "Balados" }, to: "/listen" },
   { label: { en: "World", fr: "Monde" }, to: "/news", section: "world" },
   { label: { en: "Canada", fr: "Canada" }, to: "/news", section: "canada" },
-  { label: { en: "Policy", fr: "Politiques" }, to: "/news", section: "policy" },
 ];
 
 const MORE: Item[] = [
+  { label: { en: "Policy", fr: "Politiques" }, to: "/news", section: "policy" },
   { label: { en: "Analysis", fr: "Analyses" }, to: "/news", section: "analysis" },
   { label: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" }, to: "/ministry" },
   { label: { en: "Government", fr: "Gouvernement" }, to: "/government" },

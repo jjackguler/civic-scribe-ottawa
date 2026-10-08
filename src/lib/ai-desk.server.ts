@@ -58,7 +58,8 @@ const STOP = new Set(("a an the this that these those its it new why how what wh
 const ALWAYS = new Set(["ai", "ia", "i"]);
 
 /** Numbers and names in `out` that the sources don't contain. Empty = passes. */
-export function unsupported(out: string, source: string): string[] {
+export function unsupported(out: string, source: string, allow: Iterable<string> = []): string[] {
+  const extra = new Set([...allow].map(w => w.toLowerCase()));
   const src = fold(source);
   const bad: string[] = [];
   // Numbers must appear as whole numbers in the sources, with the same scale word
@@ -81,7 +82,7 @@ export function unsupported(out: string, source: string): string[] {
       const clean = w.replace(/['’]s$/i, "").replace(/[.'’-]+$/, "");
       if (!/^\p{Lu}/u.test(clean) && !/\d/.test(clean)) return;
       const f = fold(clean);
-      if (ALWAYS.has(f)) return;
+      if (ALWAYS.has(f) || extra.has(f)) return;
       if (i === 0 && STOP.has(f)) return;
       if (src.includes(f)) return;
       // Sentence-initial ordinary words ("Researchers", "Le") are fine when the lowercase form is in the source.

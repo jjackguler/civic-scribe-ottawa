@@ -1,0 +1,16 @@
+{
+  "name": "aibroadsheet-originals",
+  "private": true,
+  "type": "module",
+  "description": "Daily explainer videos for AI Broadsheet. Runs in GitHub Actions (.github/workflows/originals.yml).",
+  "scripts": {
+    "run": "tsx run.ts",
+    "dry": "tsx run.ts --dry-run"
+  },
+  "dependencies": {
+    "@fontsource-variable/newsreader": "^5.2.8",
+    "@fontsource-variable/schibsted-grotesk": "^5.2.8",
+    "playwright": "^1.55.0",
+    "tsx": "^4.20.0"
+  }
+}
