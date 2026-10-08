@@ -1,0 +1,53 @@
+commons 'NASA human computers': 6
+commons 'ENIAC women programmers': 3
+commons 'telephone switchboard operators 1910s': 6
+commons 'woman at typewriter 1940s': 1
+commons 'librarian card catalog': 6
+commons 'man reading newspaper 1920s': 3
+commons 'artist painting at easel 1920s': 6
+commons 'photographer with camera 1920s': 4
+commons 'telegraph operator': 6
+commons 'punched card operator 1950s': 1
+commons 'NASA IBM 704 computer room': 0
+commons 'office workers 1950s typing pool': 0
+commons 'scientist at blackboard equations': 4
+commons 'mathematician chalkboard 1950s': 0
+commons 'Grace Hopper UNIVAC': 1
+commons 'post office mail sorting 1920s': 5
+commons 'stock exchange traders 1920s': 1
+commons 'businessmen shaking hands 1950s': 0
+commons 'construction workers lunch beam': 0
+commons 'radio announcer microphone 1930s': 6
+commons 'factory assembly line 1920s': 6
+commons 'crowd waiting line 1930s': 2
+commons 'detective magnifying glass': 1
+commons 'lighthouse keeper': 6
+commons 'newspaper front page 1920': 3
+commons 'New-York tribune front page 1922': 3
+commons 'Evening star Washington front page 1925': 0
+commons 'newspaper page 1910 Chronicling America': 3
+commons 'classified advertisements newspaper 1920': 1
+kenney impact-sounds: no zip link
+kenney interface-sounds: no zip link
+kenney rpg-audio: no zip link
+kenney ui-audio: no zip link
+  FAIL https://kenney.nl/assets/foley-sounds <HTTPError 404: 'Not Found'>
+kenney sci-fi-sounds: no zip link
+freesound 'scissors cutting paper': 0
+freesound 'paper tear': 0
+freesound 'tape rip': 0
+freesound 'rubber stamp': 0
+freesound 'marker pen writing': 0
+freesound 'pencil scribble': 0
+freesound 'paper slide table': 0
+freesound 'paper crumple': 0
+freesound 'page turn': 0
+freesound 'typewriter': 0
+freesound 'camera shutter': 0
+freesound 'whoosh paper': 0
+freesound 'newspaper': 0
+freesound 'glue stick': 0
+freesound 'stapler': 0
+freesound 'printing press': 0
+archive items: holizna-cc-0-20-minute-meditation-1, holizna-cc-0-cosmic-waves, holizna-cc-0-20-minute-meditation-2
+holizna: 0 tracks
