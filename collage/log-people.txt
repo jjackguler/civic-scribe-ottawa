@@ -1,12 +1,6 @@
-commons 'Sam Altman': 6
-commons 'Dario Amodei': 6
-commons 'Demis Hassabis': 0
-commons 'Satya Nadella': 3
-commons 'Mark Zuckerberg': 6
-commons 'Elon Musk': 6
-commons 'Jensen Huang': 6
+commons 'Hassabis': 0
+commons 'Demis Hassabis DeepMind': 2
+commons 'Demis Hassabis Prime Minister': 8
 commons 'Liang Wenfeng': 1
-commons 'Arthur Mensch': 6
-commons 'Sundar Pichai': 6
-commons 'Mustafa Suleyman': 6
-commons 'Alexandr Wang': 6
+commons '梁文锋': 0
+commons 'DeepSeek founder': 8
