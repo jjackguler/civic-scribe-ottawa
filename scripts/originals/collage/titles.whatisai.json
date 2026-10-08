@@ -1,6 +1,6 @@
 {
  "name": "AI Broadsheet \u2014 What is AI? (opening titles)",
- "duration": 90.0,
+ "duration": 102.5,
  "scenes": [
   {
    "type": "cold",
@@ -328,9 +328,10 @@
     "nadella",
     "zuckerberg",
     "musk",
-    "huang"
+    "reader"
    ],
-   "beat": 0.3934
+   "beat": 0.3934,
+   "q": 7
   },
   {
    "type": "spread",
@@ -350,7 +351,16 @@
    "step": 0.3947,
    "stringAt": 69.8,
    "stampAt": 70.85,
-   "stamp": "THE RACE IS ON."
+   "stamp": "THE RACE IS ON.",
+   "extra": {
+    "face": "reader",
+    "x": 760,
+    "y": 1250,
+    "h": 400,
+    "rot": 9,
+    "at": 69.4,
+    "note": "who's this?"
+   }
   },
   {
    "type": "cold",
@@ -391,30 +401,83 @@
    "stamps": []
   },
   {
-   "type": "cold",
-   "t0": 78.73,
-   "t1": 85.2,
-   "lines": [
+   "type": "flash",
+   "t0": 36.25,
+   "t1": 36.384,
+   "face": "reader",
+   "color": "black"
+  },
+  {
+   "type": "flash",
+   "t0": 46.62,
+   "t1": 46.754,
+   "face": "reader",
+   "color": "yellow"
+  },
+  {
+   "type": "flash",
+   "t0": 55.9,
+   "t1": 56.034,
+   "face": "reader",
+   "color": "cobalt"
+  },
+  {
+   "type": "whois",
+   "t0": 79.3,
+   "t1": 96.9,
+   "face": "reader",
+   "color": "yellow",
+   "org": "AI BROADSHEET",
+   "pushAt": 94.4,
+   "stamps": [
     {
-     "text": "So. What is AI?",
-     "at": 79.5,
-     "y": 800,
-     "size": 64
+     "text": "BUILDS MODELS? NO.",
+     "at": 84.25,
+     "x": 70,
+     "y": 820,
+     "rot": -6,
+     "size": 60,
+     "until": 87.9,
+     "bg": "rgba(250,246,236,.92)"
     },
     {
-     "text": "Stick around. Somebody has to keep the record.",
-     "at": 81.6,
-     "y": 920,
+     "text": "SELLS CHIPS? NO.",
+     "at": 85.75,
+     "x": 110,
+     "y": 980,
+     "rot": 4,
      "size": 60,
-     "cps": 26
+     "until": 87.9,
+     "bg": "rgba(250,246,236,.92)"
+    }
+   ],
+   "forkAt": 89.5,
+   "forkUntil": 94.4,
+   "lines": [
+    {
+     "text": "They cook.",
+     "at": 87.9,
+     "reserve": true
+    },
+    {
+     "text": "He eats.",
+     "at": 89.5,
+     "reserve": true
+    },
+    {
+     "text": "Then he tells you if it was any good.",
+     "at": 91.2,
+     "reserve": true
     }
    ]
   },
   {
    "type": "masthead",
-   "t0": 85.2,
-   "t1": 90.0,
+   "t0": 96.9,
+   "t1": 102.5,
    "sub": "What is AI? Read all about it.",
+   "stamp": "TASTE-TESTED DAILY.",
+   "stampAt": 98.6,
    "credits": "Music: \u201cWhat Is AI?\u201d, made with Suno for AI Broadsheet.\nNarration: synthetic voice.\nPhotos: Wikimedia Commons (public domain and CC BY), credited in the description."
   }
  ],
@@ -429,12 +492,15 @@
   28.224,
   31.393,
   34.55,
+  36.25,
   37.708,
   40.865,
   44.023,
+  46.62,
   47.181,
   50.338,
   53.496,
+  55.9,
   56.653,
   59.811,
   62.96,
@@ -448,7 +514,13 @@
   66.107,
   70.85,
   75.569,
-  85.2
+  79.3,
+  84.25,
+  85.75,
+  87.9,
+  89.5,
+  96.9,
+  98.6
  ],
  "black": [
   [
@@ -458,7 +530,7 @@
  ],
  "audio": {
   "music": {
-   "note": "'What Is AI?' (Suno, Deep Cave Records), take B: 0\u201350.329 s + 69.267 s\u2013end, joined on the beat",
+   "note": "'What Is AI?' (Suno, Deep Cave Records), take B: 0\u201350.329 s + 69.267 s\u2013end, joined on the beat; silence for the dialogue; the intro riff (5.317 s on) comes back under the masthead",
    "gain": 0,
    "duck": [
     [
@@ -472,9 +544,19 @@
      -9
     ],
     [
+     65.6,
+     67.3,
+     -8
+    ],
+    [
      72.4,
      75.5,
      -3
+    ],
+    [
+     96.9,
+     102.5,
+     -6
     ]
    ]
   },
@@ -505,12 +587,40 @@
     "tempo": 1.1
    },
    {
-    "file": "bm_george-n3a.wav",
+    "file": "bm_george-w0.wav",
+    "at": 65.75
+   },
+   {
+    "file": "bm_george-w1.wav",
     "at": 79.5
    },
    {
-    "file": "bm_george-n3b.wav",
-    "at": 81.6
+    "file": "bm_george-w2.wav",
+    "at": 81.4
+   },
+   {
+    "file": "bm_george-w3.wav",
+    "at": 84.2
+   },
+   {
+    "file": "bm_george-w4.wav",
+    "at": 87.9
+   },
+   {
+    "file": "bm_george-w5.wav",
+    "at": 89.5
+   },
+   {
+    "file": "bm_george-w6.wav",
+    "at": 91.2
+   },
+   {
+    "file": "bm_george-w7.wav",
+    "at": 94.4
+   },
+   {
+    "file": "bm_george-w8.wav",
+    "at": 97.4
    }
   ],
   "sfx": [
@@ -548,26 +658,6 @@
     "kind": "type",
     "at": 73.95,
     "gain": -12
-   },
-   {
-    "kind": "type",
-    "at": 79.5,
-    "gain": -10
-   },
-   {
-    "kind": "type",
-    "at": 81.6,
-    "gain": -10
-   },
-   {
-    "kind": "thump",
-    "at": 85.2,
-    "gain": -2
-   },
-   {
-    "kind": "paper",
-    "at": 85.25,
-    "gain": -8
    },
    {
     "kind": "shutter",
@@ -617,6 +707,56 @@
    {
     "kind": "shutter",
     "at": 61.391,
+    "gain": -6
+   },
+   {
+    "kind": "click",
+    "at": 36.25,
+    "gain": -10
+   },
+   {
+    "kind": "click",
+    "at": 46.62,
+    "gain": -10
+   },
+   {
+    "kind": "click",
+    "at": 55.9,
+    "gain": -10
+   },
+   {
+    "kind": "slap",
+    "at": 79.3,
+    "gain": -6
+   },
+   {
+    "kind": "stamp",
+    "at": 84.25,
+    "gain": -6
+   },
+   {
+    "kind": "stamp",
+    "at": 85.75,
+    "gain": -6
+   },
+   {
+    "kind": "thump",
+    "at": 89.5,
+    "gain": -6
+   },
+   {
+    "kind": "shutter",
+    "at": 94.4,
+    "gain": -8
+   },
+   {
+    "kind": "thump",
+    "at": 96.9,
+    "gain": -2
+   },
+   {
+    "kind": "stamp",
+    "at": 98.6,
     "gain": -6
    }
   ]

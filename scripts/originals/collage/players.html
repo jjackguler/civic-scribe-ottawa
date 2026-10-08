@@ -221,6 +221,7 @@ BUILD.rapid = (s, root) => {
     const [pw0, ph0] = CONFIG.sizes[f] || [900, 1200], ph = 1500, pw = Math.round(pw0 * ph / ph0);
     const por = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:${Math.round((W + 120 - pw) / 2)}px;top:${H + 60 - ph + 120}px"><img src="${A("players/" + f + ".png")}"></div>`);
     L.appendChild(por);
+    if (s.q === i) { const st = stampEl("?", 260, "#D3261D"); st.style.cssText += ";left:640px;top:260px;transform:rotate(12deg);padding:0 46px 10px"; L.appendChild(st); }
     return { L, por, r: (hash(i, 7) - .5) * 8 };
   });
   return t => {
@@ -252,6 +253,12 @@ BUILD.spread = (s, root) => {
   const pth = document.createElementNS("http://www.w3.org/2000/svg", "path");
   pth.setAttribute("d", d); pth.setAttribute("fill", "none"); pth.setAttribute("stroke", "#D3261D"); pth.setAttribute("stroke-width", "7"); pth.setAttribute("stroke-linecap", "round");
   svg.appendChild(pth); root.appendChild(svg);
+  let extra = null;
+  if (s.extra) {
+    const x = s.extra, [pw0, ph0] = CONFIG.sizes[x.face] || [900, 1200], ph = x.h || 430, pw = Math.round(pw0 * ph / ph0);
+    extra = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:${x.x}px;top:${x.y}px;z-index:6"><img src="${A("players/" + x.face + ".png")}"><div class="hand" style="position:absolute;left:-40px;top:-70px;background:var(--yellow);padding:10px 22px 14px;font-size:56px;transform:rotate(-8deg);box-shadow:0 8px 12px rgba(0,0,0,.3)">${esc(x.note)}</div></div>`);
+    root.appendChild(extra);
+  }
   const st = stampEl(s.stamp, 120, "#D3261D"); root.appendChild(st);
   let len = 0;
   return t => {
@@ -264,7 +271,51 @@ BUILD.spread = (s, root) => {
     });
     pth.style.strokeDashoffset = (len * (1 - p(t, s.stringAt, 1.4))).toFixed(1);
     slamIn(st, t, s.stampAt, 150, 1560, -6);
+    if (extra) { const x = s.extra; if (t < x.at) extra.style.visibility = "hidden"; else { extra.style.visibility = "visible"; const k = oBack(p(t, x.at, .14)); extra.style.transform = `rotate(${x.rot || 8}deg) scale(${lerp(1.5, 1, k).toFixed(3)})`; } }
     root.style.transform = `scale(${(1 + .05 * p(t, s.t0, s.t1 - s.t0)).toFixed(4)})`;
+  };
+};
+
+BUILD.flash = (s, root) => {
+  bgField(root, s.color || "black");
+  const [pw0, ph0] = CONFIG.sizes[s.face] || [900, 1200], ph = 1500, pw = Math.round(pw0 * ph / ph0);
+  const por = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:${Math.round((W + 120 - pw) / 2)}px;top:${H + 180 - ph}px"><img src="${A("players/" + s.face + ".png")}"></div>`);
+  root.appendChild(por);
+  const st = stampEl(s.text || "?", s.size || 240, "#D3261D"); st.style.cssText += `;left:${s.sx ?? 560}px;top:${s.sy ?? 220}px;transform:rotate(10deg)`;
+  root.appendChild(st);
+  return t => { por.style.transform = `scale(${(1.06 - .06 * p(t, s.t0, s.t1 - s.t0)).toFixed(3)})`; };
+};
+
+BUILD.whois = (s, root) => {
+  bgField(root, s.color || "yellow");
+  newsStrip(root, 620, 1660, 580, 400, 4, 333, .9);
+  const no = h(`<div class="tape elite" style="font-size:38px;left:110px;top:170px;transform:rotate(-4deg)">PLAYER No. 11 <s style="color:#D3261D">(UNINVITED)</s></div>`);
+  root.appendChild(no);
+  const [pw0, ph0] = CONFIG.sizes[s.face] || [900, 1200], ph = 1240, pw = Math.round(pw0 * ph / ph0);
+  const por = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:${Math.round((W + 120 - pw) / 2 + 40)}px;top:250px"><img src="${A("players/" + s.face + ".png")}"></div>`);
+  root.appendChild(por);
+  const name = h(`<div class="strip anton" style="background:var(--paper);color:var(--ink);font-size:150px;clip-path:${torn(171, 5, 10)}">WHO'S<br>THIS?</div>`); root.appendChild(name);
+  const org = h(`<div class="strip anton" style="background:var(--ink);color:var(--paper);font-size:58px;letter-spacing:2px;clip-path:${torn(172, 4, 8)}">${esc(s.org)}</div>`); root.appendChild(org);
+  const stamps = (s.stamps || []).map(x => { const e = stampEl(x.text, x.size || 92, x.color || "#D3261D"); if (x.bg) e.style.background = x.bg; root.appendChild(e); return { e, x }; });
+  // knife and fork, for "He eats."
+  const cutlery = h(`<svg style="position:absolute;left:0;top:0;z-index:7" width="300" height="420" viewBox="0 0 300 420"><g fill="#141210" stroke="#FAF8F2" stroke-width="8"><path d="M70 20v120c0 22 14 34 26 38v220h34V178c12-4 26-16 26-38V20h-16v110h-12V20h-16v110h-12V20h-16v110h-12V20z"/><path d="M220 20c-40 30-50 110-40 170h30v210h34V20z"/></g></svg>`);
+  root.appendChild(cutlery);
+  const note = h(`<div class="hand" style="position:absolute;left:100px;max-width:960px;font-size:68px;color:var(--ink);background:#FAF6EC;padding:14px 30px 20px;box-shadow:0 10px 18px rgba(0,0,0,.3);transform:rotate(-1.5deg);clip-path:${torn(173, 4, 10)}"></div>`);
+  root.appendChild(note);
+  const lines = s.lines.map(l => { const e = h(`<div style="opacity:0">${esc(l.text)}</div>`); note.appendChild(e); return { e, l }; });
+  return t => {
+    const u = p(t, s.t0, s.t1 - s.t0), push = s.pushAt ? oCubic(p(t, s.pushAt, 1.2)) : 0;
+    por.style.transform = `translate(${(-14 + 28 * u).toFixed(1)}px,0) scale(${(1.12 - .12 * oCubic(p(t, s.t0, .2)) + .03 * u + .22 * push).toFixed(4)})`;
+    por.style.transformOrigin = "50% 25%";
+    slamIn(no, t, s.t0 + .05, 0, 0, 0, 1.6, .12);
+    const nk = oBack(p(t, s.t0 + .1, .22)); name.style.transform = `translate(${lerp(-900, 70, nk).toFixed(0)}px,1150px) rotate(-3deg)`;
+    const ok = oBack(p(t, s.t0 + .25, .22)); org.style.transform = `translate(${lerp(1200, 110, ok).toFixed(0)}px,1470px) rotate(2deg)`;
+    const fade = 1 - push;
+    name.style.opacity = org.style.opacity = no.style.opacity = fade.toFixed(3);
+    stamps.forEach(({ e, x }) => { if (x.until && t >= x.until) { e.style.visibility = "hidden"; return; } slamIn(e, t, x.at, x.x, x.y, x.rot || 0); });
+    if (t < s.forkAt || t >= (s.forkUntil ?? 1e9)) cutlery.style.visibility = "hidden"; else { cutlery.style.visibility = "visible"; const k = oBack(p(t, s.forkAt, .16)); cutlery.style.transform = `translate(740px,${lerp(-500, 820, k).toFixed(0)}px) rotate(-14deg)`; }
+    note.style.top = "1600px"; note.style.visibility = t >= s.lines[0].at && push < .5 ? "visible" : "hidden";
+    lines.forEach(({ e, l }) => { e.style.opacity = t >= l.at ? 1 : 0; e.style.display = t >= l.at || l.reserve ? "block" : "none"; });
   };
 };
 
@@ -279,7 +330,9 @@ BUILD.masthead = (s, root) => {
   root.appendChild(box);
   const small = h(`<div class="elite" style="position:absolute;left:120px;right:120px;top:1560px;white-space:pre-line;text-align:center;font-size:30px;line-height:1.45;color:#3b352d">${esc(s.credits)}</div>`);
   root.appendChild(small);
+  const mst = s.stamp ? stampEl(s.stamp, 64, "#D3261D") : null; if (mst) root.appendChild(mst);
   return t => {
+    if (mst) slamIn(mst, t, s.stampAt, 300, 1300, -5);
     const k = p(t, s.t0, .3);
     box.style.transform = `scale(${lerp(1.35, 1, oCubic(k)).toFixed(3)})`; box.style.opacity = Math.min(1, k * 3);
     box.querySelector("#sub").style.opacity = p(t, s.t0 + .9, .5);
