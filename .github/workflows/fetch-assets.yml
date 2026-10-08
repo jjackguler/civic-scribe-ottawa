@@ -28,16 +28,16 @@ jobs:
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         run: |
-          cd ..
-          git -C "$GITHUB_WORKSPACE" fetch origin assets || true
-          if git -C "$GITHUB_WORKSPACE" rev-parse --verify origin/assets >/dev/null 2>&1; then
-            git -C "$GITHUB_WORKSPACE" worktree add assets-branch origin/assets -B assets
+          B="$RUNNER_TEMP/assets-branch"
+          git fetch origin assets || true
+          if git rev-parse --verify origin/assets >/dev/null 2>&1; then
+            git worktree add -B assets "$B" origin/assets
           else
-            git -C "$GITHUB_WORKSPACE" worktree add --orphan -b assets assets-branch
+            git worktree add --orphan -b assets "$B"
           fi
-          mkdir -p assets-branch/collage
-          cp -r assets-out/* assets-branch/collage/
-          cd assets-branch
+          mkdir -p "$B/collage"
+          cp -r ../assets-out/* "$B/collage/"
+          cd "$B"
           git config user.name "AI Broadsheet Assets"
           git config user.email "actions@users.noreply.github.com"
           git add -A
