@@ -26,7 +26,23 @@ def log(*a):
     LOG.append(s)
 
 
-def get(url, binary=False, tries=3, timeout=60):
+START = time.time()
+BUDGET = float(os.environ.get("BUDGET_SEC", "1e9"))
+
+
+def over_budget():
+    return time.time() - START > BUDGET
+
+
+def save_meta():
+    only = os.environ.get("ONLY", "") or "all"
+    with open(os.path.join(OUT, f"credits-{only}.json"), "w") as f:
+        json.dump(CREDITS, f, indent=1)
+    with open(os.path.join(OUT, f"log-{only}.txt"), "w") as f:
+        f.write("\n".join(LOG))
+
+
+def get(url, binary=False, tries=2, timeout=40):
     for k in range(tries):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": UA})
@@ -162,7 +178,7 @@ def freesound(query, limit=4, folder="sfx"):
     previews = [(u.replace("-lq.mp3", "-hq.mp3"), sid) for u, sid in re.findall(r'(https://cdn\.freesound\.org/previews/\d+/(\d+)_\d+-lq\.mp3)', html)]
     seen, n = set(), 0
     for purl, sid in previews:
-        if sid in seen or n >= limit:
+        if sid in seen or n >= limit or over_budget():
             continue
         seen.add(sid)
         title = re.search(rf'href="(/people/([^/]+)/sounds/{sid}/)"[^>]*>([^<]+)<', html)
@@ -175,6 +191,7 @@ def freesound(query, limit=4, folder="sfx"):
             f.write(data)
         CREDITS.append({"file": f"{folder}/{name}", "source": page, "author": title.group(2) if title else "", "title": title.group(3).strip() if title else "", "license": "CC0 1.0 (filtered by Freesound license search)"})
         n += 1
+        save_meta()
     log(f"freesound '{query}': {n}")
 
 
@@ -230,9 +247,12 @@ def main():
             kenney(p)
         for q in FREESOUND:
             freesound(q, limit=5)
-    if only in ("", "audio", "music"):
+    if only == "sfx2":
+        for q in ["scissors snip", "paper tear", "rubber stamp", "pencil scribble", "paper slide", "paper rustle", "whoosh", "typewriter key", "camera shutter", "tape"]:
+            freesound(q, limit=3)
+    if only in ("", "audio", "music", "sfx2"):
         for q in MUSIC:
-            freesound(q, limit=4, folder="music")
+            freesound(q, limit=3, folder="music")
     name = f"credits-{only or 'all'}.json"
     with open(os.path.join(OUT, name), "w") as f:
         json.dump(CREDITS, f, indent=1)

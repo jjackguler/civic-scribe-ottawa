@@ -22,11 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Fetch
+        timeout-minutes: 30
+        continue-on-error: true
         run: |
           mkdir -p ../assets-out
-          ONLY=music python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=sfx2 BUDGET_SEC=1500 python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
+        if: always()
         run: |
           B="$RUNNER_TEMP/assets-branch"
           git fetch origin assets || true
