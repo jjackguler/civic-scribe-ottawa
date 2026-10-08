@@ -1,0 +1,91 @@
+{
+ "altman": {
+  "file": "people/sam-altman--sam-altman-cropedit-james-tamim-jpg.jpg"
+ },
+ "amodei": {
+  "file": "people/dario-amodei--dario-amodei-at-techcrunch-disrupt-2023-01-jpg.jpg"
+ },
+ "hassabis": {
+  "file": "people/demis-hassabis-deepmind--2024-nobel-in-chemistry-laureates-16-9-ratio-jpg.jpg",
+  "crop": [
+   0,
+   0,
+   0.333,
+   1
+  ]
+ },
+ "pichai": {
+  "file": "people/sundar-pichai--sundar-pichai-2023-cropped-jpg.jpg"
+ },
+ "nadella": {
+  "file": "people/satya-nadella--satya-nadella-jpg.jpg"
+ },
+ "zuckerberg": {
+  "file": "people/mark-zuckerberg--mark-zuckerberg-f8-2019-keynote-32830578717-croppe.jpg"
+ },
+ "musk": {
+  "file": "people/elon-musk--elon-musk-colorado-2022-cropped2-jpg.jpg"
+ },
+ "mensch": {
+  "file": "people/arthur-mensch--arthur-mensch-jpg.jpg"
+ },
+ "huang": {
+  "file": "people/jensen-huang--jensen-huang-cropped-2024-jpg.jpg"
+ },
+ "london": {
+  "file": "people/demis-hassabis-prime-min--the-prime-minister-meets-with-ai-developers-529222.jpg",
+  "mode": "rect",
+  "height": 1000,
+  "cell": 7,
+  "gamma": 0.7
+ },
+ "washington": {
+  "file": "people/satya-nadella--president-joe-biden-drops-by-a-meeting-with-vice-p.jpg",
+  "mode": "rect",
+  "height": 1000,
+  "cell": 7,
+  "gamma": 0.7
+ },
+ "wafer": {
+  "file": "things/silicon-wafer--5c2a5953r-49913961083-silicon-wafer-20200519-jpg.jpg",
+  "mode": "rect",
+  "height": 1100,
+  "cell": 8,
+  "gamma": 0.7
+ },
+ "servers": {
+  "file": "things/server-racks--noirlab-hq-server-racks-6v6a0395-cc-jpg.jpg",
+  "mode": "rect",
+  "height": 1100,
+  "cell": 8,
+  "gamma": 0.7
+ },
+ "crowd": {
+  "file": "things/crowd-with-smartphones--an-elderly-man-uses-his-smartphone-to-video-record.jpg",
+  "mode": "rect",
+  "height": 1100,
+  "cell": 8,
+  "gamma": 0.7
+ },
+ "earth": {
+  "file": "things/the-blue-marble-apollo-1--the-blue-marble-as17-148-22727-jpg.jpg",
+  "mode": "rect",
+  "height": 1100,
+  "cell": 8,
+  "gamma": 0.7
+ },
+ "floor": {
+  "file": "things/stock-exchange-trading-f--new-york-stock-exchange-trading-floor-on-wall-stre.jpg",
+  "mode": "rect",
+  "height": 1100,
+  "cell": 8,
+  "gamma": 0.7
+ },
+ "press": {
+  "file": "things/newspaper-printing-press--double-octuple-newspaper-press-jpg.jpg",
+  "mode": "rect",
+  "height": 1100,
+  "cell": 6,
+  "gamma": 0.7
+ }
+}

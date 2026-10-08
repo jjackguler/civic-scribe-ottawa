@@ -1,0 +1,322 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  "What is AI?" opener: newsprint pop-comic title sequence. Hard cuts on the
+  beat, halftone portraits on spot-colour fields, freeze frames with a
+  shutter click, ransom-letter slams. Deterministic: setup() then renderAt(t).
+  CONFIG (injected): { duration, scenes:[{t0,t1,type,...}], hits:[t...], sizes:{name:[w,h]} }
+-->
+<style>
+@font-face{font-family:News;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-normal.woff2") format("woff2");font-weight:200 800}
+@font-face{font-family:News;font-style:italic;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-italic.woff2") format("woff2");font-weight:200 800}
+@font-face{font-family:Anton;src:url("FSRC_DIR/anton/files/anton-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:Elite;src:url("FSRC_DIR/special-elite/files/special-elite-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:Hand;src:url("FSRC_DIR/caveat/files/caveat-latin-400-normal.woff2") format("woff2")}
+:root{--ink:#141210;--paper:#F3ECDC;--red:#D3261D;--yellow:#F2C315;--cobalt:#2343C8;--black:#0E0D0C}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--black)}
+#frame{position:absolute;inset:0;overflow:hidden;background:var(--black)}
+#cam{position:absolute;inset:0}
+.sc{position:absolute;inset:-60px;overflow:hidden;display:none}
+.fill{position:absolute;inset:0}
+.dots{position:absolute;inset:0;opacity:.16;background-image:radial-gradient(var(--ink) 28%,transparent 31%);background-size:26px 26px}
+.np{position:absolute;overflow:hidden}
+.np img{width:100%;height:100%;object-fit:cover;display:block}
+.pic{position:absolute;overflow:hidden;box-shadow:0 18px 30px rgba(0,0,0,.45)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.por{position:absolute;filter:drop-shadow(0 26px 26px rgba(0,0,0,.45)) drop-shadow(0 4px 4px rgba(0,0,0,.35))}
+.por img{display:block;width:100%;height:100%}
+.anton{font-family:Anton,Impact,sans-serif;line-height:.9;letter-spacing:1px}
+.elite{font-family:Elite,monospace}
+.hand{font-family:Hand,cursive;line-height:1}
+.strip{position:absolute;padding:14px 26px 18px;white-space:nowrap;box-shadow:0 8px 14px rgba(0,0,0,.3)}
+.tape{position:absolute;background:rgba(236,226,196,.86);box-shadow:0 1px 2px rgba(0,0,0,.2);color:var(--ink);padding:10px 22px;white-space:nowrap}
+.rl{display:inline-block;line-height:1;padding:.06em .14em .1em;margin:0 .03em;vertical-align:middle;box-shadow:0 8px 12px rgba(0,0,0,.35)}
+.cap{position:absolute;left:90px;right:90px;color:#EFE6D2;font-family:Elite,monospace;font-size:52px;line-height:1.25}
+.stamp{position:absolute;border:12px solid currentColor;padding:14px 32px 20px;white-space:nowrap;font-family:Anton,sans-serif;letter-spacing:2px;line-height:1}
+#flash{position:absolute;inset:0;background:#FFF8EA;opacity:0;z-index:40}
+#grain{position:absolute;inset:-80px;z-index:41;opacity:.5;mix-blend-mode:multiply}
+#vig{position:absolute;inset:0;z-index:42;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.45) 100%)}
+#black{position:absolute;inset:0;z-index:43;background:#000;opacity:0}
+</style></head>
+<body><div id="frame"><div id="cam"></div><div id="flash"></div><div id="grain"></div><div id="vig"></div><div id="black"></div></div>
+<script>
+const W = 1080, H = 1920;
+const A = n => `ASSET_DIR/${n}`;
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const hash = (a, b = 0) => rng(a * 7919 + b * 104729)();
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const p = (t, a, d) => clamp((t - a) / d);
+const lerp = (a, b, x) => a + (b - a) * x;
+const oCubic = x => 1 - Math.pow(1 - x, 3);
+const oBack = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const h = html => { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; };
+const grainSvg = (freq, alpha, oct) => `url("data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='${oct}' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ${alpha} 0'/></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>`)}")`;
+function torn(seed, amp = 7, step = 26) {
+  const r = rng(seed), pts = [], j = () => (r() * amp).toFixed(1);
+  for (let x = 0; x <= 100; x += 100 / step) pts.push(`${x.toFixed(2)}% ${j()}px`);
+  for (let y = 0; y <= 100; y += 100 / (step * 1.4)) pts.push(`calc(100% - ${j()}px) ${y.toFixed(2)}%`);
+  for (let x = 100; x >= 0; x -= 100 / step) pts.push(`${x.toFixed(2)}% calc(100% - ${j()}px)`);
+  for (let y = 100; y >= 0; y -= 100 / (step * 1.4)) pts.push(`${j()}px ${y.toFixed(2)}%`);
+  return `polygon(${pts.join(",")})`;
+}
+const COL = { red: "var(--red)", yellow: "var(--yellow)", cobalt: "var(--cobalt)", paper: "var(--paper)", black: "var(--black)", ink: "var(--ink)" };
+const FG = { red: "#F7EEDC", yellow: "var(--ink)", cobalt: "#F7EEDC", paper: "var(--ink)", black: "#F7EEDC" };
+const NEWS = ["newsprint/page-a.jpg", "newsprint/page-b.jpg"];
+
+// Ransom letters cut from coloured stock and newsprint.
+const STY = [{ bg: "#141210", fg: "#F4EEDF" }, { bg: "#F3ECDC", fg: "#141210", f: "News" }, { bg: "#F2C315", fg: "#141210" }, { bg: "news", fg: "#141210" }, { bg: "#D3261D", fg: "#F4EEDF" }, { bg: "#F3ECDC", fg: "#141210", f: "Elite" }, { bg: "#2343C8", fg: "#F4EEDF" }];
+function ransom(lines, fs, seed) {
+  const box = h(`<div style="position:absolute;left:0;right:0;text-align:center"></div>`), letters = [], r = rng(seed);
+  lines.forEach((w, wi) => {
+    const row = h(`<div style="display:flex;justify-content:center;align-items:center;margin-top:${wi ? 22 : 0}px"></div>`);
+    [...w].forEach((ch, ci) => {
+      if (ch === " ") { row.appendChild(h(`<span style="display:inline-block;width:${fs * .3}px"></span>`)); return; }
+      const st = STY[Math.floor(r() * STY.length)], size = fs * (0.82 + r() * .3);
+      const bg = st.bg === "news" ? `background:linear-gradient(rgba(255,255,255,.45),rgba(255,255,255,.45)),url('${A(NEWS[ci % 2])}') ${Math.floor(r() * 100)}% ${Math.floor(r() * 100)}%/700px` : `background-color:${st.bg}`;
+      const fam = st.f === "News" ? "font-family:News;font-weight:800" : st.f === "Elite" ? "font-family:Elite" : "font-family:Anton";
+      const L = h(`<span class="rl" style="font-size:${size.toFixed(0)}px;${fam};${bg};color:${st.fg};clip-path:${torn(seed * 10 + wi * 50 + ci, 3, 5)}">${esc(ch)}</span>`);
+      L.dataset.rot = ((r() - .5) * 16).toFixed(1); L.dataset.dy = ((r() - .5) * 22).toFixed(0);
+      row.appendChild(L); letters.push(L);
+    });
+    box.appendChild(row);
+  });
+  return { box, letters };
+}
+function showLetters(letters, t, t0, gap, seed) {
+  const q = Math.floor(t * 12);
+  letters.forEach((L, i) => {
+    const at = t0 + i * gap;
+    if (t < at) { L.style.visibility = "hidden"; return; }
+    L.style.visibility = "visible";
+    const k = oBack(p(t, at, .16)), s = lerp(1.9, 1, k), jr = (hash(seed + i, q) - .5) * 1.4;
+    L.style.transform = `translateY(${L.dataset.dy}px) rotate(${(+L.dataset.rot + jr).toFixed(1)}deg) scale(${s.toFixed(3)})`;
+  });
+}
+function stampEl(text, size, color) {
+  const st = h(`<div class="stamp" style="font-size:${size}px;color:${color}">${esc(text)}</div>`);
+  const m = grainSvg(0.5, 1.6, 2);
+  st.style.webkitMaskImage = m; st.style.maskImage = m; st.style.maskSize = "420px"; st.style.webkitMaskSize = "420px";
+  return st;
+}
+function slamIn(el, t, at, x, y, rot, from = 2.2, d = .18) {
+  if (t < at) { el.style.visibility = "hidden"; return; }
+  el.style.visibility = "visible";
+  const k = p(t, at, d);
+  el.style.transform = `translate(${x}px,${y}px) rotate(${rot}deg) scale(${lerp(from, 1, oCubic(k)).toFixed(3)})`;
+  el.style.opacity = Math.min(1, k * 3).toFixed(2);
+}
+// Text that types on, one character per frame-ish, like a teleprinter.
+function typeOn(el, t, at, cps = 34) {
+  const full = el.dataset.full, n = Math.max(0, Math.floor((t - at) * cps));
+  el.textContent = t < at ? "" : full.slice(0, n);
+}
+const SCN = [];
+const BUILD = {};
+
+function bgField(root, color, dots = true) {
+  root.appendChild(h(`<div class="fill" style="background:${COL[color] || color};background-image:${grainSvg(0.012, 0.12, 2)},${grainSvg(0.85, 0.14, 3)}"></div>`));
+  if (dots) root.appendChild(h(`<div class="dots"></div>`));
+}
+function newsStrip(root, x, y, w, hh, rot, seed, op = 1) {
+  const e = h(`<div class="np" style="left:${x}px;top:${y}px;width:${w}px;height:${hh}px;transform:rotate(${rot}deg);clip-path:${torn(seed, 9)};opacity:${op}"><img src="${A(NEWS[seed % 2])}" style="filter:grayscale(1) contrast(1.15);object-position:${(hash(seed) * 100).toFixed(0)}% ${(hash(seed, 2) * 100).toFixed(0)}%"></div>`);
+  root.appendChild(e); return e;
+}
+
+BUILD.cold = (s, root) => {
+  root.appendChild(h(`<div class="fill" style="background:#0B0A09"></div>`));
+  const np = newsStrip(root, -40, -40, W + 160, H + 160, 0, 3, .1); np.style.clipPath = "none";
+  const caps = s.lines.map((ln, i) => { const c = h(`<div class="cap" style="top:${ln.y}px;font-size:${ln.size || 52}px" data-full="${esc(ln.text)}"></div>`); root.appendChild(c); return { c, ln }; });
+  return t => {
+    np.style.transform = `scale(${(1.05 + .04 * p(t, s.t0, s.t1 - s.t0)).toFixed(4)})`;
+    caps.forEach(({ c, ln }) => typeOn(c, t, ln.at, ln.cps || 30));
+  };
+};
+
+BUILD.slam = (s, root) => {
+  const layers = (s.bgs || [{ at: s.t0, color: "yellow" }]).map((b, i) => {
+    const L = h(`<div class="fill"></div>`); root.appendChild(L);
+    bgField(L, b.color);
+    if (b.photo) {
+      const ph = h(`<div class="fill" style="background:url('${A("players/" + b.photo + ".png")}') center/cover;mix-blend-mode:multiply;opacity:.9"></div>`); L.appendChild(ph);
+    }
+    return { L, b };
+  });
+  const { box, letters } = ransom(s.words, s.size || 190, 41);
+  box.style.top = (s.y || 300) + "px"; root.appendChild(box);
+  const stamps = (s.stamps || []).map((st, i) => { const e = stampEl(st.text, st.size || 96, st.color || "#141210"); root.appendChild(e); return { e, st }; });
+  return t => {
+    layers.forEach(({ L, b }, i) => { L.style.display = t >= b.at && (i === layers.length - 1 || t < layers[i + 1].b.at) ? "block" : "none"; });
+    showLetters(letters, t, s.t0, s.gap ?? 0, 51);
+    const bump = 1 + .03 * Math.exp(-((t - s.t0) % 1.579) * 6);
+    box.style.transform = `scale(${bump.toFixed(4)})`;
+    stamps.forEach(({ e, st }) => { if (st.until && t >= st.until) { e.style.visibility = "hidden"; return; } slamIn(e, t, st.at, st.x, st.y, st.rot || 0); });
+  };
+};
+
+BUILD.panel = (s, root) => {
+  bgField(root, s.color || "paper");
+  newsStrip(root, -20, 1460, 760, 520, -2, 77 + Math.round(s.t0), .85);
+  const pw = s.w || 980, ph = s.h || 760;
+  const pic = h(`<div class="pic" style="left:${(W + 120 - pw) / 2}px;top:${s.y || 380}px;width:${pw}px;height:${ph}px;clip-path:${torn(900 + Math.round(s.t0 * 10), 8)}"><img src="${A("players/" + s.photo + ".png")}"></div>`);
+  root.appendChild(pic);
+  if (s.tint) pic.appendChild(h(`<div class="fill" style="background:${COL[s.tint]};mix-blend-mode:multiply;opacity:.85"></div>`));
+  const { box, letters } = ransom(s.words, s.size || 104, 300 + Math.round(s.t0));
+  box.style.top = (s.ty || 1240) + "px"; root.appendChild(box);
+  const note = s.note ? h(`<div class="tape elite" style="font-size:34px;left:110px;top:${(s.y || 380) - 40}px;transform:rotate(-3deg);clip-path:${torn(31, 3, 6)}">${esc(s.note)}</div>`) : null;
+  if (note) root.appendChild(note);
+  return t => {
+    const u = p(t, s.t0, s.t1 - s.t0);
+    pic.style.transform = `rotate(${(s.rot || -2) + u * 1.2}deg) scale(${(1.06 - .05 * oCubic(p(t, s.t0, .25)) + .03 * u).toFixed(4)})`;
+    showLetters(letters, t, s.at ?? s.t0 + .45, s.gap ?? .035, 400 + Math.round(s.t0));
+  };
+};
+
+BUILD.card = (s, root) => {
+  bgField(root, s.color);
+  newsStrip(root, 640, 1700, 560, 360, 4, 90 + s.n, .9);
+  const fg = FG[s.color];
+  const no = h(`<div class="tape elite" style="font-size:38px;left:110px;top:170px;transform:rotate(-4deg);clip-path:${torn(40 + s.n, 3, 6)}">PLAYER No. ${String(s.n).padStart(2, "0")}</div>`);
+  root.appendChild(no);
+  let por = null;
+  if (s.photo) {
+    const [pw0, ph0] = CONFIG.sizes[s.photo] || [900, 1200];
+    const ph = s.ph || 1180, pw = Math.round(pw0 * ph / ph0);
+    por = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:${(s.px ?? Math.round((W + 120 - pw) / 2 + 60))}px;top:${s.py ?? 300}px"><img src="${A("players/" + s.photo + ".png")}"></div>`);
+  } else {
+    // nobody on file: an empty silhouette, honestly labelled
+    por = h(`<div class="por" style="width:760px;height:1000px;left:250px;top:330px"><svg viewBox="0 0 760 1000" width="760" height="1000"><path d="M380 70c-120 0-190 95-190 215 0 95 45 170 105 205-150 35-275 150-275 330v180h720V820c0-180-125-295-275-330 60-35 105-110 105-205 0-120-70-215-190-215z" fill="#141210" stroke="#FAF8F2" stroke-width="16"/><text x="380" y="380" text-anchor="middle" font-family="Anton" font-size="260" fill="${COL[s.color]}">?</text></svg></div>`);
+  }
+  root.appendChild(por);
+  const name = h(`<div class="strip anton" style="background:var(--paper);color:var(--ink);font-size:${s.fs || 150}px;clip-path:${torn(70 + s.n, 5, 10)}">${s.name.map(esc).join("<br>")}</div>`);
+  root.appendChild(name);
+  const org = h(`<div class="strip anton" style="background:var(--ink);color:var(--paper);font-size:58px;letter-spacing:2px;clip-path:${torn(80 + s.n, 4, 8)}">${esc(s.org)}</div>`);
+  root.appendChild(org);
+  const line = h(`<div class="hand" style="position:absolute;left:100px;max-width:900px;font-size:74px;color:var(--ink);background:#FAF6EC;padding:14px 30px 20px;box-shadow:0 10px 18px rgba(0,0,0,.3);transform:rotate(-1.5deg);clip-path:${torn(95 + s.n, 4, 10)}"></div>`);
+  root.appendChild(line);
+  const words = s.line.split(" ").map(w => { const e = h(`<span style="display:inline-block;margin-right:.24em;opacity:0">${esc(w)}</span>`); line.appendChild(e); return e; });
+  const fz = s.t0 + (s.freeze ?? 1.58);
+  return t => {
+    const tt = Math.min(t, fz); // freeze frame: motion stops, the shutter clicks
+    const u = p(tt, s.t0, s.t1 - s.t0);
+    const pk = oCubic(p(t, s.t0, .2));
+    por.style.transform = `translate(${(s.dir || 1) * (-18 + 36 * u)}px,${(8 - 16 * u).toFixed(1)}px) scale(${(1.14 - .14 * pk + .04 * u).toFixed(4)})`;
+    slamIn(no, t, s.t0 + .05, 0, 0, 0, 1.6, .12);
+    const ny = s.ny ?? 1300, oy = ny + (s.name.length * (s.fs || 150) * .9) + 40;
+    const nk = oBack(p(t, s.t0 + .1, .22));
+    name.style.transform = `translate(${lerp(-900, 70, nk).toFixed(0)}px,${ny}px) rotate(-3deg)`;
+    const ok = oBack(p(t, s.t0 + .22, .22));
+    org.style.transform = `translate(${lerp(1200, 110, ok).toFixed(0)}px,${oy}px) rotate(2deg)`;
+    line.style.top = (oy + 120) + "px";
+    words.forEach((w, i) => { const at = s.t0 + .55 + i * .11; w.style.opacity = t >= at ? 1 : 0; w.style.transform = `translateY(${t >= at ? (1 - oCubic(p(t, at, .12))) * 20 : 20}px)`; });
+    root.style.filter = t >= fz ? `saturate(.55) contrast(1.12) brightness(${(1 + .25 * Math.exp(-(t - fz) * 14)).toFixed(3)})` : "none";
+  };
+};
+
+BUILD.rapid = (s, root) => {
+  const items = s.faces.map((f, i) => {
+    const L = h(`<div class="fill" style="display:none"></div>`); root.appendChild(L);
+    const c = ["red", "yellow", "cobalt", "paper"][i % 4]; bgField(L, c);
+    const [pw0, ph0] = CONFIG.sizes[f] || [900, 1200], ph = 1500, pw = Math.round(pw0 * ph / ph0);
+    const por = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:${Math.round((W + 120 - pw) / 2)}px;top:${H + 60 - ph + 120}px"><img src="${A("players/" + f + ".png")}"></div>`);
+    L.appendChild(por);
+    return { L, por, r: (hash(i, 7) - .5) * 8 };
+  });
+  return t => {
+    const i = clamp(Math.floor((t - s.t0) / s.beat), 0, items.length - 1);
+    items.forEach((it, k) => { it.L.style.display = k === i ? "block" : "none"; });
+    const it = items[i], lt = t - s.t0 - i * s.beat;
+    it.por.style.transform = `rotate(${it.r}deg) scale(${(1.08 - .08 * oCubic(clamp(lt / .12))).toFixed(3)})`;
+  };
+};
+
+BUILD.spread = (s, root) => {
+  bgField(root, "#D9D4C7", false);
+  const np = newsStrip(root, 0, 0, W + 120, H + 120, 0, 5, 1); np.style.clipPath = "none";
+  root.appendChild(h(`<div class="fill" style="background:rgba(20,18,16,.18)"></div>`));
+  const pins = s.faces.map((f, i) => {
+    const [pw0, ph0] = CONFIG.sizes[f] || [900, 1200], ph = 520, pw = Math.round(pw0 * ph / ph0);
+    const col = i % 3, row = Math.floor(i / 3);
+    const x = 30 + col * 350 + (hash(i, 3) - .5) * 60, y = 230 + row * 520 + (hash(i, 4) - .5) * 70;
+    const e = h(`<div class="por" style="width:${pw}px;height:${ph}px;left:0;top:0"><img src="${A("players/" + f + ".png")}"></div>`);
+    root.appendChild(e);
+    return { e, x: x + (330 - pw) / 2 + 30, y, rot: (hash(i, 5) - .5) * 12, at: s.t0 + i * s.step };
+  });
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", W + 120); svg.setAttribute("height", H + 120);
+  svg.style.cssText = "position:absolute;left:0;top:0;overflow:visible;z-index:5";
+  const pts = pins.map(pn => [pn.x + 160, pn.y + 180]);
+  const order = [0, 4, 8, 6, 2, 1, 5, 7, 3];
+  const d = "M" + order.map(k => pts[k].map(v => v.toFixed(0)).join(" ")).join(" L");
+  const pth = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  pth.setAttribute("d", d); pth.setAttribute("fill", "none"); pth.setAttribute("stroke", "#D3261D"); pth.setAttribute("stroke-width", "7"); pth.setAttribute("stroke-linecap", "round");
+  svg.appendChild(pth); root.appendChild(svg);
+  const st = stampEl(s.stamp, 120, "#D3261D"); root.appendChild(st);
+  let len = 0;
+  return t => {
+    if (!len) { len = pth.getTotalLength(); pth.style.strokeDasharray = len; }
+    pins.forEach((pn, i) => {
+      if (t < pn.at) { pn.e.style.visibility = "hidden"; return; }
+      pn.e.style.visibility = "visible";
+      const k = oBack(p(t, pn.at, .16));
+      pn.e.style.transform = `translate(${pn.x}px,${pn.y + (1 - k) * 60}px) rotate(${pn.rot}deg) scale(${lerp(1.3, 1, k).toFixed(3)})`;
+    });
+    pth.style.strokeDashoffset = (len * (1 - p(t, s.stringAt, 1.4))).toFixed(1);
+    slamIn(st, t, s.stampAt, 150, 1560, -6);
+    root.style.transform = `scale(${(1 + .05 * p(t, s.t0, s.t1 - s.t0)).toFixed(4)})`;
+  };
+};
+
+BUILD.masthead = (s, root) => {
+  bgField(root, "paper", false);
+  const press = h(`<div class="fill" style="background:url('${A("players/press.png")}') center 70%/cover;opacity:.16"></div>`); root.appendChild(press);
+  const box = h(`<div style="position:absolute;left:60px;right:60px;top:700px;text-align:center;color:var(--ink)">
+    <div style="height:6px;background:var(--ink);margin:0 40px 10px"></div><div style="height:2px;background:var(--ink);margin:0 40px 40px"></div>
+    <div id="mh" style="font-family:News;font-weight:700;font-size:112px;line-height:1;white-space:nowrap;letter-spacing:.01em;text-transform:uppercase">AI Broadsheet</div>
+    <div style="height:2px;background:var(--ink);margin:40px 40px 10px"></div><div style="height:6px;background:var(--ink);margin:0 40px 40px"></div>
+    <div id="sub" style="font-family:News;font-style:italic;font-size:62px">${esc(s.sub)}</div></div>`);
+  root.appendChild(box);
+  const small = h(`<div class="elite" style="position:absolute;left:120px;right:120px;top:1560px;white-space:pre-line;text-align:center;font-size:30px;line-height:1.45;color:#3b352d">${esc(s.credits)}</div>`);
+  root.appendChild(small);
+  return t => {
+    const k = p(t, s.t0, .3);
+    box.style.transform = `scale(${lerp(1.35, 1, oCubic(k)).toFixed(3)})`; box.style.opacity = Math.min(1, k * 3);
+    box.querySelector("#sub").style.opacity = p(t, s.t0 + .9, .5);
+    small.style.opacity = p(t, s.t0 + 1.6, .6);
+    press.style.transform = `scale(${(1.05 + .05 * p(t, s.t0, s.t1 - s.t0)).toFixed(4)})`;
+  };
+};
+
+let CONFIG, D;
+function setup() {
+  CONFIG = window.CONFIG; D = CONFIG.duration;
+  document.getElementById("grain").style.backgroundImage = grainSvg(0.9, 0.22, 2);
+  const cam = document.getElementById("cam");
+  CONFIG.scenes.forEach((s, i) => {
+    const root = h(`<div class="sc"></div>`); cam.appendChild(root);
+    const fn = BUILD[s.type](s, root);
+    SCN.push({ s, root, fn });
+  });
+  return { duration: D };
+}
+function renderAt(t) {
+  SCN.forEach(({ s, root, fn }) => {
+    const on = t >= s.t0 && t < s.t1;
+    root.style.display = on ? "block" : "none";
+    if (on) fn(t);
+  });
+  // a hit = hard cut: white flash for two frames and a decaying camera shake
+  let last = -9; for (const x of CONFIG.hits) if (x <= t && x > last) last = x;
+  const dt = t - last;
+  document.getElementById("flash").style.opacity = dt < 1 / 15 ? (dt < 1 / 30 ? .85 : .35) : 0;
+  const amp = 18 * Math.exp(-dt * 9), q = Math.floor(t * 24);
+  document.getElementById("cam").style.transform = `translate(${((hash(1, q) - .5) * amp).toFixed(1)}px,${((hash(2, q) - .5) * amp).toFixed(1)}px)`;
+  document.getElementById("grain").style.transform = `translate(${(hash(5, q) * 80 - 40).toFixed(0)}px,${(hash(6, q) * 80 - 40).toFixed(0)}px)`;
+  const bl = CONFIG.black || [];
+  let b = 0; for (const [a, z] of bl) if (t >= a && t < z) b = 1;
+  b = Math.max(b, 1 - p(t, 0, .5), p(t, D - 1.2, 1.2));
+  document.getElementById("black").style.opacity = b.toFixed(3);
+}
+window.setup = setup; window.renderAt = renderAt;
+</script></body></html>
