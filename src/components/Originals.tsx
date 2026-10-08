@@ -50,6 +50,7 @@ export function OriginalCard({ o }: { o: Original }) {
         <time dateTime={o.publishedAt} suppressHydrationWarning>{timeAgo(o.publishedAt, now, locale)}</time>
         {" · "}{fr ? "Voix d'IA, d'après " : "AI voice, from "}{o.sources.map(s => s.name).slice(0, 3).join(", ")}
       </p>
+      {o.credits && <p className="text-[0.72rem] opacity-60 mt-1 line-clamp-2">{o.credits}</p>}
     </article>
   );
 }

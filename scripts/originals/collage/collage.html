@@ -9,6 +9,9 @@
 @font-face{font-family:Grot;src:url("FONT_DIR/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2") format("woff2");font-weight:400 900}
 @font-face{font-family:News;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-normal.woff2") format("woff2");font-weight:200 800}
 @font-face{font-family:News;font-style:italic;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-italic.woff2") format("woff2");font-weight:200 800}
+@font-face{font-family:Anton;src:url("FSRC_DIR/anton/files/anton-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:Elite;src:url("FSRC_DIR/special-elite/files/special-elite-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:Hand;src:url("FSRC_DIR/caveat/files/caveat-latin-400-normal.woff2") format("woff2")}
 :root{--y:#F5C400;--ink:#141414;--paper:#F1ECE1;--red:#D7372F;--board:#1B1A18}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;overflow:hidden;background:var(--board);font-family:Grot,sans-serif;color:var(--ink)}
@@ -39,10 +42,10 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--board);fon
 .credit{font-weight:600;font-size:26px;opacity:.75}
 svg{overflow:visible}
 #head.ink{color:#141414}#head.ink .pill{background:#141414;color:var(--y)}#prog.ink i{background:rgba(0,0,0,.2)}#prog.ink i u{background:#141414}
-#head{position:absolute;left:64px;right:64px;top:104px;display:flex;align-items:center;gap:18px;z-index:20;color:#fff}
+#head{position:absolute;left:44px;right:44px;top:92px;display:flex;align-items:center;gap:18px;z-index:20;color:#fff;background:#141414;padding:12px 18px 12px 18px;box-shadow:0 10px 22px rgba(0,0,0,.35)}
 #head b{font-family:News;font-weight:600;font-size:40px}
 #head .pill{margin-left:auto;font-weight:800;font-size:26px;padding:8px 16px;background:var(--y);color:var(--ink)}
-#prog{position:absolute;left:64px;right:64px;top:196px;display:flex;gap:8px;z-index:20}
+#prog{position:absolute;left:44px;right:44px;top:186px;background:#141414;padding:0 18px 12px;display:flex;gap:8px;z-index:20}
 #prog i{flex:1;height:7px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
 #prog i u{position:absolute;inset:0;background:var(--y);transform-origin:0 50%;transform:scaleX(0)}
 #cap{position:absolute;left:60px;right:60px;top:1418px;display:flex;justify-content:center;z-index:20}
@@ -348,14 +351,14 @@ const BUILD = {
     root.appendChild(h(`<div class="board"></div>`));
     const [l1, l2] = sc.data.lines;
     const s1 = h(`<div class="piece" style="width:940px"><div class="paper" style="padding:34px 46px 40px;clip-path:${torn(1101, 7)}"><div class="mid" style="font-size:74px;white-space:nowrap">${esc(l1)}</div></div></div>`);
-    const s2 = h(`<div class="piece" style="width:860px"><div class="black" style="padding:34px 46px 40px;clip-path:${torn(1102, 7)}"><div class="mid" style="font-size:80px;color:var(--y)">${esc(l2)}</div></div></div>`);
+    const s2 = h(`<div class="piece" style="width:860px"><div class="yellow" style="padding:34px 46px 40px;clip-path:${torn(1102, 7)}"><div class="mid" style="font-size:80px">${esc(l2)}</div></div></div>`);
     root.appendChild(s1); root.appendChild(s2);
     const srcs = h(`<div style="position:absolute;left:80px;right:80px;top:800px;color:#fff"><div class="credit" style="font-size:34px;margin-bottom:16px">Sources</div>${B.sources.map(s => `<div class="mid" style="font-size:58px;margin-top:6px">${esc(s.name)}</div>`).join("")}</div>`);
     root.appendChild(srcs);
     const lock = h(`<div style="position:absolute;left:80px;right:80px;top:1180px;display:flex;align-items:center;gap:22px;color:#fff">${MARK}<div><div class="serif" style="font-weight:600;font-size:54px">AI Broadsheet</div><div class="credit" style="font-size:28px">Explainer · ${esc(B.date)} · AI voice</div></div></div>`);
     root.appendChild(lock);
     const p1 = piece(s1, 1110, { x: 50, y: 340, rot: -2 }), p2 = piece(s2, 1111, { x: 150, y: 560, rot: 2.2 });
-    const a = sc.start, b = cue(si, "model isn't", .3), c = cue(si, "sources", .3);
+    const a = sc.start, b = cue(si, l2.toLowerCase().replace(/[^a-z' ]/g, "").split(" ").slice(0, 2).join(" "), .3), c = cue(si, "sources", .3);
     ev(a + .3, "slap"); ev(b + .3, "slap");
     return t => {
       placePiece(p1, t, a, { dx: -900, dy: 0, rot: -10 }, .42);
@@ -398,6 +401,11 @@ function setup() {
     const start = si === 0 ? 0 : timing.start - .12;
     const sc = { data, start, end: si === B.scenes.length - 1 ? T.duration : T.scenes[si + 1].start - .12, sentences: timing.sentences };
     const update = BUILD[data.type](sc, si, root);
+    if (data.bg && window.bgLayer) {
+      const old = root.querySelector(":scope > .board, :scope > .yboard");
+      if (old) old.remove();
+      root.prepend(window.bgLayer(data.bg, si));
+    }
     scenes.push({ root, sc, update });
     if (si > 0) ev(start - .15, "whoosh");
   });
@@ -413,7 +421,7 @@ function renderAt(t) {
   scenes.forEach((s, k) => { if (t >= s.sc.start) i = k; });
   scenes.forEach((s, k) => s.root.classList.toggle("on", k === i));
   const s = scenes[i];
-  const ink = s.sc.data.type === "numbers";
+  const ink = false;
   document.getElementById("head").classList.toggle("ink", ink);
   document.getElementById("prog").classList.toggle("ink", ink);
   s.update(t);
@@ -434,4 +442,6 @@ function renderAt(t) {
   renderCaption(t);
 }
 window.setup = setup; window.renderAt = renderAt;
-</script></body></html>
+</script>
+<script src="collage-v2.js"></script>
+</body></html>

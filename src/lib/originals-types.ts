@@ -27,6 +27,8 @@ export type Original = {
   transcript: string;
   voice: string;
   aiImages: boolean;
+  /** Where archive photos, music and sound effects came from (all public domain or CC0). */
+  credits?: string;
 };
 
 export type OriginalsManifest = { updatedAt: string; items: Original[] };

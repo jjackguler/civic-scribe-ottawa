@@ -1,0 +1,191 @@
+{
+  "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
+  "summary": "Google's new image model costs about half as much per picture on the Gemini API, but input and text tokens now cost more.",
+  "date": "October 8, 2026",
+  "voice": "af_heart",
+  "palette": "cream",
+  "sources": [
+    {
+      "name": "Notebookcheck",
+      "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
+    },
+    {
+      "name": "FourWeekMBA",
+      "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
+    },
+    {
+      "name": "XenoSpectrum",
+      "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "ransom",
+      "bg": "split",
+      "say": [
+        "Google's new image model, Nano Banana 2.1, makes pictures for about half the price."
+      ],
+      "words": [
+        "HALF",
+        "PRICE"
+      ],
+      "clips": [
+        {
+          "outlet": "Notebookcheck",
+          "date": "Oct 7, 2026",
+          "headline": "Google Nano Banana 2.1: Improved image model for half the price"
+        },
+        {
+          "outlet": "FourWeekMBA",
+          "date": "Oct 7, 2026",
+          "headline": "Google Halves Nano Banana Image Price, Triples Input Price"
+        }
+      ]
+    },
+    {
+      "type": "prices",
+      "bg": "kraft",
+      "say": [
+        "On the Gemini API, a 1K image drops from 6.7 cents to about 3.4.",
+        "A 2K image, from about 10 cents to 5."
+      ],
+      "figure": "painter",
+      "items": [
+        {
+          "label": "1K image",
+          "old": "$0.067",
+          "new": "$0.0336",
+          "cue": "1K",
+          "cueNew": "about 3.4"
+        },
+        {
+          "label": "2K image",
+          "old": "$0.101",
+          "new": "$0.0504",
+          "cue": "2K",
+          "cueNew": "to 5"
+        }
+      ]
+    },
+    {
+      "type": "receipt",
+      "bg": "slate",
+      "say": [
+        "But read the fine print.",
+        "Input now costs a dollar fifty per million tokens, three times as much.",
+        "Text and thinking output rose from three dollars to seven fifty."
+      ],
+      "title": "Gemini API · per 1M tokens",
+      "rows": [
+        {
+          "label": "Image output",
+          "old": "$60",
+          "new": "$30",
+          "cue": "print"
+        },
+        {
+          "label": "Input",
+          "old": "$0.50",
+          "new": "$1.50",
+          "cue": "input",
+          "circle": true
+        },
+        {
+          "label": "Text & thinking output",
+          "old": "$3",
+          "new": "$7.50",
+          "cue": "text",
+          "circle": true
+        }
+      ]
+    },
+    {
+      "type": "bigwords",
+      "bg": "cream",
+      "say": [
+        "So if you send lots of reference images or long prompts, you'll save less than the headline suggests."
+      ],
+      "words": [
+        {
+          "t": "SAVE",
+          "s": "black"
+        },
+        {
+          "t": "LESS",
+          "s": "red"
+        }
+      ],
+      "note": "Many reference images or long prompts? Input costs more now."
+    },
+    {
+      "type": "frames",
+      "bg": "board",
+      "say": [
+        "The model is built on Gemini 3.6 Flash.",
+        "It takes up to 14 reference images, and makes pictures up to 4K."
+      ],
+      "count": 14,
+      "figure": "photographer",
+      "big": "14",
+      "small": "reference images, output up to 4K"
+    },
+    {
+      "type": "bars",
+      "bg": "yellow",
+      "say": [
+        "In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro.",
+        "Independent tests aren't out yet."
+      ],
+      "unit": "Preference score (Elo), Google's raters",
+      "items": [
+        {
+          "label": "Nano Banana 2.1",
+          "value": 1050,
+          "hi": true
+        },
+        {
+          "label": "Nano Banana 2",
+          "value": 990
+        },
+        {
+          "label": "Nano Banana Pro",
+          "value": 935
+        }
+      ],
+      "min": 850,
+      "stamp": "Google's own tests",
+      "cue": "independent"
+    },
+    {
+      "type": "scraps",
+      "bg": "kraft",
+      "say": [
+        "Google also lists its limits.",
+        "Small text often stays blurry at 1K, and the model sometimes mixes up left and right."
+      ],
+      "items": [
+        "Small text blurry at 1K",
+        "Mixes up left and right"
+      ],
+      "cues": [
+        "small",
+        "left"
+      ],
+      "circle": 1,
+      "mirror": 1
+    },
+    {
+      "type": "outro",
+      "bg": "board",
+      "say": [
+        "Cheaper pictures, pricier words.",
+        "Sources: Notebookcheck, FourWeekMBA and XenoSpectrum."
+      ],
+      "lines": [
+        "Cheaper pictures.",
+        "Pricier words."
+      ],
+      "figure": "painter"
+    }
+  ]
+}
