@@ -5,7 +5,7 @@
 import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
 import { AI_RE, tagsOf } from "./classify";
 import { displayFor } from "./rights";
-import { keepAlive, sharedCacheAvailable, sharedRead, sharedWrite } from "./shared-cache";
+import { canKeepAlive, keepAlive, sharedCacheAvailable, sharedRead, sharedWrite } from "./shared-cache";
 import type { AiDeskEntry } from "./ai-desk.server";
 
 export type Story = {
@@ -44,6 +44,8 @@ export type NewsPayload = {
   /** Where this copy of the desk came from, shown on /about → Desk status. */
   origin?: "built" | "shared" | "stale";
   sharedCache?: boolean;
+  /** false when the runtime can't finish work after the response (no waitUntil). */
+  background?: boolean;
 };
 
 const UA = "Mozilla/5.0 (compatible; AIBroadsheet/1.0; +https://aibroadsheet.com)";
@@ -434,7 +436,7 @@ function rebuild(): Promise<NewsPayload> {
     .then(async payload => {
       if (payload.stories.length > 0) {
         const { attachDesk, runDesk } = await import("./ai-desk.server");
-        const base: NewsPayload = { ...payload, origin: "built", sharedCache: sharedCacheAvailable() };
+        const base: NewsPayload = { ...payload, origin: "built", sharedCache: sharedCacheAvailable(), background: canKeepAlive() };
         payload = await withTimeout(attachDesk(base), 2000, base);
         g.__mwNews = { ts: Date.now(), payload };
         saveSnapshot(payload);
@@ -461,10 +463,16 @@ export async function loadNews(): Promise<NewsPayload> {
   if (!g.__mwNews) await hydrate().catch(() => {});
   const cached = g.__mwNews;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
-  // Stale but present: answer now, refresh in the background.
+  // Stale but present: answer now and refresh in the background — when the
+  // runtime lets background work finish. Otherwise refresh within this request
+  // (bounded), so the desk can never freeze on an old copy.
   if (cached) {
-    void rebuild();
-    return { ...cached.payload, origin: cached.payload.origin === "built" ? "stale" : cached.payload.origin, sharedCache: sharedCacheAvailable() };
+    const stale = { ...cached.payload, origin: cached.payload.origin === "built" ? "stale" as const : cached.payload.origin, sharedCache: sharedCacheAvailable() };
+    if (canKeepAlive() && Date.now() - cached.ts < 20 * 60_000) {
+      void rebuild();
+      return stale;
+    }
+    return withTimeout(rebuild(), 15000, stale);
   }
   // Nothing yet: wait for a build, but never longer than 16 s (a build started
   // by another request may never settle in this one).

@@ -6,7 +6,7 @@ import { MEDIA_SOURCES, type MediaSource } from "./media-sources";
 import { AI_RE, AI_TALK_RE, INTERVIEW_RE, tagsOf } from "./classify";
 import { readCapped, withTimeout } from "./news-engine";
 import type { Topic } from "./news-sources";
-import { keepAlive, sharedRead, sharedWrite } from "./shared-cache";
+import { canKeepAlive, keepAlive, sharedRead, sharedWrite } from "./shared-cache";
 
 export type MediaItem = {
   id: string;
@@ -239,6 +239,9 @@ export async function loadMedia(): Promise<MediaPayload> {
   if (!g.__abMedia) await hydrate().catch(() => {});
   const cached = g.__abMedia;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
-  if (cached) { void rebuild(); return cached.payload; }
+  if (cached) {
+    if (canKeepAlive() && Date.now() - cached.ts < 30 * 60_000) { void rebuild(); return cached.payload; }
+    return withTimeout(rebuild(), 15000, cached.payload);
+  }
   return withTimeout(rebuild(), 17000, g.__abMedia?.payload ?? { items: [], sources: [], fetchedAt: new Date().toISOString() });
 }

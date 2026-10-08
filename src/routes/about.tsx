@@ -120,6 +120,7 @@ function DeskStatus() {
         <p className="meta mb-4">
           {locale === "fr" ? "Fil construit" : "Desk built"} {new Date(news.fetchedAt).toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" })}
           {" — "}{news.origin ?? "built"}{news.sharedCache ? (locale === "fr" ? ", cache partagé actif" : ", shared cache on") : (locale === "fr" ? ", cache partagé indisponible" : ", shared cache unavailable")}
+          {news.background === false ? (locale === "fr" ? ", mise à jour pendant la requête" : ", refreshed in-request") : ""}
         </p>
       )}
       <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3 text-[0.9rem]">

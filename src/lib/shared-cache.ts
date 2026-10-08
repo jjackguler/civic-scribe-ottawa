@@ -23,6 +23,9 @@ const store = (): CfCache | undefined => g.caches?.default;
 
 export const sharedCacheAvailable = () => !!store();
 
+/** True when this runtime lets work continue after the response (Workers waitUntil). */
+export const canKeepAlive = () => typeof g.__cfCtx?.waitUntil === "function";
+
 const keyUrl = (key: string) => `https://${g.__sharedHost ?? "aibroadsheet.com"}/__shared-cache/${encodeURIComponent(key)}`;
 
 /** Keep work running after the response is sent (Workers would otherwise cancel it). */
