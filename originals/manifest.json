@@ -1,0 +1,31 @@
+{
+  "updatedAt": "2026-10-08T10:20:00.000Z",
+  "items": [
+    {
+      "id": "202610081000-openai-posted-722-ai-written-math-papers",
+      "publishedAt": "2026-10-08T10:20:00.000Z",
+      "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
+      "summary": "OpenAI put 722 math manuscripts from an unreleased model on GitHub. Fewer than a quarter have formalized main results, and none are peer-reviewed yet.",
+      "durationSec": 84,
+      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@media/originals/files/202610081000-openai-posted-722-ai-written-math-papers.mp4",
+      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@media/originals/files/202610081000-openai-posted-722-ai-written-math-papers.jpg",
+      "sources": [
+        {
+          "name": "Gadget Review",
+          "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
+        },
+        {
+          "name": "Unite.AI",
+          "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
+        },
+        {
+          "name": "XenoSpectrum",
+          "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
+        }
+      ],
+      "transcript": "OpenAI just put 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, grouped into 372 families of results. Careful, though. Those are different units, so they don't add up to a success rate. On average, each result took about three hours of ChatGPT Pro compute. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture. But the Riemann result is a weaker version. It doesn't solve the famous problem. So, are they right? Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results. It wants this work kept where no AI lab is in control. The proofs are public. The model isn't. Now it's up to mathematicians to check the work. Sources: Gadget Review, Unite.AI and XenoSpectrum.",
+      "voice": "Kokoro (open-weights AI voice)",
+      "aiImages": false
+    }
+  ]
+}
