@@ -277,10 +277,11 @@ def main():
                 log(f"url {name}: {len(data)} bytes")
         save_meta()
     if only == "people":
-        os.makedirs(os.path.join(OUT, "people"), exist_ok=True)
+        folder = os.environ.get("FOLDER", "people")
+        os.makedirs(os.path.join(OUT, folder), exist_ok=True)
         for q in os.environ.get("PEOPLE", "").split(";"):
             if q.strip() and not over_budget():
-                commons(q.strip(), "people", limit=int(os.environ.get("PER", "6")), min_w=700, lic_ok=PEOPLE_OK, people=True)
+                commons(q.strip(), folder, limit=int(os.environ.get("PER", "6")), min_w=700, lic_ok=PEOPLE_OK, people=True)
                 save_meta()
     if only == "intro":
         os.makedirs(os.path.join(OUT, "intro"), exist_ok=True)

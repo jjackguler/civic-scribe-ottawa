@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ../assets-out
-          ONLY=people PER=8 BUDGET_SEC=900 PEOPLE="Hassabis;Demis Hassabis DeepMind;Demis Hassabis Prime Minister;Liang Wenfeng;梁文锋;DeepSeek founder" python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=people FOLDER=things PER=4 BUDGET_SEC=900 PEOPLE="The Blue Marble Apollo 17;silicon wafer;GPU graphics card;data center servers;stock exchange trading floor;newspaper printing press;crowd with smartphones;server racks" python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         if: always()
