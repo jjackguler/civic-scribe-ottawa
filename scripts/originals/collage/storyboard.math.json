@@ -1,0 +1,76 @@
+{
+  "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
+  "date": "October 8, 2026",
+  "voice": "af_heart",
+  "sources": [
+    { "name": "Gadget Review", "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html" },
+    { "name": "Unite.AI", "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/" },
+    { "name": "XenoSpectrum", "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/" }
+  ],
+  "scenes": [
+    {
+      "type": "clippings",
+      "say": ["OpenAI just put 722 math manuscripts on GitHub.", "Every one came from an AI model the public can't use."],
+      "clips": [
+        { "outlet": "Gadget Review", "date": "Oct 7, 2026", "headline": "OpenAI Drops 722 AI Math Manuscripts on GitHub. Experts Must Now Verify Them.", "mark": "722" },
+        { "outlet": "Unite.AI", "date": "Oct 6, 2026", "headline": "OpenAI Releases 722 Math Manuscripts From an Unreleased AI Model", "mark": "Unreleased AI Model" },
+        { "outlet": "XenoSpectrum", "date": "Oct 7, 2026", "headline": "OpenAI Publishes 722 AI-Generated Math Manuscripts, Including Work Tied to the Riemann Hypothesis" }
+      ]
+    },
+    {
+      "type": "numbers",
+      "say": ["The model was given about 4,000 problems.", "It produced 722 manuscripts, grouped into 372 families of results."],
+      "items": [
+        { "value": 4000, "prefix": "~", "label": "problems given to the model" },
+        { "value": 722, "label": "manuscripts on GitHub" },
+        { "value": 372, "label": "families of results" }
+      ]
+    },
+    {
+      "type": "crossout",
+      "say": ["Careful, though.", "Those are different units, so they don't add up to a success rate."],
+      "note": "722 ÷ 4,000 = success rate?",
+      "verdict": "Different units. Not a success rate."
+    },
+    {
+      "type": "clock",
+      "say": ["On average, each result took about three hours of ChatGPT Pro compute."],
+      "hours": 3,
+      "big": "≈ 3 hours",
+      "small": "of ChatGPT Pro compute per result, on average"
+    },
+    {
+      "type": "scraps",
+      "say": ["The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture.", "But the Riemann result is a weaker version. It doesn't solve the famous problem."],
+      "items": ["Kakeya conjecture, 4D", "Riemann hypothesis", "Hodge conjecture"],
+      "circle": 1,
+      "note": "A weaker version. Not a solution."
+    },
+    {
+      "type": "dots",
+      "say": ["So, are they right?", "Many come with proofs checked by Lean, a proof assistant.", "One count found 162 manuscripts with formalized main results. That's 22.4 percent."],
+      "total": 722,
+      "highlight": 162,
+      "big": "22.4%",
+      "small": "of 722 manuscripts have formalized main results",
+      "credit": "Count: XenoSpectrum, Oct 7"
+    },
+    {
+      "type": "stamp",
+      "say": ["And a machine-checked proof isn't automatically a meaningful one.", "These are preprints, not peer-reviewed papers."],
+      "stamp": "Preprint · not peer-reviewed"
+    },
+    {
+      "type": "note",
+      "say": ["An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results.", "It wants this work kept where no AI lab is in control."],
+      "big": "Advising ≠ endorsing",
+      "small": "The advisory group wants results kept in repositories no AI lab controls.",
+      "credit": "AGMAI statements, via XenoSpectrum and Unite.AI"
+    },
+    {
+      "type": "outro",
+      "say": ["The proofs are public. The model isn't.", "Now it's up to mathematicians to check the work.", "Sources: Gadget Review, Unite.AI and XenoSpectrum."],
+      "lines": ["The proofs are public.", "The model isn't."]
+    }
+  ]
+}

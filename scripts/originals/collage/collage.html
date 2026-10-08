@@ -1,0 +1,437 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  AI Broadsheet collage explainer. A deterministic animation: the renderer
+  injects BOARD (storyboard), TIMING (narration timing) and FONT_DIR, calls
+  setup(), then renderAt(t) for every frame and screenshots the page.
+-->
+<style>
+@font-face{font-family:Grot;src:url("FONT_DIR/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2") format("woff2");font-weight:400 900}
+@font-face{font-family:News;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-normal.woff2") format("woff2");font-weight:200 800}
+@font-face{font-family:News;font-style:italic;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-italic.woff2") format("woff2");font-weight:200 800}
+:root{--y:#F5C400;--ink:#141414;--paper:#F1ECE1;--red:#D7372F;--board:#1B1A18}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--board);font-family:Grot,sans-serif;color:var(--ink)}
+#frame{position:absolute;inset:0;overflow:hidden}
+.layer{position:absolute;inset:0}
+.scene{position:absolute;inset:0;display:none;transform-origin:50% 45%}
+.scene.on{display:block}
+.board{position:absolute;inset:-40px;background-color:var(--board);background-image:var(--blotch),var(--grain)}
+.yboard{position:absolute;inset:-40px;background-color:var(--y);background-image:var(--blotch),var(--grain)}
+.piece{position:absolute;filter:drop-shadow(0 16px 18px rgba(0,0,0,.42)) drop-shadow(0 2px 2px rgba(0,0,0,.35));will-change:transform}
+.paper{background-color:var(--paper);background-image:var(--blotch),var(--grain);isolation:isolate;position:relative}
+.black{background-color:#151515;background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.8px),var(--grain);background-size:9px 9px,auto;color:#fff;isolation:isolate;position:relative}
+.yellow{background-color:var(--y);background-image:var(--blotch),var(--grain);isolation:isolate;position:relative}
+.tape{position:absolute;width:190px;height:54px;background:rgba(236,226,196,.78);background-image:var(--grain);mix-blend-mode:normal;filter:none;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.outlet{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;font-size:27px;letter-spacing:.2px;border-bottom:3px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
+.outlet span:last-child{font-weight:500;opacity:.7;font-size:24px}
+.hd{font-family:News;font-weight:700;font-size:58px;line-height:1.04;letter-spacing:-.6px}
+.bars{margin-top:22px}
+.bars i{display:block;height:11px;background:rgba(20,20,20,.17);margin-top:12px}
+.hl{position:relative;z-index:0;white-space:nowrap}
+.mk{position:absolute;left:-8px;right:-8px;top:16%;bottom:2%;background:var(--y);z-index:-1;transform-origin:0 50%;transform:scaleX(0);border-radius:4px 10px 5px 12px/8px 4px 10px 5px;mix-blend-mode:multiply}
+.num{font-weight:900;font-size:200px;line-height:.86;letter-spacing:-7px;color:var(--y);font-variant-numeric:tabular-nums}
+.lbl{font-weight:600;font-size:44px;line-height:1.15;margin-top:18px}
+.big{font-weight:900;font-size:150px;line-height:.92;letter-spacing:-5px}
+.mid{font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-1px}
+.sm{font-weight:500;font-size:42px;line-height:1.25}
+.serif{font-family:News}
+.credit{font-weight:600;font-size:26px;opacity:.75}
+svg{overflow:visible}
+#head.ink{color:#141414}#head.ink .pill{background:#141414;color:var(--y)}#prog.ink i{background:rgba(0,0,0,.2)}#prog.ink i u{background:#141414}
+#head{position:absolute;left:64px;right:64px;top:104px;display:flex;align-items:center;gap:18px;z-index:20;color:#fff}
+#head b{font-family:News;font-weight:600;font-size:40px}
+#head .pill{margin-left:auto;font-weight:800;font-size:26px;padding:8px 16px;background:var(--y);color:var(--ink)}
+#prog{position:absolute;left:64px;right:64px;top:196px;display:flex;gap:8px;z-index:20}
+#prog i{flex:1;height:7px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
+#prog i u{position:absolute;inset:0;background:var(--y);transform-origin:0 50%;transform:scaleX(0)}
+#cap{position:absolute;left:60px;right:60px;top:1418px;display:flex;justify-content:center;z-index:20}
+#cap span{display:inline-block;background:#111;color:#fff;font-weight:800;font-size:54px;line-height:1.18;padding:10px 22px 14px;text-align:center;max-width:960px;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+#cap em{font-style:normal;color:var(--y)}
+#wipe{position:absolute;left:-60px;right:-60px;height:2400px;top:2000px;z-index:15}
+#grain{position:absolute;inset:-60px;background-image:var(--grain);opacity:.55;z-index:30;pointer-events:none;mix-blend-mode:multiply}
+#vig{position:absolute;inset:0;z-index:29;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 58%,rgba(0,0,0,.3) 100%)}
+</style></head>
+<body><div id="frame">
+  <div id="scenes" class="layer"></div>
+  <div id="wipe"></div>
+  <div id="head"></div>
+  <div id="prog"></div>
+  <div id="cap"></div>
+  <div id="vig"></div>
+  <div id="grain"></div>
+</div>
+<script>
+// ── utilities ──────────────────────────────────────────────────────────────
+const W = 1080, H = 1920, FPS_Q = 12; // paper pieces move "on twos" like stop-motion
+const grainSvg = (freq, alpha, oct) => `url("data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='${oct}' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ${alpha} 0'/></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>`)}")`;
+document.documentElement.style.setProperty("--grain", grainSvg(0.85, 0.16, 3));
+document.documentElement.style.setProperty("--blotch", grainSvg(0.012, 0.10, 2));
+const MARK = `<svg viewBox="0 0 64 64" width="58" height="58"><rect width="64" height="64" rx="12" fill="#F5C400"/><rect x="11" y="11" width="42" height="9" rx="1" fill="#111"/><rect x="11" y="26" width="20" height="27" rx="1" fill="#111"/><path d="M37 29h16M37 38h16M37 47h8" stroke="#111" stroke-width="4.5" stroke-linecap="round"/><circle cx="51" cy="48" r="5" fill="#D7372F"/></svg>`;
+
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const hash = (a, b = 0) => rng(a * 7919 + b * 104729)();
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const p = (t, a, d) => clamp((t - a) / d);
+const oCubic = x => 1 - Math.pow(1 - x, 3);
+const ioCubic = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const oBack = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const lerp = (a, b, x) => a + (b - a) * x;
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const h = (html) => { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; };
+
+/** Torn-paper outline as a clip-path, jagged by a few pixels on every edge. */
+function torn(seed, amp = 7, step = 26) {
+  const r = rng(seed), pts = [];
+  const j = () => (r() * amp).toFixed(1);
+  for (let x = 0; x <= 100; x += 100 / step) pts.push(`${x.toFixed(2)}% ${j()}px`);
+  for (let y = 0; y <= 100; y += 100 / (step * 1.4)) pts.push(`calc(100% - ${j()}px) ${y.toFixed(2)}%`);
+  for (let x = 100; x >= 0; x -= 100 / step) pts.push(`${x.toFixed(2)}% calc(100% - ${j()}px)`);
+  for (let y = 100; y >= 0; y -= 100 / (step * 1.4)) pts.push(`${j()}px ${y.toFixed(2)}%`);
+  return `polygon(${pts.join(",")})`;
+}
+/** A hand-drawn-looking stroke between points, as an SVG path with a known length. */
+function roughPath(pts, seed, wob = 6) {
+  const r = rng(seed);
+  return "M" + pts.map(([x, y], i) => `${(x + (i ? (r() - .5) * wob : 0)).toFixed(1)} ${(y + (i ? (r() - .5) * wob : 0)).toFixed(1)}`).join(" L");
+}
+function ellipsePts(cx, cy, rx, ry, turns = 1.12, n = 60, seed = 1) {
+  const r = rng(seed), pts = [];
+  for (let i = 0; i <= n; i++) { const a = -2.4 + (i / n) * Math.PI * 2 * turns; const k = 1 + (r() - .5) * .05 + i / n * .06; pts.push([cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * k]); }
+  return pts;
+}
+
+// ── state shared by scenes ──────────────────────────────────────────────────
+let B, T, scenes = [], EVENTS = [];
+const ev = (t, kind) => EVENTS.push({ t: +t.toFixed(3), kind });
+/** When a word is spoken (estimated from its position in the sentence). */
+function cue(si, word, lead = 0.12) {
+  for (const s of T.scenes[si].sentences) {
+    const i = s.text.toLowerCase().indexOf(word.toLowerCase());
+    if (i >= 0) return Math.max(T.scenes[si].start, s.start + (i / s.text.length) * (s.end - s.start) - lead);
+  }
+  return T.scenes[si].start;
+}
+const sent = (si, k) => T.scenes[si].sentences[Math.min(k, T.scenes[si].sentences.length - 1)];
+
+/** Paper pieces: enter with an overshoot, then breathe on twos. */
+function piece(el, seed, base) { el.dataset.seed = seed; return { el, seed, base }; }
+function placePiece(pc, t, enterAt, from = { dx: 0, dy: 900, rot: 14, s: 1 }, dur = .5) {
+  const { el, seed, base } = pc;
+  if (t < enterAt) { el.style.visibility = "hidden"; return; }
+  el.style.visibility = "visible";
+  const k = oBack(p(t, enterAt, dur));
+  const q = Math.floor(t * FPS_Q);
+  const jr = (hash(seed, q) - .5) * .5, jx = (hash(seed + 3, q) - .5) * 2.4, jy = (hash(seed + 5, q) - .5) * 2.4;
+  const x = base.x + lerp(from.dx, 0, k) + jx, y = base.y + lerp(from.dy, 0, k) + jy;
+  const rot = base.rot + lerp(from.rot, 0, k) + jr, s = lerp(from.s ?? 1, 1, k);
+  el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+}
+function tape(x, y, rot, w = 190) { const r = rng(Math.round(x * 13 + y)); const t = h(`<div class="tape"></div>`); t.style.cssText += `left:${x}px;top:${y}px;width:${w}px;transform:rotate(${rot}deg);clip-path:${torn(Math.round(r() * 1e6), 4, 6)}`; return t; }
+function marker(spanEl) { return spanEl ? spanEl.querySelector(".mk") : null; }
+function highlightText(text, mark) {
+  if (!mark) return esc(text);
+  const i = text.indexOf(mark);
+  if (i < 0) return esc(text);
+  return esc(text.slice(0, i)) + `<span class="hl"><i class="mk"></i>${esc(mark)}</span>` + esc(text.slice(i + mark.length));
+}
+function stroke(svg, d, color = "#D7372F", w = 20) {
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", d); path.setAttribute("fill", "none"); path.setAttribute("stroke", color);
+  path.setAttribute("stroke-width", w); path.setAttribute("stroke-linecap", "round"); path.setAttribute("stroke-linejoin", "round");
+  svg.appendChild(path);
+  const len = path.getTotalLength(); path.style.strokeDasharray = len; path.style.strokeDashoffset = len;
+  return { path, len, draw(x) { path.style.visibility = x > 0 ? "visible" : "hidden"; path.style.strokeDashoffset = (len * (1 - clamp(x))).toFixed(1); } };
+}
+function svgLayer(parent) { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("width", W); s.setAttribute("height", H); s.style.cssText = "position:absolute;left:0;top:0;z-index:5"; parent.appendChild(s); return s; }
+const fmt = n => Math.round(n).toLocaleString("en-US");
+
+// ── scene builders ──────────────────────────────────────────────────────────
+const BUILD = {
+  clippings(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const spots = [{ x: 56, y: 300, rot: -3.2, w: 900 }, { x: 140, y: 650, rot: 2.6, w: 860 }, { x: 40, y: 990, rot: -1.4, w: 930 }];
+    const enter = [sc.start + .05, cue(si, "math", .3), cue(si, "github", .2)];
+    const pcs = sc.data.clips.slice(0, 3).map((c, k) => {
+      const s = spots[k];
+      const el = h(`<div class="piece" style="left:0;top:0;width:${s.w}px"><div class="paper" style="padding:34px 40px 40px;clip-path:${torn(100 + k, 8)}">
+        <div class="outlet"><span>${esc(c.outlet)}</span><span>${esc(c.date || "")}</span></div>
+        <div class="hd">${highlightText(c.headline, c.mark)}</div>
+        <div class="bars"><i style="width:96%"></i><i style="width:88%"></i><i style="width:62%"></i></div></div></div>`);
+      el.appendChild(tape(s.w / 2 - 95, -26, (k % 2 ? 4 : -5)));
+      root.appendChild(el);
+      ev(enter[k] + .32, "slap");
+      return piece(el, 300 + k, s);
+    });
+    const mk0 = marker(pcs[0].el.querySelector(".hl")), mk1 = marker(pcs[1].el.querySelector(".hl"));
+    const m0 = cue(si, "722", .0) + .35, m1 = cue(si, "public", .1);
+    ev(m0, "marker"); ev(m1, "marker");
+    return t => {
+      pcs.forEach((pc, k) => placePiece(pc, t, enter[k], { dx: k % 2 ? 700 : -700, dy: 260, rot: k % 2 ? 18 : -16 }));
+      if (mk0) mk0.style.transform = `scaleX(${oCubic(p(t, m0, .45)).toFixed(3)})`;
+      if (mk1) mk1.style.transform = `scaleX(${oCubic(p(t, m1, .55)).toFixed(3)})`;
+    };
+  },
+
+  numbers(sc, si, root) {
+    root.appendChild(h(`<div class="yboard"></div>`));
+    const its = sc.data.items.slice(0, 3);
+    const cues = its.map(it => cue(si, fmt(it.value), .25));
+    const pcs = its.map((it, k) => {
+      const el = h(`<div class="piece" style="width:${900 - k * 30}px"><div class="black" style="padding:44px 52px 48px;clip-path:${torn(200 + k, 9)}">
+        <div class="num">${esc(it.prefix || "")}<span>0</span></div><div class="lbl">${esc(it.label)}</div></div></div>`);
+      root.appendChild(el);
+      ev(cues[k] + .25, "thump");
+      return { pc: piece(el, 400 + k, { x: 90 + k * 22, y: 300 + k * 345, rot: [-2.4, 1.8, -1.2][k] }), span: el.querySelector(".num span"), it };
+    });
+    return t => pcs.forEach(({ pc, span, it }, k) => {
+      placePiece(pc, t, cues[k], { dx: 0, dy: -40, rot: 0, s: 1.7 }, .32);
+      span.textContent = fmt(it.value * oCubic(p(t, cues[k] + .1, .7)));
+    });
+  },
+
+  crossout(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const note = h(`<div class="piece" style="width:820px"><div class="yellow" style="padding:70px 64px 90px;clip-path:${torn(501, 5)}">
+      <div class="serif" style="font-style:italic;font-weight:500;font-size:84px;line-height:1.12">${esc(sc.data.note)}</div></div></div>`);
+    note.appendChild(tape(300, -24, -3));
+    root.appendChild(note);
+    const strip = h(`<div class="piece" style="width:900px"><div class="paper" style="padding:34px 44px 38px;clip-path:${torn(502, 7)}"><div class="mid">${esc(sc.data.verdict)}</div></div></div>`);
+    root.appendChild(strip);
+    const svg = svgLayer(root);
+    const s1 = stroke(svg, roughPath([[175, 395], [540, 520], [925, 655]], 7), "#D7372F", 26);
+    const s2 = stroke(svg, roughPath([[185, 665], [560, 530], [915, 385]], 9), "#D7372F", 26);
+    const a = sc.start + .05, c = cue(si, "different", .2), v = cue(si, "success", .3);
+    const pn = piece(note, 510, { x: 130, y: 340, rot: -3.5 }), ps = piece(strip, 511, { x: 90, y: 960, rot: 2 });
+    ev(a + .3, "slap"); ev(c, "scribble"); ev(c + .3, "scribble"); ev(v + .2, "slap");
+    return t => {
+      placePiece(pn, t, a, { dx: 0, dy: 1200, rot: 10 });
+      s1.draw(ioCubic(p(t, c, .3))); s2.draw(ioCubic(p(t, c + .3, .3)));
+      placePiece(ps, t, v, { dx: -900, dy: 0, rot: -8 }, .4);
+    };
+  },
+
+  clock(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const face = h(`<div class="piece" style="width:640px;height:640px"><div class="paper" style="width:640px;height:640px;border-radius:50%;clip-path:${torn(601, 6, 40)}"></div></div>`);
+    root.appendChild(face);
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "-320 -320 640 640"); svg.setAttribute("width", 640); svg.setAttribute("height", 640);
+    svg.style.cssText = "position:absolute;left:0;top:0";
+    let ticks = "";
+    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; ticks += `<line x1="${Math.sin(a) * 250}" y1="${-Math.cos(a) * 250}" x2="${Math.sin(a) * (i % 3 ? 225 : 200)}" y2="${-Math.cos(a) * (i % 3 ? 225 : 200)}" stroke="#141414" stroke-width="${i % 3 ? 7 : 12}" stroke-linecap="round"/>`; }
+    svg.innerHTML = `<path id="wedge" fill="#F5C400" stroke="#141414" stroke-width="5"/>${ticks}<line id="hand" x1="0" y1="20" x2="0" y2="-215" stroke="#141414" stroke-width="16" stroke-linecap="round"/><circle r="20" fill="#D7372F"/>`;
+    face.firstChild.appendChild(svg);
+    const txt = h(`<div style="position:absolute;left:84px;right:84px;top:1040px;color:#fff"><div class="big" style="color:var(--y)">${esc(sc.data.big)}</div><div class="sm" style="margin-top:20px">${esc(sc.data.small)}</div></div>`);
+    root.appendChild(txt);
+    const wedge = svg.querySelector("#wedge"), hand = svg.querySelector("#hand");
+    const a = sc.start, c = cue(si, "three", .4), e = sent(si, 0).end;
+    const pf = piece(face, 610, { x: 220, y: 330, rot: -2 });
+    ev(a + .25, "thump"); ev(c + .5, "tick");
+    return t => {
+      placePiece(pf, t, a, { dx: 0, dy: 0, rot: -30, s: .2 }, .55);
+      const ang = (sc.data.hours / 12) * 360 * ioCubic(p(t, c, Math.max(.8, e - c)));
+      const r = 238, rad = ang * Math.PI / 180;
+      wedge.setAttribute("d", ang < .5 ? "" : `M0 0 L0 ${-r} A${r} ${r} 0 ${ang > 180 ? 1 : 0} 1 ${(Math.sin(rad) * r).toFixed(1)} ${(-Math.cos(rad) * r).toFixed(1)} Z`);
+      hand.setAttribute("transform", `rotate(${ang.toFixed(2)})`);
+      const k = oCubic(p(t, c + .2, .5));
+      txt.style.opacity = k; txt.style.transform = `translateY(${(1 - k) * 40}px)`;
+    };
+  },
+
+  scraps(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const spots = [{ x: 70, y: 330, rot: -4 }, { x: 250, y: 560, rot: 3 }, { x: 110, y: 800, rot: -1.5 }];
+    const words = ["kakeya", "riemann", "hodge"];
+    const pcs = sc.data.items.slice(0, 3).map((txt, k) => {
+      const el = h(`<div class="piece"><div class="paper" style="padding:30px 46px 36px;clip-path:${torn(700 + k, 6)}"><div class="serif" style="font-weight:700;font-size:72px;white-space:nowrap">${esc(txt)}</div></div></div>`);
+      root.appendChild(el);
+      return piece(el, 710 + k, spots[k]);
+    });
+    const at = pcs.map((_, k) => cue(si, words[k] || "", .35));
+    at.forEach(x => ev(x + .3, "slap"));
+    const svg = svgLayer(root);
+    const ci = sc.data.circle ?? 1, sp = spots[ci];
+    const ring = stroke(svg, roughPath(ellipsePts(sp.x + 360, sp.y + 70, 420, 120, 1.1, 70, 5), 3, 4), "#D7372F", 14);
+    const note = h(`<div class="piece" style="width:820px"><div class="yellow" style="padding:36px 46px 40px;clip-path:${torn(720, 6)}"><div class="mid">${esc(sc.data.note)}</div></div></div>`);
+    note.appendChild(tape(560, -22, 6, 160));
+    root.appendChild(note);
+    const pn = piece(note, 730, { x: 200, y: 1060, rot: 3.5 });
+    const rc = sent(si, 1).start + .1, nc = cue(si, "doesn't", .2);
+    ev(rc, "scribble"); ev(nc + .3, "thump");
+    return t => {
+      pcs.forEach((pc, k) => placePiece(pc, t, at[k], { dx: k % 2 ? 900 : -900, dy: 100, rot: k % 2 ? 20 : -20 }, .45));
+      ring.draw(ioCubic(p(t, rc, .6)));
+      placePiece(pn, t, nc, { dx: 0, dy: 0, rot: -6, s: 1.8 }, .3);
+    };
+  },
+
+  dots(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const cols = 38, rows = Math.ceil(sc.data.total / cols), pitch = 24, cw = cols * pitch, ch = rows * pitch;
+    const card = h(`<div class="piece" style="width:${cw + 80}px"><div class="paper" style="padding:40px;clip-path:${torn(801, 6)}"><canvas width="${cw}" height="${ch}" style="display:block"></canvas></div></div>`);
+    root.appendChild(card);
+    const tag = h(`<div class="piece"><div class="black" style="padding:16px 26px 20px;clip-path:${torn(802, 4)}"><div style="font-weight:800;font-size:40px">✓ checked by Lean</div></div></div>`);
+    root.appendChild(tag);
+    const txt = h(`<div style="position:absolute;left:84px;right:84px;top:960px;color:#fff"><div class="big" style="color:var(--y)"><span>0</span>%</div><div class="sm" style="margin-top:18px">${esc(sc.data.small)}</div><div class="credit" style="margin-top:22px">${esc(sc.data.credit || "")}</div></div>`);
+    root.appendChild(txt);
+    const ctx = card.querySelector("canvas").getContext("2d");
+    const pc = piece(card, 810, { x: 60, y: 330, rot: -1.2 }), pt = piece(tag, 811, { x: 560, y: 290, rot: 4 });
+    const a = sc.start, lc = cue(si, "lean", .3), hc = cue(si, "162", .3), bc = cue(si, "22.4", .3);
+    const target = parseFloat(sc.data.big);
+    ev(a + .25, "slap"); ev(lc + .25, "slap"); ev(hc + .2, "sweep");
+    return t => {
+      placePiece(pc, t, a, { dx: 0, dy: 1100, rot: 8 });
+      placePiece(pt, t, lc, { dx: 0, dy: 0, rot: -10, s: 1.9 }, .3);
+      ctx.clearRect(0, 0, cw, ch);
+      const shown = p(t, a + .35, 1.3), lit = p(t, hc, 1.1);
+      for (let i = 0; i < sc.data.total; i++) {
+        const c = Math.floor(i / rows), r = i % rows; // fill column by column
+        const d = (c / cols) * .7 + (r / rows) * .3;
+        if (shown < d) continue;
+        const on = i < sc.data.highlight && lit > (i / sc.data.highlight);
+        ctx.fillStyle = on ? "#F5C400" : "rgba(20,20,20,.78)";
+        ctx.beginPath(); ctx.arc(c * pitch + pitch / 2, r * pitch + pitch / 2, on ? 9.5 : 8, 0, Math.PI * 2); ctx.fill();
+        if (on) { ctx.strokeStyle = "#141414"; ctx.lineWidth = 2; ctx.stroke(); }
+      }
+      const k = p(t, bc, .8);
+      txt.style.opacity = oCubic(p(t, bc - .1, .4));
+      txt.querySelector("span").textContent = (target * oCubic(k)).toFixed(1);
+    };
+  },
+
+  stamp(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const lines = ["Theorem 1.", "Let ε > 0. Then for all sufficiently large N …", "Proof.", "By Lemma 2.3 and (4.1), it suffices to show …", "∑ₙ aₙ n⁻ˢ ≠ 0  for  Re(s) > σ₀", "which completes the proof. ∎"];
+    const page = h(`<div class="piece" style="width:880px"><div class="paper" style="padding:64px 70px 80px;clip-path:${torn(901, 6)}">
+      <div class="serif" style="font-weight:700;font-size:44px;margin-bottom:10px">Manuscript</div>
+      ${lines.map((l, i) => `<div class="serif" style="font-size:38px;line-height:1.5;${i % 2 ? "" : "font-weight:700;margin-top:18px"}">${esc(l)}</div><div class="bars"><i style="width:${90 - i * 6}%"></i></div>`).join("")}
+      </div></div>`);
+    root.appendChild(page);
+    const chk = h(`<div class="piece"><div class="yellow" style="padding:16px 28px 20px;clip-path:${torn(902, 4)}"><div style="font-weight:800;font-size:44px">✓ machine-checked</div></div></div>`);
+    root.appendChild(chk);
+    const st = h(`<div style="position:absolute;left:0;top:0;z-index:6"><div style="border:12px solid var(--red);color:var(--red);font-weight:900;line-height:1;padding:26px 40px 30px;white-space:nowrap;text-align:center">${sc.data.stamp.split("·").map((x, i) => `<div style="font-size:${i ? 54 : 104}px;margin-top:${i ? 10 : 0}px">${esc(x.trim())}</div>`).join("")}</div></div>`);
+    root.appendChild(st);
+    { const ink = st.firstChild; const m = grainSvg(0.5, 1.6, 2); ink.style.webkitMaskImage = m; ink.style.maskImage = m; ink.style.maskSize = "420px"; ink.style.webkitMaskSize = "420px"; }
+    const pp = piece(page, 910, { x: 100, y: 330, rot: -2 }), pk = piece(chk, 911, { x: 520, y: 290, rot: 5 });
+    const a = sc.start, kc = sc.start + .4, sc0 = cue(si, "preprints", .35);
+    ev(a + .3, "slap"); ev(kc + .2, "slap"); ev(sc0 + .18, "stamp");
+    return t => {
+      placePiece(pp, t, a, { dx: 0, dy: 1100, rot: 6 });
+      // shake the page when the stamp lands
+      const sh = p(t, sc0 + .18, .25);
+      if (sh > 0 && sh < 1) pp.el.style.transform += ` translate(${(Math.sin(sh * 40) * 10 * (1 - sh)).toFixed(1)}px,0)`;
+      placePiece(pk, t, kc, { dx: 0, dy: 0, rot: -12, s: 1.8 }, .3);
+      if (t < sc0) { st.style.visibility = "hidden"; return; }
+      st.style.visibility = "visible";
+      const k = p(t, sc0, .2);
+      const s = lerp(2.4, 1, oCubic(k));
+      st.style.opacity = Math.min(1, k * 2.5) * .93;
+      st.style.transform = `translate(250px,800px) rotate(-11deg) scale(${s.toFixed(3)})`;
+    };
+  },
+
+  note(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const big = h(`<div class="piece" style="width:920px"><div class="yellow" style="padding:70px 60px 80px;clip-path:${torn(1001, 8)}"><div class="big" style="font-size:132px">${esc(sc.data.big)}</div></div></div>`);
+    big.appendChild(tape(360, -26, -4));
+    root.appendChild(big);
+    const small = h(`<div class="piece" style="width:860px"><div class="paper" style="padding:40px 48px 44px;clip-path:${torn(1002, 6)}"><div class="sm" style="font-weight:600">${esc(sc.data.small)}</div><div class="credit" style="margin-top:20px">${esc(sc.data.credit || "")}</div></div></div>`);
+    root.appendChild(small);
+    const pb = piece(big, 1010, { x: 80, y: 360, rot: -2.5 }), ps = piece(small, 1011, { x: 130, y: 880, rot: 1.8 });
+    const a = cue(si, "doesn't", .4), b = sent(si, 1).start;
+    ev(a + .3, "thump"); ev(b + .3, "slap");
+    return t => { placePiece(pb, t, Math.min(a, sc.start + 1.2), { dx: 0, dy: 0, rot: -8, s: 1.9 }, .32); placePiece(ps, t, b, { dx: 900, dy: 80, rot: 10 }); };
+  },
+
+  outro(sc, si, root) {
+    root.appendChild(h(`<div class="board"></div>`));
+    const [l1, l2] = sc.data.lines;
+    const s1 = h(`<div class="piece" style="width:940px"><div class="paper" style="padding:34px 46px 40px;clip-path:${torn(1101, 7)}"><div class="mid" style="font-size:74px;white-space:nowrap">${esc(l1)}</div></div></div>`);
+    const s2 = h(`<div class="piece" style="width:860px"><div class="black" style="padding:34px 46px 40px;clip-path:${torn(1102, 7)}"><div class="mid" style="font-size:80px;color:var(--y)">${esc(l2)}</div></div></div>`);
+    root.appendChild(s1); root.appendChild(s2);
+    const srcs = h(`<div style="position:absolute;left:80px;right:80px;top:800px;color:#fff"><div class="credit" style="font-size:34px;margin-bottom:16px">Sources</div>${B.sources.map(s => `<div class="mid" style="font-size:58px;margin-top:6px">${esc(s.name)}</div>`).join("")}</div>`);
+    root.appendChild(srcs);
+    const lock = h(`<div style="position:absolute;left:80px;right:80px;top:1180px;display:flex;align-items:center;gap:22px;color:#fff">${MARK}<div><div class="serif" style="font-weight:600;font-size:54px">AI Broadsheet</div><div class="credit" style="font-size:28px">Explainer · ${esc(B.date)} · AI voice</div></div></div>`);
+    root.appendChild(lock);
+    const p1 = piece(s1, 1110, { x: 50, y: 340, rot: -2 }), p2 = piece(s2, 1111, { x: 150, y: 560, rot: 2.2 });
+    const a = sc.start, b = cue(si, "model isn't", .3), c = cue(si, "sources", .3);
+    ev(a + .3, "slap"); ev(b + .3, "slap");
+    return t => {
+      placePiece(p1, t, a, { dx: -900, dy: 0, rot: -10 }, .42);
+      placePiece(p2, t, b, { dx: 900, dy: 0, rot: 10 }, .42);
+      const k = oCubic(p(t, c, .6)); srcs.style.opacity = k; srcs.style.transform = `translateY(${(1 - k) * 30}px)`;
+      const k2 = oCubic(p(t, c + .5, .6)); lock.style.opacity = k2;
+    };
+  },
+};
+
+// ── captions ────────────────────────────────────────────────────────────────
+let CAPS = [];
+function buildCaptions() {
+  for (const sc of T.scenes) for (const s of sc.sentences) {
+    const words = s.text.split(/\s+/);
+    const weight = words.map(w => w.length + 1.5), tot = weight.reduce((a, b) => a + b, 0);
+    let acc = 0;
+    const timed = words.map((w, i) => { const st = s.start + (acc / tot) * (s.end - s.start); acc += weight[i]; return { w, st, en: s.start + (acc / tot) * (s.end - s.start) }; });
+    let chunk = [];
+    const flush = () => { if (chunk.length) CAPS.push({ words: chunk, st: chunk[0].st, en: chunk[chunk.length - 1].en }); chunk = []; };
+    for (const x of timed) { chunk.push(x); const len = chunk.map(c => c.w).join(" ").length; if (len > 20 || /[.,:;?]$/.test(x.w)) flush(); }
+    flush();
+  }
+}
+function renderCaption(t) {
+  const el = document.getElementById("cap");
+  const c = CAPS.find(c => t >= c.st - .05 && t < c.en + .12);
+  if (!c) { el.innerHTML = ""; return; }
+  el.innerHTML = `<span>${c.words.map(w => t >= w.st - .03 ? (t < w.en ? `<em>${esc(w.w)}</em>` : esc(w.w)) : `<i style="font-style:normal;opacity:.55">${esc(w.w)}</i>`).join(" ")}</span>`;
+}
+
+// ── setup and frame rendering ──────────────────────────────────────────────
+function setup() {
+  B = window.BOARD; T = window.TIMING;
+  document.getElementById("head").innerHTML = `${MARK}<b>AI Broadsheet</b><span class="pill">Explainer</span>`;
+  const host = document.getElementById("scenes");
+  B.scenes.forEach((data, si) => {
+    const root = document.createElement("div"); root.className = "scene"; host.appendChild(root);
+    const timing = T.scenes[si];
+    const start = si === 0 ? 0 : timing.start - .12;
+    const sc = { data, start, end: si === B.scenes.length - 1 ? T.duration : T.scenes[si + 1].start - .12, sentences: timing.sentences };
+    const update = BUILD[data.type](sc, si, root);
+    scenes.push({ root, sc, update });
+    if (si > 0) ev(start - .15, "whoosh");
+  });
+  document.getElementById("prog").innerHTML = scenes.map(() => "<i><u></u></i>").join("");
+  const wipe = document.getElementById("wipe");
+  wipe.className = "yellow"; wipe.style.clipPath = torn(4242, 22, 18);
+  buildCaptions();
+  EVENTS.sort((a, b) => a.t - b.t);
+  return { duration: T.duration, events: EVENTS };
+}
+function renderAt(t) {
+  let i = 0;
+  scenes.forEach((s, k) => { if (t >= s.sc.start) i = k; });
+  scenes.forEach((s, k) => s.root.classList.toggle("on", k === i));
+  const s = scenes[i];
+  const ink = s.sc.data.type === "numbers";
+  document.getElementById("head").classList.toggle("ink", ink);
+  document.getElementById("prog").classList.toggle("ink", ink);
+  s.update(t);
+  // slow push-in, a different drift per scene
+  const lt = (t - s.sc.start) / Math.max(1, s.sc.end - s.sc.start);
+  const z = 1 + .045 * lt, dx = (i % 2 ? -1 : 1) * 10 * lt;
+  s.root.style.transform = `translateX(${dx.toFixed(1)}px) scale(${z.toFixed(4)})`;
+  // paper wipe across each cut
+  const wipe = document.getElementById("wipe");
+  let wy = 2000;
+  for (const [k, x] of scenes.entries()) if (k > 0 && Math.abs(t - x.sc.start) < .3) { const q = ioCubic(p(t, x.sc.start - .3, .6)); wy = lerp(1950, -2450, q); wipe.className = k % 2 ? "yellow" : "black"; }
+  wipe.style.top = `${wy.toFixed(0)}px`;
+  // progress
+  document.querySelectorAll("#prog u").forEach((u, k) => { const x = scenes[k].sc; u.style.transform = `scaleX(${clamp((t - x.start) / (x.end - x.start)).toFixed(3)})`; });
+  // film grain moves on twos
+  const q = Math.floor(t * FPS_Q);
+  document.getElementById("grain").style.transform = `translate(${(hash(9, q) * 50 - 25).toFixed(0)}px,${(hash(11, q) * 50 - 25).toFixed(0)}px)`;
+  renderCaption(t);
+}
+window.setup = setup; window.renderAt = renderAt;
+</script></body></html>
