@@ -10,7 +10,7 @@
  * Every item links to where it was made and credits its maker. Adult or
  * "uncensored" projects are filtered out (brand safety for readers and advertisers).
  */
-import { AI_RE, AI_TALK_RE } from "./classify";
+import { AI_RE } from "./classify";
 import { withTimeout } from "./news-engine";
 import { canKeepAlive, keepAlive, sharedRead, sharedWrite } from "./shared-cache";
 
@@ -60,7 +60,7 @@ async function built(): Promise<BuiltItem[]> {
   const json = JSON.parse(await getText(`https://hn.algolia.com/api/v1/search?tags=show_hn&numericFilters=created_at_i>${since},points>15&hitsPerPage=80`, "application/json"));
   const hits = (json.hits ?? []) as { objectID: string; title?: string; url?: string; points?: number; num_comments?: number; created_at: string }[];
   return hits
-    .filter(h => h.title && (AI_RE.test(h.title) || AI_TALK_RE.test(h.title)) && !UNSAFE.test(h.title))
+    .filter(h => h.title && (AI_RE.test(h.title) || BUILT_RE.test(h.title)) && !UNSAFE.test(h.title))
     .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
     .slice(0, 10)
     .map(h => ({
@@ -74,6 +74,9 @@ async function built(): Promise<BuiltItem[]> {
       openSource: /github\.com|gitlab\.com|open[- ]source|\bOSS\b/i.test(`${h.url ?? ""} ${h.title}`),
     }));
 }
+
+/** Show HN titles that are clearly about AI ("model" alone also matches 3D models). */
+const BUILT_RE = /\b(LLMs?|GPTs?|ChatGPT|Claude|Gemini|Llama|Mistral|DeepSeek|Qwen|agents?|agentic|MCP|RAG|embeddings?|diffusion|transformers?|neural|fine-?tun\w*|inference|prompts?|vibe[- ]cod\w*|Opus|Sonnet|Haiku|Codex|Cursor|Copilot)\b/i;
 
 const latin = (s: string) => (s.match(/[A-Za-z]/g)?.length ?? 0) / Math.max(1, s.replace(/\s/g, "").length);
 
