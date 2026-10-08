@@ -14,30 +14,36 @@ export const Route = createFileRoute("/standards")({
   component: Standards,
 });
 
-const SECTIONS: { h: Bi; p: Bi[] }[] = [
+const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
   {
     h: { en: "Where our news comes from", fr: "D'où viennent nos nouvelles" },
     p: [
-      { en: "Every story on AI Broadsheet comes from a named newsroom, lab, government or community source, through its public feed. We show the publisher's headline, a short excerpt and the publisher's own photo with credit, and we link to the full article.", fr: "Chaque nouvelle d'AI Broadsheet provient d'une salle de nouvelles, d'un laboratoire, d'un gouvernement ou d'une communauté nommés, par leur fil public. Nous affichons le titre de l'éditeur, un court extrait et sa photo créditée, avec un lien vers l'article complet." },
+      { en: "Every story on AI Broadsheet comes from a named newsroom, lab, government or community source, through its public feed. We show the publisher's headline (or a labelled AI desk headline), a short excerpt and, where we may, the publisher's own photo with credit, and we link to the full article.", fr: "Chaque nouvelle d'AI Broadsheet provient d'une salle de nouvelles, d'un laboratoire, d'un gouvernement ou d'une communauté nommés, par leur fil public. Nous affichons le titre de l'éditeur (ou un titre identifié du pupitre IA), un court extrait et, quand c'est permis, la photo créditée de l'éditeur, avec un lien vers l'article complet." },
       { en: "Videos play in the publisher's own YouTube player. Podcast episodes play from the show's own audio file. Both are credited to the channel or show.", fr: "Les vidéos jouent dans le lecteur YouTube de l'éditeur. Les balados jouent depuis le fichier audio de l'émission. Les deux sont crédités." },
     ],
   },
   {
-    h: { en: "Software files stories; it doesn't write them", fr: "Le logiciel classe les nouvelles; il ne les écrit pas" },
+    h: { en: "How stories are filed", fr: "Comment les nouvelles sont classées" },
     p: [
-      { en: "Headlines are never rewritten. Our software sorts stories into desks using published keyword rules, and groups headlines that describe the same event so you can see every outlet's coverage side by side. Machine translations are labelled on every item and link to the original.", fr: "Les titres ne sont jamais réécrits. Notre logiciel classe les nouvelles par section selon des règles de mots-clés et regroupe les titres qui décrivent le même événement, pour comparer la couverture de chaque média. Les traductions automatiques sont identifiées sur chaque article et renvoient à l'original." },
-      { en: "The lead story is the event the most newsrooms are reporting right now. “Developing” means three or more outlets reported it in the last six hours.", fr: "La nouvelle principale est l'événement que le plus de médias rapportent en ce moment. « En développement » signifie qu'au moins trois médias l'ont rapporté dans les six dernières heures." },
+      { en: "Our software sorts stories into desks using published keyword rules, and groups headlines that describe the same event so you can see every outlet's coverage side by side.", fr: "Notre logiciel classe les nouvelles par section selon des règles de mots-clés et regroupe les titres qui décrivent le même événement, pour comparer la couverture de chaque média." },
+      { en: "The lead story is the event the most newsrooms are reporting right now. “Developing” means three or more outlets reported it in the last six hours. “Breaking” means three or more outlets reported it within the last two hours. These labels are counted, never chosen.", fr: "La nouvelle principale est l'événement que le plus de médias rapportent en ce moment. « En développement » signifie qu'au moins trois médias l'ont rapporté dans les six dernières heures. « Dernière heure » signifie qu'au moins trois médias l'ont rapporté dans les deux dernières heures. Ces mentions sont calculées, jamais choisies." },
     ],
   },
   {
-    h: { en: "How we use Claude", fr: "Comment nous utilisons Claude" },
+    id: "ai-desk",
+    h: { en: "The AI desk", fr: "Le pupitre IA" },
     p: [
-      { en: "We use Claude, an AI model made by Anthropic, for exactly four things:", fr: "Nous utilisons Claude, un modèle d'IA d'Anthropic, pour exactement quatre choses :" },
-      { en: "1. Translation. English headlines and summaries are translated for French readers, and French ones for English readers. Every translated item is labelled “Translated with Claude”, shows the original headline, and links to the publisher.", fr: "1. Traduction. Les titres et résumés anglais sont traduits pour les lecteurs francophones, et inversement. Chaque élément traduit porte la mention « Traduit avec Claude », affiche le titre original et renvoie à l'éditeur." },
-      { en: "2. Grouping. Claude checks whether headlines our software grouped together really report the same event, and separates the ones that don't. It only groups; it writes nothing.", fr: "2. Regroupement. Claude vérifie si les titres regroupés par notre logiciel rapportent vraiment le même événement, et sépare ceux qui ne le font pas. Il ne fait que regrouper; il n'écrit rien." },
-      { en: "3. Funding-page change detection. Claude compares official program pages with our funding listings and tells an editor what may need re-checking. It never edits a listing; an editor verifies and updates it.", fr: "3. Détection des changements sur les pages de financement. Claude compare les pages officielles des programmes avec nos fiches et signale à la rédaction ce qui pourrait devoir être revérifié. Il ne modifie jamais une fiche; un éditeur vérifie et la met à jour." },
-      { en: "4. Newsletter drafting. Claude drafts The Morning Broadsheet from publisher headlines and summaries. An editor reviews every draft before it is sent.", fr: "4. Rédaction de l'infolettre. Claude prépare un brouillon du Morning Broadsheet à partir des titres et résumés des éditeurs. Un éditeur relit chaque brouillon avant l'envoi." },
-      { en: "Claude never writes, rewrites or invents news. Headlines and photos remain the publishers' own. Every Claude output is labelled or reviewed by a human editor before publication.", fr: "Claude n'écrit, ne réécrit et n'invente jamais de nouvelles. Les titres et les photos restent ceux des éditeurs. Chaque production de Claude est identifiée ou relue par un éditeur avant publication." },
+      { en: "For the stories leading the site, Claude, an AI model made by Anthropic, writes a new headline and a brief of at most two sentences, in English and French. It works only from the headlines and excerpts the publishers themselves published for that story.", fr: "Pour les nouvelles en tête du site, Claude, un modèle d'IA d'Anthropic, rédige un nouveau titre et un résumé d'au plus deux phrases, en anglais et en français. Il travaille uniquement à partir des titres et extraits publiés par les éditeurs pour cette nouvelle." },
+      { en: "It may not add any name, number, date, place, quote, motive or consequence that isn't in that text. Before anything is shown, our software checks every number and every name in the new copy against the publishers' text. If one is missing, the copy is thrown away and the publisher's headline stays.", fr: "Il ne peut ajouter aucun nom, chiffre, date, lieu, citation, motif ou conséquence absent de ce texte. Avant tout affichage, notre logiciel vérifie chaque chiffre et chaque nom du nouveau texte dans celui des éditeurs. S'il en manque un, le texte est rejeté et le titre de l'éditeur est conservé." },
+      { en: "Every AI desk headline is labelled, the story page shows the publisher's original headline and excerpt, and the link to the original article is always there. If you find an error, use “Report an error”: we correct it and log it.", fr: "Chaque titre du pupitre IA est identifié, la page de la nouvelle affiche le titre et l'extrait originaux de l'éditeur, et le lien vers l'article original est toujours présent. Si vous trouvez une erreur, utilisez « Signaler une erreur » : nous la corrigeons et la consignons." },
+    ],
+  },
+  {
+    h: { en: "Other ways we use Claude", fr: "Autres usages de Claude" },
+    p: [
+      { en: "Translation: headlines and summaries without an AI desk version are translated for readers of the other language, labelled “Translated with Claude”, with the original shown.", fr: "Traduction : les titres et résumés sans version du pupitre IA sont traduits pour les lecteurs de l'autre langue, avec la mention « Traduit avec Claude » et l'original affiché." },
+      { en: "Grouping: Claude checks whether headlines grouped together really report the same event. Funding pages: it flags official pages that may have changed; an editor verifies and updates every listing. Newsletter: it drafts The Morning Broadsheet; an editor reviews every draft before it is sent.", fr: "Regroupement : Claude vérifie si les titres regroupés rapportent vraiment le même événement. Financement : il signale les pages officielles qui ont pu changer; un éditeur vérifie et met à jour chaque fiche. Infolettre : il prépare le Morning Broadsheet; un éditeur relit chaque brouillon avant l'envoi." },
+      { en: "Claude never invents news, never writes about a story we don't have from a publisher, and never makes pictures that look like news photos.", fr: "Claude n'invente jamais de nouvelles, n'écrit jamais sur une nouvelle qu'aucun éditeur n'a publiée et ne crée jamais d'images qui ressemblent à des photos de presse." },
     ],
   },
   {
@@ -76,7 +82,7 @@ function Standards() {
       />
       <div className="container-mw mt-10 max-w-3xl">
         {SECTIONS.map(s => (
-          <section key={s.h.en} className="mb-10">
+          <section key={s.h.en} id={s.id} className="mb-10 scroll-mt-24">
             <h2 className="masthead-serif text-[1.7rem] leading-tight mb-3">{pick(s.h)}</h2>
             <div className="prose-mw">{s.p.map(p => <p key={p.en}>{pick(p)}</p>)}</div>
           </section>

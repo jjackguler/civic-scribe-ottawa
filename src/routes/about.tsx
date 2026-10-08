@@ -22,12 +22,12 @@ export const Route = createFileRoute("/about")({
 
 const RULES = [
   {
-    en: "We never invent news. Every headline comes from a named publisher's public feed, and every story links to the original.",
-    fr: "Nous n'inventons jamais de nouvelles. Chaque manchette provient du fil public d'un éditeur nommé, et chaque article renvoie à l'original.",
+    en: "We never invent news. Every story comes from a named publisher's public feed and links to the original. AI desk headlines are labelled and checked against the publisher's own text.",
+    fr: "Nous n'inventons jamais de nouvelles. Chaque nouvelle provient du fil public d'un éditeur nommé et renvoie à l'original. Les titres du pupitre IA sont identifiés et vérifiés dans le texte de l'éditeur.",
   },
   {
-    en: "We show short excerpts only, and credit the publisher on every story and every photo. Photos are the publisher's own; if one doesn't load, we show the headline without a picture rather than a stand-in graphic.",
-    fr: "Nous n'affichons que de courts extraits et citons l'éditeur sur chaque article et chaque photo. Les photos sont celles de l'éditeur; si l'une ne se charge pas, nous affichons la manchette sans image plutôt qu'un visuel de remplacement.",
+    en: "We show short excerpts only, and credit the publisher on every story and every photo. Photos are the publisher's own. Where we have no photo we may use, we show a designed cover with the headline, never an AI picture made to look like a news photo.",
+    fr: "Nous n'affichons que de courts extraits et citons l'éditeur sur chaque article et chaque photo. Les photos sont celles de l'éditeur. Sans photo utilisable, nous affichons une couverture graphique avec le titre, jamais une image d'IA imitant une photo de presse.",
   },
   {
     en: "Funding listings are checked against the official program page, with the date we checked. If we're not sure a program is open, we say so.",

@@ -6,6 +6,7 @@ import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type
 import { AI_RE, tagsOf } from "./classify";
 import { displayFor } from "./rights";
 import { keepAlive, sharedCacheAvailable, sharedRead, sharedWrite } from "./shared-cache";
+import type { AiDeskEntry } from "./ai-desk.server";
 
 export type Story = {
   id: string;
@@ -31,6 +32,8 @@ export type Story = {
   minister: boolean;
   /** Community signal for trending items: Hacker News points/comments or paper upvotes. */
   popularity?: { score: number; comments?: number; discussUrl?: string };
+  /** AI desk headline and brief (EN/FR), checked against the sources. See ai-desk.server.ts. */
+  ai?: AiDeskEntry;
 };
 
 export type SourceStatus = { id: string; name: string; ok: boolean; count: number; checkedAt?: string; error?: string };
@@ -423,11 +426,20 @@ function rebuild(): Promise<NewsPayload> {
   // If the rebuild runs long, publish whatever the feeds have delivered so far.
   g.__mwNewsInflight = withTimeout(buildPayload(), 14000, null as unknown as NewsPayload)
     .then(p => p ?? buildPayload(false))
-    .then(payload => {
+    .then(async payload => {
       if (payload.stories.length > 0) {
-        payload = { ...payload, origin: "built", sharedCache: sharedCacheAvailable() };
+        const { attachDesk, runDesk } = await import("./ai-desk.server");
+        payload = await attachDesk({ ...payload, origin: "built", sharedCache: sharedCacheAvailable() });
         g.__mwNews = { ts: Date.now(), payload };
         saveSnapshot(payload);
+        // Write headlines for new lead stories in the background, then fold them in.
+        const built = payload;
+        keepAlive(runDesk(built).then(async n => {
+          if (n === 0 || g.__mwNews?.payload !== built) return;
+          const withDesk = await attachDesk(built);
+          g.__mwNews = { ts: g.__mwNews.ts, payload: withDesk };
+          saveSnapshot(withDesk);
+        }));
       }
       return payload.stories.length > 0 || !cached ? payload : cached.payload;
     })

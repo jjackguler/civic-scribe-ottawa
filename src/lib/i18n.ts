@@ -79,6 +79,7 @@ export const dict = {
   comments: { en: "comments", fr: "commentaires" },
   upvotes: { en: "upvotes", fr: "votes" },
   translatedWithClaude: { en: "Translated with Claude", fr: "Traduit avec Claude" },
+  aiDeskHeadline: { en: "AI desk headline", fr: "Titre du pupitre IA" },
   original: { en: "Original", fr: "Original" },
   builtWithClaude: { en: "Built with Claude", fr: "Conçu avec Claude" },
   deskTools: { en: "Editor's desk tools", fr: "Outils de la rédaction" },

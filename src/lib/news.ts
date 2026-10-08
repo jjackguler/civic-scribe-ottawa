@@ -237,19 +237,22 @@ export function diversify(stories: Story[], max = 2, window = 12): Story[] {
 }
 
 /**
- * Headline and summary to show: the editor's desk version when there is one,
- * otherwise a labelled Claude translation when the reader's language differs,
- * otherwise the publisher's own. Links, sources, dates and credits never change.
+ * Headline and summary to show: the editor's own version when there is one,
+ * then the AI desk's labelled version, then a labelled Claude translation when
+ * the reader's language differs, otherwise the publisher's own. Links, sources, dates and credits never change.
  */
 export function display(s: Story, locale: Locale) {
   const d = deskFor(s.link);
   // Keep product names like GPT-6 on one line (non-breaking hyphen; same text).
   const keep = (t: string) => t.replace(/([A-Za-z])-(\d)/g, "$1\u2011$2");
-  const tr = !d && s.lang !== locale ? getTranslation(locale, s.id) : undefined;
+  const ai = !d && s.ai?.[locale]?.title ? s.ai[locale] : undefined;
+  const tr = !d && !ai && s.lang !== locale ? getTranslation(locale, s.id) : undefined;
   return {
-    title: keep(d ? d.headline[locale] : tr ? tr.title : s.title),
-    summary: d?.dek ? d.dek[locale] : tr ? (tr.summary || s.summary) : s.summary,
+    title: keep(d ? d.headline[locale] : ai ? ai.title : tr ? tr.title : s.title),
+    summary: d?.dek ? d.dek[locale] : ai?.summary ? ai.summary : tr ? (tr.summary || s.summary) : s.summary,
     edited: !!d,
+    /** Headline and brief written by the AI desk from these publishers' reporting. */
+    ai: ai ? (s.ai?.from ?? [s.source]) : null,
     translated: !!tr,
     original: s.title,
   };

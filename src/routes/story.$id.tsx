@@ -12,7 +12,7 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { editorMailto } from "@/lib/contact";
-import { seoHead, publisherRef, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { seoHead, publisherRef, DEFAULT_OG_IMAGE, localeOf } from "@/lib/seo";
 
 export const Route = createFileRoute("/story/$id")({
   loader: async ({ params }) => {
@@ -22,9 +22,12 @@ export const Route = createFileRoute("/story/$id")({
   head: ({ match, loaderData }) => {
     const s = loaderData?.story;
     if (!s) return seoHead(match, { title: { en: `Story — ${SITE.name}`, fr: `Nouvelle — ${SITE.name}` }, description: SITE.description, noindex: true });
-    const description = s.summary || `${s.source}: ${s.title}`;
+    // The AI desk's headline and brief (labelled on the page) when there is one.
+    const ai = s.ai?.[localeOf(match)];
+    const headline = ai?.title || s.title;
+    const description = ai?.summary || s.summary || `${s.source}: ${s.title}`;
     return seoHead(match, {
-      title: `${s.title} — ${SITE.name}`,
+      title: `${headline} — ${SITE.name}`,
       description,
       image: s.image,
       type: "article",
@@ -32,7 +35,7 @@ export const Route = createFileRoute("/story/$id")({
       jsonLd: (locale, url) => [{
         "@context": "https://schema.org",
         "@type": "NewsArticle",
-        headline: s.title.slice(0, 110),
+        headline: headline.slice(0, 110),
         description,
         url,
         mainEntityOfPage: url,
@@ -99,6 +102,14 @@ function StoryPage() {
                 {fr ? `Titre de la rédaction. Titre original de ${s.source} :` : `Headline by our editors. Original headline from ${s.source}:`} <span className="italic">“{s.title}”</span>
               </p>
             )}
+            {d.ai && (
+              <p className="meta mt-3">
+                <span className="font-semibold">{fr ? "Titre et résumé du pupitre IA" : "Headline and brief by our AI desk"}</span>{" "}
+                {fr ? `(Claude, à partir du seul texte des éditeurs, vérifié automatiquement). Titre original de ${s.source} :` : `(Claude, working only from the publishers' text, checked automatically). Original headline from ${s.source}:`}{" "}
+                <span className="italic">“{s.title}”</span>{" "}
+                <Link to="/standards" hash="ai-desk" className="text-lake font-semibold hover:underline">{fr ? "Comment ça marche" : "How this works"}</Link>
+              </p>
+            )}
             {d.translated && (
               <p className="meta mt-3">
                 <span className="font-semibold">{fr ? "Traduit avec Claude." : "Translated with Claude."}</span>{" "}
@@ -116,10 +127,18 @@ function StoryPage() {
               </figure>
             )}
 
-            {d.summary && (
+            {d.ai && d.summary && (
+              <div className="mt-6 bg-surface border border-line border-t-[3px] border-t-night p-5">
+                <p className="text-[0.8rem] font-bold text-muted-ink mb-1">
+                  {fr ? `Résumé du pupitre IA, d'après ${d.ai.join(", ")}` : `AI desk brief, from reporting by ${d.ai.join(", ")}`}
+                </p>
+                <p className="font-serif text-[1.25rem] leading-relaxed">{d.summary}</p>
+              </div>
+            )}
+            {(d.ai ? s.summary : d.summary) && (
               <div className="mt-6 border-l-[3px] border-brass pl-5">
                 <p className="text-[0.8rem] font-bold text-muted-ink mb-1">{fr ? `Extrait de ${s.source}` : `From ${s.source}`}</p>
-                <p className="font-serif text-[1.25rem] leading-relaxed">{d.summary}</p>
+                <p className="font-serif text-[1.25rem] leading-relaxed">{d.ai ? s.summary : d.summary}</p>
               </div>
             )}
 

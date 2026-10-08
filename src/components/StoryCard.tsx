@@ -65,8 +65,8 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
     return (
       <article className="group py-2.5 border-b border-line last:border-0">
         <StoryLink s={s} className="block">
-          <h3 className="font-semibold leading-snug text-[0.98rem] text-ink group-hover:underline decoration-1" title={d.translated ? d.original : undefined}>{d.title}</h3>
-          {d.translated && <TranslatedNote original={d.original} compact />}
+          <h3 className="font-semibold leading-snug text-[0.98rem] text-ink group-hover:underline decoration-1" title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
+          {(d.translated || d.ai) && <TranslatedNote ai={!!d.ai} original={d.original} compact />}
           <StoryMeta s={s} className="mt-1" />
         </StoryLink>
       </article>
@@ -103,8 +103,8 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
               {showTopic && <span className="topic">{storyKicker(s, locale)}</span>}
             </p>
           )}
-          <h3 className={`hl ${titleSize} text-ink group-hover:underline decoration-2 underline-offset-4`} title={d.translated ? d.original : undefined}>{d.title}</h3>
-          {d.translated && <TranslatedNote original={d.original} />}
+          <h3 className={`hl ${titleSize} text-ink group-hover:underline decoration-2 underline-offset-4`} title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
+          {(d.translated || d.ai) && <TranslatedNote ai={!!d.ai} original={d.original} />}
           {(v === "hero" || v === "text") && d.summary && (
             <p className={`dek mt-2 ${v === "hero" ? "text-[1.15rem] line-clamp-3" : "line-clamp-2 text-[0.98rem]"}`}>{d.summary}</p>
           )}
@@ -137,12 +137,12 @@ export function CoverageBadge({ outlets, developing }: { outlets: number; develo
   );
 }
 
-/** Label on every machine-translated headline, with the publisher's original. */
-export function TranslatedNote({ original, compact = false }: { original: string; compact?: boolean }) {
+/** Label on every machine-translated or AI-desk headline, with the publisher's original. */
+export function TranslatedNote({ original, compact = false, ai = false }: { original: string; compact?: boolean; ai?: boolean }) {
   const { locale } = useLocale();
   return (
     <p className="meta mt-1 text-[0.75rem]" title={original}>
-      <span className="font-semibold">{t("translatedWithClaude", locale)}</span>
+      <span className="font-semibold">{t(ai ? "aiDeskHeadline" : "translatedWithClaude", locale)}</span>
       {!compact && <span className="block italic line-clamp-1">{t("original", locale)}: {original}</span>}
     </p>
   );
