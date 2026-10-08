@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ../assets-out
-          ONLY=people PER=6 BUDGET_SEC=900 PEOPLE="Sam Altman;Dario Amodei;Demis Hassabis;Satya Nadella;Mark Zuckerberg;Elon Musk;Jensen Huang;Liang Wenfeng;Arthur Mensch;Sundar Pichai;Mustafa Suleyman;Alexandr Wang" python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=people PER=8 BUDGET_SEC=900 PEOPLE="Hassabis;Demis Hassabis DeepMind;Demis Hassabis Prime Minister;Liang Wenfeng;梁文锋;DeepSeek founder" python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         if: always()
