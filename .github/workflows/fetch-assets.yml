@@ -24,7 +24,7 @@ jobs:
       - name: Fetch
         run: |
           mkdir -p ../assets-out
-          python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=audio python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         run: |

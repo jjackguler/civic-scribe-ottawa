@@ -111,18 +111,21 @@ NEWSPRINT_QUERIES = [
 
 
 # ── Kenney (CC0) ─────────────────────────────────────────────────────────────
-KENNEY = ["impact-sounds", "interface-sounds", "rpg-audio", "ui-audio", "foley-sounds", "sci-fi-sounds"]
+KENNEY = ["impact-sounds", "interface-sounds", "rpg-audio", "ui-audio"]
+
+
+KENNEY_ZIPS = {
+    "impact-sounds": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+    "interface-sounds": "https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip",
+    "rpg-audio": "https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip",
+    "ui-audio": "https://kenney.nl/media/pages/assets/ui-audio/490d233f68-1677590494/kenney_ui-audio.zip",
+}
 
 
 def kenney(pack):
-    page = get(f"https://kenney.nl/assets/{pack}")
-    if not page:
+    url = KENNEY_ZIPS.get(pack)
+    if not url:
         return
-    m = re.search(r'href="([^"]+\.zip)"', page)
-    if not m:
-        log(f"kenney {pack}: no zip link")
-        return
-    url = urllib.parse.urljoin("https://kenney.nl/", m.group(1))
     data = get(url, binary=True, timeout=180)
     if not data:
         return
@@ -139,6 +142,10 @@ def kenney(pack):
 
 
 # ── Freesound CC0 previews ───────────────────────────────────────────────────
+MUSIC = [
+    "documentary background music", "cinematic underscore", "news background music", "minimal piano loop",
+    "tension pulse music", "lofi beat loop", "ambient pad music", "upbeat corporate music", "music bed",
+]
 FREESOUND = [
     "scissors cutting paper", "paper tear", "tape rip", "rubber stamp", "marker pen writing",
     "pencil scribble", "paper slide table", "paper crumple", "page turn", "typewriter",
@@ -146,13 +153,13 @@ FREESOUND = [
 ]
 
 
-def freesound(query, limit=4):
-    url = "https://freesound.org/search/?" + urllib.parse.urlencode({"q": query, "f": 'license:"Creative Commons 0"', "s": "Rating highest first", "g": "1"})
+def freesound(query, limit=4, folder="sfx"):
+    url = "https://freesound.org/search/?" + urllib.parse.urlencode({"q": query, "f": 'license:"Creative Commons 0"'})
     html = get(url)
     if not html:
         return
-    # Each result carries its preview URL; ids and names come from the sound links.
-    previews = re.findall(r'(https://cdn\.freesound\.org/previews/\d+/(\d+)_\d+-hq\.mp3)', html)
+    # Each result carries its preview URL (-lq); the -hq preview sits next to it.
+    previews = [(u.replace("-lq.mp3", "-hq.mp3"), sid) for u, sid in re.findall(r'(https://cdn\.freesound\.org/previews/\d+/(\d+)_\d+-lq\.mp3)', html)]
     seen, n = set(), 0
     for purl, sid in previews:
         if sid in seen or n >= limit:
@@ -164,9 +171,9 @@ def freesound(query, limit=4):
         if not data:
             continue
         name = f"fs-{slug(query, 24)}--{sid}.mp3"
-        with open(os.path.join(OUT, "sfx", name), "wb") as f:
+        with open(os.path.join(OUT, folder, name), "wb") as f:
             f.write(data)
-        CREDITS.append({"file": f"sfx/{name}", "source": page, "author": title.group(2) if title else "", "title": title.group(3).strip() if title else "", "license": "CC0 1.0 (filtered by Freesound license search)"})
+        CREDITS.append({"file": f"{folder}/{name}", "source": page, "author": title.group(2) if title else "", "title": title.group(3).strip() if title else "", "license": "CC0 1.0 (filtered by Freesound license search)"})
         n += 1
     log(f"freesound '{query}': {n}")
 
@@ -210,20 +217,25 @@ def holizna(max_tracks=14):
 
 
 def main():
+    only = os.environ.get("ONLY", "")
     for d in ("photos", "newsprint", "sfx", "music"):
         os.makedirs(os.path.join(OUT, d), exist_ok=True)
-    for q in PHOTO_QUERIES:
-        commons(q, "photos", limit=6)
-    for q in NEWSPRINT_QUERIES:
-        commons(q, "newsprint", limit=3, min_w=1200)
-    for p in KENNEY:
-        kenney(p)
-    for q in FREESOUND:
-        freesound(q)
-    holizna()
-    with open(os.path.join(OUT, "credits.json"), "w") as f:
+    if only in ("", "images"):
+        for q in PHOTO_QUERIES:
+            commons(q, "photos", limit=6)
+        for q in NEWSPRINT_QUERIES:
+            commons(q, "newsprint", limit=3, min_w=1200)
+    if only in ("", "audio"):
+        for p in KENNEY:
+            kenney(p)
+        for q in FREESOUND:
+            freesound(q, limit=5)
+        for q in MUSIC:
+            freesound(q, limit=4, folder="music")
+    name = f"credits-{only or 'all'}.json"
+    with open(os.path.join(OUT, name), "w") as f:
         json.dump(CREDITS, f, indent=1)
-    with open(os.path.join(OUT, "log.txt"), "w") as f:
+    with open(os.path.join(OUT, f"log-{only or 'all'}.txt"), "w") as f:
         f.write("\n".join(LOG))
 
 
