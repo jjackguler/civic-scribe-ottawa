@@ -180,6 +180,12 @@ export function isDeveloping(c: Cluster, now = Date.now()) {
   return new Set(recent.map(s => s.source)).size >= 3;
 }
 
+/** "Breaking": three or more newsrooms reported it within the last two hours. */
+export function isBreaking(c: Cluster, now = Date.now()) {
+  const recent = c.stories.filter(s => now - new Date(s.publishedAt).getTime() < 2 * 3600000);
+  return new Set(recent.map(s => s.source)).size >= 3;
+}
+
 /** Ticks once a minute so relative times stay fresh; null during SSR to avoid hydration drift. */
 export function useNow() {
   const [now, setNow] = useState<number | null>(null);

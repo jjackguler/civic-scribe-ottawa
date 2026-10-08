@@ -1,6 +1,6 @@
 # Proposals (not implemented — need the owner's approval)
 
-## 0. Share the news desk across Cloudflare isolates (most urgent)
+## 0. Share the news desk across Cloudflare isolates — DONE 2026-10-07 (Cache API, `src/lib/shared-cache.ts`)
 
 **Seen live on 2026-10-07:** every Cloudflare isolate keeps its own copy of the desk in memory. A fresh isolate starts empty and needs several seconds to fetch feeds, and it only gets through the first ~30 feeds before it is replaced. Effects: the RSS feed was briefly empty, and slower feeds (provincial and city governments, CBC city desks, the new Canadian sources) rarely appear. The feed order now rotates so each fresh isolate fetches a different slice, and RSS answers 503 instead of an empty feed. Those are stopgaps.
 

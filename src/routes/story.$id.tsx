@@ -7,7 +7,7 @@ import { StoryImage } from "@/components/StoryImage";
 import { AdSlot } from "@/components/AdSlot";
 import { LatestRail } from "@/components/LatestRail";
 import { NewsletterBox } from "@/components/NewsletterBox";
-import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isFrontPool, display, inSection } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isBreaking, isFrontPool, display, inSection } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -94,7 +94,7 @@ function StoryPage() {
           <div className="min-w-0 max-w-[820px]">
             <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <Link to="/news" search={{ section: deskId }} className="topic hover:underline">{storyKicker(s, locale)}</Link>
-              {cluster && <CoverageBadge outlets={cluster.sources} developing={isDeveloping(cluster)} />}
+              {cluster && <CoverageBadge outlets={cluster.sources} developing={isDeveloping(cluster)} breaking={isBreaking(cluster)} />}
             </p>
             <h1 className="hl text-[2.1rem] sm:text-[2.9rem] lg:text-[3.3rem] leading-[1.03] mt-2">{d.title}</h1>
             {d.edited && (

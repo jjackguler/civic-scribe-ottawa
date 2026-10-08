@@ -41,16 +41,20 @@ English pages live at `/path`, French at `/fr/path` (router rewrite in `src/rout
 
 ## How we use Claude
 
-Claude (Anthropic) is used for exactly four things:
+Claude (Anthropic) is used for:
 
-1. **Translation** — EN↔FR headlines and summaries, labelled "Translated with Claude" on every item, with the original headline shown and the link to the publisher unchanged.
-2. **Grouping** — checks whether headlines grouped as one event really are the same event, and splits them if not. It only groups; it writes nothing.
-3. **Funding-page change detection** — compares official program pages with `src/lib/funding.ts` and reports what an editor should re-verify. It never edits the file.
-4. **Newsletter drafting** — drafts The Morning Broadsheet for an editor to review before sending.
+1. **AI desk** (`src/lib/ai-desk.server.ts`) — for new lead stories, a headline and a brief of at most two sentences in EN and FR, written only from the publishers' headlines and excerpts for that story. A fact guard rejects the copy if any number (with its scale) or capitalised name is not in the source text; the publisher's headline then stays. Labelled "AI desk headline" on cards and explained on the story page, with the original headline and excerpt. Runs in the background after each desk rebuild (6 stories per run), results shared across isolates.
+2. **Translation** — EN↔FR for stories without AI desk copy, labelled "Translated with Claude".
+3. **Grouping** — checks whether headlines grouped as one event really are the same event.
+4. **Funding-page change detection** and **newsletter drafting** — for an editor to review; never published automatically.
 
-Claude never writes, rewrites or invents news. Headlines and photos remain the publishers' own. Every Claude output is labelled or reviewed by a human editor before publication.
+Claude never invents news, never writes about a story no publisher has, and never makes pictures that look like news photos. Stories without a usable photo get a designed cover (`StoryCover`).
 
-Setup: add `ANTHROPIC_API_KEY` and `EDITOR_PASSCODE` in Project Settings → Secrets (optional `MAX_DAILY_CLAUDE_CALLS`, default 300). Without the key the site works exactly as before. Editor tools live at `/editor/tools` (not linked, noindex).
+Setup: add `ANTHROPIC_API_KEY` and `EDITOR_PASSCODE` in Project Settings → Secrets (optional `MAX_DAILY_CLAUDE_CALLS`, default 300 — each AI desk run is one call). Without the key the site shows publishers' headlines.
+
+## Shared cache
+
+Every Cloudflare isolate keeps its own memory, so `src/lib/shared-cache.ts` keeps the last built news desk, media desk and AI desk in the Workers Cache API. A fresh isolate serves that copy at once and refreshes in the background. /about → Desk status shows where the copy came from.
 
 ## Development
 

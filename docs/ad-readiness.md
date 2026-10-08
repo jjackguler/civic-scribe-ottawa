@@ -9,6 +9,10 @@ Two kinds of advertising: **direct campaigns** you sell yourself (media kit at `
 - Crawlable English and French pages, canonical and hreflang tags, share cards, JSON-LD, live sitemap, RSS.
 - Cookieless Cloudflare Web Analytics, ready for a token — this gives you real audience numbers for advertisers.
 
+## AI desk and search
+
+The AI desk gives lead stories our own headline and brief (EN/FR), grounded in the publishers' text and checked mechanically. That makes those pages more than a copy of someone else's headline, which helps both readers and ad reviewers. It doesn't replace original reporting: Google's spam policies name "scaled content abuse" — many pages generated mainly to rank, with little value of their own — whether written by people or AI. Keep the AI desk to lead stories (it is limited to 6 per run), and keep publishing writing of your own.
+
 ## The two risks the code can't fix
 
 ### 1. Original content

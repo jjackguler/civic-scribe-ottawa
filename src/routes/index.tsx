@@ -8,7 +8,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
 import {
-  getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isFrontPool, display,
+  getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
 } from "@/lib/news";
 import { useMedia, type MediaItem } from "@/lib/media";
@@ -126,18 +126,29 @@ function Home() {
   const loading = !data && !isError;
   const editorial = EDITORIALS[0];
   const openPrograms = PROGRAMS.filter(p => p.status === "open" || p.status === "ongoing").length;
-  const developing = top && isDeveloping(top) ? top : null;
+  // Top strip: breaking (3+ outlets in 2 h), developing (3+ in 6 h), or the newest story if under 45 minutes old.
+  const newest = news.reduce<typeof news[number] | undefined>((a, b) => (!a || b.publishedAt > a.publishedAt ? b : a), undefined);
+  const fresh = newest && Date.now() - new Date(newest.publishedAt).getTime() < 45 * 60_000 ? newest : null;
+  const alert = top && isBreaking(top)
+    ? { kind: "breaking" as const, story: top.lead, note: `${top.sources} ${locale === "fr" ? "médias" : "outlets"}` }
+    : top && isDeveloping(top)
+      ? { kind: "developing" as const, story: top.lead, note: `${top.sources} ${locale === "fr" ? "médias" : "outlets"}` }
+      : fresh ? { kind: "just-in" as const, story: fresh, note: fresh.source } : null;
 
   return (
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.tagline[locale]}</h1>
 
-      {developing && (
-        <div className="bg-live text-white">
-          <StoryLink s={developing.lead} className="container-mw flex items-center gap-3 py-2.5 group">
-            <span className="shrink-0 font-bold text-[0.8rem] bg-white text-live px-2 py-0.5">{locale === "fr" ? "EN DÉVELOPPEMENT" : "DEVELOPING"}</span>
-            <span className="font-semibold leading-snug truncate group-hover:underline">{display(developing.lead, locale).title}</span>
-            <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{developing.sources} {locale === "fr" ? "médias" : "outlets"}</span>
+      {alert && (
+        <div className={alert.kind === "breaking" ? "bg-live text-white" : alert.kind === "developing" ? "bg-live/90 text-white" : "bg-night text-white"}>
+          <StoryLink s={alert.story} className="container-mw flex items-center gap-3 py-2.5 group">
+            <span className={`shrink-0 font-bold text-[0.8rem] px-2 py-0.5 ${alert.kind === "just-in" ? "bg-brass text-night" : "bg-white text-live"} ${alert.kind === "breaking" ? "animate-pulse motion-reduce:animate-none" : ""}`}>
+              {alert.kind === "breaking" ? (locale === "fr" ? "Dernière heure" : "Breaking")
+                : alert.kind === "developing" ? (locale === "fr" ? "En développement" : "Developing")
+                : (locale === "fr" ? "À l'instant" : "Just in")}
+            </span>
+            <span className="font-semibold leading-snug truncate group-hover:underline">{display(alert.story, locale).title}</span>
+            <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{alert.note}</span>
           </StoryLink>
         </div>
       )}
@@ -164,7 +175,7 @@ function Home() {
                   s={lead}
                   variant="hero"
                   eager
-                  badge={top ? <CoverageBadge outlets={top.sources} developing={isDeveloping(top)} /> : undefined}
+                  badge={top ? <CoverageBadge outlets={top.sources} developing={isDeveloping(top)} breaking={isBreaking(top)} /> : undefined}
                 />
               )}
               {coverage.length > 0 && (
@@ -207,7 +218,7 @@ function Home() {
           <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
           <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {more.map(c => (
-              <StoryCard key={c.id} s={c.lead} variant={c.lead.image ? "card" : "text"} badge={<CoverageBadge outlets={c.sources} developing={isDeveloping(c)} />} showTopic={false} />
+              <StoryCard key={c.id} s={c.lead} variant={c.lead.image ? "card" : "text"} badge={<CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} />} showTopic={false} />
             ))}
             {moreFill.map(s => <StoryCard key={s.id} s={s} />)}
           </div>

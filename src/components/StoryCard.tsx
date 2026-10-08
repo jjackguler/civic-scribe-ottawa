@@ -43,6 +43,29 @@ export function storyKicker(s: Story, locale: "en" | "fr") {
   return topicLabel(s.topic, locale);
 }
 
+/**
+ * Designed cover for a story we have no photo for (or may not show one):
+ * the desk name set large on the house night-and-brass ground. It is a
+ * graphic, never an AI picture made to look like a news photo.
+ */
+export function StoryCover({ s, size }: { s: Story; size: "hero" | "card" }) {
+  const { locale } = useLocale();
+  return (
+    <figure aria-hidden="true" className="aspect-[16/9] relative overflow-hidden bg-night text-white">
+      <div className="absolute inset-0 opacity-[0.14]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--brass) 0 1px, transparent 1px 16px)" }} />
+      <div className="absolute inset-x-0 top-0 h-[5px] bg-brass" />
+      <div className="absolute inset-x-0 top-[9px] h-px bg-brass/50" />
+      <p className={`absolute left-5 right-5 top-5 flex justify-between gap-4 font-semibold text-white/70 ${size === "hero" ? "text-[0.9rem]" : "text-[0.75rem]"}`}>
+        <span className="masthead-serif text-white">AI Broadsheet</span>
+        <span className="truncate">{s.source}</span>
+      </p>
+      <p className={`absolute left-5 right-5 bottom-4 masthead-serif text-brass leading-[0.95] text-balance ${size === "hero" ? "text-[2.8rem] sm:text-[4.2rem]" : "text-[1.9rem]"}`}>
+        {storyKicker(s, locale)}
+      </p>
+    </figure>
+  );
+}
+
 /** Link to our story page. */
 export function StoryLink({ s, className, children }: { s: Story; className?: string; children: ReactNode }) {
   return (
@@ -90,13 +113,15 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
         </figcaption>
       )}
     </figure>
+  ) : v === "hero" || v === "card" ? (
+    <StoryCover s={s} size={v === "hero" ? "hero" : "card"} />
   ) : null;
 
   return (
     <article className="group relative">
       <StoryLink s={s} className={v === "row" ? "flex gap-3 items-start" : "block"}>
         {v !== "row" && image}
-        <div className={v === "row" ? "flex-1 min-w-0" : hasImg ? (v === "hero" ? "mt-4" : "mt-2.5") : ""}>
+        <div className={v === "row" ? "flex-1 min-w-0" : image ? (v === "hero" ? "mt-4" : "mt-2.5") : ""}>
           {(showTopic || badge) && (
             <p className="mb-1 flex flex-wrap items-center gap-x-2.5 gap-y-1">
               {badge}
@@ -117,12 +142,16 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
 }
 
 /** "Developing" / "N outlets" signal on clustered stories. */
-export function CoverageBadge({ outlets, developing }: { outlets: number; developing?: boolean }) {
+export function CoverageBadge({ outlets, developing, breaking }: { outlets: number; developing?: boolean; breaking?: boolean }) {
   const { locale } = useLocale();
-  if (outlets < 2 && !developing) return null;
+  if (outlets < 2 && !developing && !breaking) return null;
   return (
     <span className="inline-flex items-center gap-2 text-[0.78rem] font-bold">
-      {developing && (
+      {breaking ? (
+        <span className="inline-flex items-center gap-1.5 bg-live text-white px-1.5 py-0.5">
+          {locale === "fr" ? "Dernière heure" : "Breaking"}
+        </span>
+      ) : developing && (
         <span className="inline-flex items-center gap-1.5 text-live">
           <span className="live-dot" aria-hidden="true" />
           {locale === "fr" ? "En développement" : "Developing"}

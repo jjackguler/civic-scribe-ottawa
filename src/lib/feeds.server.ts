@@ -124,3 +124,19 @@ ${items}
 </rss>
 `;
 }
+
+/** Google News sitemap: stories from the last 48 hours, in both languages. */
+export async function buildNewsSitemap(): Promise<string> {
+  const news = await currentNews();
+  const cutoff = Date.now() - 48 * 3600_000;
+  const recent = (news?.stories ?? []).filter(s => isPublic(s) && new Date(s.publishedAt).getTime() >= cutoff).slice(0, 450);
+  const entry = (s: Story, l: Locale) => {
+    const title = s.ai?.[l]?.title || s.title;
+    return `<url><loc>${esc(absUrl(`/story/${s.id}`, l))}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${s.publishedAt}</news:publication_date><news:title>${esc(title)}</news:title></news:news></url>`;
+  };
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+${recent.flatMap(s => [entry(s, "en"), entry(s, "fr")]).join("\n")}
+</urlset>
+`;
+}

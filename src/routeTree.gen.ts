@@ -18,6 +18,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
+import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as MinistryRouteImport } from './routes/ministry'
 import { Route as ListenRouteImport } from './routes/listen'
@@ -78,6 +79,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const NewsletterRoute = NewsletterRouteImport.update({
   id: '/newsletter',
   path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsSitemapDotxmlRoute = NewsSitemapDotxmlRouteImport.update({
+  id: '/news-sitemap.xml',
+  path: '/news-sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsRoute = NewsRouteImport.update({
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
+  '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
+  '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
   '/news': typeof NewsRoute
+  '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/listen'
     | '/ministry'
     | '/news'
+    | '/news-sitemap.xml'
     | '/newsletter'
     | '/privacy'
     | '/rss.xml'
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/listen'
     | '/ministry'
     | '/news'
+    | '/news-sitemap.xml'
     | '/newsletter'
     | '/privacy'
     | '/rss.xml'
@@ -310,6 +321,7 @@ export interface FileRouteTypes {
     | '/listen'
     | '/ministry'
     | '/news'
+    | '/news-sitemap.xml'
     | '/newsletter'
     | '/privacy'
     | '/rss.xml'
@@ -338,6 +350,7 @@ export interface RootRouteChildren {
   ListenRoute: typeof ListenRoute
   MinistryRoute: typeof MinistryRoute
   NewsRoute: typeof NewsRoute
+  NewsSitemapDotxmlRoute: typeof NewsSitemapDotxmlRoute
   NewsletterRoute: typeof NewsletterRoute
   PrivacyRoute: typeof PrivacyRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
@@ -418,6 +431,13 @@ declare module '@tanstack/react-router' {
       path: '/newsletter'
       fullPath: '/newsletter'
       preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news-sitemap.xml': {
+      id: '/news-sitemap.xml'
+      path: '/news-sitemap.xml'
+      fullPath: '/news-sitemap.xml'
+      preLoaderRoute: typeof NewsSitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news': {
@@ -546,6 +566,7 @@ const rootRouteChildren: RootRouteChildren = {
   ListenRoute: ListenRoute,
   MinistryRoute: MinistryRoute,
   NewsRoute: NewsRoute,
+  NewsSitemapDotxmlRoute: NewsSitemapDotxmlRoute,
   NewsletterRoute: NewsletterRoute,
   PrivacyRoute: PrivacyRoute,
   RssDotxmlRoute: RssDotxmlRoute,
