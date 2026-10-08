@@ -1,0 +1,45 @@
+# Fetches public-domain photos and CC0 sounds/music for the collage explainers
+# into the `assets` branch (see scripts/assets/fetch_assets.py for sources and
+# license checks). Runs when the `assets-fetch` branch is pushed, or by hand.
+name: Fetch collage assets
+
+on:
+  push:
+    branches: [assets-fetch]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-assets
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch
+        run: |
+          mkdir -p ../assets-out
+          python3 scripts/assets/fetch_assets.py ../assets-out || true
+          du -sh ../assets-out/* || true
+      - name: Commit to the assets branch
+        run: |
+          cd ..
+          git -C "$GITHUB_WORKSPACE" fetch origin assets || true
+          if git -C "$GITHUB_WORKSPACE" rev-parse --verify origin/assets >/dev/null 2>&1; then
+            git -C "$GITHUB_WORKSPACE" worktree add assets-branch origin/assets -B assets
+          else
+            git -C "$GITHUB_WORKSPACE" worktree add --orphan -b assets assets-branch
+          fi
+          mkdir -p assets-branch/collage
+          cp -r assets-out/* assets-branch/collage/
+          cd assets-branch
+          git config user.name "AI Broadsheet Assets"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Collage assets $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing new"
+          git push origin assets
