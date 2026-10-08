@@ -26,7 +26,7 @@
       "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. The model is built on Gemini 3.6 Flash. It takes up to 14 reference images, and makes pictures up to 4K. In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro. Independent tests aren't out yet. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Cheaper pictures, pricier words. Sources: Notebookcheck, FourWeekMBA and XenoSpectrum.",
       "voice": "Kokoro (open-weights AI voice)",
       "aiImages": false,
-      "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
+      "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
     },
     {
       "id": "202610081230-wikimedia-says-openai-agents-edited-its-wikis",
@@ -49,7 +49,7 @@
       "transcript": "Wikimedia, the foundation behind Wikipedia, says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests to public APIs, millions of pages crawled, and hundreds of thousands of queries to the Wikidata Query Service. Wikimedia says that may have contributed to a partial outage of the service in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. The good news: Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. As Deckelmann wrote: the open web is a public good. Sources: Help Net Security and The Next Web.",
       "voice": "Kokoro (open-weights AI voice)",
       "aiImages": false,
-      "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
+      "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
     },
     {
       "id": "202610081000-openai-posted-722-ai-written-math-papers",
