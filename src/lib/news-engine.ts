@@ -5,6 +5,7 @@
 import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
 import { AI_RE, tagsOf } from "./classify";
 import { displayFor } from "./rights";
+import { keepAlive, sharedCacheAvailable, sharedRead, sharedWrite } from "./shared-cache";
 
 export type Story = {
   id: string;
@@ -33,7 +34,14 @@ export type Story = {
 };
 
 export type SourceStatus = { id: string; name: string; ok: boolean; count: number; checkedAt?: string; error?: string };
-export type NewsPayload = { stories: Story[]; sources: SourceStatus[]; fetchedAt: string };
+export type NewsPayload = {
+  stories: Story[];
+  sources: SourceStatus[];
+  fetchedAt: string;
+  /** Where this copy of the desk came from, shown on /about → Desk status. */
+  origin?: "built" | "shared" | "stale";
+  sharedCache?: boolean;
+};
 
 const UA = "Mozilla/5.0 (compatible; AIBroadsheet/1.0; +https://aibroadsheet.com)";
 const CACHE_MS = 3 * 60 * 1000;          // rebuild the payload at most every 3 minutes
@@ -43,7 +51,7 @@ const MAX_AGE_DAYS = 30;
 const MINISTER_MAX_AGE_DAYS = 120;        // the ministry tracker keeps a longer record
 // Cloudflare Workers cap outgoing requests per invocation, so each rebuild
 // spends a fixed budget: overdue feeds first, then publisher photos.
-const SUBREQUEST_BUDGET = 44;
+const SUBREQUEST_BUDGET = 42; // leaves room for the shared-cache read/write and one Claude call
 const MAX_FEEDS_PER_RUN = 30;
 const MAX_OG_LOOKUPS = 14;
 
@@ -54,7 +62,31 @@ const g = globalThis as unknown as {
   __mwNewsInflight?: Promise<NewsPayload>;
   __ogCache?: Map<string, string | null>;
   __mwSrc?: Map<string, SourceCache>;
+  __mwHydrate?: Promise<void>;
 };
+
+// ── shared snapshot (see shared-cache.ts) ───────────────────────────────────
+const SNAPSHOT_KEY = "desk:v1";
+const SNAPSHOT_MAX_AGE_S = 3 * 24 * 3600;
+type Snapshot = { ts: number; payload: NewsPayload; sources: [string, SourceCache][]; og: [string, string | null][] };
+
+/** A fresh isolate starts from the last desk any isolate built. Runs once per isolate. */
+function hydrate(): Promise<void> {
+  return (g.__mwHydrate ??= (async () => {
+    const snap = await sharedRead<Snapshot>(SNAPSHOT_KEY);
+    if (!snap?.payload?.stories?.length) return;
+    const cache = (g.__mwSrc ??= new Map());
+    for (const [id, c] of snap.sources ?? []) if (!cache.has(id)) cache.set(id, c);
+    const og = (g.__ogCache ??= new Map());
+    for (const [k, v] of snap.og ?? []) if (!og.has(k)) og.set(k, v);
+    if (!g.__mwNews || g.__mwNews.ts < snap.ts) g.__mwNews = { ts: snap.ts, payload: { ...snap.payload, origin: "shared" } };
+  })().catch(() => {}));
+}
+
+function saveSnapshot(payload: NewsPayload) {
+  const og = [...(g.__ogCache ?? new Map()).entries()].slice(-600);
+  sharedWrite(SNAPSHOT_KEY, { ts: Date.now(), payload, sources: [...(g.__mwSrc ?? new Map()).entries()], og } satisfies Snapshot, SNAPSHOT_MAX_AGE_S);
+}
 
 // ── text helpers ────────────────────────────────────────────────────────────
 function decodeEntities(s: string) {
@@ -385,18 +417,34 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
   return { stories, sources, fetchedAt: new Date().toISOString() };
 }
 
-export async function loadNews(): Promise<NewsPayload> {
+function rebuild(): Promise<NewsPayload> {
   const cached = g.__mwNews;
-  if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   if (g.__mwNewsInflight) return g.__mwNewsInflight;
   // If the rebuild runs long, publish whatever the feeds have delivered so far.
   g.__mwNewsInflight = withTimeout(buildPayload(), 14000, null as unknown as NewsPayload)
     .then(p => p ?? buildPayload(false))
     .then(payload => {
-      if (payload.stories.length > 0) g.__mwNews = { ts: Date.now(), payload };
+      if (payload.stories.length > 0) {
+        payload = { ...payload, origin: "built", sharedCache: sharedCacheAvailable() };
+        g.__mwNews = { ts: Date.now(), payload };
+        saveSnapshot(payload);
+      }
       return payload.stories.length > 0 || !cached ? payload : cached.payload;
     })
     .catch(() => cached?.payload ?? { stories: [], sources: [], fetchedAt: new Date().toISOString() })
     .finally(() => { g.__mwNewsInflight = undefined; });
+  keepAlive(g.__mwNewsInflight);
   return g.__mwNewsInflight;
+}
+
+export async function loadNews(): Promise<NewsPayload> {
+  if (!g.__mwNews) await hydrate();
+  const cached = g.__mwNews;
+  if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
+  // Stale but present: answer now, refresh in the background.
+  if (cached) {
+    void rebuild();
+    return { ...cached.payload, origin: cached.payload.origin === "built" ? "stale" : cached.payload.origin, sharedCache: sharedCacheAvailable() };
+  }
+  return rebuild();
 }

@@ -108,20 +108,26 @@ function DeskStatus() {
   const { data: news } = useAiNews(undefined);
   const { data: media } = useMedia();
   const rows = [
-    ...(news?.sources ?? []).map(s => ({ id: s.id, name: s.name, ok: s.ok, count: s.count, note: s.error })),
-    ...(media?.sources ?? []).map(s => ({ id: s.id, name: s.name, ok: s.ok, count: s.count, note: s.ok ? s.feedTitle : s.error })),
+    ...(news?.sources ?? []).map(s => ({ id: s.id, name: s.name, ok: s.ok, count: s.count, note: s.error, waiting: !s.checkedAt })),
+    ...(media?.sources ?? []).map(s => ({ id: s.id, name: s.name, ok: s.ok, count: s.count, note: s.ok ? s.feedTitle : s.error, waiting: !s.ok && !s.error })),
   ];
   if (rows.length === 0) return null;
   return (
     <section id="status" className="container-mw mt-14">
       <h2 className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{locale === "fr" ? "État des sources" : "Desk status"}</h2>
       <p className="meta mb-4">{locale === "fr" ? "Chaque source est vérifiée toutes les quelques minutes. Une source en panne n'empêche jamais les autres." : "Every source is checked every few minutes. One failing source never blocks the rest."}</p>
+      {news && (
+        <p className="meta mb-4">
+          {locale === "fr" ? "Fil construit" : "Desk built"} {new Date(news.fetchedAt).toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" })}
+          {" — "}{news.origin ?? "built"}{news.sharedCache ? (locale === "fr" ? ", cache partagé actif" : ", shared cache on") : (locale === "fr" ? ", cache partagé indisponible" : ", shared cache unavailable")}
+        </p>
+      )}
       <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3 text-[0.9rem]">
         {rows.map(r => (
           <li key={r.id} className="py-1.5 border-b border-line flex gap-2 items-baseline">
-            <span className={`h-2 w-2 shrink-0 rounded-full ${r.ok ? "bg-spruce" : "bg-live"}`} aria-hidden="true" />
+            <span className={`h-2 w-2 shrink-0 rounded-full ${r.ok ? "bg-spruce" : r.waiting ? "bg-line" : "bg-live"}`} aria-hidden="true" />
             <span className="font-semibold">{r.name}</span>
-            <span className="text-muted-ink">{r.ok ? `${r.count}` : (locale === "fr" ? "hors ligne" : "offline")}</span>
+            <span className="text-muted-ink">{r.ok ? `${r.count}` : r.waiting ? (locale === "fr" ? "en file d'attente" : "queued") : (locale === "fr" ? "hors ligne" : "offline")}</span>
             {r.note && <span className="text-muted-ink truncate" title={r.note}>· {r.note}</span>}
           </li>
         ))}

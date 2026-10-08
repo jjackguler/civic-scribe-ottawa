@@ -6,6 +6,7 @@ import { MEDIA_SOURCES, type MediaSource } from "./media-sources";
 import { AI_RE, AI_TALK_RE, INTERVIEW_RE, tagsOf } from "./classify";
 import { readCapped, withTimeout } from "./news-engine";
 import type { Topic } from "./news-sources";
+import { keepAlive, sharedRead, sharedWrite } from "./shared-cache";
 
 export type MediaItem = {
   id: string;
@@ -42,7 +43,21 @@ const g = globalThis as unknown as {
   __abMedia?: { ts: number; payload: MediaPayload };
   __abMediaInflight?: Promise<MediaPayload>;
   __abMediaSrc?: Map<string, Cache>;
+  __abMediaHydrate?: Promise<void>;
 };
+
+// Shared snapshot so a fresh isolate starts with video and podcasts (see shared-cache.ts).
+const SNAPSHOT_KEY = "media:v1";
+type Snapshot = { ts: number; payload: MediaPayload; sources: [string, Cache][] };
+function hydrate(): Promise<void> {
+  return (g.__abMediaHydrate ??= (async () => {
+    const snap = await sharedRead<Snapshot>(SNAPSHOT_KEY);
+    if (!snap?.payload?.items?.length) return;
+    const cache = (g.__abMediaSrc ??= new Map());
+    for (const [id, c] of snap.sources ?? []) if (!cache.has(id)) cache.set(id, c);
+    if (!g.__abMedia || g.__abMedia.ts < snap.ts) g.__abMedia = { ts: snap.ts, payload: snap.payload };
+  })().catch(() => {}));
+}
 
 function decode(s: string) {
   return s
@@ -202,17 +217,28 @@ async function build(): Promise<MediaPayload> {
   return { items, sources, fetchedAt: new Date().toISOString() };
 }
 
-export async function loadMedia(): Promise<MediaPayload> {
+function rebuild(): Promise<MediaPayload> {
   const cached = g.__abMedia;
-  if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   if (g.__abMediaInflight) return g.__abMediaInflight;
   g.__abMediaInflight = withTimeout(build(), 15000, null as unknown as MediaPayload)
     .then(p => p ?? cached?.payload ?? { items: [], sources: [], fetchedAt: new Date().toISOString() })
     .then(p => {
-      if (p.items.length > 0) g.__abMedia = { ts: Date.now(), payload: p };
+      if (p.items.length > 0) {
+        g.__abMedia = { ts: Date.now(), payload: p };
+        sharedWrite(SNAPSHOT_KEY, { ts: Date.now(), payload: p, sources: [...(g.__abMediaSrc ?? new Map()).entries()] } satisfies Snapshot, 3 * 24 * 3600);
+      }
       return p.items.length > 0 || !cached ? p : cached.payload;
     })
     .catch(() => cached?.payload ?? { items: [], sources: [], fetchedAt: new Date().toISOString() })
     .finally(() => { g.__abMediaInflight = undefined; });
+  keepAlive(g.__abMediaInflight);
   return g.__abMediaInflight;
+}
+
+export async function loadMedia(): Promise<MediaPayload> {
+  if (!g.__abMedia) await hydrate();
+  const cached = g.__abMedia;
+  if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
+  if (cached) { void rebuild(); return cached.payload; }
+  return rebuild();
 }
