@@ -1,6 +1,8 @@
-commons 'Hassabis': 0
-commons 'Demis Hassabis DeepMind': 2
-commons 'Demis Hassabis Prime Minister': 8
-commons 'Liang Wenfeng': 1
-commons '梁文锋': 0
-commons 'DeepSeek founder': 8
+commons 'The Blue Marble Apollo 17': 4
+commons 'silicon wafer': 4
+commons 'GPU graphics card': 4
+commons 'data center servers': 4
+commons 'stock exchange trading floor': 4
+commons 'newspaper printing press': 4
+commons 'crowd with smartphones': 4
+commons 'server racks': 4
