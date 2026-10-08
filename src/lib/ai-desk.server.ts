@@ -28,18 +28,19 @@ const PER_RUN = 6;
 const g = globalThis as unknown as {
   __aiDesk?: Map<string, AiDeskEntry>;
   __aiDeskRejected?: Set<string>;
-  __aiDeskLoaded?: Promise<void>;
-  __aiDeskRunning?: boolean;
+  __aiDeskLoaded?: boolean;
+  __aiDeskRunning?: number;
 };
 const desk = () => (g.__aiDesk ??= new Map());
 const rejected = () => (g.__aiDeskRejected ??= new Set());
 
-function loadShared(): Promise<void> {
-  return (g.__aiDeskLoaded ??= (async () => {
-    const saved = await sharedRead<{ e: [string, AiDeskEntry][]; r: string[] }>(KEY);
-    for (const [id, e] of saved?.e ?? []) if (!desk().has(id)) desk().set(id, e);
-    for (const id of saved?.r ?? []) rejected().add(id);
-  })().catch(() => {}));
+/** Read the shared AI desk once per isolate; a slow or failed read is simply retried next time. */
+async function loadShared(): Promise<void> {
+  if (g.__aiDeskLoaded) return;
+  const saved = await sharedRead<{ e: [string, AiDeskEntry][]; r: string[] }>(KEY);
+  for (const [id, e] of saved?.e ?? []) if (!desk().has(id)) desk().set(id, e);
+  for (const id of saved?.r ?? []) rejected().add(id);
+  if (saved) g.__aiDeskLoaded = true;
 }
 
 /** Put the AI desk's copy on the stories it has written for. */
@@ -139,8 +140,8 @@ Return {"items":[{"id","en":{"title","summary"},"fr":{"title","summary"}} or {"i
 
 /** Write copy for a few new lead stories. Never throws; does nothing without an API key. */
 export async function runDesk(payload: NewsPayload): Promise<number> {
-  if (g.__aiDeskRunning) return 0;
-  g.__aiDeskRunning = true;
+  if (g.__aiDeskRunning && Date.now() - g.__aiDeskRunning < 60_000) return 0;
+  g.__aiDeskRunning = Date.now();
   try {
     const c = await import("./claude.server");
     if (!c.claudeAvailable()) return 0;
@@ -188,6 +189,6 @@ export async function runDesk(payload: NewsPayload): Promise<number> {
     console.warn("[ai-desk]", (e as Error).message);
     return 0;
   } finally {
-    g.__aiDeskRunning = false;
+    g.__aiDeskRunning = 0;
   }
 }

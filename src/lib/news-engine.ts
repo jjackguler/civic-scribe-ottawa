@@ -63,9 +63,9 @@ type SourceCache = { ts: number; ok: boolean; stories: Story[]; error?: string }
 const g = globalThis as unknown as {
   __mwNews?: { ts: number; payload: NewsPayload };
   __mwNewsInflight?: Promise<NewsPayload>;
+  __mwNewsInflightAt?: number;
   __ogCache?: Map<string, string | null>;
   __mwSrc?: Map<string, SourceCache>;
-  __mwHydrate?: Promise<void>;
 };
 
 // ── shared snapshot (see shared-cache.ts) ───────────────────────────────────
@@ -73,17 +73,20 @@ const SNAPSHOT_KEY = "desk:v1";
 const SNAPSHOT_MAX_AGE_S = 3 * 24 * 3600;
 type Snapshot = { ts: number; payload: NewsPayload; sources: [string, SourceCache][]; og: [string, string | null][] };
 
-/** A fresh isolate starts from the last desk any isolate built. Runs once per isolate. */
-function hydrate(): Promise<void> {
-  return (g.__mwHydrate ??= (async () => {
-    const snap = await sharedRead<Snapshot>(SNAPSHOT_KEY);
-    if (!snap?.payload?.stories?.length) return;
-    const cache = (g.__mwSrc ??= new Map());
-    for (const [id, c] of snap.sources ?? []) if (!cache.has(id)) cache.set(id, c);
-    const og = (g.__ogCache ??= new Map());
-    for (const [k, v] of snap.og ?? []) if (!og.has(k)) og.set(k, v);
-    if (!g.__mwNews || g.__mwNews.ts < snap.ts) g.__mwNews = { ts: snap.ts, payload: { ...snap.payload, origin: "shared" } };
-  })().catch(() => {}));
+/**
+ * A fresh isolate starts from the last desk any isolate built. Each request
+ * does its own read (Workers can't safely share pending I/O between requests),
+ * bounded by a short deadline; once a desk is in memory it isn't read again.
+ */
+async function hydrate(): Promise<void> {
+  if (g.__mwNews) return;
+  const snap = await sharedRead<Snapshot>(SNAPSHOT_KEY);
+  if (!snap?.payload?.stories?.length) return;
+  const cache = (g.__mwSrc ??= new Map());
+  for (const [id, c] of snap.sources ?? []) if (!cache.has(id)) cache.set(id, c);
+  const og = (g.__ogCache ??= new Map());
+  for (const [k, v] of snap.og ?? []) if (!og.has(k)) og.set(k, v);
+  if (!g.__mwNews) g.__mwNews = { ts: snap.ts, payload: { ...snap.payload, origin: "shared" } };
 }
 
 function saveSnapshot(payload: NewsPayload) {
@@ -422,14 +425,17 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
 
 function rebuild(): Promise<NewsPayload> {
   const cached = g.__mwNews;
-  if (g.__mwNewsInflight) return g.__mwNewsInflight;
+  // Share a build that is under way, unless it has been stuck too long (its request may be gone).
+  if (g.__mwNewsInflight && Date.now() - (g.__mwNewsInflightAt ?? 0) < 30_000) return g.__mwNewsInflight;
+  g.__mwNewsInflightAt = Date.now();
   // If the rebuild runs long, publish whatever the feeds have delivered so far.
   g.__mwNewsInflight = withTimeout(buildPayload(), 14000, null as unknown as NewsPayload)
     .then(p => p ?? buildPayload(false))
     .then(async payload => {
       if (payload.stories.length > 0) {
         const { attachDesk, runDesk } = await import("./ai-desk.server");
-        payload = await attachDesk({ ...payload, origin: "built", sharedCache: sharedCacheAvailable() });
+        const base: NewsPayload = { ...payload, origin: "built", sharedCache: sharedCacheAvailable() };
+        payload = await withTimeout(attachDesk(base), 2000, base);
         g.__mwNews = { ts: Date.now(), payload };
         saveSnapshot(payload);
         // Write headlines for new lead stories in the background, then fold them in.
@@ -449,8 +455,10 @@ function rebuild(): Promise<NewsPayload> {
   return g.__mwNewsInflight;
 }
 
+const EMPTY = (): NewsPayload => ({ stories: [], sources: [], fetchedAt: new Date().toISOString() });
+
 export async function loadNews(): Promise<NewsPayload> {
-  if (!g.__mwNews) await hydrate();
+  if (!g.__mwNews) await hydrate().catch(() => {});
   const cached = g.__mwNews;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   // Stale but present: answer now, refresh in the background.
@@ -458,5 +466,7 @@ export async function loadNews(): Promise<NewsPayload> {
     void rebuild();
     return { ...cached.payload, origin: cached.payload.origin === "built" ? "stale" : cached.payload.origin, sharedCache: sharedCacheAvailable() };
   }
-  return rebuild();
+  // Nothing yet: wait for a build, but never longer than 16 s (a build started
+  // by another request may never settle in this one).
+  return withTimeout(rebuild(), 16000, g.__mwNews?.payload ?? EMPTY());
 }

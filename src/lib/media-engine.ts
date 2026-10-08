@@ -42,21 +42,20 @@ type Cache = { ts: number; ok: boolean; items: MediaItem[]; feedTitle?: string; 
 const g = globalThis as unknown as {
   __abMedia?: { ts: number; payload: MediaPayload };
   __abMediaInflight?: Promise<MediaPayload>;
+  __abMediaInflightAt?: number;
   __abMediaSrc?: Map<string, Cache>;
-  __abMediaHydrate?: Promise<void>;
 };
 
 // Shared snapshot so a fresh isolate starts with video and podcasts (see shared-cache.ts).
 const SNAPSHOT_KEY = "media:v1";
 type Snapshot = { ts: number; payload: MediaPayload; sources: [string, Cache][] };
-function hydrate(): Promise<void> {
-  return (g.__abMediaHydrate ??= (async () => {
-    const snap = await sharedRead<Snapshot>(SNAPSHOT_KEY);
-    if (!snap?.payload?.items?.length) return;
-    const cache = (g.__abMediaSrc ??= new Map());
-    for (const [id, c] of snap.sources ?? []) if (!cache.has(id)) cache.set(id, c);
-    if (!g.__abMedia || g.__abMedia.ts < snap.ts) g.__abMedia = { ts: snap.ts, payload: snap.payload };
-  })().catch(() => {}));
+async function hydrate(): Promise<void> {
+  if (g.__abMedia) return;
+  const snap = await sharedRead<Snapshot>(SNAPSHOT_KEY);
+  if (!snap?.payload?.items?.length) return;
+  const cache = (g.__abMediaSrc ??= new Map());
+  for (const [id, c] of snap.sources ?? []) if (!cache.has(id)) cache.set(id, c);
+  if (!g.__abMedia) g.__abMedia = { ts: snap.ts, payload: snap.payload };
 }
 
 function decode(s: string) {
@@ -219,7 +218,8 @@ async function build(): Promise<MediaPayload> {
 
 function rebuild(): Promise<MediaPayload> {
   const cached = g.__abMedia;
-  if (g.__abMediaInflight) return g.__abMediaInflight;
+  if (g.__abMediaInflight && Date.now() - (g.__abMediaInflightAt ?? 0) < 30_000) return g.__abMediaInflight;
+  g.__abMediaInflightAt = Date.now();
   g.__abMediaInflight = withTimeout(build(), 15000, null as unknown as MediaPayload)
     .then(p => p ?? cached?.payload ?? { items: [], sources: [], fetchedAt: new Date().toISOString() })
     .then(p => {
@@ -236,9 +236,9 @@ function rebuild(): Promise<MediaPayload> {
 }
 
 export async function loadMedia(): Promise<MediaPayload> {
-  if (!g.__abMedia) await hydrate();
+  if (!g.__abMedia) await hydrate().catch(() => {});
   const cached = g.__abMedia;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   if (cached) { void rebuild(); return cached.payload; }
-  return rebuild();
+  return withTimeout(rebuild(), 17000, g.__abMedia?.payload ?? { items: [], sources: [], fetchedAt: new Date().toISOString() });
 }

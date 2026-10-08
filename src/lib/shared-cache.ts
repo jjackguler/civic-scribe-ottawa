@@ -33,13 +33,12 @@ export function keepAlive(p: Promise<unknown>) {
 export async function sharedRead<T>(key: string, ms = 1500): Promise<T | null> {
   const c = store();
   if (!c) return null;
-  try {
-    const res = await Promise.race([c.match(keyUrl(key)), new Promise<undefined>(r => setTimeout(() => r(undefined), ms))]);
-    if (!res) return null;
-    return (await res.json()) as T;
-  } catch {
-    return null;
-  }
+  // One deadline for the lookup and the body read: never let a request wait longer.
+  const read = (async () => {
+    const res = await c.match(keyUrl(key));
+    return res ? ((await res.json()) as T) : null;
+  })().catch(() => null);
+  return Promise.race([read, new Promise<null>(r => setTimeout(() => r(null), ms))]);
 }
 
 export function sharedWrite(key: string, value: unknown, maxAgeSec: number) {
