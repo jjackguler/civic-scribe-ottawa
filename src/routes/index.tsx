@@ -8,7 +8,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
 import { LiveHero, type HeroSlide } from "@/components/LiveHero";
-import { Showcase, TrendsPanel } from "@/components/Showcase";
+import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
@@ -203,7 +203,7 @@ function Home() {
         </section>
       )}
 
-      {pulse && (pulse.built.length > 0 || pulse.repos.length > 0 || pulse.spaces.length > 0) && (
+      {pulse && (pulse.built.length > 0 || pulse.repos.length > 0 || (pulse.tools?.length ?? 0) > 0) && (
         <section className="container-mw mt-14">
           <ZoneHead
             title={locale === "fr" ? "Fait avec l'IA" : "Made with AI"}
@@ -254,7 +254,8 @@ function Home() {
                   {hn.map((s, i) => (
                     <li key={s.id} className="flex gap-4 py-3 border-b border-line last:border-0">
                       <span className="masthead-serif text-[1.8rem] text-brass-ink w-7 shrink-0 leading-none" aria-hidden="true">{i + 1}</span>
-                      <div className="min-w-0">
+                      <Thumb src={s.image} label={s.title} />
+                      <div className="min-w-0 flex-1">
                         <a href={s.link} target="_blank" rel="noopener noreferrer" className="font-semibold leading-snug hover:underline">{s.title}</a>
                         <p className="meta mt-1 flex flex-wrap gap-x-2.5">
                           <span>{s.summary}</span>
@@ -276,9 +277,12 @@ function Home() {
                   <ul>
                     {papers.map(s => (
                       <li key={s.id} className="py-3 border-b border-line last:border-0">
-                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="group block">
-                          <p className="font-semibold leading-snug group-hover:underline">{s.title}</p>
-                          <p className="meta mt-1">Hugging Face Papers · {s.popularity?.score} {t("upvotes", locale)}</p>
+                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="group flex gap-3">
+                          <Thumb src={s.image} label={s.title} />
+                          <span className="min-w-0">
+                            <span className="block font-semibold leading-snug group-hover:underline">{s.title}</span>
+                            <span className="meta mt-1 block">arXiv · {s.popularity?.score} {t("upvotes", locale)} {locale === "fr" ? "sur Hugging Face" : "on Hugging Face"}</span>
+                          </span>
                         </a>
                       </li>
                     ))}

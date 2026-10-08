@@ -315,11 +315,13 @@ function parseHFPapers(json: any, src: NewsSource): Story[] {
     const title = stripTags(x?.title ?? p.title ?? "");
     const date = new Date(x?.publishedAt ?? p.publishedAt ?? "");
     if (!id || !title || isNaN(date.getTime())) continue;
-    out.push(baseStory(src, title, `https://huggingface.co/papers/${id}`, date, {
+    // Link to arXiv (reachable everywhere); Hugging Face stays as the discussion page.
+    const arxiv = /^\d{4}\.\d{4,5}$/.test(String(id));
+    out.push(baseStory(src, title, arxiv ? `https://arxiv.org/abs/${id}` : `https://huggingface.co/papers/${id}`, date, {
       summary: truncate(stripTags(p.summary ?? ""), 200),
       topic: "research",
       image: typeof x?.thumbnail === "string" && /^https?:\/\//.test(x.thumbnail) ? x.thumbnail : null,
-      popularity: { score: Number(p.upvotes ?? x?.upvotes) || 0, comments: Number(x?.numComments) || undefined },
+      popularity: { score: Number(p.upvotes ?? x?.upvotes) || 0, comments: Number(x?.numComments) || undefined, discussUrl: `https://huggingface.co/papers/${id}` },
     }));
   }
   return out.sort((a, b) => (b.popularity!.score - a.popularity!.score)).slice(0, 12);

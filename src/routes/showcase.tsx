@@ -14,8 +14,8 @@ export const Route = createFileRoute("/showcase")({
     seoHead(match, {
       title: { en: `Made with AI: projects, open source and demos this week — ${SITE.name}`, fr: `Fait avec l'IA : projets, code ouvert et démos de la semaine — ${SITE.name}` },
       description: {
-        en: "What people are building with Claude, ChatGPT, Gemini and open models: Show HN projects, rising open-source AI repositories and demos you can try, updated through the day.",
-        fr: "Ce que les gens construisent avec Claude, ChatGPT, Gemini et les modèles ouverts : projets Show HN, dépôts d'IA en code ouvert en vogue et démos à essayer, mis à jour au fil de la journée.",
+        en: "What people are building with Claude, ChatGPT, Gemini and open models: Show HN projects, rising open-source AI repositories, Claude Code skills and MCP servers, updated through the day.",
+        fr: "Ce que les gens construisent avec Claude, ChatGPT, Gemini et les modèles ouverts : projets Show HN, dépôts d'IA en code ouvert en vogue, skills Claude Code et serveurs MCP, mis à jour au fil de la journée.",
       },
     }),
   component: ShowcasePage,
@@ -50,8 +50,8 @@ function ShowcasePage() {
       </section>
       <p className="container-mw meta mt-8 max-w-3xl">
         {fr
-          ? "Sources : Hacker News (Show HN), GitHub, Hugging Face Spaces et Google Trends. Nous excluons les projets pour adultes. La présence d'un projet ici n'est pas une recommandation : vérifiez sa licence et sa sécurité avant de l'utiliser."
-          : "Sources: Hacker News (Show HN), GitHub, Hugging Face Spaces and Google Trends. We leave out adult projects. A project appearing here is not an endorsement: check its licence and security before you use it."}
+          ? "Sources : Hacker News (Show HN), GitHub et Google Trends. Nous excluons les projets pour adultes. La présence d'un projet ici n'est pas une recommandation : vérifiez sa licence et sa sécurité avant de l'utiliser."
+          : "Sources: Hacker News (Show HN), GitHub and Google Trends. We leave out adult projects. A project appearing here is not an endorsement: check its licence and security before you use it."}
       </p>
     </PageShell>
   );

@@ -10,7 +10,7 @@ const n = (x: number) => (x >= 1000 ? `${(x / 1000).toFixed(x >= 10000 ? 0 : 1)}
  * Made with AI: what people shipped this week. Three live sources, each item
  * credited to its maker and linked to where it was made.
  */
-type Item = { key: string; href: string; title: string; desc?: string; meta: ReactNode };
+type Item = { key: string; href: string; title: string; desc?: string; meta: ReactNode; image?: string | null };
 
 export function Showcase({ pulse, limit = 5 }: { pulse: PulsePayload; limit?: number }) {
   const { locale } = useLocale();
@@ -21,7 +21,7 @@ export function Showcase({ pulse, limit = 5 }: { pulse: PulsePayload; limit?: nu
       title: fr ? "Construit avec l'IA" : "Built with AI",
       sub: fr ? "Les projets présentés sur Hacker News (Show HN), classés par votes." : "Projects their makers showed on Hacker News (Show HN), ranked by votes.",
       items: pulse.built.slice(0, limit).map(b => ({
-        key: b.id, href: b.url, title: b.title,
+        key: b.id, href: b.url, title: b.title, image: b.image,
         meta: (
           <>
             <span className="inline-flex items-center gap-1"><TrendingUp className="h-3.5 w-3.5" aria-hidden="true" />{b.points}</span>
@@ -36,7 +36,7 @@ export function Showcase({ pulse, limit = 5 }: { pulse: PulsePayload; limit?: nu
       title: fr ? "Code ouvert en vogue" : "Open source rising",
       sub: fr ? "Nouveaux dépôts GitHub d'IA (2 dernières semaines), par étoiles." : "New AI repositories on GitHub (last two weeks), by stars.",
       items: pulse.repos.slice(0, limit).map(r => ({
-        key: r.id, href: r.url, title: `${r.owner}/${r.name}`, desc: r.description,
+        key: r.id, href: r.url, title: `${r.owner}/${r.name}`, desc: r.description, image: r.image,
         meta: (
           <>
             <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5" aria-hidden="true" />{n(r.stars)}</span>
@@ -47,16 +47,16 @@ export function Showcase({ pulse, limit = 5 }: { pulse: PulsePayload; limit?: nu
       })),
     },
     {
-      id: "spaces",
-      title: fr ? "À essayer" : "Try it now",
-      sub: fr ? "Démos en vogue sur Hugging Face Spaces, à tester dans le navigateur." : "Trending demos on Hugging Face Spaces, to try in your browser.",
-      items: pulse.spaces.slice(0, limit).map(s => ({
-        key: s.id, href: s.url, title: s.name, desc: `${fr ? "par" : "by"} ${s.owner}`,
+      id: "tools",
+      title: fr ? "Claude Code et MCP" : "Claude Code & MCP",
+      sub: fr ? "Nouveaux skills, serveurs MCP et outils d'agents sur GitHub (30 jours), par étoiles." : "New skills, MCP servers and agent tools on GitHub (last 30 days), by stars.",
+      items: (pulse.tools ?? []).slice(0, limit).map(r => ({
+        key: r.id, href: r.url, title: `${r.owner}/${r.name}`, desc: r.description, image: r.image,
         meta: (
           <>
-            <span className="inline-flex items-center gap-1"><Play className="h-3.5 w-3.5" aria-hidden="true" />{fr ? "Démo" : "Demo"}</span>
-            <span>♥ {n(s.likes)}</span>
-            {s.sdk && <span>{s.sdk}</span>}
+            <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5" aria-hidden="true" />{n(r.stars)}</span>
+            {r.language && <span>{r.language}</span>}
+            {r.license && <span className="inline-flex items-center gap-1"><GitFork className="h-3.5 w-3.5" aria-hidden="true" />{r.license}</span>}
           </>
         ),
       })),
@@ -75,7 +75,8 @@ export function Showcase({ pulse, limit = 5 }: { pulse: PulsePayload; limit?: nu
             {c.items.map((it, k) => (
               <li key={it.key} className="flex gap-3 py-3 border-b border-line last:border-0">
                 <span className="masthead-serif text-[1.5rem] text-brass-ink w-6 shrink-0 leading-none mt-0.5" aria-hidden="true">{k + 1}</span>
-                <div className="min-w-0">
+                <Thumb src={it.image} label={it.title} />
+                <div className="min-w-0 flex-1">
                   <a href={it.href} target="_blank" rel="noopener noreferrer" className="group font-semibold leading-snug hover:underline break-words">
                     {it.title}<ArrowUpRight className="inline h-3.5 w-3.5 ml-0.5 text-muted-ink group-hover:text-ink" aria-hidden="true" />
                   </a>
@@ -142,4 +143,18 @@ export function TrendsPanel({ pulse }: { pulse: PulsePayload }) {
 function dedupe(list: Trend[]) {
   const seen = new Set<string>();
   return list.filter(t => { const k = t.term.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
+}
+
+/** Small project image (GitHub card or the project's own share image); a yellow tile when there is none. */
+export function Thumb({ src, label }: { src?: string | null; label: string }) {
+  const [ok, setOk] = useState(true);
+  return (
+    <span className="w-[88px] self-start shrink-0 aspect-[16/10] overflow-hidden bg-signal text-signal-ink grid place-items-center" aria-hidden="true">
+      {src && ok ? (
+        <img src={src} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" className="img-cover" onError={() => setOk(false)} />
+      ) : (
+        <span className="masthead-serif text-[1.6rem] leading-none">{label.replace(/^[^A-Za-z0-9]+/, "").charAt(0).toUpperCase()}</span>
+      )}
+    </span>
+  );
 }

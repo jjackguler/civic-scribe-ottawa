@@ -4,7 +4,7 @@
  *
  * - Built with AI: Show HN posts about AI (Hacker News, ranked by points)
  * - Open source rising: new GitHub repositories tagged llm / ai-agents, by stars
- * - Try it: trending Hugging Face Spaces (live demos)
+ * - Claude Code & MCP: new skills, MCP servers and agent tools on GitHub
  * - Search trends: Google Trends daily trending searches, Canada and U.S.
  *
  * Every item links to where it was made and credits its maker. Adult or
@@ -14,21 +14,23 @@ import { AI_RE } from "./classify";
 import { withTimeout } from "./news-engine";
 import { canKeepAlive, keepAlive, sharedRead, sharedWrite } from "./shared-cache";
 
-export type BuiltItem = { id: string; title: string; url: string; discussUrl: string; points: number; comments: number; at: string; openSource: boolean };
-export type RepoItem = { id: string; name: string; owner: string; url: string; description: string; stars: number; language: string | null; license: string | null; at: string; topics: string[] };
+export type BuiltItem = { id: string; title: string; url: string; discussUrl: string; points: number; comments: number; at: string; openSource: boolean; image?: string | null };
+export type RepoItem = { id: string; name: string; owner: string; url: string; description: string; stars: number; language: string | null; license: string | null; at: string; topics: string[]; image?: string | null };
 export type SpaceItem = { id: string; name: string; owner: string; url: string; likes: number; sdk: string | null; at: string };
 export type Trend = { term: string; traffic: string; newsTitle?: string; newsUrl?: string; newsSource?: string };
 export type PulsePayload = {
   built: BuiltItem[];
   repos: RepoItem[];
   spaces: SpaceItem[];
+  /** Claude Code skills, MCP servers and agent tools rising on GitHub. */
+  tools: RepoItem[];
   trends: { ca: Trend[]; us: Trend[] };
   fetchedAt: string;
 };
 
 const UA = "Mozilla/5.0 (compatible; AIBroadsheet/1.0; +https://aibroadsheet.com)";
 const TTL = 20 * 60 * 1000;
-const KEY = "pulse:v1";
+const KEY = "pulse:v2";
 const UNSAFE = /uncensored|nsfw|nude|naked|porn|hentai|lewd|explicit|erotic|sexy|18\+|onlyfans|undress|deepnude|waifu|not-for-all-audiences|gore/i;
 
 const g = globalThis as unknown as { __pulse?: { ts: number; payload: PulsePayload }; __pulseInflight?: Promise<PulsePayload>; __pulseAt?: number };
@@ -72,18 +74,46 @@ async function built(): Promise<BuiltItem[]> {
       comments: h.num_comments ?? 0,
       at: h.created_at,
       openSource: /github\.com|gitlab\.com|open[- ]source|\bOSS\b/i.test(`${h.url ?? ""} ${h.title}`),
+      image: h.url ? ghFromUrl(h.url) : null,
     }));
+}
+
+/** Fill in share images for the top Show HN links that aren't GitHub repos (a few lookups). */
+async function withImages(items: BuiltItem[], prev?: BuiltItem[]): Promise<BuiltItem[]> {
+  const known = new Map((prev ?? []).map(b => [b.url, b.image ?? null]));
+  const need = items.filter(b => !b.image && !known.has(b.url)).slice(0, 5);
+  const found = new Map(await Promise.all(need.map(async b => [b.url, await ogImage(b.url)] as const)));
+  return items.map(b => ({ ...b, image: b.image ?? found.get(b.url) ?? known.get(b.url) ?? null }));
 }
 
 /** Show HN titles that are clearly about AI ("model" alone also matches 3D models). */
 const BUILT_RE = /\b(LLMs?|GPTs?|ChatGPT|Claude|Gemini|Llama|Mistral|DeepSeek|Qwen|agents?|agentic|MCP|RAG|embeddings?|diffusion|transformers?|neural|fine-?tun\w*|inference|prompts?|vibe[- ]cod\w*|Opus|Sonnet|Haiku|Codex|Cursor|Copilot)\b/i;
 
+/** GitHub's own social card for a repository (served by GitHub, no lookup needed). */
+const ghCard = (owner: string, repo: string) => `https://opengraph.githubassets.com/1/${owner}/${repo}`;
+function ghFromUrl(url: string): string | null {
+  const m = url.match(/^https?:\/\/github\.com\/([\w.-]+)\/([\w.-]+)/i);
+  return m ? ghCard(m[1], m[2].replace(/\.git$/, "")) : null;
+}
+
+/** The project page's own share image, for Show HN links that aren't on GitHub. */
+async function ogImage(url: string): Promise<string | null> {
+  try {
+    const html = (await getText(url, "text/html", 4000)).slice(0, 200_000);
+    const m = html.match(/<meta[^>]+(?:property|name)=["'](?:og:image|twitter:image)(?::src)?["'][^>]*content=["']([^"']+)["']/i)
+      ?? html.match(/<meta[^>]+content=["']([^"']+)["'][^>]*(?:property|name)=["'](?:og:image|twitter:image)["']/i);
+    if (!m) return null;
+    const img = new URL(m[1].replace(/&amp;/g, "&"), url).href;
+    return /^https:\/\//.test(img) ? img : null;
+  } catch { return null; }
+}
+
 const latin = (s: string) => (s.match(/[A-Za-z]/g)?.length ?? 0) / Math.max(1, s.replace(/\s/g, "").length);
 
-async function repos(): Promise<RepoItem[]> {
-  const since = new Date(Date.now() - 14 * 86400_000).toISOString().slice(0, 10);
+async function repos(topics = ["llm", "ai-agents"], days = 14): Promise<RepoItem[]> {
+  const since = new Date(Date.now() - days * 86400_000).toISOString().slice(0, 10);
   const out = new Map<string, RepoItem>();
-  for (const topic of ["llm", "ai-agents"]) {
+  for (const topic of topics) {
     try {
       const json = JSON.parse(await getText(`https://api.github.com/search/repositories?q=topic:${topic}+created:%3E${since}&sort=stars&order=desc&per_page=25`, "application/vnd.github+json"));
       for (const r of (json.items ?? []) as { id: number; full_name: string; name: string; owner?: { login: string }; html_url: string; description?: string; stargazers_count: number; language?: string; license?: { spdx_id?: string }; created_at: string; topics?: string[] }[]) {
@@ -93,6 +123,7 @@ async function repos(): Promise<RepoItem[]> {
           id: String(r.id), name: r.name, owner: r.owner?.login ?? r.full_name.split("/")[0], url: r.html_url,
           description: r.description.slice(0, 180), stars: r.stargazers_count, language: r.language ?? null,
           license: r.license?.spdx_id && r.license.spdx_id !== "NOASSERTION" ? r.license.spdx_id : null, at: r.created_at, topics: (r.topics ?? []).slice(0, 4),
+          image: ghCard(r.owner?.login ?? r.full_name.split("/")[0], r.name),
         });
       }
     } catch { /* one topic failing is fine */ }
@@ -101,30 +132,22 @@ async function repos(): Promise<RepoItem[]> {
   return [...out.values()].sort((a, b) => (latin(b.description) > 0.6 ? 1 : 0) - (latin(a.description) > 0.6 ? 1 : 0) || b.stars - a.stars).slice(0, 10);
 }
 
-async function spaces(): Promise<SpaceItem[]> {
-  const json = JSON.parse(await getText("https://huggingface.co/api/spaces?sort=trendingScore&limit=60", "application/json")) as { id: string; likes?: number; sdk?: string; tags?: string[]; createdAt?: string; private?: boolean }[];
-  return json
-    .filter(s => !s.private && !UNSAFE.test(`${s.id} ${(s.tags ?? []).join(" ")}`))
-    .slice(0, 10)
-    .map(s => {
-      const [owner, name] = s.id.split("/");
-      return { id: s.id, owner, name: (name ?? s.id).replace(/[-_]+/g, " "), url: `https://huggingface.co/spaces/${s.id}`, likes: s.likes ?? 0, sdk: s.sdk ?? null, at: s.createdAt ?? "" };
-    });
-}
-
 async function build(prev?: PulsePayload): Promise<PulsePayload> {
   const keep = <T,>(p: Promise<T>, fallback: T) => withTimeout(p.catch(() => fallback), 9000, fallback);
-  const [b, r, s, ca, us] = await Promise.all([
-    keep(built(), prev?.built ?? []),
+  const [b, r, tl, ca, us] = await Promise.all([
+    keep(built().then(x => withImages(x, prev?.built)), prev?.built ?? []),
     keep(repos(), prev?.repos ?? []),
-    keep(spaces(), prev?.spaces ?? []),
+    keep(repos(["claude-code", "mcp-server", "model-context-protocol"], 30), prev?.tools ?? []),
     keep(trends("CA"), prev?.trends.ca ?? []),
     keep(trends("US"), prev?.trends.us ?? []),
   ]);
+  const repoNames = new Set(r.map(x => x.url));
   return {
     built: b.length ? b : prev?.built ?? [],
     repos: r.length ? r : prev?.repos ?? [],
-    spaces: s.length ? s : prev?.spaces ?? [],
+    // Hugging Face is blocked on some networks, so the third column is GitHub too.
+    spaces: [],
+    tools: tl.length ? tl.filter(x => !repoNames.has(x.url)) : prev?.tools ?? [],
     trends: { ca: ca.length ? ca : prev?.trends.ca ?? [], us: us.length ? us : prev?.trends.us ?? [] },
     fetchedAt: new Date().toISOString(),
   };
@@ -140,7 +163,7 @@ function rebuild(): Promise<PulsePayload> {
       sharedWrite(KEY, { ts: Date.now(), payload: p }, 2 * 24 * 3600);
       return p;
     })
-    .catch(() => prev ?? { built: [], repos: [], spaces: [], trends: { ca: [], us: [] }, fetchedAt: new Date().toISOString() })
+    .catch(() => prev ?? { built: [], repos: [], spaces: [], tools: [], trends: { ca: [], us: [] }, fetchedAt: new Date().toISOString() })
     .finally(() => { g.__pulseInflight = undefined; });
   keepAlive(g.__pulseInflight);
   return g.__pulseInflight;
@@ -157,5 +180,5 @@ export async function loadPulse(): Promise<PulsePayload> {
     if (canKeepAlive() && Date.now() - cached.ts < 2 * TTL) { void rebuild(); return cached.payload; }
     return withTimeout(rebuild(), 12000, cached.payload);
   }
-  return withTimeout(rebuild(), 12000, { built: [], repos: [], spaces: [], trends: { ca: [], us: [] }, fetchedAt: new Date().toISOString() });
+  return withTimeout(rebuild(), 12000, { built: [], repos: [], spaces: [], tools: [], trends: { ca: [], us: [] }, fetchedAt: new Date().toISOString() });
 }

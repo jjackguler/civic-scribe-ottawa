@@ -73,9 +73,9 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
                 <StoryImage src={s.story.image} alt="" eager className="img-cover" />
               </div>
             ) : (
-              <div className="absolute inset-0" aria-hidden="true">
-                <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--brass) 0 1px, transparent 1px 18px)" }} />
-                <p className="absolute right-6 top-6 masthead-serif text-brass/25 text-[5rem] sm:text-[7rem] leading-none text-right max-w-[80%]">{storyKicker(s.story, locale)}</p>
+              <div className="absolute inset-0 bg-signal" aria-hidden="true">
+                <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--signal-ink) 0 2px, transparent 2px 22px)" }} />
+                <p className="absolute left-6 top-6 right-0 masthead-serif text-signal-ink text-[3.4rem] sm:text-[4.8rem] lg:text-[5.6rem] leading-none whitespace-nowrap overflow-hidden">{storyKicker(s.story, locale)}</p>
               </div>
             )}
             <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(6,24,28,0.97)_0%,rgba(6,24,28,0.85)_38%,rgba(6,24,28,0.25)_70%,rgba(6,24,28,0.05)_100%)]" aria-hidden="true" />
@@ -88,8 +88,8 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
                 ) : s.developing ? (
                   <span className="inline-flex items-center gap-1.5 bg-white text-live px-2 py-0.5"><span className="live-dot" aria-hidden="true" />{fr ? "En développement" : "Developing"}</span>
                 ) : null}
-                {s.trend && <span className="bg-brass text-night px-2 py-0.5">{fr ? `Tendance Google ${s.trend === "ca" ? "Canada" : "É.-U."}` : `Trending on Google ${s.trend === "ca" ? "Canada" : "U.S."}`}</span>}
-                <span className="text-brass">{storyKicker(s.story, locale)}</span>
+                {s.trend && <span className="bg-signal text-signal-ink px-2 py-0.5">{fr ? `Tendance Google ${s.trend === "ca" ? "Canada" : "É.-U."}` : `Trending on Google ${s.trend === "ca" ? "Canada" : "U.S."}`}</span>}
+                <span className="text-signal">{storyKicker(s.story, locale)}</span>
                 {s.outlets >= 2 && <span className="text-white/75">{fr ? `${s.outlets} médias en parlent` : `${s.outlets} outlets reporting`}</span>}
               </p>
               <h2 className="hl text-white text-[2rem] sm:text-[2.8rem] lg:text-[3.4rem] leading-[1.02] mt-3 max-w-[22ch] text-balance group-hover:underline decoration-2 underline-offset-4">
@@ -118,7 +118,7 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
               >
                 <span className="block h-[3px] bg-white/15 overflow-hidden">
                   {k === idx ? (
-                    <span key={`p-${idx}-${paused}`} className="block h-full bg-brass hero-progress" style={{ ["--hero-ms" as string]: `${SLIDE_MS}ms` }} />
+                    <span key={`p-${idx}-${paused}`} className="block h-full bg-signal hero-progress" style={{ ["--hero-ms" as string]: `${SLIDE_MS}ms` }} />
                   ) : k < idx ? <span className="block h-full bg-white/40" /> : null}
                 </span>
                 <span className="hidden md:block mt-2 text-[0.8rem] font-semibold leading-snug line-clamp-2">{display(sl.story, locale).title}</span>
@@ -175,7 +175,7 @@ function LiveColumn({ stories }: { stories: Story[] }) {
 
   return (
     <aside className="min-w-0 border-t border-white/15 lg:border-t-0 lg:border-l lg:pl-6 pt-5 lg:pt-0" aria-label={fr ? "Fil en direct" : "Live feed"}>
-      <div className="flex items-baseline justify-between gap-3 pb-3 border-b-[3px] border-brass">
+      <div className="flex items-baseline justify-between gap-3 pb-3 border-b-[3px] border-signal">
         <p className="flex items-center gap-2 font-bold text-[1.15rem]"><span className="live-dot" aria-hidden="true" />{fr ? "En direct" : "Live"}</p>
         <p className="tabular-nums text-white/70 text-[0.9rem]" aria-live="off" suppressHydrationWarning>{clock ?? " "}</p>
       </div>
@@ -189,7 +189,7 @@ function LiveColumn({ stories }: { stories: Story[] }) {
           <li key={s.id} className={`border-b border-white/10 last:border-0 ${fresh.has(s.id) ? "live-in" : ""}`}>
             <StoryLink s={s} className="group block py-3">
               <p className="text-[0.75rem] text-white/55 flex gap-2">
-                <time dateTime={s.publishedAt} className="text-brass font-semibold" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
+                <time dateTime={s.publishedAt} className="text-signal font-semibold" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
                 <span className="truncate">{s.source}</span>
               </p>
               <p className="font-semibold leading-snug mt-0.5 group-hover:underline">{display(s, locale).title}</p>

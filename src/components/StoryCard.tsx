@@ -51,19 +51,26 @@ export function storyKicker(s: Story, locale: "en" | "fr") {
 export function StoryCover({ s, size }: { s: Story; size: "hero" | "card" }) {
   const { locale } = useLocale();
   return (
-    <figure aria-hidden="true" className="aspect-[16/9] relative overflow-hidden bg-night text-white">
-      <div className="absolute inset-0 opacity-[0.14]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--brass) 0 1px, transparent 1px 16px)" }} />
-      <div className="absolute inset-x-0 top-0 h-[5px] bg-brass" />
-      <div className="absolute inset-x-0 top-[9px] h-px bg-brass/50" />
-      <p className={`absolute left-5 right-5 top-5 flex justify-between gap-4 font-semibold text-white/70 ${size === "hero" ? "text-[0.9rem]" : "text-[0.75rem]"}`}>
-        <span className="masthead-serif text-white">AI Broadsheet</span>
+    <figure aria-hidden="true" className="aspect-[16/9] relative overflow-hidden bg-signal text-signal-ink">
+      <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--signal-ink) 0 2px, transparent 2px 20px)" }} />
+      <div className="absolute inset-x-0 bottom-0 h-[38%] bg-signal-ink" />
+      <p className={`absolute left-5 right-5 top-4 flex justify-between gap-4 font-bold ${size === "hero" ? "text-[0.9rem]" : "text-[0.75rem]"}`}>
+        <span className="masthead-serif">AI Broadsheet</span>
         <span className="truncate">{s.source}</span>
       </p>
-      <p className={`absolute left-5 right-5 bottom-4 masthead-serif text-brass leading-[0.95] text-balance ${size === "hero" ? "text-[2.8rem] sm:text-[4.2rem]" : "text-[1.9rem]"}`}>
+      <p className={`absolute left-5 right-5 bottom-[calc(38%+0.5rem)] masthead-serif leading-[0.92] text-balance ${size === "hero" ? "text-[2.8rem] sm:text-[4.2rem]" : "text-[1.9rem]"}`}>
         {storyKicker(s, locale)}
+      </p>
+      <p suppressHydrationWarning className={`absolute left-5 right-5 bottom-3 text-signal font-semibold line-clamp-2 ${size === "hero" ? "text-[1rem]" : "text-[0.8rem]"}`}>
+        {timeAgoLabel(s, locale)}
       </p>
     </figure>
   );
+}
+
+function timeAgoLabel(s: Story, locale: "en" | "fr") {
+  const d = new Date(s.publishedAt);
+  return d.toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", { weekday: "long", month: "long", day: "numeric" });
 }
 
 /** Link to our story page. */

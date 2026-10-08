@@ -38,7 +38,7 @@ export function SectionHead({ title, sub, action }: { title: string; sub?: strin
 export function ZoneHead({ title, action, dark = false, sub }: { title: ReactNode; action?: ReactNode; dark?: boolean; sub?: ReactNode }) {
   return (
     <div className={`relative pt-3 mb-5 border-t-[3px] ${dark ? "border-white/80" : "border-night"}`}>
-      <span className="absolute left-0 -top-[3px] h-[3px] w-14 bg-brass" aria-hidden="true" />
+      <span className="absolute left-0 -top-[3px] h-[3px] w-14 bg-signal" aria-hidden="true" />
       <div className="flex items-end justify-between gap-3">
         <h2 className={`masthead-serif text-[1.75rem] sm:text-[2.05rem] leading-tight ${dark ? "text-white" : "text-ink"}`}>{title}</h2>
         {action}
