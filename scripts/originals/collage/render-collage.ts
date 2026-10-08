@@ -27,6 +27,8 @@ const WORKERS = Number(process.env.COLLAGE_WORKERS || 2);
 const [boardPath, work, outPath] = process.argv.slice(2);
 const stillsArg = process.argv.indexOf("--stills");
 const stills = stillsArg > 0 ? process.argv[stillsArg + 1].split(",").map(Number) : null;
+/** --audio-only: keep the rendered frames (video.mp4 in the work dir), redo the sound mix. */
+const AUDIO_ONLY = process.argv.includes("--audio-only");
 
 async function openPage(html: string, board: unknown, timing: unknown) {
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
@@ -78,7 +80,18 @@ const SFX: Record<string, string> = {
 };
 const GAIN: Record<string, number> = { whoosh: 0.45, slap: 0.7, thump: 0.8, stamp: 0.95, marker: 0.5, scribble: 0.5, pencil: 0.55, sweep: 0.4, tick: 0.5, snip: 0.45, paper: 0.45, tear: 0.6, type: 0.5, click: 0.4, shutter: 0.5, slide: 0.5 };
 
+/** Integrated loudness (LUFS) of the first `secs` seconds. */
+async function lufs(f: string, secs = 120): Promise<number> {
+  const r = await run("ffmpeg", ["-hide_banner", "-t", String(secs), "-i", f, "-af", "ebur128", "-f", "null", "-"], { maxBuffer: 1 << 26 }).catch(e => e);
+  const m = String(r.stderr ?? "").match(/I:\s+(-?[0-9.]+) LUFS\s*\n\s*Threshold/);
+  return m ? Number(m[1]) : -20;
+}
+
 async function mixAudio(voice: string, events: { t: number; kind: string }[], dur: number, out: string) {
+  // Levels: voice at -18 LUFS, music bed ~13 LU under it (and ducked while the voice talks), effects as accents.
+  const gVoice = Math.pow(10, (-18 - (await lufs(voice))) / 20);
+  const gMusic = MUSIC && existsSync(MUSIC) ? Math.pow(10, (-31 - (await lufs(MUSIC))) / 20) : 0;
+  const SFX_TRIM = Number(process.env.COLLAGE_SFX_LEVEL || 0.5);
   const map: Record<string, string[]> = SFX_MAP && existsSync(SFX_MAP) ? JSON.parse(await readFile(SFX_MAP, "utf8")) : {};
   const used: Record<string, number> = {};
   // drop cues that land on top of the same kind (keeps the mix clean)
@@ -93,15 +106,15 @@ async function mixAudio(voice: string, events: { t: number; kind: string }[], du
       inputs.push("-i", files[k % files.length]);
     } else inputs.push("-f", "lavfi", "-i", SFX[e.kind]);
     const ms = Math.round(e.t * 1000);
-    filters.push(`[${i + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:2.5,volume=${GAIN[e.kind] ?? 0.6},adelay=${ms}|${ms}[s${i}]`);
+    filters.push(`[${i + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:2.5,volume=${((GAIN[e.kind] ?? 0.6) * (files?.length ? SFX_TRIM : 1)).toFixed(3)},adelay=${ms}|${ms}[s${i}]`);
   });
   const n = ev.length;
-  filters.push(`[0:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=1.0,asplit=2[v][vk]`);
+  filters.push(`[0:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=${gVoice.toFixed(4)},asplit=2[v][vk]`);
   let bed = "";
   if (MUSIC && existsSync(MUSIC)) {
     inputs.push("-stream_loop", "-1", "-i", MUSIC);
     // music sits under the voice and ducks while it talks
-    filters.push(`[${n + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:${dur.toFixed(2)},volume=0.22,afade=t=in:d=1.2,afade=t=out:st=${(dur - 2.5).toFixed(2)}:d=2.5[m0]`);
+    filters.push(`[${n + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:${dur.toFixed(2)},volume=${gMusic.toFixed(4)},afade=t=in:d=1.2,afade=t=out:st=${(dur - 2.5).toFixed(2)}:d=2.5[m0]`);
     filters.push(`[m0][vk]sidechaincompress=threshold=0.03:ratio=6:attack=40:release=450[m]`);
     bed = "[m]";
   } else filters.push(`[vk]anullsink`);
@@ -140,6 +153,15 @@ async function main() {
   }
 
   const frames = Math.ceil(timing.duration * FPS);
+  if (AUDIO_ONLY) {
+    const { browser, info } = await openPage(html, board, timing);
+    await browser.close();
+    const audio = join(work, "mix.m4a");
+    await mixAudio(join(work, "voice.wav"), info.events, timing.duration, audio);
+    await run("ffmpeg", ["-y", "-loglevel", "error", "-i", join(work, "video.mp4"), "-i", audio, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "copy", "-movflags", "+faststart", "-shortest", resolve(outPath)]);
+    console.log(`remixed ${outPath} (${info.events.length} sound cues)`);
+    return;
+  }
   const per = Math.ceil(frames / WORKERS);
   let events: { t: number; kind: string }[] = [];
   const parts = await Promise.all(Array.from({ length: WORKERS }, async (_, w) => {

@@ -351,7 +351,7 @@
       let note = null, pn = null, na = 0;
       if (sc.data.note) {
         note = h(`<div class="piece" style="z-index:5"><div class="paper elite" style="padding:22px 30px 26px;font-size:34px;max-width:720px;clip-path:${torn(7700 + si, 4)}">${esc(sc.data.note)}</div></div>`);
-        root.appendChild(note); pn = piece(note, 7710 + si, { x: 260, y: 1180, rot: 2 }); na = at[N - 1] + .6; ev(na + .2, "type");
+        root.appendChild(note); pn = piece(note, 7710 + si, { x: 260, y: 1180, rot: 2 }); na = at[0] - sc.start > 1.5 ? sc.start + .35 : at[N - 1] + .6; ev(na + .2, "type");
       }
       return t => {
         ws.forEach(({ pc }, k) => placePiece(pc, t, at[k], { dx: k % 2 ? 700 : -700, dy: 0, rot: k % 2 ? 8 : -8 }, .32));
@@ -489,7 +489,15 @@
       const pl = piece(lbl, 8550 + si, { x: 90, y: 1150, rot: 1.5 });
       const la = cueMaybe(si, "4k", .3) ?? at0 + n * .07 + .5;
       ev(sc.start + .2, "slap"); ev(la + .2, "thump");
+      let fg = null;
+      if (sc.data.figure) {
+        fg = figure(root, sc.data.figure, 760, 8560 + si, { x: 0, y: 0, rot: 0 });
+        fg.pc.base = { x: W - fg.w + 40, y: 1440 - 760, rot: -1.5 };
+        root.insertBefore(fg.pc.el, strip);
+        ev(sc.start + .6, "slide");
+      }
       return t => {
+        if (fg) placeStep(fg.pc, t, sc.start + .5, { dx: 600, dy: 0, rot: 0 }, .5, 4);
         placePiece(ps, t, sc.start, { dx: -900, dy: 0, rot: -10 }, .4);
         ph.forEach((pc, i) => placePiece(pc, t, at0 + i * .07, { dx: 0, dy: 0, rot: 20, s: 1.6 }, .22));
         placePiece(pl, t, la, { dx: 0, dy: 0, rot: -8, s: 1.8 }, .3);

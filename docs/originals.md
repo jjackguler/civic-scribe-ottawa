@@ -59,3 +59,15 @@ Locally: `cd scripts/originals && npm ci && npx playwright install chromium && n
 - Each video names its sources on the last card and in the description, and links them on the site.
 - AI voice and AI illustrations are disclosed on the card, in the description and on the site.
 - No real people's likeness or voice, no logos.
+
+## Collage style (v2)
+
+`scripts/originals/collage/` renders the newspaper-collage look: torn clippings, ransom-note letters, scissor-cut figures from public-domain photos, red pencil, price tags, receipts and paper wipes, with real CC0 sound effects and a ducked CC0 music bed.
+
+- `collage.html` + `collage-v2.js`: the scene engine (one storyboard JSON per video; see `storyboard.*.json`).
+- `prepare_figures.py`: cuts people out of public-domain photos (rembg) and adds the white scissor rim.
+- `prepare_sfx.py`: trims and levels CC0 recordings into a cue library (`sfx-map.json`).
+- `render-collage.ts`: frame-by-frame render, then the mix (voice −18 LUFS, music ~13 LU under and ducked, final −15 LUFS).
+- `.github/workflows/fetch-assets.yml` + `scripts/assets/fetch_assets.py`: download the material into the `assets` branch with a credits file. Photos are taken only when Wikimedia Commons marks them public domain or CC0; sounds only from Freesound's CC0 filter and Kenney (CC0).
+
+Content rules for the material: no nudity or sexual imagery, no content promoting or attacking religious belief, no violent headlines; real people only as anonymous historical figures, never cast as wrongdoers.
