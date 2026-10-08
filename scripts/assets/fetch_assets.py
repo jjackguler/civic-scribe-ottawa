@@ -120,6 +120,15 @@ PHOTO_QUERIES = [
     "construction workers lunch beam", "radio announcer microphone 1930s", "factory assembly line 1920s",
     "crowd waiting line 1930s", "detective magnifying glass", "lighthouse keeper",
 ]
+INTRO_QUERIES = [
+    "NASA Pleiades supercomputer", "NASA supercomputer room", "oil refinery Louisiana 1940s", "refinery night lights Texas",
+    "Louisiana bayou 1930s", "high voltage transmission lines towers", "telephone poles rural road 1930s",
+    "printing press newspaper 1940s", "linotype operator", "radio tower antenna 1930s", "highway overpass 1950s night",
+    "crowd of people 1940s street", "factory smokestacks 1930s", "Hoover Dam power plant generators", "electric power plant turbines 1940s",
+    "IBM 7090 NASA", "data processing center 1960s", "satellite dish antenna NASA", "storm clouds", "flock of birds sky",
+    "railroad yard 1940s", "steel mill workers 1940s", "farmer field 1930s Farm Security Administration", "woman portrait 1940s Farm Security Administration",
+    "man portrait 1930s Farm Security Administration", "worker portrait 1940s Office of War Information",
+]
 NEWSPRINT_QUERIES = [
     "newspaper front page 1920", "New-York tribune front page 1922", "Evening star Washington front page 1925",
     "newspaper page 1910 Chronicling America", "classified advertisements newspaper 1920",
@@ -242,6 +251,15 @@ def main():
             commons(q, "photos", limit=6)
         for q in NEWSPRINT_QUERIES:
             commons(q, "newsprint", limit=3, min_w=1200)
+    if only == "intro":
+        os.makedirs(os.path.join(OUT, "intro"), exist_ok=True)
+        for q in INTRO_QUERIES:
+            if over_budget():
+                break
+            commons(q, "intro", limit=5, min_w=1000)
+            save_meta()
+        for q in ["dark ambient guitar drone", "slide guitar ambient", "southern gothic guitar", "cinematic drone dark", "tremolo guitar ambient"]:
+            freesound(q, limit=3, folder="music")
     if only in ("", "audio"):
         for p in KENNEY:
             kenney(p)

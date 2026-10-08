@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ../assets-out
-          ONLY=sfx2 BUDGET_SEC=1500 python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=intro BUDGET_SEC=1200 python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         if: always()
