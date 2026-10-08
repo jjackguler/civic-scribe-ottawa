@@ -1,0 +1,31 @@
+commons 'NASA Pleiades supercomputer': 5
+commons 'NASA supercomputer room': 1
+commons 'oil refinery Louisiana 1940s': 4
+commons 'refinery night lights Texas': 0
+commons 'Louisiana bayou 1930s': 3
+commons 'high voltage transmission lines towers': 5
+commons 'telephone poles rural road 1930s': 0
+commons 'printing press newspaper 1940s': 3
+commons 'linotype operator': 5
+commons 'radio tower antenna 1930s': 5
+commons 'highway overpass 1950s night': 0
+commons 'crowd of people 1940s street': 5
+commons 'factory smokestacks 1930s': 1
+commons 'Hoover Dam power plant generators': 2
+commons 'electric power plant turbines 1940s': 0
+commons 'IBM 7090 NASA': 3
+commons 'data processing center 1960s': 5
+commons 'satellite dish antenna NASA': 2
+commons 'storm clouds': 5
+commons 'flock of birds sky': 2
+commons 'railroad yard 1940s': 5
+commons 'steel mill workers 1940s': 1
+commons 'farmer field 1930s Farm Security Administration': 5
+commons 'woman portrait 1940s Farm Security Administration': 5
+commons 'man portrait 1930s Farm Security Administration': 3
+commons 'worker portrait 1940s Office of War Information': 5
+freesound 'dark ambient guitar drone': 3
+freesound 'slide guitar ambient': 3
+freesound 'southern gothic guitar': 0
+freesound 'cinematic drone dark': 3
+freesound 'tremolo guitar ambient': 2
