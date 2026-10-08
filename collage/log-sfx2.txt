@@ -1,0 +1,19 @@
+freesound 'scissors snip': 3
+freesound 'paper tear': 3
+freesound 'rubber stamp': 3
+freesound 'pencil scribble': 3
+freesound 'paper slide': 3
+freesound 'paper rustle': 3
+freesound 'whoosh': 3
+freesound 'typewriter key': 3
+freesound 'camera shutter': 3
+freesound 'tape': 3
+freesound 'documentary background music': 3
+freesound 'cinematic underscore': 3
+freesound 'news background music': 3
+freesound 'minimal piano loop': 3
+freesound 'tension pulse music': 2
+freesound 'lofi beat loop': 3
+freesound 'ambient pad music': 3
+freesound 'upbeat corporate music': 1
+freesound 'music bed': 3
