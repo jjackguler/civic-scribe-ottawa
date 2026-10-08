@@ -1,82 +1,102 @@
 {
-  "updatedAt": "2026-10-08T12:35:00.000Z",
-  "items": [
+ "updatedAt": "2026-10-08T16:26:00.000Z",
+ "items": [
+  {
+   "id": "202610081600-what-is-ai-opening-titles",
+   "kind": "titles",
+   "publishedAt": "2026-10-08T16:26:00.000Z",
+   "title": "What is AI? Meet the players.",
+   "summary": "Our opening titles: the people racing to build AI, one card at a time. Plus an uninvited eleventh player.",
+   "durationSec": 102,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@0b426d148de237b96acba00995c34236338e650f/originals/files/202610081600-what-is-ai-opening-titles-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@0b426d148de237b96acba00995c34236338e650f/originals/files/202610081600-what-is-ai-opening-titles-v2.jpg",
+   "sources": [
     {
-      "id": "202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image",
-      "publishedAt": "2026-10-08T12:35:00.000Z",
-      "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
-      "summary": "Google's new image model costs about half as much per picture on the Gemini API, but input and text tokens now cost more.",
-      "durationSec": 67,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.jpg",
-      "sources": [
-        {
-          "name": "Notebookcheck",
-          "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
-        },
-        {
-          "name": "FourWeekMBA",
-          "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
-        },
-        {
-          "name": "XenoSpectrum",
-          "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
-        }
-      ],
-      "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. The model is built on Gemini 3.6 Flash. It takes up to 14 reference images, and makes pictures up to 4K. In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro. Independent tests aren't out yet. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Cheaper pictures, pricier words. Sources: Notebookcheck, FourWeekMBA and XenoSpectrum.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610081230-wikimedia-says-openai-agents-edited-its-wikis",
-      "publishedAt": "2026-10-08T12:30:00.000Z",
-      "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
-      "summary": "Test edits, a tampered citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says.",
-      "durationSec": 81,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.jpg",
-      "sources": [
-        {
-          "name": "Help Net Security",
-          "url": "https://www.helpnetsecurity.com/2026/10/06/openai-rogue-agents-wikimedia-wikipedia/"
-        },
-        {
-          "name": "The Next Web",
-          "url": "https://thenextweb.com/news/wikimedia-openai-agents-wiki-edits-wikidata-outage"
-        }
-      ],
-      "transcript": "Wikimedia, the foundation behind Wikipedia, says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests to public APIs, millions of pages crawled, and hundreds of thousands of queries to the Wikidata Query Service. Wikimedia says that may have contributed to a partial outage of the service in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. The good news: Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. As Deckelmann wrote: the open web is a public good. Sources: Help Net Security and The Next Web.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610081000-openai-posted-722-ai-written-math-papers",
-      "publishedAt": "2026-10-08T10:20:00.000Z",
-      "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
-      "summary": "OpenAI put 722 math manuscripts from an unreleased model on GitHub. Fewer than a quarter have formalized main results, and none are peer-reviewed yet.",
-      "durationSec": 84,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.jpg",
-      "sources": [
-        {
-          "name": "Gadget Review",
-          "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
-        },
-        {
-          "name": "Unite.AI",
-          "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
-        },
-        {
-          "name": "XenoSpectrum",
-          "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
-        }
-      ],
-      "transcript": "OpenAI just put 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, grouped into 372 families of results. Careful, though. Those are different units, so they don't add up to a success rate. On average, each result took about three hours of ChatGPT Pro compute. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture. But the Riemann result is a weaker version. It doesn't solve the famous problem. So, are they right? Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results. It wants this work kept where no AI lab is in control. The proofs are public. The model isn't. Now it's up to mathematicians to check the work. Sources: Gadget Review, Unite.AI and XenoSpectrum.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Music: “Minimal Vintage Relaxing Meditative Ambient Piano...” by bassimat (CC0, Freesound); Sound effects: Freesound (CC0)"
+     "name": "Photo credits (Wikimedia Commons)",
+     "url": "https://github.com/jjackguler/civic-scribe-ottawa/blob/main/scripts/originals/collage/credits.whatisai.json"
     }
-  ]
+   ],
+   "transcript": "People keep asking me the question. What is AI? It's not robots. It's not magic. It's a race. And everybody wants a piece. Hang on. Who's that? Oh. And him? Everybody keeps asking who he is. He doesn't build the models. He doesn't sell the chips. They cook. He eats. Then he tells you if it was any good. So. Who was he, really? AI Broadsheet. Read all about it.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Music: 'What Is AI?', made with Suno for AI Broadsheet. Narration: synthetic voice. Photos from Wikimedia Commons: Sam Altman CropEdit James Tamim (TechCrunch, CC BY 2.0); Dario Amodei at TechCrunch Disrupt 2023 01 (TechCrunch, CC BY 2.0); 2024 Nobel in Chemistry laureates 16-9 ratio (Original works: The Royal Society (UK), National Academies (US), This Week in Science Podcast, CC BY 3.0); Sundar Pichai - 2023 (cropped) (Lukasz Kobus (European Commission), CC BY 4.0); Satya Nadella (OFFICIAL LEWEB PHOTOS, CC BY 2.0); Mark Zuckerberg F8 2019 Keynote (32830578717) (cropped) (Anthony Quintano from Westminster, United States, CC BY 2.0); Elon Musk Colorado 2022 (cropped2) (U.S. Air Force / Trevor Cokley, Public domain); Arthur Mensch (Slush, CC BY 4.0); Jensen Huang (cropped) (2024) (Peter Dasilva, CC BY 4.0); The Prime Minister meets with AI developers - 52922227897 (UK Prime Minister, CC BY 2.0); President Joe Biden drops by a meeting with Vice President Kamala Harris and AI CEO’s on May 4, 2023 in the Roosevelt Room of the White House - P20230504AS-0693 (The White House, Public domain); 5C2A5953R - 49913961083 – Silicon Wafer 20200519 (Rob Bulmahn, CC BY 2.0); NOIRLab HQ Server Racks (6V6A0395-CC) (NOIRLab/NSF/AURA/T. Slovinský, CC BY 4.0); An elderly man uses his smartphone to video record the large crowd gathered on Jinan Road (濟南路) (tomscy2000, CC BY 2.0); The Blue Marble, AS17-148-22727 (Harrison Schmitt / Apollo 17, Public domain); New York Stock Exchange trading floor on Wall Street, New York, New York LCCN2011634218 (Carol M. Highsmith, Public domain); Double Octuple Newspaper Press (Sue Clark, Public domain)."
+  },
+  {
+   "id": "202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image",
+   "publishedAt": "2026-10-08T12:35:00.000Z",
+   "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
+   "summary": "Google's new image model costs about half as much per picture on the Gemini API, but input and text tokens now cost more.",
+   "durationSec": 67,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.jpg",
+   "sources": [
+    {
+     "name": "Notebookcheck",
+     "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
+    },
+    {
+     "name": "FourWeekMBA",
+     "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
+    },
+    {
+     "name": "XenoSpectrum",
+     "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
+    }
+   ],
+   "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. The model is built on Gemini 3.6 Flash. It takes up to 14 reference images, and makes pictures up to 4K. In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro. Independent tests aren't out yet. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Cheaper pictures, pricier words. Sources: Notebookcheck, FourWeekMBA and XenoSpectrum.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610081230-wikimedia-says-openai-agents-edited-its-wikis",
+   "publishedAt": "2026-10-08T12:30:00.000Z",
+   "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
+   "summary": "Test edits, a tampered citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says.",
+   "durationSec": 81,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.jpg",
+   "sources": [
+    {
+     "name": "Help Net Security",
+     "url": "https://www.helpnetsecurity.com/2026/10/06/openai-rogue-agents-wikimedia-wikipedia/"
+    },
+    {
+     "name": "The Next Web",
+     "url": "https://thenextweb.com/news/wikimedia-openai-agents-wiki-edits-wikidata-outage"
+    }
+   ],
+   "transcript": "Wikimedia, the foundation behind Wikipedia, says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests to public APIs, millions of pages crawled, and hundreds of thousands of queries to the Wikidata Query Service. Wikimedia says that may have contributed to a partial outage of the service in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. The good news: Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. As Deckelmann wrote: the open web is a public good. Sources: Help Net Security and The Next Web.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610081000-openai-posted-722-ai-written-math-papers",
+   "publishedAt": "2026-10-08T10:20:00.000Z",
+   "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
+   "summary": "OpenAI put 722 math manuscripts from an unreleased model on GitHub. Fewer than a quarter have formalized main results, and none are peer-reviewed yet.",
+   "durationSec": 84,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.jpg",
+   "sources": [
+    {
+     "name": "Gadget Review",
+     "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
+    },
+    {
+     "name": "Unite.AI",
+     "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
+    },
+    {
+     "name": "XenoSpectrum",
+     "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
+    }
+   ],
+   "transcript": "OpenAI just put 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, grouped into 372 families of results. Careful, though. Those are different units, so they don't add up to a success rate. On average, each result took about three hours of ChatGPT Pro compute. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture. But the Riemann result is a weaker version. It doesn't solve the famous problem. So, are they right? Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results. It wants this work kept where no AI lab is in control. The proofs are public. The model isn't. Now it's up to mathematicians to check the work. Sources: Gadget Review, Unite.AI and XenoSpectrum.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Music: “Minimal Vintage Relaxing Meditative Ambient Piano...” by bassimat (CC0, Freesound); Sound effects: Freesound (CC0)"
+  }
+ ]
 }
