@@ -25,6 +25,7 @@ import { Route as ListenRouteImport } from './routes/listen'
 import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as FundingRouteImport } from './routes/funding'
+import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
 import { Route as CorrectionsRouteImport } from './routes/corrections'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
@@ -116,6 +117,11 @@ const FundingRoute = FundingRouteImport.update({
   path: '/funding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeskHealthDotjsonRoute = DeskHealthDotjsonRouteImport.update({
+  id: '/desk-health.json',
+  path: '/desk-health.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CorrectionsRoute = CorrectionsRouteImport.update({
   id: '/corrections',
   path: '/corrections',
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
   '/corrections': typeof CorrectionsRoute
+  '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
   '/interviews': typeof InterviewsRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
   '/corrections': typeof CorrectionsRoute
+  '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
   '/interviews': typeof InterviewsRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
   '/corrections': typeof CorrectionsRoute
+  '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
   '/interviews': typeof InterviewsRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/advertise'
     | '/corrections'
+    | '/desk-health.json'
     | '/funding'
     | '/government'
     | '/interviews'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/advertise'
     | '/corrections'
+    | '/desk-health.json'
     | '/funding'
     | '/government'
     | '/interviews'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/advertise'
     | '/corrections'
+    | '/desk-health.json'
     | '/funding'
     | '/government'
     | '/interviews'
@@ -344,6 +356,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdvertiseRoute: typeof AdvertiseRoute
   CorrectionsRoute: typeof CorrectionsRoute
+  DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
   FundingRoute: typeof FundingRoute
   GovernmentRoute: typeof GovernmentRoute
   InterviewsRoute: typeof InterviewsRoute
@@ -482,6 +495,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FundingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/desk-health.json': {
+      id: '/desk-health.json'
+      path: '/desk-health.json'
+      fullPath: '/desk-health.json'
+      preLoaderRoute: typeof DeskHealthDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/corrections': {
       id: '/corrections'
       path: '/corrections'
@@ -560,6 +580,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdvertiseRoute: AdvertiseRoute,
   CorrectionsRoute: CorrectionsRoute,
+  DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
   FundingRoute: FundingRoute,
   GovernmentRoute: GovernmentRoute,
   InterviewsRoute: InterviewsRoute,

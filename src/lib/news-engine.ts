@@ -66,6 +66,7 @@ const g = globalThis as unknown as {
   __mwNews?: { ts: number; payload: NewsPayload };
   __mwNewsInflight?: Promise<NewsPayload>;
   __mwNewsInflightAt?: number;
+  __mwDiag?: { startedAt?: string; finishedAt?: string; result?: string; error?: string; saved?: string };
   __ogCache?: Map<string, string | null>;
   __mwSrc?: Map<string, SourceCache>;
 };
@@ -430,6 +431,7 @@ function rebuild(): Promise<NewsPayload> {
   // Share a build that is under way, unless it has been stuck too long (its request may be gone).
   if (g.__mwNewsInflight && Date.now() - (g.__mwNewsInflightAt ?? 0) < 30_000) return g.__mwNewsInflight;
   g.__mwNewsInflightAt = Date.now();
+  g.__mwDiag = { startedAt: new Date().toISOString() };
   // If the rebuild runs long, publish whatever the feeds have delivered so far.
   g.__mwNewsInflight = withTimeout(buildPayload(), 14000, null as unknown as NewsPayload)
     .then(p => p ?? buildPayload(false))
@@ -440,6 +442,7 @@ function rebuild(): Promise<NewsPayload> {
         payload = await withTimeout(attachDesk(base), 2000, base);
         g.__mwNews = { ts: Date.now(), payload };
         saveSnapshot(payload);
+        g.__mwDiag = { ...g.__mwDiag, saved: new Date().toISOString() };
         // Write headlines for new lead stories in the background, then fold them in.
         const built = payload;
         keepAlive(runDesk(built).then(async n => {
@@ -449,9 +452,13 @@ function rebuild(): Promise<NewsPayload> {
           saveSnapshot(withDesk);
         }));
       }
+      g.__mwDiag = { ...g.__mwDiag, finishedAt: new Date().toISOString(), result: `${payload.stories.length} stories` };
       return payload.stories.length > 0 || !cached ? payload : cached.payload;
     })
-    .catch(() => cached?.payload ?? { stories: [], sources: [], fetchedAt: new Date().toISOString() })
+    .catch((e: unknown) => {
+      g.__mwDiag = { ...g.__mwDiag, finishedAt: new Date().toISOString(), error: String((e as Error)?.message ?? e) };
+      return cached?.payload ?? { stories: [], sources: [], fetchedAt: new Date().toISOString() };
+    })
     .finally(() => { g.__mwNewsInflight = undefined; });
   keepAlive(g.__mwNewsInflight);
   return g.__mwNewsInflight;
@@ -477,4 +484,19 @@ export async function loadNews(): Promise<NewsPayload> {
   // Nothing yet: wait for a build, but never longer than 16 s (a build started
   // by another request may never settle in this one).
   return withTimeout(rebuild(), 16000, g.__mwNews?.payload ?? EMPTY());
+}
+
+/** Read-only diagnostics for /desk-health.json (no secrets). */
+export function deskHealth() {
+  return {
+    now: new Date().toISOString(),
+    inMemoryBuiltAt: g.__mwNews ? new Date(g.__mwNews.ts).toISOString() : null,
+    payloadFetchedAt: g.__mwNews?.payload.fetchedAt ?? null,
+    payloadOrigin: g.__mwNews?.payload.origin ?? null,
+    stories: g.__mwNews?.payload.stories.length ?? 0,
+    inflightSince: g.__mwNewsInflight && g.__mwNewsInflightAt ? new Date(g.__mwNewsInflightAt).toISOString() : null,
+    lastBuild: g.__mwDiag ?? null,
+    sharedCache: sharedCacheAvailable(),
+    background: canKeepAlive(),
+  };
 }
