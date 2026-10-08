@@ -29,6 +29,7 @@ const STATIC: Entry[] = [
   { path: "/", changefreq: "always", priority: "1.0" },
   { path: "/news", changefreq: "always", priority: "0.9" },
   { path: "/watch", changefreq: "hourly", priority: "0.7" },
+  { path: "/showcase", changefreq: "hourly", priority: "0.7" },
   { path: "/listen", changefreq: "daily", priority: "0.6" },
   { path: "/interviews", changefreq: "daily", priority: "0.6" },
   { path: "/government", changefreq: "hourly", priority: "0.7" },

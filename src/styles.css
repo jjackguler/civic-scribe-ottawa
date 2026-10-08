@@ -172,7 +172,19 @@
   .ad-label { font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--muted-ink); }
 }
 
+  /* Live hero: slide progress, cross-fade, new-item flash */
+  @keyframes hero-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .hero-progress { transform-origin: left; animation: hero-progress var(--hero-ms, 7000ms) linear forwards; }
+  .hero-paused .hero-progress { animation-play-state: paused; }
+  @keyframes hero-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .hero-in { animation: hero-in 600ms cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes hero-kenburns { from { transform: scale(1.06); } to { transform: scale(1); } }
+  .hero-kenburns { animation: hero-kenburns 8s ease-out both; }
+  @keyframes live-in { from { background: color-mix(in oklab, var(--brass) 28%, transparent); } to { background: transparent; } }
+  .live-in { animation: live-in 2.4s ease-out both; }
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-ticker, .live-dot, .flash-new { animation: none !important; }
+  .animate-ticker, .live-dot, .flash-new, .hero-in, .hero-kenburns, .live-in { animation: none !important; }
+  .hero-progress { animation: none !important; transform: scaleX(1); }
   * { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
 }

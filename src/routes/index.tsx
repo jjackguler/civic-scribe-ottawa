@@ -7,6 +7,9 @@ import { StoryCard, StoryLink, StoryMeta, CoverageBadge } from "@/components/Sto
 import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
+import { LiveHero, type HeroSlide } from "@/components/LiveHero";
+import { Showcase, TrendsPanel } from "@/components/Showcase";
+import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
@@ -24,7 +27,10 @@ import type { Topic } from "@/lib/news-sources";
 import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  loader: () => getAiNewsFast(),
+  loader: async () => {
+    const [news, pulse] = await Promise.all([getAiNewsFast(), getPulseFast()]);
+    return { news, pulse };
+  },
   head: ({ match }) =>
     seoHead(match, {
       title: { en: `${SITE.name} — ${SITE.tagline.en}`, fr: `${SITE.name} — ${SITE.tagline.fr}` },
@@ -64,8 +70,9 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
 
 function Home() {
-  const initial = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse } = Route.useLoaderData();
   const { data, isError } = useAiNews(initial);
+  const { data: pulse } = usePulse(initialPulse);
   const { data: media } = useMedia();
   const { locale, pick } = useLocale();
 
@@ -75,22 +82,32 @@ function Home() {
   const clusters = useRefinedClusters(heuristic);
   const used = new Set<string>();
 
-  // Lead: the event most newsrooms are covering. Falls back to the newest photo story.
-  const top = clusters.find(c => c.sources >= 2 && c.lead.image) ?? clusters.find(c => c.sources >= 2);
-  const lead = top?.lead ?? news.find(s => s.image) ?? news[0];
-  if (lead) used.add(lead.id);
-  const coverage = top ? top.stories.filter(s => s.id !== lead?.id).slice(0, 4) : [];
-  coverage.forEach(s => used.add(s.id));
-  const related = top ? [] : take(news, used, 3, s => !!lead && s.topic === lead.topic);
-  const photo = news.filter(s => s.image);
-  const right = take(photo, used, 2);
+  // Hero: the five events the most newsrooms are covering (Google-trending ones
+  // first among equals), then the newest photo stories to fill.
+  const heroClusters = clusters
+    .filter(c => c.sources >= 2)
+    .map(c => ({ c, score: c.sources * 10 + (trendMatch(c.lead, pulse) ? 15 : 0) + (isBreaking(c) ? 20 : isDeveloping(c) ? 8 : 0) }))
+    .sort((x, y) => y.score - x.score)
+    .slice(0, 5)
+    .map(x => x.c);
+  const slides: HeroSlide[] = heroClusters.map(c => {
+    const lead = c.lead.image ? c.lead : c.stories.find(s => s.image) ?? c.lead;
+    return { story: lead, outlets: c.sources, sources: [...new Set(c.stories.map(s => s.source))], developing: isDeveloping(c), breaking: isBreaking(c), trend: trendMatch(lead, pulse) };
+  });
+  heroClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
+  for (const s of take(news.filter(x => x.image), used, 5 - slides.length)) {
+    slides.push({ story: s, outlets: 1, sources: [s.source], developing: false, breaking: false, trend: trendMatch(s, pulse) });
+  }
+  const top = heroClusters[0];
+  const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));
 
-  // More top stories: the next clusters with two or more outlets.
+  // Top stories under the hero: the next clusters with two or more outlets, then photo stories.
+  const photo = news.filter(s => s.image);
   const more = clusters
-    .filter(c => c !== top && c.sources >= 2 && !used.has(c.lead.id))
-    .slice(0, 4);
+    .filter(c => !heroClusters.includes(c) && c.sources >= 2 && !used.has(c.lead.id))
+    .slice(0, 6);
   more.forEach(c => c.stories.forEach(s => used.add(s.id)));
-  const moreFill = take(photo, used, Math.max(0, 4 - more.length));
+  const moreFill = take(photo, used, Math.max(0, 6 - more.length));
 
   const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 6);
   const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
@@ -129,17 +146,19 @@ function Home() {
   // Top strip: breaking (3+ outlets in 2 h), developing (3+ in 6 h), or the newest story if under 45 minutes old.
   const newest = news.reduce<typeof news[number] | undefined>((a, b) => (!a || b.publishedAt > a.publishedAt ? b : a), undefined);
   const fresh = newest && Date.now() - new Date(newest.publishedAt).getTime() < 45 * 60_000 ? newest : null;
-  const alert = top && isBreaking(top)
+  const alert: { kind: "breaking" | "developing" | "just-in"; story: Story; note: string } | null = top && isBreaking(top)
     ? { kind: "breaking" as const, story: top.lead, note: `${top.sources} ${locale === "fr" ? "médias" : "outlets"}` }
     : top && isDeveloping(top)
       ? { kind: "developing" as const, story: top.lead, note: `${top.sources} ${locale === "fr" ? "médias" : "outlets"}` }
       : fresh ? { kind: "just-in" as const, story: fresh, note: fresh.source } : null;
+  const showStrip = alert?.kind === "just-in" && !slides.some(sl => sl.story.id === alert.story.id);
 
   return (
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.tagline[locale]}</h1>
 
-      {alert && (
+      {/* The hero already carries Breaking/Developing for its lead; the strip only adds a different, newer story. */}
+      {alert && showStrip && (
         <div className={alert.kind === "breaking" ? "bg-live text-white" : alert.kind === "developing" ? "bg-live/90 text-white" : "bg-night text-white"}>
           <StoryLink s={alert.story} className="container-mw flex items-center gap-3 py-2.5 group">
             <span className={`shrink-0 font-bold text-[0.8rem] px-2 py-0.5 ${alert.kind === "just-in" ? "bg-brass text-night" : "bg-white text-live"} ${alert.kind === "breaking" ? "animate-pulse motion-reduce:animate-none" : ""}`}>
@@ -153,8 +172,6 @@ function Home() {
         </div>
       )}
 
-      <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-5" />
-
       {news.length === 0 ? (
         <section className="container-mw pt-10">
           <div className="border-t-[3px] border-night pt-10 pb-16 text-center">
@@ -163,65 +180,37 @@ function Home() {
           </div>
         </section>
       ) : (
-        <section className="container-mw pt-6">
-          <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[250px_minmax(0,1fr)_300px]">
-            <div className="order-3 lg:order-1">
-              <LatestRail stories={news} fetchedAt={data?.fetchedAt} limit={12} />
-            </div>
+        <LiveHero slides={slides} latest={newestFirst} />
+      )}
 
-            <div className="order-1 lg:order-2 lg:border-x lg:border-line lg:px-7">
-              {lead && (
-                <StoryCard
-                  s={lead}
-                  variant="hero"
-                  eager
-                  badge={top ? <CoverageBadge outlets={top.sources} developing={isDeveloping(top)} breaking={isBreaking(top)} /> : undefined}
-                />
-              )}
-              {coverage.length > 0 && (
-                <div className="mt-5">
-                  <p className="text-[0.8rem] font-bold text-muted-ink pb-1.5 border-b border-line">
-                    {locale === "fr" ? "Couverture complète" : "Full coverage"}
-                  </p>
-                  <ul>
-                    {coverage.map(s => (
-                      <li key={s.id} className="py-2.5 border-b border-line">
-                        <StoryLink s={s} className="group flex gap-3">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brass" aria-hidden="true" />
-                          <span className="leading-snug">
-                            <span className="font-semibold group-hover:underline">{display(s, locale).title}</span>{" "}
-                            <span className="meta whitespace-nowrap">— {s.source}</span>
-                          </span>
-                        </StoryLink>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {related.length > 0 && (
-                <div className="mt-5 border-t border-line">
-                  {related.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
-                </div>
-              )}
-            </div>
+      <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
 
-            <div className="order-2 lg:order-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-1 content-start">
-              {right.map(s => <StoryCard key={s.id} s={s} />)}
-              <AdSlot size="mpu" placement="home-right" className="sm:col-span-2 lg:col-span-1" />
+      {(more.length > 0 || moreFill.length > 0) && (
+        <section className="container-mw mt-10">
+          <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
+          <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3 content-start">
+              {more.map(c => (
+                <StoryCard key={c.id} s={c.lead} variant="card" badge={<><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></>} showTopic={false} />
+              ))}
+              {moreFill.map(s => <StoryCard key={s.id} s={s} badge={<TrendBadge s={s} pulse={pulse} />} />)}
+            </div>
+            <div className="grid gap-6 content-start">
+              <AdSlot size="mpu" placement="home-right" />
+              {pulse && <TrendsPanel pulse={pulse} />}
             </div>
           </div>
         </section>
       )}
 
-      {(more.length > 0 || moreFill.length > 0) && (
-        <section className="container-mw mt-12">
-          <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
-          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-            {more.map(c => (
-              <StoryCard key={c.id} s={c.lead} variant={c.lead.image ? "card" : "text"} badge={<CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} />} showTopic={false} />
-            ))}
-            {moreFill.map(s => <StoryCard key={s.id} s={s} />)}
-          </div>
+      {pulse && (pulse.built.length > 0 || pulse.repos.length > 0 || pulse.spaces.length > 0) && (
+        <section className="container-mw mt-14">
+          <ZoneHead
+            title={locale === "fr" ? "Fait avec l'IA" : "Made with AI"}
+            sub={locale === "fr" ? "Ce que les gens construisent avec Claude, ChatGPT, Gemini et les modèles ouverts cette semaine. Chaque projet renvoie à son créateur." : "What people are building with Claude, ChatGPT, Gemini and open models this week. Every project links to its maker."}
+            action={<MoreLink to="/showcase" />}
+          />
+          <Showcase pulse={pulse} />
         </section>
       )}
 
@@ -486,7 +475,7 @@ function Resource({ to, icon, title, text }: { to: "/learn" | "/tools" | "/fundi
   );
 }
 
-export function MoreLink({ to, section, dark = false, compact = false }: { to: "/news" | "/government" | "/ministry" | "/editor" | "/watch" | "/listen" | "/interviews"; section?: SectionId; dark?: boolean; compact?: boolean }) {
+export function MoreLink({ to, section, dark = false, compact = false }: { to: "/news" | "/government" | "/ministry" | "/editor" | "/watch" | "/listen" | "/interviews" | "/showcase"; section?: SectionId; dark?: boolean; compact?: boolean }) {
   const { locale } = useLocale();
   return (
     <Link
@@ -498,4 +487,13 @@ export function MoreLink({ to, section, dark = false, compact = false }: { to: "
       {compact ? null : t("seeAll", locale)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
     </Link>
   );
+}
+
+/** "Trending on Google" when a trending search term appears in the headline. */
+function TrendBadge({ s, pulse }: { s: Story; pulse: PulsePayload | undefined }) {
+  const { locale } = useLocale();
+  const region = trendMatch(s, pulse);
+  if (!region) return null;
+  const where = region === "ca" ? "Canada" : locale === "fr" ? "É.-U." : "U.S.";
+  return <span className="text-[0.78rem] font-bold bg-brass/20 text-brass-ink px-1.5 py-0.5">{locale === "fr" ? `Tendance Google ${where}` : `Trending on Google ${where}`}</span>;
 }

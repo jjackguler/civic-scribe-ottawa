@@ -14,6 +14,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -60,6 +61,11 @@ const StandardsRoute = StandardsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShowcaseRoute = ShowcaseRouteImport.update({
+  id: '/showcase',
+  path: '/showcase',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
+  '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -219,6 +226,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
+  '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -249,6 +257,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
+  '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/rss.xml'
     | '/search'
+    | '/showcase'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -309,6 +319,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/rss.xml'
     | '/search'
+    | '/showcase'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -338,6 +349,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/rss.xml'
     | '/search'
+    | '/showcase'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -368,6 +380,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SearchRoute: typeof SearchRoute
+  ShowcaseRoute: typeof ShowcaseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   TermsRoute: typeof TermsRoute
@@ -416,6 +429,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/showcase': {
+      id: '/showcase'
+      path: '/showcase'
+      fullPath: '/showcase'
+      preLoaderRoute: typeof ShowcaseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -592,6 +612,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SearchRoute: SearchRoute,
+  ShowcaseRoute: ShowcaseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   TermsRoute: TermsRoute,
