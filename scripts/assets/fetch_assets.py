@@ -230,6 +230,7 @@ def main():
             kenney(p)
         for q in FREESOUND:
             freesound(q, limit=5)
+    if only in ("", "audio", "music"):
         for q in MUSIC:
             freesound(q, limit=4, folder="music")
     name = f"credits-{only or 'all'}.json"

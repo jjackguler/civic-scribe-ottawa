@@ -18,13 +18,13 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Fetch
         run: |
           mkdir -p ../assets-out
-          ONLY=audio python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=music python3 scripts/assets/fetch_assets.py ../assets-out || true
           du -sh ../assets-out/* || true
       - name: Commit to the assets branch
         run: |
