@@ -7,6 +7,7 @@ import { StoryImage } from "@/components/StoryImage";
 import { AdSlot } from "@/components/AdSlot";
 import { LatestRail } from "@/components/LatestRail";
 import { NewsletterBox } from "@/components/NewsletterBox";
+import { ExplainLike12 } from "@/components/YouthKit";
 import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isBreaking, isFrontPool, display, inSection } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
@@ -141,6 +142,9 @@ function StoryPage() {
                 <p className="font-serif text-[1.25rem] leading-relaxed">{d.ai ? s.summary : d.summary}</p>
               </div>
             )}
+
+            {/* Shown only when one of our dispatches covers this event. */}
+            <ExplainLike12 storyIds={[s.id, ...coverage.map(x => x.id)]} className="mt-6" />
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <a href={s.link} target="_blank" rel="noopener" className="inline-flex items-center gap-2 bg-night text-white font-bold px-5 py-3 rounded-[4px] hover:bg-lake">

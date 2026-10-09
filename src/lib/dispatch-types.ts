@@ -61,8 +61,10 @@ export type DispatchSummary = {
   outlets: string[];
   /** Publication times of the reports, oldest first (for the little timeline). */
   times: string[];
-  en: { headline: string; news: string };
-  fr: { headline: string; news: string };
+  en: { headline: string; news: string; matters?: string };
+  fr: { headline: string; news: string; matters?: string };
+  /** Ids of the desk stories the dispatch was written from (links a story to its dispatch). */
+  storyIds?: string[];
 };
 
 export type DispatchList = { items: DispatchSummary[]; audio: boolean };
@@ -75,8 +77,9 @@ export function summarize(d: Dispatch): DispatchSummary {
     createdAt: d.createdAt,
     outlets: [...new Set(d.sources.map(s => s.outlet))],
     times,
-    en: { headline: d.en.headline, news: d.en.news },
-    fr: { headline: d.fr.headline, news: d.fr.news },
+    en: { headline: d.en.headline, news: d.en.news, matters: d.en.matters },
+    fr: { headline: d.fr.headline, news: d.fr.news, matters: d.fr.matters },
+    storyIds: d.sources.map(s => s.storyId),
   };
 }
 

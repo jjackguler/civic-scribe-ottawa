@@ -13,6 +13,7 @@ import { editorMailto } from "@/lib/contact";
 import { DEPTHS, splitMarkers, spokenText, stripMarkers, type Dispatch, type DispatchDepth, type DispatchSource, type DispatchSummary } from "@/lib/dispatch";
 import type { Locale } from "@/lib/i18n";
 import { DispatchRail, DISPATCH_WORD, keepNames, listOutlets, ReportDots, spanLabel } from "./Dispatch";
+import { YourTake } from "./YouthKit";
 
 const useIso = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
@@ -598,6 +599,8 @@ export function DispatchArticle({ d, audio, more }: { d: Dispatch; audio: boolea
             <DispatchLabel d={d} />
             <ReportError title={c.headline} />
           </div>
+
+          <YourTake dispatchId={d.id} headline={c.headline} className="mt-10" />
         </div>
 
         <aside className="min-w-0 grid gap-10 content-start">

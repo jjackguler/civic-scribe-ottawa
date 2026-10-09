@@ -11,12 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as TodayRouteImport } from './routes/today'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as OriginalsRouteImport } from './routes/originals'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
@@ -56,6 +58,11 @@ const ToolsRoute = ToolsRouteImport.update({
   path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TodayRoute = TodayRouteImport.update({
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -84,6 +91,11 @@ const SearchRoute = SearchRouteImport.update({
 const RssDotxmlRoute = RssDotxmlRouteImport.update({
   id: '/rss.xml',
   path: '/rss.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -244,12 +256,14 @@ export interface FileRoutesByFullPath {
   '/newsletter': typeof NewsletterRoute
   '/originals': typeof OriginalsRoute
   '/privacy': typeof PrivacyRoute
+  '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
@@ -282,12 +296,14 @@ export interface FileRoutesByTo {
   '/newsletter': typeof NewsletterRoute
   '/originals': typeof OriginalsRoute
   '/privacy': typeof PrivacyRoute
+  '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
@@ -321,12 +337,14 @@ export interface FileRoutesById {
   '/newsletter': typeof NewsletterRoute
   '/originals': typeof OriginalsRoute
   '/privacy': typeof PrivacyRoute
+  '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
@@ -361,12 +379,14 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/originals'
     | '/privacy'
+    | '/quiz'
     | '/rss.xml'
     | '/search'
     | '/showcase'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/today'
     | '/tools'
     | '/watch'
     | '/api/keeper-tts'
@@ -399,12 +419,14 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/originals'
     | '/privacy'
+    | '/quiz'
     | '/rss.xml'
     | '/search'
     | '/showcase'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/today'
     | '/tools'
     | '/watch'
     | '/api/keeper-tts'
@@ -437,12 +459,14 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/originals'
     | '/privacy'
+    | '/quiz'
     | '/rss.xml'
     | '/search'
     | '/showcase'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/today'
     | '/tools'
     | '/watch'
     | '/api/keeper-tts'
@@ -476,12 +500,14 @@ export interface RootRouteChildren {
   NewsletterRoute: typeof NewsletterRoute
   OriginalsRoute: typeof OriginalsRoute
   PrivacyRoute: typeof PrivacyRoute
+  QuizRoute: typeof QuizRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SearchRoute: typeof SearchRoute
   ShowcaseRoute: typeof ShowcaseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   TermsRoute: typeof TermsRoute
+  TodayRoute: typeof TodayRoute
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
@@ -512,6 +538,13 @@ declare module '@tanstack/react-router' {
       path: '/tools'
       fullPath: '/tools'
       preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/today': {
+      id: '/today'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof TodayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -554,6 +587,13 @@ declare module '@tanstack/react-router' {
       path: '/rss.xml'
       fullPath: '/rss.xml'
       preLoaderRoute: typeof RssDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -772,12 +812,14 @@ const rootRouteChildren: RootRouteChildren = {
   NewsletterRoute: NewsletterRoute,
   OriginalsRoute: OriginalsRoute,
   PrivacyRoute: PrivacyRoute,
+  QuizRoute: QuizRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SearchRoute: SearchRoute,
   ShowcaseRoute: ShowcaseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   TermsRoute: TermsRoute,
+  TodayRoute: TodayRoute,
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
