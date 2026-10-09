@@ -90,6 +90,10 @@ function Standards() {
         dek={locale === "fr" ? "La confiance est notre seul produit. Voici comment nous la protégeons." : "Trust is the only thing we sell. Here is how we protect it."}
       />
       <div className="container-mw mt-10 max-w-3xl">
+        <p className="mb-10 font-serif text-[1.1rem] leading-relaxed border-l-[4px] border-signal pl-4">
+          {locale === "fr" ? "Ces normes découlent de nos valeurs : l'humain d'abord, la dignité de chacun, le respect de la foi et un contenu sûr pour les familles. " : "These standards follow from our values: people first, the dignity of every person, respect for faith and content that is safe for families. "}
+          <Link to="/values" className="text-lake font-semibold hover:underline">{locale === "fr" ? "Lire nos valeurs" : "Read what we stand for"}</Link>
+        </p>
         {SECTIONS.map(s => (
           <section key={s.h.en} id={s.id} className="mb-10 scroll-mt-24">
             <h2 className="masthead-serif text-[1.7rem] leading-tight mb-3">{pick(s.h)}</h2>

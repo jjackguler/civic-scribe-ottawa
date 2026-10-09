@@ -97,7 +97,7 @@ export function SiteHeader() {
           <nav aria-label="Company" className="ml-auto flex items-center gap-4 shrink-0">
             <Link to="/advertise" className="hover:text-white">{locale === "fr" ? "Annoncer" : "Advertise"}</Link>
             <Link to="/newsletter" className="hidden sm:inline hover:text-white">{locale === "fr" ? "Infolettre" : "Newsletter"}</Link>
-            <Link to="/standards" className="hidden md:inline hover:text-white">{locale === "fr" ? "Nos normes" : "Our standards"}</Link>
+            <Link to="/values" className="hidden md:inline hover:text-white">{locale === "fr" ? "Nos valeurs" : "Our values"}</Link>
             <a
               href={localePath(loc.href, locale === "en" ? "fr" : "en")}
               hrefLang={locale === "en" ? "fr" : "en"}

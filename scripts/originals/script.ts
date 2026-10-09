@@ -54,6 +54,9 @@ Rules:
 - If the text is too thin for a fair 45-second explainer, return {"skip": true}.`;
 
 /** Writes the script with Claude when apiKey is set, otherwise with Gemini (geminiKey). */
+/** Same house voice as src/lib/editorial.ts (kept in sync by hand: the pipeline runs outside the site bundle). */
+const HOUSE_VOICE = `House voice of AI Broadsheet: human-centred (say what the news means for people where the sources allow, never invent impact); never demean any person or group, no stereotypes; never mock religion, belief or God; family-safe, no sexual or graphic detail; neither fear nor hype.`;
+
 export async function writeScript(cluster: Cluster, opts: { apiKey?: string; geminiKey?: string; model: string; feedback?: string[] }): Promise<Script | null> {
   const items = cluster.stories.slice(0, 6).map((s: Story) => ({ publisher: s.source, headline: s.title, excerpt: s.summary.slice(0, 600), published: s.publishedAt }));
   const user = JSON.stringify({ story: items }) + (opts.feedback?.length
@@ -63,7 +66,7 @@ export async function writeScript(cluster: Cluster, opts: { apiKey?: string; gem
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: { "x-api-key": opts.apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-    body: JSON.stringify({ model: opts.model, max_tokens: 2500, system: SYSTEM + "\n\nReply with JSON only.", messages: [{ role: "user", content: user }] }),
+    body: JSON.stringify({ model: opts.model, max_tokens: 2500, system: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only.", messages: [{ role: "user", content: user }] }),
     signal: AbortSignal.timeout(60_000),
   });
   if (!res.ok) throw new Error(`Claude HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
@@ -79,7 +82,7 @@ async function writeScriptGemini(user: string, key: string, model: string): Prom
     method: "POST",
     headers: { "x-goog-api-key": key, "content-type": "application/json" },
     body: JSON.stringify({
-      systemInstruction: { parts: [{ text: SYSTEM + "\n\nReply with JSON only." }] },
+      systemInstruction: { parts: [{ text: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only." }] },
       contents: [{ role: "user", parts: [{ text: user }] }],
       generationConfig: { maxOutputTokens: 8192, temperature: 0.4, responseMimeType: "application/json" },
     }),

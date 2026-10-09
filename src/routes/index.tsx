@@ -16,6 +16,7 @@ import { DispatchRail } from "@/components/Dispatch";
 import { getDispatchesFast } from "@/lib/dispatch";
 import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
+import { humanLens, LENS_LABEL } from "@/lib/editorial";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
@@ -126,6 +127,9 @@ function Home() {
   more.forEach(c => c.stories.forEach(s => used.add(s.id)));
   const moreFill = take(photo, used, Math.max(0, 6 - more.length));
 
+  // People first: what the news changes for people (rights, work, children, democracy…), before the desks take their pick.
+  const peopleFirst = take(news, used, 6, s => humanLens(s).length > 0 && s.kind !== "trending");
+
   const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 6);
   const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
 
@@ -224,6 +228,26 @@ function Home() {
               <AdSlot size="mpu" placement="home-right" />
               {pulse && <TrendsPanel pulse={pulse} />}
             </div>
+          </div>
+        </section>
+      )}
+
+      {peopleFirst.length > 0 && (
+        <section className="container-mw mt-14">
+          <ZoneHead
+            title={locale === "fr" ? "L'humain d'abord" : "People first"}
+            sub={locale === "fr" ? "Ce que l'IA change cette semaine pour les droits, le travail, les enfants et la démocratie." : "What AI is changing this week for people's rights, work, children and democracy."}
+            action={<Link to="/values" className="inline-flex items-center gap-1 font-semibold text-[0.9rem] text-lake hover:underline">{locale === "fr" ? "Nos valeurs" : "Our values"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>}
+          />
+          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {peopleFirst.map(s => (
+              <StoryCard
+                key={s.id}
+                s={s}
+                variant={s.image ? "card" : "text"}
+                badge={<span className="inline-flex flex-wrap gap-1.5">{humanLens(s).map(l => <span key={l} className="text-[0.75rem] font-bold bg-lake/10 text-lake px-1.5 py-0.5">{pick(LENS_LABEL[l])}</span>)}</span>}
+              />
+            ))}
           </div>
         </section>
       )}

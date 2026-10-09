@@ -61,6 +61,7 @@ export function SiteFooter() {
           <ul className="grid gap-1.5 text-[0.92rem]">
             <li><Link to="/advertise" className={link}>{fr ? "Annoncer" : "Advertise"}</Link></li>
             <li><Link to="/newsletter" className={link}>{fr ? "Infolettre" : "Newsletter"}</Link></li>
+            <li><Link to="/values" className={link}>{fr ? "Nos valeurs" : "What we stand for"}</Link></li>
             <li><Link to="/standards" className={link}>{fr ? "Normes éditoriales" : "Editorial standards"}</Link></li>
             <li><Link to="/about" className={link}>{fr ? "À propos et sources" : "About and sources"}</Link></li>
             <li><Link to="/corrections" className={link}>{fr ? "Corrections" : "Corrections"}</Link></li>

@@ -7,6 +7,8 @@
  * claude.functions.ts.
  */
 
+import { HOUSE_VOICE } from "./editorial";
+
 export const HAIKU = "claude-haiku-4-5-20251001";
 export const SONNET = "claude-sonnet-5-5";
 
@@ -117,6 +119,7 @@ export async function claudeJson<T>(opts: {
 }): Promise<T | null> {
   const key = process.env["ANTHROPIC_API_KEY"];
   if (!key && !process.env["GEMINI_API_KEY"]) return null;
+  opts = { ...opts, system: `${opts.system}\n\n${HOUSE_VOICE}` };
   const ck = `${opts.task}:${hashKey(opts.model + opts.system + opts.user)}`;
   const hit = cacheGet<T>(ck);
   if (hit !== undefined) return hit;

@@ -2,6 +2,7 @@
  * Server-side AI news aggregator. Imported only from the server function in
  * news.ts, so none of this ships to the browser.
  */
+import { editorialGate } from "./editorial";
 import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
 import { AI_RE, tagsOf } from "./classify";
 import { displayFor } from "./rights";
@@ -402,7 +403,8 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
       // Never borrow another publisher's photo: the caption credits the story's own source.
     }
   }
-  const all = [...byKey.values()].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  // The editorial gate (see /values): sexually explicit stories never reach the site.
+  const all = [...byKey.values()].filter(s => editorialGate(s).ok).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
   // Government releases and the ministry record are kept in full; the rest is capped.
   const keep = new Set<Story>();
