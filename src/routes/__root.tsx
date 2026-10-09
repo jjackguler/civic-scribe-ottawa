@@ -31,7 +31,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
     <div className="flex min-h-screen items-center justify-center bg-paper px-4">
       <div className="max-w-md text-center">
         <h1 className="hl text-3xl">This page didn't load</h1>
-        <p className="mt-2 text-sm text-muted-ink">{error.message}</p>
+        <p className="mt-2 text-sm text-muted-ink">{error instanceof Error ? error.message : String(error)}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button onClick={() => { router.invalidate(); reset(); }} className="bg-ink text-white px-4 py-2 rounded-[5px] font-semibold">Try again</button>
           <a href="/" className="border border-ink px-4 py-2 rounded-[5px] font-semibold">Go home</a>
