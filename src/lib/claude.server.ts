@@ -112,6 +112,8 @@ export async function claudeJson<T>(opts: {
   user: string;
   maxTokens?: number;
   ttlMs: number;
+  /** Longer replies (the Dispatch desk) may need more than the default 20 s. */
+  timeoutMs?: number;
 }): Promise<T | null> {
   const key = process.env["ANTHROPIC_API_KEY"];
   if (!key && !process.env["GEMINI_API_KEY"]) return null;
@@ -121,7 +123,7 @@ export async function claudeJson<T>(opts: {
   if (!takeBudget()) return null;
 
   const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  const timer = setTimeout(() => ctrl.abort(), opts.timeoutMs ?? TIMEOUT_MS);
   try {
     if (!key) {
       const text = await geminiText({ system: opts.system + "\n\nReply with JSON only. No prose, no code fences.", user: opts.user, maxTokens: Math.max(opts.maxTokens ?? 2048, 4096), json: true, signal: ctrl.signal });

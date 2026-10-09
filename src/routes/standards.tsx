@@ -39,6 +39,15 @@ const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
     ],
   },
   {
+    id: "dispatches",
+    h: { en: "Dispatches", fr: "Les dépêches" },
+    p: [
+      { en: "A Dispatch is an article our desk writes, with AI, when two or more outlets are reporting the same event. The AI model (Claude, made by Anthropic, or Google's Gemini when Claude is unavailable) works only from the headlines and excerpts those outlets published. It adds no background, no reactions and nothing from memory.", fr: "Une dépêche est un article que notre pupitre écrit, avec l'IA, quand au moins deux médias rapportent le même événement. Le modèle d'IA (Claude, d'Anthropic, ou Gemini, de Google, quand Claude n'est pas disponible) travaille uniquement à partir des titres et extraits publiés par ces médias. Il n'ajoute ni contexte, ni réactions, ni rien de mémoire." },
+      { en: "Before a dispatch is published, our software checks every number and every name in every part of it, in English and in French, against the outlets' text. One miss and the draft is thrown away. A point is listed as “confirmed” only when two or more outlets report it as fact, or when the company, lab or agency announced it itself; anything else is shown as a claim, in the name of whoever made it. What the reporting leaves open is listed as unknown, never guessed.", fr: "Avant la publication, notre logiciel vérifie chaque chiffre et chaque nom de chaque partie de la dépêche, en anglais et en français, dans le texte des médias. Un seul manque et le texte est rejeté. Un point n'est « confirmé » que si au moins deux médias le rapportent comme un fait, ou si l'entreprise, le laboratoire ou l'organisme l'a annoncé lui-même; sinon, il est présenté comme une affirmation, au nom de son auteur. Ce que les reportages laissent ouvert est indiqué comme inconnu, jamais deviné." },
+      { en: "Every dispatch is labelled “Written by the AI Broadsheet desk with AI”, names the outlets it comes from, and links each point and each paragraph to the report it came from. “Listen” uses a synthetic ElevenLabs stock voice, or your browser's own voice. If you find an error, use “Report an error”: we correct it and log it.", fr: "Chaque dépêche porte la mention « Écrit par le pupitre d'AI Broadsheet avec l'IA », nomme les médias dont elle provient et relie chaque point et chaque paragraphe au reportage d'origine. « Écouter » utilise une voix de synthèse ElevenLabs ou la voix de votre navigateur. Si vous trouvez une erreur, utilisez « Signaler une erreur » : nous la corrigeons et la consignons." },
+    ],
+  },
+  {
     h: { en: "Other ways we use Claude", fr: "Autres usages de Claude" },
     p: [
       { en: "Translation: headlines and summaries without an AI desk version are translated for readers of the other language, labelled “Translated with Claude”, with the original shown.", fr: "Traduction : les titres et résumés sans version du pupitre IA sont traduits pour les lecteurs de l'autre langue, avec la mention « Traduit avec Claude » et l'original affiché." },

@@ -9,12 +9,19 @@ import { GUIDES } from "./guides";
 import { EDITORIALS } from "./editorials";
 import { TOPICS } from "./news";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
+import type { Dispatch } from "./dispatch-types";
 
 // XML 1.0 forbids most control characters; one in a feed item would break the whole file.
 const esc = (s: string) =>
   s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 
 /** The news desk as it stands, without waiting long for slow feeds. */
+/** Published dispatches (our own articles); empty when the desk is off. */
+async function currentDispatches(): Promise<Dispatch[]> {
+  const { listDispatches } = await import("./dispatch.server");
+  return withTimeout(listDispatches().catch(() => []), 3000, []);
+}
+
 async function currentNews(): Promise<NewsPayload | null> {
   // A cold isolate needs up to ~14 s to build the desk (loadNews has its own limit).
   return withTimeout(loadNews().catch(() => null), 16000, null);
@@ -31,6 +38,7 @@ const STATIC: Entry[] = [
   { path: "/watch", changefreq: "hourly", priority: "0.7" },
   { path: "/showcase", changefreq: "hourly", priority: "0.7" },
   { path: "/originals", changefreq: "daily", priority: "0.7" },
+  { path: "/dispatch", changefreq: "hourly", priority: "0.8" },
   { path: "/listen", changefreq: "daily", priority: "0.6" },
   { path: "/interviews", changefreq: "daily", priority: "0.6" },
   { path: "/government", changefreq: "hourly", priority: "0.7" },
@@ -66,7 +74,8 @@ export async function buildSitemap(): Promise<string> {
   for (const g of GUIDES) entries.push({ path: `/learn/${g.slug}`, changefreq: "monthly", priority: "0.5" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
-  const news = await currentNews();
+  const [news, dispatches] = await Promise.all([currentNews(), currentDispatches()]);
+  for (const d of dispatches.slice(0, 200)) entries.push({ path: `/dispatch/${d.id}`, changefreq: "weekly", priority: "0.7", lastmod: d.createdAt.slice(0, 10) });
   for (const s of (news?.stories ?? []).filter(isPublic).slice(0, 400)) {
     entries.push({ path: `/story/${s.id}`, changefreq: "daily", priority: "0.5", lastmod: s.publishedAt.slice(0, 10) });
   }
@@ -129,16 +138,20 @@ ${items}
 
 /** Google News sitemap: stories from the last 48 hours, in both languages. */
 export async function buildNewsSitemap(): Promise<string> {
-  const news = await currentNews();
+  const [news, dispatches] = await Promise.all([currentNews(), currentDispatches()]);
   const cutoff = Date.now() - 48 * 3600_000;
-  const recent = (news?.stories ?? []).filter(s => isPublic(s) && new Date(s.publishedAt).getTime() >= cutoff).slice(0, 450);
+  const recent = (news?.stories ?? []).filter(s => isPublic(s) && new Date(s.publishedAt).getTime() >= cutoff).slice(0, 400);
   const entry = (s: Story, l: Locale) => {
     const title = s.ai?.[l]?.title || s.title;
     return `<url><loc>${esc(absUrl(`/story/${s.id}`, l))}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${s.publishedAt}</news:publication_date><news:title>${esc(title)}</news:title></news:news></url>`;
   };
+  // Our own dispatches first: they are the articles this publication writes.
+  const ours = dispatches.filter(d => new Date(d.createdAt).getTime() >= cutoff).slice(0, 50);
+  const dispatchEntry = (d: Dispatch, l: Locale) =>
+    `<url><loc>${esc(absUrl(`/dispatch/${d.id}`, l))}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${d.createdAt}</news:publication_date><news:title>${esc(d[l].headline)}</news:title></news:news></url>`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${recent.flatMap(s => [entry(s, "en"), entry(s, "fr")]).join("\n")}
+${[...ours.flatMap(d => [dispatchEntry(d, "en"), dispatchEntry(d, "fr")]), ...recent.flatMap(s => [entry(s, "en"), entry(s, "fr")])].join("\n")}
 </urlset>
 `;
 }

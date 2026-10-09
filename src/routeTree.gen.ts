@@ -34,10 +34,13 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
+import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
+import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
+import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
 
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
@@ -164,6 +167,11 @@ const EditorIndexRoute = EditorIndexRouteImport.update({
   path: '/editor/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DispatchIndexRoute = DispatchIndexRouteImport.update({
+  id: '/dispatch/',
+  path: '/dispatch/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoryIdRoute = StoryIdRouteImport.update({
   id: '/story/$id',
   path: '/story/$id',
@@ -182,6 +190,16 @@ const EditorToolsRoute = EditorToolsRouteImport.update({
 const EditorSlugRoute = EditorSlugRouteImport.update({
   id: '/editor/$slug',
   path: '/editor/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatchIdRoute = DispatchIdRouteImport.update({
+  id: '/dispatch/$id',
+  path: '/dispatch/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
+  id: '/api/dispatch-audio/$id',
+  path: '/api/dispatch-audio/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -209,12 +227,15 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
+  '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
+  '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/learn/': typeof LearnIndexRoute
+  '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -240,12 +261,15 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
+  '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
+  '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/learn': typeof LearnIndexRoute
+  '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -272,12 +296,15 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
+  '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
+  '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/learn/': typeof LearnIndexRoute
+  '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -305,12 +332,15 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
+    | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
     | '/learn/$slug'
     | '/story/$id'
+    | '/dispatch/'
     | '/editor/'
     | '/learn/'
+    | '/api/dispatch-audio/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -336,12 +366,15 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
+    | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
     | '/learn/$slug'
     | '/story/$id'
+    | '/dispatch'
     | '/editor'
     | '/learn'
+    | '/api/dispatch-audio/$id'
   id:
     | '__root__'
     | '/'
@@ -367,12 +400,15 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
+    | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
     | '/learn/$slug'
     | '/story/$id'
+    | '/dispatch/'
     | '/editor/'
     | '/learn/'
+    | '/api/dispatch-audio/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -399,12 +435,15 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
+  DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
   LearnSlugRoute: typeof LearnSlugRoute
   StoryIdRoute: typeof StoryIdRoute
+  DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
+  ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -584,6 +623,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dispatch/': {
+      id: '/dispatch/'
+      path: '/dispatch'
+      fullPath: '/dispatch/'
+      preLoaderRoute: typeof DispatchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/story/$id': {
       id: '/story/$id'
       path: '/story/$id'
@@ -610,6 +656,20 @@ declare module '@tanstack/react-router' {
       path: '/editor/$slug'
       fullPath: '/editor/$slug'
       preLoaderRoute: typeof EditorSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatch/$id': {
+      id: '/dispatch/$id'
+      path: '/dispatch/$id'
+      fullPath: '/dispatch/$id'
+      preLoaderRoute: typeof DispatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/dispatch-audio/$id': {
+      id: '/api/dispatch-audio/$id'
+      path: '/api/dispatch-audio/$id'
+      fullPath: '/api/dispatch-audio/$id'
+      preLoaderRoute: typeof ApiDispatchAudioIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -639,12 +699,15 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,
+  DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
   LearnSlugRoute: LearnSlugRoute,
   StoryIdRoute: StoryIdRoute,
+  DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
+  ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
