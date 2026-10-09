@@ -7,8 +7,6 @@ export type OriginalSource = { name: string; url: string };
 
 export type Original = {
   id: string;
-  /** "explainer" (default): a news explainer written from publishers' reporting. "titles": our own opening titles. */
-  kind?: "explainer" | "titles";
   publishedAt: string;
   /** Headline of the explainer (ours, checked against the sources). */
   title: string;

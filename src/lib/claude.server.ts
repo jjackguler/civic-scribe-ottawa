@@ -1,10 +1,7 @@
 /**
- * Server-only model client. Claude (Anthropic Messages API) when
- * ANTHROPIC_API_KEY is set; otherwise Gemini (GEMINI_API_KEY, model from
- * GEMINI_TEXT_MODEL) answers the same prompts, so every AI feature keeps
- * working with either key. Every helper returns null on any failure so callers
- * fall back to today's behaviour. Never import this from client code; use
- * claude.functions.ts.
+ * Server-only Claude client (Anthropic Messages API over plain fetch).
+ * Every helper returns null on any failure so callers fall back to today's
+ * behaviour. Never import this from client code; use claude.functions.ts.
  */
 
 export const HAIKU = "claude-haiku-4-5-20251001";
@@ -47,35 +44,7 @@ export function cacheSet(key: string, value: unknown, ttl: number) {
 }
 
 export function claudeAvailable(): boolean {
-  return !!process.env["ANTHROPIC_API_KEY"] || !!process.env["GEMINI_API_KEY"];
-}
-
-/** Which model family is answering: "claude", "gemini" or null. */
-export function modelProvider(): "claude" | "gemini" | null {
-  return process.env["ANTHROPIC_API_KEY"] ? "claude" : process.env["GEMINI_API_KEY"] ? "gemini" : null;
-}
-
-export const GEMINI_TEXT = () => process.env["GEMINI_TEXT_MODEL"] || "gemini-2.5-flash";
-
-/** One Gemini generateContent call that returns the reply text, or null. */
-export async function geminiText(opts: { system: string; user: string; maxTokens?: number; json?: boolean; signal?: AbortSignal }): Promise<string | null> {
-  const key = process.env["GEMINI_API_KEY"];
-  if (!key) return null;
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_TEXT()}:generateContent`, {
-    method: "POST",
-    signal: opts.signal,
-    headers: { "x-goog-api-key": key, "content-type": "application/json" },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: opts.system }] },
-      contents: [{ role: "user", parts: [{ text: opts.user }] }],
-      generationConfig: { maxOutputTokens: opts.maxTokens ?? 2048, temperature: 0.4, ...(opts.json ? { responseMimeType: "application/json" } : {}) },
-    }),
-  });
-  if (!res.ok) { console.warn(`[gemini] HTTP ${res.status}`); return null; }
-  const body = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[] };
-  const c = body.candidates?.[0];
-  if (!c || c.finishReason === "SAFETY") return null;
-  return (c.content?.parts ?? []).map(p => p.text ?? "").join("");
+  return !!process.env["ANTHROPIC_API_KEY"];
 }
 
 function takeBudget(): boolean {
@@ -112,26 +81,17 @@ export async function claudeJson<T>(opts: {
   user: string;
   maxTokens?: number;
   ttlMs: number;
-  /** Longer replies (the Dispatch desk) may need more than the default 20 s. */
-  timeoutMs?: number;
 }): Promise<T | null> {
   const key = process.env["ANTHROPIC_API_KEY"];
-  if (!key && !process.env["GEMINI_API_KEY"]) return null;
+  if (!key) return null;
   const ck = `${opts.task}:${hashKey(opts.model + opts.system + opts.user)}`;
   const hit = cacheGet<T>(ck);
   if (hit !== undefined) return hit;
   if (!takeBudget()) return null;
 
   const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), opts.timeoutMs ?? TIMEOUT_MS);
+  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    if (!key) {
-      const text = await geminiText({ system: opts.system + "\n\nReply with JSON only. No prose, no code fences.", user: opts.user, maxTokens: Math.max(opts.maxTokens ?? 2048, 4096), json: true, signal: ctrl.signal });
-      const parsed = text == null ? null : parseJson<T>(text);
-      if (parsed == null) { console.warn(`[gemini] ${opts.task} returned nothing usable`); return null; }
-      cacheSet(ck, parsed, opts.ttlMs);
-      return parsed;
-    }
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       signal: ctrl.signal,

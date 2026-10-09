@@ -11,7 +11,7 @@
  *   6. Optional: upload to YouTube. Always: write the entry to the manifest.
  *
  * Usage:  npx tsx run.ts [--dry-run] [--out dir] [--manifest path]
- * Env:    ELEVENLABS_API_KEY and ANTHROPIC_API_KEY or GEMINI_API_KEY   required (not in --dry-run)
+ * Env:    ANTHROPIC_API_KEY, ELEVENLABS_API_KEY            required (not in --dry-run)
  *         GEMINI_API_KEY, GEMINI_IMAGE_MODEL               optional illustrations
  *         YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET, YOUTUBE_REFRESH_TOKEN   optional upload
  *         ORIGINALS_PRIVACY (unlisted|public|private, default unlisted)
@@ -63,12 +63,7 @@ async function main() {
     script = FIXTURE;
     sources = [{ name: "TechCrunch", url: "https://example.com/1" }, { name: "The Verge", url: "https://example.com/2" }, { name: "Wired", url: "https://example.com/3" }];
   } else {
-    // A missing key is a setup gap, not a failure: say so in the run summary and stop cleanly.
-    const missing = [!env("ANTHROPIC_API_KEY") && !env("GEMINI_API_KEY") ? "ANTHROPIC_API_KEY or GEMINI_API_KEY" : "", !env("ELEVENLABS_API_KEY") ? "ELEVENLABS_API_KEY" : ""].filter(Boolean);
-    if (missing.length) {
-      console.log(`::warning title=Originals skipped::Add repository secret(s) ${missing.join(" and ")} under Settings → Secrets and variables → Actions.`);
-      return;
-    }
+    for (const k of ["ANTHROPIC_API_KEY", "ELEVENLABS_API_KEY"]) if (!env(k)) throw new Error(`Missing secret ${k}`);
     const desk = await loadNews();
     const clusters = clusterStories(desk.stories, 24);
     console.log(`desk: ${desk.stories.length} stories, ${clusters.filter(c => c.sources >= 2).length} multi-outlet stories`);
@@ -76,14 +71,12 @@ async function main() {
     if (!cluster) { console.log("Nothing new to explain right now."); return; }
     console.log(`story: ${cluster.lead.title} (${cluster.sources} outlets)`);
     const src = sourceText(cluster);
-    const model = env("ANTHROPIC_API_KEY") ? env("CLAUDE_MODEL") || "claude-sonnet-5-5" : env("GEMINI_TEXT_MODEL") || "gemini-2.5-pro";
-    const keys = { apiKey: env("ANTHROPIC_API_KEY") || undefined, geminiKey: env("GEMINI_API_KEY") || undefined };
-    console.log(`writer: ${model}`);
-    let draft = await writeScript(cluster, { ...keys, model });
+    const model = env("CLAUDE_MODEL") || "claude-sonnet-5-5";
+    let draft = await writeScript(cluster, { apiKey: env("ANTHROPIC_API_KEY"), model });
     let bad = validShape(draft) ? checkScript(draft, src) : ["(invalid shape)"];
     if (bad.length) {
       console.log("fact guard, retrying without:", bad.join(", "));
-      draft = await writeScript(cluster, { ...keys, model, feedback: bad });
+      draft = await writeScript(cluster, { apiKey: env("ANTHROPIC_API_KEY"), model, feedback: bad });
       bad = validShape(draft) ? checkScript(draft, src) : ["(invalid shape)"];
     }
     if (!draft || bad.length) { console.log("No script passed the fact guard; nothing published.", bad); return; }

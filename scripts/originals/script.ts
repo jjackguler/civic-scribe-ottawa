@@ -53,13 +53,11 @@ Rules:
 - No questions in titles, no exclamation marks, no "breaking", no "shocking".
 - If the text is too thin for a fair 45-second explainer, return {"skip": true}.`;
 
-/** Writes the script with Claude when apiKey is set, otherwise with Gemini (geminiKey). */
-export async function writeScript(cluster: Cluster, opts: { apiKey?: string; geminiKey?: string; model: string; feedback?: string[] }): Promise<Script | null> {
+export async function writeScript(cluster: Cluster, opts: { apiKey: string; model: string; feedback?: string[] }): Promise<Script | null> {
   const items = cluster.stories.slice(0, 6).map((s: Story) => ({ publisher: s.source, headline: s.title, excerpt: s.summary.slice(0, 600), published: s.publishedAt }));
   const user = JSON.stringify({ story: items }) + (opts.feedback?.length
     ? `\n\nYour previous draft used words that are not in the sources: ${opts.feedback.join(", ")}. Remove them or replace them with words from the sources.`
     : "");
-  if (!opts.apiKey) return writeScriptGemini(user, opts.geminiKey!, opts.model);
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: { "x-api-key": opts.apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
@@ -69,25 +67,6 @@ export async function writeScript(cluster: Cluster, opts: { apiKey?: string; gem
   if (!res.ok) throw new Error(`Claude HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const body = await res.json() as { content?: { type: string; text?: string }[] };
   const text = (body.content ?? []).map(b => b.text ?? "").join("");
-  const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
-  if (json.skip) return null;
-  return json as Script;
-}
-
-async function writeScriptGemini(user: string, key: string, model: string): Promise<Script | null> {
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST",
-    headers: { "x-goog-api-key": key, "content-type": "application/json" },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: SYSTEM + "\n\nReply with JSON only." }] },
-      contents: [{ role: "user", parts: [{ text: user }] }],
-      generationConfig: { maxOutputTokens: 8192, temperature: 0.4, responseMimeType: "application/json" },
-    }),
-    signal: AbortSignal.timeout(90_000),
-  });
-  if (!res.ok) throw new Error(`Gemini HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
-  const body = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-  const text = (body.candidates?.[0]?.content?.parts ?? []).map(p => p.text ?? "").join("");
   const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
   if (json.skip) return null;
   return json as Script;

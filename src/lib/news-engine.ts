@@ -453,8 +453,6 @@ function rebuild(): Promise<NewsPayload> {
           g.__mwNews = { ts: g.__mwNews.ts, payload: withDesk };
           saveSnapshot(withDesk);
         }));
-        // Dispatches: our own articles on events several outlets report (dispatch.server.ts).
-        keepAlive(import("./dispatch.server").then(m => m.runDispatches(built)));
       }
       g.__mwDiag = { ...g.__mwDiag, finishedAt: new Date().toISOString(), result: `${payload.stories.length} stories` };
       return payload.stories.length > 0 || !cached ? payload : cached.payload;

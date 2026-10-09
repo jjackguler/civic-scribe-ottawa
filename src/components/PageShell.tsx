@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
-import { KeeperLauncher } from "./Keeper";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -9,7 +8,6 @@ export function PageShell({ children }: { children: ReactNode }) {
       <SiteHeader />
       <main id="main" className="flex-1">{children}</main>
       <SiteFooter />
-      <KeeperLauncher />
     </div>
   );
 }

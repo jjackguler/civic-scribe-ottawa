@@ -1,6 +1,6 @@
 # AI Broadsheet Originals: one short explainer video, twice a day.
-# Setup: docs/originals.md. Needs repository secrets ELEVENLABS_API_KEY and
-# ANTHROPIC_API_KEY or GEMINI_API_KEY (Gemini also draws illustrations); YOUTUBE_* optional.
+# Setup: docs/originals.md. Needs repository secrets ANTHROPIC_API_KEY and
+# ELEVENLABS_API_KEY; GEMINI_API_KEY and the YOUTUBE_* secrets are optional.
 name: Originals
 
 on:
@@ -58,7 +58,6 @@ jobs:
           ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
-          GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
