@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchRouteImport } from './routes/watch'
+import { Route as ValuesRouteImport } from './routes/values'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -57,6 +58,11 @@ import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-au
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
   path: '/watch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValuesRoute = ValuesRouteImport.update({
+  id: '/values',
+  path: '/values',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsRoute = ToolsRouteImport.update({
@@ -301,6 +307,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
+  '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -347,6 +354,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
+  '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -394,6 +402,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
+  '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -442,6 +451,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/today'
     | '/tools'
+    | '/values'
     | '/watch'
     | '/api/keeper-tts'
     | '/dispatch/$id'
@@ -488,6 +498,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/today'
     | '/tools'
+    | '/values'
     | '/watch'
     | '/api/keeper-tts'
     | '/dispatch/$id'
@@ -534,6 +545,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/today'
     | '/tools'
+    | '/values'
     | '/watch'
     | '/api/keeper-tts'
     | '/dispatch/$id'
@@ -581,6 +593,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   TodayRoute: typeof TodayRoute
   ToolsRoute: typeof ToolsRoute
+  ValuesRoute: typeof ValuesRoute
   WatchRoute: typeof WatchRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
   DispatchIdRoute: typeof DispatchIdRoute
@@ -609,6 +622,13 @@ declare module '@tanstack/react-router' {
       path: '/watch'
       fullPath: '/watch'
       preLoaderRoute: typeof WatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/values': {
+      id: '/values'
+      path: '/values'
+      fullPath: '/values'
+      preLoaderRoute: typeof ValuesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools': {
@@ -941,6 +961,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   TodayRoute: TodayRoute,
   ToolsRoute: ToolsRoute,
+  ValuesRoute: ValuesRoute,
   WatchRoute: WatchRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
   DispatchIdRoute: DispatchIdRoute,

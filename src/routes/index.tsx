@@ -17,6 +17,10 @@ import { getDispatchesFast } from "@/lib/dispatch";
 import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
 import { humanLens, LENS_LABEL } from "@/lib/editorial";
+import { TodayLauncher } from "@/components/Today";
+import { QuizCard } from "@/components/Quiz";
+import { getDailyQuizFast } from "@/lib/youth";
+import { YoungLabBand } from "@/components/YoungLab";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
@@ -35,8 +39,8 @@ import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const [news, pulse, originals, dispatches] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast(), getDispatchesFast()]);
-    return { news, pulse, originals, dispatches };
+    const [news, pulse, originals, dispatches, quiz] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast(), getDispatchesFast(), getDailyQuizFast()]);
+    return { news, pulse, originals, dispatches, quiz };
   },
   head: ({ match }) =>
     seoHead(match, {
@@ -77,7 +81,7 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
 
 function Home() {
-  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches } = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches, quiz } = Route.useLoaderData();
   const { data: originals } = useOriginals(initialOriginals);
   const { data, isError } = useAiNews(initial);
   const { data: pulse } = usePulse(initialPulse);
@@ -178,6 +182,9 @@ function Home() {
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.tagline[locale]}</h1>
 
+      {/* Today in 60 seconds: tap a bubble to start the story stack */}
+      <div className="bg-night"><TodayLauncher initialNews={initial} initialDispatches={dispatches} dark className="container-mw pt-4 pb-1" /></div>
+
       {/* The hero already carries Breaking/Developing for its lead; the strip only adds a different, newer story. */}
       {alert && showStrip && (
         <div className={alert.kind === "breaking" ? "bg-live text-white" : alert.kind === "developing" ? "bg-live/90 text-white" : "bg-night text-white"}>
@@ -208,6 +215,7 @@ function Home() {
 
       {/* Our own reporting, right under the stage */}
       <DispatchRail initial={dispatches} className="container-mw pt-12" />
+      <QuizCard initial={quiz} className="container-mw mt-10" />
 
       {(more.length > 0 || moreFill.length > 0 || steppedDown.length > 0) && (
         <section className="container-mw mt-10">
@@ -281,6 +289,7 @@ function Home() {
       )}
 
       <LabsBand />
+      <YoungLabBand />
 
       {watchList.length > 0 && <WatchBand videos={watchList} />}
 

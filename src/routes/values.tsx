@@ -35,17 +35,19 @@ function Values() {
         </div>
       </section>
 
-      <div className="container-mw mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2 max-w-5xl">
+      <div className="container-mw mt-12">
+        <div className="grid gap-x-12 gap-y-10 md:grid-cols-2 max-w-5xl">
         {VALUES.map(v => (
           <section key={v.id} id={v.id} className="border-t-[3px] border-signal pt-4 scroll-mt-24">
             <h2 className="hl text-[1.5rem] sm:text-[1.7rem]">{pick(v.h)}</h2>
             <p className="font-serif text-[1.08rem] leading-relaxed mt-2 text-ink/85">{pick(v.p)}</p>
           </section>
         ))}
+        </div>
       </div>
 
-      <section className="container-mw mt-14 max-w-5xl">
-        <div className="bg-ice/60 border border-line p-6 sm:p-8">
+      <section className="container-mw mt-14">
+        <div className="bg-ice/60 border border-line p-6 sm:p-8 max-w-5xl">
           <h2 className="hl text-[1.4rem]">{fr ? "Comment ces règles sont appliquées" : "How these rules are applied"}</h2>
           <ul className="mt-3 grid gap-2 font-serif text-[1.05rem] leading-relaxed list-disc pl-5">
             <li>{fr ? "Un filtre écarte automatiquement les nouvelles dont le titre ou l'extrait est sexuellement explicite, avant qu'elles n'arrivent sur le site." : "A filter automatically removes stories whose headline or excerpt is sexually explicit, before they reach the site."}</li>

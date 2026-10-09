@@ -46,6 +46,8 @@ export function SiteHeader() {
   const [menu, setMenu] = useState<null | "topics" | "more">(null);
   const navRef = useRef<HTMLDivElement>(null);
   const currentSection = (loc.search as { section?: string })?.section;
+  // Young Lab keeps children away from open AI chat: no Keeper link there.
+  const mainNav = loc.pathname.includes("/labs/young") ? MAIN.filter(n => n.to !== "/ask") : MAIN;
 
   useEffect(() => { setMenu(null); setOpen(false); }, [loc.pathname, currentSection]);
   useEffect(() => {
@@ -121,7 +123,7 @@ export function SiteHeader() {
           <nav aria-label="Sections" className="hidden xl:flex items-stretch h-full ml-auto">
             {barLink(MAIN[0])}
             {toggle("topics", locale === "fr" ? "Thèmes" : "Topics")}
-            {MAIN.slice(1).map(barLink)}
+            {mainNav.slice(1).map(barLink)}
             {toggle("more", locale === "fr" ? "Plus" : "More")}
           </nav>
           <Link
@@ -163,7 +165,7 @@ export function SiteHeader() {
           <nav aria-label="Sections" className="xl:hidden border-t border-white/15 bg-night max-h-[calc(100vh-62px)] overflow-y-auto">
             <div className="container-mw py-3 grid gap-6 sm:grid-cols-2">
               <div className="flex flex-col">
-                {MAIN.map(n => <L key={pick(n.label)} n={n} className="py-2.5 text-lg font-semibold border-b border-white/15">{pick(n.label)}</L>)}
+                {mainNav.map(n => <L key={pick(n.label)} n={n} className="py-2.5 text-lg font-semibold border-b border-white/15">{pick(n.label)}</L>)}
                 {MORE.map(n => <L key={pick(n.label)} n={n} className="py-2.5 font-semibold border-b border-white/15 text-white/85">{pick(n.label)}</L>)}
               </div>
               <div>
