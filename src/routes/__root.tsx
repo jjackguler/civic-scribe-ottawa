@@ -44,7 +44,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   // The language comes from the URL: /fr/... is French, everything else English.
   beforeLoad: ({ location }) => ({ locale: (isFrPath(location.publicHref ?? location.href) ? "fr" : "en") as Locale }),
-  head: () => ({
+  // No ad script on Young Lab (children's) pages.
+  head: ({ matches }) => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -68,7 +69,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
     scripts: [
-      ...(ADSENSE_CLIENT
+      ...(ADSENSE_CLIENT && !matches.some(m => /^\/labs\/young(\/|$)/.test(m.pathname))
         ? [{ src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`, async: true, crossOrigin: "anonymous" as const }]
         : []),
       // Cloudflare Web Analytics: cookieless, no personal data. Off until a token is set.

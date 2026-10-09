@@ -480,3 +480,195 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
   .keeper-launcher { transition: none; }
   .keeper-launcher.is-tucked { transform: none; opacity: 1; pointer-events: auto; }
 }
+
+/* Young Lab */
+/* The youth wing of Labs: chunky shapes, big tap targets, motion that answers
+   an action (cards flip, stamps thump, tiles pop, confetti on finishing). Every
+   animation here stops under prefers-reduced-motion. */
+.yl {
+  --yl-sun: #ffd23f;
+  --yl-sky: #8fd3ff;
+  --yl-coral: #ff9a7a;
+  --yl-mint: #8be3bd;
+  --yl-grape: #cdb8ff;
+  --yl-cream: #fff8ea;
+  /* Dyslexia-friendly rhythm: generous line height and a touch of letter and word spacing. */
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  letter-spacing: 0.012em;
+  word-spacing: 0.06em;
+}
+.yl-page { background: var(--yl-cream); min-height: 60vh; }
+.yl :focus-visible { outline: 3px solid var(--lake); outline-offset: 3px; }
+/* Headings and cards that receive focus only so screen readers hear what changed. */
+.yl [tabindex="-1"]:focus-visible { outline: none; }
+.yl-title { font-family: var(--font-display); font-weight: 850; letter-spacing: -0.012em; text-wrap: balance; }
+.yl-band { background: var(--yl-cream); }
+
+/* Chunky cards and buttons */
+.yl-card { position: relative; border: 3px solid var(--ink); border-radius: 20px; box-shadow: 5px 5px 0 var(--ink); color: var(--ink); }
+.yl-lift { transition: transform 140ms ease-out, box-shadow 140ms ease-out; }
+.yl-lift:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.yl-lift:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+.yl-lift:has(:focus-visible) { outline: 3px solid var(--lake); outline-offset: 4px; }
+.yl-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  min-height: 48px; padding: 0.5em 1.1em; border: 3px solid var(--ink); border-radius: 14px;
+  background: #fff; color: var(--ink); font-weight: 800; font-size: 1.02rem; line-height: 1.25; text-align: left;
+  box-shadow: 4px 4px 0 var(--ink); cursor: pointer; text-decoration: none;
+  transition: transform 90ms ease-out, box-shadow 90ms ease-out, background-color 150ms ease-out;
+}
+.yl-btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.yl-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.yl-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 4px 4px 0 var(--ink); }
+.yl-btn--big { min-height: 60px; font-size: 1.15rem; padding: 0.6em 1.3em; border-radius: 16px; }
+.yl-btn--ink { background: var(--ink); color: #fff; box-shadow: 4px 4px 0 var(--yl-coral); }
+.yl-btn--ink:hover { box-shadow: 5px 5px 0 var(--yl-coral); }
+.yl-btn--ink:active { box-shadow: 1px 1px 0 var(--yl-coral); }
+.yl-btn--ink:disabled { box-shadow: 4px 4px 0 var(--yl-coral); }
+.yl-leaves { font-size: 0.78rem; font-weight: 700; padding: 0.15em 0.5em; border-radius: 999px; background: var(--ice); border: 2px solid var(--ink); white-space: nowrap; }
+.yl-chip {
+  display: inline-flex; align-items: center; gap: 0.4em; min-height: 44px; padding: 0.35em 0.95em;
+  border: 3px solid var(--ink); border-radius: 999px; background: #fff; color: var(--ink); font-weight: 750; cursor: pointer;
+  transition: background-color 150ms ease-out, transform 90ms ease-out;
+}
+.yl-chip:active { transform: scale(0.96); }
+.yl-chip[aria-pressed="true"] { background: var(--signal); }
+.yl-chip:disabled { opacity: 0.45; cursor: not-allowed; }
+.yl-tile {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0.45em 0.95em; text-align: left;
+  border: 3px solid var(--ink); border-radius: 12px; background: #fff; font-weight: 700; line-height: 1.3; cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink); transition: transform 90ms ease-out, box-shadow 90ms ease-out, background-color 150ms ease-out;
+}
+.yl-tile:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.yl-tile[aria-pressed="true"] { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.yl-select { width: 100%; min-height: 48px; padding: 0 0.75em; border: 3px solid var(--ink); border-radius: 12px; background: #fff; font-weight: 700; font-size: 1rem; color: var(--ink); }
+.yl-range { accent-color: var(--ink); min-height: 44px; }
+.yl-done { box-shadow: 5px 5px 0 var(--spruce); }
+/* Tones come after the components so a toned button, chip or tile keeps its colour. */
+.yl-tone-sun { background-color: var(--yl-sun); }
+.yl-tone-sky { background-color: var(--yl-sky); }
+.yl-tone-coral { background-color: var(--yl-coral); }
+.yl-tone-mint { background-color: var(--yl-mint); }
+.yl-tone-grape { background-color: var(--yl-grape); }
+
+/* Flip cards: both faces share one grid cell, so the card is as tall as its tallest face. */
+.yl-flip { perspective: 1200px; }
+.yl-flip-inner { display: grid; position: relative; transform-style: preserve-3d; transition: transform 560ms cubic-bezier(.2,.7,.2,1); }
+.yl-flip.is-flipped .yl-flip-inner { transform: rotateY(180deg); }
+.yl-face { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.yl-face--back { transform: rotateY(180deg); }
+
+/* Prompt kitchen */
+.yl-ticket { position: relative; padding: 1em 1.2em 1.2em; background: #fff; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 5px 5px 0 var(--ink); border-left-width: 10px; }
+.yl-pot { min-height: 6.5rem; padding: 0.9em; border: 3px dashed var(--ink); border-radius: 16px; background: var(--paper); }
+.yl-star-on { animation: yl-star 520ms cubic-bezier(.2,.7,.2,1) both; }
+
+/* Next-word bars */
+.yl-bar-btn { position: relative; display: flex; align-items: center; width: 100%; min-height: 54px; padding: 0.5em 0.9em; overflow: hidden; border: 3px solid var(--ink); border-radius: 14px; background: #fff; box-shadow: 3px 3px 0 var(--ink); text-align: left; cursor: pointer; transition: transform 90ms ease-out, box-shadow 90ms ease-out; }
+.yl-bar-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.yl-bar-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.yl-bar-fill { position: absolute; inset: 0 auto 0 0; background: var(--yl-sun); transition: width 420ms cubic-bezier(.2,.7,.2,1); }
+
+/* Chatbot flow chart */
+.yl-flow { display: grid; gap: 0; }
+.yl-flow > li { position: relative; }
+.yl-flow-start, .yl-flow-end { display: flex; align-items: center; gap: 0.6em; padding: 0.8em 1em; border: 3px solid var(--ink); border-radius: 999px; background: #fff; font-weight: 800; }
+.yl-flow-end { border-radius: 16px; background: var(--yl-sky); align-items: flex-start; font-weight: 600; }
+.yl-flow-start { width: fit-content; background: var(--yl-sun); }
+.yl-flow > li + li { margin-top: 30px; }
+.yl-flow > li + li::before { content: ""; position: absolute; left: 28px; top: -30px; height: 30px; border-left: 3px solid var(--ink); }
+.yl-flow > li + li::after { content: ""; position: absolute; left: 22.5px; top: -11px; border: 7px solid transparent; border-top-color: var(--ink); border-bottom-width: 0; }
+.yl-flow-rule { padding: 1em; border: 3px solid var(--ink); border-radius: 16px; background: #fff; box-shadow: 4px 4px 0 var(--ink); transition: background-color 200ms ease-out; }
+.yl-flow-q { display: flex; gap: 0.9em; align-items: flex-start; }
+.yl-diamond { display: grid; place-items: center; flex: none; width: 34px; height: 34px; margin: 6px 4px 0; transform: rotate(45deg); border: 3px solid var(--ink); background: var(--yl-coral); font-weight: 900; }
+.yl-diamond > span { transform: rotate(-45deg); }
+.yl-flow-no { margin-top: 0.6em; font-size: 0.85rem; font-weight: 700; color: var(--muted-ink); }
+.yl-flow .is-hit { background: var(--signal); animation: yl-hit 520ms cubic-bezier(.2,.7,.2,1) both; }
+
+/* Stamps */
+.yl-stamp { margin: 0; color: var(--ink); }
+.yl-stamp svg { display: block; overflow: visible; }
+.yl-stamp.is-earned svg { transform: rotate(-6deg); }
+.yl-stamp-fill { stroke: none; }
+.yl-stamp-fill.yl-tone-sun { fill: var(--yl-sun); }
+.yl-stamp-fill.yl-tone-sky { fill: var(--yl-sky); }
+.yl-stamp-fill.yl-tone-coral { fill: var(--yl-coral); }
+.yl-stamp-fill.yl-tone-mint { fill: var(--yl-mint); }
+.yl-stamp-fill.yl-tone-grape { fill: var(--yl-grape); }
+.yl-stamp-empty { fill: rgba(255,255,255,0.6); }
+.yl-stamp:not(.is-earned) { color: #7d8984; }
+.yl-stamp-text { font: 800 11.5px/1 var(--font-display); letter-spacing: 0.06em; fill: currentColor; }
+.yl-stamp-text--bot { font-size: 10.5px; }
+.yl-stamp-q { font: 900 34px/1 var(--font-display); fill: currentColor; }
+.yl-sticker { position: absolute; top: -14px; right: 14px; z-index: 2; padding: 0.25em 0.8em; border: 3px solid var(--ink); border-radius: 10px; font-weight: 900; font-size: 1.05rem; box-shadow: 3px 3px 0 var(--ink); transform: rotate(4deg); }
+.yl-sticker--fake { background: var(--live); color: #fff; }
+.yl-sticker--real { background: var(--yl-mint); color: var(--ink); }
+
+/* Confetti: small shapes thrown up and out from the finish panel, once. */
+.yl-confetti { position: absolute; left: 50%; top: 80px; width: 0; height: 0; z-index: 5; pointer-events: none; }
+.yl-piece { position: absolute; left: 0; top: 0; border: 2px solid var(--ink); animation: yl-confetti 1500ms cubic-bezier(.2,.7,.3,1) both; }
+.yl-piece--dot { border-radius: 999px; }
+.yl-piece--tri { border: none; width: 0 !important; height: 0 !important; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 12px solid currentColor; }
+
+/* Teach the machine */
+.yl-draw { stroke-dashoffset: 0; animation: yl-draw 520ms cubic-bezier(.2,.7,.2,1) both; }
+.yl-drop > * { animation: yl-drop 380ms cubic-bezier(.2,.7,.2,1) both; transform-box: fill-box; transform-origin: center; }
+.yl-pop-svg { animation: yl-fade 300ms ease-out both; }
+
+/* Entrances that answer an action */
+.yl-in { animation: yl-in 420ms cubic-bezier(.2,.7,.2,1) both; }
+.yl-deal { animation: yl-deal 460ms cubic-bezier(.2,.7,.2,1) both; }
+.yl-pop { animation: yl-pop 360ms cubic-bezier(.2,.7,.2,1) both; }
+.yl-thump { animation: yl-thump 620ms cubic-bezier(.2,.7,.2,1) 120ms both; }
+.yl-stamp.yl-thump svg { transform: none; }
+.yl-shape { transform-box: fill-box; transform-origin: center; animation: yl-shape-in 700ms cubic-bezier(.2,.7,.2,1) both; }
+.yl-shape-2 { animation-delay: 90ms; }
+.yl-shape-3 { animation-delay: 180ms; }
+.yl-shape-4 { animation-delay: 260ms; }
+.yl-shape-5, .yl-shape-6 { animation-delay: 340ms; }
+
+@keyframes yl-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes yl-deal { from { opacity: 0; transform: translateY(18px) rotate(-1.5deg) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes yl-pop { 0% { opacity: 0; transform: scale(0.6) translateY(-10px); } 60% { opacity: 1; transform: scale(1.08); } 100% { transform: none; } }
+@keyframes yl-thump {
+  0% { opacity: 0; transform: scale(2.1) rotate(-22deg); }
+  55% { opacity: 1; transform: scale(0.9) rotate(-4deg); }
+  72% { transform: scale(1.05) rotate(-7deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+@keyframes yl-star { 0% { transform: scale(0.3) rotate(-40deg); } 70% { transform: scale(1.25) rotate(8deg); } 100% { transform: none; } }
+@keyframes yl-hit { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 80%, transparent), 4px 4px 0 var(--ink); } 100% { box-shadow: 0 0 0 14px transparent, 4px 4px 0 var(--ink); } }
+@keyframes yl-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes yl-drop { 0% { opacity: 0; transform: translateY(-14px) scale(0.6); } 70% { opacity: 1; transform: translateY(1px) scale(1.06); } 100% { transform: none; } }
+@keyframes yl-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes yl-shape-in { from { opacity: 0; transform: scale(0.5) rotate(-12deg); } to { opacity: 1; transform: none; } }
+@keyframes yl-confetti {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  35% { opacity: 1; transform: translate(calc(var(--dx) * 0.55), calc(var(--up) * -1)) rotate(calc(var(--rot) * 0.4)); }
+  85% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yl-in, .yl-deal, .yl-pop, .yl-thump, .yl-star-on, .yl-draw, .yl-drop > *, .yl-pop-svg, .yl-shape, .yl-piece, .yl-flow .is-hit { animation: none !important; }
+  .yl-confetti { display: none; }
+  .yl-flip-inner, .yl-lift, .yl-btn, .yl-chip, .yl-tile, .yl-bar-btn, .yl-bar-fill, .yl-flow-rule { transition: none !important; }
+  .yl-lift:hover, .yl-lift:active, .yl-btn:hover, .yl-btn:active, .yl-tile:hover, .yl-bar-btn:hover, .yl-bar-btn:active, .yl-chip:active { transform: none; }
+}
+
+/* Printing activity sheets and the passport: only the print root, nothing else. */
+#yl-print-root { display: none; }
+.yl-sheet-lines { display: none; }
+#yl-print-root .yl-sheet-lines { display: grid; gap: 1.1rem; margin-top: 1.2rem; }
+#yl-print-root .yl-sheet-lines span { display: block; border-bottom: 1.5px solid #999; height: 1.4rem; }
+@media print {
+  html.yl-printing body > *:not(#yl-print-root) { display: none !important; }
+  html.yl-printing #yl-print-root { display: block; }
+  html.yl-printing body { background: #fff; }
+  #yl-print-root .yl-sheet { break-after: page; box-shadow: none; border-width: 2px; margin: 0 0 1rem; }
+  #yl-print-root .yl-sheet:last-child { break-after: auto; }
+  #yl-print-root .yl-no-print { display: none; }
+  #yl-print-root .yl-stamp svg { transform: none; }
+  #yl-print-root * { animation: none !important; }
+}
