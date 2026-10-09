@@ -105,8 +105,8 @@ const second = (id: string, h: number, headEn: string, headFr: string, newsEn: s
   topic: "policy",
   model: "claude",
   sources: outlets.map((o, i) => ({ ...sources[i % sources.length], key: `s${i + 1}`, outlet: o, publishedAt: ago(h + 3 - i * 0.8), storyId: `${id}-${i}`, official: false })),
-  en: { ...en, headline: headEn, news: newsEn },
-  fr: { ...fr, headline: headFr, news: newsFr },
+  en: { ...en, headline: headEn, news: newsEn, matters: "A sample \"why it matters\" line for this fixture dispatch, written from its sources." },
+  fr: { ...fr, headline: headFr, news: newsFr, matters: "Une ligne d'exemple « pourquoi c'est important » pour cette dépêche de test, tirée de ses sources." },
 });
 
 export const FIXTURES: Dispatch[] = [

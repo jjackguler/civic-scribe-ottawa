@@ -672,3 +672,62 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
   #yl-print-root .yl-stamp svg { transform: none; }
   #yl-print-root * { animation: none !important; }
 }
+
+/* Youth formats */
+/* "Today in 60 seconds", "The Broadsheet 5", "Explain it like I'm 12" and "Your take".
+   Motion answers what the reader did: a card follows the finger and springs on, an
+   answer pops or shakes, the streak flame grows. Nothing loops to hold attention. */
+.today-glow { background: radial-gradient(60% 45% at 50% 0%, color-mix(in oklab, var(--signal) 14%, transparent), transparent 70%), radial-gradient(50% 40% at 85% 100%, color-mix(in oklab, var(--lake) 35%, transparent), transparent 70%); }
+.today-card { will-change: transform; -webkit-touch-callout: none; }
+/* Photos must not start a native image drag: that would cancel the swipe. */
+.today-card img { pointer-events: none; -webkit-user-drag: none; user-select: none; }
+.today-card.is-snapping { transition: transform 460ms cubic-bezier(.34, 1.56, .64, 1); }
+/* The card takes focus only so arrow keys and screen readers start there; its controls carry the focus rings. */
+.today-card:focus, .today-card:focus-visible { outline: none; }
+@keyframes today-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.today-progress { transform-origin: left; animation: today-progress var(--today-ms, 8000ms) linear forwards; }
+.today-paused .today-progress { animation-play-state: paused; }
+@keyframes today-in-next { 0% { opacity: 0; transform: translateX(34%) scale(.96); } 62% { opacity: 1; transform: translateX(-2.5%) scale(1); } 100% { transform: none; } }
+@keyframes today-in-prev { 0% { opacity: 0; transform: translateX(-34%) scale(.96); } 62% { opacity: 1; transform: translateX(2.5%) scale(1); } 100% { transform: none; } }
+.today-in-next { animation: today-in-next 520ms cubic-bezier(.2, .8, .25, 1) both; }
+.today-in-prev { animation: today-in-prev 520ms cubic-bezier(.2, .8, .25, 1) both; }
+@keyframes today-photo { from { transform: scale(1.08); } to { transform: scale(1); } }
+.today-photo { animation: today-photo 8s ease-out both; }
+@keyframes today-pop { 0% { opacity: 0; transform: scale(.4) rotate(-12deg); } 65% { opacity: 1; transform: scale(1.12) rotate(4deg); } 100% { transform: none; } }
+.today-done { animation: today-pop 620ms cubic-bezier(.2, .8, .25, 1) both; }
+.today-hold { animation: labs-in 180ms ease-out both; }
+.today-ring { background: conic-gradient(from 200deg, var(--signal), var(--brass), var(--live), var(--signal)); }
+.today-nav { transition: opacity 160ms ease-out, background-color 160ms ease-out; }
+
+@keyframes quiz-q-in { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+.quiz-q { animation: quiz-q-in 360ms cubic-bezier(.2, .8, .25, 1) both; }
+@keyframes quiz-pop { 0% { transform: scale(1); } 40% { transform: scale(1.04); box-shadow: 0 0 0 6px color-mix(in oklab, var(--spruce) 30%, transparent); } 100% { transform: scale(1); box-shadow: 0 0 0 14px transparent; } }
+.quiz-pop { animation: quiz-pop 520ms cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes quiz-reveal { from { opacity: .4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.quiz-reveal { animation: quiz-reveal 380ms 160ms cubic-bezier(.2, .8, .25, 1) both; }
+@keyframes quiz-shake { 0%, 100% { transform: none; } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); } }
+.quiz-shake { animation: quiz-shake 420ms ease-out both; }
+@keyframes quiz-explain-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.quiz-explain { animation: quiz-explain-in 420ms 120ms cubic-bezier(.2, .8, .25, 1) both; }
+.quiz-score { animation: quiz-explain-in 480ms cubic-bezier(.2, .8, .25, 1) both; }
+@keyframes score-in { 0% { opacity: 0; transform: translateY(16px) scale(.8); } 70% { opacity: 1; transform: translateY(-3px) scale(1.06); } 100% { transform: none; } }
+.score-in { animation: score-in 620ms 120ms cubic-bezier(.2, .8, .25, 1) both; }
+@keyframes score-dot { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
+.score-dot { animation: score-dot 360ms cubic-bezier(.34, 1.56, .64, 1) both; }
+.streak-flame { transition: width 500ms cubic-bezier(.34, 1.56, .64, 1), height 500ms cubic-bezier(.34, 1.56, .64, 1); transform-origin: 50% 90%; }
+@keyframes streak-grow { 0% { transform: scale(.5); } 55% { transform: scale(1.35) rotate(-6deg); } 80% { transform: scale(.95) rotate(2deg); } 100% { transform: none; } }
+.streak-grow { animation: streak-grow 760ms 500ms cubic-bezier(.2, .8, .25, 1) both; }
+
+.eli-knob { transition: left 260ms cubic-bezier(.34, 1.56, .64, 1); }
+.eli-in { animation: quiz-explain-in 360ms cubic-bezier(.2, .8, .25, 1) both; }
+@keyframes take-on { 0% { transform: scale(.6) rotate(-14deg); } 60% { transform: scale(1.25) rotate(6deg); } 100% { transform: none; } }
+.take-on { animation: take-on 440ms cubic-bezier(.2, .8, .25, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .today-in-next, .today-in-prev, .today-photo, .today-done, .today-hold,
+  .quiz-q, .quiz-pop, .quiz-reveal, .quiz-shake, .quiz-explain, .quiz-score, .score-in, .score-dot, .streak-grow,
+  .eli-in, .take-on { animation: none !important; }
+  .today-progress { animation: none !important; transform: scaleX(1); }
+  .today-card.is-snapping, .today-nav, .streak-flame, .eli-knob, .quiz-opt { transition: none !important; }
+  .quiz-opt:hover { transform: none !important; }
+}
