@@ -189,7 +189,27 @@
   @keyframes live-in { from { background: color-mix(in oklab, var(--brass) 28%, transparent); } to { background: transparent; } }
   .live-in { animation: live-in 2.4s ease-out both; }
 
+  /* Micro-interactions: they answer a reader's action or mark what changed. */
+  .press { transition: transform 120ms ease-out; }
+  .press:active { transform: scale(0.97); }
+  /* Headline underline that draws in from the left on hover/focus */
+  .headline-sweep { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 3px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size 380ms cubic-bezier(.2,.7,.2,1); padding-bottom: 2px; }
+  .group:hover .headline-sweep, .group:focus-visible .headline-sweep { background-size: 100% 3px; }
+  /* Play button: a ring that breathes outward, only while it waits */
+  @keyframes play-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 60%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
+  .play-ring { animation: play-ring 2.2s ease-out infinite; }
+  /* Live counter: a small bump when the number changes */
+  @keyframes count-bump { 0% { transform: translateY(-4px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+  .count-bump { animation: count-bump 420ms cubic-bezier(.2,.7,.2,1) both; }
+  /* An item that just left the hero lands in Top stories: drops in, with a brass wash that fades */
+  @keyframes stepped-down { 0% { transform: translateY(-28px); opacity: 0; } 60% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+  @keyframes stepped-down-wash { from { box-shadow: 0 0 0 6px color-mix(in oklab, var(--brass) 45%, transparent); } to { box-shadow: 0 0 0 6px transparent; } }
+  .stepped-down { animation: stepped-down 900ms cubic-bezier(.2,.7,.2,1) both, stepped-down-wash 2.6s ease-out 600ms both; }
+  .moved-in { animation: stepped-down 900ms cubic-bezier(.2,.7,.2,1) both; }
+
 @media (prefers-reduced-motion: reduce) {
+  .play-ring, .count-bump, .stepped-down, .moved-in { animation: none !important; }
+  .press:active { transform: none; }
   .animate-ticker, .live-dot, .flash-new, .hero-in, .hero-kenburns, .live-in { animation: none !important; }
   .hero-progress { animation: none !important; transform: scaleX(1); }
   * { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }

@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Landmark, BookOpen, Wrench, Coins } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { LatestRail } from "@/components/LatestRail";
 import { StoryCard, StoryLink, StoryMeta, CoverageBadge } from "@/components/StoryCard";
 import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
-import { LiveHero, type HeroSlide } from "@/components/LiveHero";
+import { LiveHero, slideKey, type HeroSlide, type StorySlide } from "@/components/LiveHero";
 import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
@@ -93,14 +93,24 @@ function Home() {
     .sort((x, y) => y.score - x.score)
     .slice(0, 5)
     .map(x => x.c);
-  const slides: HeroSlide[] = heroClusters.map(c => {
+  const storySlides: StorySlide[] = heroClusters.map(c => {
     const lead = c.lead.image ? c.lead : c.stories.find(s => s.image) ?? c.lead;
     return { story: lead, outlets: c.sources, sources: [...new Set(c.stories.map(s => s.source))], developing: isDeveloping(c), breaking: isBreaking(c), trend: trendMatch(lead, pulse) };
   });
   heroClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
-  for (const s of take(news.filter(x => x.image), used, 5 - slides.length)) {
-    slides.push({ story: s, outlets: 1, sources: [s.source], developing: false, breaking: false, trend: trendMatch(s, pulse) });
+  for (const s of take(news.filter(x => x.image), used, 5 - storySlides.length)) {
+    storySlides.push({ story: s, outlets: 1, sources: [s.source], developing: false, breaking: false, trend: trendMatch(s, pulse) });
   }
+  // Our own productions lead the stage while they are new (titles for three days,
+  // explainers for a day and a half, at most two), then step down into Top stories.
+  const nowMs = useClock();
+  const ownAll = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  const ageH = (iso: string) => (nowMs - new Date(iso).getTime()) / 3600_000;
+  const onStage = (o: { kind?: string; publishedAt: string }) => ageH(o.publishedAt) < (o.kind === "titles" ? 72 : 36);
+  const heroOwn = ownAll.filter(onStage).slice(0, 2);
+  const steppedDown = ownAll.filter(o => !heroOwn.includes(o) && ageH(o.publishedAt) < 7 * 24).slice(0, 1);
+  const slides: HeroSlide[] = [...heroOwn.map(o => ({ kind: "original" as const, original: o })), ...storySlides].slice(0, 6);
+  const fromHero = useSteppedDown(slides.map(slideKey));
   const top = heroClusters[0];
   const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));
 
@@ -154,7 +164,7 @@ function Home() {
     : top && isDeveloping(top)
       ? { kind: "developing" as const, story: top.lead, note: `${top.sources} ${locale === "fr" ? "médias" : "outlets"}` }
       : fresh ? { kind: "just-in" as const, story: fresh, note: fresh.source } : null;
-  const showStrip = alert?.kind === "just-in" && !slides.some(sl => sl.story.id === alert.story.id);
+  const showStrip = alert?.kind === "just-in" && !storySlides.some(sl => sl.story.id === alert.story.id);
 
   return (
     <PageShell>
@@ -175,7 +185,7 @@ function Home() {
         </div>
       )}
 
-      {news.length === 0 ? (
+      {news.length === 0 && slides.length === 0 ? (
         <section className="container-mw pt-10">
           <div className="border-t-[3px] border-night pt-10 pb-16 text-center">
             <span className="live-dot inline-block" aria-hidden="true" />
@@ -188,15 +198,20 @@ function Home() {
 
       <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
 
-      {(more.length > 0 || moreFill.length > 0) && (
+      {(more.length > 0 || moreFill.length > 0 || steppedDown.length > 0) && (
         <section className="container-mw mt-10">
           <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
           <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[minmax(0,1fr)_300px]">
             <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3 content-start">
-              {more.map(c => (
-                <StoryCard key={c.id} s={c.lead} variant="card" badge={<><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></>} showTopic={false} />
+              {steppedDown.map(o => (
+                <div key={o.id} className={`sm:row-span-2 ${fromHero.has(o.id) ? "stepped-down" : ""}`}><OriginalCard o={o} /></div>
               ))}
-              {moreFill.map(s => <StoryCard key={s.id} s={s} badge={<TrendBadge s={s} pulse={pulse} />} />)}
+              {more.map(c => (
+                <div key={c.id} className={c.stories.some(x => fromHero.has(x.id)) ? "stepped-down" : ""}>
+                  <StoryCard s={c.lead} variant="card" badge={<><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></>} showTopic={false} />
+                </div>
+              ))}
+              {moreFill.map(s => <div key={s.id} className={fromHero.has(s.id) ? "stepped-down" : ""}><StoryCard s={s} badge={<TrendBadge s={s} pulse={pulse} />} /></div>)}
             </div>
             <div className="grid gap-6 content-start">
               <AdSlot size="mpu" placement="home-right" />
@@ -228,7 +243,7 @@ function Home() {
               <Link to="/originals" className="inline-flex items-center gap-1 font-bold underline underline-offset-4 decoration-2">{locale === "fr" ? "Tous les explicatifs" : "All explainers"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
             <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
-              {originals!.items.slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
+              {ownAll.filter(o => !heroOwn.includes(o) && !steppedDown.includes(o)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
             </div>
           </div>
         </section>
@@ -452,6 +467,31 @@ function Home() {
       </section>
     </PageShell>
   );
+}
+
+/** Current time, ticking each minute, so hero items age off the stage without a reload. */
+function useClock() {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 60_000); return () => clearInterval(t); }, []);
+  return now;
+}
+
+/**
+ * Keys that were on the hero stage on an earlier render and have since left it.
+ * Those items get a short "stepped down from the top" animation where they land.
+ */
+function useSteppedDown(heroKeys: string[]) {
+  const prev = useRef<string[] | null>(null);
+  const [left, setLeft] = useState<Set<string>>(new Set());
+  const sig = heroKeys.join("|");
+  useEffect(() => {
+    if (prev.current) {
+      const gone = prev.current.filter(k => !heroKeys.includes(k));
+      if (gone.length) setLeft(new Set(gone));
+    }
+    prev.current = heroKeys;
+  }, [sig]); // eslint-disable-line react-hooks/exhaustive-deps
+  return left;
 }
 
 /** Dark broadcast band: one player, a running list beside it. */
