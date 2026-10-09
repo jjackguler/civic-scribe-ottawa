@@ -29,20 +29,17 @@ import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as FundingRouteImport } from './routes/funding'
 import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
 import { Route as CorrectionsRouteImport } from './routes/corrections'
+import { Route as AskRouteImport } from './routes/ask'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
-import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
-import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
-import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
-import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
-import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
+import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
 
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
@@ -144,6 +141,11 @@ const CorrectionsRoute = CorrectionsRouteImport.update({
   path: '/corrections',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AskRoute = AskRouteImport.update({
+  id: '/ask',
+  path: '/ask',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdvertiseRoute = AdvertiseRouteImport.update({
   id: '/advertise',
   path: '/advertise',
@@ -164,19 +166,9 @@ const LearnIndexRoute = LearnIndexRouteImport.update({
   path: '/learn/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabsIndexRoute = LabsIndexRouteImport.update({
-  id: '/labs/',
-  path: '/labs/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EditorIndexRoute = EditorIndexRouteImport.update({
   id: '/editor/',
   path: '/editor/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DispatchIndexRoute = DispatchIndexRouteImport.update({
-  id: '/dispatch/',
-  path: '/dispatch/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StoryIdRoute = StoryIdRouteImport.update({
@@ -189,11 +181,6 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabsPathRoute = LabsPathRouteImport.update({
-  id: '/labs/$path',
-  path: '/labs/$path',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EditorToolsRoute = EditorToolsRouteImport.update({
   id: '/editor/tools',
   path: '/editor/tools',
@@ -204,14 +191,9 @@ const EditorSlugRoute = EditorSlugRouteImport.update({
   path: '/editor/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DispatchIdRoute = DispatchIdRouteImport.update({
-  id: '/dispatch/$id',
-  path: '/dispatch/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
-  id: '/api/dispatch-audio/$id',
-  path: '/api/dispatch-audio/$id',
+const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
+  id: '/api/keeper-tts',
+  path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -219,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -239,22 +222,19 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
-  '/dispatch/$id': typeof DispatchIdRoute
+  '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
-  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
-  '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
-  '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
-  '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -275,23 +255,20 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
-  '/dispatch/$id': typeof DispatchIdRoute
+  '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
-  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
-  '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
-  '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
-  '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -312,17 +289,13 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
-  '/dispatch/$id': typeof DispatchIdRoute
+  '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
-  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
-  '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
-  '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
-  '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -330,6 +303,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/ask'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -350,22 +324,19 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
-    | '/dispatch/$id'
+    | '/api/keeper-tts'
     | '/editor/$slug'
     | '/editor/tools'
-    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
-    | '/dispatch/'
     | '/editor/'
-    | '/labs/'
     | '/learn/'
-    | '/api/dispatch-audio/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/advertise'
+    | '/ask'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -386,22 +357,19 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
-    | '/dispatch/$id'
+    | '/api/keeper-tts'
     | '/editor/$slug'
     | '/editor/tools'
-    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
-    | '/dispatch'
     | '/editor'
-    | '/labs'
     | '/learn'
-    | '/api/dispatch-audio/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/advertise'
+    | '/ask'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -422,23 +390,20 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
-    | '/dispatch/$id'
+    | '/api/keeper-tts'
     | '/editor/$slug'
     | '/editor/tools'
-    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
-    | '/dispatch/'
     | '/editor/'
-    | '/labs/'
     | '/learn/'
-    | '/api/dispatch-audio/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdvertiseRoute: typeof AdvertiseRoute
+  AskRoute: typeof AskRoute
   CorrectionsRoute: typeof CorrectionsRoute
   DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
   FundingRoute: typeof FundingRoute
@@ -459,17 +424,13 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
-  DispatchIdRoute: typeof DispatchIdRoute
+  ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
-  LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
   StoryIdRoute: typeof StoryIdRoute
-  DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
-  LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
-  ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -614,6 +575,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CorrectionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ask': {
+      id: '/ask'
+      path: '/ask'
+      fullPath: '/ask'
+      preLoaderRoute: typeof AskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/advertise': {
       id: '/advertise'
       path: '/advertise'
@@ -642,25 +610,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/labs/': {
-      id: '/labs/'
-      path: '/labs'
-      fullPath: '/labs/'
-      preLoaderRoute: typeof LabsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/editor/': {
       id: '/editor/'
       path: '/editor'
       fullPath: '/editor/'
       preLoaderRoute: typeof EditorIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dispatch/': {
-      id: '/dispatch/'
-      path: '/dispatch'
-      fullPath: '/dispatch/'
-      preLoaderRoute: typeof DispatchIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/story/$id': {
@@ -677,13 +631,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/labs/$path': {
-      id: '/labs/$path'
-      path: '/labs/$path'
-      fullPath: '/labs/$path'
-      preLoaderRoute: typeof LabsPathRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/editor/tools': {
       id: '/editor/tools'
       path: '/editor/tools'
@@ -698,18 +645,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dispatch/$id': {
-      id: '/dispatch/$id'
-      path: '/dispatch/$id'
-      fullPath: '/dispatch/$id'
-      preLoaderRoute: typeof DispatchIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/dispatch-audio/$id': {
-      id: '/api/dispatch-audio/$id'
-      path: '/api/dispatch-audio/$id'
-      fullPath: '/api/dispatch-audio/$id'
-      preLoaderRoute: typeof ApiDispatchAudioIdRouteImport
+    '/api/keeper-tts': {
+      id: '/api/keeper-tts'
+      path: '/api/keeper-tts'
+      fullPath: '/api/keeper-tts'
+      preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -719,6 +659,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdvertiseRoute: AdvertiseRoute,
+  AskRoute: AskRoute,
   CorrectionsRoute: CorrectionsRoute,
   DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
   FundingRoute: FundingRoute,
@@ -739,17 +680,13 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,
-  DispatchIdRoute: DispatchIdRoute,
+  ApiKeeperTtsRoute: ApiKeeperTtsRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
-  LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
   StoryIdRoute: StoryIdRoute,
-  DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
-  LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
-  ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
