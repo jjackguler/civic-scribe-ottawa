@@ -12,6 +12,10 @@ import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { OriginalCard } from "@/components/Originals";
+import { DispatchRail } from "@/components/Dispatch";
+import { getDispatchesFast } from "@/lib/dispatch";
+import { LabsBand } from "@/components/Labs";
+import { AskKeeperBand } from "@/components/Keeper";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
@@ -30,8 +34,8 @@ import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const [news, pulse, originals] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast()]);
-    return { news, pulse, originals };
+    const [news, pulse, originals, dispatches] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast(), getDispatchesFast()]);
+    return { news, pulse, originals, dispatches };
   },
   head: ({ match }) =>
     seoHead(match, {
@@ -72,7 +76,7 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
 
 function Home() {
-  const { news: initial, pulse: initialPulse, originals: initialOriginals } = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches } = Route.useLoaderData();
   const { data: originals } = useOriginals(initialOriginals);
   const { data, isError } = useAiNews(initial);
   const { data: pulse } = usePulse(initialPulse);
@@ -198,13 +202,16 @@ function Home() {
 
       <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
 
+      {/* Our own reporting, right under the stage */}
+      <DispatchRail initial={dispatches} className="container-mw pt-12" />
+
       {(more.length > 0 || moreFill.length > 0 || steppedDown.length > 0) && (
         <section className="container-mw mt-10">
           <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
           <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[minmax(0,1fr)_300px]">
             <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3 content-start">
               {steppedDown.map(o => (
-                <div key={o.id} className={`sm:row-span-2 ${fromHero.has(o.id) ? "stepped-down" : ""}`}><OriginalCard o={o} /></div>
+                <div key={o.id} className={`w-full max-w-[260px] sm:max-w-none sm:row-span-2 ${fromHero.has(o.id) ? "stepped-down" : ""}`}><OriginalCard o={o} /></div>
               ))}
               {more.map(c => (
                 <div key={c.id} className={c.stories.some(x => fromHero.has(x.id)) ? "stepped-down" : ""}>
@@ -243,11 +250,13 @@ function Home() {
               <Link to="/originals" className="inline-flex items-center gap-1 font-bold underline underline-offset-4 decoration-2">{locale === "fr" ? "Tous les explicatifs" : "All explainers"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
             <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
-              {ownAll.filter(o => !heroOwn.includes(o) && !steppedDown.includes(o)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
+              {ownAll.filter(o => !steppedDown.includes(o)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
             </div>
           </div>
         </section>
       )}
+
+      <LabsBand />
 
       {watchList.length > 0 && <WatchBand videos={watchList} />}
 
@@ -371,7 +380,9 @@ function Home() {
         </section>
       )}
 
-      <section className="mt-14 bg-night text-white">
+      <div className="mt-14"><AskKeeperBand /></div>
+
+      <section className="bg-night text-white">
         <div className="container-mw py-12">
           <NewsletterBox />
         </div>

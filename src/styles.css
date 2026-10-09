@@ -243,6 +243,8 @@
   .dispatch-wire, .dispatch-depth-in > * { animation: none !important; }
   .dispatch-stamp[data-lit="true"] { transform: none; }
   .dispatch-height, .dispatch-depth-thumb, .dispatch-stamp, .dispatch-claim { transition: none !important; }
+}
+
 /* Labs */
 /* Motion here only answers the reader: a step ticked, the line advancing, a question answered, a path finished. */
 .labs-line-fill { transition: height 700ms cubic-bezier(.2,.7,.2,1), width 700ms cubic-bezier(.2,.7,.2,1); }
@@ -270,6 +272,8 @@
   .labs-printing .labs-cert { position: absolute; left: 0; top: 0; width: 100%; }
   .labs-printing .labs-no-print { display: none; }
   .labs-printing .labs-cert-name { border-color: transparent; }
+}
+
 /* Keeper */
 /* The Keeper's room on /ask, the homepage band, the floating launcher and
    "Read this page to me". Each atmosphere is a set of tokens; the character
