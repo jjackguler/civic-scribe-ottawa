@@ -33,10 +33,12 @@ import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
@@ -162,6 +164,11 @@ const LearnIndexRoute = LearnIndexRouteImport.update({
   path: '/learn/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsIndexRoute = LabsIndexRouteImport.update({
+  id: '/labs/',
+  path: '/labs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EditorIndexRoute = EditorIndexRouteImport.update({
   id: '/editor/',
   path: '/editor/',
@@ -180,6 +187,11 @@ const StoryIdRoute = StoryIdRouteImport.update({
 const LearnSlugRoute = LearnSlugRouteImport.update({
   id: '/learn/$slug',
   path: '/learn/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsPathRoute = LabsPathRouteImport.update({
+  id: '/labs/$path',
+  path: '/labs/$path',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorToolsRoute = EditorToolsRouteImport.update({
@@ -230,10 +242,12 @@ export interface FileRoutesByFullPath {
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
+  '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
@@ -264,10 +278,12 @@ export interface FileRoutesByTo {
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
+  '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
@@ -299,10 +315,12 @@ export interface FileRoutesById {
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
+  '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
 }
@@ -335,10 +353,12 @@ export interface FileRouteTypes {
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
     | '/dispatch/'
     | '/editor/'
+    | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -369,10 +389,12 @@ export interface FileRouteTypes {
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
     | '/dispatch'
     | '/editor'
+    | '/labs'
     | '/learn'
     | '/api/dispatch-audio/$id'
   id:
@@ -403,10 +425,12 @@ export interface FileRouteTypes {
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
     | '/dispatch/'
     | '/editor/'
+    | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
   fileRoutesById: FileRoutesById
@@ -438,10 +462,12 @@ export interface RootRouteChildren {
   DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
+  LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
   StoryIdRoute: typeof StoryIdRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
+  LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
 }
@@ -616,6 +642,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/': {
+      id: '/labs/'
+      path: '/labs'
+      fullPath: '/labs/'
+      preLoaderRoute: typeof LabsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/editor/': {
       id: '/editor/'
       path: '/editor'
@@ -642,6 +675,13 @@ declare module '@tanstack/react-router' {
       path: '/learn/$slug'
       fullPath: '/learn/$slug'
       preLoaderRoute: typeof LearnSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/$path': {
+      id: '/labs/$path'
+      path: '/labs/$path'
+      fullPath: '/labs/$path'
+      preLoaderRoute: typeof LabsPathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor/tools': {
@@ -702,10 +742,12 @@ const rootRouteChildren: RootRouteChildren = {
   DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
+  LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
   StoryIdRoute: StoryIdRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
+  LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
 }
