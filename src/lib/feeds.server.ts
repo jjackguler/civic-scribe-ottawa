@@ -7,6 +7,7 @@ import { ORIGIN, absUrl } from "./seo";
 import type { Locale } from "./i18n";
 import { GUIDES } from "./guides";
 import { PATHS } from "./labs";
+import { ACTIVITIES as YOUNG_ACTIVITIES } from "./young-lab";
 import { EDITORIALS } from "./editorials";
 import { TOPICS } from "./news";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
@@ -76,6 +77,9 @@ export async function buildSitemap(): Promise<string> {
   for (const id of ["world", "canada", "labs", "analysis"]) entries.push({ path: `/news?section=${id}`, changefreq: "hourly", priority: "0.6" });
   for (const g of GUIDES) entries.push({ path: `/learn/${g.slug}`, changefreq: "monthly", priority: "0.5" });
   for (const p of PATHS) entries.push({ path: `/labs/${p.id}`, changefreq: "monthly", priority: "0.6" });
+  // Young Lab (the passport is personal and noindex, so it stays out).
+  for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
+  for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
   const [news, dispatches] = await Promise.all([currentNews(), currentDispatches()]);

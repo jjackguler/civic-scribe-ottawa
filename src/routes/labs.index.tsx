@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Award } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { ContinueCard, FrenchTag, LengthLabel, LessonOne, PathPicker, PriceTag, ProviderTag, RouteMap, ofText } from "@/components/Labs";
+import { YoungLabCard } from "@/components/YoungLab";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, absUrl, publisherRef } from "@/lib/seo";
@@ -103,6 +104,11 @@ function LabsPage() {
         <div className="py-12 sm:py-16">
           <PathPicker onPick={setPicked} />
         </div>
+      </section>
+
+      {/* Young Lab: the youth wing */}
+      <section className="container-mw" aria-label={fr ? "Jeune Labo, pour les 8 à 17 ans" : "Young Lab, for ages 8 to 17"}>
+        <YoungLabCard />
       </section>
 
       <PathsIndex />

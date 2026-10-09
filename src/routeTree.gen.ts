@@ -44,6 +44,12 @@ import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
+import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
+import { Route as LabsYoungPassportRouteImport } from './routes/labs.young.passport'
+import { Route as LabsYoungMakersRouteImport } from './routes/labs.young.makers'
+import { Route as LabsYoungGrownUpsRouteImport } from './routes/labs.young.grown-ups'
+import { Route as LabsYoungExplorersRouteImport } from './routes/labs.young.explorers'
+import { Route as LabsYoungActivityRouteImport } from './routes/labs.young.$activity'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
 
 const WatchRoute = WatchRouteImport.update({
@@ -221,6 +227,36 @@ const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsYoungIndexRoute = LabsYoungIndexRouteImport.update({
+  id: '/labs/young/',
+  path: '/labs/young/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungPassportRoute = LabsYoungPassportRouteImport.update({
+  id: '/labs/young/passport',
+  path: '/labs/young/passport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungMakersRoute = LabsYoungMakersRouteImport.update({
+  id: '/labs/young/makers',
+  path: '/labs/young/makers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungGrownUpsRoute = LabsYoungGrownUpsRouteImport.update({
+  id: '/labs/young/grown-ups',
+  path: '/labs/young/grown-ups',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungExplorersRoute = LabsYoungExplorersRouteImport.update({
+  id: '/labs/young/explorers',
+  path: '/labs/young/explorers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungActivityRoute = LabsYoungActivityRouteImport.update({
+  id: '/labs/young/$activity',
+  path: '/labs/young/$activity',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
   id: '/api/dispatch-audio/$id',
   path: '/api/dispatch-audio/$id',
@@ -264,6 +300,12 @@ export interface FileRoutesByFullPath {
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/young/$activity': typeof LabsYoungActivityRoute
+  '/labs/young/explorers': typeof LabsYoungExplorersRoute
+  '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
+  '/labs/young/makers': typeof LabsYoungMakersRoute
+  '/labs/young/passport': typeof LabsYoungPassportRoute
+  '/labs/young/': typeof LabsYoungIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -302,6 +344,12 @@ export interface FileRoutesByTo {
   '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/young/$activity': typeof LabsYoungActivityRoute
+  '/labs/young/explorers': typeof LabsYoungExplorersRoute
+  '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
+  '/labs/young/makers': typeof LabsYoungMakersRoute
+  '/labs/young/passport': typeof LabsYoungPassportRoute
+  '/labs/young': typeof LabsYoungIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -341,6 +389,12 @@ export interface FileRoutesById {
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/young/$activity': typeof LabsYoungActivityRoute
+  '/labs/young/explorers': typeof LabsYoungExplorersRoute
+  '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
+  '/labs/young/makers': typeof LabsYoungMakersRoute
+  '/labs/young/passport': typeof LabsYoungPassportRoute
+  '/labs/young/': typeof LabsYoungIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -381,6 +435,12 @@ export interface FileRouteTypes {
     | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
+    | '/labs/young/$activity'
+    | '/labs/young/explorers'
+    | '/labs/young/grown-ups'
+    | '/labs/young/makers'
+    | '/labs/young/passport'
+    | '/labs/young/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -419,6 +479,12 @@ export interface FileRouteTypes {
     | '/labs'
     | '/learn'
     | '/api/dispatch-audio/$id'
+    | '/labs/young/$activity'
+    | '/labs/young/explorers'
+    | '/labs/young/grown-ups'
+    | '/labs/young/makers'
+    | '/labs/young/passport'
+    | '/labs/young'
   id:
     | '__root__'
     | '/'
@@ -457,6 +523,12 @@ export interface FileRouteTypes {
     | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
+    | '/labs/young/$activity'
+    | '/labs/young/explorers'
+    | '/labs/young/grown-ups'
+    | '/labs/young/makers'
+    | '/labs/young/passport'
+    | '/labs/young/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -496,6 +568,12 @@ export interface RootRouteChildren {
   LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
+  LabsYoungActivityRoute: typeof LabsYoungActivityRoute
+  LabsYoungExplorersRoute: typeof LabsYoungExplorersRoute
+  LabsYoungGrownUpsRoute: typeof LabsYoungGrownUpsRoute
+  LabsYoungMakersRoute: typeof LabsYoungMakersRoute
+  LabsYoungPassportRoute: typeof LabsYoungPassportRoute
+  LabsYoungIndexRoute: typeof LabsYoungIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -745,6 +823,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/young/': {
+      id: '/labs/young/'
+      path: '/labs/young'
+      fullPath: '/labs/young/'
+      preLoaderRoute: typeof LabsYoungIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/passport': {
+      id: '/labs/young/passport'
+      path: '/labs/young/passport'
+      fullPath: '/labs/young/passport'
+      preLoaderRoute: typeof LabsYoungPassportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/makers': {
+      id: '/labs/young/makers'
+      path: '/labs/young/makers'
+      fullPath: '/labs/young/makers'
+      preLoaderRoute: typeof LabsYoungMakersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/grown-ups': {
+      id: '/labs/young/grown-ups'
+      path: '/labs/young/grown-ups'
+      fullPath: '/labs/young/grown-ups'
+      preLoaderRoute: typeof LabsYoungGrownUpsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/explorers': {
+      id: '/labs/young/explorers'
+      path: '/labs/young/explorers'
+      fullPath: '/labs/young/explorers'
+      preLoaderRoute: typeof LabsYoungExplorersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/$activity': {
+      id: '/labs/young/$activity'
+      path: '/labs/young/$activity'
+      fullPath: '/labs/young/$activity'
+      preLoaderRoute: typeof LabsYoungActivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/dispatch-audio/$id': {
       id: '/api/dispatch-audio/$id'
       path: '/api/dispatch-audio/$id'
@@ -792,6 +912,12 @@ const rootRouteChildren: RootRouteChildren = {
   LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
+  LabsYoungActivityRoute: LabsYoungActivityRoute,
+  LabsYoungExplorersRoute: LabsYoungExplorersRoute,
+  LabsYoungGrownUpsRoute: LabsYoungGrownUpsRoute,
+  LabsYoungMakersRoute: LabsYoungMakersRoute,
+  LabsYoungPassportRoute: LabsYoungPassportRoute,
+  LabsYoungIndexRoute: LabsYoungIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

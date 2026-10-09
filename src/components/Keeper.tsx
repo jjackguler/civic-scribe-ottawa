@@ -253,7 +253,8 @@ export function KeeperLauncher() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (hidden || path === "/ask") return null;
+  // Young Lab is for children: no shortcut into an open-ended AI chat from there.
+  if (hidden || path === "/ask" || path === "/labs/young" || path.startsWith("/labs/young/")) return null;
   const dismiss = () => {
     try { window.sessionStorage.setItem(STORE.launcherHidden, "1"); } catch { /* storage blocked */ }
     setHidden(true);
