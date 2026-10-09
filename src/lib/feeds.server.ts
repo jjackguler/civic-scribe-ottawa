@@ -6,6 +6,7 @@ import { SITE } from "./site";
 import { ORIGIN, absUrl } from "./seo";
 import type { Locale } from "./i18n";
 import { GUIDES } from "./guides";
+import { PATHS } from "./labs";
 import { EDITORIALS } from "./editorials";
 import { TOPICS } from "./news";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
@@ -38,6 +39,7 @@ const STATIC: Entry[] = [
   { path: "/funding", changefreq: "weekly", priority: "0.7" },
   { path: "/tools", changefreq: "weekly", priority: "0.5" },
   { path: "/learn", changefreq: "weekly", priority: "0.6" },
+  { path: "/labs", changefreq: "weekly", priority: "0.7" },
   { path: "/editor", changefreq: "weekly", priority: "0.6" },
   { path: "/advertise", changefreq: "monthly", priority: "0.4" },
   { path: "/newsletter", changefreq: "monthly", priority: "0.4" },
@@ -64,6 +66,7 @@ export async function buildSitemap(): Promise<string> {
   for (const tp of TOPICS) entries.push({ path: `/news?section=${tp.id}`, changefreq: "hourly", priority: "0.6" });
   for (const id of ["world", "canada", "labs", "analysis"]) entries.push({ path: `/news?section=${id}`, changefreq: "hourly", priority: "0.6" });
   for (const g of GUIDES) entries.push({ path: `/learn/${g.slug}`, changefreq: "monthly", priority: "0.5" });
+  for (const p of PATHS) entries.push({ path: `/labs/${p.id}`, changefreq: "monthly", priority: "0.6" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
   const news = await currentNews();

@@ -33,9 +33,11 @@ import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 
@@ -159,6 +161,11 @@ const LearnIndexRoute = LearnIndexRouteImport.update({
   path: '/learn/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsIndexRoute = LabsIndexRouteImport.update({
+  id: '/labs/',
+  path: '/labs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EditorIndexRoute = EditorIndexRouteImport.update({
   id: '/editor/',
   path: '/editor/',
@@ -172,6 +179,11 @@ const StoryIdRoute = StoryIdRouteImport.update({
 const LearnSlugRoute = LearnSlugRouteImport.update({
   id: '/learn/$slug',
   path: '/learn/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsPathRoute = LabsPathRouteImport.update({
+  id: '/labs/$path',
+  path: '/labs/$path',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorToolsRoute = EditorToolsRouteImport.update({
@@ -211,9 +223,11 @@ export interface FileRoutesByFullPath {
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/editor/': typeof EditorIndexRoute
+  '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRoutesByTo {
@@ -242,9 +256,11 @@ export interface FileRoutesByTo {
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/editor': typeof EditorIndexRoute
+  '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
 }
 export interface FileRoutesById {
@@ -274,9 +290,11 @@ export interface FileRoutesById {
   '/watch': typeof WatchRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/story/$id': typeof StoryIdRoute
   '/editor/': typeof EditorIndexRoute
+  '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
 }
 export interface FileRouteTypes {
@@ -307,9 +325,11 @@ export interface FileRouteTypes {
     | '/watch'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
     | '/editor/'
+    | '/labs/'
     | '/learn/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -338,9 +358,11 @@ export interface FileRouteTypes {
     | '/watch'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
     | '/editor'
+    | '/labs'
     | '/learn'
   id:
     | '__root__'
@@ -369,9 +391,11 @@ export interface FileRouteTypes {
     | '/watch'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/labs/$path'
     | '/learn/$slug'
     | '/story/$id'
     | '/editor/'
+    | '/labs/'
     | '/learn/'
   fileRoutesById: FileRoutesById
 }
@@ -401,9 +425,11 @@ export interface RootRouteChildren {
   WatchRoute: typeof WatchRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
+  LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
   StoryIdRoute: typeof StoryIdRoute
   EditorIndexRoute: typeof EditorIndexRoute
+  LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
 }
 
@@ -577,6 +603,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/': {
+      id: '/labs/'
+      path: '/labs'
+      fullPath: '/labs/'
+      preLoaderRoute: typeof LabsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/editor/': {
       id: '/editor/'
       path: '/editor'
@@ -596,6 +629,13 @@ declare module '@tanstack/react-router' {
       path: '/learn/$slug'
       fullPath: '/learn/$slug'
       preLoaderRoute: typeof LearnSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/$path': {
+      id: '/labs/$path'
+      path: '/labs/$path'
+      fullPath: '/labs/$path'
+      preLoaderRoute: typeof LabsPathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor/tools': {
@@ -641,9 +681,11 @@ const rootRouteChildren: RootRouteChildren = {
   WatchRoute: WatchRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
+  LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
   StoryIdRoute: StoryIdRoute,
   EditorIndexRoute: EditorIndexRoute,
+  LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
 }
 export const routeTree = rootRouteImport
