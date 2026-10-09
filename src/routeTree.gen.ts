@@ -9,175 +9,55 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WatchRouteImport } from './routes/watch'
-import { Route as ValuesRouteImport } from './routes/values'
-import { Route as ToolsRouteImport } from './routes/tools'
-import { Route as TodayRouteImport } from './routes/today'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as StandardsRouteImport } from './routes/standards'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ShowcaseRouteImport } from './routes/showcase'
-import { Route as SearchRouteImport } from './routes/search'
-import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
-import { Route as QuizRouteImport } from './routes/quiz'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as OriginalsRouteImport } from './routes/originals'
-import { Route as NewsletterRouteImport } from './routes/newsletter'
-import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
-import { Route as NewsRouteImport } from './routes/news'
-import { Route as MinistryRouteImport } from './routes/ministry'
-import { Route as ListenRouteImport } from './routes/listen'
-import { Route as InterviewsRouteImport } from './routes/interviews'
-import { Route as GovernmentRouteImport } from './routes/government'
-import { Route as FundingRouteImport } from './routes/funding'
-import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
-import { Route as CorrectionsRouteImport } from './routes/corrections'
-import { Route as AskRouteImport } from './routes/ask'
-import { Route as AdvertiseRouteImport } from './routes/advertise'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as LearnIndexRouteImport } from './routes/learn.index'
-import { Route as LabsIndexRouteImport } from './routes/labs.index'
-import { Route as EditorIndexRouteImport } from './routes/editor.index'
-import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
-import { Route as StoryIdRouteImport } from './routes/story.$id'
-import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
-import { Route as LabsPathRouteImport } from './routes/labs.$path'
-import { Route as EditorToolsRouteImport } from './routes/editor.tools'
-import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
-import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdvertiseRouteImport } from './routes/advertise'
+import { Route as AskRouteImport } from './routes/ask'
+import { Route as CorrectionsRouteImport } from './routes/corrections'
+import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
+import { Route as FundingRouteImport } from './routes/funding'
+import { Route as GovernmentRouteImport } from './routes/government'
+import { Route as InterviewsRouteImport } from './routes/interviews'
+import { Route as ListenRouteImport } from './routes/listen'
+import { Route as MinistryRouteImport } from './routes/ministry'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
+import { Route as NewsletterRouteImport } from './routes/newsletter'
+import { Route as OriginalsRouteImport } from './routes/originals'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as ShowcaseRouteImport } from './routes/showcase'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as StandardsRouteImport } from './routes/standards'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TodayRouteImport } from './routes/today'
+import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as ValuesRouteImport } from './routes/values'
+import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
-import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
-import { Route as LabsYoungPassportRouteImport } from './routes/labs.young.passport'
-import { Route as LabsYoungMakersRouteImport } from './routes/labs.young.makers'
-import { Route as LabsYoungGrownUpsRouteImport } from './routes/labs.young.grown-ups'
-import { Route as LabsYoungExplorersRouteImport } from './routes/labs.young.explorers'
-import { Route as LabsYoungActivityRouteImport } from './routes/labs.young.$activity'
+import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
+import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
+import { Route as EditorIndexRouteImport } from './routes/editor.index'
+import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
+import { Route as EditorToolsRouteImport } from './routes/editor.tools'
+import { Route as LabsIndexRouteImport } from './routes/labs.index'
+import { Route as LabsPathRouteImport } from './routes/labs.$path'
+import { Route as LearnIndexRouteImport } from './routes/learn.index'
+import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
+import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
+import { Route as LabsYoungActivityRouteImport } from './routes/labs.young.$activity'
+import { Route as LabsYoungExplorersRouteImport } from './routes/labs.young.explorers'
+import { Route as LabsYoungGrownUpsRouteImport } from './routes/labs.young.grown-ups'
+import { Route as LabsYoungMakersRouteImport } from './routes/labs.young.makers'
+import { Route as LabsYoungPassportRouteImport } from './routes/labs.young.passport'
 
-const WatchRoute = WatchRouteImport.update({
-  id: '/watch',
-  path: '/watch',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ValuesRoute = ValuesRouteImport.update({
-  id: '/values',
-  path: '/values',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsRoute = ToolsRouteImport.update({
-  id: '/tools',
-  path: '/tools',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TodayRoute = TodayRouteImport.update({
-  id: '/today',
-  path: '/today',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StandardsRoute = StandardsRouteImport.update({
-  id: '/standards',
-  path: '/standards',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShowcaseRoute = ShowcaseRouteImport.update({
-  id: '/showcase',
-  path: '/showcase',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SearchRoute = SearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RssDotxmlRoute = RssDotxmlRouteImport.update({
-  id: '/rss.xml',
-  path: '/rss.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const QuizRoute = QuizRouteImport.update({
-  id: '/quiz',
-  path: '/quiz',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OriginalsRoute = OriginalsRouteImport.update({
-  id: '/originals',
-  path: '/originals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NewsletterRoute = NewsletterRouteImport.update({
-  id: '/newsletter',
-  path: '/newsletter',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NewsSitemapDotxmlRoute = NewsSitemapDotxmlRouteImport.update({
-  id: '/news-sitemap.xml',
-  path: '/news-sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NewsRoute = NewsRouteImport.update({
-  id: '/news',
-  path: '/news',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MinistryRoute = MinistryRouteImport.update({
-  id: '/ministry',
-  path: '/ministry',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ListenRoute = ListenRouteImport.update({
-  id: '/listen',
-  path: '/listen',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InterviewsRoute = InterviewsRouteImport.update({
-  id: '/interviews',
-  path: '/interviews',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GovernmentRoute = GovernmentRouteImport.update({
-  id: '/government',
-  path: '/government',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FundingRoute = FundingRouteImport.update({
-  id: '/funding',
-  path: '/funding',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DeskHealthDotjsonRoute = DeskHealthDotjsonRouteImport.update({
-  id: '/desk-health.json',
-  path: '/desk-health.json',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CorrectionsRoute = CorrectionsRouteImport.update({
-  id: '/corrections',
-  path: '/corrections',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AskRoute = AskRouteImport.update({
-  id: '/ask',
-  path: '/ask',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdvertiseRoute = AdvertiseRouteImport.update({
-  id: '/advertise',
-  path: '/advertise',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -185,59 +65,129 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AdvertiseRoute = AdvertiseRouteImport.update({
+  id: '/advertise',
+  path: '/advertise',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LearnIndexRoute = LearnIndexRouteImport.update({
-  id: '/learn/',
-  path: '/learn/',
+const AskRoute = AskRouteImport.update({
+  id: '/ask',
+  path: '/ask',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabsIndexRoute = LabsIndexRouteImport.update({
-  id: '/labs/',
-  path: '/labs/',
+const CorrectionsRoute = CorrectionsRouteImport.update({
+  id: '/corrections',
+  path: '/corrections',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EditorIndexRoute = EditorIndexRouteImport.update({
-  id: '/editor/',
-  path: '/editor/',
+const DeskHealthDotjsonRoute = DeskHealthDotjsonRouteImport.update({
+  id: '/desk-health.json',
+  path: '/desk-health.json',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DispatchIndexRoute = DispatchIndexRouteImport.update({
-  id: '/dispatch/',
-  path: '/dispatch/',
+const FundingRoute = FundingRouteImport.update({
+  id: '/funding',
+  path: '/funding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StoryIdRoute = StoryIdRouteImport.update({
-  id: '/story/$id',
-  path: '/story/$id',
+const GovernmentRoute = GovernmentRouteImport.update({
+  id: '/government',
+  path: '/government',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LearnSlugRoute = LearnSlugRouteImport.update({
-  id: '/learn/$slug',
-  path: '/learn/$slug',
+const InterviewsRoute = InterviewsRouteImport.update({
+  id: '/interviews',
+  path: '/interviews',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabsPathRoute = LabsPathRouteImport.update({
-  id: '/labs/$path',
-  path: '/labs/$path',
+const ListenRoute = ListenRouteImport.update({
+  id: '/listen',
+  path: '/listen',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EditorToolsRoute = EditorToolsRouteImport.update({
-  id: '/editor/tools',
-  path: '/editor/tools',
+const MinistryRoute = MinistryRouteImport.update({
+  id: '/ministry',
+  path: '/ministry',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EditorSlugRoute = EditorSlugRouteImport.update({
-  id: '/editor/$slug',
-  path: '/editor/$slug',
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DispatchIdRoute = DispatchIdRouteImport.update({
-  id: '/dispatch/$id',
-  path: '/dispatch/$id',
+const NewsSitemapDotxmlRoute = NewsSitemapDotxmlRouteImport.update({
+  id: '/news-sitemap.xml',
+  path: '/news-sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsletterRoute = NewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OriginalsRoute = OriginalsRouteImport.update({
+  id: '/originals',
+  path: '/originals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShowcaseRoute = ShowcaseRouteImport.update({
+  id: '/showcase',
+  path: '/showcase',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StandardsRoute = StandardsRouteImport.update({
+  id: '/standards',
+  path: '/standards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TodayRoute = TodayRouteImport.update({
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValuesRoute = ValuesRouteImport.update({
+  id: '/values',
+  path: '/values',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WatchRoute = WatchRouteImport.update({
+  id: '/watch',
+  path: '/watch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
@@ -245,29 +195,64 @@ const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DispatchIndexRoute = DispatchIndexRouteImport.update({
+  id: '/dispatch/',
+  path: '/dispatch/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatchIdRoute = DispatchIdRouteImport.update({
+  id: '/dispatch/$id',
+  path: '/dispatch/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorIndexRoute = EditorIndexRouteImport.update({
+  id: '/editor/',
+  path: '/editor/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorSlugRoute = EditorSlugRouteImport.update({
+  id: '/editor/$slug',
+  path: '/editor/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorToolsRoute = EditorToolsRouteImport.update({
+  id: '/editor/tools',
+  path: '/editor/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsIndexRoute = LabsIndexRouteImport.update({
+  id: '/labs/',
+  path: '/labs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsPathRoute = LabsPathRouteImport.update({
+  id: '/labs/$path',
+  path: '/labs/$path',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnIndexRoute = LearnIndexRouteImport.update({
+  id: '/learn/',
+  path: '/learn/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnSlugRoute = LearnSlugRouteImport.update({
+  id: '/learn/$slug',
+  path: '/learn/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoryIdRoute = StoryIdRouteImport.update({
+  id: '/story/$id',
+  path: '/story/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
+  id: '/api/dispatch-audio/$id',
+  path: '/api/dispatch-audio/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LabsYoungIndexRoute = LabsYoungIndexRouteImport.update({
   id: '/labs/young/',
   path: '/labs/young/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LabsYoungPassportRoute = LabsYoungPassportRouteImport.update({
-  id: '/labs/young/passport',
-  path: '/labs/young/passport',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LabsYoungMakersRoute = LabsYoungMakersRouteImport.update({
-  id: '/labs/young/makers',
-  path: '/labs/young/makers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LabsYoungGrownUpsRoute = LabsYoungGrownUpsRouteImport.update({
-  id: '/labs/young/grown-ups',
-  path: '/labs/young/grown-ups',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LabsYoungExplorersRoute = LabsYoungExplorersRouteImport.update({
-  id: '/labs/young/explorers',
-  path: '/labs/young/explorers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabsYoungActivityRoute = LabsYoungActivityRouteImport.update({
@@ -275,9 +260,24 @@ const LabsYoungActivityRoute = LabsYoungActivityRouteImport.update({
   path: '/labs/young/$activity',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
-  id: '/api/dispatch-audio/$id',
-  path: '/api/dispatch-audio/$id',
+const LabsYoungExplorersRoute = LabsYoungExplorersRouteImport.update({
+  id: '/labs/young/explorers',
+  path: '/labs/young/explorers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungGrownUpsRoute = LabsYoungGrownUpsRouteImport.update({
+  id: '/labs/young/grown-ups',
+  path: '/labs/young/grown-ups',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungMakersRoute = LabsYoungMakersRouteImport.update({
+  id: '/labs/young/makers',
+  path: '/labs/young/makers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsYoungPassportRoute = LabsYoungPassportRouteImport.update({
+  id: '/labs/young/passport',
+  path: '/labs/young/passport',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -617,179 +617,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/watch': {
-      id: '/watch'
-      path: '/watch'
-      fullPath: '/watch'
-      preLoaderRoute: typeof WatchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/values': {
-      id: '/values'
-      path: '/values'
-      fullPath: '/values'
-      preLoaderRoute: typeof ValuesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools': {
-      id: '/tools'
-      path: '/tools'
-      fullPath: '/tools'
-      preLoaderRoute: typeof ToolsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/today': {
-      id: '/today'
-      path: '/today'
-      fullPath: '/today'
-      preLoaderRoute: typeof TodayRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/standards': {
-      id: '/standards'
-      path: '/standards'
-      fullPath: '/standards'
-      preLoaderRoute: typeof StandardsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/showcase': {
-      id: '/showcase'
-      path: '/showcase'
-      fullPath: '/showcase'
-      preLoaderRoute: typeof ShowcaseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/search': {
-      id: '/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rss.xml': {
-      id: '/rss.xml'
-      path: '/rss.xml'
-      fullPath: '/rss.xml'
-      preLoaderRoute: typeof RssDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/quiz': {
-      id: '/quiz'
-      path: '/quiz'
-      fullPath: '/quiz'
-      preLoaderRoute: typeof QuizRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/originals': {
-      id: '/originals'
-      path: '/originals'
-      fullPath: '/originals'
-      preLoaderRoute: typeof OriginalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/newsletter': {
-      id: '/newsletter'
-      path: '/newsletter'
-      fullPath: '/newsletter'
-      preLoaderRoute: typeof NewsletterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/news-sitemap.xml': {
-      id: '/news-sitemap.xml'
-      path: '/news-sitemap.xml'
-      fullPath: '/news-sitemap.xml'
-      preLoaderRoute: typeof NewsSitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/news': {
-      id: '/news'
-      path: '/news'
-      fullPath: '/news'
-      preLoaderRoute: typeof NewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ministry': {
-      id: '/ministry'
-      path: '/ministry'
-      fullPath: '/ministry'
-      preLoaderRoute: typeof MinistryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/listen': {
-      id: '/listen'
-      path: '/listen'
-      fullPath: '/listen'
-      preLoaderRoute: typeof ListenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/interviews': {
-      id: '/interviews'
-      path: '/interviews'
-      fullPath: '/interviews'
-      preLoaderRoute: typeof InterviewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/government': {
-      id: '/government'
-      path: '/government'
-      fullPath: '/government'
-      preLoaderRoute: typeof GovernmentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/funding': {
-      id: '/funding'
-      path: '/funding'
-      fullPath: '/funding'
-      preLoaderRoute: typeof FundingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/desk-health.json': {
-      id: '/desk-health.json'
-      path: '/desk-health.json'
-      fullPath: '/desk-health.json'
-      preLoaderRoute: typeof DeskHealthDotjsonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/corrections': {
-      id: '/corrections'
-      path: '/corrections'
-      fullPath: '/corrections'
-      preLoaderRoute: typeof CorrectionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ask': {
-      id: '/ask'
-      path: '/ask'
-      fullPath: '/ask'
-      preLoaderRoute: typeof AskRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/advertise': {
-      id: '/advertise'
-      path: '/advertise'
-      fullPath: '/advertise'
-      preLoaderRoute: typeof AdvertiseRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -799,81 +631,179 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/advertise': {
+      id: '/advertise'
+      path: '/advertise'
+      fullPath: '/advertise'
+      preLoaderRoute: typeof AdvertiseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn/': {
-      id: '/learn/'
-      path: '/learn'
-      fullPath: '/learn/'
-      preLoaderRoute: typeof LearnIndexRouteImport
+    '/ask': {
+      id: '/ask'
+      path: '/ask'
+      fullPath: '/ask'
+      preLoaderRoute: typeof AskRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/labs/': {
-      id: '/labs/'
-      path: '/labs'
-      fullPath: '/labs/'
-      preLoaderRoute: typeof LabsIndexRouteImport
+    '/corrections': {
+      id: '/corrections'
+      path: '/corrections'
+      fullPath: '/corrections'
+      preLoaderRoute: typeof CorrectionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/editor/': {
-      id: '/editor/'
-      path: '/editor'
-      fullPath: '/editor/'
-      preLoaderRoute: typeof EditorIndexRouteImport
+    '/desk-health.json': {
+      id: '/desk-health.json'
+      path: '/desk-health.json'
+      fullPath: '/desk-health.json'
+      preLoaderRoute: typeof DeskHealthDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dispatch/': {
-      id: '/dispatch/'
-      path: '/dispatch'
-      fullPath: '/dispatch/'
-      preLoaderRoute: typeof DispatchIndexRouteImport
+    '/funding': {
+      id: '/funding'
+      path: '/funding'
+      fullPath: '/funding'
+      preLoaderRoute: typeof FundingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/story/$id': {
-      id: '/story/$id'
-      path: '/story/$id'
-      fullPath: '/story/$id'
-      preLoaderRoute: typeof StoryIdRouteImport
+    '/government': {
+      id: '/government'
+      path: '/government'
+      fullPath: '/government'
+      preLoaderRoute: typeof GovernmentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn/$slug': {
-      id: '/learn/$slug'
-      path: '/learn/$slug'
-      fullPath: '/learn/$slug'
-      preLoaderRoute: typeof LearnSlugRouteImport
+    '/interviews': {
+      id: '/interviews'
+      path: '/interviews'
+      fullPath: '/interviews'
+      preLoaderRoute: typeof InterviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/labs/$path': {
-      id: '/labs/$path'
-      path: '/labs/$path'
-      fullPath: '/labs/$path'
-      preLoaderRoute: typeof LabsPathRouteImport
+    '/listen': {
+      id: '/listen'
+      path: '/listen'
+      fullPath: '/listen'
+      preLoaderRoute: typeof ListenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/editor/tools': {
-      id: '/editor/tools'
-      path: '/editor/tools'
-      fullPath: '/editor/tools'
-      preLoaderRoute: typeof EditorToolsRouteImport
+    '/ministry': {
+      id: '/ministry'
+      path: '/ministry'
+      fullPath: '/ministry'
+      preLoaderRoute: typeof MinistryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/editor/$slug': {
-      id: '/editor/$slug'
-      path: '/editor/$slug'
-      fullPath: '/editor/$slug'
-      preLoaderRoute: typeof EditorSlugRouteImport
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dispatch/$id': {
-      id: '/dispatch/$id'
-      path: '/dispatch/$id'
-      fullPath: '/dispatch/$id'
-      preLoaderRoute: typeof DispatchIdRouteImport
+    '/news-sitemap.xml': {
+      id: '/news-sitemap.xml'
+      path: '/news-sitemap.xml'
+      fullPath: '/news-sitemap.xml'
+      preLoaderRoute: typeof NewsSitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newsletter': {
+      id: '/newsletter'
+      path: '/newsletter'
+      fullPath: '/newsletter'
+      preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/originals': {
+      id: '/originals'
+      path: '/originals'
+      fullPath: '/originals'
+      preLoaderRoute: typeof OriginalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/showcase': {
+      id: '/showcase'
+      path: '/showcase'
+      fullPath: '/showcase'
+      preLoaderRoute: typeof ShowcaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/standards': {
+      id: '/standards'
+      path: '/standards'
+      fullPath: '/standards'
+      preLoaderRoute: typeof StandardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/today': {
+      id: '/today'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/values': {
+      id: '/values'
+      path: '/values'
+      fullPath: '/values'
+      preLoaderRoute: typeof ValuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/watch': {
+      id: '/watch'
+      path: '/watch'
+      fullPath: '/watch'
+      preLoaderRoute: typeof WatchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/keeper-tts': {
@@ -883,39 +813,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dispatch/': {
+      id: '/dispatch/'
+      path: '/dispatch'
+      fullPath: '/dispatch/'
+      preLoaderRoute: typeof DispatchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatch/$id': {
+      id: '/dispatch/$id'
+      path: '/dispatch/$id'
+      fullPath: '/dispatch/$id'
+      preLoaderRoute: typeof DispatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor/': {
+      id: '/editor/'
+      path: '/editor'
+      fullPath: '/editor/'
+      preLoaderRoute: typeof EditorIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor/$slug': {
+      id: '/editor/$slug'
+      path: '/editor/$slug'
+      fullPath: '/editor/$slug'
+      preLoaderRoute: typeof EditorSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor/tools': {
+      id: '/editor/tools'
+      path: '/editor/tools'
+      fullPath: '/editor/tools'
+      preLoaderRoute: typeof EditorToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/': {
+      id: '/labs/'
+      path: '/labs'
+      fullPath: '/labs/'
+      preLoaderRoute: typeof LabsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/$path': {
+      id: '/labs/$path'
+      path: '/labs/$path'
+      fullPath: '/labs/$path'
+      preLoaderRoute: typeof LabsPathRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/': {
+      id: '/learn/'
+      path: '/learn'
+      fullPath: '/learn/'
+      preLoaderRoute: typeof LearnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/$slug': {
+      id: '/learn/$slug'
+      path: '/learn/$slug'
+      fullPath: '/learn/$slug'
+      preLoaderRoute: typeof LearnSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/story/$id': {
+      id: '/story/$id'
+      path: '/story/$id'
+      fullPath: '/story/$id'
+      preLoaderRoute: typeof StoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/dispatch-audio/$id': {
+      id: '/api/dispatch-audio/$id'
+      path: '/api/dispatch-audio/$id'
+      fullPath: '/api/dispatch-audio/$id'
+      preLoaderRoute: typeof ApiDispatchAudioIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/labs/young/': {
       id: '/labs/young/'
       path: '/labs/young'
       fullPath: '/labs/young/'
       preLoaderRoute: typeof LabsYoungIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/labs/young/passport': {
-      id: '/labs/young/passport'
-      path: '/labs/young/passport'
-      fullPath: '/labs/young/passport'
-      preLoaderRoute: typeof LabsYoungPassportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/labs/young/makers': {
-      id: '/labs/young/makers'
-      path: '/labs/young/makers'
-      fullPath: '/labs/young/makers'
-      preLoaderRoute: typeof LabsYoungMakersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/labs/young/grown-ups': {
-      id: '/labs/young/grown-ups'
-      path: '/labs/young/grown-ups'
-      fullPath: '/labs/young/grown-ups'
-      preLoaderRoute: typeof LabsYoungGrownUpsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/labs/young/explorers': {
-      id: '/labs/young/explorers'
-      path: '/labs/young/explorers'
-      fullPath: '/labs/young/explorers'
-      preLoaderRoute: typeof LabsYoungExplorersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/labs/young/$activity': {
@@ -925,11 +904,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabsYoungActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/dispatch-audio/$id': {
-      id: '/api/dispatch-audio/$id'
-      path: '/api/dispatch-audio/$id'
-      fullPath: '/api/dispatch-audio/$id'
-      preLoaderRoute: typeof ApiDispatchAudioIdRouteImport
+    '/labs/young/explorers': {
+      id: '/labs/young/explorers'
+      path: '/labs/young/explorers'
+      fullPath: '/labs/young/explorers'
+      preLoaderRoute: typeof LabsYoungExplorersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/grown-ups': {
+      id: '/labs/young/grown-ups'
+      path: '/labs/young/grown-ups'
+      fullPath: '/labs/young/grown-ups'
+      preLoaderRoute: typeof LabsYoungGrownUpsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/makers': {
+      id: '/labs/young/makers'
+      path: '/labs/young/makers'
+      fullPath: '/labs/young/makers'
+      preLoaderRoute: typeof LabsYoungMakersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/young/passport': {
+      id: '/labs/young/passport'
+      path: '/labs/young/passport'
+      fullPath: '/labs/young/passport'
+      preLoaderRoute: typeof LabsYoungPassportRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
