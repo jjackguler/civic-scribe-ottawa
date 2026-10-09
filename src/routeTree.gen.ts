@@ -29,6 +29,7 @@ import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as FundingRouteImport } from './routes/funding'
 import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
 import { Route as CorrectionsRouteImport } from './routes/corrections'
+import { Route as AskRouteImport } from './routes/ask'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -38,6 +39,7 @@ import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
+import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
 
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
@@ -139,6 +141,11 @@ const CorrectionsRoute = CorrectionsRouteImport.update({
   path: '/corrections',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AskRoute = AskRouteImport.update({
+  id: '/ask',
+  path: '/ask',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdvertiseRoute = AdvertiseRouteImport.update({
   id: '/advertise',
   path: '/advertise',
@@ -184,11 +191,17 @@ const EditorSlugRoute = EditorSlugRouteImport.update({
   path: '/editor/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
+  id: '/api/keeper-tts',
+  path: '/api/keeper-tts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -209,6 +222,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
+  '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
@@ -220,6 +234,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -240,6 +255,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
+  '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
@@ -252,6 +268,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -272,6 +289,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRoute
   '/watch': typeof WatchRoute
+  '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/learn/$slug': typeof LearnSlugRoute
@@ -285,6 +303,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/ask'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -305,6 +324,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
+    | '/api/keeper-tts'
     | '/editor/$slug'
     | '/editor/tools'
     | '/learn/$slug'
@@ -316,6 +336,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/ask'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -336,6 +357,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
+    | '/api/keeper-tts'
     | '/editor/$slug'
     | '/editor/tools'
     | '/learn/$slug'
@@ -347,6 +369,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/ask'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -367,6 +390,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/watch'
+    | '/api/keeper-tts'
     | '/editor/$slug'
     | '/editor/tools'
     | '/learn/$slug'
@@ -379,6 +403,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdvertiseRoute: typeof AdvertiseRoute
+  AskRoute: typeof AskRoute
   CorrectionsRoute: typeof CorrectionsRoute
   DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
   FundingRoute: typeof FundingRoute
@@ -399,6 +424,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRoute
   WatchRoute: typeof WatchRoute
+  ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
   LearnSlugRoute: typeof LearnSlugRoute
@@ -549,6 +575,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CorrectionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ask': {
+      id: '/ask'
+      path: '/ask'
+      fullPath: '/ask'
+      preLoaderRoute: typeof AskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/advertise': {
       id: '/advertise'
       path: '/advertise'
@@ -612,6 +645,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/keeper-tts': {
+      id: '/api/keeper-tts'
+      path: '/api/keeper-tts'
+      fullPath: '/api/keeper-tts'
+      preLoaderRoute: typeof ApiKeeperTtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -619,6 +659,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdvertiseRoute: AdvertiseRoute,
+  AskRoute: AskRoute,
   CorrectionsRoute: CorrectionsRoute,
   DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
   FundingRoute: FundingRoute,
@@ -639,6 +680,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRoute,
   WatchRoute: WatchRoute,
+  ApiKeeperTtsRoute: ApiKeeperTtsRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
   LearnSlugRoute: LearnSlugRoute,
