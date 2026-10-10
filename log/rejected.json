@@ -3,7 +3,7 @@
     "id": "7fquf9",
     "at": "2026-10-10T05:31:36.558Z",
     "stage": "reporter",
-    "headline": "Le gouvernement du Canada annoncera du soutien pour l’intelligence artificielle à London",
+    "headline": "Le gouvernement du Canada annoncera du soutien pour l\u2019intelligence artificielle \u00e0 London",
     "reasons": [
       "skip: The single source provides only a brief, truncated media advisory announcing upcoming artificial intelligence support in London, Ontario, which cannot support a 150-word factual article without paddin"
     ]
@@ -15,60 +15,6 @@
     "headline": "Government of Canada to announce support for artificial intelligence in London",
     "reasons": [
       "skip: The provided source is a single truncated media advisory excerpt that lacks sufficient factual detail to sustain a 150-word news article without padding or speculation."
-    ]
-  },
-  {
-    "id": "1173smd",
-    "at": "2026-10-10T05:31:01.249Z",
-    "stage": "reporter",
-    "headline": "OpenAI’s revenue is reportedly $20 billion less than previously projected",
-    "reasons": [
-      "no news section"
-    ]
-  },
-  {
-    "id": "1kvh7gb",
-    "at": "2026-10-10T05:30:17.509Z",
-    "stage": "reporter",
-    "headline": "Anthropic launches free AI security scans for open-source projects",
-    "reasons": [
-      "no reply"
-    ]
-  },
-  {
-    "id": "1qewv4f",
-    "at": "2026-10-10T05:22:33.126Z",
-    "stage": "reporter",
-    "headline": "Nikon microscopic video competition winner disqualified for using generative AI",
-    "reasons": [
-      "no reply"
-    ]
-  },
-  {
-    "id": "f93735",
-    "at": "2026-10-10T05:22:32.886Z",
-    "stage": "reporter",
-    "headline": "An Anthropic AI model sent a false homicide tip to Philadelphia police",
-    "reasons": [
-      "no reply"
-    ]
-  },
-  {
-    "id": "1kc5xax",
-    "at": "2026-10-10T05:22:32.747Z",
-    "stage": "reporter",
-    "headline": "Amazon and others are done keeping data center deals secret. Is it enough to build trust?",
-    "reasons": [
-      "no reply"
-    ]
-  },
-  {
-    "id": "5jid90",
-    "at": "2026-10-10T05:22:32.570Z",
-    "stage": "reporter",
-    "headline": "Fired OpenAI safety researchers dispute misconduct claims, warn of chilling effect",
-    "reasons": [
-      "no reply"
     ]
   }
 ]
