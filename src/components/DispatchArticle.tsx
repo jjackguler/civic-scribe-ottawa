@@ -14,6 +14,9 @@ import { DEPTHS, splitMarkers, spokenText, stripMarkers, type Dispatch, type Dis
 import type { Locale } from "@/lib/i18n";
 import { DispatchRail, DISPATCH_WORD, keepNames, listOutlets, ReportDots, spanLabel } from "./Dispatch";
 import { YourTake } from "./YouthKit";
+import { ShareBar } from "./ShareBar";
+import { ShareImageButton } from "./ShareSheet";
+import { dispatchCard } from "@/lib/share-content";
 
 const useIso = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
@@ -531,6 +534,7 @@ export function DispatchArticle({ d, audio, more }: { d: Dispatch; audio: boolea
   const [depth, setDepth] = useDepth();
   const bySrc = useMemo(() => new Map(d.sources.map(s => [s.key, s])), [d]);
   const sources = [...d.sources].sort((a, b) => a.publishedAt.localeCompare(b.publishedAt));
+  const card = useMemo(() => dispatchCard(d, locale), [d, locale]);
 
   return (
     <article lang={locale === "fr" ? "fr-CA" : "en-CA"}>
@@ -552,6 +556,7 @@ export function DispatchArticle({ d, audio, more }: { d: Dispatch; audio: boolea
             </div>
             <div className="grid gap-4 lg:pb-1">
               <Listen d={d} audio={audio} />
+              <ShareImageButton content={card} url={`/dispatch/${d.id}`} title={c.headline} campaign="dispatch" tone="outline-dark" className="justify-self-start" />
               <div className="border-t border-white/15 pt-3">
                 <ReportDots times={sources.map(s => s.publishedAt)} dark />
                 <p className="mt-1.5 flex justify-between gap-3 text-[0.75rem] text-white/70" suppressHydrationWarning>
@@ -599,6 +604,8 @@ export function DispatchArticle({ d, audio, more }: { d: Dispatch; audio: boolea
             <DispatchLabel d={d} />
             <ReportError title={c.headline} />
           </div>
+
+          <ShareBar url={`/dispatch/${d.id}`} title={c.headline} text={`${c.headline}\n${c.news}`} campaign="dispatch" className="mt-6" />
 
           <YourTake dispatchId={d.id} headline={c.headline} className="mt-10" />
         </div>

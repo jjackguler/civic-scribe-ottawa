@@ -15,6 +15,8 @@ import { useLocale } from "@/lib/locale-context";
 import { absUrl } from "@/lib/seo";
 import { dayLabel, useDailyQuiz, useQuizLocal, type DailyQuiz, type QuizDayState, type QuizQ } from "@/lib/youth";
 import type { Locale } from "@/lib/i18n";
+import { quizCard } from "@/lib/share-content";
+import { ShareImageButton } from "./ShareSheet";
 
 const COPY = {
   en: {
@@ -286,6 +288,7 @@ function ScoreCard({ quiz, answers, score, total, streak, grew, headRef }: {
   const qs = quiz[locale];
   const [status, setStatus] = useState("");
   const text = useMemo(() => (answers ? shareText(quiz, answers, locale) : ""), [quiz, answers, locale]);
+  const card = useMemo(() => (answers ? quizCard(quiz, answers, streak, locale) : null), [quiz, answers, streak, locale]);
   const msg = L.messages[Math.round((score / Math.max(1, total)) * 5)] ?? L.messages[0];
   useEffect(() => { headRef.current?.focus({ preventScroll: true }); }, [headRef]);
 
@@ -328,6 +331,7 @@ function ScoreCard({ quiz, answers, score, total, streak, grew, headRef }: {
               {typeof navigator !== "undefined" && typeof navigator.share === "function" ? <Share2 className="h-5 w-5" aria-hidden="true" /> : <Copy className="h-5 w-5" aria-hidden="true" />}
               {L.share}
             </button>
+            {card && <ShareImageButton content={card} url="/quiz" title={`${L.shareTitle} · ${score}/${total}`} campaign="quiz" className="min-h-12 !rounded-none" />}
             <p className="text-[0.9rem] font-semibold text-spruce" aria-live="polite">{status}</p>
           </div>
         </div>

@@ -12,9 +12,11 @@
  */
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
-import { ArrowRight, Check, ChevronLeft, ChevronRight, Pause, Play, RotateCcw, X } from "lucide-react";
+import { ArrowRight, Check, ChevronLeft, ChevronRight, ImageIcon, Pause, Play, RotateCcw, X } from "lucide-react";
 import { StoryImage } from "./StoryImage";
 import { storyKicker } from "./StoryCard";
+import { ShareSheet } from "./ShareSheet";
+import { storyCard } from "@/lib/share-content";
 import { useLocale } from "@/lib/locale-context";
 import { fixtureRequested } from "@/lib/dispatch";
 import { buildToday, useSeen, useToday, type TodayItem } from "@/lib/youth";
@@ -56,6 +58,7 @@ const COPY = {
     home: "Go to the front page",
     launcher: "Today's top stories, 60 seconds",
     start: "Start",
+    share: "Share this story as an image",
   },
   fr: {
     title: "L'actualité en 60 secondes",
@@ -88,6 +91,7 @@ const COPY = {
     home: "Aller à la une",
     launcher: "Les grandes nouvelles du jour, en 60 secondes",
     start: "Commencer",
+    share: "Partager cette nouvelle en image",
   },
 };
 
@@ -170,11 +174,13 @@ function StackPlayer({ items, startId }: { items: TodayItem[]; startId?: string 
   const [snapping, setSnapping] = useState(false);
   const [announce, setAnnounce] = useState("");
   const [round, setRound] = useState(0);
+  const [sharing, setSharing] = useState<TodayItem | null>(null);
   const reduced = useReducedMotion();
   const { markSeen } = useSeen();
   const cardRef = useRef<HTMLDivElement>(null);
   const atEnd = idx >= n;
-  const running = !userPaused && !held && !hidden && !reduced && !atEnd;
+  // The stack holds still while the share sheet is open.
+  const running = !userPaused && !held && !hidden && !reduced && !atEnd && !sharing;
   const cur = atEnd ? null : items[idx];
 
   useEffect(() => { if (cur) markSeen(cur.id); }, [cur?.id]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -320,7 +326,7 @@ function StackPlayer({ items, startId }: { items: TodayItem[]; startId?: string 
 
         {/* The slide */}
         <div key={`${idx}-${round}`} className={`relative flex min-h-0 flex-1 flex-col ${dir === "next" ? "today-in-next" : "today-in-prev"}`}>
-          {cur ? <Slide it={cur} /> : <EndCard n={n} onRestart={restart} />}
+          {cur ? <Slide it={cur} onShare={() => setSharing(cur)} /> : <EndCard n={n} onRestart={restart} />}
         </div>
 
         {held && <span className="today-hold absolute left-1/2 top-16 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-[0.8rem] font-semibold" aria-hidden="true">{L.pause}</span>}
@@ -345,11 +351,31 @@ function StackPlayer({ items, startId }: { items: TodayItem[]; startId?: string 
         <ChevronRight className="h-7 w-7" aria-hidden="true" />
         <span className="sr-only">{L.next}</span>
       </button>
+
+      {/* Outside the card, so taps in the sheet never turn the page. */}
+      {sharing && (
+        <ShareSheet
+          open
+          onOpenChange={o => { if (!o) { setSharing(null); cardRef.current?.focus({ preventScroll: true }); } }}
+          content={storyCard({
+            id: sharing.id,
+            kind: sharing.kind,
+            kicker: kickerOf(sharing, locale),
+            headline: sharing.headline,
+            what: sharing.what,
+            outlets: sharing.outlets,
+            path: sharing.link.to === "/dispatch/$id" ? `/dispatch/${sharing.link.id}` : `/story/${sharing.link.id}`,
+          }, locale)}
+          url={sharing.link.to === "/dispatch/$id" ? `/dispatch/${sharing.link.id}` : `/story/${sharing.link.id}`}
+          title={sharing.headline}
+          campaign="today"
+        />
+      )}
     </StackFrame>
   );
 }
 
-function Slide({ it }: { it: TodayItem }) {
+function Slide({ it, onShare }: { it: TodayItem; onShare: () => void }) {
   const { locale } = useLocale();
   const L = COPY[locale];
   const kicker = kickerOf(it, locale);
@@ -389,15 +415,21 @@ function Slide({ it }: { it: TodayItem }) {
         </div>
 
         <div className="mt-auto pt-3">
-          {it.link.to === "/dispatch/$id" ? (
-            <Link to="/dispatch/$id" params={{ id: it.link.id }} search={fixture ? ({ fixture: "1" } as never) : undefined} className="press flex min-h-12 items-center justify-center gap-2 bg-signal px-4 font-bold text-signal-ink hover:bg-white">
-              {L.readDispatch} <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </Link>
-          ) : (
-            <Link to="/story/$id" params={{ id: it.link.id }} className="press flex min-h-12 items-center justify-center gap-2 bg-signal px-4 font-bold text-signal-ink hover:bg-white">
-              {L.readStory} <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </Link>
-          )}
+          <div className="flex gap-2">
+            {it.link.to === "/dispatch/$id" ? (
+              <Link to="/dispatch/$id" params={{ id: it.link.id }} search={fixture ? ({ fixture: "1" } as never) : undefined} className="press flex min-h-12 flex-1 items-center justify-center gap-2 bg-signal px-4 font-bold text-signal-ink hover:bg-white">
+                {L.readDispatch} <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              </Link>
+            ) : (
+              <Link to="/story/$id" params={{ id: it.link.id }} className="press flex min-h-12 flex-1 items-center justify-center gap-2 bg-signal px-4 font-bold text-signal-ink hover:bg-white">
+                {L.readStory} <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              </Link>
+            )}
+            <button type="button" onClick={onShare} aria-haspopup="dialog" className="press grid min-h-12 w-12 shrink-0 place-items-center border-2 border-white/40 text-white hover:border-signal hover:bg-signal hover:text-signal-ink">
+              <ImageIcon className="h-5 w-5" aria-hidden="true" />
+              <span className="sr-only">{L.share}</span>
+            </button>
+          </div>
           <p className="mt-2 line-clamp-2 text-center text-[0.78rem] text-white/65">{L.from} {outletLine(it.outlets, locale)}</p>
         </div>
       </div>
