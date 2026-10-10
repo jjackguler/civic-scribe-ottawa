@@ -85,8 +85,17 @@ function save() {
   sharedWrite(KEY, { d: all, p, r: [...rejected()].slice(-800), day: g.__dispatchDay } satisfies Saved, KEEP_DAYS * 86400);
 }
 
-/** Every published dispatch, newest first. Never throws. */
+/**
+ * Every published dispatch, newest first. Never throws. Once the Newsroom
+ * (scripts/newsroom, stored on the `newsroom` branch) has published, its
+ * newest articles are the dispatches and this desk stands down.
+ */
 export async function listDispatches(): Promise<Dispatch[]> {
+  try {
+    const { newestArticles } = await import("./newsroom.server");
+    const articles = await newestArticles(12);
+    if (articles.length) return articles;
+  } catch { /* the Worker desk below */ }
   try { await loadShared(); } catch { /* memory only */ }
   return [...done().values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
@@ -344,6 +353,9 @@ export async function runDispatches(payload: NewsPayload): Promise<number> {
   try {
     const c = await import("./claude.server");
     if (!c.claudeAvailable()) return 0;
+    // The Newsroom writes our articles now; this desk is the fallback while it has published nothing.
+    const { newsroomHasItems } = await import("./newsroom.server");
+    if (await newsroomHasItems()) return 0;
     await loadShared();
     // French for drafts whose English passed, then English retries, then new events.
     const jobs: (() => Promise<Dispatch | null | void>)[] = [];

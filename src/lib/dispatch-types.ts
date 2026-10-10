@@ -65,10 +65,18 @@ export type DispatchSummary = {
   fr: { headline: string; news: string; matters?: string };
   /** Ids of the desk stories the dispatch was written from (links a story to its dispatch). */
   storyIds?: string[];
+  /** Set when this is a Newsroom article: its permanent slugs (/article/<en>, /fr/article/<fr>). */
+  article?: { en: string; fr: string };
 };
 
 export type DispatchList = { items: DispatchSummary[]; audio: boolean };
-export type DispatchPage = { dispatch: Dispatch | null; audio: boolean; more: DispatchSummary[] };
+export type DispatchPage = {
+  dispatch: Dispatch | null;
+  audio: boolean;
+  more: DispatchSummary[];
+  /** The Newsroom article that replaced this dispatch: the route redirects there. */
+  article?: { en: string; fr: string };
+};
 
 export function summarize(d: Dispatch): DispatchSummary {
   const times = [...d.sources].map(s => s.publishedAt).sort();
@@ -83,10 +91,10 @@ export function summarize(d: Dispatch): DispatchSummary {
   };
 }
 
-/** "[s1]" markers in a paragraph → text and the source keys after each run of text. */
+/** "[s1]" (source) and "[b1]" (our background page) markers in a paragraph → text and the keys after each run of text. */
 export function splitMarkers(p: string): { text: string; keys: string[] }[] {
   const out: { text: string; keys: string[] }[] = [];
-  const re = /\s*\[((?:s\d+)(?:\s*,\s*s\d+)*)\]/g;
+  const re = /\s*\[((?:[sb]\d+)(?:\s*,\s*[sb]\d+)*)\]/g;
   let last = 0;
   for (const m of p.matchAll(re)) {
     out.push({ text: p.slice(last, m.index), keys: m[1].split(/\s*,\s*/) });
@@ -96,7 +104,7 @@ export function splitMarkers(p: string): { text: string; keys: string[] }[] {
   return out;
 }
 
-export const stripMarkers = (p: string) => p.replace(/\s*\[(?:s\d+)(?:\s*,\s*s\d+)*\]/g, "");
+export const stripMarkers = (p: string) => p.replace(/\s*\[(?:[sb]\d+)(?:\s*,\s*[sb]\d+)*\]/g, "");
 
 /** Text the voice reads: headline, the news, the 30-second lines and the standard body. */
 export function spokenText(d: Dispatch, locale: "en" | "fr"): string {
