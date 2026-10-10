@@ -15,4 +15,4 @@ header[6] = 48; header[7] = 48;
 header.writeUInt16LE(1, 10); header.writeUInt16LE(32, 12);
 header.writeUInt32LE(png.length, 14); header.writeUInt32LE(22, 18);
 await writeFile(new URL('favicon.ico', root), Buffer.concat([header, png]));
-console.log('Rendered AB favicon, touch icon and profile marks.');
+console.log('Rendered news-spark favicon, touch icon and profile marks.');
