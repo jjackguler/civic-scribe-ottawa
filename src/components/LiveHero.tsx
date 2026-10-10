@@ -134,10 +134,9 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
 }
 
 /**
- * A story on the stage. The photo and the words never share pixels: the photo
- * fills the right of the stage (the top on phones) and the headline sits on a
- * solid panel that overlaps its edge, so every headline reads cleanly whatever
- * the picture behind it.
+ * A story on the stage. The photo and the words never share pixels: the
+ * headline has its own column on the left (below the photo on phones) and the
+ * photo its own on the right, uncovered, so both read cleanly.
  */
 function StoryStage({ s }: { s: StorySlide }) {
   const { locale } = useLocale();
@@ -146,7 +145,7 @@ function StoryStage({ s }: { s: StorySlide }) {
   return (
     <StoryLink s={s.story} className="group relative grid min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] lg:grid-cols-12 bg-night-2 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-brass">
       {/* Photo, or the house pattern when there is none */}
-      <div className="relative aspect-[16/10] lg:aspect-auto lg:[grid-column:5/13] lg:[grid-row:1] overflow-hidden">
+      <div className="relative aspect-[16/10] lg:aspect-auto lg:[grid-column:6/13] lg:[grid-row:1] overflow-hidden">
         {s.story.image ? (
           <div className="absolute inset-0 hero-kenburns">
             <StoryImage src={s.story.image} alt="" eager className="img-cover transition-transform duration-700 group-hover:scale-[1.03]" />
@@ -157,13 +156,11 @@ function StoryStage({ s }: { s: StorySlide }) {
             <p className="absolute right-6 bottom-6 left-0 text-right masthead-serif text-signal-ink text-[3.4rem] sm:text-[4.8rem] lg:text-[5.6rem] leading-none whitespace-nowrap overflow-hidden">{storyKicker(s.story, locale)}</p>
           </div>
         )}
-        {/* a short fade only where the panel meets the photo */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-night-2 to-transparent" aria-hidden="true" />
         {s.story.image && <span className="absolute top-3 right-3 bg-night/80 text-white/85 text-[0.7rem] px-1.5 py-0.5">Photo: {s.story.source}</span>}
       </div>
 
-      <div className="relative z-10 lg:[grid-column:1/8] lg:[grid-row:1] self-end flex">
-        <div className="hero-in w-full bg-night-2 lg:bg-night-2/95 lg:backdrop-blur-sm p-5 sm:p-8 lg:pl-10 lg:pr-12 lg:pt-8 lg:pb-9 border-l-[6px] border-signal">
+      <div className="relative lg:[grid-column:1/6] lg:[grid-row:1] flex">
+        <div className="hero-in w-full flex flex-col justify-end bg-night-2 p-5 sm:p-8 lg:px-8 lg:py-8 border-l-[6px] border-signal">
           <p className="flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
             {s.breaking ? (
               <span className="bg-live text-white px-2 py-0.5">{fr ? "Dernière heure" : "Breaking"}</span>
@@ -174,10 +171,10 @@ function StoryStage({ s }: { s: StorySlide }) {
             <span className="text-signal">{storyKicker(s.story, locale)}</span>
             {s.outlets >= 2 && <span className="text-white/75">{fr ? `${s.outlets} médias en parlent` : `${s.outlets} outlets reporting`}</span>}
           </p>
-          <h2 className="hl text-white text-[1.9rem] sm:text-[2.5rem] lg:text-[2.75rem] leading-[1.04] mt-3 text-balance">
+          <h2 className="hl text-white text-[1.7rem] sm:text-[2.2rem] lg:text-[2.15rem] xl:text-[2.4rem] leading-[1.06] mt-3 text-balance line-clamp-5">
             <span className="headline-sweep">{d.title}</span>
           </h2>
-          {d.summary && <p className="font-serif text-white/80 text-[1.05rem] sm:text-[1.15rem] leading-relaxed mt-3 max-w-[56ch] line-clamp-3">{d.summary}</p>}
+          {d.summary && <p className="font-serif text-white/80 text-[1.05rem] sm:text-[1.1rem] leading-relaxed mt-3 max-w-[56ch] line-clamp-3">{d.summary}</p>}
           <p className="mt-4 text-[0.85rem] text-white/65 flex flex-wrap gap-x-3 gap-y-1">
             <span className="font-semibold text-white/85">{s.story.source}</span>
             <HeroTime iso={s.story.publishedAt} />
