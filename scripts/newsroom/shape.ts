@@ -51,15 +51,31 @@ function cleanMarkers(p: string, valid: Set<string>, allowB: boolean): string {
   }).replace(/\s+([.,;:])/g, "$1").trim();
 }
 
-export function shapeDraft(r: RawDraft | null | undefined, sources: DispatchSource[], backgroundKeys: string[]): Draft | string {
+/**
+ * Headlines in our house style are in sentence case. Models often write Title
+ * Case ("OpenAI Cuts Revenue Estimate"), which would make every word look like
+ * a name to the fact guard. Lowercase capitalised words that the sources never
+ * capitalise; keep real names, acronyms and brand spellings (OpenAI, iPhone).
+ */
+export function sentenceCase(text: string, sourceText: string): string {
+  const keep = new Set([...sourceText.matchAll(/\b\p{Lu}[\p{L}\d'’-]*/gu)].map(m => m[0]));
+  return text.replace(/(^|[\s(«“"])(\p{Lu}[\p{Ll}'’-]+)\b/gu, (all, pre: string, w: string, at: number) => {
+    const sentenceStart = at === 0 || /[.!?:]\s*$/.test(text.slice(0, at + pre.length));
+    return sentenceStart || keep.has(w) ? all : pre + w.toLowerCase();
+  });
+}
+
+export function shapeDraft(r: RawDraft | null | undefined, sources: DispatchSource[], backgroundKeys: string[], sourceText = ""): Draft | string {
   if (!r || typeof r !== "object") return "no reply";
   if (r.skip) return `skip${r.reason ? `: ${str(r.reason, 200)}` : ""}`;
   const srcKeys = new Set(sources.map(s => s.key));
   const valid = new Set([...srcKeys, ...backgroundKeys]);
-  const headline = str(r.headline, 140);
+  const names = `${sourceText}\n${sources.map(s => `${s.title} ${s.outlet}`).join("\n")}`;
+  const sc = (t: string) => sentenceCase(t, names);
+  const headline = sc(str(r.headline, 140));
   const dek = str(r.dek, 300);
   const news = str(r.news, 300);
-  const thirty = arr<unknown>(r.thirty).map(x => str(x, 160)).filter(Boolean).slice(0, 3);
+  const thirty = arr<unknown>(r.thirty).map(x => sc(str(x, 160))).filter(Boolean).slice(0, 3);
   const matters = str(r.matters, 480);
   if (!headline || !news || thirty.length !== 3 || !matters) return "missing fields";
 

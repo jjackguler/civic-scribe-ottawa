@@ -102,7 +102,7 @@ ${HOUSE_VOICE}`;
 
 export async function reporter(m: Models, e: Event): Promise<Outcome<Draft>> {
   const raw = await m.json<RawDraft>("reporter", "writer", REPORTER, JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens }, sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
-  const d = shapeDraft(raw, e.sources, e.background.map(b => b.key));
+  const d = shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
   if (typeof d === "string") return { ok: false, note: note("reporter", m.model("writer"), "fail", [d]) };
   return { ok: true, value: d, note: note("reporter", m.model("writer"), "done", [`${countWords(d.sections.flatMap(s => s.paras))} words`, `${d.sections.map(s => s.kind).join(" → ")}`]) };
 }
@@ -136,7 +136,7 @@ export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome
   if (!first.facts.length && !first.style.length) return { ok: true, value: d, note: note("copy", "mechanical", "pass", ["fact guard: every name and number found in the sources", "house style: clean"]) };
   const problems = describe(first);
   const raw = await m.json<RawDraft>("copy", "writer", COPY, JSON.stringify({ problems, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
-  const fixed = shapeDraft(raw, e.sources, e.background.map(b => b.key));
+  const fixed = shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
   if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
   const again = copyProblems(fixed, e, "en");
   if (again.facts.length || again.style.length) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...describe(again)]) };
@@ -190,7 +190,7 @@ export async function translator(m: Models, e: Event, en: Draft): Promise<Outcom
   for (let attempt = 0; attempt < 2; attempt++) {
     const retry = bad.length ? `\n\nA previous French version was rejected: ${bad.slice(0, 14).join("; ")}. Fix exactly that.` : "";
     const raw = await m.json<RawDraft>("translator", "writer", TRANSLATOR, JSON.stringify({ english: toRaw(en), sources: sourcesFor(e), background: backgroundFor(e, "fr") }) + retry, { id: e.id, attempt }, 7000);
-    const fr = shapeDraft(raw, e.sources, e.background.map(b => b.key));
+    const fr = shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
     if (typeof fr === "string") { bad = [`shape: ${fr}`]; notes.push(`attempt ${attempt + 1}: ${fr}`); continue; }
     const misaligned = alignFrench(fr, en);
     if (misaligned) { bad = [misaligned]; notes.push(`attempt ${attempt + 1}: ${misaligned}`); continue; }
