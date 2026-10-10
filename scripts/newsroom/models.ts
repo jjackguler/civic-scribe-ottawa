@@ -81,8 +81,8 @@ export function liveModels(): Models | null {
   }
 
   const names: Record<Tier, string> = {
-    writer: env("NEWSROOM_GEMINI_WRITER") || "gemini-2.5-pro",
-    checker: env("NEWSROOM_GEMINI_CHECKER") || "gemini-2.5-flash",
+    writer: env("NEWSROOM_GEMINI_WRITER") || "gemini-3.1-pro-preview",
+    checker: env("NEWSROOM_GEMINI_CHECKER") || "gemini-3.8-flash",
   };
   return {
     provider: "gemini",
@@ -91,7 +91,7 @@ export function liveModels(): Models | null {
     async json<T>(role: RoleName, tier: Tier, system: string, user: string, _ctx: CallCtx, maxTokens = 8192) {
       // Try the chosen model, then fall back to models that are more widely available
       // (a retired name or a free-tier limit on Pro must not stop the newsroom).
-      const chain = [...new Set([names[tier], "gemini-2.5-flash", "gemini-flash-latest"])];
+      const chain = [...new Set([names[tier], "gemini-3.8-flash", "gemini-flash-latest", "gemini-pro-latest"])];
       for (const model of chain) {
         try {
           const res = await withRetry(() => fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {

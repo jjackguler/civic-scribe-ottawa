@@ -16,7 +16,7 @@
  *   --dry-run   fixture desk + canned desk replies: no feeds, no API, no key; writes to out/newsroom-store
  * Env:    ANTHROPIC_API_KEY or GEMINI_API_KEY (one is required outside --dry-run; Claude is used when both are set)
  *         NEWSROOM_MAX_PER_RUN (default 4), NEWSROOM_DAILY_CAP (default 40): events attempted
- *         NEWSROOM_GEMINI_WRITER (gemini-2.5-pro), NEWSROOM_GEMINI_CHECKER (gemini-2.5-flash)
+ *         NEWSROOM_GEMINI_WRITER (gemini-3.1-pro-preview), NEWSROOM_GEMINI_CHECKER (gemini-3.8-flash)
  *         NEWSROOM_CLAUDE_WRITER / CLAUDE_MODEL, NEWSROOM_CLAUDE_CHECKER
  *         GEMINI_IMAGE_MODEL (optional: abstract cover illustrations; needs GEMINI_API_KEY)
  */

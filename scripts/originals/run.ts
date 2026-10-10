@@ -76,7 +76,7 @@ async function main() {
     if (!cluster) { console.log("Nothing new to explain right now."); return; }
     console.log(`story: ${cluster.lead.title} (${cluster.sources} outlets)`);
     const src = sourceText(cluster);
-    const model = env("ANTHROPIC_API_KEY") ? env("CLAUDE_MODEL") || "claude-sonnet-5-5" : env("GEMINI_TEXT_MODEL") || "gemini-2.5-pro";
+    const model = env("ANTHROPIC_API_KEY") ? env("CLAUDE_MODEL") || "claude-sonnet-5-5" : env("GEMINI_TEXT_MODEL") || "gemini-3.1-pro-preview";
     const keys = { apiKey: env("ANTHROPIC_API_KEY") || undefined, geminiKey: env("GEMINI_API_KEY") || undefined };
     console.log(`writer: ${model}`);
     let draft = await writeScript(cluster, { ...keys, model });

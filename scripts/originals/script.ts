@@ -78,22 +78,32 @@ export async function writeScript(cluster: Cluster, opts: { apiKey?: string; gem
 }
 
 async function writeScriptGemini(user: string, key: string, model: string): Promise<Script | null> {
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST",
-    headers: { "x-goog-api-key": key, "content-type": "application/json" },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only." }] },
-      contents: [{ role: "user", parts: [{ text: user }] }],
-      generationConfig: { maxOutputTokens: 8192, temperature: 0.4, responseMimeType: "application/json" },
-    }),
-    signal: AbortSignal.timeout(90_000),
-  });
-  if (!res.ok) throw new Error(`Gemini HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
-  const body = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-  const text = (body.candidates?.[0]?.content?.parts ?? []).map(p => p.text ?? "").join("");
-  const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
-  if (json.skip) return null;
-  return json as Script;
+  // Google retires model names for new keys; fall back rather than fail the day's video.
+  let last = "";
+  for (const m of [...new Set([model, "gemini-3.8-flash", "gemini-flash-latest"])]) {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
+      method: "POST",
+      headers: { "x-goog-api-key": key, "content-type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only." }] },
+        contents: [{ role: "user", parts: [{ text: user }] }],
+        generationConfig: { maxOutputTokens: 16384, temperature: 0.4, responseMimeType: "application/json" },
+      }),
+      signal: AbortSignal.timeout(180_000),
+    });
+    if (!res.ok) {
+      last = `Gemini ${m} HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`;
+      console.warn(last);
+      if ([404, 429, 503].includes(res.status)) continue;
+      throw new Error(last);
+    }
+    const body = await res.json() as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] } }[] };
+    const text = (body.candidates?.[0]?.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join("");
+    const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
+    if (json.skip) return null;
+    return json as Script;
+  }
+  throw new Error(last || "No Gemini model answered");
 }
 
 /** Everything the viewer will hear or read must be supported by the sources. */

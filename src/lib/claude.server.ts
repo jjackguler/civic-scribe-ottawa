@@ -57,27 +57,36 @@ export function modelProvider(): "claude" | "gemini" | null {
   return process.env["ANTHROPIC_API_KEY"] ? "claude" : process.env["GEMINI_API_KEY"] ? "gemini" : null;
 }
 
-export const GEMINI_TEXT = () => process.env["GEMINI_TEXT_MODEL"] || "gemini-2.5-flash";
+export const GEMINI_TEXT = () => process.env["GEMINI_TEXT_MODEL"] || "gemini-3.8-flash";
+/** Google retires model names for new keys; when one answers 404, try the next. */
+const GEMINI_FALLBACKS = ["gemini-3.8-flash", "gemini-flash-latest"];
 
 /** One Gemini generateContent call that returns the reply text, or null. */
 export async function geminiText(opts: { system: string; user: string; maxTokens?: number; json?: boolean; signal?: AbortSignal }): Promise<string | null> {
   const key = process.env["GEMINI_API_KEY"];
   if (!key) return null;
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_TEXT()}:generateContent`, {
-    method: "POST",
-    signal: opts.signal,
-    headers: { "x-goog-api-key": key, "content-type": "application/json" },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: opts.system }] },
-      contents: [{ role: "user", parts: [{ text: opts.user }] }],
-      generationConfig: { maxOutputTokens: opts.maxTokens ?? 2048, temperature: 0.4, ...(opts.json ? { responseMimeType: "application/json" } : {}) },
-    }),
-  });
-  if (!res.ok) { console.warn(`[gemini] HTTP ${res.status}`); return null; }
-  const body = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[] };
-  const c = body.candidates?.[0];
-  if (!c || c.finishReason === "SAFETY") return null;
-  return (c.content?.parts ?? []).map(p => p.text ?? "").join("");
+  for (const model of [...new Set([GEMINI_TEXT(), ...GEMINI_FALLBACKS])]) {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      signal: opts.signal,
+      headers: { "x-goog-api-key": key, "content-type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: opts.system }] },
+        contents: [{ role: "user", parts: [{ text: opts.user }] }],
+        generationConfig: { maxOutputTokens: opts.maxTokens ?? 2048, temperature: 0.4, ...(opts.json ? { responseMimeType: "application/json" } : {}) },
+      }),
+    });
+    if (!res.ok) {
+      console.warn(`[gemini] ${model} HTTP ${res.status}`);
+      if (res.status === 404 || res.status === 429 || res.status === 503) continue; // retired name, quota or overload: next model
+      return null;
+    }
+    const body = (await res.json()) as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] }; finishReason?: string }[] };
+    const c = body.candidates?.[0];
+    if (!c || c.finishReason === "SAFETY") return null;
+    return (c.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join("");
+  }
+  return null;
 }
 
 function takeBudget(): boolean {
