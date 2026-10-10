@@ -37,12 +37,16 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
+import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
 import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
+import { Route as GlossaryIndexRouteImport } from './routes/glossary.index'
+import { Route as GlossaryTermRouteImport } from './routes/glossary.$term'
+import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
@@ -199,6 +203,11 @@ const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticleSlugRoute = ArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevSocialRoute = DevSocialRouteImport.update({
   id: '/dev/social',
   path: '/dev/social',
@@ -227,6 +236,21 @@ const EditorSlugRoute = EditorSlugRouteImport.update({
 const EditorToolsRoute = EditorToolsRouteImport.update({
   id: '/editor/tools',
   path: '/editor/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryIndexRoute = GlossaryIndexRouteImport.update({
+  id: '/glossary/',
+  path: '/glossary/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryTermRoute = GlossaryTermRouteImport.update({
+  id: '/glossary/$term',
+  path: '/glossary/$term',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesSlugRoute = GuidesSlugRouteImport.update({
+  id: '/guides/$slug',
+  path: '/guides/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabsIndexRoute = LabsIndexRouteImport.update({
@@ -334,16 +358,20 @@ export interface FileRoutesByFullPath {
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/glossary/$term': typeof GlossaryTermRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
+  '/glossary/': typeof GlossaryIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
@@ -385,16 +413,20 @@ export interface FileRoutesByTo {
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/glossary/$term': typeof GlossaryTermRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
+  '/glossary': typeof GlossaryIndexRoute
   '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
@@ -437,16 +469,20 @@ export interface FileRoutesById {
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
+  '/glossary/$term': typeof GlossaryTermRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
+  '/glossary/': typeof GlossaryIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
@@ -490,16 +526,20 @@ export interface FileRouteTypes {
     | '/values'
     | '/watch'
     | '/api/keeper-tts'
+    | '/article/$slug'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/glossary/$term'
+    | '/guides/$slug'
     | '/labs/$path'
     | '/learn/$slug'
     | '/og/quiz.png'
     | '/story/$id'
     | '/dispatch/'
     | '/editor/'
+    | '/glossary/'
     | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
@@ -541,16 +581,20 @@ export interface FileRouteTypes {
     | '/values'
     | '/watch'
     | '/api/keeper-tts'
+    | '/article/$slug'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/glossary/$term'
+    | '/guides/$slug'
     | '/labs/$path'
     | '/learn/$slug'
     | '/og/quiz.png'
     | '/story/$id'
     | '/dispatch'
     | '/editor'
+    | '/glossary'
     | '/labs'
     | '/learn'
     | '/api/dispatch-audio/$id'
@@ -592,16 +636,20 @@ export interface FileRouteTypes {
     | '/values'
     | '/watch'
     | '/api/keeper-tts'
+    | '/article/$slug'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
+    | '/glossary/$term'
+    | '/guides/$slug'
     | '/labs/$path'
     | '/learn/$slug'
     | '/og/quiz.png'
     | '/story/$id'
     | '/dispatch/'
     | '/editor/'
+    | '/glossary/'
     | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
@@ -644,16 +692,20 @@ export interface RootRouteChildren {
   ValuesRoute: typeof ValuesRoute
   WatchRoute: typeof WatchRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
+  ArticleSlugRoute: typeof ArticleSlugRoute
   DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
+  GlossaryTermRoute: typeof GlossaryTermRoute
+  GuidesSlugRoute: typeof GuidesSlugRoute
   LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
+  GlossaryIndexRoute: typeof GlossaryIndexRoute
   LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
@@ -865,6 +917,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/article/$slug': {
+      id: '/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/article/$slug'
+      preLoaderRoute: typeof ArticleSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dev/social': {
       id: '/dev/social'
       path: '/dev/social'
@@ -905,6 +964,27 @@ declare module '@tanstack/react-router' {
       path: '/editor/tools'
       fullPath: '/editor/tools'
       preLoaderRoute: typeof EditorToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary/': {
+      id: '/glossary/'
+      path: '/glossary'
+      fullPath: '/glossary/'
+      preLoaderRoute: typeof GlossaryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary/$term': {
+      id: '/glossary/$term'
+      path: '/glossary/$term'
+      fullPath: '/glossary/$term'
+      preLoaderRoute: typeof GlossaryTermRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/$slug': {
+      id: '/guides/$slug'
+      path: '/guides/$slug'
+      fullPath: '/guides/$slug'
+      preLoaderRoute: typeof GuidesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/labs/': {
@@ -1044,16 +1124,20 @@ const rootRouteChildren: RootRouteChildren = {
   ValuesRoute: ValuesRoute,
   WatchRoute: WatchRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
+  ArticleSlugRoute: ArticleSlugRoute,
   DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
+  GlossaryTermRoute: GlossaryTermRoute,
+  GuidesSlugRoute: GuidesSlugRoute,
   LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
   OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
+  GlossaryIndexRoute: GlossaryIndexRoute,
   LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,

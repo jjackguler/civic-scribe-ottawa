@@ -2,6 +2,8 @@
  * Server-only builders for /sitemap.xml and /rss.xml (+ /fr/rss.xml).
  * Imported dynamically from the server route handlers.
  */
+import { loadGlossary, GLOSSARY_UPDATED } from "./glossary";
+import { HUBS } from "./hubs";
 import { SITE } from "./site";
 import { ORIGIN, absUrl } from "./seo";
 import type { Locale } from "./i18n";
@@ -98,6 +100,10 @@ export async function buildSitemap(): Promise<string> {
   for (const id of ["world", "canada", "labs", "analysis"]) entries.push({ path: `/news?section=${id}`, changefreq: "hourly", priority: "0.6" });
   for (const g of GUIDES) entries.push({ path: `/learn/${g.slug}`, changefreq: "monthly", priority: "0.5" });
   for (const p of PATHS) entries.push({ path: `/labs/${p.id}`, changefreq: "monthly", priority: "0.6" });
+  // Evergreen: the glossary and the long-form guides.
+  entries.push({ path: "/glossary", changefreq: "weekly", priority: "0.7", lastmod: GLOSSARY_UPDATED });
+  for (const t of await loadGlossary()) entries.push({ path: `/glossary/${t.slug}`, changefreq: "monthly", priority: "0.6", lastmod: GLOSSARY_UPDATED });
+  for (const h of HUBS) entries.push({ path: `/guides/${h.slug}`, changefreq: "monthly", priority: "0.8", lastmod: h.updated });
   // Young Lab (the passport is personal and noindex, so it stays out).
   for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });

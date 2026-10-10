@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: SITE.description.en },
       { name: "theme-color", content: "#0B2A2F" },
       { property: "og:site_name", content: SITE.name },
-      ...(SITE.social.x ? [{ name: "twitter:site", content: `@${SITE.social.x.replace(/\/+$/, "").split("/").pop()}` }] : []),
+      ...(SITE.social.x ? [{ name: "twitter:site", content: `@${String(SITE.social.x).replace(/\/+$/, "").split("/").pop()}` }] : []),
       // AdSense site verification without loading any ad code in <head>.
       ...(ADSENSE_CLIENT ? [{ name: "google-adsense-account", content: ADSENSE_CLIENT }] : []),
     ],
