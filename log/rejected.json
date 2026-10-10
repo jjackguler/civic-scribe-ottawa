@@ -1,5 +1,17 @@
 [
   {
+    "id": "5jid90",
+    "at": "2026-10-10T05:46:23.283Z",
+    "stage": "copy",
+    "headline": "Fired OpenAI safety researchers dispute misconduct claims, warn of chilling effect",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"The company cited a breach of trust after an investigation, while the dismissed \", denial not in the sources: \"The fired researchers rejected claims of misconduct in an open letter.\", denial not in the sources: \"When safety specialists fear retaliation, warnings about harmful systems may not\", denial not in the sources: \"They denied mishandling private records and argued that the company is punishing\".",
+      "Too close to TechCrunch's wording (\"a chilling effect on the company s ai safety…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Staff."
+    ]
+  },
+  {
     "id": "1kc5xax",
     "at": "2026-10-10T05:41:35.072Z",
     "stage": "reporter",
@@ -30,7 +42,7 @@
     "id": "7fquf9",
     "at": "2026-10-10T05:31:36.558Z",
     "stage": "reporter",
-    "headline": "Le gouvernement du Canada annoncera du soutien pour l\u2019intelligence artificielle \u00e0 London",
+    "headline": "Le gouvernement du Canada annoncera du soutien pour l’intelligence artificielle à London",
     "reasons": [
       "skip: The single source provides only a brief, truncated media advisory announcing upcoming artificial intelligence support in London, Ontario, which cannot support a 150-word factual article without paddin"
     ]
