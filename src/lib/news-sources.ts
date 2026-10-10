@@ -36,7 +36,9 @@ export type NewsSource = {
   /** Feeds that rarely change are re-checked every 30 minutes instead of every 8. */
   slow?: boolean;
   /** How to read the source. Defaults to RSS/Atom. */
-  format?: "rss" | "anthropic-html" | "hn" | "hf-papers";
+  format?: "rss" | "anthropic-html" | "links-html" | "hn" | "hf-papers";
+  /** For "links-html": the site origin, a regex for post paths, and where the date is. */
+  links?: { origin: string; path: string; date: "text" | "id-yymmdd" };
   /** Rewrite links from a CMS origin to the public site: [from, to]. */
   linkRewrite?: [string, string];
   /** Specialist newsroom: every item is kept and filed under this topic desk. */
@@ -82,6 +84,15 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "openai", name: "OpenAI", url: "https://openai.com/news/rss.xml", home: "https://openai.com/news/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "deepmind", name: "Google DeepMind", url: "https://deepmind.google/blog/feed", home: "https://deepmind.google/discover/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "google-ai", name: "Google AI", url: "https://blog.google/technology/ai/rss/", home: "https://blog.google/technology/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true },
+  // Labs and model makers without (or in addition to) the big newsrooms: their own announcements, first-hand.
+  { id: "xai", name: "xAI", url: "https://x.ai/news", home: "https://x.ai/news", region: "world", lang: "en", kind: "lab", aiOnly: true, format: "links-html", links: { origin: "https://x.ai", path: "/news/[a-z0-9-]+", date: "text" } },
+  { id: "deepseek", name: "DeepSeek", url: "https://api-docs.deepseek.com/news/news250120", home: "https://api-docs.deepseek.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true, format: "links-html", links: { origin: "https://api-docs.deepseek.com", path: "/news/news\\d{6}", date: "id-yymmdd" } },
+  { id: "microsoft-ai", name: "Microsoft AI", url: "https://blogs.microsoft.com/ai/feed/", home: "https://blogs.microsoft.com/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
+  { id: "msr", name: "Microsoft Research", url: "https://www.microsoft.com/en-us/research/feed/", home: "https://www.microsoft.com/en-us/research/blog/", region: "world", lang: "en", kind: "lab", aiOnly: false, slow: true },
+  { id: "apple-ml", name: "Apple Machine Learning Research", url: "https://machinelearning.apple.com/rss.xml", home: "https://machinelearning.apple.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
+  { id: "midjourney", name: "Midjourney", url: "https://updates.midjourney.com/rss/", home: "https://updates.midjourney.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
+  { id: "stability", name: "Stability AI", url: "https://stability.ai/news?format=rss", home: "https://stability.ai/news", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
+  { id: "qwen", name: "Qwen (Alibaba)", url: "https://qwenlm.github.io/blog/index.xml", home: "https://qwenlm.github.io/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "huggingface", name: "Hugging Face", url: "https://huggingface.co/blog/feed.xml", home: "https://huggingface.co/blog", region: "world", lang: "en", kind: "lab", aiOnly: true },
 
   // ── Specialist beats: immersive tech, robotics, data centres ───────────

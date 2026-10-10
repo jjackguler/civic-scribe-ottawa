@@ -288,6 +288,41 @@ function parseAnthropic(html: string, src: NewsSource): Story[] {
   return out.slice(0, 12);
 }
 
+const MONTHS = "Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?";
+const DATE_IN_TEXT = new RegExp(`^(?:${MONTHS}) \\d{1,2}, \\d{4}$`);
+
+/**
+ * A lab's news page without a feed: links to its posts, each with a date in
+ * the link text ("Sep 21, 2026"), or a date in the post id (DeepSeek's
+ * news250120 = 2025-01-20).
+ */
+function parseLinks(html: string, src: NewsSource): Story[] {
+  const cfg = src.links!;
+  const out: Story[] = [];
+  const seen = new Set<string>();
+  for (const m of html.matchAll(new RegExp(`<a[^>]+href="(?:${cfg.origin.replace(/[.]/g, "\\.")})?(${cfg.path})"[^>]*>([\\s\\S]*?)<\\/a>`, "g"))) {
+    const path = m[1];
+    if (seen.has(path)) continue;
+    const parts = m[2].split(/<[^>]+>/).map(x => stripTags(x)).filter(Boolean);
+    let date: Date | null = null;
+    let rest = parts;
+    if (cfg.date === "id-yymmdd") {
+      const id = path.match(/(\d{2})(\d{2})(\d{2})\/?$/);
+      if (id) date = new Date(`20${id[1]}-${id[2]}-${id[3]}T12:00:00Z`);
+      rest = parts.map(x => x.replace(/\s*\d{4}\/\d{2}\/\d{2}\s*$/, ""));
+    } else {
+      const i = parts.findIndex(x => DATE_IN_TEXT.test(x));
+      // The headline is the first real line after the date (labels like "Product" or "Introducing" skipped).
+      if (i >= 0) { date = new Date(parts[i] + " 12:00 UTC"); rest = parts.slice(i + 1); }
+    }
+    const title = rest.find(x => x.length >= 3 && !/^(introducing|product|news|english|company|research|read more|·|\|)$/i.test(x));
+    if (!date || !title || isNaN(date.getTime()) || date.getTime() < Date.now() - MAX_AGE_DAYS * 86400000) continue;
+    seen.add(path);
+    out.push(baseStory(src, title.slice(0, 160), cfg.origin + path, date));
+  }
+  return out.slice(0, 12);
+}
+
 /** Hacker News (Algolia API): AI stories the tech community is upvoting. */
 function parseHN(json: any, src: NewsSource): Story[] {
   const out: Story[] = [];
@@ -337,6 +372,11 @@ async function fetchSource(src: NewsSource): Promise<SourceCache> {
     }
     if (src.format === "hf-papers") {
       return { ts: Date.now(), ok: true, stories: parseHFPapers(JSON.parse(await fetchText(src.url, 6000)), src) };
+    }
+    if (src.format === "links-html") {
+      const stories = parseLinks(await fetchText(src.url, 6000), src);
+      if (!stories.length) throw new Error("Page layout changed");
+      return { ts: Date.now(), ok: true, stories };
     }
     if (src.format === "anthropic-html") {
       const stories = parseAnthropic(await fetchText(src.url, 6000), src);

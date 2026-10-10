@@ -4,6 +4,7 @@
  * read as a thumbnail in a chat or a feed. Server only: loaded lazily by the
  * /og/* routes, so the outlines never reach the browser.
  */
+import { SITE } from "../site";
 import { G700, G800, S600 } from "./font-data";
 import { Raster, fitText, hex, measure, mul, rotateAbout, roundRectPoly, type FontData, type Mat, type Pt, type RGB } from "./raster";
 import { BRAND, outletsLine, ransomStyles, rotatePts, seedOf, tornRect } from "./shapes";
@@ -133,7 +134,7 @@ function article(spec: Extract<OgSpec, { kind: "article" }>): Raster {
   }
   if (!line) { const f = fitText(G700, `${by} ${outletsLine(spec.outlets, spec.locale, 1)}`, [23], avail, 1); line = f.lines[0] ?? ""; size = 23; }
   if (spec.outlets.length > 0) r.text(G700, line, right - measure(G700, line, size), 563, size, C.ink);
-  const dom = "aibroadsheet.com";
+  const dom = SITE.domain;
   const dw = measure(G700, dom, 21);
   r.text(G700, dom, right - dw, 596, 21, C.ink, { alpha: 0.72 });
   return r;

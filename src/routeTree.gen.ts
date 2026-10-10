@@ -36,6 +36,7 @@ import { Route as TodayRouteImport } from './routes/today'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as WatchRouteImport } from './routes/watch'
+import { Route as ApiDispatchesDotjsonRouteImport } from './routes/api.dispatches[.]json'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
@@ -198,6 +199,11 @@ const WatchRoute = WatchRouteImport.update({
   path: '/watch',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDispatchesDotjsonRoute = ApiDispatchesDotjsonRouteImport.update({
+  id: '/api/dispatches.json',
+  path: '/api/dispatches.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   id: '/api/keeper-tts',
   path: '/api/keeper-tts',
@@ -357,6 +363,7 @@ export interface FileRoutesByFullPath {
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
+  '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
@@ -412,6 +419,7 @@ export interface FileRoutesByTo {
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
+  '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
@@ -468,6 +476,7 @@ export interface FileRoutesById {
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
+  '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
@@ -525,6 +534,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/values'
     | '/watch'
+    | '/api/dispatches.json'
     | '/api/keeper-tts'
     | '/article/$slug'
     | '/dev/social'
@@ -580,6 +590,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/values'
     | '/watch'
+    | '/api/dispatches.json'
     | '/api/keeper-tts'
     | '/article/$slug'
     | '/dev/social'
@@ -635,6 +646,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/values'
     | '/watch'
+    | '/api/dispatches.json'
     | '/api/keeper-tts'
     | '/article/$slug'
     | '/dev/social'
@@ -691,6 +703,7 @@ export interface RootRouteChildren {
   ToolsRoute: typeof ToolsRoute
   ValuesRoute: typeof ValuesRoute
   WatchRoute: typeof WatchRoute
+  ApiDispatchesDotjsonRoute: typeof ApiDispatchesDotjsonRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
   DevSocialRoute: typeof DevSocialRoute
@@ -910,6 +923,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/dispatches.json': {
+      id: '/api/dispatches.json'
+      path: '/api/dispatches.json'
+      fullPath: '/api/dispatches.json'
+      preLoaderRoute: typeof ApiDispatchesDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/keeper-tts': {
       id: '/api/keeper-tts'
       path: '/api/keeper-tts'
@@ -1123,6 +1143,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsRoute: ToolsRoute,
   ValuesRoute: ValuesRoute,
   WatchRoute: WatchRoute,
+  ApiDispatchesDotjsonRoute: ApiDispatchesDotjsonRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
   ArticleSlugRoute: ArticleSlugRoute,
   DevSocialRoute: DevSocialRoute,

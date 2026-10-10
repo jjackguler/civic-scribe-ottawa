@@ -85,6 +85,29 @@ function save() {
   sharedWrite(KEY, { d: all, p, r: [...rejected()].slice(-800), day: g.__dispatchDay } satisfies Saved, KEEP_DAYS * 86400);
 }
 
+// ── the permanent archive ───────────────────────────────────────────────────
+const ARCHIVE_URL = "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/archive/dispatches.json";
+const ga = globalThis as unknown as { __archive?: { at: number; items: Dispatch[] } };
+
+/** Dispatches kept for good on GitHub. Cached 10 minutes per isolate; an unreachable archive is just empty. */
+async function archiveIndex(): Promise<Dispatch[]> {
+  if (ga.__archive && Date.now() - ga.__archive.at < 10 * 60_000) return ga.__archive.items;
+  try {
+    const r = await fetch(ARCHIVE_URL, { signal: AbortSignal.timeout(2500) });
+    const items = r.ok ? ((await r.json()) as { items?: Dispatch[] }).items ?? [] : [];
+    ga.__archive = { at: Date.now(), items };
+  } catch {
+    ga.__archive = { at: Date.now(), items: ga.__archive?.items ?? [] };
+  }
+  return ga.__archive.items;
+}
+
+/** The dispatches this Worker desk wrote (not the archive), for the archiver. */
+export async function liveDispatches(): Promise<Dispatch[]> {
+  try { await loadShared(); } catch { /* memory only */ }
+  return [...done().values()];
+}
+
 /**
  * Every published dispatch, newest first. Never throws. Once the Newsroom
  * (scripts/newsroom, stored on the `newsroom` branch) has published, its
@@ -97,12 +120,17 @@ export async function listDispatches(): Promise<Dispatch[]> {
     if (articles.length) return articles;
   } catch { /* the Worker desk below */ }
   try { await loadShared(); } catch { /* memory only */ }
-  return [...done().values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const live = [...done().values()];
+  // The permanent archive (the `archive` branch, filled by .github/workflows/archive.yml)
+  // brings back dispatches this isolate or data centre has forgotten.
+  const have = new Set(live.map(d => d.id));
+  const old = (await archiveIndex()).filter(d => !have.has(d.id));
+  return [...live, ...old].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
 export async function getDispatchById(id: string): Promise<Dispatch | null> {
   try { await loadShared(); } catch { /* memory only */ }
-  return done().get(id) ?? null;
+  return done().get(id) ?? (await archiveIndex()).find(d => d.id === id) ?? null;
 }
 
 // ── the fact guard, extended ───────────────────────────────────────────────

@@ -7,8 +7,13 @@
  */
 export const SITE = {
   name: "AI Broadsheet",
-  /** Planned domain (not registered yet). Used for canonical URLs, sitemap and feeds. */
-  domain: "aibroadsheet.com",
+  /**
+   * The live address, used for canonical URLs, hreflang, sitemaps, feeds and share links.
+   * Search engines only index pages whose canonical URL really answers, so this stays on
+   * the Lovable address until aibroadsheet.com is registered and connected; then change it
+   * here (and in public/robots.txt) and nothing else.
+   */
+  domain: "aibroadsheet.lovable.app",
   tagline: {
     en: "The world's AI newspaper, live",
     fr: "Le journal mondial de l'IA, en direct",

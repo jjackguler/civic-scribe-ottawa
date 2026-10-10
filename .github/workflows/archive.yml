@@ -1,0 +1,53 @@
+# Keeps every Dispatch the site writes, for good: the site's Worker cache forgets,
+# this archive doesn't. Needs no secrets: it reads the public site and writes to
+# the `archive` branch, which the site reads back (src/lib/dispatch.server.ts).
+name: Archive dispatches
+
+on:
+  schedule:
+    - cron: "17,47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SITE: ${{ vars.SITE_URL || 'https://aibroadsheet.lovable.app' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out the archive branch
+        run: |
+          git fetch origin archive:archive 2>/dev/null || true
+          if git show-ref --quiet refs/heads/archive; then
+            git worktree add ../archive archive
+          else
+            git worktree add --detach ../archive
+            cd ../archive && git checkout --orphan archive && git rm -rf . >/dev/null 2>&1 || true
+          fi
+      - name: Fetch and merge
+        run: |
+          if ! curl -fsS --max-time 30 "$SITE/api/dispatches.json" -o live.json; then
+            echo "::warning title=Archive skipped::$SITE/api/dispatches.json did not answer (site not published yet?)."
+            exit 0
+          fi
+          node scripts/archive/merge.mjs live.json ../archive/dispatches.json
+      - name: Commit
+        run: |
+          cd ../archive
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "AI Broadsheet Archive"
+            git config user.email "actions@users.noreply.github.com"
+            git add dispatches.json
+            git commit -q -m "Archive: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push -q origin archive
+          else
+            echo "Nothing new."
+          fi

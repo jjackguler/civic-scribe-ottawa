@@ -3,5 +3,5 @@ Allow: /
 Disallow: /editor/tools
 Disallow: /fr/editor/tools
 
-Sitemap: https://aibroadsheet.com/sitemap.xml
-Sitemap: https://aibroadsheet.com/news-sitemap.xml
+Sitemap: https://aibroadsheet.lovable.app/sitemap.xml
+Sitemap: https://aibroadsheet.lovable.app/news-sitemap.xml
