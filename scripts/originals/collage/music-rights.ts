@@ -34,4 +34,4 @@ export async function approvedOwnerMusic(file: string): Promise<MusicRights | nu
     return validMusicRights(entry, digest) ? entry : null;
   } catch { return null; }
 }
-export const isCc0 = (license?: string) => /^(?:CC0(?:\s+1\.0)?|https?:\/\/creativecommons\.org\/publicdomain\/zero\/1\.0\/?)$/i.test(license?.trim() ?? "");
+export const isCc0 = (license?: string) => /^(?:CC0(?:\s+1\.0)?(?: \(filtered by Freesound license search\))?|https?:\/\/creativecommons\.org\/publicdomain\/zero\/1\.0\/?)$/i.test(license?.trim() ?? "");

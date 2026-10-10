@@ -68,6 +68,7 @@ try {
   });
   await test("fallback music requires explicit CC0 credit", () => {
     assert.equal(isCc0("CC0"), true); assert.equal(isCc0("https://creativecommons.org/publicdomain/zero/1.0/"), true);
+    assert.equal(isCc0("CC0 1.0 (filtered by Freesound license search)"), true);
     assert.equal(isCc0("CC BY-NC"), false); assert.equal(isCc0(), false);
   });
   await test("free-plan opening video is held; existing explainers remain playable", () => {
