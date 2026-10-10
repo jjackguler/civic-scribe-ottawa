@@ -3,14 +3,20 @@
  * Plain fetch, no SDKs. Keys come from GitHub Actions secrets.
  */
 import { writeFile } from "node:fs/promises";
+import { limitError } from "./util";
 
 // ── ElevenLabs ──────────────────────────────────────────────────────────────
 const PREFERRED_VOICES = ["George", "Brian", "Daniel", "Adam", "Matilda", "Rachel"];
 
 export async function pickVoice(apiKey: string, wanted?: string): Promise<{ id: string; name: string }> {
-  if (wanted) return { id: wanted, name: "custom" };
+  if (wanted) {
+    // Name the chosen voice in the credits when the API tells us; "custom" otherwise.
+    const r = await fetch(`https://api.elevenlabs.io/v1/voices/${encodeURIComponent(wanted)}`, { headers: { "xi-api-key": apiKey }, signal: AbortSignal.timeout(30_000) }).catch(() => null);
+    const v = r?.ok ? await r.json().catch(() => null) as { name?: string } | null : null;
+    return { id: wanted, name: v?.name || "custom" };
+  }
   const res = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": apiKey } });
-  if (!res.ok) throw new Error(`ElevenLabs voices HTTP ${res.status}`);
+  if (!res.ok) { const body = await res.text(); throw limitError("ElevenLabs", res.status, body) ?? new Error(`ElevenLabs voices HTTP ${res.status}`); }
   const { voices } = await res.json() as { voices: { voice_id: string; name: string; category?: string }[] };
   // Only the platform's own stock voices: never a cloned voice of a real person.
   const stock = voices.filter(v => v.category === "premade");
@@ -26,8 +32,38 @@ export async function speak(apiKey: string, voiceId: string, text: string, out: 
     body: JSON.stringify({ text, model_id: model, voice_settings: { stability: 0.45, similarity_boost: 0.75, style: 0.15, use_speaker_boost: true } }),
     signal: AbortSignal.timeout(90_000),
   });
-  if (!res.ok) throw new Error(`ElevenLabs TTS HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  if (!res.ok) { const body = await res.text(); throw limitError("ElevenLabs", res.status, body) ?? new Error(`ElevenLabs TTS HTTP ${res.status}: ${body.slice(0, 200)}`); }
   await writeFile(out, Buffer.from(await res.arrayBuffer()));
+}
+
+export type Alignment = { characters: string[]; character_start_times_seconds: number[]; character_end_times_seconds: number[] };
+
+/**
+ * Text to speech with character timings (the /with-timestamps endpoint): MP3 bytes
+ * plus, for every character of `text`, when it starts and ends in the audio.
+ */
+export async function speakWithTimestamps(apiKey: string, voiceId: string, text: string, model = "eleven_multilingual_v2"): Promise<{ mp3: Buffer; alignment: Alignment | null }> {
+  let last = "";
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/with-timestamps?output_format=mp3_44100_128`, {
+      method: "POST",
+      headers: { "xi-api-key": apiKey, "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify({ text, model_id: model, voice_settings: { stability: 0.45, similarity_boost: 0.75, style: 0.15, use_speaker_boost: true } }),
+      signal: AbortSignal.timeout(120_000),
+    });
+    if (res.ok) {
+      const body = await res.json() as { audio_base64?: string; alignment?: Alignment | null; normalized_alignment?: Alignment | null };
+      if (!body.audio_base64) throw new Error("ElevenLabs: no audio in the response");
+      return { mp3: Buffer.from(body.audio_base64, "base64"), alignment: body.alignment ?? body.normalized_alignment ?? null };
+    }
+    const err = await res.text();
+    const limit = limitError("ElevenLabs", res.status, err);
+    if (limit) throw limit;
+    last = `ElevenLabs TTS HTTP ${res.status}: ${err.slice(0, 200)}`;
+    if (res.status < 500) break; // a bad request won't get better by asking again
+    await new Promise(r => setTimeout(r, 3000 * (attempt + 1)));
+  }
+  throw new Error(last);
 }
 
 // ── Gemini illustrations (optional) ─────────────────────────────────────────
@@ -86,7 +122,7 @@ export async function uploadToYouTube(c: YouTubeCreds, file: Buffer, meta: { tit
   if (!init.ok) throw new Error(`YouTube init HTTP ${init.status}: ${(await init.text()).slice(0, 300)}`);
   const url = init.headers.get("location");
   if (!url) throw new Error("YouTube: no upload URL");
-  const put = await fetch(url, { method: "PUT", headers: { "content-type": "video/mp4" }, body: file });
+  const put = await fetch(url, { method: "PUT", headers: { "content-type": "video/mp4" }, body: new Uint8Array(file) });
   if (!put.ok) throw new Error(`YouTube upload HTTP ${put.status}: ${(await put.text()).slice(0, 300)}`);
   const v = (await put.json()) as { id: string; status?: { privacyStatus?: "public" | "unlisted" | "private" } };
   // Unaudited API projects get their uploads locked to private; report what YouTube actually set.

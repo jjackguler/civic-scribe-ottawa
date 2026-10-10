@@ -455,7 +455,7 @@
       const el = h(`<div class="piece" style="width:760px"><div class="rcpt elite" style="padding:56px 50px 80px;clip-path:polygon(${Array.from({ length: 31 }, (_, i) => `${(i / 30 * 100).toFixed(2)}% ${i % 2 ? 0 : 14}px`).join(",")},${Array.from({ length: 31 }, (_, i) => `${(100 - i / 30 * 100).toFixed(2)}% calc(100% - ${i % 2 ? 0 : 14}px)`).join(",")})">
         <div style="text-align:center;font-size:34px;border-bottom:3px dashed #141414;padding-bottom:20px;margin-bottom:10px">${esc(sc.data.title)}</div>
         ${rows.map((rw, k) => `<div class="row" data-k="${k}" style="padding:26px 6px;border-bottom:2px dashed rgba(0,0,0,.25)"><div style="font-size:34px">${esc(rw.label)}</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:6px"><span style="font-size:44px;text-decoration:line-through;opacity:.5">${esc(rw.old)}</span><span style="font-size:30px">→</span><span class="anton" style="font-size:96px;line-height:1">${esc(rw.new)}</span></div></div>`).join("")}
-        <div style="text-align:center;font-size:26px;margin-top:24px;opacity:.7">*** list prices, standard tier ***</div></div></div>`);
+        ${(sc.data.footer ?? "*** list prices, standard tier ***") ? `<div style="text-align:center;font-size:26px;margin-top:24px;opacity:.7">${esc(sc.data.footer ?? "*** list prices, standard tier ***")}</div>` : ""}</div></div>`);
       root.appendChild(el);
       const pr = piece(el, 8400 + si, { x: 160, y: 300, rot: -1.5 });
       const rowEls = [...el.querySelectorAll(".row")];

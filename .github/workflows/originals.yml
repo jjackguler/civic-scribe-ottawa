@@ -1,6 +1,8 @@
-# AI Broadsheet Originals: one short explainer video, twice a day.
+# AI Broadsheet Originals: one short explainer video, twice a day, in the
+# newspaper-collage style of the hand-made explainers (scripts/originals/collage).
 # Setup: docs/originals.md. Needs repository secrets ELEVENLABS_API_KEY and
-# ANTHROPIC_API_KEY or GEMINI_API_KEY (Gemini also draws illustrations); YOUTUBE_* optional.
+# GEMINI_API_KEY or ANTHROPIC_API_KEY; YOUTUBE_* optional. Missing keys or an
+# exhausted quota end the run with a warning, never a failure.
 name: Originals
 
 on:
@@ -10,9 +12,14 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Render a test video without calling any API"
+        description: "Render a short test video with fixture text and silent narration (no API calls)"
         type: boolean
         default: false
+      style:
+        description: "Video style (default: the ORIGINALS_STYLE variable, else collage)"
+        type: choice
+        options: [default, collage, cards]
+        default: default
 
 permissions:
   contents: write
@@ -21,14 +28,19 @@ concurrency:
   group: originals
   cancel-in-progress: false
 
+env:
+  ORIGINALS_STYLE: ${{ (inputs.style && inputs.style != 'default') && inputs.style || vars.ORIGINALS_STYLE || 'collage' }}
+
 jobs:
   explainer:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # A 60-75 s collage video is ~2,000 frames rendered in Chromium: about 8-15 minutes on a
+    # 2-vCPU runner, plus ~5 minutes of setup (and ~2 more the first time figures are cut out).
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check out the media branch (manifest)
+      - name: Check out the media branch (manifest, owner queue, videos)
         run: |
           git fetch origin media:media 2>/dev/null || true
           if git show-ref --quiet refs/heads/media; then
@@ -39,16 +51,65 @@ jobs:
           fi
           mkdir -p ../media/originals
 
+      - name: Check out the assets branch (public-domain photos, CC0 sounds and music)
+        if: env.ORIGINALS_STYLE == 'collage'
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          ref: assets
+          path: .assets
+          sparse-checkout: |
+            collage/newsprint
+            collage/sfx
+            collage/music
+            collage/photos
+            collage/intro
+            music
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Install tools
+      - name: Install tools (FFmpeg, fonts, Chromium)
         working-directory: scripts/originals
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
           npm install --no-audit --no-fund
           npx playwright install --with-deps chromium
+
+      # Scissor-cut figures (background removal with rembg) are made once and cached;
+      # they only change when figures.json or prepare_figures.py changes.
+      - name: Cache the cut-out figures
+        if: env.ORIGINALS_STYLE == 'collage'
+        id: figs
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/collage-figs
+          key: collage-figs-${{ hashFiles('scripts/originals/collage/figures.json', 'scripts/originals/collage/prepare_figures.py') }}
+
+      - name: Cut out the figures (first run only)
+        if: env.ORIGINALS_STYLE == 'collage' && steps.figs.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        run: |
+          [ -d .assets/collage/photos ] || { echo "No assets branch checkout: no figures this run."; exit 0; }
+          python3 -m venv "$RUNNER_TEMP/figs-venv"
+          "$RUNNER_TEMP/figs-venv/bin/pip" install -q "rembg[cpu]>=2.0.60,<2.1" scipy pillow numpy
+          "$RUNNER_TEMP/figs-venv/bin/python" scripts/originals/collage/prepare_figures.py \
+            scripts/originals/collage/figures.json .assets/collage "$RUNNER_TEMP/figs" || true
+          # Only a complete-enough set goes into the cache (a failed run must not be cached).
+          if [ "$(ls "$RUNNER_TEMP"/figs/*.png 2>/dev/null | wc -l)" -ge 4 ]; then
+            mkdir -p ~/.cache/collage-figs && cp "$RUNNER_TEMP"/figs/*.png ~/.cache/collage-figs/
+          fi
+          ls -la ~/.cache/collage-figs || true
+
+      - name: Build the collage kit (sets COLLAGE_ASSETS, COLLAGE_SFX_MAP, COLLAGE_MUSIC)
+        if: env.ORIGINALS_STYLE == 'collage'
+        continue-on-error: true
+        working-directory: scripts/originals
+        run: |
+          [ -d "$GITHUB_WORKSPACE/.assets/collage" ] || { echo "::warning title=No collage assets::The assets branch could not be checked out; the video will have no figures, newspaper pages, sounds or music."; exit 0; }
+          npx tsx collage/kit.ts "$GITHUB_WORKSPACE/.assets" "$RUNNER_TEMP/collage-kit" --figs ~/.cache/collage-figs --github-env "$GITHUB_ENV"
 
       - name: Make the explainer
         working-directory: scripts/originals
@@ -56,43 +117,33 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID }}
+          ELEVENLABS_MODEL: ${{ vars.ELEVENLABS_MODEL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
-          GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL }}
+          ORIGINALS_GEMINI_MODEL: ${{ vars.ORIGINALS_GEMINI_MODEL }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ORIGINALS_PRIVACY: ${{ vars.ORIGINALS_PRIVACY }}
-          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
-        run: |
-          npx tsx run.ts ${{ inputs.dry_run && '--dry-run' || '' }} --out out --manifest ../../../media/originals/manifest.json
+          ASSETS_DIR: ${{ github.workspace }}/.assets
+          COLLAGE_WORKERS: ${{ vars.COLLAGE_WORKERS || '2' }}
+        run: npx tsx run.ts ${{ inputs.dry_run && '--dry-run' || '' }} --out out --media ../../../media
 
-      - name: Keep a copy of the video (GitHub release)
-        if: ${{ hashFiles('scripts/originals/out/entry.json') != '' && !inputs.dry_run }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          ID=$(node -p "require('./scripts/originals/out/entry.json').id")
-          gh release create "original-$ID" scripts/originals/out/explainer.mp4 scripts/originals/out/poster.jpg \
-            --title "Original $ID" --notes-file scripts/originals/out/description.txt --latest=false
-
-      - name: Publish the manifest
+      # The video and poster go to the media branch (served by jsDelivr, pinned to that
+      # commit) and the manifest lists them; queue and skip-log changes are saved too.
+      - name: Publish to the media branch
         if: ${{ !inputs.dry_run }}
-        run: |
-          cd ../media
-          if [ -n "$(git status --porcelain)" ]; then
-            git config user.name "AI Broadsheet Originals"
-            git config user.email "actions@users.noreply.github.com"
-            git add originals/manifest.json
-            git commit -m "Originals: $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push origin media
-          else
-            echo "No new explainer."
-          fi
+        working-directory: scripts/originals
+        run: npx tsx publish.ts --out out --media ../../../media
 
       - name: Upload the test render
         if: ${{ inputs.dry_run }}
         uses: actions/upload-artifact@v4
         with:
           name: dry-run
-          path: scripts/originals/out/explainer.mp4
+          path: |
+            scripts/originals/out/explainer.mp4
+            scripts/originals/out/poster.jpg
+            scripts/originals/out/storyboard.json
+            scripts/originals/out/entry.json
+          if-no-files-found: warn

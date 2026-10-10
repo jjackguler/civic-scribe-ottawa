@@ -9,7 +9,7 @@ import { execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { chromium, type Page } from "playwright";
 
 const run = promisify(execFile);
@@ -22,7 +22,9 @@ const ASSETS = process.env.COLLAGE_ASSETS ? resolve(process.env.COLLAGE_ASSETS) 
 const SFX_MAP = process.env.COLLAGE_SFX_MAP ? resolve(process.env.COLLAGE_SFX_MAP) : "";
 const MUSIC = process.env.COLLAGE_MUSIC ? resolve(process.env.COLLAGE_MUSIC) : "";
 const FPS = 30;
-const WORKERS = Number(process.env.COLLAGE_WORKERS || 2);
+const WORKERS = Math.max(1, Number(process.env.COLLAGE_WORKERS || 2));
+/** x264 quality (lower = bigger file). 19 for the hand-made renders; CI may raise it to keep files small. */
+const CRF = String(process.env.COLLAGE_CRF || 19);
 
 const [boardPath, work, outPath] = process.argv.slice(2);
 const stillsArg = process.argv.indexOf("--stills");
@@ -47,7 +49,7 @@ async function openPage(html: string, board: unknown, timing: unknown) {
 
 async function renderRange(page: Page, from: number, to: number, file: string) {
   const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-c:v", "mjpeg", "-framerate", String(FPS), "-i", "-",
-    "-c:v", "libx264", "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yuv420p", "-r", String(FPS), file], { stdio: ["pipe", "inherit", "inherit"] });
+    "-c:v", "libx264", "-preset", "veryfast", "-crf", CRF, "-pix_fmt", "yuv420p", "-r", String(FPS), file], { stdio: ["pipe", "inherit", "inherit"] });
   const done = new Promise<void>((res, rej) => ff.on("close", c => (c === 0 ? res() : rej(new Error(`ffmpeg ${c}`)))));
   for (let f = from; f < to; f++) {
     await page.evaluate(t => (window as any).renderAt(t), f / FPS);
@@ -94,6 +96,7 @@ async function mixAudio(voice: string, events: { t: number; kind: string }[], du
   const SFX_TRIM = Number(process.env.COLLAGE_SFX_LEVEL || 0.5);
   const map: Record<string, string[]> = SFX_MAP && existsSync(SFX_MAP) ? JSON.parse(await readFile(SFX_MAP, "utf8")) : {};
   const used: Record<string, number> = {};
+  const usedFiles = new Set<string>();
   // drop cues that land on top of the same kind (keeps the mix clean)
   const last: Record<string, number> = {};
   const ev = events.filter(e => (SFX[e.kind] || map[e.kind]?.length) && e.t >= 0 && e.t < dur && !(last[e.kind] !== undefined && e.t - last[e.kind] < 0.09) && ((last[e.kind] = e.t), true));
@@ -104,6 +107,7 @@ async function mixAudio(voice: string, events: { t: number; kind: string }[], du
     if (files?.length) {
       const k = used[e.kind] = (used[e.kind] ?? -1) + 1;
       inputs.push("-i", files[k % files.length]);
+      usedFiles.add(files[k % files.length]);
     } else inputs.push("-f", "lavfi", "-i", SFX[e.kind]);
     const ms = Math.round(e.t * 1000);
     filters.push(`[${i + 1}:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:2.5,volume=${((GAIN[e.kind] ?? 0.6) * (files?.length ? SFX_TRIM : 1)).toFixed(3)},adelay=${ms}|${ms}[s${i}]`);
@@ -120,6 +124,8 @@ async function mixAudio(voice: string, events: { t: number; kind: string }[], du
   } else filters.push(`[vk]anullsink`);
   filters.push(`[v]${ev.map((_, i) => `[s${i}]`).join("")}${bed}amix=inputs=${n + 1 + (bed ? 1 : 0)}:normalize=0:duration=first,loudnorm=I=-15:TP=-1.5:LRA=9[a]`);
   await run("ffmpeg", ["-y", "-loglevel", "error", ...inputs, "-filter_complex", filters.join(";"), "-map", "[a]", "-c:a", "aac", "-b:a", "192k", "-t", dur.toFixed(2), out], { maxBuffer: 1 << 26 });
+  // Which recordings ended up in the mix (the pipeline credits their authors).
+  await writeFile(join(dirname(out), "sfx-used.json"), JSON.stringify({ files: [...usedFiles], music: MUSIC && existsSync(MUSIC) ? MUSIC : null }, null, 1));
 }
 
 /** Width and height from a PNG header. */

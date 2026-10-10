@@ -1,0 +1,59 @@
+{
+  "librarian": {
+    "file": "photos/librarian-card-catalog--librarian-at-the-card-files-at-senior-high-school-.jpg",
+    "model": "u2net_human_seg",
+    "about": "a librarian at a card catalogue (1974): knowledge, archives, the web, search",
+    "label": "Librarian at the card files, 1974 (David Rees)"
+  },
+  "mail": {
+    "file": "photos/post-office-mail-sorting--postal-workers-sorting-mail-u-s-post-office-washin.jpg",
+    "model": "u2net_human_seg",
+    "keep": 3,
+    "about": "two postal workers sorting mail (1920): traffic, requests, messages, volume",
+    "label": "Postal workers sorting mail, 1920 (National Photo Company)"
+  },
+  "painter": {
+    "file": "photos/artist-painting-at-easel--liebermann-max-selbstbildnis-mit-sportm-tze-an-der.jpg",
+    "model": "u2net_human_seg",
+    "about": "a painter at an easel (1925 self-portrait): images, art, creativity, design",
+    "label": "Max Liebermann, self-portrait at the easel, 1925"
+  },
+  "photographer": {
+    "file": "photos/photographer-with-camera--jules-beau-1902-jpg.jpg",
+    "model": "isnet-general-use",
+    "about": "a photographer with a box camera (1902): photos, video, cameras, vision",
+    "label": "Jules Beau, 1902"
+  },
+  "community": {
+    "file": "photos/nasa-human-computers--nasa-human-computers-women-at-nasa-1959-from-left-.jpg",
+    "model": "u2net_human_seg",
+    "keep": 1,
+    "about": "a group of NASA 'human computers' at a desk (1959): people, teams, communities, research",
+    "label": "NASA human computers, 1959 (NASA)"
+  },
+  "operator": {
+    "file": "photos/telegraph-operator--miss-ethel-wakefield-a-western-union-telegraph-pbx.jpg",
+    "model": "u2net_human_seg",
+    "crop": [
+      0.05,
+      0.0,
+      0.75,
+      1.0
+    ],
+    "about": "a telephone switchboard operator (1943): networks, connections, chatbots, calls",
+    "label": "Western Union PBX operator, 1943 (Esther Bubley)"
+  },
+  "eniac": {
+    "file": "photos/eniac-women-programmers--two-women-operating-eniac-full-resolution-jpg.jpg",
+    "model": "u2net_human_seg",
+    "keep": 2,
+    "about": "a programmer standing by the ENIAC computer (1946): computing, chips, hardware, code",
+    "label": "Two women operating ENIAC, 1946 (U.S. Army)"
+  },
+  "lathe": {
+    "file": "intro/woman-portrait-1940s-far--woman-lathe-operator-in-the-1940s-jpg.jpg",
+    "model": "u2net_human_seg",
+    "about": "a lathe operator in a factory (1942): manufacturing, robots, work, industry",
+    "label": "Woman lathe operator, 1942 (Howard R. Hollem)"
+  }
+}

@@ -1,42 +1,155 @@
 /**
- * AI Broadsheet Originals — one short explainer per run.
+ * AI Broadsheet Originals: one short explainer per run.
  *
- *   1. Build the news desk (same engine as the site) and pick the story the
- *      most newsrooms are covering that we haven't explained yet.
- *   2. Claude writes the script from the publishers' text; the fact guard
- *      rejects any name or number that isn't in the sources (one retry).
- *   3. ElevenLabs narrates each card with a stock voice.
- *   4. Optional: Gemini draws an abstract illustration per card (labelled).
- *   5. Cards rendered in the house style, joined with FFmpeg (1080×1920).
- *   6. Optional: upload to YouTube. Always: write the entry to the manifest.
+ *   1. Story: the owner's queue, else our newest newsroom article, else the desk's
+ *      multi-outlet story (pick.ts). Risky topics only when the owner queued them.
+ *   2. Storyboard (collage style, the default): one model call returns the whole
+ *      storyboard in the collage schema; the fact guard checks every spoken and
+ *      on-screen word, name and number (one retry). Cards style: the old card script.
+ *   3. Voice: ElevenLabs with character timestamps → voice.wav + timing.json.
+ *   4. Render: collage/render-collage.ts (Chromium frame by frame, CC0 sounds and
+ *      music from the assets branch), poster JPG.
+ *   5. Optional: YouTube upload. Always: out/entry.json for publish.ts, which commits
+ *      the video to the media branch and lists it in the manifest.
  *
- * Usage:  npx tsx run.ts [--dry-run] [--out dir] [--manifest path]
- * Env:    ELEVENLABS_API_KEY and ANTHROPIC_API_KEY or GEMINI_API_KEY   required (not in --dry-run)
- *         GEMINI_API_KEY, GEMINI_IMAGE_MODEL               optional illustrations
- *         YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET, YOUTUBE_REFRESH_TOKEN   optional upload
- *         ORIGINALS_PRIVACY (unlisted|public|private, default unlisted)
- *         ELEVENLABS_VOICE_ID, CLAUDE_MODEL, CHROMIUM_PATH  optional overrides
+ * Usage:  npx tsx run.ts [--dry-run] [--out dir] [--media <media branch checkout>] [--stills auto|1.5,6]
+ * Env:    ELEVENLABS_API_KEY and GEMINI_API_KEY or ANTHROPIC_API_KEY     required (not in --dry-run)
+ *         ORIGINALS_STYLE (collage|cards, default collage)
+ *         ASSETS_DIR (assets branch checkout) or COLLAGE_ASSETS (a built kit), COLLAGE_FIGS_DIR
+ *         ELEVENLABS_VOICE_ID, ELEVENLABS_MODEL, ORIGINALS_GEMINI_MODEL, CLAUDE_MODEL, CHROMIUM_PATH
+ *         YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET, YOUTUBE_REFRESH_TOKEN, ORIGINALS_PRIVACY   optional upload
  */
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { spawn, execFile } from "node:child_process";
+import { promisify } from "node:util";
+import { mkdir, readFile, stat, writeFile, rename } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { loadNews } from "../../src/lib/news-engine";
-import { clusterStories } from "../../src/lib/cluster";
 import type { Original, OriginalsManifest } from "../../src/lib/originals-types";
-import { checkScript, pickCluster, sourceText, validShape, writeScript, type Script } from "./script";
-import { illustrate, pickVoice, speak, uploadToYouTube } from "./media-apis";
-import { compose, renderCards, silence, readBuffer, poster as run_ffmpeg_poster } from "./render";
+import { chooseStory, FIXTURE_BRIEF, type Brief, type Origin } from "./pick";
+import { fixtureBoard, validate, writeStoryboard, type Board } from "./storyboard";
+import { narrateElevenLabs, placeholderNarration, type Timing } from "./narrate";
+import { buildKit, creditsLine, loadKit, type Kit } from "./collage/kit";
+import { pickVoice, speak, uploadToYouTube } from "./media-apis";
+import { checkScript, validShape, writeScript, type Script } from "./script";
+import { compose, renderCards, silence, readBuffer, poster as cardPoster } from "./render";
+import { SkipRun, env, flushSummary, note, slug, warn } from "./util";
 
+const run = promisify(execFile);
+const HERE = import.meta.dirname;
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry-run");
-const arg = (name: string, def: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : def; };
+const arg = (name: string, def: string) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : def; };
 const OUT = resolve(arg("--out", "out"));
-const MANIFEST = resolve(arg("--manifest", "manifest.json"));
-const env = (k: string) => process.env[k]?.trim() || "";
+/** The media branch checkout (its originals/ folder holds manifest.json, queue.json, skipped.json). */
+const MEDIA = resolve(arg("--media", "../../../media"));
+const ORIG = join(MEDIA, "originals");
+const STILLS = arg("--stills", "");
+const STYLE = (env("ORIGINALS_STYLE") || "collage").toLowerCase() === "cards" ? "cards" : "collage";
+const DATE = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "America/Toronto" });
 
-function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60); }
+type Made = { title: string; summary: string; video: string; poster: string; seconds: number; transcript: string; voice: string; credits?: string; model: string; tags: string[]; aiImages: boolean };
 
-const FIXTURE: Script = {
+// ── collage style ──────────────────────────────────────────────────────────
+async function getKit(): Promise<Kit | null> {
+  const prebuilt = env("COLLAGE_ASSETS") ? await loadKit(env("COLLAGE_ASSETS")) : null;
+  if (prebuilt) return prebuilt;
+  const src = env("ASSETS_DIR");
+  if (!src || !existsSync(src)) {
+    warn("No collage assets", "ASSETS_DIR (a checkout of the assets branch) is not set: the video will have no archive figures, newspaper pages, sounds or music.");
+    return null;
+  }
+  const kit = await buildKit(src, join(OUT, "kit"), { figsDir: env("COLLAGE_FIGS_DIR") || undefined });
+  note(`kit: ${kit.figures.length} figures, ${Object.keys(kit.sfxSources).length} sound takes, music ${kit.music ? kit.music.split("/").pop() : "none"}`);
+  return kit;
+}
+
+function renderCollage(board: string, work: string, out: string, stills?: string): Promise<void> {
+  return new Promise((res, rej) => {
+    const p = spawn("npx", ["tsx", join(HERE, "collage/render-collage.ts"), board, work, out, ...(stills ? ["--stills", stills] : [])], { cwd: HERE, stdio: "inherit", env: process.env });
+    p.on("error", rej);
+    p.on("close", c => (c === 0 ? res() : rej(new Error(`render-collage exited ${c}`))));
+  });
+}
+
+async function fileSize(f: string) { return (await stat(f)).size; }
+
+async function makeCollage(brief: Brief): Promise<Made | string | null> {
+  const kit = await getKit();
+  if (kit) {
+    process.env.COLLAGE_ASSETS = kit.dir;
+    if (kit.sfxMap && !env("COLLAGE_SFX_MAP")) process.env.COLLAGE_SFX_MAP = kit.sfxMap;
+    if (kit.music && !env("COLLAGE_MUSIC")) process.env.COLLAGE_MUSIC = kit.music;
+  }
+  const figures = kit?.figures ?? [];
+
+  // Storyboard
+  let board: Board;
+  let model = "fixture";
+  if (DRY) {
+    board = fixtureBoard(figures, DATE, FIXTURE_BRIEF.sources);
+    const problems = validate(board, figures).filter(p => !/narration must be|7 to 10 scenes/.test(p)); // the fixture is short on purpose
+    if (problems.length) throw new Error(`fixture storyboard: ${problems.join("; ")}`);
+  } else {
+    const r = await writeStoryboard(brief, figures, {
+      anthropic: env("ANTHROPIC_API_KEY") || undefined, gemini: env("GEMINI_API_KEY") || undefined,
+      claudeModel: env("CLAUDE_MODEL") || "claude-sonnet-5-5", geminiModel: env("ORIGINALS_GEMINI_MODEL") || "gemini-3.8-flash",
+    }, DATE);
+    model = r.model;
+    if (!r.board) return r.reason;
+    board = r.board;
+    note(`storyboard: ${board.scenes.length} scenes (${board.scenes.map(s => s.type).join(", ")}), writer ${r.model}, ${r.attempts === 1 ? "passed the fact guard first time" : "passed on the retry"}`);
+  }
+  const work = join(OUT, "work");
+  await mkdir(work, { recursive: true });
+  const boardPath = join(OUT, "storyboard.json");
+  await writeFile(boardPath, JSON.stringify(board, null, 2));
+
+  // Voice
+  let timing: Timing;
+  let voice = "none (dry run)";
+  if (DRY) timing = await placeholderNarration(board, work);
+  else {
+    const v = await pickVoice(env("ELEVENLABS_API_KEY"), env("ELEVENLABS_VOICE_ID") || undefined);
+    voice = `ElevenLabs (${v.name})`;
+    timing = await narrateElevenLabs(board, work, env("ELEVENLABS_API_KEY"), v.id, env("ELEVENLABS_MODEL") || undefined);
+  }
+  note(`narration: ${timing.duration.toFixed(1)} s, ${voice}`);
+
+  // Render
+  if (STILLS) {
+    const times = STILLS === "auto" ? timing.scenes.map(s => +(s.start + (s.end - s.start) * 0.72).toFixed(2)).join(",") : STILLS;
+    await renderCollage(boardPath, work, join(OUT, "explainer.mp4"), times);
+    note(`stills at ${times} s in ${work}`);
+    return null;
+  }
+  const video = join(OUT, "explainer.mp4");
+  await renderCollage(boardPath, work, video);
+  // jsDelivr serves files up to 20 MB: squeeze the rare long, busy video.
+  if (await fileSize(video) > 19_000_000) {
+    const tmp = join(OUT, "explainer-small.mp4");
+    await run("ffmpeg", ["-y", "-loglevel", "error", "-i", video, "-c:v", "libx264", "-preset", "veryfast", "-crf", "27", "-c:a", "copy", "-movflags", "+faststart", tmp]);
+    await rename(tmp, video);
+  }
+  const poster = join(OUT, "poster.jpg");
+  const at = Math.max(0.5, Math.min(timing.duration - 0.2, timing.scenes[0].end - 0.4));
+  await run("ffmpeg", ["-y", "-loglevel", "error", "-ss", at.toFixed(2), "-i", video, "-frames:v", "1", "-vf", "scale=540:960", "-q:v", "4", poster]);
+
+  // Credits: the figures, pages, music and recordings this video actually used.
+  let credits: string | undefined;
+  if (kit) {
+    const used = existsSync(join(work, "sfx-used.json")) ? JSON.parse(await readFile(join(work, "sfx-used.json"), "utf8")) as { files: string[] } : { files: [] };
+    const figs = board.scenes.map(s => s.figure).filter((f): f is string => typeof f === "string");
+    const newsprint = board.scenes.some(s => ["newsprint", "split", "kraft", "cream", "board"].includes(s.bg) || s.type === "ransom");
+    credits = creditsLine(kit, { figures: [...new Set(figs)], newsprint, sfxFiles: used.files }, `AI voice, ${voice}`);
+  }
+  return {
+    title: board.title, summary: board.summary, video, poster, seconds: timing.duration,
+    transcript: board.scenes.map(s => s.say.join(" ")).join(" "), voice, credits, model, tags: board.tags, aiImages: false,
+  };
+}
+
+// ── cards style (the original renderer, kept as a fallback: ORIGINALS_STYLE=cards) ──
+const FIXTURE_SCRIPT: Script = {
   title: "Dry run: how the pipeline renders an explainer",
   summary: "A test render with placeholder text and silent narration.",
   segments: [
@@ -49,124 +162,109 @@ const FIXTURE: Script = {
   youtubeTitle: "Dry run", description: "Dry run", tags: ["test"],
 };
 
-async function main() {
-  await mkdir(OUT, { recursive: true });
-  const manifest: OriginalsManifest = existsSync(MANIFEST)
-    ? JSON.parse(await readFile(MANIFEST, "utf8"))
-    : { updatedAt: new Date().toISOString(), items: [] };
-  const covered = new Set(manifest.items.flatMap(i => i.sources.map(s => s.url)));
-
-  // 1. Story
+async function makeCards(brief: Brief): Promise<Made | string> {
   let script: Script;
-  let sources: { name: string; url: string }[];
-  if (DRY) {
-    script = FIXTURE;
-    sources = [{ name: "TechCrunch", url: "https://example.com/1" }, { name: "The Verge", url: "https://example.com/2" }, { name: "Wired", url: "https://example.com/3" }];
-  } else {
-    // A missing key is a setup gap, not a failure: say so in the run summary and stop cleanly.
-    const missing = [!env("ANTHROPIC_API_KEY") && !env("GEMINI_API_KEY") ? "ANTHROPIC_API_KEY or GEMINI_API_KEY" : "", !env("ELEVENLABS_API_KEY") ? "ELEVENLABS_API_KEY" : ""].filter(Boolean);
-    if (missing.length) {
-      console.log(`::warning title=Originals skipped::Add repository secret(s) ${missing.join(" and ")} under Settings → Secrets and variables → Actions.`);
-      return;
-    }
-    const desk = await loadNews();
-    const clusters = clusterStories(desk.stories, 24);
-    console.log(`desk: ${desk.stories.length} stories, ${clusters.filter(c => c.sources >= 2).length} multi-outlet stories`);
-    const cluster = pickCluster(clusters, covered);
-    if (!cluster) { console.log("Nothing new to explain right now."); return; }
-    console.log(`story: ${cluster.lead.title} (${cluster.sources} outlets)`);
-    const src = sourceText(cluster);
-    const model = env("ANTHROPIC_API_KEY") ? env("CLAUDE_MODEL") || "claude-sonnet-5-5" : env("GEMINI_TEXT_MODEL") || "gemini-3.1-pro-preview";
+  let model = "fixture";
+  if (DRY) script = FIXTURE_SCRIPT;
+  else {
+    model = env("ANTHROPIC_API_KEY") ? env("CLAUDE_MODEL") || "claude-sonnet-5-5" : env("ORIGINALS_GEMINI_MODEL") || "gemini-3.8-flash";
     const keys = { apiKey: env("ANTHROPIC_API_KEY") || undefined, geminiKey: env("GEMINI_API_KEY") || undefined };
-    console.log(`writer: ${model}`);
-    let draft = await writeScript(cluster, { ...keys, model });
-    let bad = validShape(draft) ? checkScript(draft, src) : ["(invalid shape)"];
+    let draft = await writeScript(brief, { ...keys, model });
+    let bad = validShape(draft) ? checkScript(draft, brief.sourceText) : ["(invalid shape)"];
     if (bad.length) {
-      console.log("fact guard, retrying without:", bad.join(", "));
-      draft = await writeScript(cluster, { ...keys, model, feedback: bad });
-      bad = validShape(draft) ? checkScript(draft, src) : ["(invalid shape)"];
+      note(`fact guard, retrying without: ${bad.join(", ")}`);
+      draft = await writeScript(brief, { ...keys, model, feedback: bad });
+      bad = validShape(draft) ? checkScript(draft, brief.sourceText) : ["(invalid shape)"];
     }
-    if (!draft || bad.length) { console.log("No script passed the fact guard; nothing published.", bad); return; }
+    if (!draft || bad.length) return `no script passed the fact guard (${bad.join(", ") || "writer declined"})`;
     script = draft;
-    const seen = new Set<string>();
-    sources = cluster.stories.filter(s => !seen.has(s.source) && seen.add(s.source)).slice(0, 6).map(s => ({ name: s.source, url: s.link }));
   }
-
-  // 2. Voice
   const voices: string[] = [];
   let voiceName = "none (dry run)";
-  if (DRY) {
-    for (let k = 0; k < script.segments.length; k++) {
-      const f = join(OUT, `voice-${k}.mp3`);
-      await silence(Math.max(2.5, script.segments[k].say.split(/\s+/).length * 0.38), f);
-      voices.push(f);
-    }
-  } else {
-    const voice = await pickVoice(env("ELEVENLABS_API_KEY"), env("ELEVENLABS_VOICE_ID") || undefined);
-    voiceName = `ElevenLabs (${voice.name})`;
-    for (let k = 0; k < script.segments.length; k++) {
-      const f = join(OUT, `voice-${k}.mp3`);
-      await speak(env("ELEVENLABS_API_KEY"), voice.id, script.segments[k].say, f);
-      voices.push(f);
-    }
+  const v = DRY ? null : await pickVoice(env("ELEVENLABS_API_KEY"), env("ELEVENLABS_VOICE_ID") || undefined);
+  if (v) voiceName = `ElevenLabs (${v.name})`;
+  for (let k = 0; k < script.segments.length; k++) {
+    const f = join(OUT, `voice-${k}.mp3`);
+    if (!v) await silence(Math.max(2.5, script.segments[k].say.split(/\s+/).length * 0.38), f);
+    else await speak(env("ELEVENLABS_API_KEY"), v.id, script.segments[k].say, f);
+    voices.push(f);
   }
-
-  // 3. Illustrations (optional, never of people; labelled on the card)
-  const images: (string | null)[] = script.segments.map(() => null);
-  if (!DRY && env("GEMINI_API_KEY")) {
-    const model = env("GEMINI_IMAGE_MODEL") || "gemini-2.5-flash-image";
-    for (let k = 0; k < script.segments.length; k++) {
-      const p = script.segments[k].imagePrompt;
-      if (!p || script.segments[k].card.type === "sources") continue;
-      const f = join(OUT, `img-${k}.png`);
-      if (await illustrate(env("GEMINI_API_KEY"), p, f, model)) images[k] = f;
-    }
-  }
-
-  // 4. Render
-  const date = new Date().toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric" });
-  const cards = await renderCards(script, OUT, { images, sources: sources.map(s => s.name), date, chromiumPath: env("CHROMIUM_PATH") || undefined });
+  const cards = await renderCards(script, OUT, { images: script.segments.map(() => null), sources: brief.sources.map(s => s.name), date: DATE, chromiumPath: env("CHROMIUM_PATH") || undefined });
   const video = join(OUT, "explainer.mp4");
   const seconds = await compose(cards, voices, OUT, video);
-  console.log(`rendered ${video} (${seconds.toFixed(1)} s)`);
+  const poster = join(OUT, "poster.jpg");
+  await cardPoster(cards[0], poster);
+  return { title: script.title, summary: script.summary, video, poster, seconds, transcript: script.segments.map(s => s.say).join(" "), voice: voiceName, model, tags: script.tags ?? [], aiImages: false };
+}
 
-  const transcript = script.segments.map(s => s.say).join(" ");
-  const description = `${script.description}\n\nNarrated by an AI voice (${voiceName}). Script written with Claude from the publishers' reporting and checked against it.${images.some(Boolean) ? " Illustrations are AI-generated." : ""}\n\nSources:\n${sources.map(s => `${s.name}: ${s.url}`).join("\n")}`;
+// ── main ───────────────────────────────────────────────────────────────────
+async function main() {
+  await mkdir(OUT, { recursive: true });
+  note(`Originals ${STYLE} style${DRY ? " (dry run: fixture text, silent narration, no API calls)" : ""}`);
+  const manifestPath = join(ORIG, "manifest.json");
+  const manifest: OriginalsManifest = existsSync(manifestPath) ? JSON.parse(await readFile(manifestPath, "utf8")) : { updatedAt: new Date().toISOString(), items: [] };
 
-  // 5. Upload (optional)
-  let youtubeId: string | undefined;
-  let youtubePrivacy: "public" | "unlisted" | "private" | undefined;
-  if (!DRY && env("YOUTUBE_REFRESH_TOKEN")) {
-    const privacy = (env("ORIGINALS_PRIVACY") || "unlisted") as "public" | "unlisted" | "private";
-    const up = await uploadToYouTube(
-      { clientId: env("YOUTUBE_CLIENT_ID"), clientSecret: env("YOUTUBE_CLIENT_SECRET"), refreshToken: env("YOUTUBE_REFRESH_TOKEN") },
-      await readBuffer(video),
-      { title: script.youtubeTitle || script.title, description, tags: [...(script.tags ?? []), "AI news", "AI Broadsheet"], privacy },
-    );
-    youtubeId = up.id;
-    youtubePrivacy = up.privacy;
-    console.log(`YouTube: https://youtu.be/${youtubeId} (requested ${privacy}, YouTube set ${up.privacy})`);
+  if (!DRY) {
+    // A missing key is a setup gap, not a failure: say so in the run summary and stop cleanly.
+    const missing = [!env("ANTHROPIC_API_KEY") && !env("GEMINI_API_KEY") ? "GEMINI_API_KEY (or ANTHROPIC_API_KEY)" : "", !env("ELEVENLABS_API_KEY") ? "ELEVENLABS_API_KEY" : ""].filter(Boolean);
+    if (missing.length) { warn("Originals skipped", `Add repository secret(s) ${missing.join(" and ")} under Settings → Secrets and variables → Actions.`); return; }
   }
 
-  // 6. Manifest entry (the workflow commits it to the media branch)
-  const id = `${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "")}-${slug(script.title)}`;
-  // The workflow attaches the video and poster to a GitHub release named after the entry.
-  const repo = env("GITHUB_REPOSITORY");
-  const asset = (f: string) => (repo ? `https://github.com/${repo}/releases/download/original-${id}/${f}` : undefined);
-  await run_ffmpeg_poster(cards[0], join(OUT, "poster.jpg"));
-  const entry: Original = {
-    id, publishedAt: new Date().toISOString(), title: script.title, summary: script.summary,
-    durationSec: Math.round(seconds), youtubeId, youtubePrivacy, fileUrl: asset("explainer.mp4"), posterUrl: asset("poster.jpg"),
-    sources, transcript, voice: voiceName, aiImages: images.some(Boolean),
+  const pick = DRY ? { brief: FIXTURE_BRIEF, done: async () => {} } : await chooseStory({ mediaDir: ORIG, manifest, write: true });
+  const brief = pick.brief;
+  if (!brief) { note("Nothing new to explain right now."); return; }
+
+  const made = STYLE === "cards" ? await makeCards(brief) : await makeCollage(brief);
+  if (made === null) return; // stills only
+  if (typeof made === "string") {
+    warn("No explainer this run", `${made}. Story: ${brief.lead}`);
+    await pick.done({ status: "skipped", reason: made });
+    return;
+  }
+  note(`rendered ${made.video} (${made.seconds.toFixed(1)} s, ${((await fileSize(made.video)) / 1e6).toFixed(1)} MB)`);
+
+  const id = `${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "")}-${slug(made.title)}`;
+  const sources = brief.sources.map(s => ({ name: s.name, url: s.url }));
+  const writer = made.model.startsWith("claude") ? "Claude" : made.model.startsWith("gemini") ? "Gemini" : "a fixture";
+  const description = `${made.summary}\n\nNarrated by an AI voice (${made.voice}). ${STYLE === "collage" ? "Storyboard" : "Script"} written with ${writer} from the publishers' reporting and checked against it.${made.credits ? `\n\n${made.credits}` : ""}\n\nSources:\n${sources.map(s => `${s.name}: ${s.url}`).join("\n")}`;
+
+  // Upload (optional)
+  let youtubeId: string | undefined;
+  let youtubePrivacy: Original["youtubePrivacy"];
+  if (!DRY && env("YOUTUBE_REFRESH_TOKEN")) {
+    const privacy = (env("ORIGINALS_PRIVACY") || "unlisted") as "public" | "unlisted" | "private";
+    try {
+      const up = await uploadToYouTube(
+        { clientId: env("YOUTUBE_CLIENT_ID"), clientSecret: env("YOUTUBE_CLIENT_SECRET"), refreshToken: env("YOUTUBE_REFRESH_TOKEN") },
+        await readBuffer(made.video),
+        { title: made.title, description, tags: [...made.tags, "AI news", "AI Broadsheet"], privacy },
+      );
+      youtubeId = up.id; youtubePrivacy = up.privacy;
+      note(`YouTube: https://youtu.be/${youtubeId} (requested ${privacy}, YouTube set ${up.privacy})`);
+    } catch (e) {
+      warn("YouTube upload failed", `${(e as Error).message.slice(0, 200)}. The site plays its own copy.`);
+    }
+  }
+
+  // The manifest entry; publish.ts pins fileUrl/posterUrl to the media commit and lists it.
+  const entry: Original & { origin: Origin } = {
+    id, kind: "explainer", publishedAt: new Date().toISOString(), title: made.title, summary: made.summary,
+    durationSec: Math.round(made.seconds), youtubeId, youtubePrivacy,
+    sources, transcript: made.transcript, voice: made.voice, aiImages: made.aiImages,
+    ...(made.credits ? { credits: made.credits } : {}),
+    origin: brief.origin,
   };
   await writeFile(join(OUT, "entry.json"), JSON.stringify(entry, null, 2));
   await writeFile(join(OUT, "description.txt"), description);
-  if (!DRY) {
-    manifest.items = [entry, ...manifest.items].slice(0, 200);
-    manifest.updatedAt = entry.publishedAt;
-    await writeFile(MANIFEST, JSON.stringify(manifest, null, 2));
-  }
-  console.log(`entry ${id}`);
+  if (!DRY) await pick.done({ status: "made", id });
+  note(`entry ${id}: “${made.title}”`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main()
+  .catch(async e => {
+    if (e instanceof SkipRun) { warn(e.title, e.message); return; }
+    console.error(e);
+    note(`failed: ${(e as Error).message}`);
+    process.exitCode = 1;
+  })
+  .finally(() => flushSummary("Originals"));

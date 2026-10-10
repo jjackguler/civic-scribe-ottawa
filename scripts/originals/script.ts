@@ -3,9 +3,9 @@
  * publishers' own text. Every line is checked by the same fact guard as the AI
  * desk: any number or name not in the sources rejects the script.
  */
-import type { Story } from "../../src/lib/news-engine";
 import type { Cluster } from "../../src/lib/cluster";
 import { unsupported } from "../../src/lib/ai-desk.server";
+import { SkipRun, limitError } from "./util";
 
 export type Card =
   | { type: "headline"; big: string; small?: string }
@@ -53,13 +53,13 @@ Rules:
 - No questions in titles, no exclamation marks, no "breaking", no "shocking".
 - If the text is too thin for a fair 45-second explainer, return {"skip": true}.`;
 
-/** Writes the script with Claude when apiKey is set, otherwise with Gemini (geminiKey). */
 /** Same house voice as src/lib/editorial.ts (kept in sync by hand: the pipeline runs outside the site bundle). */
-const HOUSE_VOICE = `House voice of AI Broadsheet: human-centred (say what the news means for people where the sources allow, never invent impact); never demean any person or group, no stereotypes; never mock religion, belief or God; family-safe, no sexual or graphic detail; neither fear nor hype.`;
+export const HOUSE_VOICE = `House voice of AI Broadsheet: human-centred (say what the news means for people where the sources allow, never invent impact); never demean any person or group, no stereotypes; never mock religion, belief or God; family-safe, no sexual or graphic detail; neither fear nor hype.`;
 
-export async function writeScript(cluster: Cluster, opts: { apiKey?: string; geminiKey?: string; model: string; feedback?: string[] }): Promise<Script | null> {
-  const items = cluster.stories.slice(0, 6).map((s: Story) => ({ publisher: s.source, headline: s.title, excerpt: s.summary.slice(0, 600), published: s.publishedAt }));
-  const user = JSON.stringify({ story: items }) + (opts.feedback?.length
+/** Writes the card script with Claude when apiKey is set, otherwise with Gemini (geminiKey). */
+export async function writeScript(brief: { items: { publisher: string; headline: string; excerpt: string; published?: string }[]; reporting?: unknown }, opts: { apiKey?: string; geminiKey?: string; model: string; feedback?: string[] }): Promise<Script | null> {
+  const items = brief.items.slice(0, 6).map(s => ({ publisher: s.publisher, headline: s.headline, excerpt: s.excerpt.slice(0, 600), published: s.published }));
+  const user = JSON.stringify({ story: items, ourReporting: brief.reporting }) + (opts.feedback?.length
     ? `\n\nYour previous draft used words that are not in the sources: ${opts.feedback.join(", ")}. Remove them or replace them with words from the sources.`
     : "");
   if (!opts.apiKey) return writeScriptGemini(user, opts.geminiKey!, opts.model);
@@ -69,7 +69,7 @@ export async function writeScript(cluster: Cluster, opts: { apiKey?: string; gem
     body: JSON.stringify({ model: opts.model, max_tokens: 2500, system: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only.", messages: [{ role: "user", content: user }] }),
     signal: AbortSignal.timeout(60_000),
   });
-  if (!res.ok) throw new Error(`Claude HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  if (!res.ok) { const b = await res.text(); throw limitError("Claude", res.status, b) ?? new Error(`Claude HTTP ${res.status}: ${b.slice(0, 300)}`); }
   const body = await res.json() as { content?: { type: string; text?: string }[] };
   const text = (body.content ?? []).map(b => b.text ?? "").join("");
   const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
@@ -79,7 +79,7 @@ export async function writeScript(cluster: Cluster, opts: { apiKey?: string; gem
 
 async function writeScriptGemini(user: string, key: string, model: string): Promise<Script | null> {
   // Google retires model names for new keys; fall back rather than fail the day's video.
-  let last = "";
+  let last = "", quota = false;
   for (const m of [...new Set([model, "gemini-3.8-flash", "gemini-flash-latest"])]) {
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
       method: "POST",
@@ -94,8 +94,9 @@ async function writeScriptGemini(user: string, key: string, model: string): Prom
     if (!res.ok) {
       last = `Gemini ${m} HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`;
       console.warn(last);
+      if (res.status === 429) quota = true;
       if ([404, 429, 503].includes(res.status)) continue;
-      throw new Error(last);
+      throw limitError("Gemini", res.status, last) ?? new Error(last);
     }
     const body = await res.json() as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] } }[] };
     const text = (body.candidates?.[0]?.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join("");
@@ -103,6 +104,7 @@ async function writeScriptGemini(user: string, key: string, model: string): Prom
     if (json.skip) return null;
     return json as Script;
   }
+  if (quota) throw new SkipRun("Gemini quota", `Every Gemini model in the chain answered HTTP 429 (quota). Last: ${last.slice(0, 160)}`);
   throw new Error(last || "No Gemini model answered");
 }
 

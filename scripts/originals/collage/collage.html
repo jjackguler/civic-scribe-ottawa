@@ -116,6 +116,14 @@ function cue(si, word, lead = 0.12) {
   return T.scenes[si].start;
 }
 const sent = (si, k) => T.scenes[si].sentences[Math.min(k, T.scenes[si].sentences.length - 1)];
+/** Like cue(), but `fallback` when the word is not spoken in the scene. */
+function cueOr(si, word, lead, fallback) {
+  if (word) for (const s of T.scenes[si].sentences) {
+    const i = s.text.toLowerCase().indexOf(String(word).toLowerCase());
+    if (i >= 0) return Math.max(T.scenes[si].start, s.start + (i / s.text.length) * (s.end - s.start) - lead);
+  }
+  return fallback;
+}
 
 /** Paper pieces: enter with an overshoot, then breathe on twos. */
 function piece(el, seed, base) { el.dataset.seed = seed; return { el, seed, base }; }
@@ -154,7 +162,12 @@ const BUILD = {
   clippings(sc, si, root) {
     root.appendChild(h(`<div class="board"></div>`));
     const spots = [{ x: 56, y: 300, rot: -3.2, w: 900 }, { x: 140, y: 650, rot: 2.6, w: 860 }, { x: 40, y: 990, rot: -1.4, w: 930 }];
-    const enter = [sc.start + .05, cue(si, "math", .3), cue(si, "github", .2)];
+    // Generic boards give each clip a cue word; the original math board relies on these defaults.
+    const generic = sc.data.clips.some(c => c.cue);
+    const enter = generic
+      ? sc.data.clips.slice(0, 3).map((c, k) => cueOr(si, c.cue, .2, sc.start + .05 + k * 1.1))
+      : [sc.start + .05, cue(si, "math", .3), cue(si, "github", .2)];
+    if (generic) { enter[0] = Math.min(enter[0], sc.start + .05); for (let k = 1; k < enter.length; k++) enter[k] = Math.max(enter[k], enter[k - 1] + .5); }
     const pcs = sc.data.clips.slice(0, 3).map((c, k) => {
       const s = spots[k];
       const el = h(`<div class="piece" style="left:0;top:0;width:${s.w}px"><div class="paper" style="padding:34px 40px 40px;clip-path:${torn(100 + k, 8)}">
@@ -166,7 +179,15 @@ const BUILD = {
       ev(enter[k] + .32, "slap");
       return piece(el, 300 + k, s);
     });
-    const mk0 = marker(pcs[0].el.querySelector(".hl")), mk1 = marker(pcs[1].el.querySelector(".hl"));
+    if (generic) {
+      const mks = pcs.map((pc, k) => ({ mk: marker(pc.el.querySelector(".hl")), at: enter[k] + .65 })).filter(x => x.mk);
+      mks.forEach(x => ev(x.at, "marker"));
+      return t => {
+        pcs.forEach((pc, k) => placePiece(pc, t, enter[k], { dx: k % 2 ? 700 : -700, dy: 260, rot: k % 2 ? 18 : -16 }));
+        mks.forEach(x => { x.mk.style.transform = `scaleX(${oCubic(p(t, x.at, .5)).toFixed(3)})`; });
+      };
+    }
+    const mk0 = marker(pcs[0].el.querySelector(".hl")), mk1 = pcs[1] ? marker(pcs[1].el.querySelector(".hl")) : null;
     const m0 = cue(si, "722", .0) + .35, m1 = cue(si, "public", .1);
     ev(m0, "marker"); ev(m1, "marker");
     return t => {
@@ -179,17 +200,18 @@ const BUILD = {
   numbers(sc, si, root) {
     root.appendChild(h(`<div class="yboard"></div>`));
     const its = sc.data.items.slice(0, 3);
-    const cues = its.map(it => cue(si, fmt(it.value), .25));
+    const fmtN = (n, d) => d ? n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }) : fmt(n);
+    const cues = its.map(it => it.cue ? cue(si, it.cue, .25) : cue(si, fmtN(it.value, it.decimals || 0), .25));
     const pcs = its.map((it, k) => {
       const el = h(`<div class="piece" style="width:${900 - k * 30}px"><div class="black" style="padding:44px 52px 48px;clip-path:${torn(200 + k, 9)}">
-        <div class="num">${esc(it.prefix || "")}<span>0</span></div><div class="lbl">${esc(it.label)}</div></div></div>`);
+        <div class="num">${esc(it.prefix || "")}<span>0</span>${esc(it.suffix || "")}</div><div class="lbl">${esc(it.label)}</div></div></div>`);
       root.appendChild(el);
       ev(cues[k] + .25, "thump");
       return { pc: piece(el, 400 + k, { x: 90 + k * 22, y: 300 + k * 345, rot: [-2.4, 1.8, -1.2][k] }), span: el.querySelector(".num span"), it };
     });
     return t => pcs.forEach(({ pc, span, it }, k) => {
       placePiece(pc, t, cues[k], { dx: 0, dy: -40, rot: 0, s: 1.7 }, .32);
-      span.textContent = fmt(it.value * oCubic(p(t, cues[k] + .1, .7)));
+      span.textContent = fmtN(it.value * oCubic(p(t, cues[k] + .1, .7)), it.decimals || 0);
     });
   },
 
@@ -204,7 +226,9 @@ const BUILD = {
     const svg = svgLayer(root);
     const s1 = stroke(svg, roughPath([[175, 395], [540, 520], [925, 655]], 7), "#D7372F", 26);
     const s2 = stroke(svg, roughPath([[185, 665], [560, 530], [915, 385]], 9), "#D7372F", 26);
-    const a = sc.start + .05, c = cue(si, "different", .2), v = cue(si, "success", .3);
+    const a = sc.start + .05;
+    const c = sc.data.cue ? cueOr(si, sc.data.cue, .2, sc.start + 1) : cue(si, "different", .2);
+    const v = sc.data.verdictCue ? cueOr(si, sc.data.verdictCue, .3, Math.max(c + .9, sent(si, 1).start)) : cue(si, "success", .3);
     const pn = piece(note, 510, { x: 130, y: 340, rot: -3.5 }), ps = piece(strip, 511, { x: 90, y: 960, rot: 2 });
     ev(a + .3, "slap"); ev(c, "scribble"); ev(c + .3, "scribble"); ev(v + .2, "slap");
     return t => {
@@ -342,7 +366,7 @@ const BUILD = {
     const small = h(`<div class="piece" style="width:860px"><div class="paper" style="padding:40px 48px 44px;clip-path:${torn(1002, 6)}"><div class="sm" style="font-weight:600">${esc(sc.data.small)}</div><div class="credit" style="margin-top:20px">${esc(sc.data.credit || "")}</div></div></div>`);
     root.appendChild(small);
     const pb = piece(big, 1010, { x: 80, y: 360, rot: -2.5 }), ps = piece(small, 1011, { x: 130, y: 880, rot: 1.8 });
-    const a = cue(si, "doesn't", .4), b = sent(si, 1).start;
+    const a = cue(si, sc.data.cue || "doesn't", .4), b = sent(si, 1).start;
     ev(a + .3, "thump"); ev(b + .3, "slap");
     return t => { placePiece(pb, t, Math.min(a, sc.start + 1.2), { dx: 0, dy: 0, rot: -8, s: 1.9 }, .32); placePiece(ps, t, b, { dx: 900, dy: 80, rot: 10 }); };
   },
@@ -373,10 +397,14 @@ const BUILD = {
 let CAPS = [];
 function buildCaptions() {
   for (const sc of T.scenes) for (const s of sc.sentences) {
-    const words = s.text.split(/\s+/);
-    const weight = words.map(w => w.length + 1.5), tot = weight.reduce((a, b) => a + b, 0);
-    let acc = 0;
-    const timed = words.map((w, i) => { const st = s.start + (acc / tot) * (s.end - s.start); acc += weight[i]; return { w, st, en: s.start + (acc / tot) * (s.end - s.start) }; });
+    let timed;
+    if (Array.isArray(s.words) && s.words.length) timed = s.words.map(x => ({ w: x.w, st: x.start, en: x.end }));
+    else {
+      const words = s.text.split(/\s+/);
+      const weight = words.map(w => w.length + 1.5), tot = weight.reduce((a, b) => a + b, 0);
+      let acc = 0;
+      timed = words.map((w, i) => { const st = s.start + (acc / tot) * (s.end - s.start); acc += weight[i]; return { w, st, en: s.start + (acc / tot) * (s.end - s.start) }; });
+    }
     let chunk = [];
     const flush = () => { if (chunk.length) CAPS.push({ words: chunk, st: chunk[0].st, en: chunk[chunk.length - 1].en }); chunk = []; };
     for (const x of timed) { chunk.push(x); const len = chunk.map(c => c.w).join(" ").length; if (len > 20 || /[.,:;?]$/.test(x.w)) flush(); }
