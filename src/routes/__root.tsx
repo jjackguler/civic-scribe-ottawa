@@ -7,6 +7,8 @@ import appCss from "../styles.css?url";
 import grotesk from "../fonts/schibsted-grotesk-latin-wght-normal.woff2?url";
 import newsreader from "../fonts/newsreader-latin-opsz-normal.woff2?url";
 import { LocaleProvider } from "@/lib/locale-context";
+import { MobileRuntime } from "@/components/MobileApp";
+import mobileCss from "../mobile.css?url";
 import { SITE } from "@/lib/site";
 import { ADSENSE_CLIENT } from "@/lib/ads";
 import { isFrPath } from "@/lib/seo";
@@ -71,7 +73,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       // Fallbacks; every page sets its own through seoHead().
       { title: `${SITE.name} — ${SITE.tagline.en}` },
       { name: "description", content: SITE.description.en },
@@ -85,6 +87,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preload", href: grotesk, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "preload", href: newsreader, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: mobileCss },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", href: "/favicon-96.png?v=news-spark", type: "image/png", sizes: "96x96" },
       { rel: "icon", href: "/favicon.svg?v=news-spark", type: "image/svg+xml", sizes: "any" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=news-spark", sizes: "180x180" },
@@ -123,6 +127,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LocaleProvider>
         <Outlet />
+        <MobileRuntime />
         {ConsentBanner && <Suspense fallback={null}><ConsentBanner /></Suspense>}
       </LocaleProvider>
     </QueryClientProvider>

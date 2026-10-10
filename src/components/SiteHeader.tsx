@@ -23,6 +23,8 @@ const MAIN: Item[] = [
 ];
 
 const MORE: Item[] = [
+  { label: { en: "Get the app", fr: "Installer l'application" }, to: "/more" },
+  { label: { en: "Saved stories", fr: "Articles enregistrés" }, to: "/saved" },
   { label: { en: "Ask the Keeper", fr: "Demandez au Gardien" }, to: "/ask" },
   { label: { en: "Made with AI", fr: "Fait avec l'IA" }, to: "/showcase" },
   { label: { en: "Podcasts", fr: "Balados" }, to: "/listen" },

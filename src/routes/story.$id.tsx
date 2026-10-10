@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { StoryCard, StoryLink, StoryMeta, CoverageBadge, storyKicker } from "@/components/StoryCard";
 import { StoryImage } from "@/components/StoryImage";
+import { ArticleTools } from "@/components/MobileApp";
 import { AdSlot } from "@/components/AdSlot";
 import { LatestRail } from "@/components/LatestRail";
 import { NewsletterBox } from "@/components/NewsletterBox";
@@ -121,6 +122,7 @@ function StoryPage() {
               </p>
             )}
             <StoryMeta s={s} className="mt-3 text-[0.9rem]" />
+            <ArticleTools title={d.title} summary={d.summary || s.summary || ''} source={s.source} publishedAt={s.publishedAt} />
 
             {s.image && (
               <figure className="mt-6">
@@ -136,13 +138,13 @@ function StoryPage() {
                 <p className="text-[0.8rem] font-bold text-muted-ink mb-1">
                   {fr ? `Résumé du pupitre IA, d'après ${d.ai.join(", ")}` : `AI desk brief, from reporting by ${d.ai.join(", ")}`}
                 </p>
-                <p className="font-serif text-[1.25rem] leading-relaxed">{d.summary}</p>
+                <p className="reader-copy font-serif text-[1.25rem] leading-relaxed">{d.summary}</p>
               </div>
             )}
             {(d.ai ? s.summary : d.summary) && (
               <div className="mt-6 border-l-[3px] border-brass pl-5">
                 <p className="text-[0.8rem] font-bold text-muted-ink mb-1">{fr ? `Extrait de ${s.source}` : `From ${s.source}`}</p>
-                <p className="font-serif text-[1.25rem] leading-relaxed">{d.ai ? s.summary : d.summary}</p>
+                <p className="reader-copy font-serif text-[1.25rem] leading-relaxed">{d.ai ? s.summary : d.summary}</p>
               </div>
             )}
 
