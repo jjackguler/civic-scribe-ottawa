@@ -64,8 +64,11 @@ export function shapeDraft(r: RawDraft | null | undefined, sources: DispatchSour
   if (!headline || !news || thirty.length !== 3 || !matters) return "missing fields";
 
   const sections: ArticleSection[] = [];
+  // Models sometimes return a section as one string, or the whole article as text: accept both.
+  const art: Record<string, unknown> = typeof r.article === "string" ? { news: String(r.article).split(/\n\s*\n/) } : (r.article ?? {});
   for (const kind of KINDS) {
-    const paras = arr<unknown>(r.article?.[kind])
+    const raw = art[kind];
+    const paras = arr<unknown>(typeof raw === "string" ? raw.split(/\n\s*\n/) : raw)
       .map(p => (typeof p === "string" ? cleanMarkers(p.replace(/\s+/g, " "), valid, kind === "background") : ""))
       .filter(p => p.replace(MARKER_RE, "").trim().length > 0)
       .slice(0, 6)

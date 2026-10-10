@@ -73,7 +73,7 @@ const SHAPE = `Return JSON:
  "dek": 1-2 sentences under the headline (at most 40 words) that add the most important detail,
  "news": one sentence, at most 25 words: the news,
  "thirty": exactly 3 lines, each at most 14 words, that tell the story in 30 seconds,
- "confirmed": 0-4 [{"text", "src": ["s1","s3"]}] facts reported as fact by two or more of the sources, or announced by the company, lab or agency itself (official source),
+ "confirmed": 0-4 [{"text", "src": ["s1","s3"]}] facts stated as fact by two or more independent outlets (a company, lab or agency announcing its own news goes in "claimed", by that party),
  "claimed": 0-4 [{"text", "by", "src": [...]}] statements made by someone, in their name ("by" is that party as named in the sources; "text" written as "X says…"),
  "unknown": 1-3 short lines naming what the sources leave open, phrased neutrally ("Whether…", "When…", "How much…"), never speculating,
  "matters": at most 2 plain sentences on what this changes for an ordinary person, ONLY as far as the sources say; if they say nothing about impact, say plainly what is different now,
@@ -88,7 +88,8 @@ const SHAPE = `Return JSON:
  "timeline": [{"when", "text", "src"}] ONLY for times or dates the sources themselves state ("when" copied as written); otherwise []}
 
 Markers: end every sentence in "article", "plain" and "expert" that carries a fact with the source marker(s) it comes from, like "[s2]" or "[s1,s3]" ([bN] for background).
-Length: "article" should be 300 to 550 words WHEN the reporting supports it. If it supports less, write less (never under 150 words): never pad, never repeat a point, never fill with generalities. If the reporting can't support 150 words of real information, return {"skip": true, "reason": "..."}.`;
+Length: "article" should be 300 to 550 words WHEN the reporting supports it. If it supports less, write less (never under 120 words): a short, exact article is better than a padded one. Never repeat a point or fill with generalities. If the reporting can't support 120 words of real information, return {"skip": true, "reason": "..."}.
+Shape: "article" is an object whose values are ARRAYS of paragraph strings, e.g. {"news": ["…[s1]", "…[s2]"], "known": ["…"], "matters": ["…"], "background": []}.`;
 
 // ── reporter ───────────────────────────────────────────────────────────────
 const REPORTER = `You are the reporter at the AI Broadsheet Newsroom, a bilingual (English / Canadian French) human-centred AI news site in Canada. You write ONE original news article in English about ONE event, from the reporting of the outlets you are given, each as {key, outlet, official, published, lang, headline, excerpt}. "official": true means the outlet is the company, lab or government announcing its own news. Our headline, our structure, our words; their facts, credited.

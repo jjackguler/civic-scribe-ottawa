@@ -81,7 +81,8 @@ export function liveModels(): Models | null {
   }
 
   const names: Record<Tier, string> = {
-    writer: env("NEWSROOM_GEMINI_WRITER") || "gemini-3.1-pro-preview",
+    // Pro has no free-tier quota; set NEWSROOM_GEMINI_WRITER=gemini-3.1-pro-preview once billing is on.
+    writer: env("NEWSROOM_GEMINI_WRITER") || "gemini-3.8-flash",
     checker: env("NEWSROOM_GEMINI_CHECKER") || "gemini-3.8-flash",
   };
   return {

@@ -130,7 +130,7 @@ export function styleProblems(d: Draft, lang: "en" | "fr"): string[] {
   if (d.headline.length < 40 || d.headline.length > 110) out.push(`The headline must be 40 to 110 characters (it is ${d.headline.length}).`);
   if (/\b[A-Z]{5,}\b/.test(d.headline.replace(/\b(OpenAI|NVIDIA|UNESCO|NATO|OECD|CIFAR)\b/g, ""))) out.push("No words in ALL CAPS in the headline.");
   const words = countWords(d.sections.flatMap(s => s.paras));
-  const [min, max] = lang === "fr" ? [150, 700] : [150, 600];
+  const [min, max] = lang === "fr" ? [120, 700] : [120, 600];
   if (words < min) out.push(`The article is too thin (${words} words): skip the event rather than pad it.`);
   if (words > max) out.push(`The article is too long (${words} words): cut to at most 550 words.`);
   for (const s of d.sections) {
