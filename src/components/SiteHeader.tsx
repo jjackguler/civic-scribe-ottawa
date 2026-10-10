@@ -12,18 +12,20 @@ import type { Bi } from "@/lib/i18n";
 
 type Item = { label: Bi; to: string; section?: SectionId };
 
+// One kind of thing per word: news, our explanations, learning, then media. (Strategy review, §07.)
 const MAIN: Item[] = [
-  { label: { en: "Latest", fr: "En continu" }, to: "/news" },
-  { label: { en: "Dispatches", fr: "Dépêches" }, to: "/dispatch" },
-  { label: { en: "Explainers", fr: "Explicatifs" }, to: "/originals" },
-  { label: { en: "Labs", fr: "Labs" }, to: "/labs" },
-  { label: { en: "Ask the Keeper", fr: "Demandez au Gardien" }, to: "/ask" },
-  { label: { en: "Watch", fr: "Vidéos" }, to: "/watch" },
-  { label: { en: "Made with AI", fr: "Fait avec l'IA" }, to: "/showcase" },
-  { label: { en: "Podcasts", fr: "Balados" }, to: "/listen" },
+  { label: { en: "Today", fr: "Aujourd'hui" }, to: "/news" },
+  { label: { en: "Explained", fr: "Expliqué" }, to: "/dispatch" },
+  { label: { en: "Videos", fr: "Vidéos" }, to: "/originals" },
+  { label: { en: "Learn AI", fr: "Apprendre l'IA" }, to: "/labs" },
+  { label: { en: "Glossary", fr: "Glossaire" }, to: "/glossary" },
+  { label: { en: "Watch & listen", fr: "Voir et écouter" }, to: "/watch" },
 ];
 
 const MORE: Item[] = [
+  { label: { en: "Ask the Keeper", fr: "Demandez au Gardien" }, to: "/ask" },
+  { label: { en: "Made with AI", fr: "Fait avec l'IA" }, to: "/showcase" },
+  { label: { en: "Podcasts", fr: "Balados" }, to: "/listen" },
   { label: { en: "World", fr: "Monde" }, to: "/news", section: "world" },
   { label: { en: "Canada", fr: "Canada" }, to: "/news", section: "canada" },
   { label: { en: "Interviews", fr: "Entrevues" }, to: "/interviews" },
@@ -34,7 +36,7 @@ const MORE: Item[] = [
   { label: { en: "From the labs", fr: "Des laboratoires" }, to: "/news", section: "labs" },
   { label: { en: "Trending", fr: "Tendances" }, to: "/news", section: "trending" },
   { label: { en: "Tools worth trying", fr: "Outils à essayer" }, to: "/tools" },
-  { label: { en: "Learn AI", fr: "Apprendre l'IA" }, to: "/learn" },
+  { label: { en: "Beginner guides", fr: "Guides pour débuter" }, to: "/learn" },
   { label: { en: "Funding", fr: "Financement" }, to: "/funding" },
   { label: { en: "Editor's desk", fr: "Mot de la rédaction" }, to: "/editor" },
 ];

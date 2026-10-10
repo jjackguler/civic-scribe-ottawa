@@ -23,7 +23,7 @@ export type AiDeskEntry = { en: DeskCopy; fr: DeskCopy; from: string[]; at: stri
 
 const KEY = "ai-desk:v1";
 const MAX_ENTRIES = 600;
-const PER_RUN = 10;
+const PER_RUN = 6;
 
 const g = globalThis as unknown as {
   __aiDesk?: Map<string, AiDeskEntry>;

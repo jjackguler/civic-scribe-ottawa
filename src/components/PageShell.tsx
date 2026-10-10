@@ -9,7 +9,8 @@ export function PageShell({ children }: { children: ReactNode }) {
       <SiteHeader />
       <main id="main" className="flex-1">{children}</main>
       <SiteFooter />
-      <KeeperLauncher />
+      {/* On phones the floating Keeper competed with the story; it lives in the menu there. */}
+      <div className="hidden md:block"><KeeperLauncher /></div>
     </div>
   );
 }
