@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
-      SITE: ${{ vars.SITE_URL || 'https://aibroadsheet.lovable.app' }}
+      SITE: ${{ vars.SITE_URL || 'https://aibroadsheet.com' }}
     steps:
       - uses: actions/checkout@v4
       - name: Check out the archive branch

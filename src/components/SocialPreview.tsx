@@ -13,6 +13,7 @@ import { dispatchCard, keyNumber, storyCard, type CardOfTheDayPick } from "@/lib
 import { CARD_FORMATS, CARD_TEMPLATES, canvasToBlob, renderShareCard, type ShareCardContent } from "@/lib/share-cards";
 import { ogImagePath } from "@/lib/og/url";
 import { quizDay, dayLabel } from "@/lib/youth-core";
+import { SITE } from "@/lib/site";
 
 export default function SocialPreview() {
   const { locale } = useLocale();
@@ -24,7 +25,7 @@ export default function SocialPreview() {
     locale, kind: "quiz", kicker: fr ? "Quiz du jour" : "Daily quiz",
     headline: `${fr ? "Les 5 du Broadsheet" : "The Broadsheet 5"} · 4/5`,
     source: `${fr ? "Les 5 du Broadsheet" : "The Broadsheet 5"} · ${dayLabel(day, locale)}`,
-    url: "aibroadsheet.lovable.app/quiz", seed: `quiz-${day}`,
+    url: `${SITE.domain}/quiz`, seed: `quiz-${day}`,
     quiz: { score: 4, total: 5, marks: [true, true, false, true, true], streak: 3, dayLabel: dayLabel(day, locale) },
   }), [locale, fr, day]);
   const sentence = fr
