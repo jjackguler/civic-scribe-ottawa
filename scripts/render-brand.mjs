@@ -1,9 +1,17 @@
 // Run with the optional local `sharp` package; generated assets are committed.
 import sharp from 'sharp';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const root = new URL('../public/', import.meta.url);
 const svg = await readFile(new URL('favicon.svg', root));
+await mkdir(new URL('icons/', root), { recursive: true });
+for (const size of [192, 512]) {
+  await sharp(svg).resize(size, size).png().toFile(fileURLToPath(new URL(`icons/icon-${size}.png`, root)));
+  const inner = Math.round(size * 0.8), pad = Math.floor((size - inner) / 2);
+  await sharp(svg).resize(inner, inner).flatten({ background: '#0B2A2F' })
+    .extend({ top: pad, left: pad, bottom: size - inner - pad, right: size - inner - pad, background: '#0B2A2F' })
+    .png().toFile(fileURLToPath(new URL(`icons/maskable-${size}.png`, root)));
+}
 for (const [name, size] of [['favicon-96.png', 96], ['apple-touch-icon.png', 180], ['logo-192.png', 192], ['logo-512.png', 512]]) {
   await sharp(svg).resize(size, size).png().toFile(fileURLToPath(new URL(name, root)));
 }

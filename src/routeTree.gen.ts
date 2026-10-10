@@ -20,6 +20,7 @@ import { Route as GovernmentRouteImport } from './routes/government'
 import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as ListenRouteImport } from './routes/listen'
 import { Route as MinistryRouteImport } from './routes/ministry'
+import { Route as MoreRouteImport } from './routes/more'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
@@ -27,6 +28,7 @@ import { Route as OriginalsRouteImport } from './routes/originals'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
+import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -119,6 +121,11 @@ const MinistryRoute = MinistryRouteImport.update({
   path: '/ministry',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
@@ -152,6 +159,11 @@ const QuizRoute = QuizRouteImport.update({
 const RssDotxmlRoute = RssDotxmlRouteImport.update({
   id: '/rss.xml',
   path: '/rss.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -347,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
+  '/more': typeof MoreRoute
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
@@ -354,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
+  '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -403,6 +417,7 @@ export interface FileRoutesByTo {
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
+  '/more': typeof MoreRoute
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
@@ -410,6 +425,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
+  '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -460,6 +476,7 @@ export interface FileRoutesById {
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
+  '/more': typeof MoreRoute
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
@@ -467,6 +484,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
+  '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -518,6 +536,7 @@ export interface FileRouteTypes {
     | '/interviews'
     | '/listen'
     | '/ministry'
+    | '/more'
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
@@ -525,6 +544,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/rss.xml'
+    | '/saved'
     | '/search'
     | '/showcase'
     | '/sitemap.xml'
@@ -574,6 +594,7 @@ export interface FileRouteTypes {
     | '/interviews'
     | '/listen'
     | '/ministry'
+    | '/more'
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
@@ -581,6 +602,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/rss.xml'
+    | '/saved'
     | '/search'
     | '/showcase'
     | '/sitemap.xml'
@@ -630,6 +652,7 @@ export interface FileRouteTypes {
     | '/interviews'
     | '/listen'
     | '/ministry'
+    | '/more'
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
@@ -637,6 +660,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/rss.xml'
+    | '/saved'
     | '/search'
     | '/showcase'
     | '/sitemap.xml'
@@ -687,6 +711,7 @@ export interface RootRouteChildren {
   InterviewsRoute: typeof InterviewsRoute
   ListenRoute: typeof ListenRoute
   MinistryRoute: typeof MinistryRoute
+  MoreRoute: typeof MoreRoute
   NewsRoute: typeof NewsRoute
   NewsSitemapDotxmlRoute: typeof NewsSitemapDotxmlRoute
   NewsletterRoute: typeof NewsletterRoute
@@ -694,6 +719,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
+  SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   ShowcaseRoute: typeof ShowcaseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -811,6 +837,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MinistryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news': {
       id: '/news'
       path: '/news'
@@ -858,6 +891,13 @@ declare module '@tanstack/react-router' {
       path: '/rss.xml'
       fullPath: '/rss.xml'
       preLoaderRoute: typeof RssDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -1127,6 +1167,7 @@ const rootRouteChildren: RootRouteChildren = {
   InterviewsRoute: InterviewsRoute,
   ListenRoute: ListenRoute,
   MinistryRoute: MinistryRoute,
+  MoreRoute: MoreRoute,
   NewsRoute: NewsRoute,
   NewsSitemapDotxmlRoute: NewsSitemapDotxmlRoute,
   NewsletterRoute: NewsletterRoute,
@@ -1134,6 +1175,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
   RssDotxmlRoute: RssDotxmlRoute,
+  SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   ShowcaseRoute: ShowcaseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

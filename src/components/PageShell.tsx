@@ -2,13 +2,15 @@ import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { KeeperLauncher } from "./Keeper";
+import { MobileNav } from "./MobileApp";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col app-shell">
       <SiteHeader />
       <main id="main" className="flex-1">{children}</main>
       <SiteFooter />
+      <MobileNav />
       {/* On phones the floating Keeper competed with the story; it lives in the menu there. */}
       <div className="hidden md:block"><KeeperLauncher /></div>
     </div>

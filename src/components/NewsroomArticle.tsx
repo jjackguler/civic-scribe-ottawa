@@ -23,6 +23,7 @@ import { keepNames, listOutlets } from "./Dispatch";
 import { Chip, DepthSwitch, EaseHeight, Ledger, Listen, ReportError, ThirtySeconds, clock, useDepth } from "./DispatchArticle";
 import { YourTake } from "./YouthKit";
 import { ShareBar } from "./ShareBar";
+import { ArticleTools } from "./MobileApp";
 
 const COPY = {
   en: {
@@ -241,6 +242,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
       </header>
 
       <div className="container-mw pt-9 sm:pt-12">
+        <ArticleTools title={c.headline} summary={c.dek} source="AI Broadsheet Newsroom" publishedAt={a.createdAt} />
         <ThirtySeconds lines={c.thirty} />
       </div>
 
