@@ -93,7 +93,9 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
   const headline = e.sources[0]?.title ?? e.id;
   const stop = async (stage: string, n: RoleNote) => {
     roles.push(n);
-    await store.reject({ id: e.id, at: new Date().toISOString(), stage, headline, reasons: n.notes });
+    // A model that didn't answer is our failure, not the story's: don't put the story on cooldown.
+    const infra = n.notes.every(x => /no reply|not json|HTTP \d|call failed|no candidate/i.test(x));
+    if (!infra) await store.reject({ id: e.id, at: new Date().toISOString(), stage, headline, reasons: n.notes });
     log(`  ✗ ${stage}: ${n.notes.slice(0, 4).join(" | ")}`);
     return "rejected" as const;
   };
@@ -211,7 +213,8 @@ async function main() {
   // The editor's approvals first: held articles whose ids are now in approved.json.
   for (const id of await store.releaseApproved()) log(`✓ published ${id} (approved by the editor)`);
   const { events, skipped } = pickEvents(stories, seen);
-  for (const s of skipped.slice(0, 12)) console.log(`skip ${s.id}: ${s.why} — ${s.title}`);
+  log(`store: ${STORE} (${store.index.items.length} published, ${store.rejected.length} on record as turned down)`);
+  for (const s of skipped.slice(0, 12)) log(`skip ${s.id}: ${s.why} — ${s.title}`);
   if (events.length === 0) { log("No new events to write."); return finish(models); }
 
   let published = 0, rejected = 0, held = 0;
