@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { DispatchArticle } from "@/components/DispatchArticle";
 import { getDispatch, summarize, type DispatchPage } from "@/lib/dispatch";
@@ -11,17 +11,23 @@ type Search = { fixture?: string };
 export const Route = createFileRoute("/dispatch/$id")({
   validateSearch: (s: Record<string, unknown>): Search => (import.meta.env.DEV && String(s.fixture) === "1" ? { fixture: "1" } : {}),
   loaderDeps: ({ search }) => ({ fixture: search.fixture }),
-  loader: async ({ params, deps }): Promise<DispatchPage> => {
+  loader: async ({ params, deps, context }): Promise<DispatchPage> => {
     // Dev only: sample dispatches, since feeds and model APIs are unreachable locally.
     if (import.meta.env.DEV && deps.fixture === "1") {
       const { FIXTURES } = await import("@/lib/dispatch-fixture");
       const dispatch = FIXTURES.find(d => d.id === params.id) ?? FIXTURES[0];
       return { dispatch, audio: false, more: FIXTURES.filter(d => d !== dispatch).map(summarize) };
     }
-    return Promise.race([
+    const page = await Promise.race([
       getDispatch({ data: { id: params.id } }),
       new Promise<DispatchPage>(r => setTimeout(() => r({ dispatch: null, audio: false, more: [] }), 3000)),
     ]);
+    // The Newsroom wrote this event: its article is the permanent page.
+    if (page.article) {
+      const locale = (context as { locale?: "en" | "fr" }).locale === "fr" ? "fr" : "en";
+      throw redirect({ to: "/article/$slug", params: { slug: page.article[locale] }, statusCode: 301 });
+    }
+    return page;
   },
   head: ({ match, loaderData }) => {
     const d = loaderData?.dispatch;

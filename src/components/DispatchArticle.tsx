@@ -83,7 +83,7 @@ const COPY = {
   },
 } as const;
 
-function clock(iso: string, locale: Locale) {
+export function clock(iso: string, locale: Locale) {
   return new Date(iso).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { timeZone: "America/Toronto", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
 
@@ -104,7 +104,7 @@ export function DispatchLabel({ d, dark = false, className = "" }: { d: Dispatch
 }
 
 // ── In 30 seconds ──────────────────────────────────────────────────────────
-function ThirtySeconds({ lines }: { lines: string[] }) {
+export function ThirtySeconds({ lines }: { lines: string[] }) {
   const { locale } = useLocale();
   const ref = useRef<HTMLOListElement>(null);
   const [state, setState] = useState<"static" | "armed" | "play">("static");
@@ -141,7 +141,7 @@ function ThirtySeconds({ lines }: { lines: string[] }) {
 type Active = { keys: string[]; from: HTMLElement; origin: "claim" | "stamp"; id: number } | null;
 type Wire = { d: string; k: string; x1: number; y1: number; x2: number; y2: number };
 
-function Chip({ s, onActive, onLeave, dark = false }: { s: DispatchSource; onActive?: (el: HTMLElement) => void; onLeave?: (el: HTMLElement) => void; dark?: boolean }) {
+export function Chip({ s, onActive, onLeave, dark = false }: { s: DispatchSource; onActive?: (el: HTMLElement) => void; onLeave?: (el: HTMLElement) => void; dark?: boolean }) {
   const { locale } = useLocale();
   return (
     <a
@@ -161,7 +161,7 @@ function Chip({ s, onActive, onLeave, dark = false }: { s: DispatchSource; onAct
   );
 }
 
-function Ledger({ d }: { d: Dispatch }) {
+export function Ledger({ d }: { d: Dispatch }) {
   const { locale } = useLocale();
   const L = COPY[locale];
   const c = d[locale];
@@ -318,7 +318,7 @@ function Column({ icon, title, sub, children, tone }: { icon: ReactNode; title: 
 // ── Reading depth ──────────────────────────────────────────────────────────
 const DEPTH_KEY = "dispatch-depth";
 
-function useDepth(): [DispatchDepth, (d: DispatchDepth) => void] {
+export function useDepth(): [DispatchDepth, (d: DispatchDepth) => void] {
   const [depth, setDepth] = useState<DispatchDepth>("standard");
   useEffect(() => {
     try { const v = localStorage.getItem(DEPTH_KEY); if (v && (DEPTHS as string[]).includes(v)) setDepth(v as DispatchDepth); } catch { /* private mode */ }
@@ -333,7 +333,7 @@ const minutes = (paras: string[], locale: Locale) => {
   return s < 60 ? `${Math.round(s / 10) * 10} s` : `${Math.round(s / 60)} min`;
 };
 
-function DepthSwitch({ value, onChange, body }: { value: DispatchDepth; onChange: (d: DispatchDepth) => void; body: Record<DispatchDepth, string[]> }) {
+export function DepthSwitch({ value, onChange, body }: { value: DispatchDepth; onChange: (d: DispatchDepth) => void; body: Record<DispatchDepth, string[]> }) {
   const { locale } = useLocale();
   const L = COPY[locale];
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -369,7 +369,7 @@ function DepthSwitch({ value, onChange, body }: { value: DispatchDepth; onChange
 }
 
 /** The column eases to the new length while the paragraphs re-set. */
-function EaseHeight({ children, k }: { children: ReactNode; k: string }) {
+export function EaseHeight({ children, k }: { children: ReactNode; k: string }) {
   const outer = useRef<HTMLDivElement>(null);
   const inner = useRef<HTMLDivElement>(null);
   const [h, setH] = useState<number | null>(null);
@@ -430,14 +430,15 @@ function Paragraph({ p, bySrc }: { p: string; bySrc: Map<string, DispatchSource>
 // ── Listen ─────────────────────────────────────────────────────────────────
 type Voice = "idle" | "loading" | "playing" | "paused";
 
-function Listen({ d, audio }: { d: Dispatch; audio: boolean }) {
+/** `text` overrides what is read (the Newsroom reads its own intro); without TTS the browser's voice reads it. */
+export function Listen({ d, audio, text: given }: { d: Dispatch; audio: boolean; text?: string }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const [state, setState] = useState<Voice>("idle");
   const [progress, setProgress] = useState(0);
   const [mode, setMode] = useState<"tts" | "browser" | null>(audio ? "tts" : null);
   const el = useRef<HTMLAudioElement | null>(null);
-  const text = useMemo(() => spokenText(d, locale), [d, locale]);
+  const text = useMemo(() => given ?? spokenText(d, locale), [d, locale, given]);
   const [canBrowser, setCanBrowser] = useState(false);
   useEffect(() => { setCanBrowser(typeof window !== "undefined" && "speechSynthesis" in window); }, []);
   useEffect(() => { if (!audio && canBrowser) setMode("browser"); }, [audio, canBrowser]);
@@ -513,7 +514,7 @@ function Listen({ d, audio }: { d: Dispatch; audio: boolean }) {
 }
 
 // ── report an error ────────────────────────────────────────────────────────
-function ReportError({ title }: { title: string }) {
+export function ReportError({ title }: { title: string }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const publicHref = useRouterState({ select: st => st.location.publicHref ?? st.location.href });

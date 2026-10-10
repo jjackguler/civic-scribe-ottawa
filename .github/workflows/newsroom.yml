@@ -1,0 +1,99 @@
+# AI Broadsheet Newsroom: our own articles, written with AI by a staged
+# editorial team (reporter, copy, standards, translator, SEO, design), every
+# 30 minutes. Setup and how to unpublish: docs/newsroom.md.
+# Needs repository secret GEMINI_API_KEY and/or ANTHROPIC_API_KEY (Claude is used when both are set).
+# Without either, the run logs a warning and exits cleanly.
+name: Newsroom
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Fixture desk and canned desk replies: no feeds, no API calls, nothing published"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: newsroom
+  cancel-in-progress: false
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the newsroom branch (the store)
+        run: |
+          git fetch origin newsroom:newsroom 2>/dev/null || true
+          if git show-ref --quiet refs/heads/newsroom; then
+            git worktree add ../newsroom-store newsroom
+          else
+            git worktree add --detach ../newsroom-store
+            cd ../newsroom-store && git checkout --orphan newsroom && git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        working-directory: scripts/newsroom
+        run: npm install --no-audit --no-fund
+
+      - name: Check the mechanical desks (fact guard, slugs)
+        working-directory: scripts/newsroom
+        run: npx tsx test.ts
+
+      - name: Write
+        working-directory: scripts/newsroom
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
+          NEWSROOM_MAX_PER_RUN: ${{ vars.NEWSROOM_MAX_PER_RUN }}
+          NEWSROOM_DAILY_CAP: ${{ vars.NEWSROOM_DAILY_CAP }}
+          NEWSROOM_GEMINI_WRITER: ${{ vars.NEWSROOM_GEMINI_WRITER }}
+          NEWSROOM_GEMINI_CHECKER: ${{ vars.NEWSROOM_GEMINI_CHECKER }}
+          NEWSROOM_CLAUDE_WRITER: ${{ vars.NEWSROOM_CLAUDE_WRITER }}
+          NEWSROOM_CLAUDE_CHECKER: ${{ vars.NEWSROOM_CLAUDE_CHECKER }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            npx tsx run.ts --dry-run --store out/newsroom-store
+          else
+            npx tsx run.ts --store ../../../newsroom-store
+          fi
+
+      - name: Publish to the newsroom branch
+        if: ${{ !inputs.dry_run }}
+        run: |
+          cd ../newsroom-store
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing new."
+            exit 0
+          fi
+          git config user.name "AI Broadsheet Newsroom"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Newsroom: $(date -u +%Y-%m-%dT%H:%MZ)"
+          # The owner may have edited killed.json in the web UI meanwhile: rebase onto it, never overwrite it.
+          for i in 1 2 3; do
+            git pull -q --rebase origin newsroom 2>/dev/null || true
+            if git push -q -u origin newsroom; then exit 0; fi
+            sleep 5
+          done
+          echo "::error::Could not push to the newsroom branch"
+          exit 1
+
+      - name: Keep the dry-run store
+        if: ${{ inputs.dry_run }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsroom-dry-run
+          path: scripts/newsroom/out/newsroom-store

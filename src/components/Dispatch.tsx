@@ -9,6 +9,7 @@
  */
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { ZoneHead } from "./PageShell";
 import { useLocale } from "@/lib/locale-context";
 import { useDispatches, type DispatchList, type DispatchSummary } from "@/lib/dispatch";
@@ -59,15 +60,16 @@ export function DispatchCard({ d, size = "rail" }: { d: DispatchSummary; size?: 
   const { locale } = useLocale();
   const c = d[locale];
   const fr = locale === "fr";
+  const cls = "press flex h-full flex-col bg-surface border border-line border-t-[4px] border-t-night p-4 sm:p-5 hover:border-night focus-visible:outline-offset-4";
+  // A Newsroom article links straight to its permanent URL.
+  const wrap = (children: ReactNode) => d.article
+    ? <Link to="/article/$slug" params={{ slug: d.article[locale] }} className={cls}>{children}</Link>
+    : <Link to="/dispatch/$id" params={{ id: d.id }} className={cls}>{children}</Link>;
   return (
     <article className="group relative h-full">
-      <Link
-        to="/dispatch/$id"
-        params={{ id: d.id }}
-        className="press flex h-full flex-col bg-surface border border-line border-t-[4px] border-t-night p-4 sm:p-5 hover:border-night focus-visible:outline-offset-4"
-      >
+      {wrap(<>
         <span className="flex items-center gap-2 text-[0.78rem] font-bold">
-          <span className="bg-signal text-signal-ink px-1.5 py-0.5">{DISPATCH_WORD[locale]}</span>
+          <span className="bg-signal text-signal-ink px-1.5 py-0.5">{d.article ? (fr ? "Rédaction" : "Newsroom") : DISPATCH_WORD[locale]}</span>
           <span className="text-brass-ink">{fr ? `${d.outlets.length} médias` : `${d.outlets.length} outlets`}</span>
         </span>
         <h3 className={`hl mt-2.5 text-ink ${size === "grid" ? "text-[1.35rem]" : "text-[1.2rem] sm:text-[1.28rem]"}`}>
@@ -81,7 +83,7 @@ export function DispatchCard({ d, size = "rail" }: { d: DispatchSummary; size?: 
             <span className="shrink-0" suppressHydrationWarning>{spanLabel(d.times, locale)}</span>
           </p>
         </div>
-      </Link>
+      </>)}
     </article>
   );
 }

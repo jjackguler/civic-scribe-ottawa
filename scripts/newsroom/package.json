@@ -1,0 +1,14 @@
+{
+  "name": "aibroadsheet-newsroom",
+  "private": true,
+  "type": "module",
+  "description": "The AI Broadsheet Newsroom: original articles written with AI by a staged editorial team. Runs in GitHub Actions (.github/workflows/newsroom.yml). See docs/newsroom.md.",
+  "scripts": {
+    "run": "tsx run.ts",
+    "dry": "tsx run.ts --dry-run",
+    "test": "tsx test.ts"
+  },
+  "dependencies": {
+    "tsx": "^4.20.0"
+  }
+}

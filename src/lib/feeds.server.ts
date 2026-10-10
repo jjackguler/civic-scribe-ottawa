@@ -12,17 +12,26 @@ import { EDITORIALS } from "./editorials";
 import { TOPICS } from "./news";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
 import type { Dispatch } from "./dispatch-types";
+import type { NewsroomSummary } from "./newsroom-types";
 
 // XML 1.0 forbids most control characters; one in a feed item would break the whole file.
 const esc = (s: string) =>
   s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 
-/** The news desk as it stands, without waiting long for slow feeds. */
-/** Published dispatches (our own articles); empty when the desk is off. */
-async function currentDispatches(): Promise<Dispatch[]> {
+/** The Newsroom's published articles (killed ones left out), newest first. */
+async function currentArticles(): Promise<NewsroomSummary[]> {
+  const { newsroomState } = await import("./newsroom.server");
+  return withTimeout(newsroomState().then(s => s.items).catch(() => []), 5000, []);
+}
+
+/** The Worker desk's dispatches: listed only while the Newsroom has published nothing (its pages redirect after). */
+async function currentDispatches(articles: NewsroomSummary[]): Promise<Dispatch[]> {
+  if (articles.length) return [];
   const { listDispatches } = await import("./dispatch.server");
   return withTimeout(listDispatches().catch(() => []), 3000, []);
 }
+
+/** The news desk as it stands, without waiting long for slow feeds. */
 
 async function currentNews(): Promise<NewsPayload | null> {
   // A cold isolate needs up to ~14 s to build the desk (loadNews has its own limit).
@@ -62,6 +71,16 @@ const STATIC: Entry[] = [
   { path: "/terms", changefreq: "monthly", priority: "0.2" },
 ];
 
+/** An article: each language at its own slug, each naming the other as its alternate. */
+function articleEntry(a: NewsroomSummary) {
+  const href = (l: Locale) => absUrl(`/article/${a.slug[l]}`, l);
+  const alt = (["en", "fr"] as Locale[]).map(l => `<xhtml:link rel="alternate" hreflang="${l}" href="${esc(href(l))}"/>`).join("")
+    + `<xhtml:link rel="alternate" hreflang="x-default" href="${esc(href("en"))}"/>`;
+  return (["en", "fr"] as Locale[])
+    .map(l => `<url><loc>${esc(href(l))}</loc><lastmod>${a.updatedAt}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>${alt}</url>`)
+    .join("\n");
+}
+
 function urlEntry(e: Entry) {
   const alt = (["en", "fr"] as Locale[])
     .map(l => `<xhtml:link rel="alternate" hreflang="${l}" href="${esc(absUrl(e.path, l))}"/>`)
@@ -84,15 +103,18 @@ export async function buildSitemap(): Promise<string> {
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
-  const [news, dispatches] = await Promise.all([currentNews(), currentDispatches()]);
+  const articles = await currentArticles();
+  const [news, dispatches] = await Promise.all([currentNews(), currentDispatches(articles)]);
   for (const d of dispatches.slice(0, 200)) entries.push({ path: `/dispatch/${d.id}`, changefreq: "weekly", priority: "0.7", lastmod: d.createdAt.slice(0, 10) });
-  for (const s of (news?.stories ?? []).filter(isPublic).slice(0, 400)) {
-    entries.push({ path: `/story/${s.id}`, changefreq: "daily", priority: "0.5", lastmod: s.publishedAt.slice(0, 10) });
+  // Story pages (a publisher's excerpt and link) are noindex, except where one of our articles covers the story.
+  const covered = new Set(articles.flatMap(a => a.storyIds));
+  for (const s of (news?.stories ?? []).filter(s => isPublic(s) && covered.has(s.id)).slice(0, 400)) {
+    entries.push({ path: `/story/${s.id}`, changefreq: "daily", priority: "0.4", lastmod: s.publishedAt.slice(0, 10) });
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${entries.map(urlEntry).join("\n")}
+${[...articles.slice(0, 1000).map(articleEntry), ...entries.map(urlEntry)].join("\n")}
 </urlset>
 `;
 }
@@ -146,22 +168,25 @@ ${items}
 `;
 }
 
-/** Google News sitemap: stories from the last 48 hours, in both languages. */
+/**
+ * Google News sitemap: our own articles from the last 48 hours, in both
+ * languages. Aggregator story pages (a publisher's excerpt and link) are
+ * noindex and stay out: Google News is for the news we write.
+ */
 export async function buildNewsSitemap(): Promise<string> {
-  const [news, dispatches] = await Promise.all([currentNews(), currentDispatches()]);
+  const articles = await currentArticles();
+  const dispatches = await currentDispatches(articles);
   const cutoff = Date.now() - 48 * 3600_000;
-  const recent = (news?.stories ?? []).filter(s => isPublic(s) && new Date(s.publishedAt).getTime() >= cutoff).slice(0, 400);
-  const entry = (s: Story, l: Locale) => {
-    const title = s.ai?.[l]?.title || s.title;
-    return `<url><loc>${esc(absUrl(`/story/${s.id}`, l))}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${s.publishedAt}</news:publication_date><news:title>${esc(title)}</news:title></news:news></url>`;
-  };
-  // Our own dispatches first: they are the articles this publication writes.
-  const ours = dispatches.filter(d => new Date(d.createdAt).getTime() >= cutoff).slice(0, 50);
-  const dispatchEntry = (d: Dispatch, l: Locale) =>
-    `<url><loc>${esc(absUrl(`/dispatch/${d.id}`, l))}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${d.createdAt}</news:publication_date><news:title>${esc(d[l].headline)}</news:title></news:news></url>`;
+  const news = (loc: string, l: Locale, date: string, title: string) =>
+    `<url><loc>${esc(loc)}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${date}</news:publication_date><news:title>${esc(title)}</news:title></news:news></url>`;
+  const ours = articles.filter(a => new Date(a.createdAt).getTime() >= cutoff).slice(0, 500)
+    .flatMap(a => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/article/${a.slug[l]}`, l), l, a.createdAt, a[l].headline)));
+  // Until the Newsroom publishes, the Worker desk's dispatches are our articles.
+  const fallback = dispatches.filter(d => new Date(d.createdAt).getTime() >= cutoff).slice(0, 50)
+    .flatMap(d => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/dispatch/${d.id}`, l), l, d.createdAt, d[l].headline)));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${[...ours.flatMap(d => [dispatchEntry(d, "en"), dispatchEntry(d, "fr")]), ...recent.flatMap(s => [entry(s, "en"), entry(s, "fr")])].join("\n")}
+${[...ours, ...fallback].join("\n")}
 </urlset>
 `;
 }

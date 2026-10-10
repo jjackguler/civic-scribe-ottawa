@@ -5,14 +5,38 @@
 import { createServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-import { summarize, type DispatchList, type DispatchPage } from "./dispatch-types";
+import { summarize, type DispatchList, type DispatchPage, type DispatchSummary } from "./dispatch-types";
+import type { NewsroomSummary } from "./newsroom-types";
 
 export * from "./dispatch-types";
 
 const EMPTY: DispatchList = { items: [], audio: false };
 
-/** The latest dispatches (summaries), newest first. Empty when the desk is off. */
+/** A Newsroom article as a dispatch summary: rails, Today and "Explain it like I'm 12" link to the article. */
+function fromNewsroom(n: NewsroomSummary): DispatchSummary {
+  return {
+    id: n.id,
+    createdAt: n.createdAt,
+    outlets: n.outlets,
+    times: n.times,
+    en: { headline: n.en.headline, news: n.en.news, matters: n.en.matters },
+    fr: { headline: n.fr.headline, news: n.fr.news, matters: n.fr.matters },
+    storyIds: n.storyIds,
+    article: n.slug,
+  };
+}
+
+/**
+ * The latest dispatches (summaries), newest first. Once the Newsroom
+ * (scripts/newsroom) has published, these are its articles; until then, the
+ * Worker-side Dispatch desk's. Empty when both are off.
+ */
 export const getDispatches = createServerFn({ method: "GET" }).handler(async (): Promise<DispatchList> => {
+  try {
+    const { newsroomState } = await import("./newsroom.server");
+    const nr = await newsroomState();
+    if (nr.items.length) return { items: nr.items.slice(0, 24).map(fromNewsroom), audio: false };
+  } catch { /* fall back to the Worker desk */ }
   try {
     const [{ listDispatches }, { ttsAvailable }] = await Promise.all([import("./dispatch.server"), import("./dispatch-audio.server")]);
     const all = await listDispatches();
@@ -25,6 +49,16 @@ export const getDispatches = createServerFn({ method: "GET" }).handler(async ():
 export const getDispatch = createServerFn({ method: "GET" })
   .inputValidator((d) => z.object({ id: z.string().max(120) }).parse(d))
   .handler(async ({ data }): Promise<DispatchPage> => {
+    // An id the Newsroom wrote (or one of the stories it wrote from): the article, and where it lives now.
+    try {
+      const { newsroomState, articleById } = await import("./newsroom.server");
+      const nr = await newsroomState();
+      const item = nr.items.find(i => i.id === data.id) ?? nr.items.find(i => i.storyIds.includes(data.id));
+      if (item) {
+        const article = await articleById(item.id);
+        if (article) return { dispatch: article, audio: false, more: nr.items.filter(i => i.id !== item.id).slice(0, 8).map(fromNewsroom), article: item.slug };
+      }
+    } catch { /* fall back to the Worker desk */ }
     try {
       const [{ listDispatches }, { ttsAvailable }] = await Promise.all([import("./dispatch.server"), import("./dispatch-audio.server")]);
       const all = await listDispatches();
