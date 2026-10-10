@@ -1,5 +1,26 @@
 [
   {
+    "id": "1173smd",
+    "at": "2026-10-10T05:42:41.840Z",
+    "stage": "copy",
+    "headline": "OpenAI’s revenue is reportedly $20 billion less than previously projected",
+    "reasons": [
+      "Not in the sources (names or numbers): Revised, Cuts, Estimate, Earlier.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Leaves.",
+      "Too close to The Decoder's wording (\"openai s annualized revenue rate sits at about 50…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1kc5xax",
+    "at": "2026-10-10T05:41:35.072Z",
+    "stage": "reporter",
+    "headline": "Amazon and others are done keeping data center deals secret. Is it enough to build trust?",
+    "reasons": [
+      "skip: The provided sources describe two unrelated events with minimal excerpts that cannot support a factual article of at least 120 words without padding or unverified information."
+    ]
+  },
+  {
     "id": "1kvh7gb",
     "at": "2026-10-10T05:39:32.049Z",
     "stage": "reporter",
