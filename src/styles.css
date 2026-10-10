@@ -731,3 +731,25 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
   .today-card.is-snapping, .today-nav, .streak-flame, .eli-knob, .quiz-opt { transition: none !important; }
   .quiz-opt:hover { transform: none !important; }
 }
+
+/* SEO */
+/* Self-hosted variable fonts (SIL Open Font License; see src/fonts/OFL-*.txt), replacing the
+   render-blocking Google Fonts stylesheet. Latin is preloaded from __root.tsx; Latin Extended
+   downloads only when a page uses one of its characters. */
+@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("./fonts/schibsted-grotesk-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("./fonts/schibsted-grotesk-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Schibsted Grotesk"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("./fonts/schibsted-grotesk-latin-wght-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Schibsted Grotesk"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("./fonts/schibsted-grotesk-latin-ext-wght-italic.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("./fonts/newsreader-latin-opsz-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("./fonts/newsreader-latin-ext-opsz-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Newsreader"; font-style: italic; font-weight: 200 800; font-display: swap; src: url("./fonts/newsreader-latin-opsz-italic.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Newsreader"; font-style: italic; font-weight: 200 800; font-display: swap; src: url("./fonts/newsreader-latin-ext-opsz-italic.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+/* Glossary and guides */
+.seo-prose h2, .seo-prose h3, .seo-anchor { scroll-margin-top: 6rem; }
+.seo-prose table { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
+.seo-prose th, .seo-prose td { text-align: left; vertical-align: top; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--line); }
+.seo-prose th { font-weight: 700; background: var(--ice); }
+.seo-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+@keyframes seo-fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.seo-fade-in { animation: seo-fade-in 220ms ease-out both; }
+@media (prefers-reduced-motion: reduce) { .seo-fade-in { animation: none !important; } }
