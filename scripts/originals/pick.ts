@@ -19,7 +19,7 @@ import type { Cluster } from "../../src/lib/cluster";
 import type { Story } from "../../src/lib/news-engine";
 import type { OriginalsManifest } from "../../src/lib/originals-types";
 import type { NewsroomArticle, NewsroomIndex } from "../../src/lib/newsroom-types";
-import { env, note } from "./util";
+import { env, note, SkipRun } from "./util";
 
 export type SourceRef = { name: string; url: string; title: string; publishedAt?: string };
 export type BriefItem = { publisher: string; headline: string; excerpt: string; published?: string; url: string };
@@ -61,7 +61,11 @@ export function riskReasons(text: string, lens: string[] = []): string[] {
 }
 
 async function readJson<T>(f: string, fallback: T): Promise<T> {
-  try { return existsSync(f) ? JSON.parse(await readFile(f, "utf8")) as T : fallback; } catch { return fallback; }
+  try { return JSON.parse(await readFile(f, "utf8")) as T; }
+  catch (e) {
+    if ((e as NodeJS.ErrnoException).code === "ENOENT") return fallback;
+    throw new SkipRun("Unreadable store", "A queue/store file is invalid or unreadable. Repair it before retrying; existing choices were preserved.");
+  }
 }
 
 /** Newsroom store file: a local folder (tests) or the raw branch on GitHub. */
@@ -156,7 +160,10 @@ export async function chooseStory(o: { mediaDir: string; manifest: OriginalsMani
   const donePath = join(o.mediaDir, "queue-done.json");
   const skipPath = join(o.mediaDir, "skipped.json");
   const rawQueue = await readJson<QueueItem[] | { items?: QueueItem[] }>(queuePath, []);
-  const queue: QueueItem[] = Array.isArray(rawQueue) ? rawQueue : rawQueue.items ?? [];
+  const queue: QueueItem[] = Array.isArray(rawQueue) ? rawQueue : rawQueue?.items as QueueItem[];
+  if (!Array.isArray(queue) || queue.some(i => !i || typeof i !== "object" || ![i.articleId, i.storyId, i.url].some(v => typeof v === "string" && v.trim()))) {
+    throw new SkipRun("Invalid owner queue", "queue.json must contain items with an articleId, storyId or URL. Nothing was removed.");
+  }
   const skipped = await readJson<Skipped[]>(skipPath, []);
   const recent = new Set(skipped.filter(s => Date.now() - new Date(s.at).getTime() < 7 * 86400_000).map(s => s.key));
   const covered = new Set(o.manifest.items.flatMap(i => [...i.sources.map(s => s.url), ...(((i as { origin?: Origin }).origin?.articleId) ? [`article:${(i as { origin?: Origin }).origin!.articleId}`] : [])]));
@@ -184,7 +191,7 @@ export async function chooseStory(o: { mediaDir: string; manifest: OriginalsMani
     return clusterStories(await loadDesk(), hours);
   };
 
-  // 1. The owner's queue, top first. Items that can't be found are consumed with the reason.
+  // 1. The owner's queue, top first. Unreadable sources remain queued for review/retry.
   while (queue.length) {
     const item = queue[0];
     const origin: Origin = { kind: "queue", articleId: item.articleId, storyId: item.storyId, url: item.url, note: item.note };
@@ -210,9 +217,7 @@ export async function chooseStory(o: { mediaDir: string; manifest: OriginalsMani
       note(`story (owner queue${item.note ? `, note: “${item.note}”` : ""}): ${brief.lead}`);
       return { brief, done: consume };
     }
-    note(`queue item not found, removed: ${JSON.stringify(item)}`);
-    await consume({ status: "skipped", reason: "not found (not on the desk, not in the newsroom, or the page could not be read)" });
-    if (!o.write) break;
+    throw new SkipRun("Queued source unavailable", "The first queued story could not be read. It was kept in queue.json; check its URL/id or retry when the source returns.");
   }
 
   // 2. Our own newsroom articles, newest first.

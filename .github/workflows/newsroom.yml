@@ -2,7 +2,7 @@
 # editorial team (reporter, copy, standards, translator, SEO, design), every
 # 30 minutes. Setup and how to unpublish: docs/newsroom.md.
 # Needs repository secret GEMINI_API_KEY and/or ANTHROPIC_API_KEY (Claude is used when both are set).
-# Without either, the run logs a warning and exits cleanly.
+# Setup/quota failures are visible failures; counters are persisted even then.
 name: Newsroom
 
 on:
@@ -49,9 +49,12 @@ jobs:
 
       - name: Check the mechanical desks (fact guard, slugs)
         working-directory: scripts/newsroom
-        run: npx tsx test.ts
+        run: |
+          npx tsx test.ts
+          npx tsx costs-test.ts
 
       - name: Write
+        id: write
         working-directory: scripts/newsroom
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -64,6 +67,18 @@ jobs:
           NEWSROOM_GEMINI_CHECKER: ${{ vars.NEWSROOM_GEMINI_CHECKER }}
           NEWSROOM_CLAUDE_WRITER: ${{ vars.NEWSROOM_CLAUDE_WRITER }}
           NEWSROOM_CLAUDE_CHECKER: ${{ vars.NEWSROOM_CLAUDE_CHECKER }}
+          NEWSROOM_PROVIDER: ${{ vars.NEWSROOM_PROVIDER }}
+          NEWSROOM_PROFILE: ${{ vars.NEWSROOM_PROFILE }}
+          NEWSROOM_ECONOMY_MODEL: ${{ vars.NEWSROOM_ECONOMY_MODEL }}
+          NEWSROOM_GEMINI_FALLBACKS: ${{ vars.NEWSROOM_GEMINI_FALLBACKS }}
+          NEWSROOM_ALLOW_PRO: ${{ vars.NEWSROOM_ALLOW_PRO }}
+          NEWSROOM_RETRIES: ${{ vars.NEWSROOM_RETRIES }}
+          NEWSROOM_RUN_MAX_CALLS: ${{ vars.NEWSROOM_RUN_MAX_CALLS }}
+          NEWSROOM_RUN_MAX_TOKENS: ${{ vars.NEWSROOM_RUN_MAX_TOKENS }}
+          NEWSROOM_RUN_MAX_USD: ${{ vars.NEWSROOM_RUN_MAX_USD }}
+          NEWSROOM_PRICE_INPUT_PER_M: ${{ vars.NEWSROOM_PRICE_INPUT_PER_M }}
+          NEWSROOM_PRICE_OUTPUT_PER_M: ${{ vars.NEWSROOM_PRICE_OUTPUT_PER_M }}
+          NEWSROOM_GEMINI_THINKING_HEADROOM: ${{ vars.NEWSROOM_GEMINI_THINKING_HEADROOM }}
         run: |
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             npx tsx run.ts --dry-run --store out/newsroom-store
@@ -72,7 +87,7 @@ jobs:
           fi
 
       - name: Publish to the newsroom branch
-        if: ${{ !inputs.dry_run }}
+        if: ${{ always() && !cancelled() && !inputs.dry_run && (steps.write.outcome == 'success' || steps.write.outcome == 'failure') }}
         run: |
           cd ../newsroom-store
           if [ -z "$(git status --porcelain)" ]; then

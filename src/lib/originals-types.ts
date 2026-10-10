@@ -29,7 +29,7 @@ export type Original = {
   transcript: string;
   voice: string;
   aiImages: boolean;
-  /** Where archive photos, music and sound effects came from (all public domain or CC0). */
+  /** Sources and licences for archive photos, music and sound effects actually used. */
   credits?: string;
 };
 
@@ -39,3 +39,9 @@ export const ORIGINALS_MANIFEST_URL = "https://raw.githubusercontent.com/jjackgu
 
 /** Whether the YouTube copy can be embedded (public or unlisted). */
 export const youtubePlayable = (o: Original) => !!o.youtubeId && o.youtubePrivacy !== "private";
+
+/** The owner reported this version's Suno music was made on the free plan.
+ * Keep its files for re-editing; publish a new id after replacing the soundtrack.
+ */
+const MUSIC_RIGHTS_HOLD = new Set(["202610081600-what-is-ai-opening-titles"]);
+export const originalPublishable = (o: Original) => !MUSIC_RIGHTS_HOLD.has(o.id) && (youtubePlayable(o) || !!o.fileUrl);

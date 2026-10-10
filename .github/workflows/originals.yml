@@ -2,7 +2,7 @@
 # newspaper-collage style of the hand-made explainers (scripts/originals/collage).
 # Setup: docs/originals.md. Needs repository secrets ELEVENLABS_API_KEY and
 # GEMINI_API_KEY or ANTHROPIC_API_KEY; YOUTUBE_* optional. Missing keys or an
-# exhausted quota end the run with a warning, never a failure.
+# exhausted quota fail visibly without consuming the selected story.
 name: Originals
 
 on:
@@ -75,6 +75,7 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
           npm install --no-audit --no-fund
+          npx tsx test.ts
           npx playwright install --with-deps chromium
 
       # Scissor-cut figures (background removal with rembg) are made once and cached;
@@ -112,6 +113,7 @@ jobs:
           npx tsx collage/kit.ts "$GITHUB_WORKSPACE/.assets" "$RUNNER_TEMP/collage-kit" --figs ~/.cache/collage-figs --github-env "$GITHUB_ENV"
 
       - name: Make the explainer
+        id: make
         working-directory: scripts/originals
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

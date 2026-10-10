@@ -30,8 +30,8 @@ function OriginalsPage() {
       <PageIntro
         title={fr ? "Explicatifs" : "Explainers"}
         dek={fr
-          ? "Les grandes nouvelles en IA du jour, expliquées en une minute. Deux par jour."
-          : "The day's biggest AI stories, explained in about a minute. Two a day."}
+          ? "Les nouvelles en IA choisies par notre rédaction, expliquées en environ une minute, avec leurs sources."
+          : "AI stories selected by our newsroom, explained in about a minute, with their sources."}
       />
       <section className="container-mw mt-10">
         {items.length === 0 ? (
@@ -46,8 +46,8 @@ function OriginalsPage() {
         <h2 className="masthead-serif text-[1.6rem] mb-2">{fr ? "Comment ils sont faits" : "How they're made"}</h2>
         <p className="font-serif text-[1.1rem] leading-relaxed">
           {fr
-            ? "Notre système choisit la nouvelle que le plus de médias rapportent. Claude écrit le texte uniquement à partir de leurs titres et extraits; chaque nom et chaque chiffre est vérifié dans ces textes, sinon la vidéo n'est pas publiée. La voix est une voix de synthèse ElevenLabs. Les illustrations, quand il y en a, sont générées par IA et identifiées; nous ne fabriquons jamais d'images qui ressemblent à des photos de presse. Chaque vidéo nomme ses sources."
-            : "Our system picks the story the most newsrooms are reporting. Claude writes the script only from their headlines and excerpts; every name and number is checked against that text, or the video isn't published. The voice is a synthetic ElevenLabs voice. Illustrations, when there are any, are AI-generated and labelled; we never make pictures that look like news photos. Every video names its sources."}
+            ? "Nos choix éditoriaux passent en premier, puis nos articles, puis les sujets rapportés par plusieurs médias. Les textes sont rédigés avec l'aide de l'IA à partir des sources citées. Des contrôles automatiques comparent les noms, les chiffres et les citations aux textes sources; ils ne remplacent pas la vérification humaine. Les voix sont synthétiques et les crédits de chaque vidéo précisent les outils et les médias utilisés. Les images d'archives du collage sont décoratives : elles ne représentent pas les personnes de la nouvelle."
+            : "Our editorial selections come first, followed by our articles and stories reported by multiple outlets. Scripts are written with AI assistance from the cited sources. Automated checks compare names, numbers and quotations with those texts; they do not replace human verification. Voices are synthetic, and each video's credits identify the tools and media used. Archive images in the collage are decoration, not depictions of the people in the story."}
         </p>
         <p className="mt-3"><Link to="/standards" hash="ai-desk" className="text-lake font-semibold hover:underline">{fr ? "Nos normes" : "Our standards"}</Link></p>
       </section>

@@ -1,0 +1,34 @@
+name: Production checks
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: production-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install site and test runtime
+        run: |
+          npm install --no-audit --no-fund
+          npm install --prefix scripts/newsroom --no-audit --no-fund
+      - name: Editorial, cost, queue and music checks (no credentials)
+        working-directory: scripts/newsroom
+        run: |
+          npx tsx test.ts
+          npx tsx costs-test.ts
+          npx tsx ../originals/test.ts
+          npx tsx run.ts --dry-run --store out/ci-fixture
+      - name: Build the existing site
+        run: npm run build

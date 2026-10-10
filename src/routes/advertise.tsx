@@ -81,9 +81,9 @@ function Advertise() {
                 : `${SITE.name} is a live AI newspaper, fed around the clock by ${feeds} newsrooms, labs, governments, video channels and podcasts — in English and French.`}
             </p>
           </div>
-          <a href={mail} className="justify-self-start lg:justify-self-end inline-flex items-center gap-2 bg-brass text-night font-bold px-6 py-3.5 rounded-[4px] hover:bg-white">
+          {SITE.email.advertise && <a href={mail} className="justify-self-start lg:justify-self-end inline-flex items-center gap-2 bg-brass text-night font-bold px-6 py-3.5 rounded-[4px] hover:bg-white">
             <Mail className="h-5 w-5" aria-hidden="true" /> {fr ? "Demander les tarifs" : "Ask for rates"}
-          </a>
+          </a>}
         </div>
       </section>
 
@@ -163,9 +163,9 @@ function Advertise() {
                 : "Tell us your brand, goal, dates and budget. We'll reply with a plan, placements and rates."}
             </p>
           </div>
-          <a href={mail} className="inline-flex items-center gap-2 bg-brass text-night font-bold px-6 py-3.5 rounded-[4px] hover:bg-white">
+          {SITE.email.advertise ? <a href={mail} className="inline-flex items-center gap-2 bg-brass text-night font-bold px-6 py-3.5 rounded-[4px] hover:bg-white">
             <Mail className="h-5 w-5" aria-hidden="true" /> {SITE.email.advertise}
-          </a>
+          </a> : <p className="text-sm text-white/75">{fr ? "Les coordonnées publicitaires seront publiées ici prochainement." : "Advertising contact details will be published here soon."}</p>}
         </div>
       </section>
     </PageShell>

@@ -199,15 +199,16 @@ async function makeCards(brief: Brief): Promise<Made | string> {
 
 // ── main ───────────────────────────────────────────────────────────────────
 async function main() {
+  // Loading the news desk must not launch unrelated paid headline/dispatch writers.
+  process.env.MAX_DAILY_CLAUDE_CALLS = "-1";
   await mkdir(OUT, { recursive: true });
   note(`Originals ${STYLE} style${DRY ? " (dry run: fixture text, silent narration, no API calls)" : ""}`);
   const manifestPath = join(ORIG, "manifest.json");
   const manifest: OriginalsManifest = existsSync(manifestPath) ? JSON.parse(await readFile(manifestPath, "utf8")) : { updatedAt: new Date().toISOString(), items: [] };
 
   if (!DRY) {
-    // A missing key is a setup gap, not a failure: say so in the run summary and stop cleanly.
     const missing = [!env("ANTHROPIC_API_KEY") && !env("GEMINI_API_KEY") ? "GEMINI_API_KEY (or ANTHROPIC_API_KEY)" : "", !env("ELEVENLABS_API_KEY") ? "ELEVENLABS_API_KEY" : ""].filter(Boolean);
-    if (missing.length) { warn("Originals skipped", `Add repository secret(s) ${missing.join(" and ")} under Settings → Secrets and variables → Actions.`); return; }
+    if (missing.length) throw new SkipRun("Originals configuration", `Add repository secret(s) ${missing.join(" and ")} under Settings → Secrets and variables → Actions.`);
   }
 
   const pick = DRY ? { brief: FIXTURE_BRIEF, done: async () => {} } : await chooseStory({ mediaDir: ORIG, manifest, write: true });
@@ -262,7 +263,7 @@ async function main() {
 
 main()
   .catch(async e => {
-    if (e instanceof SkipRun) { warn(e.title, e.message); return; }
+    if (e instanceof SkipRun) { warn(e.title, e.message); process.exitCode = 1; return; }
     console.error(e);
     note(`failed: ${(e as Error).message}`);
     process.exitCode = 1;
