@@ -37,6 +37,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
+import { Route as DevSocialRouteImport } from './routes/dev.social'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
 import { Route as EditorIndexRouteImport } from './routes/editor.index'
@@ -46,6 +47,7 @@ import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as OgQuizDotpngRouteImport } from './routes/og.quiz[.]png'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
 import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
@@ -54,6 +56,8 @@ import { Route as LabsYoungExplorersRouteImport } from './routes/labs.young.expl
 import { Route as LabsYoungGrownUpsRouteImport } from './routes/labs.young.grown-ups'
 import { Route as LabsYoungMakersRouteImport } from './routes/labs.young.makers'
 import { Route as LabsYoungPassportRouteImport } from './routes/labs.young.passport'
+import { Route as OgArticleIdRouteImport } from './routes/og.article.$id'
+import { Route as OgSectionNameRouteImport } from './routes/og.section.$name'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -195,6 +199,11 @@ const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevSocialRoute = DevSocialRouteImport.update({
+  id: '/dev/social',
+  path: '/dev/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DispatchIndexRoute = DispatchIndexRouteImport.update({
   id: '/dispatch/',
   path: '/dispatch/',
@@ -240,6 +249,11 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OgQuizDotpngRoute = OgQuizDotpngRouteImport.update({
+  id: '/og/quiz.png',
+  path: '/og/quiz.png',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoryIdRoute = StoryIdRouteImport.update({
   id: '/story/$id',
   path: '/story/$id',
@@ -280,6 +294,16 @@ const LabsYoungPassportRoute = LabsYoungPassportRouteImport.update({
   path: '/labs/young/passport',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OgArticleIdRoute = OgArticleIdRouteImport.update({
+  id: '/og/article/$id',
+  path: '/og/article/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OgSectionNameRoute = OgSectionNameRouteImport.update({
+  id: '/og/section/$name',
+  path: '/og/section/$name',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -310,11 +334,13 @@ export interface FileRoutesByFullPath {
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
@@ -326,6 +352,8 @@ export interface FileRoutesByFullPath {
   '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
   '/labs/young/makers': typeof LabsYoungMakersRoute
   '/labs/young/passport': typeof LabsYoungPassportRoute
+  '/og/article/$id': typeof OgArticleIdRoute
+  '/og/section/$name': typeof OgSectionNameRoute
   '/labs/young/': typeof LabsYoungIndexRoute
 }
 export interface FileRoutesByTo {
@@ -357,11 +385,13 @@ export interface FileRoutesByTo {
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
@@ -373,6 +403,8 @@ export interface FileRoutesByTo {
   '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
   '/labs/young/makers': typeof LabsYoungMakersRoute
   '/labs/young/passport': typeof LabsYoungPassportRoute
+  '/og/article/$id': typeof OgArticleIdRoute
+  '/og/section/$name': typeof OgSectionNameRoute
   '/labs/young': typeof LabsYoungIndexRoute
 }
 export interface FileRoutesById {
@@ -405,11 +437,13 @@ export interface FileRoutesById {
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
   '/editor/tools': typeof EditorToolsRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
@@ -421,6 +455,8 @@ export interface FileRoutesById {
   '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
   '/labs/young/makers': typeof LabsYoungMakersRoute
   '/labs/young/passport': typeof LabsYoungPassportRoute
+  '/og/article/$id': typeof OgArticleIdRoute
+  '/og/section/$name': typeof OgSectionNameRoute
   '/labs/young/': typeof LabsYoungIndexRoute
 }
 export interface FileRouteTypes {
@@ -454,11 +490,13 @@ export interface FileRouteTypes {
     | '/values'
     | '/watch'
     | '/api/keeper-tts'
+    | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
     | '/labs/$path'
     | '/learn/$slug'
+    | '/og/quiz.png'
     | '/story/$id'
     | '/dispatch/'
     | '/editor/'
@@ -470,6 +508,8 @@ export interface FileRouteTypes {
     | '/labs/young/grown-ups'
     | '/labs/young/makers'
     | '/labs/young/passport'
+    | '/og/article/$id'
+    | '/og/section/$name'
     | '/labs/young/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -501,11 +541,13 @@ export interface FileRouteTypes {
     | '/values'
     | '/watch'
     | '/api/keeper-tts'
+    | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
     | '/labs/$path'
     | '/learn/$slug'
+    | '/og/quiz.png'
     | '/story/$id'
     | '/dispatch'
     | '/editor'
@@ -517,6 +559,8 @@ export interface FileRouteTypes {
     | '/labs/young/grown-ups'
     | '/labs/young/makers'
     | '/labs/young/passport'
+    | '/og/article/$id'
+    | '/og/section/$name'
     | '/labs/young'
   id:
     | '__root__'
@@ -548,11 +592,13 @@ export interface FileRouteTypes {
     | '/values'
     | '/watch'
     | '/api/keeper-tts'
+    | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
     | '/editor/tools'
     | '/labs/$path'
     | '/learn/$slug'
+    | '/og/quiz.png'
     | '/story/$id'
     | '/dispatch/'
     | '/editor/'
@@ -564,6 +610,8 @@ export interface FileRouteTypes {
     | '/labs/young/grown-ups'
     | '/labs/young/makers'
     | '/labs/young/passport'
+    | '/og/article/$id'
+    | '/og/section/$name'
     | '/labs/young/'
   fileRoutesById: FileRoutesById
 }
@@ -596,11 +644,13 @@ export interface RootRouteChildren {
   ValuesRoute: typeof ValuesRoute
   WatchRoute: typeof WatchRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
+  DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
   EditorToolsRoute: typeof EditorToolsRoute
   LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
+  OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
@@ -612,6 +662,8 @@ export interface RootRouteChildren {
   LabsYoungGrownUpsRoute: typeof LabsYoungGrownUpsRoute
   LabsYoungMakersRoute: typeof LabsYoungMakersRoute
   LabsYoungPassportRoute: typeof LabsYoungPassportRoute
+  OgArticleIdRoute: typeof OgArticleIdRoute
+  OgSectionNameRoute: typeof OgSectionNameRoute
   LabsYoungIndexRoute: typeof LabsYoungIndexRoute
 }
 
@@ -813,6 +865,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev/social': {
+      id: '/dev/social'
+      path: '/dev/social'
+      fullPath: '/dev/social'
+      preLoaderRoute: typeof DevSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dispatch/': {
       id: '/dispatch/'
       path: '/dispatch'
@@ -876,6 +935,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/og/quiz.png': {
+      id: '/og/quiz.png'
+      path: '/og/quiz.png'
+      fullPath: '/og/quiz.png'
+      preLoaderRoute: typeof OgQuizDotpngRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/story/$id': {
       id: '/story/$id'
       path: '/story/$id'
@@ -932,6 +998,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabsYoungPassportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/og/article/$id': {
+      id: '/og/article/$id'
+      path: '/og/article/$id'
+      fullPath: '/og/article/$id'
+      preLoaderRoute: typeof OgArticleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og/section/$name': {
+      id: '/og/section/$name'
+      path: '/og/section/$name'
+      fullPath: '/og/section/$name'
+      preLoaderRoute: typeof OgSectionNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -964,11 +1044,13 @@ const rootRouteChildren: RootRouteChildren = {
   ValuesRoute: ValuesRoute,
   WatchRoute: WatchRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
+  DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
   EditorToolsRoute: EditorToolsRoute,
   LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
+  OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
@@ -980,6 +1062,8 @@ const rootRouteChildren: RootRouteChildren = {
   LabsYoungGrownUpsRoute: LabsYoungGrownUpsRoute,
   LabsYoungMakersRoute: LabsYoungMakersRoute,
   LabsYoungPassportRoute: LabsYoungPassportRoute,
+  OgArticleIdRoute: OgArticleIdRoute,
+  OgSectionNameRoute: OgSectionNameRoute,
   LabsYoungIndexRoute: LabsYoungIndexRoute,
 }
 export const routeTree = rootRouteImport
