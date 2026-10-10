@@ -47,6 +47,8 @@ export type NewsPayload = {
   sharedCache?: boolean;
   /** false when the runtime can't finish work after the response (no waitUntil). */
   background?: boolean;
+  /** A cold start's first completed feeds; the browser immediately requests the full desk. */
+  partial?: boolean;
 };
 
 const UA = "Mozilla/5.0 (compatible; AIBroadsheet/1.0; +https://aibroadsheet.com)";
@@ -423,13 +425,13 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
     .sort((a, b) => a.group - b.group || a.rank - b.rank)
     .slice(0, MAX_FEEDS_PER_RUN);
 
-  const fresh = await Promise.all(due.map(async ({ src }) =>
-    [src.id, await withTimeout(fetchSource(src), 9000, { ts: Date.now(), ok: false, stories: [], error: "Timed out" } as SourceCache)] as const));
-  for (const [id, c] of fresh) {
-    const prev = cache.get(id);
+  await Promise.all(due.map(async ({ src }) => {
+    const c = await withTimeout(fetchSource(src), 9000, { ts: Date.now(), ok: false, stories: [], error: "Timed out" } as SourceCache);
+    const prev = cache.get(src.id);
     // Keep the last good stories if a refresh fails.
-    cache.set(id, c.ok || !prev ? c : { ...prev, ts: c.ts, ok: false, error: c.error });
-  }
+    // Save each result as it arrives: the first paint needn't wait for the slowest feed.
+    cache.set(src.id, c.ok || !prev ? c : { ...prev, ts: c.ts, ok: false, error: c.error });
+  }));
 
   // Merge every source's stories; duplicates (same headline) are merged, keeping flags.
   const byKey = new Map<string, Story>();
@@ -511,6 +513,20 @@ function rebuild(): Promise<NewsPayload> {
 }
 
 const EMPTY = (): NewsPayload => ({ stories: [], sources: [], fetchedAt: new Date().toISOString() });
+
+/** A bounded first edition. Full aggregation continues under Workers waitUntil. */
+export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
+  const full = loadNews();
+  keepAlive(full);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const result = await Promise.race([
+    full,
+    new Promise<null>(resolve => { timer = setTimeout(() => resolve(null), ms); }),
+  ]).finally(() => clearTimeout(timer));
+  if (result) return result;
+  if (g.__mwNews) return { ...g.__mwNews.payload, partial: true };
+  return { ...(await buildPayload(false)), partial: true };
+}
 
 export async function loadNews(): Promise<NewsPayload> {
   if (!g.__mwNews) await hydrate().catch(() => {});

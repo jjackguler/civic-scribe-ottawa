@@ -16,7 +16,10 @@ const g = globalThis as unknown as { caches?: { default?: CfCache }; __cfCtx?: C
 /** Called from src/server.ts on every request: remembers the host and the Worker's execution context. */
 export function bindRequest(request: Request, ctx: unknown) {
   try { g.__sharedHost = new URL(request.url).host; } catch { /* keep previous */ }
-  if (ctx && typeof (ctx as CfCtx).waitUntil === "function") g.__cfCtx = ctx as CfCtx;
+  // Nitro passes the Workers context on Request rather than as fetch's third argument.
+  const runtime = (request as Request & { runtime?: { cloudflare?: { context?: CfCtx } } }).runtime;
+  const current = ctx ?? runtime?.cloudflare?.context;
+  g.__cfCtx = current && typeof (current as CfCtx).waitUntil === "function" ? current as CfCtx : undefined;
 }
 
 const store = (): CfCache | undefined => g.caches?.default;

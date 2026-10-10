@@ -34,6 +34,11 @@ export const getAiNews = createServerFn({ method: "GET" }).handler(async () => {
   return loadNews();
 });
 
+export const getFrontPageNews = createServerFn({ method: "GET" }).handler(async () => {
+  const { loadFrontPageNews } = await import("./news-engine");
+  return loadFrontPageNews();
+});
+
 /** Used by route loaders: never hold SSR hostage to a slow feed. */
 export async function getAiNewsFast(ms = 4500): Promise<NewsPayload | null> {
   return Promise.race([
@@ -49,7 +54,7 @@ export function useAiNews(initial: NewsPayload | null | undefined) {
     queryKey: ["ai-news"],
     queryFn: () => getAiNews(),
     initialData: initial && initial.stories.length > 0 ? initial : undefined,
-    staleTime: 60_000,
+    staleTime: q => q.state.data?.partial ? 0 : 60_000,
     refetchInterval: REFRESH_MS,
     refetchOnWindowFocus: true,
   });
