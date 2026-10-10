@@ -53,11 +53,11 @@ export const SITE = {
   cloudflareAnalyticsToken: "",
   /** Social profiles. An icon appears only when its URL is set. */
   social: {
-    instagram: "", // Enable only after the brand account is created and verified.
+    instagram: "https://www.instagram.com/aibroadsheet/",
     tiktok: "",
     facebook: "https://www.facebook.com/profile.php?id=61594952624655",
     linkedin: "https://www.linkedin.com/company/aibroadsheet/",
-    x: "", // TODO [X_URL]
+    x: "https://x.com/aibroadsheet",
     youtube: "",
   },
 } as const;
