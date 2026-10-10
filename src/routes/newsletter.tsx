@@ -9,7 +9,7 @@ export const Route = createFileRoute("/newsletter")({
   head: ({ match }) =>
     seoHead(match, {
       title: { en: `The Morning Broadsheet newsletter — ${SITE.name}`, fr: `L'infolettre The Morning Broadsheet — ${SITE.name}` },
-      description: { en: `The AI stories that matter, in your inbox each morning. Checked sources, links to the originals, nothing made up.`, fr: `Les nouvelles en IA qui comptent, dans votre boîte chaque matin. Sources vérifiées, liens vers les originaux, rien d'inventé.` },
+      description: { en: `The AI stories that matter, in your inbox each morning. Named sources, links to the originals, mistakes corrected in public.`, fr: `Les nouvelles en IA qui comptent, dans votre boîte chaque matin. Sources nommées, liens vers les originaux, erreurs corrigées publiquement.` },
     }),
   component: Newsletter,
 });

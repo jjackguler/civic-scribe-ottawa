@@ -44,7 +44,7 @@ const unElide = (s: string) => s.replace(/(^|[\s«“"(])(?:[LDJMNSTC]|Qu|Jusqu|
 /** French ordinals ("9e", "12e année", "1er", "2nde") are the number itself: check the number. */
 const unOrdinal = (s: string) => s.replace(/(\d)(?:er|re|ère|e|es|ème|eme|nde?)(?![\p{L}\p{N}])/gu, "$1");
 
-/** Names and numbers in `fields` that `sourceText` doesn't contain. Empty = passes. */
+/** Names and numbers in `fields` that `sourceText` doesn't contain, plus any denial the sources don't make. Empty = passes. */
 export function factGuard(fields: string[], sourceText: string): string[] {
   const src = unElide(sourceText);
   const bad = new Set<string>();
@@ -52,7 +52,38 @@ export function factGuard(fields: string[], sourceText: string): string[] {
     if (!f) continue;
     for (const w of unsupported(unOrdinal(unElide(stripAllMarkers(f))), src, [...STARTERS, ...HOUSE])) bad.add(w);
   }
+  for (const p of negationProblems(fields, sourceText)) bad.add(p);
   return [...bad];
+}
+
+// ── meaning, not just names: a sentence that says "did not" must have a source that says so ──
+const NEG = /\b(?:not|never|no longer|none|neither|nor|denied|denies|deny|refused|refuses|declined|declines|rejected|rejects)\b|n['’]t\b|\bne\b[^.!?]{0,40}\b(?:pas|jamais|plus|aucun|aucune|rien)\b|\b(?:jamais|aucun|aucune|nie|nié|refuse|refusé|rejette|rejeté)\b/i;
+const NAME = /(?<![.!?]\s)(?<=\s|^)[A-Z][\p{L}\d-]{2,}/gu;
+const ABOUT_REPORTING = /\b(?:reports?|reporting|reported|sources?|outlets?|says?|said|specif(?:y|ies|ied)|disclos\w*|confirm\w*|known|unclear|announced|names?|named|rapports?|médias?|nomm\w*|sources?|dit|précis\w*|indiqu\w*|confirm\w*|connu\w*|annonc\w*)\b/i;
+const sentences = (t: string) => t.split(/(?<=[.!?])\s+/).map(x => x.trim()).filter(Boolean);
+
+/**
+ * Sentences that deny or reverse something ("X did not release Y") when no
+ * source sentence about the same names says anything of the kind. This is the
+ * mechanical half of a meaning check: it catches a flipped verb, not every
+ * change of meaning, so riskier stories still go to a human (see run.ts).
+ */
+export function negationProblems(fields: string[], sourceText: string): string[] {
+  const srcSentences = sentences(unElide(sourceText));
+  const out: string[] = [];
+  for (const f of fields) {
+    for (const sent of sentences(unElide(stripAllMarkers(f ?? "")))) {
+      if (!NEG.test(sent)) continue;
+      // What the reporting leaves open ("Neither report says…", "not yet known") is our own, honest, unknowns line.
+      if (ABOUT_REPORTING.test(sent)) continue;
+      // Proper names only: the first word of a sentence is capitalised anyway.
+      const names = [...sent.matchAll(NAME)].filter(m => (m.index ?? 0) > 0).map(m => m[0].toLowerCase()).filter(n => !STARTERS.includes(n) && !HOUSE.includes(n));
+      const byName = names.length ? srcSentences.filter(s => names.some(n => s.toLowerCase().includes(n))) : [];
+      const related = byName.length ? byName : srcSentences;
+      if (!related.some(s => NEG.test(s))) out.push(`denial not in the sources: "${sent.slice(0, 80)}"`);
+    }
+  }
+  return out;
 }
 
 /** Every field of a reporter's or translator's draft, one at a time. */

@@ -33,6 +33,29 @@ import { openStore, type Store } from "./store";
 
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry-run");
+/** NEWSROOM_REVIEW=off publishes everything that passes the desks; the default holds risky stories for a human. */
+const REVIEW = (process.env.NEWSROOM_REVIEW ?? "risky").trim().toLowerCase();
+
+/**
+ * Stories a human editor must approve before they go out: anything that could
+ * damage a person's reputation, or touches health, money, elections, children
+ * or safety. Low-risk news (launches, research, tools) is published by the desks.
+ */
+export function riskReasons(a: { lens?: string[]; en: { headline: string; news?: string; dek?: string } }): string[] {
+  const text = `${a.en.headline} ${a.en.dek ?? ""} ${a.en.news ?? ""}`;
+  const out: string[] = [];
+  const rules: [RegExp, string][] = [
+    [/\b(accus\w*|alleg\w*|lawsuit|sued|sues|suing|charged|arrest\w*|police|crime|criminal|fraud\w*|scandal|misconduct|fired|firing|harass\w*|investigat\w*|court|guilty|defam\w*)\b/i, "people's reputations or the law"],
+    [/\b(health|medical|patients?|hospital\w*|diagnos\w*|drugs?|mental|suicide|self-harm|death|died|dies|killed)\b/i, "health or life"],
+    [/\b(stocks?|shares|invest\w*|crypto\w*|bitcoin|valuation|earnings|bank\w*|loan\w*)\b/i, "money and investing"],
+    [/\b(election\w*|vot(e|er|ers|ing)|ballot\w*|campaign\w*|candidate\w*|referendum)\b/i, "elections"],
+    [/\b(child|children|kids?|minors?|teen\w*|students?|school\w*)\b/i, "children"],
+    [/\b(war|military|weapon\w*|attack\w*|terror\w*|drone strike|security breach|hack\w*|leak\w*)\b/i, "conflict or security"],
+  ];
+  for (const [re, why] of rules) if (re.test(text)) out.push(why);
+  for (const l of a.lens ?? []) if (["children", "health", "democracy", "safety"].includes(l) && !out.length) out.push(`people-first lens: ${l}`);
+  return [...new Set(out)];
+}
 const arg = (name: string, def: string) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : def; };
 const env = (k: string) => process.env[k]?.trim() || "";
 const STORE = resolve(arg("--store", DRY ? "out/newsroom-store" : "newsroom-store"));
@@ -65,7 +88,7 @@ function finalCopy(d: Draft, s: SeoCopy, links: string[], lang: "en" | "fr"): Ne
   };
 }
 
-async function writeOne(m: Models, store: Store, e: Event): Promise<"published" | "rejected"> {
+async function writeOne(m: Models, store: Store, e: Event): Promise<"published" | "held" | "rejected"> {
   const roles: RoleNote[] = [];
   const headline = e.sources[0]?.title ?? e.id;
   const stop = async (stage: string, n: RoleNote) => {
@@ -136,6 +159,12 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
     lens: humanLens({ title: copy.value.headline, summary: copy.value.news }),
     roles,
   };
+  const risk = riskReasons(article);
+  if (risk.length && REVIEW !== "off") {
+    await store.hold(article, risk);
+    log(`  ⏸ held for the editor (${risk.join("; ")}): add "${article.id}" to approved.json on the newsroom branch to publish`);
+    return "held";
+  }
   await store.publish(article);
   log(`  ✓ published /article/${slugEn} · /fr/article/${slugFr} (${article.words.en} words, ${article.format})`);
   return "published";
@@ -179,23 +208,26 @@ async function main() {
     killed: store.killed,
     rejectedAt: new Map(store.rejected.map(r => [r.id, r.at] as const)),
   };
+  // The editor's approvals first: held articles whose ids are now in approved.json.
+  for (const id of await store.releaseApproved()) log(`✓ published ${id} (approved by the editor)`);
   const { events, skipped } = pickEvents(stories, seen);
   for (const s of skipped.slice(0, 12)) console.log(`skip ${s.id}: ${s.why} — ${s.title}`);
   if (events.length === 0) { log("No new events to write."); return finish(models); }
 
-  let published = 0, rejected = 0;
+  let published = 0, rejected = 0, held = 0;
   for (const e of events.slice(0, budget)) {
     if (store.has(e.id)) continue;
     log(`\n▸ ${e.id}: ${e.sources[0]?.title} (${new Set(e.sources.map(s => s.outlet)).size} outlet(s)${e.sources.some(s => s.official) ? ", official" : ""})`);
     try {
-      if ((await writeOne(models, store, e)) === "published") published++; else rejected++;
+      const r = await writeOne(models, store, e);
+      if (r === "published") published++; else if (r === "held") held++; else rejected++;
     } catch (err) {
       // An unexpected error stops this event only; nothing half-written reaches the store.
       log(`  ✗ error: ${(err as Error).message}`);
       rejected++;
     }
   }
-  log(`\n${published} published, ${rejected} turned down, ${Math.max(0, events.length - budget)} left for a later run.`);
+  log(`\n${published} published, ${held} held for the editor, ${rejected} turned down, ${Math.max(0, events.length - budget)} left for a later run.`);
   return finish(models);
 }
 

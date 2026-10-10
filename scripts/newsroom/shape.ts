@@ -87,14 +87,19 @@ export function shapeDraft(r: RawDraft | null | undefined, sources: DispatchSour
     .map(x => ({ when: str(x.when, 60), text: str(x.text, 220), src: keysOf(x.src, srcKeys) })).filter(x => x.when && x.text && x.src.length).slice(0, 8);
   if (confirmed.length + claimed.length === 0) return "no points";
 
-  // "Confirmed" is counted, not chosen: two outlets, or the party itself.
+  // "Reported by more than one outlet" is counted, not chosen: two or more independent
+  // publishers. A company, lab or agency announcing its own news is an announcement
+  // in its name, never a confirmation; nothing here is "independently verified".
   const official = new Set(sources.filter(s => s.official).map(s => s.key));
   const outletOf = new Map(sources.map(s => [s.key, s.outlet]));
   const confirmedOk: DispatchClaim[] = [];
   for (const c of confirmed) {
-    const outlets = new Set(c.src.map(k => outletOf.get(k)));
-    if (outlets.size >= 2 || c.src.some(k => official.has(k))) confirmedOk.push(c);
-    else claimed.push({ ...c, by: outletOf.get(c.src[0]) ?? "" });
+    const independent = new Set(c.src.filter(k => !official.has(k)).map(k => outletOf.get(k)));
+    if (independent.size >= 2) confirmedOk.push(c);
+    else {
+      const party = c.src.find(k => official.has(k));
+      claimed.push({ ...c, by: outletOf.get(party ?? c.src[0]) ?? "" });
+    }
   }
   return { headline, dek, news, thirty, confirmed: confirmedOk, claimed: claimed.slice(0, 6), unknown, matters, sections, body: { plain, expert }, timeline };
 }

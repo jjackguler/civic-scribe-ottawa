@@ -58,8 +58,10 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
     if (k >= 0 && k !== i % Math.max(n, 1)) setI(k);
   }, [keys]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // No automatic rotation for reduced-motion readers, nor on phones: the lead story
+  // stays put while someone reads it; the tabs and arrows still move on request.
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)");
     setReduced(mq.matches);
     const on = () => setReduced(mq.matches);
     mq.addEventListener("change", on);
@@ -295,6 +297,7 @@ function LiveColumn({ stories }: { stories: Story[] }) {
   }, [ids]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const lastHour = now ? stories.filter(s => now - new Date(s.publishedAt).getTime() < 3600_000).length : null;
+  const checkedAt = now ? new Date(now).toLocaleTimeString(fr ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" }) : "";
 
   return (
     <aside className="min-w-0 border-t border-white/15 lg:border-t-0 lg:border-l lg:pl-6 pt-5 lg:pt-0" aria-label={fr ? "Fil en direct" : "Live feed"}>
@@ -304,7 +307,9 @@ function LiveColumn({ stories }: { stories: Story[] }) {
       </div>
       {lastHour !== null && (
         <p key={lastHour} className="count-bump text-[0.8rem] text-white/60 mt-2">
-          {fr ? `${lastHour} nouvelle${lastHour === 1 ? "" : "s"} dans la dernière heure` : `${lastHour} ${lastHour === 1 ? "story" : "stories"} in the last hour`}
+          {lastHour > 0
+            ? (fr ? `${lastHour} nouvelle${lastHour === 1 ? "" : "s"} dans la dernière heure` : `${lastHour} ${lastHour === 1 ? "story" : "stories"} in the last hour`)
+            : (fr ? `Sources vérifiées à ${checkedAt}` : `Sources checked at ${checkedAt}`)}
         </p>
       )}
       <ol className="mt-1" aria-live="polite">

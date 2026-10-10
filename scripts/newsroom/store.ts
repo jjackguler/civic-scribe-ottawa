@@ -34,6 +34,18 @@ Edit \`killed.json\` here in GitHub's web editor and add the article's id (or it
 
 Commit. Within about five minutes the site hides it everywhere and its page answers 410 Gone.
 Remove the line to bring it back. Never delete files by hand: the workflow keeps the index in step.
+
+## Approve a held article
+
+Articles that touch people's reputations, health, money, elections, children or safety are not
+published automatically. They wait in \`drafts/\` and are listed in \`drafts.json\` with the reasons.
+Read the draft; to publish it, add its id to \`approved.json\`:
+
+\`\`\`json
+{ "approved": ["<id>"] }
+\`\`\`
+
+Commit. The next newsroom run (within 30 minutes) publishes it under your approval.
 `;
 
 async function readJson<T>(file: string, fallback: T): Promise<T> {
@@ -50,6 +62,10 @@ export async function openStore(dir: string) {
   const index = await readJson<NewsroomIndex>(join(dir, "index.json"), { updatedAt: new Date(0).toISOString(), items: [] });
   const rejected = await readJson<Rejection[]>(join(dir, "log", "rejected.json"), []);
   const killed = killedIds(await readJson<unknown>(join(dir, "killed.json"), {}));
+  await mkdir(join(dir, "drafts"), { recursive: true });
+  if (!existsSync(join(dir, "approved.json"))) await writeFile(join(dir, "approved.json"), JSON.stringify({ approved: [] }, null, 2) + "\n");
+  const drafts = await readJson<{ items: { id: string; headline: string; reasons: string[]; createdAt: string }[] }>(join(dir, "drafts.json"), { items: [] });
+  const approvedIds = new Set(((await readJson<{ approved?: unknown[] }>(join(dir, "approved.json"), {})).approved ?? []).filter((x): x is string => typeof x === "string"));
 
   return {
     dir,
@@ -57,7 +73,28 @@ export async function openStore(dir: string) {
     rejected,
     killed,
     slugsTaken: () => new Set(index.items.flatMap(i => [i.slug.en, i.slug.fr])),
-    has: (id: string) => index.items.some(i => i.id === id) || existsSync(join(dir, "articles", `${id}.json`)),
+    has: (id: string) => index.items.some(i => i.id === id) || existsSync(join(dir, "articles", `${id}.json`)) || existsSync(join(dir, "drafts", `${id}.json`)),
+    drafts,
+    /** Keep an article back for a human editor: it is published only once its id is in approved.json. */
+    async hold(a: NewsroomArticle, reasons: string[]) {
+      await writeFile(join(dir, "drafts", `${a.id}.json`), JSON.stringify(a, null, 2) + "\n");
+      drafts.items = [{ id: a.id, headline: a.en.headline, reasons, createdAt: a.createdAt }, ...drafts.items.filter(d => d.id !== a.id)].slice(0, 500);
+      await writeFile(join(dir, "drafts.json"), JSON.stringify(drafts, null, 2) + "\n");
+    },
+    /** Publish every held article the editor has approved. Returns the ids published. */
+    async releaseApproved(): Promise<string[]> {
+      const out: string[] = [];
+      for (const d of [...drafts.items]) {
+        if (!approvedIds.has(d.id) || killed.has(d.id)) continue;
+        const a = await readJson<NewsroomArticle | null>(join(dir, "drafts", `${d.id}.json`), null);
+        if (!a) continue;
+        await this.publish({ ...a, roles: [...a.roles, { role: "editor", note: "Approved by the editor (approved.json)." } as never] });
+        drafts.items = drafts.items.filter(x => x.id !== d.id);
+        out.push(d.id);
+      }
+      if (out.length) await writeFile(join(dir, "drafts.json"), JSON.stringify(drafts, null, 2) + "\n");
+      return out;
+    },
     imagePath: (id: string) => join(dir, "images", `${id}.png`),
     async ensureImages() { await mkdir(join(dir, "images"), { recursive: true }); },
     async publish(a: NewsroomArticle) {

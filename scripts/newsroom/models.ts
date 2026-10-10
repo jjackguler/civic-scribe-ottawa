@@ -1,3 +1,4 @@
+import { appendFileSync } from "node:fs";
 /**
  * The model client for the newsroom: Claude (ANTHROPIC_API_KEY) when it is
  * set, otherwise Gemini (GEMINI_API_KEY). Two tiers: "writer" for the
@@ -88,32 +89,51 @@ export function liveModels(): Models | null {
     usage,
     model: t => names[t],
     async json<T>(role: RoleName, tier: Tier, system: string, user: string, _ctx: CallCtx, maxTokens = 8192) {
-      try {
-        const res = await withRetry(() => fetch(`https://generativelanguage.googleapis.com/v1beta/models/${names[tier]}:generateContent`, {
-          method: "POST",
-          headers: { "x-goog-api-key": geminiKey, "content-type": "application/json" },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: `${system}\n\nReply with JSON only.` }] },
-            contents: [{ role: "user", parts: [{ text: user }] }],
-            // 2.5 models think before answering; the budget leaves room for both.
-            generationConfig: { maxOutputTokens: Math.max(maxTokens, 8192) * 2, temperature: 0.3, responseMimeType: "application/json" },
-          }),
-          signal: AbortSignal.timeout(180_000),
-        }));
-        usage.calls++;
-        if (!res.ok) { console.warn(`[${role}] Gemini HTTP ${res.status}`); return null; }
-        const body = (await res.json()) as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] }; finishReason?: string }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } };
-        usage.inTokens += body.usageMetadata?.promptTokenCount ?? 0;
-        usage.outTokens += (body.usageMetadata?.candidatesTokenCount ?? 0) + (body.usageMetadata?.thoughtsTokenCount ?? 0);
-        const c = body.candidates?.[0];
-        if (!c || c.finishReason === "SAFETY") return null;
-        return parseJson<T>((c.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join(""));
-      } catch (e) {
-        console.warn(`[${role}] Gemini call failed: ${(e as Error).message}`);
-        return null;
+      // Try the chosen model, then fall back to models that are more widely available
+      // (a retired name or a free-tier limit on Pro must not stop the newsroom).
+      const chain = [...new Set([names[tier], "gemini-2.5-flash", "gemini-flash-latest"])];
+      for (const model of chain) {
+        try {
+          const res = await withRetry(() => fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+            method: "POST",
+            headers: { "x-goog-api-key": geminiKey, "content-type": "application/json" },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: `${system}\n\nReply with JSON only.` }] },
+              contents: [{ role: "user", parts: [{ text: user }] }],
+              // 2.5 models think before answering; the budget leaves room for both.
+              generationConfig: { maxOutputTokens: Math.max(maxTokens, 8192) * 2, temperature: 0.3, responseMimeType: "application/json" },
+            }),
+            signal: AbortSignal.timeout(180_000),
+          }));
+          usage.calls++;
+          if (!res.ok) {
+            const why = (await res.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 220);
+            report(`[${role}] Gemini ${model} HTTP ${res.status}: ${why}`);
+            if ([400, 403, 404, 429].includes(res.status)) continue; // try the next model
+            return null;
+          }
+          const body = (await res.json()) as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] }; finishReason?: string }[]; usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } };
+          usage.inTokens += body.usageMetadata?.promptTokenCount ?? 0;
+          usage.outTokens += (body.usageMetadata?.candidatesTokenCount ?? 0) + (body.usageMetadata?.thoughtsTokenCount ?? 0);
+          const c = body.candidates?.[0];
+          if (!c || c.finishReason === "SAFETY") { report(`[${role}] Gemini ${model}: no candidate (${c?.finishReason ?? "empty"})`); return null; }
+          const parsed = parseJson<T>((c.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join(""));
+          if (parsed == null) report(`[${role}] Gemini ${model}: reply was not JSON (finish ${c.finishReason})`);
+          return parsed;
+        } catch (e) {
+          report(`[${role}] Gemini ${model} call failed: ${(e as Error).message}`);
+        }
       }
+      return null;
     },
   };
+}
+
+/** Warn in the log and, on GitHub, in the run summary (so failures are visible without the raw log). */
+function report(msg: string) {
+  console.warn(msg);
+  const f = process.env.GITHUB_STEP_SUMMARY;
+  if (f) { try { appendFileSync(f, `- ${msg.replace(/[<>]/g, "")}\n`); } catch { /* summary is optional */ } }
 }
 
 /** Dry run: answers come from fixtures, keyed by event id, role and attempt. */

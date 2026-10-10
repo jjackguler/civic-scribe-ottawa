@@ -86,12 +86,23 @@ export const HOUSE_VOICE = `House voice of AI Broadsheet (applies to everything 
 /** Headlines/excerpts that are sexually explicit or promote adult content. */
 const EXPLICIT = /\b(porn\w*|pornograph\w*|erotic\w*|nsfw|nude\w*|nudity|naked|onlyfans|sexting|hentai|x-rated|adult (content|site|video|film|entertainment|industry)|sex (bot|chatbot|toy|tape|work\w*)|strip ?club|camgirl\w*|fetish\w*|explicit (images?|content|photos?|videos?)|undress\w*|érotique\w*|pornographi\w*|contenu pour adultes|nu(e|es|s)? intégra\w*|sexuellement explicite\w*)\b/i;
 
-export type GateResult = { ok: true } | { ok: false; reason: "explicit" };
+export type GateResult = { ok: true } | { ok: false; reason: "explicit" | "sponsored" };
+
+/** Paid content from a feed is advertising, not news: it never enters the editorial stream. */
+const SPONSORED = /^\s*(?:sponsored|partner content|paid (?:post|content)|advertorial|promoted|presented by|brought to you by|contenu (?:commandité|sponsorisé|partenaire)|publireportage)\b/i;
+
+/**
+ * Public-interest reporting about sexual abuse made with AI (deepfake victims,
+ * "nudify" apps, laws and prosecutions) is harm reporting, not explicit
+ * content: it stays in the adult news stream. Young Lab never shows news.
+ */
+const HARM_REPORTING = /\b(?:deepfakes?|victims?|abuse|exploitation|non-?consensual|without (?:their )?consent|harass\w*|ban(?:s|ned)?|law|bill|lawsuit|sued|charged|arrest\w*|police|prosecut\w*|regulat\w*|protect\w*|safety|hypertrucage\w*|victimes?|abus|exploitation|consentement|loi|interdi\w*|poursuite\w*|accus\w*)\b/i;
 
 /** Stories that fail never reach the site. Kept mechanical and published on /values. */
 export function editorialGate(s: { title: string; summary?: string }): GateResult {
   const text = `${s.title} ${s.summary ?? ""}`;
-  if (EXPLICIT.test(text)) return { ok: false, reason: "explicit" };
+  if (SPONSORED.test(s.title) || /\bsponsored\b/i.test(s.title.slice(0, 40))) return { ok: false, reason: "sponsored" };
+  if (EXPLICIT.test(text) && !HARM_REPORTING.test(text)) return { ok: false, reason: "explicit" };
   return { ok: true };
 }
 

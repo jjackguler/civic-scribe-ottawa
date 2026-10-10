@@ -215,14 +215,15 @@ function shape(r: Raw | null | undefined, sources: DispatchSource[]): DispatchCo
   }
   if (confirmed.length + claimed.length === 0) return "no points";
 
-  // "Confirmed" is counted, not chosen: two outlets, or the party itself.
+  // "Reported by several outlets" is counted, not chosen: two or more independent publishers.
+  // A company announcing its own news is an announcement in its name, not a confirmation.
   const official = new Set(sources.filter(s => s.official).map(s => s.key));
   const outletOf = new Map(sources.map(s => [s.key, s.outlet]));
   const confirmedOk: DispatchClaim[] = [];
   for (const c of confirmed) {
-    const outlets = new Set(c.src.map(k => outletOf.get(k)));
-    if (outlets.size >= 2 || c.src.some(k => official.has(k))) confirmedOk.push(c);
-    else claimed.push({ ...c, by: outletOf.get(c.src[0]) ?? "" });
+    const independent = new Set(c.src.filter(k => !official.has(k)).map(k => outletOf.get(k)));
+    if (independent.size >= 2) confirmedOk.push(c);
+    else claimed.push({ ...c, by: outletOf.get(c.src.find(k => official.has(k)) ?? c.src[0]) ?? "" });
   }
   return { headline, news, thirty, confirmed: confirmedOk, claimed: claimed.slice(0, 6), unknown, matters, body, timeline };
 }
@@ -276,7 +277,7 @@ const SHAPE = `Return JSON:
 {"headline": 50-95 characters, who did what, active voice,
  "news": one sentence, at most 25 words: the news,
  "thirty": exactly 3 lines, each at most 14 words, that together tell the story in 30 seconds,
- "confirmed": 0-4 [{"text", "src": ["s1","s3"]}] facts reported as fact by two or more of the sources, or announced by the company, lab or agency itself (official source),
+ "confirmed": 0-4 [{"text", "src": ["s1","s3"]}] facts reported as fact by two or more independent outlets (a company announcing its own news goes in "claimed", by that company),
  "claimed": 0-4 [{"text", "by", "src": [...]}] statements made by someone, in their name ("by" is that party, named in the sources; "text" is written as "X says…"),
  "unknown": 1-3 short lines naming what the sources leave open, phrased neutrally ("Whether…", "When…", "How much…"), never speculating,
  "matters": at most 2 plain sentences on what this changes for an ordinary reader, ONLY as far as the sources say; if they say nothing about impact, say plainly what is different now,

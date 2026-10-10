@@ -29,8 +29,8 @@ export function NewsletterBox({ variant = "band" }: { variant?: "band" | "card" 
         <h2 className={`masthead-serif leading-[1.08] mt-1 ${variant === "band" ? "text-[2rem] sm:text-[2.4rem]" : "text-[1.6rem]"}`}>The Morning Broadsheet</h2>
         <p className={`font-serif text-white/75 leading-relaxed mt-2 max-w-[52ch] ${variant === "band" ? "text-[1.08rem]" : "text-[0.98rem]"}`}>
           {fr
-            ? "Les nouvelles en IA qui comptent, dans votre boîte chaque matin. Sources vérifiées, liens vers les originaux, rien d'inventé."
-            : "The AI stories that matter, in your inbox each morning. Checked sources, links to the originals, nothing made up."}
+            ? "Les nouvelles en IA qui comptent, dans votre boîte chaque matin. Sources nommées, liens vers les originaux, erreurs corrigées publiquement."
+            : "The AI stories that matter, in your inbox each morning. Named sources, links to the originals, mistakes corrected in public."}
         </p>
       </div>
       <form onSubmit={submit} className={variant === "band" ? "" : "mt-5"}>

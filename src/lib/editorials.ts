@@ -38,8 +38,8 @@ export const EDITORIALS: Editorial[] = [
         fr: "AI Broadsheet suit en continu des dizaines de salles de nouvelles, laboratoires d'IA, gouvernements, chaînes vidéo et balados. La une s'ouvre sur la nouvelle que le plus de médias rapportent, et chaque page d'article place leur couverture côte à côte pour que vous puissiez comparer.",
       },
       {
-        en: "The rules are what make it trustworthy. Software sorts the news; it never writes it. Every headline comes from a named publisher and links to the original. Every photo and video is credited. Opinion lives here, on the editor's desk, and nowhere else. Advertising pays for the work and never touches it.",
-        fr: "Ce sont les règles qui rendent le tout fiable. Le logiciel classe les nouvelles; il ne les écrit jamais. Chaque titre vient d'un éditeur nommé et renvoie à l'original. Chaque photo et vidéo est créditée. L'opinion se trouve ici, au mot de la rédaction, et nulle part ailleurs. La publicité finance le travail sans jamais y toucher.",
+        en: "The rules are what make it trustworthy. Software sorts the news and, where labelled, helps write it; an editor answers for all of it. Every headline comes from a named publisher and links to the original. Every photo and video is credited. Opinion lives here, on the editor's desk, and nowhere else. Advertising pays for the work and never touches it.",
+        fr: "Ce sont les règles qui rendent le tout fiable. Le logiciel classe les nouvelles et, quand c'est indiqué, aide à les écrire; un éditeur répond de tout. Chaque titre vient d'un éditeur nommé et renvoie à l'original. Chaque photo et vidéo est créditée. L'opinion se trouve ici, au mot de la rédaction, et nulle part ailleurs. La publicité finance le travail sans jamais y toucher.",
       },
       {
         en: "Tell us what we're missing — a source we should follow, a desk we should add, a story we filed in the wrong place. A newsroom of one depends on its readers.",

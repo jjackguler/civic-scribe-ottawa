@@ -165,8 +165,8 @@ function WhoRunsThis() {
           ) : (
             <p className="text-white/80">
               {fr
-                ? "Une seule personne choisit les sources, écrit les éditoriaux et les guides, et répond des corrections. Le logiciel recueille et classe les nouvelles; il ne les écrit pas."
-                : "One editor chooses the sources, writes the editorials and guides, and answers for corrections. Software gathers and files the news; it doesn't write it."}
+                ? "Une seule personne choisit les sources, écrit les éditoriaux et les guides, et répond des corrections. Le logiciel recueille et classe les nouvelles, et l'IA écrit les titres du pupitre, les dépêches et les articles identifiés, vérifiés par rapport aux sources; l'éditeur répond de tout."
+                : "One editor chooses the sources, writes the editorials and guides, and answers for corrections. Software gathers and files the news, and AI writes the labelled desk headlines, dispatches and articles, checked against the sources; the editor answers for all of it."}
             </p>
           )}
           {mail && (

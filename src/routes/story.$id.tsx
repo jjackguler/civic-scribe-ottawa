@@ -30,6 +30,9 @@ export const Route = createFileRoute("/story/$id")({
     return seoHead(match, {
       title: `${headline} — ${SITE.name}`,
       description,
+      // A publisher's headline, excerpt and link: useful to readers, not our journalism.
+      // Search engines are pointed at our own articles, guides and glossary instead.
+      noindex: true,
       image: s.image,
       type: "article",
       publishedTime: s.publishedAt,

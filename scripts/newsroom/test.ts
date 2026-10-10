@@ -135,5 +135,18 @@ test("one non-official outlet's 'confirmed' point becomes a claim in its name", 
   assert.equal(d.sections[0].paras[0], "Para [s1] with a fake marker and a background marker.");
 });
 
+console.log("meaning check");
+test("a flipped verb ('did not release') is caught", () => {
+  const bad = factGuard(["Northwind Labs did not release Aurora-2."], "Northwind Labs released Aurora-2, an open-weight model, on Tuesday.");
+  assert.ok(bad.some(x => x.startsWith("denial not in the sources")));
+});
+test("a denial the source itself makes passes", () => {
+  assert.deepEqual(factGuard(["Northwind Labs said it did not train Aurora-2 on user data."], "Northwind Labs said it did not train Aurora-2 on user data."), []);
+});
+test("what the reporting leaves open is not a denial", () => {
+  assert.deepEqual(factGuard(["Neither report says how many people will use it."], SRC), []);
+});
+
 console.log(`\n${passed} passed, ${failures.length} failed`);
 process.exit(failures.length ? 1 : 0);
+
