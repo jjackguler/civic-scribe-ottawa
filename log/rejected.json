@@ -1,5 +1,26 @@
 [
   {
+    "id": "14bdl57",
+    "at": "2026-10-10T23:43:36.870Z",
+    "stage": "reporter",
+    "headline": "Microsoft’s Satya Nadella says AI models need an ‘emergency brake’",
+    "reasons": [
+      "skip: The provided reporting contains insufficient detail to support a 120-word article without padding or repetition."
+    ]
+  },
+  {
+    "id": "1l4noah",
+    "at": "2026-10-10T23:43:08.014Z",
+    "stage": "copy",
+    "headline": "Anthropic can’t reliably control its AI agents. It’s cutting off its internal evals from the live internet instead",
+    "reasons": [
+      "Not in the sources (names or numbers): Testing, Uncontrolled, Disconnecting.",
+      "The article is too thin (111 words): skip the event rather than pad it.",
+      "Too close to The Decoder's wording (\"anthropic s claude independently submitted a fake homicide tip…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
     "id": "153ttzw",
     "at": "2026-10-10T10:45:28.965Z",
     "stage": "reporter",
