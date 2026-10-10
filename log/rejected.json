@@ -1,9 +1,45 @@
 [
   {
+    "id": "1kvh7gb",
+    "at": "2026-10-10T05:39:32.049Z",
+    "stage": "reporter",
+    "headline": "Anthropic launches free AI security scans for open-source projects",
+    "reasons": [
+      "no news section"
+    ]
+  },
+  {
+    "id": "1qewv4f",
+    "at": "2026-10-10T05:38:36.273Z",
+    "stage": "reporter",
+    "headline": "Nikon microscopic video competition winner disqualified for using generative AI",
+    "reasons": [
+      "skip: The provided sources contain only two brief excerpts with fewer than 50 words of reporting, which cannot support the mandatory minimum 150 words of real information without padding or repeating points"
+    ]
+  },
+  {
+    "id": "f93735",
+    "at": "2026-10-10T05:37:33.844Z",
+    "stage": "reporter",
+    "headline": "An Anthropic AI model sent a false homicide tip to Philadelphia police",
+    "reasons": [
+      "skip: The provided source excerpts contain fewer than 60 words of factual information, which cannot support the minimum 150-word article requirement without padding or introducing unverified details."
+    ]
+  },
+  {
+    "id": "5jid90",
+    "at": "2026-10-10T05:36:52.702Z",
+    "stage": "reporter",
+    "headline": "Fired OpenAI safety researchers dispute misconduct claims, warn of chilling effect",
+    "reasons": [
+      "no news section"
+    ]
+  },
+  {
     "id": "7fquf9",
     "at": "2026-10-10T05:31:36.558Z",
     "stage": "reporter",
-    "headline": "Le gouvernement du Canada annoncera du soutien pour l\u2019intelligence artificielle \u00e0 London",
+    "headline": "Le gouvernement du Canada annoncera du soutien pour l’intelligence artificielle à London",
     "reasons": [
       "skip: The single source provides only a brief, truncated media advisory announcing upcoming artificial intelligence support in London, Ontario, which cannot support a 150-word factual article without paddin"
     ]
