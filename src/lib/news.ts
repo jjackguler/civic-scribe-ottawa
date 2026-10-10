@@ -1,3 +1,4 @@
+import { hasTranslation } from "./translations";
 import { createServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
@@ -41,7 +42,7 @@ export async function getAiNewsFast(ms = 4500): Promise<NewsPayload | null> {
   ]);
 }
 
-const REFRESH_MS = 3 * 60 * 1000;
+const REFRESH_MS = 90 * 1000; // the front page stays live
 
 export function useAiNews(initial: NewsPayload | null | undefined) {
   return useQuery({
@@ -147,7 +148,9 @@ export function timeAgo(iso: string, now: number | null, locale: Locale) {
 
 /** Stories readers in this language see first (French readers get French sources first). */
 export function byLocale(stories: Story[], locale: Locale) {
-  if (locale === "en") return stories;
+  // The English site is English only: a story from a French (or any other
+  // language) source appears once our desk or translator has English copy for it.
+  if (locale === "en") return stories.filter(s => s.lang === "en" || !!s.ai || hasTranslation("en", s.id));
   return [...stories.filter(s => s.lang === "fr"), ...stories.filter(s => s.lang !== "fr")];
 }
 

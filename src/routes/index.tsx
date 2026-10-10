@@ -21,6 +21,9 @@ import { TodayLauncher } from "@/components/Today";
 import { QuizCard } from "@/components/Quiz";
 import { getDailyQuizFast } from "@/lib/youth";
 import { YoungLabBand } from "@/components/YoungLab";
+import { NewsroomLead } from "@/components/NewsroomLead";
+import { getNewsroomFast } from "@/lib/newsroom";
+import { CardOfTheDay } from "@/components/CardOfTheDay";
 import {
   getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
@@ -39,8 +42,8 @@ import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const [news, pulse, originals, dispatches, quiz] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast(), getDispatchesFast(), getDailyQuizFast()]);
-    return { news, pulse, originals, dispatches, quiz };
+    const [news, pulse, originals, dispatches, quiz, newsroom] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast(), getDispatchesFast(), getDailyQuizFast(), getNewsroomFast()]);
+    return { news, pulse, originals, dispatches, quiz, newsroom };
   },
   head: ({ match }) =>
     seoHead(match, {
@@ -81,7 +84,7 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
 
 function Home() {
-  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches, quiz } = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches, quiz, newsroom } = Route.useLoaderData();
   const { data: originals } = useOriginals(initialOriginals);
   const { data, isError } = useAiNews(initial);
   const { data: pulse } = usePulse(initialPulse);
@@ -98,7 +101,12 @@ function Home() {
   // first among equals), then the newest photo stories to fill.
   const heroClusters = clusters
     .filter(c => c.sources >= 2)
-    .map(c => ({ c, score: c.sources * 10 + (trendMatch(c.lead, pulse) ? 15 : 0) + (isBreaking(c) ? 20 : isDeveloping(c) ? 8 : 0) }))
+    .map(c => {
+      // Freshness keeps the stage live: the newest reporting climbs, yesterday's slides away.
+      const ageH = (Date.now() - Math.max(...c.stories.map(x => new Date(x.publishedAt).getTime()))) / 3600_000;
+      const fresh = ageH < 1 ? 18 : ageH < 3 ? 10 : ageH < 8 ? 4 : ageH > 24 ? -15 : 0;
+      return { c, score: c.sources * 10 + fresh + (trendMatch(c.lead, pulse) ? 15 : 0) + (isBreaking(c) ? 20 : isDeveloping(c) ? 8 : 0) };
+    })
     .sort((x, y) => y.score - x.score)
     .slice(0, 5)
     .map(x => x.c);
@@ -115,10 +123,11 @@ function Home() {
   const nowMs = useClock();
   const ownAll = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   const ageH = (iso: string) => (nowMs - new Date(iso).getTime()) / 3600_000;
-  const onStage = (o: { kind?: string; publishedAt: string }) => ageH(o.publishedAt) < (o.kind === "titles" ? 72 : 36);
-  const heroOwn = ownAll.filter(onStage).slice(0, 2);
+  const onStage = (o: { kind?: string; publishedAt: string }) => ageH(o.publishedAt) < (o.kind === "titles" ? 24 : 12);
+  const heroOwn = ownAll.filter(onStage).slice(0, 1);
   const steppedDown = ownAll.filter(o => !heroOwn.includes(o) && ageH(o.publishedAt) < 7 * 24).slice(0, 1);
-  const slides: HeroSlide[] = [...heroOwn.map(o => ({ kind: "original" as const, original: o })), ...storySlides].slice(0, 6);
+  // The newest top story leads; our own video takes the second slot while it is new.
+  const slides: HeroSlide[] = [...storySlides.slice(0, 1), ...heroOwn.map(o => ({ kind: "original" as const, original: o })), ...storySlides.slice(1)].slice(0, 6);
   const fromHero = useSteppedDown(slides.map(slideKey));
   const top = heroClusters[0];
   const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));
@@ -213,9 +222,13 @@ function Home() {
 
       <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
 
-      {/* Our own reporting, right under the stage */}
+      {/* Our own reporting, right under the stage: newsroom articles first, then dispatches */}
+      <NewsroomLead initial={newsroom} className="container-mw pt-12" />
       <DispatchRail initial={dispatches} className="container-mw pt-12" />
-      <QuizCard initial={quiz} className="container-mw mt-10" />
+      <div className="container-mw mt-10 grid gap-6 lg:grid-cols-2">
+        <QuizCard initial={quiz} />
+        <CardOfTheDay initialDispatches={dispatches} initialQuiz={quiz} />
+      </div>
 
       {(more.length > 0 || moreFill.length > 0 || steppedDown.length > 0) && (
         <section className="container-mw mt-10">

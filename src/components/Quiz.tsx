@@ -331,7 +331,7 @@ function ScoreCard({ quiz, answers, score, total, streak, grew, headRef }: {
               {typeof navigator !== "undefined" && typeof navigator.share === "function" ? <Share2 className="h-5 w-5" aria-hidden="true" /> : <Copy className="h-5 w-5" aria-hidden="true" />}
               {L.share}
             </button>
-            {card && <ShareImageButton content={card} url="/quiz" title={`${L.shareTitle} · ${score}/${total}`} campaign="quiz" className="min-h-12 !rounded-none" />}
+            {card && <ShareImageButton content={card} url="/quiz" title={`${L.shareTitle} · ${score}/${total}`} campaign="quiz" className="min-h-12 rounded-none!" />}
             <p className="text-[0.9rem] font-semibold text-spruce" aria-live="polite">{status}</p>
           </div>
         </div>

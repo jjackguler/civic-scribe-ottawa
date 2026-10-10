@@ -1,3 +1,4 @@
+import { ogImageFor } from "@/lib/og/url";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { DispatchArticle } from "@/components/DispatchArticle";
@@ -37,6 +38,8 @@ export const Route = createFileRoute("/dispatch/$id")({
     return seoHead(match, {
       title: `${c.headline} — ${SITE.name}`,
       description: c.news,
+      image: ogImageFor("article", d.id, localeOf(match), { version: d.createdAt }),
+      imageWidth: 1200, imageHeight: 630, imageAlt: c.headline,
       type: "article",
       publishedTime: d.createdAt,
       jsonLd: (l, url) => [{

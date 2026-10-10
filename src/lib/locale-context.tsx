@@ -14,7 +14,7 @@ const LocaleContext = createContext<Ctx>({ locale: "en", setLocale: () => {}, pi
 function visibleIds(payload: NewsPayload | undefined, locale: Locale): string[] {
   if (!payload) return [];
   return payload.stories
-    .filter(s => s.lang !== locale && !hasTranslation(locale, s.id))
+    .filter(s => s.lang !== locale && !s.ai && !hasTranslation(locale, s.id))
     .slice(0, 30)
     .map(s => s.id);
 }

@@ -605,7 +605,7 @@ function AboutKeeper({ fr }: { fr: boolean }) {
   return (
     <section className="container-mw py-12 grid gap-10 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]" aria-labelledby="about-keeper">
       <div className="prose-mw">
-        <h2 id="about-keeper" className="!mt-0">{fr ? "Qui est le Gardien?" : "Who is the Keeper?"}</h2>
+        <h2 id="about-keeper" className="mt-0!">{fr ? "Qui est le Gardien?" : "Who is the Keeper?"}</h2>
         <p>{fr
           ? "Le Gardien est un personnage créé par notre rédaction. Son nom vient de nos génériques : « Quelqu'un garde la trace de tout. » C'est un programme d'IA : il n'a ni corps, ni opinions personnelles, et il ne se souvient pas de vous après votre visite."
           : "The Keeper is a character our newsroom made. The name comes from our opening titles: \"Someone keeps the record whole.\" It's an AI program: it has no body and no personal opinions, and it doesn't remember you after your visit."}</p>

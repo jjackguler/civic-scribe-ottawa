@@ -105,7 +105,8 @@ export const Route = createFileRoute("/article/$slug")({
     const head = seoHead(match, {
       title: pageTitle(c.seoTitle),
       description: c.metaDescription,
-      image: articleOgImage(a),
+      image: articleOgImage(a, l),
+      imageWidth: 1200, imageHeight: 630, imageAlt: c.headline,
       type: "article",
       publishedTime: a.createdAt,
       jsonLd: (loc) => articleLd(a, loc, articleUrl(a, loc)),

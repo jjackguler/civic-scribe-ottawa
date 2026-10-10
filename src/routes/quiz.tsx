@@ -1,3 +1,4 @@
+import { ogImageFor } from "@/lib/og/url";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
@@ -6,7 +7,7 @@ import { QuizPlayer, QUIZ_NAME, QUIZ_UNAVAILABLE, StreakFlame } from "@/componen
 import { dayLabel, getDailyQuizFast, useDailyQuiz, useQuizLocal, type DailyQuiz } from "@/lib/youth";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
-import { seoHead } from "@/lib/seo";
+import { localeOf, seoHead } from "@/lib/seo";
 
 type Search = { fixture?: 1 };
 
@@ -22,6 +23,8 @@ export const Route = createFileRoute("/quiz")({
         en: "Five questions from today's AI headlines, every answer linked to the story. Two minutes, a new quiz every day.",
         fr: "Cinq questions sur les manchettes IA du jour, chaque réponse liée à sa nouvelle. Deux minutes, un nouveau quiz chaque jour.",
       },
+      image: ogImageFor("quiz", undefined, localeOf(match)),
+      imageWidth: 1200, imageHeight: 630,
     }),
   component: QuizPage,
 });

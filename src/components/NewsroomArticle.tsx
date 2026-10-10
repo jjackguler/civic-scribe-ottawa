@@ -22,6 +22,7 @@ import { NewsroomGrid } from "./NewsroomLead";
 import { keepNames, listOutlets } from "./Dispatch";
 import { Chip, DepthSwitch, EaseHeight, Ledger, Listen, ReportError, ThirtySeconds, clock, useDepth } from "./DispatchArticle";
 import { YourTake } from "./YouthKit";
+import { ShareBar } from "./ShareBar";
 
 const COPY = {
   en: {
@@ -192,7 +193,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
       {c.sections.map(s => (
         <div key={s.kind} data-kind={s.kind}>
           {SECTION_HEADING[s.kind][locale] && <h2>{SECTION_HEADING[s.kind][locale]}</h2>}
-          {s.kind === "background" && <p className="!text-[0.85rem] !font-sans !font-semibold !text-muted-ink !mb-2">{L.background}</p>}
+          {s.kind === "background" && <p className="text-[0.85rem]! font-sans! font-semibold! text-muted-ink! mb-2!">{L.background}</p>}
           {s.paras.map((p, i) => <Para key={i} p={p} bySrc={bySrc} bg={bg} />)}
         </div>
       ))}
@@ -254,7 +255,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
             <EaseHeight k={depth}>
               {depth === "plain" ? (
                 <div className="prose-mw nr-prose mt-6">
-                  <p className="!text-[0.9rem] !font-sans !text-muted-ink">{L.plainNote}</p>
+                  <p className="text-[0.9rem]! font-sans! text-muted-ink!">{L.plainNote}</p>
                   {c.body.plain.map((p, i) => <Para key={i} p={p} bySrc={bySrc} bg={bg} />)}
                 </div>
               ) : (
@@ -262,7 +263,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
                   {sectionsView}
                   {depth === "expert" && c.body.expert.length > 0 && (
                     <div className="prose-mw nr-prose mt-2 border-l-[4px] border-brass pl-5">
-                      <h2 className="!mt-2">{L.expert}</h2>
+                      <h2 className="mt-2!">{L.expert}</h2>
                       {c.body.expert.map((p, i) => <Para key={i} p={p} bySrc={bySrc} bg={bg} />)}
                     </div>
                   )}
@@ -338,7 +339,8 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
               </div>
             </section>
           )}
-          <YourTake dispatchId={a.id} headline={c.headline} className={c.faq.length > 0 ? "mt-12" : ""} />
+          <ShareBar url={`/article/${a.slug[locale]}`} title={c.headline} text={`${c.headline}\n${c.dek}`} campaign="article" className={c.faq.length > 0 ? "mt-12" : "mt-6"} />
+          <YourTake dispatchId={a.id} headline={c.headline} className="mt-6" />
         </div>
       </div>
 

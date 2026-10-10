@@ -782,3 +782,18 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
 @media (prefers-reduced-motion: reduce) {
   .social-overlay[data-state="open"], .social-sheet[data-state="open"], .social-card-in, .cotd-letter, .cotd-big { animation: none !important; }
 }
+
+/* House photo treatment (StoryImage) */
+.house-photo-frame { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
+.house-photo { filter: grayscale(0.85) contrast(1.08) brightness(1.03); transition: filter 420ms ease-out, transform 700ms cubic-bezier(.2,.7,.2,1); }
+.house-photo-wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(17,17,17,0.22) 0.7px, transparent 1.3px) 0 0 / 4px 4px,
+    linear-gradient(color-mix(in oklab, var(--signal) 22%, transparent), color-mix(in oklab, var(--signal) 22%, transparent));
+  mix-blend-mode: multiply;
+  transition: opacity 420ms ease-out;
+}
+.group:hover .house-photo, .group:focus-visible .house-photo, .house-photo-frame:hover .house-photo { filter: none; }
+.group:hover .house-photo-wash, .group:focus-visible .house-photo-wash, .house-photo-frame:hover .house-photo-wash { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .house-photo, .house-photo-wash { transition: none; } }

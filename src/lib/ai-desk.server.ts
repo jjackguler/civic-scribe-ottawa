@@ -23,7 +23,7 @@ export type AiDeskEntry = { en: DeskCopy; fr: DeskCopy; from: string[]; at: stri
 
 const KEY = "ai-desk:v1";
 const MAX_ENTRIES = 600;
-const PER_RUN = 6;
+const PER_RUN = 10;
 
 const g = globalThis as unknown as {
   __aiDesk?: Map<string, AiDeskEntry>;
@@ -118,6 +118,8 @@ function pickJobs(payload: NewsPayload): Job[] {
   const pool = payload.stories
     .filter(s => !s.gov && s.kind !== "trending" && s.kind !== "beat" && Date.now() - new Date(s.publishedAt).getTime() < 36 * 3600_000)
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  // Non-English stories first: the English site shows them only once our desk has written English copy.
+  pool.sort((a, b) => Number(a.lang === "en") - Number(b.lang === "en"));
   const jobs: Job[] = [];
   for (const s of pool) {
     if (jobs.length >= PER_RUN) break;
@@ -130,7 +132,7 @@ function pickJobs(payload: NewsPayload): Job[] {
 
 const SYSTEM = `You are the copy desk of AI Broadsheet, a bilingual (English / Canadian French) AI news site. For each item you get the reporting of one or more publishers on ONE story: their headlines and short excerpts. Write, for each item:
 - "en": {"title", "summary"} and "fr": {"title", "summary"} (Canadian French).
-- title: a clear, specific, active-voice headline, 50 to 95 characters. Lead with who did what. No questions, no exclamation marks, no "breaking", no hype words, no puns.
+- title: an AI Broadsheet headline, 50 to 95 characters: our own wording, never a copy of the publisher's. Clear, specific, active voice, present tense. Lead with who did what; where the text supports it, say who is affected (people first). No questions, no exclamation marks, no "breaking", no hype words, no puns.
 - summary: at most two short sentences: what happened, then why it matters ONLY if the excerpts say so. Otherwise the second sentence says who reported it.
 
 Hard rules:

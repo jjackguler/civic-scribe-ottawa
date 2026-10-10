@@ -125,7 +125,7 @@ export function CardOfTheDayView({ pick, className = "" }: { pick: CardOfTheDayP
             title={pick.headline}
             campaign="card-of-the-day"
             tone="light"
-            className="min-h-12 !rounded-none border-night bg-night !text-white hover:!bg-lake"
+            className="min-h-12 rounded-none! border-night bg-night! text-white! hover:bg-lake!"
           />
           {pick.link.to === "/quiz" ? (
             <Link to="/quiz" search={fixture ? ({ fixture: 1 } as never) : undefined} className="press inline-flex min-h-12 items-center justify-center gap-2 border-2 border-night px-4 font-bold hover:bg-night hover:text-white">

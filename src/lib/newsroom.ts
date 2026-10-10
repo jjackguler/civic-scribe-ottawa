@@ -11,9 +11,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-import { DEFAULT_OG_IMAGE } from "./seo";
 import { NEWSROOM_RAW, type NewsroomArticle, type NewsroomSummary } from "./newsroom-types";
 
+import { ogImageFor } from "./og/url";
+import type { Locale } from "./i18n";
 export * from "./newsroom-types";
 
 export type NewsroomList = { items: NewsroomSummary[] };
@@ -95,9 +96,8 @@ export function useNewsroom(initial?: NewsroomList | null) {
  * `${ORIGIN}/og/article/${a.id}.png`, and every article page, the JSON-LD and
  * the sitemaps pick it up.
  */
-export function articleOgImage(a: Pick<NewsroomArticle, "id"> & Partial<Pick<NewsroomArticle, "slug" | "cover">>): string {
-  void a;
-  return DEFAULT_OG_IMAGE;
+export function articleOgImage(a: Pick<NewsroomArticle, "id"> & Partial<Pick<NewsroomArticle, "updatedAt">>, locale: Locale = "en"): string {
+  return ogImageFor("article", a.id, locale, { version: a.updatedAt ?? "" });
 }
 
 /** Public URL of a file in the store (the optional cover illustration). */

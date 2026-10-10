@@ -63,7 +63,19 @@ export async function ogArticle(request: Request, rawId: string): Promise<Respon
     const { getDispatchById } = await import("../dispatch.server");
     d = await getDispatchById(id).catch(() => null);
   }
-  if (!d) return fallback(request);
+  if (!d) {
+    // Our newsroom's own articles share the article card.
+    const { articleById } = await import("../newsroom.server");
+    const a = await articleById(id).catch(() => null);
+    if (!a) return fallback(request);
+    const v = ogVersion(a.updatedAt);
+    return serve(request, {
+      kind: "article", locale, id: a.id,
+      kicker: locale === "fr" ? "AI Broadsheet" : "AI Broadsheet",
+      headline: a[locale].headline,
+      outlets: [...new Set(a.sources.map(s => s.outlet))],
+    }, `n-${a.id}-${locale}-${v}`, url.searchParams.get("v") === v);
+  }
   const version = ogVersion(d.createdAt);
   const c = d[locale];
   const outlets = [...new Set(d.sources.map(s => s.outlet))];
