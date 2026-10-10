@@ -189,13 +189,13 @@ export function breadcrumbLd(locale: Locale, crumbs: Crumb[]) {
 
 /** The publication, for JSON-LD `publisher` fields and the home page. */
 export function organizationLd(locale: Locale) {
-  const sameAs = [SITE.social.linkedin, SITE.social.x, SITE.social.youtube].filter(Boolean);
+  const sameAs = Object.values(SITE.social).filter(Boolean);
   return {
     "@context": "https://schema.org",
     "@type": "NewsMediaOrganization",
     "@id": `${ORIGIN}/#organization`,
     name: SITE.name,
-    url: absUrl("/", locale),
+    url: `${ORIGIN}/`,
     logo: { "@type": "ImageObject", url: LOGO_URL, width: 512, height: 512 },
     image: DEFAULT_OG_IMAGE,
     description: SITE.description[locale],
@@ -205,21 +205,22 @@ export function organizationLd(locale: Locale) {
     publishingPrinciples: absUrl("/standards", locale),
     correctionsPolicy: absUrl("/corrections", locale),
     ethicsPolicy: absUrl("/values", locale),
+    masthead: `${absUrl("/about", locale)}#who`,
     actionableFeedbackPolicy: absUrl("/corrections", locale),
     ...(SITE.email.editor ? { email: SITE.email.editor } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
 }
 
-/** WebSite with a SearchAction (sitelinks search box). */
+/** One site identity across both languages, with its internal search action. */
 export function websiteLd(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${ORIGIN}/#website`,
     name: SITE.name,
-    url: absUrl("/", locale),
-    inLanguage: LANG_TAG[locale],
+    url: `${ORIGIN}/`,
+    inLanguage: [LANG_TAG.en, LANG_TAG.fr],
     publisher: { "@id": `${ORIGIN}/#organization` },
     potentialAction: {
       "@type": "SearchAction",

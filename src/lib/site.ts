@@ -9,11 +9,9 @@ export const SITE = {
   name: "AI Broadsheet",
   /**
    * The live address, used for canonical URLs, hreflang, sitemaps, feeds and share links.
-   * Search engines only index pages whose canonical URL really answers, so this stays on
-   * the Lovable address until aibroadsheet.com is registered and connected; then change it
-   * here (and in public/robots.txt) and nothing else.
+   * Keep this aligned with the primary domain in Lovable and public/robots.txt.
    */
-  domain: "aibroadsheet.lovable.app",
+  domain: "aibroadsheet.com",
   tagline: {
     en: "The world's AI newspaper, live",
     fr: "Le journal mondial de l'IA, en direct",
@@ -31,15 +29,15 @@ export const SITE = {
   },
   /** Who runs the site, shown on /about. */
   editor: {
-    name: "", // TODO [EDITOR_NAME]
-    role: { en: "", fr: "" }, // TODO [ROLE]
+    name: "Jack Guler",
+    role: { en: "Editor", fr: "Responsable éditorial" },
     bio: { en: "", fr: "" }, // TODO [BIO]
   },
   email: {
-    /** Planned: corrections@aibroadsheet.com; enable after routing and a test email succeed. */
-    editor: "",
-    /** Enable only after the domain mailbox is connected and a test message succeeds. */
-    advertise: "",
+    /** Cloudflare Email Routing, enabled 2026-10-10. */
+    general: "hello@aibroadsheet.com",
+    editor: "corrections@aibroadsheet.com",
+    advertise: "hello@aibroadsheet.com",
   },
   newsletter: {
     /** TODO [NEWSLETTER_PROVIDER], e.g. "Substack" or "Beehiiv". Named on /privacy. */
@@ -55,6 +53,9 @@ export const SITE = {
   cloudflareAnalyticsToken: "",
   /** Social profiles. An icon appears only when its URL is set. */
   social: {
+    instagram: "", // Enable only after the brand account is created and verified.
+    tiktok: "",
+    facebook: "",
     linkedin: "", // TODO [LINKEDIN_URL]
     x: "", // TODO [X_URL]
     youtube: "",

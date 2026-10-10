@@ -13,7 +13,7 @@ export function SiteFooter() {
   const head = "font-bold text-white mb-3";
   const link = "text-white/75 hover:text-white hover:underline";
   const mail = editorMailto();
-  const social = ([["LinkedIn", SITE.social.linkedin], ["X", SITE.social.x], ["YouTube", SITE.social.youtube]] as const).filter(([, href]) => !!href);
+  const social = ([["Instagram", SITE.social.instagram], ["TikTok", SITE.social.tiktok], ["X", SITE.social.x], ["Facebook", SITE.social.facebook], ["LinkedIn", SITE.social.linkedin], ["YouTube", SITE.social.youtube]] as const).filter(([, href]) => !!href);
   return (
     <footer className="mt-20 bg-night text-white">
       <div className="container-mw pt-12 pb-10 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
@@ -21,6 +21,7 @@ export function SiteFooter() {
           <Logo inverse />
           <p className="mt-4 max-w-md text-white/75 font-serif text-[1.05rem] leading-relaxed">{SITE.description[locale]}</p>
           <p className="mt-4 text-sm text-white/55 max-w-md">{t("sourcesNote", locale)}</p>
+          {SITE.email.general && <p className="mt-4"><a href={`mailto:${SITE.email.general}`} className="text-brass hover:underline">{SITE.email.general}</a></p>}
           {social.length > 0 && (
             <ul className="mt-5 flex flex-wrap gap-2" aria-label={fr ? "Réseaux sociaux" : "Social media"}>
               {social.map(([label, href]) => (

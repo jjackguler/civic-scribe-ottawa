@@ -110,13 +110,10 @@ export async function buildSitemap(): Promise<string> {
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
   const articles = await currentArticles();
-  const [news, dispatches] = await Promise.all([currentNews(), currentDispatches(articles)]);
+  const dispatches = await currentDispatches(articles);
   for (const d of dispatches.slice(0, 200)) entries.push({ path: `/dispatch/${d.id}`, changefreq: "weekly", priority: "0.7", lastmod: d.createdAt.slice(0, 10) });
-  // Story pages (a publisher's excerpt and link) are noindex, except where one of our articles covers the story.
-  const covered = new Set(articles.flatMap(a => a.storyIds));
-  for (const s of (news?.stories ?? []).filter(s => isPublic(s) && covered.has(s.id)).slice(0, 400)) {
-    entries.push({ path: `/story/${s.id}`, changefreq: "daily", priority: "0.4", lastmod: s.publishedAt.slice(0, 10) });
-  }
+  // /story pages are noindex or redirect to our articles. Only their canonical
+  // /article destinations belong here; building a sitemap needs no RSS refresh.
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
