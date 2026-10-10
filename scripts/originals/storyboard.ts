@@ -9,7 +9,7 @@ import { unsupported } from "../../src/lib/ai-desk.server";
 import { HOUSE_VOICE, HOUSE_WORDS } from "./script";
 import type { Brief } from "./pick";
 import type { KitFigure } from "./collage/kit";
-import { SkipRun, limitError } from "./util";
+import { requestWriter, type WriterKeys } from "./writer-api";
 
 export type Scene = { type: string; bg: string; say: string[]; [k: string]: unknown };
 export type Board = {
@@ -111,74 +111,12 @@ function userMessage(brief: Brief, figures: KitFigure[], feedback?: string[]): s
   return s;
 }
 
-type Keys = { anthropic?: string; gemini?: string; claudeModel: string; geminiModel: string };
-
-async function callClaude(system: string, user: string, key: string, model: string): Promise<string> {
-  let res: Response;
-  try {
-    res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model, max_tokens: 6000, system, messages: [{ role: "user", content: user }] }),
-      signal: AbortSignal.timeout(180_000),
-    });
-  } catch (e) { throw new SkipRun("Claude unavailable", `Claude did not answer (${(e as Error).message}).`); }
-  if (!res.ok) {
-    const body = await res.text();
-    if (res.status === 529 || res.status >= 500) throw new SkipRun("Claude unavailable", `Claude answered HTTP ${res.status}.`);
-    throw limitError("Claude", res.status, body) ?? new Error(`Claude HTTP ${res.status}: ${body.slice(0, 300)}`);
-  }
-  const body = await res.json() as { content?: { type: string; text?: string }[] };
-  return (body.content ?? []).map(b => b.text ?? "").join("");
-}
-
-async function callGemini(system: string, user: string, key: string, model: string): Promise<{ text: string; model: string }> {
-  // Google retires model names for new keys and the free tier runs out: try the chain, then skip cleanly.
-  let last = "", quota = false, down = false;
-  for (const m of [...new Set([model, "gemini-3.8-flash", "gemini-flash-latest"])]) {
-    let res: Response;
-    try {
-      res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
-        method: "POST",
-        headers: { "x-goog-api-key": key, "content-type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents: [{ role: "user", parts: [{ text: user }] }],
-          generationConfig: { maxOutputTokens: 16384, temperature: 0.5, responseMimeType: "application/json" },
-        }),
-        signal: AbortSignal.timeout(180_000),
-      });
-    } catch (e) { last = `Gemini ${m}: ${(e as Error).message}`; down = true; console.warn(last); continue; }
-    if (!res.ok) {
-      const body = await res.text();
-      last = `Gemini ${m} HTTP ${res.status}: ${body.slice(0, 200)}`;
-      console.warn(last);
-      if (res.status === 400 && /api key/i.test(body)) throw new SkipRun("Gemini key", "Gemini rejected the API key (HTTP 400). Check the GEMINI_API_KEY secret.");
-      if (res.status === 401 || res.status === 403) throw limitError("Gemini", res.status, body)!;
-      if (res.status === 429) { quota = true; continue; }
-      if (res.status === 404 || res.status >= 500) { down = down || res.status >= 500; continue; }
-      throw new Error(last);
-    }
-    const body = await res.json() as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] } }[] };
-    return { text: (body.candidates?.[0]?.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join(""), model: m };
-  }
-  if (quota) throw new SkipRun("Gemini quota", `Every Gemini model in the chain answered HTTP 429 (quota). Last: ${last.slice(0, 160)}`);
-  if (down) throw new SkipRun("Gemini unavailable", `Gemini did not answer. Last: ${last.slice(0, 160)}`);
-  throw new Error(last || "No Gemini model answered");
-}
-
-/** One model call: Claude when its key is set (falling back to Gemini on a quota/credit problem), else Gemini. */
+type Keys = WriterKeys;
 async function callWriter(user: string, keys: Keys): Promise<{ raw: unknown; model: string }> {
-  const parse = (text: string) => { try { return JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)); } catch { return null; } };
-  if (keys.anthropic) {
-    try { return { raw: parse(await callClaude(SYSTEM, user, keys.anthropic, keys.claudeModel)), model: keys.claudeModel }; }
-    catch (e) {
-      if (!(e instanceof SkipRun) || !keys.gemini) throw e;
-      console.warn(`${e.message} Trying Gemini.`);
-    }
-  }
-  if (keys.gemini) { const r = await callGemini(SYSTEM, user, keys.gemini, keys.geminiModel); return { raw: parse(r.text), model: r.model }; }
-  throw new SkipRun("No writer key", "Add the GEMINI_API_KEY or ANTHROPIC_API_KEY repository secret.");
+  const r = await requestWriter(SYSTEM, user, keys);
+  let raw: unknown = null;
+  try { raw = JSON.parse(r.text.slice(r.text.indexOf("{"), r.text.lastIndexOf("}") + 1)); } catch { /* one content revision is allowed */ }
+  return { raw, model: r.model };
 }
 
 /**

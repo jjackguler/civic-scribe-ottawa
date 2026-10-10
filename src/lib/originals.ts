@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import { ORIGINALS_MANIFEST_URL, youtubePlayable, type Original, type OriginalsManifest } from "./originals-types";
+import { ORIGINALS_MANIFEST_URL, originalPublishable, type Original, type OriginalsManifest } from "./originals-types";
 
 export type { Original, OriginalsManifest };
 
@@ -16,7 +16,7 @@ export const getOriginals = createServerFn({ method: "GET" }).handler(async (): 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = (await res.json()) as OriginalsManifest;
     // Playable on the site: on YouTube (public/unlisted) or our own copy.
-    data.items = (data.items ?? []).filter(i => youtubePlayable(i) || i.fileUrl);
+    data.items = (data.items ?? []).filter(originalPublishable);
     g.__originals = { ts: Date.now(), data };
     return data;
   } catch {

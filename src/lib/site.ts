@@ -36,10 +36,10 @@ export const SITE = {
     bio: { en: "", fr: "" }, // TODO [BIO]
   },
   email: {
-    /** TODO [EDITOR_EMAIL] — corrections, terms and reader contact. Hidden while empty. */
+    /** Planned: corrections@aibroadsheet.com; enable after routing and a test email succeed. */
     editor: "",
-    /** Advertising enquiries. Works once the domain is registered and forwarding is set up. */
-    advertise: "advertise@aibroadsheet.com",
+    /** Enable only after the domain mailbox is connected and a test message succeeds. */
+    advertise: "",
   },
   newsletter: {
     /** TODO [NEWSLETTER_PROVIDER], e.g. "Substack" or "Beehiiv". Named on /privacy. */

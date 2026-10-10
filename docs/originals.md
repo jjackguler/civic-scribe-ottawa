@@ -1,6 +1,6 @@
 # AI Broadsheet Originals (explainer videos)
 
-Twice a day (07:30 and 17:30 Toronto time) a GitHub Action makes one 45–75 second vertical explainer in our newspaper-collage style: the same look as the hand-made explainers (torn clippings, ransom-note letters, scissor-cut archive figures, red pencil, stamps, price tags, receipts, paper wipes, CC0 sounds and a ducked music bed).
+Twice a day (11:30 and 21:30 UTC; 07:30/17:30 Toronto during daylight time, 06:30/16:30 during standard time) a GitHub Action makes one 45–75 second vertical explainer in our newspaper-collage style: the same look as the hand-made explainers (torn clippings, ransom-note letters, scissor-cut archive figures, red pencil, stamps, price tags, receipts, paper wipes, CC0 sounds and a ducked music bed).
 
 1. **Story.** The owner's queue first, then our own newest newsroom article, then the story the most outlets are covering (see [Choosing the story](#choosing-the-story)).
 2. **Storyboard.** One model call (Gemini `gemini-3.8-flash` by default, Claude when `ANTHROPIC_API_KEY` is set) returns a whole storyboard in the collage schema. Every spoken line and every on-screen word, number, name and quote goes through the fact guard; one retry with the problems listed; otherwise nothing is made and the story is skipped for a week.
@@ -37,7 +37,7 @@ GitHub → branch `media` → `originals/queue.json` → edit (pencil icon) → 
 - `storyId`: a story id from the desk.
 - `note` (optional): what to emphasise. It guides the writer only; it is never a source of facts.
 
-What happened to each item is written to `originals/queue-done.json` (`made` with the video id, or `skipped` with the reason). Items that can't be found are removed with a reason. A run that stops for a missing key or an exhausted quota leaves the queue as it is.
+What happened to each item is written to `originals/queue-done.json` (`made` with the video id, or `skipped` with the reason). Items that cannot be read remain at the head of the queue, with a visible failure asking the owner to check the URL/id. Invalid queue JSON also stops the run; it is never treated as an empty queue. A run that stops for a missing key or an exhausted quota leaves the queue as it is.
 
 Stories that failed the fact guard are listed in `originals/skipped.json` and not tried again for a week.
 
@@ -63,7 +63,7 @@ The workflow checks out the `assets` branch (filled by `.github/workflows/fetch-
 - **Figures**: `collage/figures.json` lists the archive photos to cut out (with a short description for the writer and a credit label). They are cut out once with rembg (`prepare_figures.py`) and cached by the workflow; editing `figures.json` makes a new set.
 - **Newspaper pages**: two public-domain front pages (1910 and 1920) for backgrounds.
 - **Sounds**: CC0 recordings trimmed per cue (snip, slap, stamp, pencil…); anything missing is synthesised.
-- **Music**: your own tracks first, if the assets branch has `music/owner/*.mp3` (or `collage/music/owner/*.mp3`); one is picked per run. Optional `credits.json` in that folder: `{"file.mp3": "Music: “Title”, made by AI Broadsheet with Suno"}`. Without owner tracks, one of five CC0 beds chosen by ear (Freesound ids in `kit.ts`). Nothing is downloaded from Suno by the pipeline: add your files to the branch yourself.
+- **Music**: only owner tracks with a matching reviewed commercial-use record in `rights.json` are eligible. Otherwise a bed with an explicit CC0 credit is chosen, or the video has no music. See [music rights](music-rights.md). Merely uploading an MP3 or paying for Suno later grants no permission to use an older free-plan track.
 
 The manifest's `credits` names the archive photos, pages, music and sound authors this video actually used, and the voice.
 
@@ -76,7 +76,7 @@ GitHub → repository → Settings → Secrets and variables → Actions → **N
 | Secret | Needed | What for |
 | --- | --- | --- |
 | `GEMINI_API_KEY` | yes (or Anthropic) | Storyboard writing (Google AI Studio key) |
-| `ANTHROPIC_API_KEY` | optional | When set, Claude writes the storyboard; Gemini becomes the fallback on a quota or credit error |
+| `ANTHROPIC_API_KEY` | optional | When set, Claude writes the storyboard; billing errors stop the run without switching providers |
 | `ELEVENLABS_API_KEY` | yes | Narration (with timestamps) |
 | `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, `YOUTUBE_REFRESH_TOKEN` | optional | Upload to YouTube. Without them the site plays its own copy. |
 
@@ -85,14 +85,14 @@ Optional **variables** (same page, Variables tab):
 | Variable | Default | |
 | --- | --- | --- |
 | `ORIGINALS_STYLE` | `collage` | `collage` or `cards` |
-| `ORIGINALS_GEMINI_MODEL` | `gemini-3.8-flash` | First model tried; then `gemini-3.8-flash`, `gemini-flash-latest` |
+| `ORIGINALS_GEMINI_MODEL` | `gemini-3.8-flash` | The one model used; no automatic fallback |
 | `CLAUDE_MODEL` | `claude-sonnet-5-5` | |
 | `ELEVENLABS_VOICE_ID` | first of George, Brian, Daniel, Adam, Matilda, Rachel | A specific stock voice |
 | `ELEVENLABS_MODEL` | `eleven_multilingual_v2` | |
 | `ORIGINALS_PRIVACY` | `unlisted` | `public`, `unlisted` or `private` on YouTube |
 | `COLLAGE_WORKERS` | `2` | Parallel Chromium renderers (match the runner's CPUs) |
 
-**Missing keys and quotas never fail the run.** A missing secret, a rejected key or an HTTP 429 (Gemini, Claude or ElevenLabs) ends the run with a warning, and the run summary says what happened. Nothing is published and the queue is left untouched; the next scheduled run tries again.
+**Missing keys, quotas and provider timeouts fail visibly.** They do not consume the selected story. A storyboard has at most two content attempts, each one HTTP request with a 90-second timeout (no model/provider escalation). Loading the feed does not launch unrelated paid headline/dispatch writers. A no-story run and an editorial rejection remain normal outcomes; the summary distinguishes them from production failures.
 
 **ElevenLabs usage:** a video is about 900–1,100 characters of narration, so two a day is roughly 60,000 characters a month. Check that your plan's monthly allowance covers it.
 

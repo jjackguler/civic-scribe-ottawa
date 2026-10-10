@@ -17,6 +17,7 @@ import { promisify } from "node:util";
 import { copyFile, mkdir, readFile, readdir, writeFile, appendFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
+import { approvedOwnerMusic, isCc0 } from "./music-rights";
 
 const run = promisify(execFile);
 const HERE = import.meta.dirname;
@@ -164,18 +165,19 @@ export async function buildKit(assetsRoot: string, kitDir: string, opts: { figsD
   let music: string | null = null;
   let musicCredit: Kit["musicCredit"] = null;
   const ownerDirs = [join(root, "music", "owner"), join(col, "music", "owner")].filter(d => existsSync(d));
-  const owner = (await Promise.all(ownerDirs.map(async d => (await list(d, /\.(mp3|m4a|wav)$/i)).map(f => join(d, f))))).flat();
+  const candidates = (await Promise.all(ownerDirs.map(async d => (await list(d, /\.(mp3|m4a|wav)$/i)).map(f => join(d, f))))).flat();
+  const owner: { file: string; credit: string }[] = [];
+  for (const file of candidates) {
+    const rights = await approvedOwnerMusic(file);
+    if (rights) owner.push({ file, credit: rights.credit });
+    else console.warn(`Music excluded (no matching commercial-use attestation): ${basename(file)}`);
+  }
   if (owner.length) {
-    music = owner[hash(seed) % owner.length];
-    let text = `Music: “${basename(music).replace(/\.[a-z0-9]+$/i, "").replace(/[-_]+/g, " ").trim()}”, made by AI Broadsheet with Suno`;
-    for (const d of ownerDirs) {
-      const f = join(d, "credits.json");
-      if (!existsSync(f)) continue;
-      try { const c = JSON.parse(await readFile(f, "utf8")) as Record<string, string>; if (c[basename(music)]) text = c[basename(music)]; } catch { /* keep the default credit */ }
-    }
-    musicCredit = { text };
+    const picked = owner[hash(seed) % owner.length];
+    music = picked.file;
+    musicCredit = { text: picked.credit };
   } else {
-    const beds = (await list(join(col, "music"), /\.mp3$/i)).filter(f => MUSIC_OK.some(id => f.endsWith(`--${id}.mp3`)));
+    const beds = (await list(join(col, "music"), /\.mp3$/i)).filter(f => MUSIC_OK.some(id => f.endsWith(`--${id}.mp3`)) && isCc0(creditOf(`music/${f}`)?.license));
     const long: string[] = [];
     for (const f of beds) if ((await duration(join(col, "music", f))) >= 20) long.push(f);
     if (long.length) {

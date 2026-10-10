@@ -1,6 +1,6 @@
 /**
  * Small shared helpers for the Originals pipeline: env, the run summary
- * ($GITHUB_STEP_SUMMARY) and the "skip cleanly" error for setup gaps and quotas.
+ * ($GITHUB_STEP_SUMMARY) and the recoverable error for setup gaps and quotas.
  */
 import { appendFile } from "node:fs/promises";
 
@@ -10,7 +10,7 @@ export function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, 
 
 /**
  * A run that cannot go ahead for a reason outside the code: a missing key, an
- * exhausted quota, a rejected key. The run ends with a warning, not a failure.
+ * exhausted quota, a rejected key. The job fails visibly; the story is not consumed.
  */
 export class SkipRun extends Error {
   constructor(public title: string, message: string) { super(message); this.name = "SkipRun"; }

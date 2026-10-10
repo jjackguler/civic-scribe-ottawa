@@ -5,7 +5,7 @@
  */
 import type { Cluster } from "../../src/lib/cluster";
 import { unsupported } from "../../src/lib/ai-desk.server";
-import { SkipRun, limitError } from "./util";
+import { requestWriter } from "./writer-api";
 
 export type Card =
   | { type: "headline"; big: string; small?: string }
@@ -62,50 +62,12 @@ export async function writeScript(brief: { items: { publisher: string; headline:
   const user = JSON.stringify({ story: items, ourReporting: brief.reporting }) + (opts.feedback?.length
     ? `\n\nYour previous draft used words that are not in the sources: ${opts.feedback.join(", ")}. Remove them or replace them with words from the sources.`
     : "");
-  if (!opts.apiKey) return writeScriptGemini(user, opts.geminiKey!, opts.model);
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "x-api-key": opts.apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-    body: JSON.stringify({ model: opts.model, max_tokens: 2500, system: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only.", messages: [{ role: "user", content: user }] }),
-    signal: AbortSignal.timeout(60_000),
-  });
-  if (!res.ok) { const b = await res.text(); throw limitError("Claude", res.status, b) ?? new Error(`Claude HTTP ${res.status}: ${b.slice(0, 300)}`); }
-  const body = await res.json() as { content?: { type: string; text?: string }[] };
-  const text = (body.content ?? []).map(b => b.text ?? "").join("");
-  const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
-  if (json.skip) return null;
-  return json as Script;
-}
-
-async function writeScriptGemini(user: string, key: string, model: string): Promise<Script | null> {
-  // Google retires model names for new keys; fall back rather than fail the day's video.
-  let last = "", quota = false;
-  for (const m of [...new Set([model, "gemini-3.8-flash", "gemini-flash-latest"])]) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`, {
-      method: "POST",
-      headers: { "x-goog-api-key": key, "content-type": "application/json" },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only." }] },
-        contents: [{ role: "user", parts: [{ text: user }] }],
-        generationConfig: { maxOutputTokens: 16384, temperature: 0.4, responseMimeType: "application/json" },
-      }),
-      signal: AbortSignal.timeout(180_000),
-    });
-    if (!res.ok) {
-      last = `Gemini ${m} HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`;
-      console.warn(last);
-      if (res.status === 429) quota = true;
-      if ([404, 429, 503].includes(res.status)) continue;
-      throw limitError("Gemini", res.status, last) ?? new Error(last);
-    }
-    const body = await res.json() as { candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] } }[] };
-    const text = (body.candidates?.[0]?.content?.parts ?? []).filter(p => !p.thought).map(p => p.text ?? "").join("");
-    const json = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1));
-    if (json.skip) return null;
-    return json as Script;
-  }
-  if (quota) throw new SkipRun("Gemini quota", `Every Gemini model in the chain answered HTTP 429 (quota). Last: ${last.slice(0, 160)}`);
-  throw new Error(last || "No Gemini model answered");
+  const r = await requestWriter(SYSTEM + "\n\n" + HOUSE_VOICE + "\n\nReply with JSON only.", user, {
+    anthropic: opts.apiKey, gemini: opts.geminiKey, claudeModel: opts.model, geminiModel: opts.model,
+  }, 2500);
+  let json: any;
+  try { json = JSON.parse(r.text.slice(r.text.indexOf("{"), r.text.lastIndexOf("}") + 1)); } catch { return null; }
+  return json?.skip ? null : json as Script;
 }
 
 /** Everything the viewer will hear or read must be supported by the sources. */

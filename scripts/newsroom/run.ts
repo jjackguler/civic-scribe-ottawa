@@ -24,6 +24,7 @@ import { appendFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { humanLens } from "../../src/lib/editorial";
 import { countWords, uniqueSlug, type NewsroomArticle, type NewsroomCopy, type RoleNote } from "../../src/lib/newsroom-types";
+import { loadAttempts, recordAttempt } from "./attempts";
 import { cannedModels, illustrate, liveModels, type Models } from "./models";
 import { LINKS, loadGlossary } from "./library";
 import { pickEvents } from "./pick";
@@ -94,7 +95,7 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
   const stop = async (stage: string, n: RoleNote) => {
     roles.push(n);
     // A model that didn't answer is our failure, not the story's: don't put the story on cooldown.
-    const infra = n.notes.every(x => /no reply|not json|HTTP \d|call failed|no candidate/i.test(x));
+    const infra = !!m.failure || !!m.usage.capped || n.notes.every(x => /no reply|not json|HTTP \d|call failed|no candidate/i.test(x));
     if (!infra) await store.reject({ id: e.id, at: new Date().toISOString(), stage, headline, reasons: n.notes });
     log(`  ✗ ${stage}: ${n.notes.slice(0, 4).join(" | ")}`);
     return "rejected" as const;
@@ -186,9 +187,7 @@ async function main() {
   } else {
     const live = liveModels();
     if (!live) {
-      // A missing key is a setup gap, not a failure: say so and stop cleanly.
-      console.log("::warning title=Newsroom skipped::Add repository secret GEMINI_API_KEY or ANTHROPIC_API_KEY under Settings → Secrets and variables → Actions.");
-      return;
+      throw new Error("Newsroom configuration is incomplete. Check the provider, API key and model prices in the log. No content was generated.");
     }
     models = live;
     const { loadNews } = await import("../../src/lib/news-engine");
@@ -199,10 +198,17 @@ async function main() {
   await loadGlossary();
   const store = await openStore(STORE);
 
+  // Human approvals need no paid calls and must still work after the daily cap.
+  for (const id of await store.releaseApproved()) log(`✓ published ${id} (approved by the editor)`);
+
   const today = new Date().toISOString().slice(0, 10);
   const doneToday = store.index.items.filter(i => i.createdAt.startsWith(today)).length + store.rejected.filter(r => r.at.startsWith(today)).length;
-  const budget = Math.min(MAX, Math.max(0, DAILY - doneToday));
-  if (budget === 0) { log(`Caps reached (${doneToday} attempted today, cap ${DAILY}; ${MAX} per run). Nothing to do.`); return finish(models); }
+  // Outcomes on record, or attempts started (incl. infra failures), whichever is higher.
+  const attempts = await loadAttempts(STORE, today);
+  const attemptedToday = Math.max(doneToday, attempts.count);
+  attempts.count = attemptedToday; // Seed migration from existing outcomes before the first persistent increment.
+  const budget = Math.min(MAX, Math.max(0, DAILY - attemptedToday));
+  if (budget === 0) { log(`Caps reached (${attemptedToday} attempted today, cap ${DAILY}; ${MAX} per run). Nothing to do.`); return finish(models); }
 
   const seen = {
     ids: new Set(store.index.items.map(i => i.id)),
@@ -210,8 +216,6 @@ async function main() {
     killed: store.killed,
     rejectedAt: new Map(store.rejected.map(r => [r.id, r.at] as const)),
   };
-  // The editor's approvals first: held articles whose ids are now in approved.json.
-  for (const id of await store.releaseApproved()) log(`✓ published ${id} (approved by the editor)`);
   const { events, skipped } = pickEvents(stories, seen);
   log(`store: ${STORE} (${store.index.items.length} published, ${store.rejected.length} on record as turned down)`);
   for (const s of skipped.slice(0, 12)) log(`skip ${s.id}: ${s.why} — ${s.title}`);
@@ -219,8 +223,10 @@ async function main() {
 
   let published = 0, rejected = 0, held = 0;
   for (const e of events.slice(0, budget)) {
+    if (models.failure || models.usage.capped) break;
     if (store.has(e.id)) continue;
     log(`\n▸ ${e.id}: ${e.sources[0]?.title} (${new Set(e.sources.map(s => s.outlet)).size} outlet(s)${e.sources.some(s => s.official) ? ", official" : ""})`);
+    await recordAttempt(STORE, attempts, e.id);
     try {
       const r = await writeOne(models, store, e);
       if (r === "published") published++; else if (r === "held") held++; else rejected++;
@@ -235,9 +241,16 @@ async function main() {
 }
 
 async function finish(m: Models) {
-  log(`Model calls: ${m.usage.calls} (≈${m.usage.inTokens} tokens in, ${m.usage.outTokens} out; ${m.provider}).`);
+  if (m.failure) {
+    log(`::error title=Newsroom production failed::${m.failure}`);
+    process.exitCode = 1;
+  }
+  log(`Model calls: ${m.usage.calls} (≈${m.usage.inTokens} tokens in, ${m.usage.outTokens} out incl. thinking; ${m.provider}, writer ${m.model("writer")}, checker ${m.model("checker")}).`);
+  const b = m.usage;
+  if (b.usd === null) log('Estimated spend: UNKNOWN after a network/usage error; remaining paid calls were stopped. Verify the provider billing console.');
+  if (typeof b.usd === "number") log(`Estimated spend this run: ≈$${b.usd.toFixed(3)} at the illustrative rates in docs/newsroom-costs.md${b.capped ? `; ${b.capped} call(s) refused by the per-run guard` : ""}. Not a global cap.`);
   const file = env("GITHUB_STEP_SUMMARY");
   if (file) await appendFile(file, `## Newsroom\n\n\`\`\`\n${summary.join("\n")}\n\`\`\`\n`).catch(() => {});
 }
 
-main().then(() => process.exit(0), e => { console.error(e); process.exit(1); });
+main().then(() => process.exit(process.exitCode || 0), e => { console.error(e); process.exit(1); });
