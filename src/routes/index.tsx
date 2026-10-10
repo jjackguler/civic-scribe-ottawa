@@ -25,7 +25,7 @@ import { NewsroomLead } from "@/components/NewsroomLead";
 import { getNewsroomFast } from "@/lib/newsroom";
 import { CardOfTheDay } from "@/components/CardOfTheDay";
 import {
-  getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
+  getFrontPageNews, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
 } from "@/lib/news";
 import { useMedia, type MediaItem } from "@/lib/media";
@@ -42,7 +42,11 @@ import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const [news, pulse, originals, dispatches, quiz, newsroom] = await Promise.all([getAiNewsFast(), getPulseFast(), getOriginalsFast(), getDispatchesFast(), getDailyQuizFast(), getNewsroomFast()]);
+    // Secondary desks hydrate through their own hooks; none can delay first paint.
+    const [news, pulse, originals, dispatches, quiz, newsroom] = await Promise.all([
+      getFrontPageNews().catch(() => null), getPulseFast(150), getOriginalsFast(150),
+      getDispatchesFast(150), getDailyQuizFast(150), getNewsroomFast(150),
+    ]);
     return { news, pulse, originals, dispatches, quiz, newsroom };
   },
   head: ({ match }) =>
@@ -290,7 +294,7 @@ function Home() {
             <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
               <div>
                 <h2 className="masthead-serif text-[2.2rem] sm:text-[2.8rem] leading-none">{locale === "fr" ? "Explicatifs" : "Explainers"}</h2>
-                <p className="font-semibold mt-2">{locale === "fr" ? "L'actualité IA du jour en une minute. Deux par jour." : "Today's AI news in a minute. Two a day."}</p>
+                <p className="font-semibold mt-2">{locale === "fr" ? "Les sujets choisis par notre rédaction, expliqués en une minute." : "Stories selected by our newsroom, explained in about a minute."}</p>
               </div>
               <Link to="/originals" className="inline-flex items-center gap-1 font-bold underline underline-offset-4 decoration-2">{locale === "fr" ? "Tous les explicatifs" : "All explainers"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>

@@ -1,0 +1,14 @@
+[
+  {
+    "storyIds": ["1l4noah"],
+    "image": "/editorial/intelligence-unplugged.webp",
+    "video": "/editorial/intelligence-unplugged.mp4",
+    "alt": {
+      "en": "AI editorial illustration: a paper brain and globe separated by an unplugged yellow cable, a metaphor for internet isolation.",
+      "fr": "Illustration éditoriale par IA : un cerveau et un globe en papier séparés par un câble jaune débranché, métaphore de l'isolement d'Internet."
+    },
+    "model": "Google Flow / Nano Banana 2.1",
+    "createdAt": "2026-10-10",
+    "projectUrl": "https://flow.google.com/project/737a6144-c312-4836-8879-f6283bd953a4"
+  }
+]

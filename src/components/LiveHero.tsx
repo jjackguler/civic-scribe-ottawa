@@ -7,6 +7,7 @@ import { useLocale } from "@/lib/locale-context";
 import { StoryLink, storyKicker } from "./StoryCard";
 import { StoryImage } from "./StoryImage";
 import { mmss, originalKind, usePreviewOk } from "./Originals";
+import { editorialArtFor } from "@/lib/editorial-art";
 
 /** One of our own productions (explainer or opening titles) on the stage. */
 export type OriginalSlide = { kind: "original"; original: Original };
@@ -33,30 +34,31 @@ const ORIGINAL_MS = 12000;
 /**
  * The front page's live desk: our own productions first, then the stories the
  * most newsrooms are covering, one at a time on a dark stage, with a live column
- * of the newest headlines beside it. Auto-advances; pauses on hover, on keyboard
+ * of the newest headlines beside it. Rotation is opt-in; pauses on hover, on keyboard
  * focus, while a video plays with sound, with the pause button, and never moves
  * for reduced-motion readers.
  */
 export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Story[] }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
-  const [i, setI] = useState(0);
+  const [activeKey, setActiveKey] = useState<string | null>(null);
   const [hover, setHover] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
+  const [userPaused, setUserPaused] = useState(true);
   const [reduced, setReduced] = useState(false);
   const [mediaPlaying, setMediaPlaying] = useState(false);
   const paused = hover || userPaused || reduced || mediaPlaying;
   const n = slides.length;
-  const idx = n ? i % n : 0;
+  const idx = Math.max(0, slides.findIndex(sl => slideKey(sl) === activeKey));
+  const setI = (next: number | ((previous: number) => number)) => {
+    const k = typeof next === "function" ? next(idx) : next;
+    if (slides[k]) setActiveKey(slideKey(slides[k]));
+  };
   const curKey = n ? slideKey(slides[idx]) : "";
-  const lastKey = useRef(curKey);
-  useEffect(() => { lastKey.current = curKey; setMediaPlaying(false); }, [curKey]);
-  // A refresh can add or drop slides; stay on the one the reader is looking at.
-  const keys = slides.map(slideKey).join("|");
+  // Keep the selected story even if a background refresh reorders the edition.
   useEffect(() => {
-    const k = slides.findIndex(sl => slideKey(sl) === lastKey.current);
-    if (k >= 0 && k !== i % Math.max(n, 1)) setI(k);
-  }, [keys]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (curKey) setActiveKey(curKey);
+    setMediaPlaying(false);
+  }, [curKey]);
 
   // No automatic rotation for reduced-motion readers, nor on phones: the lead story
   // stays put while someone reads it; the tabs and arrows still move on request.
@@ -81,7 +83,7 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
 
   return (
     <section className="bg-night text-white" aria-roledescription="carousel" aria-label={fr ? "À la une, en direct" : "Top stories, live"}>
-      <div className="container-mw py-6 lg:py-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="container-mw frontpage-stage py-5 lg:py-6">
         <div
           className={`min-w-0 ${paused ? "hero-paused" : ""}`}
           onMouseEnter={() => setHover(true)}
@@ -98,19 +100,18 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
             : <StoryStage key={cur.story.id} s={cur} />}
 
           {/* Slide picker with progress */}
-          <div className="mt-3 grid gap-2" style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr)) auto` }} role="tablist" aria-label={fr ? "Choisir une nouvelle" : "Choose a story"}>
+          <div className="mt-3 grid gap-2" style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr)) auto` }} role="group" aria-label={fr ? "Choisir une nouvelle" : "Choose a story"}>
             {slides.map((sl, k) => (
               <button
                 key={slideKey(sl)}
-                role="tab"
-                aria-selected={k === idx}
+                aria-pressed={k === idx}
                 aria-label={slideTitle(sl, locale)}
                 onClick={() => setI(k)}
-                className={`press self-start text-left min-w-0 group/tab ${k === idx ? "text-white" : "text-white/55 hover:text-white/85"}`}
+                className={`press min-h-11 self-start text-left min-w-0 group/tab ${k === idx ? "text-white" : "text-white/55 hover:text-white/85"}`}
               >
                 <span className="block h-[3px] bg-white/15 overflow-hidden transition-[height] group-hover/tab:h-[5px]">
                   {k === idx ? (
-                    <span key={`p-${idx}-${paused}`} className="block h-full bg-signal hero-progress" style={{ ["--hero-ms" as string]: `${slideMs}ms` }} />
+                    <span key={`p-${idx}-${paused}`} className={`block h-full bg-signal ${paused ? "" : "hero-progress"}`} style={{ ["--hero-ms" as string]: `${slideMs}ms` }} />
                   ) : k < idx ? <span className="block h-full bg-white/40" /> : null}
                 </span>
                 <span className="hidden md:block mt-2 text-[0.8rem] font-semibold leading-snug line-clamp-2">
@@ -121,7 +122,7 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
             ))}
             <button
               onClick={() => setUserPaused(p => !p)}
-              className="press self-start -mt-1 p-1.5 text-white/70 hover:text-white"
+              className="press self-start min-h-11 min-w-11 grid place-items-center text-white/70 hover:text-white"
               aria-label={userPaused ? (fr ? "Reprendre le défilement" : "Resume rotation") : (fr ? "Mettre en pause" : "Pause rotation")}
             >
               {userPaused ? <Play className="h-4 w-4" aria-hidden="true" /> : <Pause className="h-4 w-4" aria-hidden="true" />}
@@ -144,13 +145,19 @@ function StoryStage({ s }: { s: StorySlide }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const d = display(s.story, locale);
+  const art = editorialArtFor(s.story.id);
+  const [animateArt, setAnimateArt] = useState(false);
   return (
-    <StoryLink s={s.story} className="group relative grid min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] lg:grid-cols-12 bg-night-2 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-brass">
+    <div>
+    <StoryLink s={s.story} className="group lead-spread focus-visible:outline focus-visible:outline-2 focus-visible:outline-brass">
       {/* Photo, or the house pattern when there is none */}
-      <div className="relative aspect-[16/10] lg:aspect-auto lg:[grid-column:7/13] lg:[grid-row:1] overflow-hidden">
-        {s.story.image ? (
-          <div className="absolute inset-0 hero-kenburns">
-            <StoryImage src={s.story.image} alt="" eager className="img-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+      <div className="lead-art relative overflow-hidden bg-night">
+        {art ? (
+          animateArt && art.video ? <video src={art.video} poster={art.image} muted autoPlay loop playsInline className="absolute inset-0 h-full w-full object-contain" aria-label={art.alt[locale]} />
+            : <img src={art.image} alt={art.alt[locale]} width={1200} height={900} fetchPriority="high" loading="eager" decoding="async" className="absolute inset-0 h-full w-full object-contain" />
+        ) : s.story.image ? (
+          <div className="absolute inset-0">
+            <StoryImage src={s.story.image} alt="" eager plain className="h-full w-full object-contain" />
           </div>
         ) : (
           <div className="absolute inset-0 bg-signal" aria-hidden="true">
@@ -158,11 +165,11 @@ function StoryStage({ s }: { s: StorySlide }) {
             <p className="absolute right-6 bottom-6 left-0 text-right masthead-serif text-signal-ink text-[3.4rem] sm:text-[4.8rem] lg:text-[5.6rem] leading-none whitespace-nowrap overflow-hidden">{storyKicker(s.story, locale)}</p>
           </div>
         )}
-        {s.story.image && <span className="absolute top-3 right-3 bg-night/80 text-white/85 text-[0.7rem] px-1.5 py-0.5">Photo: {s.story.source}</span>}
+        {(art || s.story.image) && <span className="absolute top-3 right-3 bg-night/90 text-white/85 text-[0.7rem] px-2 py-1">{art ? (fr ? "Illustration IA · AI Broadsheet" : "AI illustration · AI Broadsheet") : `Photo: ${s.story.source}`}</span>}
       </div>
 
-      <div className="relative lg:[grid-column:1/7] lg:[grid-row:1] flex">
-        <div className="hero-in w-full flex flex-col justify-end bg-night-2 p-5 sm:p-8 lg:px-8 lg:py-8 border-l-[6px] border-signal">
+      <div className="lead-copy min-w-0 flex">
+        <div className="w-full flex flex-col justify-center p-5 sm:p-7 border-l-[4px] border-signal">
           <p className="flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
             {s.breaking ? (
               <span className="bg-live text-white px-2 py-0.5">{fr ? "Dernière heure" : "Breaking"}</span>
@@ -173,19 +180,24 @@ function StoryStage({ s }: { s: StorySlide }) {
             <span className="text-signal">{storyKicker(s.story, locale)}</span>
             {s.outlets >= 2 && <span className="text-white/75">{fr ? `${s.outlets} médias en parlent` : `${s.outlets} outlets reporting`}</span>}
           </p>
-          <h2 className="hl text-white text-[1.6rem] sm:text-[2.05rem] lg:text-[1.95rem] xl:text-[2.2rem] leading-[1.08] mt-3 text-balance line-clamp-6">
-            <span className="headline-sweep">{d.title}</span>
+          <h2 className="hl lead-headline text-white mt-3">
+            <span>{d.title}</span>
           </h2>
           {d.summary && <p className="font-serif text-white/80 text-[1.05rem] sm:text-[1.1rem] leading-relaxed mt-3 max-w-[56ch] line-clamp-3">{d.summary}</p>}
           <p className="mt-4 text-[0.85rem] text-white/65 flex flex-wrap gap-x-3 gap-y-1">
             <span className="font-semibold text-white/85">{s.story.source}</span>
             <HeroTime iso={s.story.publishedAt} />
             {d.ai && <span>{fr ? "Titre du pupitre IA" : "AI desk headline"}</span>}
-            {s.sources.length > 1 && <span className="truncate">{fr ? "Aussi : " : "Also: "}{s.sources.filter(x => x !== s.story.source).slice(0, 4).join(", ")}</span>}
+            {s.sources.length > 1 && <span>{fr ? "Aussi : " : "Also: "}{s.sources.filter(x => x !== s.story.source).slice(0, 3).join(", ")}</span>}
           </p>
         </div>
       </div>
     </StoryLink>
+    {art?.video && <button onClick={() => setAnimateArt(v => !v)} className="press min-h-11 mt-2 flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-signal">
+      {animateArt ? <Pause className="w-4 h-4" aria-hidden="true" /> : <Play className="w-4 h-4" aria-hidden="true" />}
+      {animateArt ? (fr ? "Arrêter l'animation" : "Stop cover animation") : (fr ? "Animer la couverture · 6 s" : "Animate this cover · 6 sec")}
+    </button>}
+    </div>
   );
 }
 
@@ -297,10 +309,9 @@ function LiveColumn({ stories }: { stories: Story[] }) {
   }, [ids]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const lastHour = now ? stories.filter(s => now - new Date(s.publishedAt).getTime() < 3600_000).length : null;
-  const checkedAt = now ? new Date(now).toLocaleTimeString(fr ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" }) : "";
 
   return (
-    <aside className="min-w-0 border-t border-white/15 lg:border-t-0 lg:border-l lg:pl-6 pt-5 lg:pt-0" aria-label={fr ? "Fil en direct" : "Live feed"}>
+    <aside className="frontpage-live min-w-0" aria-label={fr ? "Fil en direct" : "Live feed"}>
       <div className="flex items-baseline justify-between gap-3 pb-3 border-b-[3px] border-signal">
         <p className="flex items-center gap-2 font-bold text-[1.15rem]"><span className="live-dot" aria-hidden="true" />{fr ? "En direct" : "Live"}</p>
         <p className="tabular-nums text-white/70 text-[0.9rem]" aria-live="off" suppressHydrationWarning>{clock ?? " "}</p>
@@ -309,10 +320,10 @@ function LiveColumn({ stories }: { stories: Story[] }) {
         <p key={lastHour} className="count-bump text-[0.8rem] text-white/60 mt-2">
           {lastHour > 0
             ? (fr ? `${lastHour} nouvelle${lastHour === 1 ? "" : "s"} dans la dernière heure` : `${lastHour} ${lastHour === 1 ? "story" : "stories"} in the last hour`)
-            : (fr ? `Sources vérifiées à ${checkedAt}` : `Sources checked at ${checkedAt}`)}
+            : (fr ? "Les dernières nouvelles de nos sources" : "Latest from our sources")}
         </p>
       )}
-      <ol className="mt-1" aria-live="polite">
+      <ol className="live-headlines mt-1" aria-live="polite">
         {list.map(s => (
           <li key={s.id} className={`border-b border-white/10 last:border-0 ${fresh.has(s.id) ? "live-in" : ""}`}>
             <StoryLink s={s} className="group block py-3 transition-transform duration-200 hover:translate-x-1">
