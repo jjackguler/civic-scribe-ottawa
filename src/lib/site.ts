@@ -55,7 +55,7 @@ export const SITE = {
   social: {
     instagram: "", // Enable only after the brand account is created and verified.
     tiktok: "",
-    facebook: "",
+    facebook: "https://www.facebook.com/aibroadsheet",
     linkedin: "", // TODO [LINKEDIN_URL]
     x: "", // TODO [X_URL]
     youtube: "",
