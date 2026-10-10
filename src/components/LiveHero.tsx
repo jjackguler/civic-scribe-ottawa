@@ -147,7 +147,7 @@ function StoryStage({ s }: { s: StorySlide }) {
   return (
     <StoryLink s={s.story} className="group relative grid min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] lg:grid-cols-12 bg-night-2 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-brass">
       {/* Photo, or the house pattern when there is none */}
-      <div className="relative aspect-[16/10] lg:aspect-auto lg:[grid-column:6/13] lg:[grid-row:1] overflow-hidden">
+      <div className="relative aspect-[16/10] lg:aspect-auto lg:[grid-column:7/13] lg:[grid-row:1] overflow-hidden">
         {s.story.image ? (
           <div className="absolute inset-0 hero-kenburns">
             <StoryImage src={s.story.image} alt="" eager className="img-cover transition-transform duration-700 group-hover:scale-[1.03]" />
@@ -161,7 +161,7 @@ function StoryStage({ s }: { s: StorySlide }) {
         {s.story.image && <span className="absolute top-3 right-3 bg-night/80 text-white/85 text-[0.7rem] px-1.5 py-0.5">Photo: {s.story.source}</span>}
       </div>
 
-      <div className="relative lg:[grid-column:1/6] lg:[grid-row:1] flex">
+      <div className="relative lg:[grid-column:1/7] lg:[grid-row:1] flex">
         <div className="hero-in w-full flex flex-col justify-end bg-night-2 p-5 sm:p-8 lg:px-8 lg:py-8 border-l-[6px] border-signal">
           <p className="flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
             {s.breaking ? (
@@ -173,7 +173,7 @@ function StoryStage({ s }: { s: StorySlide }) {
             <span className="text-signal">{storyKicker(s.story, locale)}</span>
             {s.outlets >= 2 && <span className="text-white/75">{fr ? `${s.outlets} médias en parlent` : `${s.outlets} outlets reporting`}</span>}
           </p>
-          <h2 className="hl text-white text-[1.7rem] sm:text-[2.2rem] lg:text-[2.15rem] xl:text-[2.4rem] leading-[1.06] mt-3 text-balance line-clamp-5">
+          <h2 className="hl text-white text-[1.6rem] sm:text-[2.05rem] lg:text-[1.95rem] xl:text-[2.2rem] leading-[1.08] mt-3 text-balance line-clamp-6">
             <span className="headline-sweep">{d.title}</span>
           </h2>
           {d.summary && <p className="font-serif text-white/80 text-[1.05rem] sm:text-[1.1rem] leading-relaxed mt-3 max-w-[56ch] line-clamp-3">{d.summary}</p>}
