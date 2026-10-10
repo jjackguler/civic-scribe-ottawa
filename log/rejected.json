@@ -1,5 +1,32 @@
 [
   {
+    "id": "153ttzw",
+    "at": "2026-10-10T10:45:28.965Z",
+    "stage": "reporter",
+    "headline": "How Postman runs Agent Mode for 40 million developers on Amazon Bedrock",
+    "reasons": [
+      "skip: The single source provides only a short headline and a truncated excerpt, which does not contain enough factual information to meet the minimum length of 120 words without padding or speculation."
+    ]
+  },
+  {
+    "id": "12sy66",
+    "at": "2026-10-10T10:44:49.351Z",
+    "stage": "reporter",
+    "headline": "ICYMI: What landed for AI builders in September 2026",
+    "reasons": [
+      "skip: The single source provides only a brief, truncated recap excerpt with insufficient factual detail to sustain a 120-word article without prohibited padding or extrapolation."
+    ]
+  },
+  {
+    "id": "alft3y",
+    "at": "2026-10-10T10:44:15.954Z",
+    "stage": "reporter",
+    "headline": "Anthropic’s AI gave Philadelphia police a fake tip about an unsolved homicide",
+    "reasons": [
+      "no plain version"
+    ]
+  },
+  {
     "id": "5jid90",
     "at": "2026-10-10T05:46:23.283Z",
     "stage": "copy",
