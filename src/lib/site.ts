@@ -54,10 +54,10 @@ export const SITE = {
   /** Social profiles. An icon appears only when its URL is set. */
   social: {
     instagram: "https://www.instagram.com/aibroadsheet/",
-    tiktok: "",
+    tiktok: "https://www.tiktok.com/@aibroadsheet",
     facebook: "https://www.facebook.com/profile.php?id=61594952624655",
     linkedin: "https://www.linkedin.com/company/aibroadsheet/",
     x: "https://x.com/aibroadsheet",
-    youtube: "",
+    youtube: "https://www.youtube.com/@AIBroadsheet",
   },
 } as const;
