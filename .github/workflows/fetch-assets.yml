@@ -26,7 +26,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p ../assets-out
-          ONLY=people FOLDER=reels PER=4 BUDGET_SEC=1500 PEOPLE="lineman climbing utility pole 1940s;Rural Electrification Administration farm electricity;electric meter reader;family living room radio lamp 1940s;children talking on telephone 1950s;girl talking on telephone 1940s;teenagers 1950s soda fountain;boy listening to radio 1940s;children classroom 1940s Office of War Information;mother reading to child 1940s;Elektro robot Westinghouse 1939;Unimate robot;industrial robot arm;packing department workers 1940s;welder 1940s Office of War Information;taxi driver 1940s;dishwasher restaurant kitchen 1940s;nurse 1940s Office of War Information" python3 scripts/assets/fetch_assets.py ../assets-out || true
+          ONLY=people FOLDER=reels PER=4 BUDGET_SEC=1500 PEOPLE="lineman climbing utility pole 1940s;Rural Electrification Administration farm electricity;electric meter reader;family living room radio lamp 1940s;children talking on telephone 1950s;girl talking on telephone 1940s;teenagers 1950s soda fountain;boy listening to radio 1940s;children classroom 1940s Office of War Information;mother reading to child 1940s;Elektro robot Westinghouse 1939;Unimate robot;industrial robot arm;packing department workers 1940s;welder 1940s Office of War Information;taxi driver 1940s;dishwasher restaurant kitchen 1940s;nurse 1940s Office of War Information" python3 scripts/assets/fetch_assets.py ../assets-out > ../assets-out/run-reels.txt 2>&1 || true
           mv ../assets-out/credits-people.json ../assets-out/credits-reels.json || true
           mv ../assets-out/log-people.txt ../assets-out/log-reels.txt || true
           du -sh ../assets-out/* || true

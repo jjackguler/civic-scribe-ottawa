@@ -83,7 +83,12 @@ def commons(query, folder, limit=8, min_w=900, lic_ok=PD_OK, people=False):
     raw = get(api)
     if not raw:
         return 0
-    pages = sorted(json.loads(raw).get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
+    try:
+        data = json.loads(raw)
+    except Exception as e:  # noqa: BLE001
+        log(f"  commons '{query}': not JSON ({repr(e)[:80]}): {raw[:200]!r}")
+        return 0
+    pages = sorted(data.get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
     got = 0
     for p in pages:
         if got >= limit:
