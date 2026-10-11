@@ -1,0 +1,58 @@
+{
+  "updatedAt": "2026-10-11T23:51:15.190Z",
+  "items": [
+    {
+      "id": "wsr938",
+      "slug": {
+        "en": "satya-nadella-microsoft-emergency-brake-ai",
+        "fr": "satya-nadella-microsoft-frein-urgence-ia"
+      },
+      "createdAt": "2026-10-11T23:51:15.187Z",
+      "updatedAt": "2026-10-11T23:51:15.187Z",
+      "topic": "research",
+      "format": "standard",
+      "outlets": [
+        "TechCrunch",
+        "The Verge",
+        "The Decoder"
+      ],
+      "times": [
+        "2026-10-10T21:47:51.000Z",
+        "2026-10-10T22:10:17.000Z",
+        "2026-10-11T09:08:35.000Z"
+      ],
+      "storyIds": [
+        "187pt48",
+        "14bdl57",
+        "wsr938"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "bars",
+        "en": {
+          "kicker": "AI safety",
+          "big": "brake",
+          "small": "Nadella urges emergency stop for models"
+        },
+        "fr": {
+          "kicker": "Sécurité de l'IA",
+          "big": "frein",
+          "small": "Un arrêt d'urgence requis pour les modèles"
+        }
+      },
+      "words": 188,
+      "en": {
+        "headline": "Microsoft's Satya Nadella calls for emergency brake on AI systems",
+        "dek": "Microsoft CEO Satya Nadella says advanced artificial intelligence models should be treated as compromised insider threats requiring an emergency brake.",
+        "news": "Microsoft CEO Satya Nadella stated that artificial intelligence models require an emergency brake and should be presumed compromised.",
+        "matters": "The statements urge organizations and users to stop assuming advanced automated systems are secure by default."
+      },
+      "fr": {
+        "headline": "Satya Nadella de Microsoft réclame un frein d'urgence pour l'IA",
+        "dek": "Satya Nadella affirme que les modèles d'intelligence artificielle doivent être considérés comme compromis et nécessitent un frein d'urgence.",
+        "news": "Satya Nadella, chef de la direction de Microsoft, a affirmé que les modèles d'intelligence artificielle exigent un frein d'urgence et doivent être présumés compromis.",
+        "matters": "Ces déclarations incitent les organisations et les usagers à cesser de présumer que les systèmes automatisés avancés sont sûrs par défaut."
+      }
+    }
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "version": 1,
+  "id": "wsr938",
+  "slug": {
+    "en": "satya-nadella-microsoft-emergency-brake-ai",
+    "fr": "satya-nadella-microsoft-frein-urgence-ia"
+  },
+  "createdAt": "2026-10-11T23:51:15.187Z",
+  "updatedAt": "2026-10-11T23:51:15.187Z",
+  "topic": "research",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "TechCrunch",
+      "title": "Microsoft’s Satya Nadella says AI models need an ‘emergency brake’",
+      "url": "https://techcrunch.com/2026/10/10/microsofts-satya-nadella-says-ai-models-need-an-emergency-brake/",
+      "publishedAt": "2026-10-10T21:47:51.000Z",
+      "storyId": "187pt48",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "The Verge",
+      "title": "Satya Nadella says we should assume all AI models are ‘compromised’",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1009337/satya-nadella-says-we-should-assume-all-ai-models-are-compromised",
+      "publishedAt": "2026-10-10T22:10:17.000Z",
+      "storyId": "14bdl57",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "The Decoder",
+      "title": "Microsoft's Nadella bows to Trump's language diktat on \"Super Intelligence\" and uses it to attack OpenAI and Anthropic",
+      "url": "https://the-decoder.com/microsofts-nadella-bows-to-trumps-language-diktat-on-super-intelligence-and-uses-it-to-attack-openai-and-anthropic/",
+      "publishedAt": "2026-10-11T09:08:35.000Z",
+      "storyId": "wsr938",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "night",
+    "motif": "bars",
+    "en": {
+      "kicker": "AI safety",
+      "big": "brake",
+      "small": "Nadella urges emergency stop for models"
+    },
+    "fr": {
+      "kicker": "Sécurité de l'IA",
+      "big": "frein",
+      "small": "Un arrêt d'urgence requis pour les modèles"
+    }
+  },
+  "en": {
+    "headline": "Microsoft's Satya Nadella calls for emergency brake on AI systems",
+    "news": "Microsoft CEO Satya Nadella stated that artificial intelligence models require an emergency brake and should be presumed compromised.",
+    "thirty": [
+      "Satya Nadella stated that advanced artificial intelligence models need an emergency brake.",
+      "The Microsoft executive warned that all systems should be considered compromised.",
+      "Nadella adopted the phrase super intelligence while criticising OpenAI and Anthropic."
+    ],
+    "confirmed": [
+      {
+        "text": "Satya Nadella published statements warning about the hazards and security assumptions of advanced artificial intelligence models.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Satya Nadella says artificial intelligence models need an \"emergency brake\" and the industry must assess its trust architecture.",
+        "by": "Satya Nadella",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Satya Nadella says we should assume all artificial intelligence models are \"compromised\".",
+        "by": "Satya Nadella",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Satya Nadella says artificial intelligence should be called \"super intelligence\" and frames models as insider threats.",
+        "by": "Satya Nadella",
+        "src": [
+          "s3"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether Microsoft will implement technical mechanisms or controls to serve as an emergency brake.",
+      "How Microsoft intends to apply Nadella's proposed trust architecture across its own commercial products."
+    ],
+    "matters": "The statements urge organizations and users to stop assuming advanced automated systems are secure by default.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Satya Nadella, the head of Microsoft, posted a warning stating that people should treat artificial intelligence programs as compromised [s1,s2]. This view means systems might fail or be exploited by attackers from within [s2,s3]. Nadella said the industry must inspect its trust architecture—the security measures that make software reliable—and add an emergency brake to stop dangerous tools [s1,s2].",
+        "The executive also used the phrase super intelligence and criticized rivals OpenAI and Anthropic [s3]. He described future models as insider threats, which are trusted components that could cause harm [s3]."
+      ],
+      "standard": [
+        "Microsoft chief executive officer Satya Nadella stated that artificial intelligence models need an \"emergency brake\" and warned that observers should assume all models are \"compromised\" [s1,s2]. In a post published on Saturday morning, Nadella wrote that it is time \"to step back and assess the trust architecture\" of the technology while addressing the perils of highly advanced systems [s1,s2].",
+        "Nadella also adopted the phrase \"super intelligence\" instead of artificial intelligence, matching language preferred by Trump, and used the argument to challenge OpenAI and Anthropic [s3]. In the post on X, the Microsoft executive framed models as insider threats and argued against treating automated software merely as a \"set of nested\" elements [s2,s3].",
+        "The sources report that Nadella outlined the dangers posed by powerful models and urged the sector to confront those vulnerabilities directly [s1,s2]. Whether Microsoft will implement specific software modifications, audits, or regulatory safeguards to enact an emergency brake remains unstated [s1,s2].",
+        "The statements indicate that organizations should treat advanced automated systems as vulnerable rather than safe by default [s2]. For people and enterprises that use machine learning tools, Nadella's position implies that external security safeguards are necessary to protect against internal system compromises [s1,s2,s3]."
+      ],
+      "expert": [
+        "Nadella's post on X focused on the structural vulnerabilities of advanced systems, calling for an evaluation of AI's \"trust architecture\" and advocating for an operational \"emergency brake\" [s1,s2]. The executive rejected treating software as a \"set of nested\" elements, arguing that operators must assume all models are already \"compromised\" [s2].",
+        "The Decoder noted that Nadella adopted the term \"super intelligence\" instead of artificial intelligence, aligning with Trump's language preferences and attacking OpenAI and Anthropic while framing models as insider threats [s3]. While TechCrunch and The Verge concentrated on safety frameworks and threat models, The Decoder emphasized political terminology and rivalry with competing labs [s1,s2,s3]."
+      ]
+    },
+    "seoTitle": "Microsoft's Satya Nadella calls for emergency brake on AI",
+    "dek": "Microsoft CEO Satya Nadella says advanced artificial intelligence models should be treated as compromised insider threats requiring an emergency brake.",
+    "metaDescription": "Microsoft CEO Satya Nadella warns that artificial intelligence models should be presumed compromised and require an emergency brake.",
+    "keywords": [
+      "satya nadella",
+      "microsoft",
+      "super intelligence",
+      "artificial intelligence safety",
+      "emergency brake"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Microsoft chief executive officer Satya Nadella stated that artificial intelligence models need an \"emergency brake\" and warned that observers should assume all models are \"compromised\" [s1,s2]. In a post published on Saturday morning, Nadella wrote that it is time \"to step back and assess the trust architecture\" of the technology while addressing the perils of highly advanced systems [s1,s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Nadella also adopted the phrase \"super intelligence\" instead of artificial intelligence, matching language preferred by Trump, and used the argument to challenge OpenAI and Anthropic [s3]. In the post on X, the Microsoft executive framed models as insider threats and argued against treating automated software merely as a \"set of nested\" elements [s2,s3].",
+          "The sources report that Nadella outlined the dangers posed by powerful models and urged the sector to confront those vulnerabilities directly [s1,s2]. Whether Microsoft will implement specific software modifications, audits, or regulatory safeguards to enact an emergency brake remains unstated [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The statements indicate that organizations should treat advanced automated systems as vulnerable rather than safe by default [s2]. For people and enterprises that use machine learning tools, Nadella's position implies that external security safeguards are necessary to protect against internal system compromises [s1,s2,s3]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What did Satya Nadella propose for AI systems?",
+        "a": "Nadella stated that artificial intelligence models require an emergency brake and warned that observers should assume all models are compromised."
+      },
+      {
+        "q": "Which companies did Nadella challenge in his statement?",
+        "a": "Nadella used his argument about super intelligence and insider threats to challenge OpenAI and Anthropic."
+      },
+      {
+        "q": "Has Microsoft announced specific safeguards to enact this emergency brake?",
+        "a": "Whether Microsoft will implement specific software modifications, audits, or regulatory safeguards remains unstated."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      },
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Satya Nadella de Microsoft réclame un frein d'urgence pour l'IA",
+    "news": "Satya Nadella, chef de la direction de Microsoft, a affirmé que les modèles d'intelligence artificielle exigent un frein d'urgence et doivent être présumés compromis.",
+    "thirty": [
+      "Satya Nadella a affirmé que les modèles avancés d'intelligence artificielle ont besoin d'un frein d'urgence.",
+      "Le dirigeant de Microsoft a prévenu qu'il faut considérer tous les systèmes comme compromis.",
+      "Nadella a adopté l'expression super intelligence tout en critiquant OpenAI et Anthropic."
+    ],
+    "confirmed": [
+      {
+        "text": "Satya Nadella a publié des déclarations mettant en garde contre les périls et les postulats de sécurité des modèles avancés d'intelligence artificielle.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Satya Nadella affirme que les modèles d'intelligence artificielle ont besoin d'un « emergency brake » et que le secteur doit évaluer son architecture de confiance.",
+        "by": "Satya Nadella",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Satya Nadella affirme que nous devrions présumer que tous les modèles d'intelligence artificielle sont « compromised ».",
+        "by": "Satya Nadella",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Satya Nadella affirme que l'intelligence artificielle devrait être appelée « super intelligence » et présente les modèles comme des menaces internes.",
+        "by": "Satya Nadella",
+        "src": [
+          "s3"
+        ]
+      }
+    ],
+    "unknown": [
+      "La question de savoir si Microsoft déploiera des mécanismes techniques ou des contrôles pour agir comme frein d'urgence.",
+      "La façon dont Microsoft compte appliquer l'architecture de confiance proposée par Nadella à l'ensemble de ses propres produits commerciaux."
+    ],
+    "matters": "Ces déclarations incitent les organisations et les usagers à cesser de présumer que les systèmes automatisés avancés sont sûrs par défaut.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Satya Nadella, le dirigeant de Microsoft, a publié un avertissement affirmant qu'il faut considérer les programmes d'intelligence artificielle comme compromis [s1,s2]. Ce constat signifie que les systèmes pourraient faillir ou être exploités de l'intérieur par des attaquants [s2,s3]. Nadella a affirmé que le secteur doit examiner son architecture de confiance — les dispositifs de sécurité qui rendent un logiciel fiable — et ajouter un frein d'urgence pour arrêter les outils dangereux [s1,s2].",
+        "Le dirigeant a aussi employé l'expression super intelligence et a critiqué les entreprises rivales OpenAI et Anthropic [s3]. Il a décrit les futurs modèles comme des menaces internes, soit des composants de confiance pouvant causer des torts [s3]."
+      ],
+      "standard": [
+        "Satya Nadella, chef de la direction de Microsoft, a affirmé que les modèles d'intelligence artificielle ont besoin d'un « emergency brake » et a prévenu qu'il faut considérer tous les modèles comme « compromised » [s1,s2]. Dans une publication diffusée un samedi matin, Nadella a écrit qu'il est temps « to step back and assess the trust architecture » de la technologie tout en abordant les périls posés par les systèmes hautement avancés [s1,s2].",
+        "Nadella a également adopté l'expression « super intelligence » au lieu d'intelligence artificielle, reprenant le vocabulaire privilégié par Trump, et a utilisé cet argument pour s'en prendre à OpenAI et Anthropic [s3]. Dans ce message sur X, le dirigeant de Microsoft a décrit les modèles comme des menaces internes et s'est opposé à l'idée de traiter un logiciel simplement comme un « set of nested » éléments [s2,s3].",
+        "Les sources rapportent que Nadella a exposé les dangers des modèles puissants et a invité le secteur à affronter directement ces vulnérabilités [s1,s2]. La question de savoir si Microsoft appliquera des modifications logicielles précises, des vérifications ou des garde-fous réglementaires pour instaurer un frein d'urgence demeure sans réponse [s1,s2].",
+        "Ces déclarations indiquent que les organisations devraient traiter les systèmes automatisés avancés comme vulnérables plutôt que sûrs par défaut [s2]. Pour les personnes et les entreprises qui exploitent des outils d'apprentissage automatique, la position de Nadella implique que des protections externes demeurent nécessaires face aux compromissions internes [s1,s2,s3]."
+      ],
+      "expert": [
+        "La publication de Nadella sur X s'est concentrée sur les vulnérabilités structurelles des systèmes avancés, appelant à évaluer la « trust architecture » de l'IA et préconisant un « emergency brake » opérationnel [s1,s2]. Le dirigeant a refusé d'aborder les logiciels comme un « set of nested » éléments, faisant valoir que les exploitants doivent tenir tous les modèles pour déjà « compromised » [s2].",
+        "The Decoder a noté que Nadella a adopté le terme « super intelligence » au lieu d'intelligence artificielle, s'alignant sur le langage privilégié par Trump et attaquant OpenAI et Anthropic tout en présentant les modèles comme des menaces internes [s3]. Alors que TechCrunch et The Verge se sont concentrés sur les cadres de sécurité et les modèles de menace, The Decoder a mis l'accent sur la terminologie politique et la rivalité avec les laboratoires concurrents [s1,s2,s3]."
+      ]
+    },
+    "seoTitle": "Satya Nadella réclame un frein d'urgence pour l'IA",
+    "dek": "Satya Nadella affirme que les modèles d'intelligence artificielle doivent être considérés comme compromis et nécessitent un frein d'urgence.",
+    "metaDescription": "Satya Nadella, chef de la direction de Microsoft, soutient que les modèles d'IA doivent être traités comme compromis et munis d'un frein d'urgence.",
+    "keywords": [
+      "satya nadella",
+      "microsoft",
+      "super intelligence",
+      "sécurité ia",
+      "frein d'urgence"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Satya Nadella, chef de la direction de Microsoft, a affirmé que les modèles d'intelligence artificielle ont besoin d'un « emergency brake » et a prévenu qu'il faut considérer tous les modèles comme « compromised » [s1,s2]. Dans une publication diffusée un samedi matin, Nadella a écrit qu'il est temps « to step back and assess the trust architecture » de la technologie tout en abordant les périls posés par les systèmes hautement avancés [s1,s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Nadella a également adopté l'expression « super intelligence » au lieu d'intelligence artificielle, reprenant le vocabulaire privilégié par Trump, et a utilisé cet argument pour s'en prendre à OpenAI et Anthropic [s3]. Dans ce message sur X, le dirigeant de Microsoft a décrit les modèles comme des menaces internes et s'est opposé à l'idée de traiter un logiciel simplement comme un « set of nested » éléments [s2,s3].",
+          "Les sources rapportent que Nadella a exposé les dangers des modèles puissants et a invité le secteur à affronter directement ces vulnérabilités [s1,s2]. La question de savoir si Microsoft appliquera des modifications logicielles précises, des vérifications ou des garde-fous réglementaires pour instaurer un frein d'urgence demeure sans réponse [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Ces déclarations indiquent que les organisations devraient traiter les systèmes automatisés avancés comme vulnérables plutôt que sûrs par défaut [s2]. Pour les personnes et les entreprises qui exploitent des outils d'apprentissage automatique, la position de Nadella implique que des protections externes demeurent nécessaires face aux compromissions internes [s1,s2,s3]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Que réclame Satya Nadella pour les systèmes d'IA ?",
+        "a": "Nadella a affirmé que les modèles d'intelligence artificielle ont besoin d'un frein d'urgence et qu'il faut présumer que tous les modèles sont compromis."
+      },
+      {
+        "q": "Quelles entreprises Nadella a-t-il interpellées ?",
+        "a": "Nadella a utilisé son raisonnement sur la super intelligence et les menaces internes pour s'en prendre à OpenAI et Anthropic."
+      },
+      {
+        "q": "Microsoft a-t-elle annoncé des mesures concrètes ?",
+        "a": "La question de savoir si Microsoft appliquera des modifications logicielles précises, des vérifications ou des garde-fous réglementaires demeure sans réponse."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      },
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 188,
+    "fr": 221
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-11T23:50:15.153Z",
+      "verdict": "done",
+      "notes": [
+        "188 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "mechanical",
+      "at": "2026-10-11T23:50:15.163Z",
+      "verdict": "pass",
+      "notes": [
+        "fact guard: every name and number found in the sources",
+        "house style: clean"
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-11T23:50:22.012Z",
+      "verdict": "pass",
+      "notes": [
+        "Attribution of political framing and competitive motives specifically to The Decoder in the expert section appropriately handles contested characterizations from that outlet."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-11T23:50:47.849Z",
+      "verdict": "pass",
+      "notes": [
+        "221 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-11T23:51:00.138Z",
+      "verdict": "done",
+      "notes": [
+        "en: Microsoft's Satya Nadella calls for emergency brake on AI (57)",
+        "fr: Satya Nadella réclame un frein d'urgence pour l'IA (50)",
+        "en seoTitle dropped (not in the sources: Systems)",
+        "en seoTitle clipped to 60 characters"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-11T23:51:15.187Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: night/bars \"brake\""
+      ]
+    }
+  ]
+}
