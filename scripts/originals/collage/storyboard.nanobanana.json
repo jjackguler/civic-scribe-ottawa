@@ -127,7 +127,8 @@
       "count": 14,
       "figure": "photographer",
       "big": "14",
-      "small": "reference images, output up to 4K"
+      "small": "reference images, output up to 4K",
+      "strip": "Built on Gemini 3.6 Flash"
     },
     {
       "type": "bars",

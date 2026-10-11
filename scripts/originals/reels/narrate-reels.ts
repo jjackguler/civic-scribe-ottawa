@@ -11,7 +11,12 @@ import { pickVoice } from "../media-apis";
 const [out, ...only] = process.argv.slice(2);
 const key = process.env.ELEVENLABS_API_KEY;
 if (!key) { console.error("ELEVENLABS_API_KEY missing"); process.exit(1); }
-const voice = await pickVoice(key, process.env.ELEVENLABS_VOICE_ID || undefined);
+// Stock voices only. If listing voices is not allowed for this key, use the premade "Brian" voice by id.
+const voice = await pickVoice(key, process.env.ELEVENLABS_VOICE_ID || undefined).catch(async e => {
+  const r = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": key } });
+  console.warn(`voices list failed (${String(e).slice(0, 80)}): ${r.status} ${(await r.text()).slice(0, 300)}`);
+  return { id: "nPczCjzI2devNBz1zQrb", name: "Brian (premade)" };
+});
 console.log(`voice: ${voice.name}`);
 const dir = import.meta.dirname;
 for (const f of (await readdir(dir)).filter(f => f.endsWith(".json")).sort()) {

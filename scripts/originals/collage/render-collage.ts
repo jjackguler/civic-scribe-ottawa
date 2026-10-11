@@ -139,7 +139,7 @@ async function main() {
   const timing = JSON.parse(await readFile(join(work, "timing.json"), "utf8"));
   const html = join(work, "collage.html");
   await writeFile(html, (await readFile(join(HERE, "collage.html"), "utf8")).replaceAll("FSRC_DIR", FSRC_DIR).replaceAll("FONT_DIR", FONT_DIR));
-  await writeFile(join(work, "collage-v2.js"), (await readFile(join(HERE, "collage-v2.js"), "utf8")).replaceAll("ASSET_DIR", "file://" + ASSETS));
+  for (const js of ["collage-v2.js", "reel.js"]) await writeFile(join(work, js), (await readFile(join(HERE, js), "utf8")).replaceAll("ASSET_DIR", "file://" + ASSETS));
   if (ASSETS) {
     const figs: Record<string, [number, number]> = {};
     if (existsSync(join(ASSETS, "figs"))) for (const f of await readdir(join(ASSETS, "figs"))) if (f.endsWith(".png")) figs[f.slice(0, -4)] = await pngSize(join(ASSETS, "figs", f));

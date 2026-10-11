@@ -5,16 +5,38 @@
   "summary": "AI data centers need huge amounts of electricity. A Senate report, a bipartisan bill and the companies disagree about who pays for the grid upgrades.",
   "date": "October 10, 2026",
   "sources": [
-    { "name": "NPR", "url": "https://www.wunc.org/2026-10-04/how-much-are-ai-data-centers-adding-to-your-electricity-bill" },
-    { "name": "TIME", "url": "https://time.com/article/2026/10/08/senate-investigation-ai-data-centers/" },
-    { "name": "Daily Caller", "url": "https://dailycaller.com/2026/10/08/senate-permitting-bill-data-centers-pay-grid-upgrades-electric-bills-capito-heinrich-lee-whitehouse/" }
+    {
+      "name": "NPR",
+      "url": "https://www.wunc.org/2026-10-04/how-much-are-ai-data-centers-adding-to-your-electricity-bill"
+    },
+    {
+      "name": "TIME",
+      "url": "https://time.com/article/2026/10/08/senate-investigation-ai-data-centers/"
+    },
+    {
+      "name": "Daily Caller",
+      "url": "https://dailycaller.com/2026/10/08/senate-permitting-bill-data-centers-pay-grid-upgrades-electric-bills-capito-heinrich-lee-whitehouse/"
+    }
   ],
   "scenes": [
     {
       "type": "hook",
-      "photo": "lines",
-      "say": ["Your electricity bill might be helping pay for AI."],
-      "lines": [["YOUR", "BILL"], ["PAYS FOR"], ["AI?"]],
+      "photo": "reel/tower.jpg",
+      "say": [
+        "Your electricity bill might be helping pay for AI."
+      ],
+      "lines": [
+        [
+          "YOUR",
+          "BILL"
+        ],
+        [
+          "PAYS FOR"
+        ],
+        [
+          "AI?"
+        ]
+      ],
       "sticker": "wait, what?",
       "stickerCue": "AI"
     },
@@ -25,12 +47,19 @@
         "But a report from three Democratic senators says it may employ only about 100 permanent workers."
       ],
       "label": "One 100 MW data center",
-      "a": { "n": 100000, "label": "homes' worth of power", "cue": "100,000" },
-      "b": { "n": 100, "label": "permanent jobs", "cue": "only" }
+      "a": {
+        "n": 100000,
+        "label": "homes' worth of power",
+        "cue": "100,000"
+      },
+      "b": {
+        "n": 100,
+        "label": "permanent jobs",
+        "cue": "only"
+      }
     },
     {
       "type": "pullquote",
-      "fig": "lineman",
       "say": [
         "When the grid needs new lines and power plants, that cost is often shared by everyone with a meter.",
         "A Harvard energy-law expert put it simply: everyone pays."
@@ -38,7 +67,8 @@
       "quote": "Everyone pays those costs.",
       "mark": "Everyone pays",
       "credit": "Ari Peskoe, Harvard Electricity Law Initiative, to NPR",
-      "cue": "everyone pays"
+      "cue": "everyone pays",
+      "photo": "reel/pole.jpg"
     },
     {
       "type": "bill",
@@ -48,9 +78,20 @@
       ],
       "title": "ELECTRIC BILL",
       "rows": [
-        { "label": "Energy used", "value": "$—" },
-        { "label": "Delivery", "value": "$—" },
-        { "label": "New grid upgrades?", "value": "+$8–13/mo", "hl": true, "cue": "8 to 13" }
+        {
+          "label": "Energy used",
+          "value": "$—"
+        },
+        {
+          "label": "Delivery",
+          "value": "$—"
+        },
+        {
+          "label": "New grid upgrades?",
+          "value": "+$8–13/mo",
+          "hl": true,
+          "cue": "8 to 13"
+        }
       ],
       "stamp": "estimate",
       "stampCue": "estimates",
@@ -63,8 +104,16 @@
         "The report says none of the seven companies it looked at agreed to pay for grid upgrades that only exist because of them.",
         "The companies say they pay their direct costs, and bigger upgrades help everyone."
       ],
-      "left": { "who": "Senate report", "says": "None of 7 companies agreed to pay for upgrades built only for them", "cue": "none" },
-      "right": { "who": "The companies", "says": "We pay our direct costs. Bigger upgrades help everyone.", "cue": "companies say" }
+      "left": {
+        "who": "Senate report",
+        "says": "None of 7 companies agreed to pay for upgrades built only for them",
+        "cue": "none"
+      },
+      "right": {
+        "who": "The companies",
+        "says": "They pay their direct costs. Bigger upgrades help everyone.",
+        "cue": "companies say"
+      }
     },
     {
       "type": "doc",
@@ -73,16 +122,27 @@
       ],
       "head": "U.S. SENATE · BILL",
       "title": "Data centers pay their own way",
-      "lines": ["New data centers of 20 MW or more", "cover the extra grid costs they add", "Sponsors: 2 Republicans, 2 Democrats"],
+      "lines": [
+        "New data centers of 20 MW or more",
+        "cover the extra grid costs they add",
+        "Sponsors: 2 Republicans, 2 Democrats"
+      ],
       "stamp": "proposed",
       "stampCue": "cover",
       "note": "not law yet"
     },
     {
       "type": "ask",
-      "photo": "lines",
-      "say": ["So, should AI data centers pay for their own power lines? Tell us below."],
-      "lines": [["WHO", "PAYS?"]],
+      "photo": "reel/tower.jpg",
+      "say": [
+        "So, should AI data centers pay for their own power lines? Tell us below."
+      ],
+      "lines": [
+        [
+          "WHO",
+          "PAYS?"
+        ]
+      ],
       "comment": "Tell us below"
     }
   ]

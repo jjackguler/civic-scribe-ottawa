@@ -207,6 +207,7 @@
     st.style.opacity = Math.min(1, k * 2.5) * .92;
     st.style.transform = `translate(${x}px,${y}px) rotate(${rot}deg) scale(${lerp(2.3, 1, oCubic(k)).toFixed(3)})`;
   }
+  window.V2 = { ransom, showLetters, stampEl, placeStamp, figure, placeStep, newsPiece, scribble, svgEl, path, stain, clipEl, cueMaybe, STY };
   const ORIG = { stamp: BUILD.stamp, scraps: BUILD.scraps, outro: BUILD.outro };
 
   Object.assign(BUILD, {
@@ -471,7 +472,7 @@
     },
 
     frames(sc, si, root) {
-      const strip = h(`<div class="piece"><div class="yellow anton" style="font-size:70px;padding:16px 36px 20px;clip-path:${torn(8500 + si, 5)}">Built on Gemini 3.6 Flash</div></div>`);
+      const strip = h(`<div class="piece"><div class="yellow anton" style="font-size:70px;padding:16px 36px 20px;clip-path:${torn(8500 + si, 5)}">${esc(sc.data.strip || "")}</div></div>`);
       root.appendChild(strip);
       const ps = piece(strip, 8510 + si, { x: 70, y: 300, rot: -2 });
       const thumbs = (B.assets && B.assets.thumbs) || [];

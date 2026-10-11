@@ -21,7 +21,7 @@
   "scenes": [
     {
       "type": "hook",
-      "photo": "factory",
+      "photo": "reel/assembly.jpg",
       "say": [
         "Robots can already do 74 percent of physical tasks in America. So why haven't they taken those jobs?"
       ],
@@ -40,8 +40,8 @@
       "stickerCue": "why"
     },
     {
-      "type": "flood",
-      "fig": "typist",
+      "type": "cards",
+      "fig": "librarian",
       "say": [
         "That number comes from a new study by Anthropic, the company behind Claude.",
         "Its AI rated about 19,000 job tasks. Many robot tasks only work in factory-like settings."
@@ -84,8 +84,8 @@
         "win": true
       },
       "right": {
-        "fig": "packer",
-        "label": "Packing worker",
+        "fig": "lathe",
+        "label": "Human worker",
         "price": "$49,000",
         "cue": "49,000"
       },
@@ -125,7 +125,7 @@
     },
     {
       "type": "ask",
-      "photo": "factory",
+      "photo": "reel/assembly.jpg",
       "say": [
         "Most exposed: drivers. Least: nurses and repair workers. What's your job? Tell us below."
       ],
