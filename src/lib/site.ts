@@ -9,7 +9,7 @@ export const SITE = {
   name: "AI Broadsheet",
   /**
    * The live address, used for canonical URLs, hreflang, sitemaps, feeds and share links.
-   * Keep this aligned with the primary domain in Lovable and public/robots.txt.
+   * Keep this aligned with the primary deployment domain and public/robots.txt.
    */
   domain: "aibroadsheet.com",
   tagline: {
