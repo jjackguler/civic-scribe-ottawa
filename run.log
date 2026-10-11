@@ -1,0 +1,10 @@
+/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/media-apis.ts:19
+  if (!res.ok) { const body = await res.text(); throw limitError("ElevenLabs", res.status, body) ?? new Error(`ElevenLabs voices HTTP ${res.status}`); }
+                                                                                                    ^
+
+Error: ElevenLabs voices HTTP 400
+    at pickVoice (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/media-apis.ts:19:101)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async <anonymous> (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/reels/narrate-reels.ts:14:15)
+
+Node.js v22.23.3
