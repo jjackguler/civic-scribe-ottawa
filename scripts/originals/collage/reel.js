@@ -186,11 +186,11 @@
       const bub = h(`<div class="piece" style="z-index:9"><div style="position:relative;background:#FBFAF6;background-image:var(--grain);padding:26px 40px 34px;border-radius:44px;box-shadow:0 10px 18px rgba(0,0,0,.35)"><div class="mkr" style="font-size:62px;line-height:1;color:${INK};white-space:nowrap">${esc(sc.data.comment || "Tell us below")} ↓</div></div>
         <div style="position:absolute;left:70px;bottom:-34px;width:60px;height:46px;background:#FBFAF6;clip-path:polygon(0 0,100% 0,10% 100%)"></div></div>`);
       root.appendChild(bub);
-      const srcs = h(`<div class="piece" style="z-index:9"><div class="paper elite" style="padding:14px 24px 16px;font-size:28px;max-width:860px;clip-path:${torn(9410 + si, 4)}">Sources: ${B.sources.map(s => esc(s.name)).join(", ")}</div></div>`);
+      const srcs = h(`<div class="piece" style="z-index:9"><div class="paper elite" style="width:720px;padding:14px 24px 16px;font-size:26px;line-height:1.25;clip-path:${torn(9410 + si, 4)}">Sources: ${B.sources.map(s => esc(s.name)).join(", ")}</div></div>`);
       root.appendChild(srcs);
       const ba = after(at(si, "tell us", .2, sc.start + 1.2), sc.start + .6);
       ev(ba + .1, "slap"); ev(sc.start + .9, "type");
-      const pb = piece(bub, 9420 + si, { x: 120, y: 1000, rot: -3 }), ps = piece(srcs, 9430 + si, { x: 70, y: 210, rot: 1 + r() });
+      const pb = piece(bub, 9420 + si, { x: 120, y: 1000, rot: -3 }), ps = piece(srcs, 9430 + si, { x: 300, y: 200, rot: 1 + r() });
       return t => { upd(t); placePiece(pb, t, ba, { dx: 0, dy: 0, rot: 10, s: .3 }, .35); placePiece(ps, t, sc.start + .8, { dx: -900, dy: 0, rot: -6 }, .4); };
     },
 
@@ -266,7 +266,7 @@
       const sa = after(at(si, d.stampCue, .1, ats[hi] + .5), ats[hi] + .4);
       const note = h(`<div class="piece" style="z-index:9"><div class="sticky" style="background-color:${Y};padding:30px 34px 40px;width:400px;clip-path:${torn(9730 + si, 3, 8)}"><div class="mkr" style="font-size:56px;line-height:1.02">${esc(d.note)}</div></div></div>`);
       note.appendChild(tape(120, -22, -6, 160)); root.appendChild(note);
-      const na = after(at(si, d.noteCue, .2, sent(si, 1).start), sa + .5);
+      const na = Math.min(after(at(si, d.noteCue, .2, sent(si, 1).start), sa + .5), sa + 1.2, sc.end - 1.6);
       const pn = piece(note, 9740 + si, { x: 620, y: 1040, rot: 5 });
       ev(sc.start + .15, "tear"); ats.forEach(a => ev(a, "type")); ev(ats[hi] + .5, "pencil"); ev(sa + .18, "stamp"); ev(na + .2, "slap");
       return t => {
@@ -314,13 +314,13 @@
       const sig = stroke(svg, roughPath([[70, 0], [110, -60], [140, 10], [180, -50], [210, 0], [260, -30], [300, -10], [380, -40]].map(([x, y]) => [x, y + 470 + 52 * lns.length + (d.title.length > 18 ? 0 : 30)]), 9920 + si, 8), "#1d2a55", 6);
       const st = V().stampEl(d.stamp, 104, RED); root.appendChild(st);
       const l0 = sc.start + .55;
-      const sa = after(at(si, d.stampCue, .1, sc.start + 1.6), l0 + .3);
+      const sa = Math.min(after(at(si, d.stampCue, .1, sc.start + 1.6), l0 + .3), sc.end - 2.6);
       ev(sc.start + .2, "slap"); lns.forEach((_, k) => ev(l0 + k * .45, "type")); ev(sa - .5, "pencil"); ev(sa + .18, "stamp");
       let pn = null, na = 0;
       if (d.note) {
         const note = h(`<div class="piece" style="z-index:9"><div class="sticky" style="background-color:${Y};padding:28px 32px 36px;width:380px;clip-path:${torn(9930 + si, 3, 8)}"><div class="mkr" style="font-size:52px;line-height:1.02">${esc(d.note)}</div></div></div>`);
         note.appendChild(tape(110, -22, 5, 150)); root.appendChild(note);
-        na = after(at(si, d.noteCue, .2, sa + .9), sa + .5); ev(na + .2, "slap");
+        na = Math.min(after(at(si, d.noteCue, .2, sa + .9), sa + .5), sc.end - 1.5); ev(na + .2, "slap");
         pn = piece(note, 9940 + si, { x: 620, y: 960, rot: -5 });
       }
       return t => {
@@ -353,11 +353,12 @@
         if (mark === "check") return stroke(svg, roughPath([[40, y + 20], [85, y + 75], [165, y - 40]], 10030 + k, 6), RED, 18);
         return stroke(svg, roughPath([[x0 + 10, y + 26], [x0 + 340, y + 34], [x0 + 760, y + 18]], 10040 + k, 6), RED, 12);
       });
-      ev(sc.start + .15, "slap"); ats.forEach(a => { ev(a + .25, "slap"); ev(a + .6, mark === "check" ? "pencil" : "scribble"); });
+      ev(sc.start + .15, "slap"); ats.forEach((a, k) => { ev(Math.min(a, sc.start + .5 + k * .3) + .25, "slap"); ev(a + .6, mark === "check" ? "pencil" : "scribble"); });
       return t => {
         placePiece(piece(ti, 10050 + si, { x: 60, y: 280, rot: -2 }), t, sc.start, { dx: -900, dy: 0, rot: -8 }, .35);
-        pcs.forEach((pc, k) => placePiece(pc, t, ats[k], { dx: k % 2 ? 900 : -900, dy: 60, rot: k % 2 ? 16 : -16 }, .38));
-        marks.forEach((m, k) => m.draw(ioCubic(p(t, ats[k] + .55, .3))));
+        // the list is on screen early; each line is struck (or ticked) when it is spoken
+        pcs.forEach((pc, k) => placePiece(pc, t, Math.min(ats[k], sc.start + .5 + k * .3), { dx: k % 2 ? 900 : -900, dy: 60, rot: k % 2 ? 16 : -16 }, .38));
+        marks.forEach((m, k) => m.draw(ioCubic(p(t, ats[k] + .25, .3))));
       };
     },
 
