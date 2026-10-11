@@ -176,17 +176,6 @@
   "query": "Unimate robot"
  },
  {
-  "file": "reels/unimate-robot--unimate-puma-200-robot-arm-6202074072-jpg.jpg",
-  "title": "File:UNIMATE PUMA 200 Robot Arm (6202074072).jpg",
-  "source": "https://commons.wikimedia.org/wiki/File:UNIMATE_PUMA_200_Robot_Arm_(6202074072).jpg",
-  "author": "Razor Robotics",
-  "credit": "UNIMATE PUMA 200 Robot Arm",
-  "license": "CC BY 2.0",
-  "description": "UNIMATE PUMA 200 Robot Arm",
-  "date": "2010-08-04 15:37",
-  "query": "Unimate robot"
- },
- {
   "file": "reels/unimate-robot--unimate-puma-200-robot-arm-6202074596-jpg.jpg",
   "title": "File:UNIMATE PUMA 200 Robot Arm (6202074596).jpg",
   "source": "https://commons.wikimedia.org/wiki/File:UNIMATE_PUMA_200_Robot_Arm_(6202074596).jpg",
@@ -195,6 +184,17 @@
   "license": "CC BY 2.0",
   "description": "UNIMATE PUMA 200 Robot Arm with access cover removed",
   "date": "2010-08-04 15:38",
+  "query": "Unimate robot"
+ },
+ {
+  "file": "reels/unimate-robot--unimate-puma-200-robot-arm-6202074072-jpg.jpg",
+  "title": "File:UNIMATE PUMA 200 Robot Arm (6202074072).jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:UNIMATE_PUMA_200_Robot_Arm_(6202074072).jpg",
+  "author": "Razor Robotics",
+  "credit": "UNIMATE PUMA 200 Robot Arm",
+  "license": "CC BY 2.0",
+  "description": "UNIMATE PUMA 200 Robot Arm",
+  "date": "2010-08-04 15:37",
   "query": "Unimate robot"
  },
  {
@@ -320,12 +320,12 @@
  },
  {
   "file": "reels/taxi-driver-1940s--student-als-taxichauffeur-leest-de-krant-bestandde.jpg",
-  "title": "File:Student als taxichauffeur leest de krant, Bestanddeelnr 254-2094.jpg",
-  "source": "https://commons.wikimedia.org/wiki/File:Student_als_taxichauffeur_leest_de_krant,_Bestanddeelnr_254-2094.jpg",
+  "title": "File:Student als taxichauffeur leest de krant, Bestanddeelnr 254-2092.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:Student_als_taxichauffeur_leest_de_krant,_Bestanddeelnr_254-2092.jpg",
   "author": "Willem van de Poll",
-  "credit": "http://proxy.handle.net/10648/aec924f6-d0b4-102d-bcf8-003048976d84",
+  "credit": "http://proxy.handle.net/10648/aec9237a-d0b4-102d-bcf8-003048976d84",
   "license": "CC0",
-  "description": "Collectie / Archief\u00a0: Fotocollectie Van de Poll\nReportage / Serie\u00a0: Studenten aan de Universiteit van Parijs (Sorbonne)\nBeschrijving\u00a0: Student als taxichauffeur leest de krant\nDatum\u00a0: 1948\nLocatie\u00a0: Frankrijk, Parijs\nTrefwoorden\u00a0: baretten, kranten, studenten, taxichauffeurs, taximeters\nFotograaf\u00a0: ",
+  "description": "Collectie / Archief\u00a0: Fotocollectie Van de Poll\nReportage / Serie\u00a0: Studenten aan de Universiteit van Parijs (Sorbonne)\nBeschrijving\u00a0: Student als taxichauffeur leest de krant\nDatum\u00a0: 1948\nLocatie\u00a0: Frankrijk, Parijs\nTrefwoorden\u00a0: auto's, studenten, taxichauffeurs\nFotograaf\u00a0: Poll, Willem van de\nAut",
   "date": "1948",
   "query": "taxi driver 1940s"
  },
