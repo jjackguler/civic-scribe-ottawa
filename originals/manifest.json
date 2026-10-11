@@ -1,6 +1,90 @@
 {
- "updatedAt": "2026-10-11T02:00:00.000Z",
+ "updatedAt": "2026-10-11T22:45:00.000Z",
  "items": [
+  {
+   "id": "202610101820-robots-can-do-74-percent-of-physical-tasks",
+   "kind": "explainer",
+   "publishedAt": "2026-10-10T22:20:00.000Z",
+   "title": "Robots can do 74% of physical tasks. So why aren't they taking the jobs?",
+   "summary": "A new study finds robots can already do most physical tasks, but are cheaper than people for only 0.3% of work.",
+   "durationSec": 47,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101820-robots-can-do-74-percent-of-physical-tasks.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101820-robots-can-do-74-percent-of-physical-tasks.jpg",
+   "sources": [
+    {
+     "name": "Anthropic research",
+     "url": "https://www.anthropic.com/research/what-work-can-robots-do"
+    },
+    {
+     "name": "Digital Today",
+     "url": "https://www.digitaltoday.co.kr/en/view/109951/robots-can-replace-74-percent-of-manual-labor-but-not-yet-cheaper-than-humans"
+    },
+    {
+     "name": "Neoteo",
+     "url": "https://www.neoteo.com/en/anthropic-estimates-robots-can-perform-74-of-us-physical-tasks-in-some-settings"
+    }
+   ],
+   "transcript": "Robots can already do 74 percent of physical tasks in America. So why haven't they taken those jobs? That's from a new study by Anthropic, the company behind Claude. Its AI rated 19,000 job tasks, and many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3 percent of work. One win: packing boxes. About 45,000 dollars a year for a robot, 49,000 for a worker. But welding robots cost about five times more than welders. Dishwashing robots, several times more. Robot costs fall about 3 percent a year. At that pace, it takes about 40 years before they're cheaper for even 10 percent of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “DL - 120 BPM TV waiting loop” (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610101810-new-rules-for-chatbots-that-talk-to-kids",
+   "kind": "explainer",
+   "publishedAt": "2026-10-10T22:10:00.000Z",
+   "title": "New rules for chatbots that talk to kids",
+   "summary": "California's Adam's Law (SB 1119) sets default limits and behaviour rules for AI chatbots used by children. Most rules start July 1, 2027.",
+   "durationSec": 39,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101810-new-rules-for-chatbots-that-talk-to-kids.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101810-new-rules-for-chatbots-that-talk-to-kids.jpg",
+   "sources": [
+    {
+     "name": "ZwillGen",
+     "url": "https://www.zwillgen.com/artificial-intelligence/adams-law-california-raises-the-bar-for-child-chatbot-protections/"
+    },
+    {
+     "name": "Common Sense Media",
+     "url": "https://www.commonsensemedia.org/press-releases/governor-newsom-signs-adams-law-setting-first-real-safety-standard-for-kids-and-chatbots"
+    },
+    {
+     "name": "Courthouse News",
+     "url": "https://www.courthousenews.com/articles/california-governor-signs-over-a-dozen-bills-regulating-social-media-ai"
+    }
+   ],
+   "transcript": "A chatbot that tells a kid it loves them? California just said no. It's called Adam's Law. It was signed in September, and most rules start in July 2027. Chatbots must try not to pretend they're human, act romantic, flatter too much, make kids depend on them, or tell them to hide it from parents. By default: one hour per session, two hours a day, no memory, no push alerts. Parents can change that. And if a child is in crisis, the bot must point them to real help, like 988. Break the rules on purpose? Up to 15,000 dollars per child. Should your apps have these rules too? Tell us below.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Lofi HipHop Melody Loop 99 BPM.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610101800-is-ai-on-your-power-bill",
+   "kind": "explainer",
+   "publishedAt": "2026-10-10T22:00:00.000Z",
+   "title": "Is AI on your power bill?",
+   "summary": "AI data centers need huge amounts of electricity. A Senate report, a bipartisan bill and the companies disagree about who pays for the grid upgrades.",
+   "durationSec": 44,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101800-is-ai-on-your-power-bill.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101800-is-ai-on-your-power-bill.jpg",
+   "sources": [
+    {
+     "name": "NPR",
+     "url": "https://www.wunc.org/2026-10-04/how-much-are-ai-data-centers-adding-to-your-electricity-bill"
+    },
+    {
+     "name": "TIME",
+     "url": "https://time.com/article/2026/10/08/senate-investigation-ai-data-centers/"
+    },
+    {
+     "name": "Daily Caller",
+     "url": "https://dailycaller.com/2026/10/08/senate-permitting-bill-data-centers-pay-grid-upgrades-electric-bills-capito-heinrich-lee-whitehouse/"
+    }
+   ],
+   "transcript": "Your electricity bill might be helping pay for AI. One 100-megawatt data center can use as much power as about 100,000 homes. Permanent jobs? About 100, says a report from Senate Democrats. Grid upgrades are often split among everyone with a meter. A Harvard expert told NPR: everyone pays. In Louisiana, estimates say one Meta project could add 8 to 13 dollars a month to the average Entergy bill. Meta disputes that. The report says none of seven big companies agreed to pay for upgrades built only for them. The companies say they pay their direct costs. Now a bipartisan Senate bill would make new data centers pay the extra grid costs they add. So, who should pay? Tell us below.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Full Chill Lofi Beat.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
   {
    "id": "202610081600-what-is-ai-opening-titles",
    "kind": "titles",
