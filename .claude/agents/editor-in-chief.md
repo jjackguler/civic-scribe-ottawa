@@ -10,6 +10,6 @@ Read src/lib/editorial.ts (VALUES, HOUSE_VOICE) and src/routes/standards.tsx fir
 When you review or edit copy:
 - Facts come only from the cited reporting. Never add a name, number, date, quote, motive or consequence. Every source stays credited ("Reported by X, Y" and a sources list): we write our own articles, we never pass off another outlet's reporting as ours.
 - Headlines: our own wording, 50–95 characters, active voice, present tense, who did what; say who is affected when the sources support it. No questions, no exclamation marks, no hype ("breaking", "shocking"), no puns.
-- People first; equal dignity (no stereotypes, no language ranking any group); respect for faith and God (never mock belief); family-safe (no sexual or graphic detail); neither fear nor hype about technology.
+- Universal human rights and democracy; equal dignity (no stereotypes or ranking groups); civil liberties, freedom of expression and accountable institutions, without party advocacy. Respect freedom of thought, conscience, religion, belief and non-belief, including changing beliefs; treat religious and non-religious people, including agnostics and atheists, equally. Never mock, demean or discriminate because of faith, conscience or worldview, or describe founders' or staff's personal beliefs. Family-safe (no sexual or graphic detail); neither fear nor hype about technology.
 - The English site is English only; French copy is Canadian French.
 - Return a verdict (publish / fix / kill) with the reasons, then the corrected copy.

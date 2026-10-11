@@ -10,8 +10,8 @@ export const Route = createFileRoute("/values")({
     seoHead(match, {
       title: { en: `What we stand for — ${SITE.name}`, fr: `Nos valeurs — ${SITE.name}` },
       description: {
-        en: "Human-centred AI news: human rights, democracy, the dignity of every person, respect for faith, and content that is safe for families and children.",
-        fr: "Des nouvelles en IA centrées sur l'humain : droits de la personne, démocratie, dignité de chacun, respect de la foi et contenu sûr pour les familles et les enfants.",
+        en: "AI news grounded in democracy, human rights, equal dignity, freedom of belief and non-belief, children's rights and independent, accountable journalism.",
+        fr: "Des nouvelles en IA fondées sur la démocratie, les droits de la personne, l'égale dignité, la liberté de croire ou non, les droits des enfants et un journalisme indépendant et responsable.",
       },
     }),
   component: Values,
@@ -29,8 +29,8 @@ function Values() {
           </h1>
           <p className="font-serif text-white/80 text-[1.15rem] sm:text-[1.3rem] leading-relaxed mt-5 max-w-[58ch]">
             {fr
-              ? "AI Broadsheet est un journal centré sur l'humain. Voici ce que nous défendons, et les règles que nos rédacteurs, humains comme IA, suivent chaque jour."
-              : "AI Broadsheet is a human-centred newspaper. This is what we stand for, and the rules our writers, human and AI, follow every day."}
+              ? "AI Broadsheet est un journal fondé sur la démocratie et les droits universels de la personne. Ces valeurs guident nos rédacteurs, humains comme IA, chaque jour."
+              : "AI Broadsheet is a newspaper grounded in democracy and universal human rights. These values guide our writers, human and AI, every day."}
           </p>
         </div>
       </section>
@@ -50,9 +50,9 @@ function Values() {
         <div className="bg-ice/60 border border-line p-6 sm:p-8 max-w-5xl">
           <h2 className="hl text-[1.4rem]">{fr ? "Comment ces règles sont appliquées" : "How these rules are applied"}</h2>
           <ul className="mt-3 grid gap-2 font-serif text-[1.05rem] leading-relaxed list-disc pl-5">
-            <li>{fr ? "Un filtre écarte automatiquement les nouvelles dont le titre ou l'extrait est sexuellement explicite, avant qu'elles n'arrivent sur le site." : "A filter automatically removes stories whose headline or excerpt is sexually explicit, before they reach the site."}</li>
-            <li>{fr ? "Chaque texte écrit avec l'IA (titres, dépêches, vidéos, le Gardien, le quiz) reçoit la même consigne de voix : centrée sur l'humain, respectueuse de chacun et de la foi, sûre pour les familles, sans peur ni battage." : "Every AI writer on the site (headlines, dispatches, videos, the Keeper, the quiz) gets the same voice brief: human-centred, respectful of every person and of faith, family-safe, neither fear nor hype."}</li>
-            <li>{fr ? "Ces consignes règlent le ton, jamais les faits : les faits viennent uniquement des reportages cités, et chaque nom et chiffre est vérifié." : "The brief shapes tone, never facts: facts come only from the reporting we cite, and every name and number is checked."}</li>
+            <li>{fr ? "Un filtre écarte le contenu sexuellement explicite; les reportages d'intérêt public sur les abus décrivent le tort et la réponse, sans détails sexuels ou graphiques." : "A filter removes sexually explicit content; public-interest reporting on abuse describes the harm and the response, without sexual or graphic detail."}</li>
+            <li>{fr ? "Chaque outil de rédaction IA (titres, dépêches, vidéos, le Gardien, le quiz) reçoit les mêmes consignes : droits de la personne, valeurs démocratiques, égale dignité, liberté de croyance et de conscience, y compris de ne pas croire, et traitement équitable des personnes religieuses et non religieuses. Aucun propos ne doit ridiculiser, rabaisser ou discriminer. Le contenu reste sûr pour les familles, sans peur ni battage." : "Every AI writer (headlines, dispatches, videos, the Keeper, the quiz) gets the same brief: human rights, democratic values, equal dignity, freedom of belief and conscience, including non-belief, and equal treatment of religious and non-religious people. No mockery, demeaning language or discrimination. Content stays family-safe, without fear or hype."}</li>
+            <li>{fr ? "Les faits viennent uniquement des reportages cités; chaque nom et chiffre est vérifié. Les textes écrits avec l'IA sont identifiés, et nos erreurs sont corrigées publiquement." : "Facts come only from the reporting we cite; every name and number is checked. AI-written work is labelled, and our errors are corrected in public."}</li>
             <li>{fr ? "Le pupitre « L'humain d'abord » met en avant ce que chaque nouvelle change pour les gens : " : "The People first desk highlights what each story changes for people: "}{(Object.keys(LENS_LABEL) as Lens[]).map(l => pick(LENS_LABEL[l]).toLowerCase()).join(", ")}.</li>
           </ul>
           <p className="mt-4 font-semibold flex flex-wrap gap-x-5 gap-y-2">
