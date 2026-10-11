@@ -1,0 +1,160 @@
+{
+  "format": "reel",
+  "slug": "chatbot-rules",
+  "title": "New rules for chatbots that talk to kids",
+  "summary": "California's Adam's Law (SB 1119) sets default limits and behaviour rules for AI chatbots used by children. Most rules start July 1, 2027.",
+  "date": "October 10, 2026",
+  "sources": [
+    {
+      "name": "ZwillGen",
+      "url": "https://www.zwillgen.com/artificial-intelligence/adams-law-california-raises-the-bar-for-child-chatbot-protections/"
+    },
+    {
+      "name": "Common Sense Media",
+      "url": "https://www.commonsensemedia.org/press-releases/governor-newsom-signs-adams-law-setting-first-real-safety-standard-for-kids-and-chatbots"
+    },
+    {
+      "name": "Courthouse News",
+      "url": "https://www.courthousenews.com/articles/california-governor-signs-over-a-dozen-bills-regulating-social-media-ai"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "photo": "phone",
+      "say": [
+        "A chatbot that tells a kid it loves them? California just said no."
+      ],
+      "lines": [
+        [
+          "\"I LOVE"
+        ],
+        [
+          "YOU\""
+        ],
+        [
+          "NOT FOR",
+          "KIDS"
+        ]
+      ],
+      "sticker": "new law",
+      "stickerCue": "said no"
+    },
+    {
+      "type": "doc",
+      "say": [
+        "It's called Adam's Law. Governor Gavin Newsom signed it in September.",
+        "Most of the rules start July 1st, 2027."
+      ],
+      "head": "STATE OF CALIFORNIA · SB 1119",
+      "title": "Adam's Law",
+      "lines": [
+        "Chatbots used by children",
+        "Signed September 10, 2026",
+        "Most rules start July 1, 2027"
+      ],
+      "stamp": "signed",
+      "stampCue": "signed",
+      "note": "starts July 1, 2027",
+      "noteCue": "July"
+    },
+    {
+      "type": "rules",
+      "say": [
+        "With kids, chatbots have to try not to pretend they're human, act romantic, flatter too much, make a child depend on them, or say to hide it from parents."
+      ],
+      "title": "Chatbots must try NOT to:",
+      "items": [
+        {
+          "t": "pretend to be human",
+          "cue": "pretend"
+        },
+        {
+          "t": "act romantic",
+          "cue": "romantic"
+        },
+        {
+          "t": "flatter too much",
+          "cue": "flatter"
+        },
+        {
+          "t": "make a kid depend on them",
+          "cue": "depend"
+        },
+        {
+          "t": "say \"hide it from your parents\"",
+          "cue": "hide"
+        }
+      ]
+    },
+    {
+      "type": "toggles",
+      "say": [
+        "By default: one hour per session, two hours a day, no memory, and no push notifications.",
+        "Parents can change the settings."
+      ],
+      "title": "Default settings for kids",
+      "items": [
+        {
+          "label": "Session limit",
+          "value": "1 hr",
+          "cue": "one hour"
+        },
+        {
+          "label": "Daily limit",
+          "value": "2 hrs",
+          "cue": "two hours"
+        },
+        {
+          "label": "Chat memory",
+          "value": "OFF",
+          "cue": "memory"
+        },
+        {
+          "label": "Push notifications",
+          "value": "OFF",
+          "cue": "notifications"
+        }
+      ],
+      "note": "parents can change these",
+      "noteCue": "parents"
+    },
+    {
+      "type": "pullquote",
+      "fig": "operator",
+      "say": [
+        "And if a child is in crisis, the bot has to point them to real help, like the 988 line."
+      ],
+      "quote": "If a child is in crisis: point them to real help.",
+      "mark": "real help",
+      "credit": "What the law requires · In crisis? Call or text 988 (U.S. and Canada)",
+      "cue": "real help",
+      "plain": true
+    },
+    {
+      "type": "flipstat",
+      "say": [
+        "Companies that break the rules on purpose could face fines of up to 15,000 dollars per child."
+      ],
+      "pre": "Fine, per child",
+      "to": "$15,000",
+      "label": "up to, for breaking the rules on purpose",
+      "cue": "15,000"
+    },
+    {
+      "type": "ask",
+      "photo": "phone",
+      "say": [
+        "Would you want these rules on your apps too? Tell us below."
+      ],
+      "lines": [
+        [
+          "YOUR",
+          "APPS",
+          "TOO?"
+        ]
+      ],
+      "comment": "Tell us below"
+    }
+  ]
+}

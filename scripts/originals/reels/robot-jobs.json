@@ -1,0 +1,141 @@
+{
+  "format": "reel",
+  "slug": "robot-jobs",
+  "title": "Robots can do 74% of physical tasks. So why aren't they taking the jobs?",
+  "summary": "A new study finds robots can already do most physical tasks, but are cheaper than people for only 0.3% of work.",
+  "date": "October 10, 2026",
+  "sources": [
+    {
+      "name": "Anthropic research",
+      "url": "https://www.anthropic.com/research/what-work-can-robots-do"
+    },
+    {
+      "name": "Digital Today",
+      "url": "https://www.digitaltoday.co.kr/en/view/109951/robots-can-replace-74-percent-of-manual-labor-but-not-yet-cheaper-than-humans"
+    },
+    {
+      "name": "Neoteo",
+      "url": "https://www.neoteo.com/en/anthropic-estimates-robots-can-perform-74-of-us-physical-tasks-in-some-settings"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "photo": "factory",
+      "say": [
+        "Robots can already do 74 percent of physical tasks in America. So why haven't they taken those jobs?"
+      ],
+      "lines": [
+        [
+          "74%"
+        ],
+        [
+          "SO WHY"
+        ],
+        [
+          "NOT YET?"
+        ]
+      ],
+      "sticker": "the catch",
+      "stickerCue": "why"
+    },
+    {
+      "type": "flood",
+      "fig": "typist",
+      "say": [
+        "That number comes from a new study by Anthropic, the company behind Claude.",
+        "Its AI rated about 19,000 job tasks. Many robot tasks only work in factory-like settings."
+      ],
+      "items": [
+        {
+          "big": "19,000",
+          "small": "job tasks, rated by AI",
+          "cue": "19,000"
+        },
+        {
+          "big": "mostly",
+          "small": "in factory-like settings",
+          "cue": "factory"
+        }
+      ]
+    },
+    {
+      "type": "flipstat",
+      "say": [
+        "Here's the catch: robots are cheaper than people for just 0.3 percent of work."
+      ],
+      "pre": "Can do",
+      "from": "74%",
+      "to": "0.3%",
+      "label": "of work where a robot is cheaper than a person",
+      "cue": "0.3"
+    },
+    {
+      "type": "versus",
+      "say": [
+        "One place they already win: packing boxes.",
+        "A packing robot costs about 45,000 dollars a year. A worker, about 49,000."
+      ],
+      "left": {
+        "fig": "robot",
+        "label": "Packing robot",
+        "price": "$45,000",
+        "cue": "45,000",
+        "win": true
+      },
+      "right": {
+        "fig": "packer",
+        "label": "Packing worker",
+        "price": "$49,000",
+        "cue": "49,000"
+      },
+      "unit": "per year, approx."
+    },
+    {
+      "type": "rules",
+      "say": [
+        "But a welding robot costs about five times more than a human welder.",
+        "Dishwashing robots cost several times more too."
+      ],
+      "title": "Still cheaper with people:",
+      "mark": "check",
+      "items": [
+        {
+          "t": "welding: robot ≈ 5× the cost",
+          "cue": "welding"
+        },
+        {
+          "t": "dishwashing: several times more",
+          "cue": "dishwashing"
+        }
+      ]
+    },
+    {
+      "type": "timeline",
+      "say": [
+        "Robot costs fall about 3 percent a year.",
+        "At that pace, it takes about 40 years before robots are cheaper for even 10 percent of work."
+      ],
+      "from": 2026,
+      "to": 2066,
+      "label": "≈ 40 years",
+      "note": "robots cheaper for 10% of work",
+      "chip": "−3% a year",
+      "cue": "40 years"
+    },
+    {
+      "type": "ask",
+      "photo": "factory",
+      "say": [
+        "Most exposed: drivers. Least: nurses and repair workers. What's your job? Tell us below."
+      ],
+      "lines": [
+        [
+          "YOUR",
+          "JOB?"
+        ]
+      ],
+      "comment": "Tell us below"
+    }
+  ]
+}

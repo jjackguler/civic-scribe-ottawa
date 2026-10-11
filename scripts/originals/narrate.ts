@@ -20,7 +20,9 @@ export type Timing = { duration: number; scenes: { start: number; end: number; s
 
 const SR = 44100;
 /** Same pacing as tts_kokoro.py. */
-const SCENE_GAP = 0.55, LEAD_IN = 0.6, TAIL = 1.6, SENT_GAP = 0.28;
+const envN = (k: string, d: number) => (process.env[k] ? Number(process.env[k]) : d);
+/** Reels run tighter: NARRATE_LEAD_IN=0.1 NARRATE_SCENE_GAP=0.3 NARRATE_TAIL=1.2. */
+const SCENE_GAP = envN("NARRATE_SCENE_GAP", 0.55), LEAD_IN = envN("NARRATE_LEAD_IN", 0.6), TAIL = envN("NARRATE_TAIL", 1.6), SENT_GAP = envN("NARRATE_SENT_GAP", 0.28);
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
 
 /** MP3 bytes → mono 16-bit PCM at 44.1 kHz. */

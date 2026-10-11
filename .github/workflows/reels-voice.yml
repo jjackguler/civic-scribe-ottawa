@@ -1,0 +1,49 @@
+# Voices the hand-written reel storyboards (scripts/originals/reels/*.json) with
+# ElevenLabs and commits voice.wav + timing.json to the `reels-voice` branch.
+# Runs when the `reels-voice-run` branch is pushed.
+name: Reels voice
+
+on:
+  push:
+    branches: [reels-voice-run]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        working-directory: scripts/originals
+        run: npm ci --no-audit --no-fund
+      - name: Narrate
+        working-directory: scripts/originals
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ vars.REELS_VOICE_ID }}
+          NARRATE_LEAD_IN: "0.1"
+          NARRATE_SCENE_GAP: "0.3"
+          NARRATE_SENT_GAP: "0.2"
+          NARRATE_TAIL: "1.2"
+        run: npx tsx reels/narrate-reels.ts ../../../voice-out 2>&1 | tee ../../../voice-out.log || true
+      - name: Commit to reels-voice
+        if: always()
+        run: |
+          mkdir -p ../voice-out && cp ../voice-out.log ../voice-out/run.log || true
+          B="$RUNNER_TEMP/rv"
+          git fetch origin reels-voice || true
+          if git rev-parse --verify origin/reels-voice >/dev/null 2>&1; then git worktree add -B reels-voice "$B" origin/reels-voice; else git worktree add --orphan -b reels-voice "$B"; fi
+          cp -r ../voice-out/* "$B/"
+          cd "$B"
+          git config user.name "AI Broadsheet Reels"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Reel narration $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing new"
+          git push origin reels-voice
