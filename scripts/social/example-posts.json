@@ -1,0 +1,5 @@
+[
+ {"slug":"power-bill","photo":"ASSETS/reel/tower.jpg","pos":"center 30%","headline":"Your [power bill] may be helping pay for [AI]. One data center can use as much power as [100,000 homes]. Here's who pays","source":"Sources: NPR, TIME"},
+ {"slug":"chatbot-rules","photo":"ASSETS/reel/switchboard.jpg","pos":"center 40%","filter":"contrast(1.1)","headline":"California just told AI chatbots: [no romance with kids], a [2-hour daily limit] by default and no \"hide it from your parents.\" Here's what changes","source":"Sources: ZwillGen, Common Sense Media"},
+ {"slug":"robot-jobs","photo":"ASSETS/reel/assembly.jpg","pos":"center 45%","headline":"Robots can already do [74% of physical tasks]. But they're cheaper than people for just [0.3% of work]. Here's why","source":"Source: Anthropic study"}
+]

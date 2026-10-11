@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Anton;src:url("FSRC/anton/files/anton-latin-400-normal.woff2")}
+@font-face{font-family:Bodoni;src:url("FSRC/bodoni-moda/files/bodoni-moda-latin-800-italic.woff2");font-style:italic}
+@font-face{font-family:Bodoni;src:url("FSRC/bodoni-moda/files/bodoni-moda-latin-700-normal.woff2")}
+@font-face{font-family:Elite;src:url("FSRC/special-elite/files/special-elite-latin-400-normal.woff2")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1350px;background:#0E0E0E;overflow:hidden}
+#ph{position:absolute;left:0;top:0;width:1080px;height:860px;background-size:cover;background-position:center}
+#ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,14,14,0) 55%,rgba(14,14,14,.85) 88%,#0E0E0E 100%)}
+#brand{position:absolute;left:40px;right:40px;top:800px;display:flex;align-items:center;gap:22px;color:#E9E4D8}
+#brand i{flex:1;height:2px;background:#E9E4D8;opacity:.75}
+#brand b{font-family:Bodoni;font-style:italic;font-weight:800;font-size:34px;letter-spacing:.5px}
+#hl{position:absolute;left:34px;right:34px;top:858px;height:410px;display:flex;align-items:center;justify-content:center;text-align:center}
+#hl div{font-family:Anton;color:#F4F0E6;text-transform:uppercase;line-height:.98;letter-spacing:.2px}
+#hl em{font-style:normal;color:#F5C400}
+#foot{position:absolute;left:40px;right:40px;bottom:30px;display:flex;justify-content:space-between;color:#E9E4D8;font-family:Elite;font-size:22px;opacity:.85}
+#slide{position:absolute;inset:0;padding:120px 80px;background:#0E0E0E;color:#F4F0E6;display:none}
+</style></head><body>
+<div id="ph"></div>
+<div id="brand"><i></i><b>AI Broadsheet</b><i></i></div>
+<div id="hl"><div id="t"></div></div>
+<div id="foot"><span id="src"></span><span>SWIPE FOR MORE ›</span></div>
+<script>
+window.build = (d) => {
+  document.getElementById('ph').style.backgroundImage = `url("${d.photo}")`;
+  if (d.pos) document.getElementById('ph').style.backgroundPosition = d.pos;
+  if (d.filter) document.getElementById('ph').style.filter = d.filter;
+  const t = document.getElementById('t');
+  t.innerHTML = d.headline.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\[([^\]]+)\]/g,'<em>$1</em>');
+  document.getElementById('src').textContent = d.source || '';
+  // largest size that fits the box
+  let lo = 40, hi = 140; const box = document.getElementById('hl');
+  while (hi - lo > 1) { const m = (lo + hi) / 2; t.style.fontSize = m + 'px'; (t.scrollHeight <= box.clientHeight && t.scrollWidth <= box.clientWidth) ? lo = m : hi = m; }
+  t.style.fontSize = lo + 'px';
+};
+</script></body></html>
