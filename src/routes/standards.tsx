@@ -91,7 +91,7 @@ function Standards() {
       />
       <div className="container-mw mt-10 max-w-3xl">
         <p className="mb-10 font-serif text-[1.1rem] leading-relaxed border-l-[4px] border-signal pl-4">
-          {locale === "fr" ? "Ces normes découlent de nos valeurs : l'humain d'abord, la dignité de chacun, le respect de la foi et un contenu sûr pour les familles. " : "These standards follow from our values: people first, the dignity of every person, respect for faith and content that is safe for families. "}
+          {locale === "fr" ? "Ces normes découlent de nos valeurs : la démocratie, les droits de la personne, l'égale dignité, la liberté de croyance et de conscience — y compris de ne pas croire — et la sécurité des enfants et des familles. " : "These standards follow from our values: democracy, human rights, equal dignity, freedom of belief and conscience — including non-belief — and safety for children and families. "}
           <Link to="/values" className="text-lake font-semibold hover:underline">{locale === "fr" ? "Lire nos valeurs" : "Read what we stand for"}</Link>
         </p>
         {SECTIONS.map(s => (
