@@ -1,6 +1,7 @@
 # Roadmap
 
 Done
+- [ ] Revise the bilingual values charter and connected newsroom references; validate unchanged behavior.
 - [x] Claude features: labelled EN↔FR translation, cluster refinement, passcode-gated editor tools, disclosures
 - [x] Crawlable /fr URLs, canonical + hreflang, share cards, JSON-LD, dynamic sitemap, RSS (EN/FR)
 - [x] Search; tested Canadian feeds (Ottawa, Québec, Alberta, OPC, Vector, CanadaBuys AI tenders)
