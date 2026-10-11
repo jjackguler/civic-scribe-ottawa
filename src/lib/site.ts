@@ -49,8 +49,8 @@ export const SITE = {
      */
     url: "",
   },
-  /** TODO [CLOUDFLARE_ANALYTICS_TOKEN] — Cloudflare Web Analytics (cookieless). Off while empty. */
-  cloudflareAnalyticsToken: "",
+  /** Cloudflare Web Analytics (cookieless), installed manually to avoid duplicate beacons. */
+  cloudflareAnalyticsToken: "9a828408ce894cf0865655bda68a0d73",
   /** Social profiles. An icon appears only when its URL is set. */
   social: {
     instagram: "https://www.instagram.com/aibroadsheet/",
