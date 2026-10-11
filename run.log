@@ -1,10 +1,13 @@
-/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/media-apis.ts:19
-  if (!res.ok) { const body = await res.text(); throw limitError("ElevenLabs", res.status, body) ?? new Error(`ElevenLabs voices HTTP ${res.status}`); }
-                                                                                                    ^
+voices list failed (Error: ElevenLabs voices HTTP 400): 400 {"detail":{"type":"authentication_error","code":"invalid_api_key","message":"API key ID used as API key - only valid API keys can be used. API keys start with 'sk_' and are shown when the key is created or rotated.","status":"api_key_id_used_as_api_key","request_id":"682b6be5363ac0f4c8e5b11ce4671c5c
+voice: Brian (premade)
+/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/media-apis.ts:66
+  throw new Error(last);
+        ^
 
-Error: ElevenLabs voices HTTP 400
-    at pickVoice (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/media-apis.ts:19:101)
+Error: ElevenLabs TTS HTTP 400: {"detail":{"type":"authentication_error","code":"invalid_api_key","message":"API key ID used as API key - only valid API keys can be used. API keys start with 'sk_' and are shown when the key is creat
+    at speakWithTimestamps (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/media-apis.ts:66:9)
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
-    at async <anonymous> (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/reels/narrate-reels.ts:14:15)
+    at async narrateElevenLabs (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/narrate.ts:91:32)
+    at async <anonymous> (/home/runner/work/civic-scribe-ottawa/civic-scribe-ottawa/scripts/originals/reels/narrate-reels.ts:27:13)
 
 Node.js v22.23.3
