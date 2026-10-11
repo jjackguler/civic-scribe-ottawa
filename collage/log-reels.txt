@@ -1,0 +1,18 @@
+commons 'lineman climbing utility pole 1940s': 0
+commons 'Rural Electrification Administration farm electricity': 3
+commons 'electric meter reader': 4
+commons 'family living room radio lamp 1940s': 0
+commons 'children talking on telephone 1950s': 0
+commons 'girl talking on telephone 1940s': 1
+commons 'teenagers 1950s soda fountain': 0
+commons 'boy listening to radio 1940s': 0
+commons 'children classroom 1940s Office of War Information': 4
+commons 'mother reading to child 1940s': 2
+commons 'Elektro robot Westinghouse 1939': 1
+commons 'Unimate robot': 4
+commons 'industrial robot arm': 2
+commons 'packing department workers 1940s': 2
+commons 'welder 1940s Office of War Information': 4
+commons 'taxi driver 1940s': 4
+commons 'dishwasher restaurant kitchen 1940s': 0
+commons 'nurse 1940s Office of War Information': 4
