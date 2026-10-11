@@ -43,8 +43,8 @@
     {
       "type": "count",
       "say": [
-        "One 100-megawatt data center can use about as much power as 100,000 homes.",
-        "But a report from three Democratic senators says it may employ only about 100 permanent workers."
+        "One 100-megawatt data center can use as much power as about 100,000 homes.",
+        "Permanent jobs? About 100, says a report from Senate Democrats."
       ],
       "label": "One 100 MW data center",
       "a": {
@@ -55,14 +55,14 @@
       "b": {
         "n": 100,
         "label": "permanent jobs",
-        "cue": "only"
+        "cue": "permanent"
       }
     },
     {
       "type": "pullquote",
       "say": [
-        "When the grid needs new lines and power plants, that cost is often shared by everyone with a meter.",
-        "A Harvard energy-law expert put it simply: everyone pays."
+        "Grid upgrades are often split among everyone with a meter.",
+        "A Harvard expert told NPR: everyone pays."
       ],
       "quote": "Everyone pays those costs.",
       "mark": "Everyone pays",
@@ -73,18 +73,18 @@
     {
       "type": "bill",
       "say": [
-        "In Louisiana, estimates say one giant Meta project could add 8 to 13 dollars a month to the average Entergy bill.",
+        "In Louisiana, estimates say one Meta project could add 8 to 13 dollars a month to the average Entergy bill.",
         "Meta disputes that."
       ],
       "title": "ELECTRIC BILL",
       "rows": [
         {
           "label": "Energy used",
-          "value": "$—"
+          "value": "—"
         },
         {
           "label": "Delivery",
-          "value": "$—"
+          "value": "—"
         },
         {
           "label": "New grid upgrades?",
@@ -101,8 +101,8 @@
     {
       "type": "sides",
       "say": [
-        "The report says none of the seven companies it looked at agreed to pay for grid upgrades that only exist because of them.",
-        "The companies say they pay their direct costs, and bigger upgrades help everyone."
+        "The report says none of seven big companies agreed to pay for upgrades built only for them.",
+        "The companies say they pay their direct costs."
       ],
       "left": {
         "who": "Senate report",
@@ -118,7 +118,7 @@
     {
       "type": "doc",
       "say": [
-        "Now two Republicans and two Democrats want new data centers of 20 megawatts or more to cover the extra costs they add to the grid."
+        "Now a bipartisan Senate bill would make new data centers pay the extra grid costs they add."
       ],
       "head": "U.S. SENATE · BILL",
       "title": "Data centers pay their own way",
@@ -128,18 +128,20 @@
         "Sponsors: 2 Republicans, 2 Democrats"
       ],
       "stamp": "proposed",
-      "stampCue": "cover",
+      "stampCue": "extra",
       "note": "not law yet"
     },
     {
       "type": "ask",
       "photo": "reel/tower.jpg",
       "say": [
-        "So, should AI data centers pay for their own power lines? Tell us below."
+        "So, who should pay? Tell us below."
       ],
       "lines": [
         [
-          "WHO",
+          "WHO"
+        ],
+        [
           "PAYS?"
         ]
       ],

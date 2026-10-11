@@ -2,7 +2,7 @@
 an ElevenLabs key. Writes one WAV for the whole video and a timing JSON:
   python3 tts_kokoro.py storyboard.json out_dir model.onnx voices.bin
 """
-import json, sys
+import json, os, sys
 import numpy as np
 import soundfile as sf
 from kokoro_onnx import Kokoro
@@ -11,7 +11,10 @@ board_path, out_dir, model, voices = sys.argv[1:5]
 board = json.load(open(board_path))
 k = Kokoro(model, voices)
 SR = 24000
-SENT_GAP, SCENE_GAP, LEAD_IN, TAIL = 0.28, 0.55, 0.6, 1.6
+E = lambda k, d: float(os.environ.get(k, d))
+# Reels run tighter: NARRATE_LEAD_IN=0.1 NARRATE_SCENE_GAP=0.3 NARRATE_SENT_GAP=0.2 NARRATE_TAIL=1.2 KOKORO_SPEED=1.08
+SENT_GAP, SCENE_GAP, LEAD_IN, TAIL = E('NARRATE_SENT_GAP', 0.28), E('NARRATE_SCENE_GAP', 0.55), E('NARRATE_LEAD_IN', 0.6), E('NARRATE_TAIL', 1.6)
+SPEED = E('KOKORO_SPEED', 1.0)
 
 audio = [np.zeros(int(LEAD_IN * SR), dtype=np.float32)]
 t = LEAD_IN
@@ -20,7 +23,7 @@ for scene in board["scenes"]:
     start = t
     sents = []
     for i, text in enumerate(scene["say"]):
-        samples, sr = k.create(text, voice=board.get("voice", "af_heart"), speed=1.0, lang="en-us")
+        samples, sr = k.create(text, voice=board.get("voice", "af_heart"), speed=SPEED, lang="en-us")
         assert sr == SR
         sents.append({"text": text, "start": round(t, 3), "end": round(t + len(samples) / SR, 3)})
         audio.append(samples.astype(np.float32))

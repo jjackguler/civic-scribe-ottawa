@@ -43,8 +43,8 @@
       "type": "cards",
       "fig": "librarian",
       "say": [
-        "That number comes from a new study by Anthropic, the company behind Claude.",
-        "Its AI rated about 19,000 job tasks. Many robot tasks only work in factory-like settings."
+        "That's from a new study by Anthropic, the company behind Claude.",
+        "Its AI rated 19,000 job tasks, and many robot tasks only work in factory-like settings."
       ],
       "items": [
         {
@@ -62,7 +62,7 @@
     {
       "type": "flipstat",
       "say": [
-        "Here's the catch: robots are cheaper than people for just 0.3 percent of work."
+        "The catch: robots are cheaper than people for just 0.3 percent of work."
       ],
       "pre": "Can do",
       "from": "74%",
@@ -73,8 +73,8 @@
     {
       "type": "versus",
       "say": [
-        "One place they already win: packing boxes.",
-        "A packing robot costs about 45,000 dollars a year. A worker, about 49,000."
+        "One win: packing boxes.",
+        "About 45,000 dollars a year for a robot, 49,000 for a worker."
       ],
       "left": {
         "fig": "robot",
@@ -94,8 +94,8 @@
     {
       "type": "rules",
       "say": [
-        "But a welding robot costs about five times more than a human welder.",
-        "Dishwashing robots cost several times more too."
+        "But welding robots cost about five times more than welders.",
+        "Dishwashing robots, several times more."
       ],
       "title": "Still cheaper with people:",
       "mark": "check",
@@ -114,7 +114,7 @@
       "type": "timeline",
       "say": [
         "Robot costs fall about 3 percent a year.",
-        "At that pace, it takes about 40 years before robots are cheaper for even 10 percent of work."
+        "At that pace, it takes about 40 years before they're cheaper for even 10 percent of work."
       ],
       "from": 2026,
       "to": 2066,
@@ -127,7 +127,7 @@
       "type": "ask",
       "photo": "reel/assembly.jpg",
       "say": [
-        "Most exposed: drivers. Least: nurses and repair workers. What's your job? Tell us below."
+        "Most exposed: drivers. Least: nurses. What's your job? Tell us below."
       ],
       "lines": [
         [

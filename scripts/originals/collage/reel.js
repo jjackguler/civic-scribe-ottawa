@@ -96,7 +96,7 @@
     return { box, letters };
   }
   /** Font size so the longest row of `rows` fits ~940 px. */
-  const fitFs = (rows, max = 200) => Math.min(max, 940 / (Math.max(...rows.map(r => r.join(" ").length)) * .74 + .3));
+  const fitFs = (rows, max = 200) => Math.min(max, 900 / (Math.max(...rows.map(r => r.join(" ").length)) * .86 + .4));
 
   function marker(text, size, color = INK) {
     return h(`<div class="mkr" style="font-size:${size}px;line-height:1.05;color:${color};white-space:nowrap">${esc(text)}</div>`);
@@ -146,11 +146,11 @@
   Object.assign(BUILD, {
     hook(sc, si, root) {
       root.appendChild(window.bgLayer("ink", si));
-      const ph = duo(sc.data.photo, 1160, 1160, 9200 + si);
-      root.appendChild(h(`<div style="position:absolute;left:-30px;top:236px;width:1140px;height:1130px;background:${RED};clip-path:${torn(9210 + si, 10, 18)};transform:rotate(2deg)"></div>`));
+      const ph = duo(sc.data.photo, 1160, 1760, 9200 + si);
+      root.appendChild(h(`<div style="position:absolute;left:-30px;top:236px;width:1140px;height:1760px;background:${RED};clip-path:${torn(9210 + si, 10, 18)};transform:rotate(2deg)"></div>`));
       ph.style.cssText += "left:-40px;top:210px;transform:rotate(-1.5deg)"; root.appendChild(ph);
       const rows = sc.data.lines;
-      const { box, letters } = ransom3(rows, fitFs(rows, 210), 9300 + si);
+      const { box, letters } = ransom3(rows, fitFs(rows, 210), 9300 + si, true);
       box.style.top = "330px"; root.appendChild(box);
       const loop = !!sc.data.loop;
       const s0 = sent(si, 0);
@@ -158,17 +158,17 @@
       letters.forEach((_, i) => { if (i % 2 === 0) ev(t0 + i * gap, "snip"); });
       const svg = svgBox(root, W, H, 8);
       const done = t0 + letters.length * gap;
-      const und = stroke(svg, roughPath([[180, 1150], [540, 1132], [900, 1146]], 9300 + si, 10), Y, 16);
+      const und = stroke(svg, roughPath([[160, 1200], [520, 1182], [880, 1196]], 9300 + si, 10), INK, 14);
       const b = burst(svg, 900, 300, 60, 9310 + si, Y);
       let st = null, sa = 0, ar = null;
       if (sc.data.sticker) {
         st = sticker(sc.data.sticker, 9320 + si, Y, sc.data.sticker.length > 9 ? 54 : 66); root.appendChild(st);
         sa = after(at(si, sc.data.stickerCue, .1, done + .3), done + .1);
         ev(sa + .15, "slap");
-        ar = arrow(svg, 330, 1310, 250, 1180, 9330 + si, Y, 10);
+        ar = arrow(svg, 700, 1010, 560, 1110, 9330 + si, INK, 9);
       }
       ev(done + .1, "marker");
-      const pst = st && piece(st, 9340 + si, { x: 680, y: 1010, rot: 9 });
+      const pst = st && piece(st, 9340 + si, { x: 690, y: 860, rot: 9 });
       return t => {
         V().showLetters(letters, t, t0, gap, 9350 + si);
         ph.querySelector("img").style.transform = `scale(${(1.08 - .06 * clamp((t - sc.start) / 6)).toFixed(4)})`;
@@ -209,12 +209,12 @@
       const cb = after(at(si, B0.cue, .3, sent(si, 1).start + .5), ca + 1.2);
       const small = h(`<div class="piece" style="z-index:7"><div class="paper" style="padding:22px 34px 28px;display:flex;align-items:center;gap:22px;clip-path:${torn(9520 + si, 6)}"><div style="display:flex">${PERSON.repeat(3)}</div><div><div class="bod" style="font-size:110px;line-height:.9;color:${RED}">≈${fmt(B0.n)}</div><div class="mkr" style="font-size:44px">${esc(B0.label)}</div></div></div></div>`);
       root.appendChild(small);
-      ev(sc.start + .2, "slap"); for (let k = 0; k < 8; k++) ev(ca + k * .12, "click"); ev(ca + 1, "thump"); ev(cb + .2, "stamp");
+      ev(sc.start + .2, "slap"); for (let k = 0; k < 10; k++) ev(sc.start + .3 + k * (ca + .6 - sc.start - .3) / 10, "click"); ev(ca + 1, "thump"); ev(cb + .2, "stamp");
       const pl = piece(lab, 9530 + si, { x: 60, y: 285, rot: -2 }), pbg = piece(big, 9540 + si, { x: 90, y: 690, rot: -2.5 }), psm = piece(small, 9550 + si, { x: 300, y: 990, rot: 3 });
       const span = big.querySelector("span");
       return t => {
         placePiece(pl, t, sc.start, { dx: -900, dy: 0, rot: -8 }, .35);
-        const k = clamp((t - ca) / 1.1);
+        const k = clamp((t - sc.start - .3) / Math.max(1, ca + .9 - sc.start - .3));
         hs.forEach((e, i) => { e.style.visibility = i < k * N ? "visible" : "hidden"; });
         placePiece(pbg, t, ca + .9, { dx: 0, dy: 0, rot: -8, s: 1.8 }, .3);
         span.textContent = fmt(A0.n * oCubic(p(t, ca + .9, .7)));
@@ -244,14 +244,16 @@
     },
 
     bill(sc, si, root) {
-      root.appendChild(window.bgLayer("slate", si));
+      root.appendChild(window.bgLayer("ink", si));
       const d = sc.data;
       const bars = Array.from({ length: 12 }, (_, i) => 30 + ((i * 37) % 50) + i * 3);
       const el = h(`<div class="piece" style="width:860px"><div class="rcpt" style="padding:44px 48px 60px;clip-path:${torn(9700 + si, 5)}">
         <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid ${INK};padding-bottom:16px"><div class="arc" style="font-size:58px">${esc(d.title)}</div><div class="elite" style="font-size:24px;text-align:right">Account 0042-7781<br>Residential</div></div>
         <div style="display:flex;align-items:flex-end;gap:10px;height:120px;margin:26px 0 10px">${bars.map((b, i) => `<i style="display:block;width:44px;height:${b + (i > 8 ? 30 : 0)}px;background:${i > 8 ? RED : "rgba(20,20,20,.75)"}"></i>`).join("")}</div>
         <div class="elite" style="font-size:22px;opacity:.6;margin-bottom:12px">kWh, last 12 months</div>
-        ${d.rows.map((rw, k) => `<div class="row" style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 4px;border-top:2px dashed rgba(0,0,0,.25)"><span class="elite" style="font-size:38px">${esc(rw.label)}</span><span class="${rw.hl ? "mkr" : "elite"}" style="font-size:${rw.hl ? 76 : 38}px;color:${rw.hl ? RED : INK}">${esc(rw.value)}</span></div>`).join("")}
+        ${d.rows.map((rw, k) => rw.hl
+          ? `<div class="row" style="position:relative;padding:22px 4px 10px;border-top:2px dashed rgba(0,0,0,.25)"><div class="elite" style="font-size:38px">${esc(rw.label)}</div><div class="mkr" style="font-size:118px;line-height:1.05;color:${RED};margin-left:30px">${esc(rw.value)}</div><svg class="ring" width="760" height="230" style="position:absolute;left:0;top:40px;overflow:visible"></svg></div>`
+          : `<div class="row" style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 4px;border-top:2px dashed rgba(0,0,0,.25)"><span class="elite" style="font-size:38px">${esc(rw.label)}</span><span class="elite" style="font-size:38px;opacity:.5">${esc(rw.value)}</span></div>`).join("")}
       </div></div>`);
       root.appendChild(el);
       const pe = piece(el, 9710 + si, { x: 110, y: 270, rot: -1.5 });
@@ -259,19 +261,19 @@
       const svg = svgBox(root, W, H, 8);
       const hi = d.rows.findIndex(r => r.hl);
       const ats = d.rows.map((rw, k) => (rw.cue ? after(at(si, rw.cue, .3, sc.start + 1.5), sc.start + .6) : sc.start + .5 + k * .3));
-      const ring = stroke(svg, roughPath(ellipsePts(780, 270 + 44 + 140 + 120 + 30 + 98 * hi + 50 + 40, 230, 80, 1.15, 60, 9720 + si), 9721, 5), RED, 10);
+      const ring = stroke(el.querySelector(".ring"), roughPath(ellipsePts(360, 95, 350, 90, 1.12, 60, 9720 + si), 9721, 5), RED, 9);
       const st = V().stampEl(d.stamp, 96, RED); root.appendChild(st);
       const sa = after(at(si, d.stampCue, .1, ats[hi] + .5), ats[hi] + .4);
       const note = h(`<div class="piece" style="z-index:9"><div class="sticky" style="background-color:${Y};padding:30px 34px 40px;width:400px;clip-path:${torn(9730 + si, 3, 8)}"><div class="mkr" style="font-size:56px;line-height:1.02">${esc(d.note)}</div></div></div>`);
       note.appendChild(tape(120, -22, -6, 160)); root.appendChild(note);
       const na = after(at(si, d.noteCue, .2, sent(si, 1).start), sa + .5);
-      const pn = piece(note, 9740 + si, { x: 600, y: 940, rot: 5 });
+      const pn = piece(note, 9740 + si, { x: 620, y: 1040, rot: 5 });
       ev(sc.start + .15, "tear"); ats.forEach(a => ev(a, "type")); ev(ats[hi] + .5, "pencil"); ev(sa + .18, "stamp"); ev(na + .2, "slap");
       return t => {
         placePiece(pe, t, sc.start, { dx: 0, dy: -1300, rot: 0 }, .55);
         rowEls.forEach((r, k) => { r.style.opacity = clamp((t - ats[k]) * 4); });
         ring.draw(ioCubic(p(t, ats[hi] + .5, .5)));
-        V().placeStamp(st, t, sa, 160, 880, -10);
+        V().placeStamp(st, t, sa, 120, 1050, -10);
         placePiece(pn, t, na, { dx: 600, dy: 200, rot: 20 }, .4);
       };
     },
@@ -338,17 +340,17 @@
       const step = n > 3 ? 172 : 260, fs = n > 3 ? 58 : 68;
       const cols = [Y, "#FBFAF6", "#F3D27A", "#FBFAF6", Y];
       const notes = d.items.map((it, k) => {
-        const el = h(`<div class="piece" style="z-index:${4 + k}"><div class="sticky" style="background-color:${cols[k % cols.length]};padding:24px 40px 30px;clip-path:${torn(10010 + si * 7 + k, 3, 10)}"><div class="mkr" style="font-size:${fs}px;line-height:1.05;white-space:nowrap">${esc(it.t)}</div></div></div>`);
+        const el = h(`<div class="piece" style="z-index:${4 + k}"><div class="sticky" style="background-color:${cols[k % cols.length]};padding:24px 40px 30px;clip-path:${torn(10010 + si * 7 + k, 3, 10)}"><div class="mkr" style="font-size:${fs}px;line-height:1.05;${n > 3 ? "white-space:nowrap" : "max-width:640px"}">${esc(it.t)}</div></div></div>`);
         if (k % 2 === 0) el.appendChild(tape(40, -20, -8, 130));
         root.appendChild(el); return el;
       });
       const svg = svgBox(root, W, H, 12);
       const ats = d.items.map((it, k) => after(at(si, it.cue, .35, sc.start + .6 + k * .9), sc.start + .35 + k * .25));
       for (let k = 1; k < n; k++) ats[k] = Math.max(ats[k], ats[k - 1] + .35);
-      const pcs = notes.map((el, k) => piece(el, 10020 + si * 7 + k, { x: 70 + (k % 2) * 90, y: 420 + k * step, rot: (k % 2 ? 2 : -2) }));
+      const pcs = notes.map((el, k) => piece(el, 10020 + si * 7 + k, { x: (mark === "check" ? 170 : 70) + (k % 2) * 90, y: 420 + k * step, rot: (k % 2 ? 2 : -2) }));
       const marks = notes.map((el, k) => {
         const y = 420 + k * step + 50, x0 = 70 + (k % 2) * 90;
-        if (mark === "check") return stroke(svg, roughPath([[x0 + 30 + 820, y + 10], [x0 + 70 + 820, y + 60], [x0 + 150 + 820, y - 50]], 10030 + k, 6), "#1f8a3c", 16);
+        if (mark === "check") return stroke(svg, roughPath([[40, y + 20], [85, y + 75], [165, y - 40]], 10030 + k, 6), RED, 18);
         return stroke(svg, roughPath([[x0 + 10, y + 26], [x0 + 340, y + 34], [x0 + 760, y + 18]], 10040 + k, 6), RED, 12);
       });
       ev(sc.start + .15, "slap"); ats.forEach(a => { ev(a + .25, "slap"); ev(a + .6, mark === "check" ? "pencil" : "scribble"); });
@@ -440,24 +442,22 @@
       const d = sc.data;
       root.appendChild(h(`<div style="position:absolute;left:-40px;top:230px;width:600px;height:1300px;background:${Y};background-image:var(--blotch),var(--grain);clip-path:${torn(10300 + si, 9, 14)}"></div>`));
       const robot = paperRobot(1, 10310 + si); root.appendChild(robot);
-      const pr = piece(robot, 10311 + si, { x: 70, y: 470, rot: -3 });
+      const pr = piece(robot, 10311 + si, { x: 70, y: 330, rot: -3 });
       const f = V().figure(root, d.right.fig, 760, 10320 + si, { x: 0, y: 0, rot: 0 });
-      f.pc.base = { x: W - f.w + 40, y: 1240 - 760, rot: 2 };
-      const tag = (side, k) => h(`<div class="piece" style="width:470px;z-index:7"><div class="tag ${k ? "" : "y"}" style="padding:20px 30px 26px 80px"><div class="hole"></div><div class="elite" style="font-size:30px">${esc(side.label)}</div><div class="arc" style="font-size:88px;line-height:1">${esc(side.price)}</div></div></div>`);
+      f.pc.base = { x: W - f.w + 40, y: 1060 - 760, rot: 2 };
+      const tag = (side, k) => h(`<div class="piece" style="width:470px;z-index:7"><div class="tag ${k ? "" : "y"}" style="padding:20px 30px 26px 80px"><div class="hole"></div><div class="elite" style="font-size:30px">${esc(side.label)}</div><div class="arc" style="font-size:88px;line-height:1">${esc(side.price)}</div><div class="elite" style="font-size:24px;margin-top:6px">${esc(d.unit || "")}</div></div></div>`);
       const tl = tag(d.left, 0), tr = tag(d.right, 1); root.appendChild(tl); root.appendChild(tr);
-      const unit = h(`<div class="piece" style="z-index:7"><div class="paper elite" style="padding:12px 22px 14px;font-size:30px;clip-path:${torn(10330 + si, 4)}">${esc(d.unit || "")}</div></div>`); root.appendChild(unit);
-      const vs = ransom3([["VS"]], 130, 10340 + si); vs.box.style.top = "250px"; root.appendChild(vs.box);
+      const vs = ransom3([["VS"]], 130, 10340 + si, true); vs.box.style.top = "300px"; root.appendChild(vs.box);
       const svg = svgBox(root, W, H, 12);
-      const ring = stroke(svg, roughPath(ellipsePts(290, 1150, 290, 120, 1.15, 60, 10350 + si), 10351, 5), RED, 12);
+      const ring = stroke(svg, roughPath(ellipsePts(270, 1015, 290, 125, 1.15, 60, 10350 + si), 10351, 5), RED, 12);
       const cheap = h(`<div class="piece" style="z-index:13">${marker("cheaper!", 76, RED).outerHTML}</div>`); root.appendChild(cheap);
       const la = after(at(si, d.left.cue, .3, sent(si, 1).start + .4), sc.start + .8), ra = after(at(si, d.right.cue, .3, la + 1.2), la + .6);
       ev(sc.start + .2, "slide"); ev(sc.start + .5, "slide"); ev(la + .2, "slap"); ev(ra + .2, "slap"); ev(ra + .7, "pencil"); ev(ra + 1.1, "slap");
-      const ptl = piece(tl, 10360 + si, { x: 40, y: 1080, rot: -4 }), ptr = piece(tr, 10361 + si, { x: 560, y: 1150, rot: 3 }), pu = piece(unit, 10362 + si, { x: 600, y: 360, rot: 2 }), pc = piece(cheap, 10363 + si, { x: 120, y: 950, rot: -8 });
+      const ptl = piece(tl, 10360 + si, { x: 30, y: 920, rot: -4 }), ptr = piece(tr, 10361 + si, { x: 570, y: 960, rot: 3 }), pc = piece(cheap, 10363 + si, { x: 160, y: 1140, rot: -6 });
       return t => {
         V().showLetters(vs.letters, t, sc.start + .1, .08, 10370 + si);
         V().placeStep(pr, t, sc.start + .1, { dx: -600, dy: 0, rot: 0 }, .5, 4);
         V().placeStep(f.pc, t, sc.start + .4, { dx: 600, dy: 0, rot: 0 }, .5, 4);
-        placePiece(pu, t, sc.start + .9, { dx: 600, dy: 0, rot: 8 }, .35);
         placePiece(ptl, t, la, { dx: 0, dy: 0, rot: -14, s: 1.9 }, .3);
         placePiece(ptr, t, ra, { dx: 0, dy: 0, rot: 14, s: 1.9 }, .3);
         ring.draw(ioCubic(p(t, ra + .6, .45)));

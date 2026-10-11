@@ -33,7 +33,9 @@
           "YOU\""
         ],
         [
-          "NOT FOR",
+          "NOT FOR"
+        ],
+        [
           "KIDS"
         ]
       ],
@@ -43,8 +45,7 @@
     {
       "type": "doc",
       "say": [
-        "It's called Adam's Law. Governor Gavin Newsom signed it in September.",
-        "Most of the rules start July 1st, 2027."
+        "It's called Adam's Law. It was signed in September, and most rules start in July 2027."
       ],
       "head": "STATE OF CALIFORNIA · SB 1119",
       "title": "Adam's Law",
@@ -61,7 +62,7 @@
     {
       "type": "rules",
       "say": [
-        "With kids, chatbots have to try not to pretend they're human, act romantic, flatter too much, make a child depend on them, or say to hide it from parents."
+        "Chatbots must try not to pretend they're human, act romantic, flatter too much, make kids depend on them, or tell them to hide it from parents."
       ],
       "title": "Chatbots must try NOT to:",
       "items": [
@@ -90,8 +91,8 @@
     {
       "type": "toggles",
       "say": [
-        "By default: one hour per session, two hours a day, no memory, and no push notifications.",
-        "Parents can change the settings."
+        "By default: one hour per session, two hours a day, no memory, no push alerts.",
+        "Parents can change that."
       ],
       "title": "Default settings for kids",
       "items": [
@@ -113,7 +114,7 @@
         {
           "label": "Push notifications",
           "value": "OFF",
-          "cue": "notifications"
+          "cue": "push"
         }
       ],
       "note": "parents can change these",
@@ -123,7 +124,7 @@
       "type": "pullquote",
       "fig": "operator",
       "say": [
-        "And if a child is in crisis, the bot has to point them to real help, like the 988 line."
+        "And if a child is in crisis, the bot must point them to real help, like 988."
       ],
       "quote": "If a child is in crisis: point them to real help.",
       "mark": "real help",
@@ -134,7 +135,7 @@
     {
       "type": "flipstat",
       "say": [
-        "Companies that break the rules on purpose could face fines of up to 15,000 dollars per child."
+        "Break the rules on purpose? Up to 15,000 dollars per child."
       ],
       "pre": "Fine, per child",
       "to": "$15,000",
@@ -145,11 +146,13 @@
       "type": "ask",
       "photo": "reel/switchboard.jpg",
       "say": [
-        "Would you want these rules on your apps too? Tell us below."
+        "Should your apps have these rules too? Tell us below."
       ],
       "lines": [
         [
-          "YOUR",
+          "YOUR"
+        ],
+        [
           "APPS",
           "TOO?"
         ]

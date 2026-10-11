@@ -92,7 +92,7 @@ async function lufs(f: string, secs = 120): Promise<number> {
 async function mixAudio(voice: string, events: { t: number; kind: string }[], dur: number, out: string) {
   // Levels: voice at -18 LUFS, music bed ~13 LU under it (and ducked while the voice talks), effects as accents.
   const gVoice = Math.pow(10, (-18 - (await lufs(voice))) / 20);
-  const gMusic = MUSIC && existsSync(MUSIC) ? Math.pow(10, (-31 - (await lufs(MUSIC))) / 20) : 0;
+  const gMusic = MUSIC && existsSync(MUSIC) ? Math.pow(10, (Number(process.env.COLLAGE_MUSIC_LUFS || -31) - (await lufs(MUSIC))) / 20) : 0;
   const SFX_TRIM = Number(process.env.COLLAGE_SFX_LEVEL || 0.5);
   const map: Record<string, string[]> = SFX_MAP && existsSync(SFX_MAP) ? JSON.parse(await readFile(SFX_MAP, "utf8")) : {};
   const used: Record<string, number> = {};
