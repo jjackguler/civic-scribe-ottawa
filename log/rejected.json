@@ -1,5 +1,16 @@
 [
   {
+    "id": "1wyiqlm",
+    "at": "2026-10-12T20:43:34.849Z",
+    "stage": "copy",
+    "headline": "Meta has some Wonder Full new AI models",
+    "reasons": [
+      "Not in the sources (names or numbers): Performance, People.",
+      "Too close to The Decoder's wording (\"in the top three on six out of ten…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: missing fields"
+    ]
+  },
+  {
     "id": "14bdl57",
     "at": "2026-10-10T23:43:36.870Z",
     "stage": "reporter",
