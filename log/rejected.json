@@ -1,5 +1,30 @@
 [
   {
+    "id": "ns5nnh",
+    "at": "2026-10-13T21:58:55.442Z",
+    "stage": "copy",
+    "headline": "Just 5 years in, interactive chatbot platform Character.AI files for bankruptcy",
+    "reasons": [
+      "Not in the sources (names or numbers): United, States.",
+      "Too close to Global News's wording (\"agreed to sell some assets for us 20 million…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Global News's wording (\"has filed for bankruptcy in the u s and…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "gm4gvd",
+    "at": "2026-10-13T21:56:01.564Z",
+    "stage": "copy",
+    "headline": "Muse Wonder Puts Meta Back at the AI Frontier",
+    "reasons": [
+      "Not in the sources (names or numbers): Early, Regular, Access, Software, Programmers, Guidance, People.",
+      "Too close to The Decoder's wording (\"its api the gemini app and google antigravity the…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Reports, Subscribers, Users, APIs.",
+      "Too close to The Decoder's wording (\"trails anthropic s claude opus 5 5 and meta…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1wyiqlm",
     "at": "2026-10-12T20:43:34.849Z",
     "stage": "copy",
