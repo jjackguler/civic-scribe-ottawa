@@ -1,0 +1,45 @@
+{
+  "story": "202610101800-is-ai-on-your-power-bill",
+  "date": "Oct 10, 2026",
+  "source": "Sources: NPR · TIME · Daily Caller",
+  "note": "Every figure and claim below comes from the published 'Is AI on your power bill?' explainer and its three sources. Headline key words go in [brackets] and turn signal yellow.",
+  "slides": [
+    {
+      "slug": "1-cover",
+      "shot": "cover",
+      "kicker": "Energy · Explainer",
+      "headline": "Is AI on your [power bill]?",
+      "deck": "AI data centers need huge amounts of electricity. A Senate report, a bipartisan bill and the companies disagree about who pays for the grid upgrades."
+    },
+    {
+      "slug": "2-scale",
+      "shot": "aerial",
+      "kicker": "The scale",
+      "headline": "One 100 MW data center can use as much power as about [100,000 homes].",
+      "deck": "Permanent jobs? About 100, says a report from Senate Democrats.",
+      "pins": [
+        { "at": "datacenter", "text": "1 data center · 100 MW" },
+        { "at": "homes", "text": "about 100,000 homes' worth of power" }
+      ]
+    },
+    {
+      "slug": "3-bill",
+      "shot": "street",
+      "kicker": "Your bill",
+      "headline": "In Louisiana, one Meta project could add [$8–13 a month] to the average Entergy bill.",
+      "deck": "That is an estimate, and Meta disputes it. Grid upgrades are often split among everyone with a meter."
+    },
+    {
+      "slug": "4-who-pays",
+      "shot": "pylons",
+      "kicker": "The dispute",
+      "headline": "Who pays for the [grid upgrades]?",
+      "sides": [
+        { "who": "Senate report", "says": "None of seven big companies agreed to pay for upgrades built only for them." },
+        { "who": "The companies", "says": "They say they pay their direct costs." }
+      ],
+      "deck": "A bipartisan Senate bill would make new data centers pay the extra grid costs they add. Who should pay? Tell us.",
+      "last": true
+    }
+  ]
+}
