@@ -1,10 +1,10 @@
 {
- "updatedAt": "2026-10-14T10:50:00.000Z",
+ "updatedAt": "2026-10-14T05:50:00.000Z",
  "items": [
   {
    "id": "202610141050-nano-banana-fine-print-zine",
    "kind": "explainer",
-   "publishedAt": "2026-10-14T10:50:00.000Z",
+   "publishedAt": "2026-10-14T05:50:00.000Z",
    "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
    "summary": "Google's new image model costs about half as much per picture, but input and text tokens now cost more. A zine-style explainer.",
    "durationSec": 54,
@@ -32,7 +32,7 @@
   {
    "id": "202610141040-722-math-papers-zine",
    "kind": "explainer",
-   "publishedAt": "2026-10-14T10:40:00.000Z",
+   "publishedAt": "2026-10-14T05:48:00.000Z",
    "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
    "summary": "722 manuscripts from a model the public can't use; fewer than a quarter have formalized main results and none are peer-reviewed yet. A Dada-collage explainer.",
    "durationSec": 61,
@@ -60,7 +60,7 @@
   {
    "id": "202610141030-wikimedia-agents-zine",
    "kind": "explainer",
-   "publishedAt": "2026-10-14T10:30:00.000Z",
+   "publishedAt": "2026-10-14T05:46:00.000Z",
    "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
    "summary": "Test edits, a changed citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says. A zine-style explainer.",
    "durationSec": 69,
@@ -84,7 +84,7 @@
   {
    "id": "202610141020-ai-can-invent-its-own-hiring-stereotypes",
    "kind": "explainer",
-   "publishedAt": "2026-10-14T10:20:00.000Z",
+   "publishedAt": "2026-10-14T05:44:00.000Z",
    "title": "Can AI invent its own stereotypes? In a hiring game, it did.",
    "summary": "In a Princeton and University of Chicago simulation, AI models' hiring became far more segregated by group than people's, though every candidate was equally good.",
    "durationSec": 46,
@@ -112,7 +112,7 @@
   {
    "id": "202610141010-character-ai-files-for-bankruptcy",
    "kind": "explainer",
-   "publishedAt": "2026-10-14T10:10:00.000Z",
+   "publishedAt": "2026-10-14T05:42:00.000Z",
    "title": "Character.AI files for bankruptcy. Disney bids $20 million for a licence, not the app.",
    "summary": "The chatbot company filed for Chapter 11 on October 12; if no buyer keeps the app running, it says the platform will be wound down.",
    "durationSec": 38,
@@ -140,7 +140,7 @@
   {
    "id": "202610141000-robots-and-jobs-night-city",
    "kind": "explainer",
-   "publishedAt": "2026-10-14T10:00:00.000Z",
+   "publishedAt": "2026-10-14T05:40:00.000Z",
    "title": "Robots and jobs: the 0.3% catch",
    "summary": "Robots can already do 74% of physical tasks in America, but are cheaper than people for just 0.3% of work. A night-city reel.",
    "durationSec": 36,
