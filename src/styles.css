@@ -216,7 +216,62 @@
   .stepped-down { animation: stepped-down 900ms cubic-bezier(.2,.7,.2,1) both, stepped-down-wash 2.6s ease-out 600ms both; }
   .moved-in { animation: stepped-down 900ms cubic-bezier(.2,.7,.2,1) both; }
 
+/* Living covers on the front-page stage (HeroMotif): small loops, each element on its own clock */
+.hm * { transform-box: fill-box; transform-origin: center; }
+@keyframes hm-tw { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+.hm-tw { animation: hm-tw 3.2s ease-in-out infinite; }
+@keyframes hm-pulse { 0%, 100% { opacity: 0.55; transform: scale(0.94); } 50% { opacity: 1; transform: scale(1.04); } }
+.hm-pulse { animation: hm-pulse 2.8s ease-in-out infinite; }
+@keyframes hm-orbit { to { transform: rotate(360deg); } }
+.hm-orbit { transform-box: view-box; animation: hm-orbit 14s linear infinite; }
+@keyframes hm-draw { 0% { stroke-dasharray: 1; stroke-dashoffset: 1; } 45%, 80% { stroke-dasharray: 1; stroke-dashoffset: 0; } 100% { stroke-dasharray: 1; stroke-dashoffset: -1; } }
+.hm-draw { animation: hm-draw 6s ease-in-out infinite; }
+@keyframes hm-pop { 0%, 100% { opacity: 0; transform: scale(0.6); } 12%, 70% { opacity: 1; transform: scale(1); } 85% { opacity: 0; transform: scale(0.9); } }
+.hm-pop { animation: hm-pop 4.2s cubic-bezier(.2,.8,.2,1.2) infinite both; }
+@keyframes hm-dots { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-6px); opacity: 1; } }
+.hm-dots { animation: hm-dots 0.9s ease-in-out infinite; }
+@keyframes hm-cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.hm-blink-cursor { animation: hm-cursor 1s steps(1) infinite; }
+@keyframes hm-run { from { stroke-dasharray: 0.12 0.88; stroke-dashoffset: 1; } to { stroke-dasharray: 0.12 0.88; stroke-dashoffset: 0; } }
+.hm-run { animation: hm-run 2.2s linear infinite; }
+@keyframes hm-flicker { 0%, 100% { opacity: 1; } 8% { opacity: 0.3; } 12% { opacity: 1; } 55% { opacity: 0.85; } 58% { opacity: 0.2; } 61% { opacity: 1; } }
+.hm-flicker { animation: hm-flicker 3.4s linear infinite; }
+@keyframes hm-eye { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+.hm-eye { animation: hm-eye 3.6s ease-in-out infinite; }
+@keyframes hm-eq { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+.hm-eq { transform-origin: bottom; animation: hm-eq 0.8s ease-in-out infinite; }
+@keyframes hm-paint { 0% { stroke-dasharray: 1; stroke-dashoffset: 1; } 35%, 85% { stroke-dasharray: 1; stroke-dashoffset: 0; } 100% { stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0; } }
+.hm-paint { animation: hm-paint 5s cubic-bezier(.6,.1,.3,1) infinite both; }
+@keyframes hm-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.hm-bob { animation: hm-bob 1.8s ease-in-out infinite; }
+@keyframes hm-tilt { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+.hm-tilt { transform-box: view-box; animation: hm-tilt 4s ease-in-out infinite; }
+.hm-hang-l, .hm-hang-r { transform-box: view-box; animation: hm-tilt 4s ease-in-out infinite reverse; }
+@keyframes hm-rise { 0% { transform: scaleY(0); } 30%, 85% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+.hm-rise { transform-origin: bottom; animation: hm-rise 5s cubic-bezier(.2,.7,.2,1) infinite both; }
+@keyframes hm-coin { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.08); } }
+.hm-coin { transform-box: view-box; animation: hm-coin 1.6s ease-in-out infinite; }
+@keyframes hm-sweep { to { transform: rotate(360deg); } }
+.hm-sweep { transform-box: view-box; animation: hm-sweep 3.6s linear infinite; }
+@keyframes hm-blip { 0%, 100% { opacity: 0; transform: scale(0.4); } 20% { opacity: 1; transform: scale(1.2); } 60% { opacity: 0.2; transform: scale(1); } }
+.hm-blip { animation: hm-blip 3.3s ease-out infinite; }
+/* Bias: four mixed colours drift into their own corners, then mix again */
+@keyframes hm-sort-0 { 0%, 15%, 100% { transform: none; } 45%, 75% { transform: translate(-60px, -40px); } }
+@keyframes hm-sort-1 { 0%, 15%, 100% { transform: none; } 45%, 75% { transform: translate(60px, -40px); } }
+@keyframes hm-sort-2 { 0%, 15%, 100% { transform: none; } 45%, 75% { transform: translate(-60px, 40px); } }
+@keyframes hm-sort-3 { 0%, 15%, 100% { transform: none; } 45%, 75% { transform: translate(60px, 40px); } }
+.hm-sort-0 { animation: hm-sort-0 7s cubic-bezier(.6,.1,.3,1) infinite; }
+.hm-sort-1 { animation: hm-sort-1 7s cubic-bezier(.6,.1,.3,1) infinite; }
+.hm-sort-2 { animation: hm-sort-2 7s cubic-bezier(.6,.1,.3,1) infinite; }
+.hm-sort-3 { animation: hm-sort-3 7s cubic-bezier(.6,.1,.3,1) infinite; }
+@keyframes hm-win { 0%, 100% { opacity: 0.25; } 40%, 60% { opacity: 1; } }
+.hm-win { animation: hm-win 5.4s ease-in-out infinite; }
+/* The photo breathes slowly while its slide is on stage */
+@keyframes hero-drift { from { transform: scale(1.0); } to { transform: scale(1.07) translate(-1%, -1%); } }
+.hero-drift { animation: hero-drift 14s ease-in-out infinite alternate; }
+
 @media (prefers-reduced-motion: reduce) {
+  .hm *, .hero-drift { animation: none !important; }
   .play-ring, .count-bump, .stepped-down, .moved-in { animation: none !important; }
   .press:active { transform: none; }
   .animate-ticker, .live-dot, .flash-new, .hero-in, .hero-kenburns, .live-in { animation: none !important; }

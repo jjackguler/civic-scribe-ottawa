@@ -8,6 +8,8 @@ import { StoryLink, storyKicker } from "./StoryCard";
 import { StoryImage } from "./StoryImage";
 import { mmss, originalKind, usePreviewOk } from "./Originals";
 import { editorialArtFor } from "@/lib/editorial-art";
+import { HeroMotif } from "./HeroMotif";
+import { motifFor } from "@/lib/hero-motif";
 
 /** One of our own productions (explainer or opening titles) on the stage. */
 export type OriginalSlide = { kind: "original"; original: Original };
@@ -146,6 +148,7 @@ function StoryStage({ s }: { s: StorySlide }) {
   const fr = locale === "fr";
   const d = display(s.story, locale);
   const art = editorialArtFor(s.story.id);
+  const motif = motifFor({ title: `${s.story.title} ${d.title}`, summary: d.summary, topic: s.story.topic });
   const [animateArt, setAnimateArt] = useState(false);
   return (
     <div>
@@ -156,16 +159,22 @@ function StoryStage({ s }: { s: StorySlide }) {
           animateArt && art.video ? <video src={art.video} poster={art.image} muted autoPlay loop playsInline className="absolute inset-0 h-full w-full object-contain" aria-label={art.alt[locale]} />
             : <img src={art.image} alt={art.alt[locale]} width={1200} height={900} fetchPriority="high" loading="eager" decoding="async" className="absolute inset-0 h-full w-full object-contain" />
         ) : s.story.image ? (
-          <div className="absolute inset-0">
-            <StoryImage src={s.story.image} alt="" eager plain className="h-full w-full object-contain" />
-          </div>
+          <>
+            <div className="absolute inset-0 hero-drift">
+              <StoryImage src={s.story.image} alt="" eager plain className="h-full w-full object-contain" />
+            </div>
+            {/* A small living sticker for what the story is about, in the corner, never on the photo's subject */}
+            <div className="absolute left-3 bottom-3 h-[72px] w-[96px] sm:h-[90px] sm:w-[120px] overflow-hidden border-2 border-signal shadow-[0_8px_24px_rgba(0,0,0,0.45)]" aria-hidden="true">
+              <HeroMotif motif={motif} seed={`${s.story.id}-b`} variant="badge" />
+            </div>
+          </>
         ) : (
-          <div className="absolute inset-0 bg-signal" aria-hidden="true">
-            <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--signal-ink) 0 2px, transparent 2px 22px)" }} />
-            <p className="absolute right-6 bottom-6 left-0 text-right masthead-serif text-signal-ink text-[3.4rem] sm:text-[4.8rem] lg:text-[5.6rem] leading-none whitespace-nowrap overflow-hidden">{storyKicker(s.story, locale)}</p>
+          <div className="absolute inset-0" aria-hidden="true">
+            <HeroMotif motif={motif} seed={s.story.id} />
+            <p className="absolute inset-x-0 bottom-0 bg-night/95 px-5 py-3 text-right masthead-serif text-signal text-[2.2rem] sm:text-[3rem] lg:text-[3.4rem] leading-none whitespace-nowrap overflow-hidden">{storyKicker(s.story, locale)}</p>
           </div>
         )}
-        {(art || s.story.image) && <span className="absolute top-3 right-3 bg-night/90 text-white/85 text-[0.7rem] px-2 py-1">{art ? (fr ? "Illustration IA · AI Broadsheet" : "AI illustration · AI Broadsheet") : `Photo: ${s.story.source}`}</span>}
+        <span className="absolute top-3 right-3 bg-night/90 text-white/85 text-[0.7rem] px-2 py-1">{art ? (fr ? "Illustration IA · AI Broadsheet" : "AI illustration · AI Broadsheet") : s.story.image ? `Photo: ${s.story.source}` : (fr ? "Illustration animée · AI Broadsheet" : "Animated illustration · AI Broadsheet")}</span>
       </div>
 
       <div className="lead-copy min-w-0 flex">
@@ -240,7 +249,7 @@ function OriginalStage({ o, onPlayingChange }: { o: Original; onPlayingChange: (
           <p className="mt-3 text-[0.85rem] text-white/65">
             {o.kind === "titles"
               ? (fr ? "Voix d'IA" : "AI voice")
-              : (fr ? "Voix d'IA, d'après " : "AI voice, from ") + o.sources.map(x => x.name).slice(0, 3).join(", ")}
+              : (/^no narration/i.test(o.voice) ? (fr ? "Sous-titres, d'après " : "Captions, from ") : (fr ? "Voix d'IA, d'après " : "AI voice, from ")) + o.sources.map(x => x.name).slice(0, 3).join(", ")}
           </p>
         </div>
         <div className="order-1 sm:order-2 justify-self-center sm:justify-self-end">
