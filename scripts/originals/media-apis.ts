@@ -15,8 +15,14 @@ export async function pickVoice(apiKey: string, wanted?: string): Promise<{ id: 
     const v = r?.ok ? await r.json().catch(() => null) as { name?: string } | null : null;
     return { id: wanted, name: v?.name || "custom" };
   }
-  const res = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": apiKey } });
-  if (!res.ok) { const body = await res.text(); throw limitError("ElevenLabs", res.status, body) ?? new Error(`ElevenLabs voices HTTP ${res.status}`); }
+  const res = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": apiKey }, signal: AbortSignal.timeout(30_000) });
+  if (!res.ok) {
+    const body = await res.text();
+    const limit = limitError("ElevenLabs", res.status, body); if (limit) throw limit;
+    // A valid key that may speak but not list voices: use the premade (stock) "Brian" voice by id, and say why.
+    console.log(`::warning title=ElevenLabs voice list::HTTP ${res.status} ${body.replace(/\s+/g, " ").slice(0, 160)}; using the premade voice Brian.`);
+    return { id: "nPczCjzI2devNBz1zQrb", name: "Brian" };
+  }
   const { voices } = await res.json() as { voices: { voice_id: string; name: string; category?: string }[] };
   // Only the platform's own stock voices: never a cloned voice of a real person.
   const stock = voices.filter(v => v.category === "premade");

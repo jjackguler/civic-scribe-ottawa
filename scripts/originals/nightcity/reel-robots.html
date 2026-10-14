@@ -1,0 +1,377 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  AI Broadsheet animated reel, 1080x1920, in the "night city" painterly language:
+  deep blue/teal night, one strong orange light, fog, fire escapes, lit windows,
+  small lone silhouettes. Every figure in the captions comes from the published
+  explainer "Robots can do 74% of physical tasks. So why aren't they taking the jobs?"
+  and its sources. The art is an illustration and says so on screen.
+  render-reel.mjs calls window.setup() once, then window.frame(t) per video frame.
+-->
+<style>
+@font-face{font-family:Bod;src:url("node_modules/@fontsource/bodoni-moda/files/bodoni-moda-latin-700-normal.woff2");font-weight:700}
+@font-face{font-family:Bod;src:url("node_modules/@fontsource/bodoni-moda/files/bodoni-moda-latin-800-italic.woff2");font-weight:800;font-style:italic}
+@font-face{font-family:Grot;src:url("node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2");font-weight:400 900}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#121212;--ivory:#EFE8DA;--red:#D9412B;--y:#F5C400}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0b1a24;color:var(--ivory)}
+canvas{position:absolute;inset:0}
+#mast{position:absolute;left:56px;top:96px;display:flex;align-items:center;gap:16px;z-index:5}
+#mast img{width:50px;height:50px}
+#mast b{font-family:Bod;font-weight:700;font-size:28px;letter-spacing:5px;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+#ill{position:absolute;right:56px;top:108px;z-index:5;font-family:Grot;font-weight:700;font-size:17px;letter-spacing:2.5px;background:rgba(18,18,18,.82);padding:8px 13px;border-left:3px solid var(--y)}
+#panel{position:absolute;left:56px;right:56px;bottom:360px;z-index:5;background:rgba(18,18,18,.88);padding:34px 42px 38px;border-top:5px solid var(--red)}
+#kick{display:flex;align-items:center;gap:16px;font-family:Grot;font-weight:800;font-size:24px;letter-spacing:4px;color:var(--red);margin-bottom:14px}
+#kick i{display:block;width:48px;height:5px;background:var(--red)}
+.line{font-family:Grot;font-weight:800;font-size:56px;line-height:1.12;letter-spacing:-.5px}
+.line em,.title em{font-style:normal;color:var(--y)}
+.title{font-family:Bod;font-weight:700;font-size:118px;line-height:1.0;letter-spacing:-1px;margin:4px 0 10px;padding-left:10px}
+.title em{font-style:italic;font-weight:800}
+.big{font-family:Bod;font-weight:800;font-style:italic;font-size:250px;line-height:.95;color:var(--y);margin:2px 0 6px;letter-spacing:-4px}
+.big small{font-size:110px;letter-spacing:0;margin-left:10px}
+.w{display:inline-block;will-change:transform}
+.bars{margin-top:22px;display:grid;gap:16px}
+.bar{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:18px;font-family:Grot;font-weight:800;font-size:30px}
+.bar span{display:block;height:58px;background:var(--y);color:var(--ink);font-size:30px;line-height:58px;padding-left:16px;white-space:nowrap;overflow:hidden}
+.bar.h span{background:var(--ivory)}
+.src{margin-top:20px;font-family:Grot;font-weight:600;font-size:21px;letter-spacing:2px;opacity:.75}
+#pin{position:absolute;z-index:4;display:none;font-family:Grot;font-weight:800;font-size:28px;background:var(--y);color:var(--ink);padding:10px 14px;white-space:nowrap}
+#pinline{position:absolute;inset:0;z-index:4;pointer-events:none}
+</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<svg id="pinline" width="1080" height="1920"></svg><div id="pin"></div>
+<div id="mast"><img src="mark.svg" alt=""><b>AI BROADSHEET</b></div>
+<div id="ill">ILLUSTRATION</div>
+<div id="panel"></div>
+<script>
+const W = 1080, H = 1920, FPS = 30;
+let seed = 74;
+const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const R = (a, b) => a + rnd() * (b - a);
+const hsl = (h, s, l, a = 1) => `hsla(${h},${s}%,${l}%,${a})`;
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const out = (x) => 1 - Math.pow(1 - clamp(x), 3);
+// a cheap deterministic hash for per-frame flicker
+const hash = (n) => { const s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s); };
+
+function layer(w, h, fn) { const c = document.createElement("canvas"); c.width = w; c.height = h; fn(c.getContext("2d"), w, h); return c; }
+
+// ── the painter: a base fill, then many short translucent strokes and drips ──
+function paint(g, x, y, w, h, [hh, s, l], o = {}) {
+  const { n = Math.round(w * h / 380), ang = Math.PI / 2, aj = .3, len = [18, 80], wid = [3, 11], dl = 8, dh = 6, a = [.07, .22], drips = 0, base = true, clip } = o;
+  g.save(); g.beginPath(); clip ? clip(g) : g.rect(x, y, w, h); g.clip();
+  if (base) { g.fillStyle = hsl(hh, s, l); g.fillRect(x, y, w, h); }
+  g.lineCap = "round";
+  for (let i = 0; i < n; i++) {
+    const cx = x + rnd() * w, cy = y + rnd() * h, an = ang + (rnd() * 2 - 1) * aj, L = R(...len);
+    g.strokeStyle = hsl(hh + (rnd() * 2 - 1) * dh, clamp(s + (rnd() * 2 - 1) * 6, 0, 100), clamp(l + (rnd() * 2 - 1) * dl, 0, 100), R(...a));
+    g.lineWidth = R(...wid); g.beginPath();
+    g.moveTo(cx - Math.cos(an) * L / 2, cy - Math.sin(an) * L / 2);
+    g.quadraticCurveTo(cx + R(-6, 6), cy + R(-6, 6), cx + Math.cos(an) * L / 2, cy + Math.sin(an) * L / 2); g.stroke();
+  }
+  for (let i = 0; i < drips; i++) {
+    const dx = x + rnd() * w, dy = y + rnd() * h * .7, L = R(40, 280), gr = g.createLinearGradient(0, dy, 0, dy + L);
+    gr.addColorStop(0, hsl(hh, s, l - 12, .4)); gr.addColorStop(1, hsl(hh, s, l - 12, 0));
+    g.strokeStyle = gr; g.lineWidth = R(2, 7); g.beginPath(); g.moveTo(dx, dy); g.lineTo(dx + R(-3, 3), dy + L); g.stroke();
+  }
+  g.restore();
+}
+function glow(g, x, y, r, col, a = 1) {
+  const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, col); gr.addColorStop(1, "rgba(0,0,0,0)");
+  g.save(); g.globalCompositeOperation = "lighter"; g.globalAlpha = a; g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); g.restore();
+}
+function vgrad(g, x, y, w, h, stops) { const gr = g.createLinearGradient(0, y, 0, y + h); stops.forEach(([p, c]) => gr.addColorStop(p, c)); g.fillStyle = gr; g.fillRect(x, y, w, h); }
+function person(g, x, y, s, col, pose = "stand") { // a small silhouette, feet at (x, y), height s
+  g.save(); g.fillStyle = col; g.strokeStyle = col; g.lineCap = "round";
+  if (pose === "crouch") {
+    g.beginPath(); g.arc(x, y - s * .55, s * .09, 0, 7); g.fill();
+    g.beginPath(); g.moveTo(x - s * .16, y - s * .44); g.quadraticCurveTo(x + s * .02, y - s * .52, x + s * .14, y - s * .40); g.lineTo(x + s * .18, y - s * .06); g.lineTo(x - s * .22, y); g.closePath(); g.fill();
+    g.lineWidth = s * .05; g.beginPath(); g.moveTo(x - s * .1, y - s * .38); g.lineTo(x - s * .32, y - s * .26); g.stroke();
+  } else if (pose === "sit") {
+    g.beginPath(); g.arc(x, y - s * .62, s * .1, 0, 7); g.fill();
+    g.fillRect(x - s * .12, y - s * .52, s * .24, s * .3); g.fillRect(x - s * .12, y - s * .24, s * .38, s * .08); g.fillRect(x + s * .2, y - s * .24, s * .07, s * .24);
+  } else {
+    g.beginPath(); g.arc(x, y - s * .9, s * .085, 0, 7); g.fill();
+    g.beginPath(); g.moveTo(x - s * .15, y - s * .78); g.lineTo(x + s * .15, y - s * .78); g.lineTo(x + s * .11, y - s * .42); g.lineTo(x + s * .09, y); g.lineTo(x + s * .02, y); g.lineTo(x, y - s * .36);
+    g.lineTo(x - s * .02, y); g.lineTo(x - s * .09, y); g.lineTo(x - s * .11, y - s * .42); g.closePath(); g.fill();
+    if (pose === "phone") { g.lineWidth = s * .055; g.beginPath(); g.moveTo(x + s * .12, y - s * .74); g.quadraticCurveTo(x + s * .24, y - s * .64, x + s * .12, y - s * .58); g.stroke(); }
+    if (pose === "walk") { g.lineWidth = s * .06; g.beginPath(); g.moveTo(x, y - s * .38); g.lineTo(x + s * .14, y); g.stroke(); g.fillRect(x + s * .12, y - s * .5, s * .16, s * .12); }
+  }
+  g.restore();
+}
+function railing(g, x1, x2, y, h, col, step = 14) {
+  g.strokeStyle = col; g.lineWidth = 3; g.beginPath(); g.moveTo(x1, y - h); g.lineTo(x2, y - h); g.moveTo(x1, y - h * .5); g.lineTo(x2, y - h * .5); g.stroke();
+  g.lineWidth = 2; g.beginPath(); for (let x = x1; x <= x2; x += step) { g.moveTo(x, y - h); g.lineTo(x, y); } g.stroke();
+}
+function stairs(g, x1, y1, x2, y2, col) {
+  g.strokeStyle = col; g.lineWidth = 4; g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.moveTo(x1, y1 - 70); g.lineTo(x2, y2 - 70); g.stroke();
+  g.lineWidth = 3; const n = 12; g.beginPath(); for (let i = 1; i < n; i++) { const t = i / n, x = x1 + (x2 - x1) * t, y = y1 + (y2 - y1) * t; g.moveTo(x - 14, y); g.lineTo(x + 14, y); } g.stroke();
+}
+
+// ── scenes ──────────────────────────────────────────────────────────────────
+// Each scene: prerendered painted layers in build(), animated parts in draw(g, t).
+const S = {};
+
+S.roof = { build() { // ref: lone figure on an orange-lit ledge over a night city
+  this.sky = layer(W, H, (g) => {
+    vgrad(g, 0, 0, W, H, [[0, hsl(208, 55, 9)], [.5, hsl(203, 50, 19)], [.75, hsl(200, 45, 24)], [1, hsl(205, 45, 14)]]);
+    paint(g, 0, 0, W, H, [204, 48, 18], { base: false, ang: 0, aj: .15, len: [60, 200], wid: [8, 26], a: [.03, .08], n: 1400, dl: 9 });
+    glow(g, 790, 540, 120, "rgba(255,190,120,.35)"); g.fillStyle = hsl(36, 90, 72); g.beginPath(); g.arc(790, 540, 15, 0, 7); g.fill();
+    this.lights = [];
+    for (let x = 640; x < W + 40; x += R(50, 120)) { const top = R(1020, 1360), w = R(60, 130);
+      paint(g, x, top, w, H - top, [206, 38, R(15, 22)], { n: 220, a: [.05, .14] });
+      for (let yy = top + 30; yy < H; yy += 34) for (let xx = x + 10; xx < x + w - 10; xx += 22) if (rnd() < .22) this.lights.push([xx, yy, rnd() < .8 ? 42 : 200, R(1.6, 3.6), rnd() * 9]);
+    }
+    for (let i = 0; i < 260; i++) this.lights.push([R(620, W), R(980, 1300), 45, R(1.2, 2.4), rnd() * 9]);
+    vgrad(g, 0, 1150, W, 770, [[0, hsl(203, 45, 22, 0)], [.6, hsl(203, 45, 20, .55)], [1, hsl(206, 45, 12, .8)]]);
+  });
+  this.tower = layer(W, H, (g) => {
+    paint(g, -20, 300, 650, 1640, [207, 48, 19], { drips: 46, n: 4200 });
+    paint(g, -20, 300, 650, 1640, [160, 30, 27], { base: false, n: 700, a: [.03, .09], wid: [6, 20] });
+    paint(g, -20, 284, 620, 30, [210, 25, 32], { n: 120 });
+    g.strokeStyle = hsl(210, 20, 30); g.lineWidth = 3; g.beginPath(); g.moveTo(140, 284); g.lineTo(140, 230); g.moveTo(120, 240); g.lineTo(165, 240); g.moveTo(420, 284); g.lineTo(424, 210); g.stroke();
+    for (const wx of [110, 335]) { paint(g, wx, 1150, 150, 200, [212, 30, 12], { n: 90 }); g.strokeStyle = hsl(200, 15, 62, .8); g.lineWidth = 4; g.strokeRect(wx, 1150, 150, 200); g.beginPath(); g.moveTo(wx + 75, 1150); g.lineTo(wx + 75, 1350); g.moveTo(wx, 1230); g.lineTo(wx + 150, 1230); g.stroke(); paint(g, wx - 12, 1350, 174, 16, [205, 18, 55], { n: 40 }); }
+    const orange = [22, 100, 52];
+    paint(g, 590, 330, 120, 500, orange, { drips: 12, n: 700, dl: 9, clip: (c) => { c.moveTo(590, 340); c.lineTo(690, 330); c.lineTo(720, 360); c.lineTo(712, 830); c.lineTo(590, 830); c.closePath(); } });
+    paint(g, 580, 818, 250, 44, [205, 20, 58], { n: 160 }); paint(g, 580, 852, 250, 12, [20, 90, 45], { n: 40 });
+    paint(g, 650, 862, 122, 1080, orange, { drips: 22, n: 1500, dl: 10 });
+    paint(g, 650, 862, 26, 1080, [15, 80, 30], { n: 200, a: [.15, .35] });
+    glow(g, 405, 1520, 26, "rgba(255,120,40,.9)"); g.fillStyle = hsl(24, 100, 55); g.beginPath(); g.arc(405, 1520, 9, 0, 7); g.fill();
+  });
+},
+draw(g, t, d) {
+  const s = 1.12 - .12 * ease(t / d);
+  g.save(); g.translate(W / 2, H / 2); g.scale(s, s); g.translate(-700, -980);
+  g.drawImage(this.sky, 0, 0);
+  for (const [x, y, hue, r, ph] of this.lights) { g.fillStyle = hsl(hue, 90, 68, .55 + .45 * Math.sin(t * 2.2 + ph)); g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+  g.drawImage(this.tower, 0, 0);
+  person(g, 762, 820, 128, hsl(212, 45, 6), "phone");
+  const on = clamp((t - 1.4) / .4); if (on > 0) { glow(g, 792, 728, 46, "rgba(150,230,255,.8)", on); }
+  g.restore();
+} };
+
+S.tenement = { build() { // ref: tall brick tenement with fire escape in warm fog
+  this.L = layer(W, 2700, (g) => {
+    vgrad(g, 0, 0, W, 2700, [[0, hsl(80, 8, 40)], [1, hsl(70, 9, 33)]]);
+    for (let i = 0; i < 9; i++) { const x = R(-80, 980), w = R(180, 320), top = R(80, 900);
+      paint(g, x, top, w, 2700 - top, [80, 6, R(36, 47)], { n: 900, a: [.04, .1] });
+      for (let yy = top + 80; yy < 2700; yy += 150) for (let xx = x + 30; xx < x + w - 60; xx += 90) { g.fillStyle = rnd() < .12 ? hsl(34, 90, 62, .8) : hsl(80, 6, 30, .5); g.fillRect(xx, yy, 46, 70); }
+    }
+    vgrad(g, 0, 0, W, 2700, [[0, hsl(80, 8, 45, .35)], [1, hsl(80, 8, 40, .15)]]);
+    paint(g, 60, 1560, 200, 1140, [30, 28, 38], { n: 900, drips: 10 });
+    paint(g, 180, 300, 720, 1250, [14, 14, 35], { n: 4200, drips: 30 });
+    paint(g, 180, 1550, 720, 1150, [6, 52, 37], { n: 4200, drips: 26 });
+    const gr = g.createRadialGradient(720, 2400, 20, 720, 2400, 700); gr.addColorStop(0, "rgba(255,120,50,.55)"); gr.addColorStop(1, "rgba(255,120,50,0)");
+    g.save(); g.globalCompositeOperation = "lighter"; g.fillStyle = gr; g.fillRect(180, 1550, 720, 1150); g.restore();
+    paint(g, 160, 270, 760, 34, [20, 10, 18], { n: 120 }); railing(g, 200, 880, 270, 70, hsl(20, 10, 14), 18);
+    this.wins = [];
+    for (let r = 0; r < 7; r++) for (const wx of [250, 470, 700]) { const wy = 420 + r * 300; this.wins.push({ x: wx, y: wy, w: 110, h: 170, on: R(.3, 4.2), who: rnd() < .45 ? pick(["sit", "stand", "sit"]) : null });
+      g.fillStyle = hsl(20, 12, 13); g.fillRect(wx - 8, wy - 8, 126, 186); g.fillStyle = hsl(205, 12, 20); g.fillRect(wx, wy, 110, 170); }
+    const iron = hsl(15, 15, 9);
+    for (let r = 0; r < 7; r++) { const y = 420 + r * 300 + 200; g.fillStyle = iron; g.fillRect(400, y, 280, 8); railing(g, 400, 680, y, 70, iron, 13);
+      if (r < 6) stairs(g, r % 2 ? 420 : 660, y + 300, r % 2 ? 640 : 440, y + 8, iron); }
+    paint(g, 0, 2620, W, 80, [20, 10, 12], { n: 200 });
+    glow(g, 70, 2430, 90, "rgba(255,190,110,.7)"); g.strokeStyle = hsl(20, 10, 12); g.lineWidth = 6; g.beginPath(); g.moveTo(60, 2700); g.lineTo(60, 2440); g.stroke();
+  });
+},
+draw(g, t, d) {
+  const off = 780 * (1 - ease(t / d)); g.save(); g.translate(0, -off); g.drawImage(this.L, 0, 0);
+  for (const w of this.wins) { const k = clamp((t - w.on) / .25); if (!k) continue;
+    const f = .85 + .15 * hash(Math.floor(t * 8) + w.x * w.y);
+    const gr = g.createLinearGradient(0, w.y, 0, w.y + w.h); gr.addColorStop(0, hsl(38, 100, 72, k * f)); gr.addColorStop(1, hsl(28, 95, 55, k * f));
+    g.fillStyle = gr; g.fillRect(w.x, w.y, w.w, w.h);
+    g.fillStyle = hsl(20, 60, 30, .35 * k); g.fillRect(w.x + w.w * .62, w.y, w.w * .38, w.h);
+    if (w.who) person(g, w.x + 42, w.y + w.h, 120, hsl(20, 40, 12, .9 * k), w.who);
+    glow(g, w.x + w.w / 2, w.y + w.h / 2, 120, `rgba(255,170,80,${.25 * k})`);
+  }
+  g.restore();
+} };
+function pick(a) { return a[Math.floor(rnd() * a.length)]; }
+
+S.city = { build() { // ref: foggy teal city whose windows light up one by one
+  this.wins = [];
+  this.L = layer(W, H, (g) => {
+    vgrad(g, 0, 0, W, H, [[0, hsl(206, 60, 10)], [.55, hsl(196, 48, 24)], [1, hsl(200, 45, 13)]]);
+    paint(g, 0, 0, W, H, [200, 45, 20], { base: false, ang: 0, len: [80, 220], wid: [10, 30], a: [.03, .07], n: 900 });
+    const rows = [[680, 26, 36, .5], [860, 20, 26, .3], [1080, 15, 18, 0]];
+    for (const [base, l, step, fog] of rows) { let x = -40;
+      while (x < W) { const w = R(90, 200), top = base - R(0, 520) + (base > 1000 ? 120 : 0);
+        paint(g, x, top, w, H - top, [205, 38, l + R(-3, 3)], { n: Math.round(w * (H - top) / 900), a: [.05, .14], drips: 4 });
+        for (let yy = top + 26; yy < H - 340; yy += step) for (let xx = x + 12; xx < x + w - 14; xx += step * .8) if (rnd() < .55) this.wins.push([xx, yy, step * .42, step * .55, fog, rnd()]);
+        x += w + R(4, 30); }
+      if (fog) vgrad(g, 0, base - 500, W, 1400, [[0, hsl(198, 40, 30, 0)], [.5, hsl(198, 40, 30, fog * .5)], [1, hsl(198, 40, 24, 0)]]);
+    }
+    vgrad(g, 0, 1500, W, 420, [[0, hsl(205, 45, 12, 0)], [1, hsl(205, 45, 9, .9)]]);
+  });
+  this.wins.sort((a, b) => a[5] - b[5]);
+},
+draw(g, t, d) {
+  const s = 1 + .06 * ease(t / d); g.save(); g.translate(W / 2, H / 2); g.scale(s, s); g.translate(-W / 2, -H / 2);
+  g.drawImage(this.L, 0, 0);
+  const n = Math.floor(this.wins.length * out((t - .35) / 2.4));
+  for (let i = 0; i < n; i++) { const [x, y, w, h, fog, r] = this.wins[i]; g.fillStyle = r < .08 ? hsl(190, 80, 75, .9 - fog) : hsl(34 + r * 12, 100, 62 + r * 10, .95 - fog); g.fillRect(x, y, w, h); }
+  g.restore();
+} };
+
+S.wall = { build() { // ref: a vast blue wall and one small orange doorway
+  this.L = layer(W, H, (g) => {
+    vgrad(g, 0, 0, W, H, [[0, hsl(205, 75, 30)], [.75, hsl(204, 72, 44)], [1, hsl(208, 60, 26)]]);
+    paint(g, 0, 0, W, H, [204, 70, 38], { base: false, ang: 0, len: [80, 240], wid: [12, 34], a: [.03, .07], n: 900 });
+    paint(g, 700, 760, 420, 1100, [207, 60, 34], { n: 900, a: [.03, .07] }); vgrad(g, 700, 760, 420, 1100, [[0, hsl(204, 72, 42, .4)], [1, hsl(204, 72, 44, .55)]]);
+    paint(g, -10, -10, 540, 1790, [214, 74, 21], { n: 3200, a: [.04, .1], dl: 4 });
+    paint(g, 300, 1455, 172, 305, [208, 22, 62], { n: 300, dl: 5 });
+    paint(g, 296, 1448, 180, 12, [210, 20, 40], { n: 30 });
+    g.fillStyle = hsl(210, 25, 30); for (let i = 0; i < 4; i++) g.fillRect(310, 1710 + i * 13, 80, 10);
+    paint(g, 400, 1600, 40, 50, [28, 100, 55], { n: 30 }); paint(g, 476, 1612, 92, 26, [24, 100, 52], { n: 30 }); paint(g, 476, 1600, 92, 12, [210, 20, 40], { n: 10 });
+    g.strokeStyle = hsl(214, 50, 8); g.lineWidth = 7; g.beginPath(); g.moveTo(278, 1760); g.lineTo(278, 1330); g.quadraticCurveTo(280, 1290, 318, 1292); g.stroke();
+    glow(g, 320, 1300, 60, "rgba(255,220,150,.9)"); glow(g, 320, 1420, 220, "rgba(255,200,120,.18)");
+    paint(g, 0, 1760, W, 160, [214, 45, 10], { n: 500, ang: 0 }); g.fillStyle = hsl(205, 40, 40, .5); g.fillRect(0, 1760, 700, 5);
+    person(g, 490, 1760, 70, hsl(214, 60, 7)); person(g, 690, 1770, 82, hsl(214, 60, 7), "walk");
+    g.fillStyle = hsl(214, 50, 8); g.beginPath(); g.roundRect(800, 1712, 160, 48, 12); g.fill(); g.beginPath(); g.roundRect(830, 1688, 92, 34, 10); g.fill();
+    g.fillStyle = hsl(46, 100, 55); g.fillRect(864, 1680, 26, 8); g.fillStyle = hsl(214, 50, 4); for (const x of [830, 930]) { g.beginPath(); g.arc(x, 1762, 14, 0, 7); g.fill(); }
+    glow(g, 962, 1730, 30, "rgba(255,240,200,.8)"); glow(g, 620, 1745, 26, "rgba(255,255,230,.8)"); glow(g, 640, 1745, 26, "rgba(255,255,230,.8)");
+    g.strokeStyle = hsl(214, 50, 10); g.lineWidth = 4; g.beginPath(); g.moveTo(1030, 1760); g.lineTo(1030, 1500); g.lineTo(1000, 1495); g.stroke(); glow(g, 1000, 1500, 26, "rgba(255,220,160,.6)");
+  });
+  this.door = { x: 330, y: 1653, w: 58, h: 107 }; // 58 x 107 = 6,206 px², 0.30% of the 1080 x 1920 frame
+},
+draw(g, t, d) {
+  const k = ease((t - .5) / 2.6), s = 5 - 4 * k, D = this.door, cx = D.x + D.w / 2 + (W / 2 - D.x - D.w / 2) * k, cy = D.y + D.h / 2 + (H / 2 - D.y - D.h / 2) * k;
+  g.save(); g.translate(W / 2, H / 2); g.scale(s, s); g.translate(-cx, -cy); g.drawImage(this.L, 0, 0);
+  const gr = g.createLinearGradient(0, D.y, 0, D.y + D.h); gr.addColorStop(0, hsl(36, 100, 62)); gr.addColorStop(1, hsl(26, 100, 52)); g.fillStyle = gr; g.fillRect(D.x, D.y, D.w, D.h);
+  g.fillStyle = hsl(20, 60, 25, .55); g.fillRect(D.x + 10, D.y + 18, 12, 16);
+  person(g, D.x + 18, D.y + D.h, 46, hsl(20, 60, 12), "sit"); g.fillStyle = hsl(20, 50, 15); g.fillRect(D.x + 30, D.y + D.h - 26, 22, 4);
+  glow(g, D.x + D.w / 2, D.y + D.h, 90, "rgba(255,150,60,.35)");
+  g.restore();
+  this.screenDoor = { x: (D.x - cx) * s + W / 2, y: (D.y - cy) * s + H / 2, w: D.w * s, h: D.h * s, k };
+} };
+
+S.escape = { build() { // ref: fire escape on red brick in warm raking light
+  this.L = layer(W, H, (g) => {
+    paint(g, 0, 0, W, H, [8, 50, 29], { n: 2600, ang: 0, aj: .05, len: [16, 34], wid: [8, 14], a: [.1, .25], dl: 7 });
+    g.strokeStyle = hsl(10, 30, 16, .35); g.lineWidth = 2; for (let y = 0; y < H; y += 22) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+    paint(g, 0, 0, 230, H, [32, 22, 44], { n: 900, drips: 8 });
+    for (let y = 120; y < H; y += 400) { paint(g, 40, y, 140, 220, [195, 20, 22], { n: 60 }); g.strokeStyle = hsl(32, 18, 30); g.lineWidth = 8; g.strokeRect(40, y, 140, 220); }
+    for (let y = 160; y < H; y += 500) for (const x of [300, 760]) { const gr = g.createLinearGradient(x, y, x + 180, y + 260); gr.addColorStop(0, hsl(190, 30, 34)); gr.addColorStop(1, hsl(205, 30, 14)); g.fillStyle = gr; g.fillRect(x, y, 180, 270); g.strokeStyle = hsl(15, 30, 18); g.lineWidth = 10; g.strokeRect(x, y, 180, 270); }
+    const lit = g.createLinearGradient(W, 0, 300, 900); lit.addColorStop(0, "rgba(255,140,60,.45)"); lit.addColorStop(1, "rgba(255,140,60,0)");
+    g.save(); g.globalCompositeOperation = "lighter"; g.fillStyle = lit; g.fillRect(0, 0, W, H); g.restore();
+    const esc = (dx, dy, col, a) => { g.save(); g.translate(dx, dy); g.globalAlpha = a;
+      for (const y of [560, 1080, 1600]) { g.fillStyle = col; g.beginPath(); g.moveTo(250, y); g.lineTo(920, y); g.lineTo(960, y + 40); g.lineTo(290, y + 40); g.closePath(); g.fill(); railing(g, 250, 920, y, 110, col, 16); }
+      stairs(g, 860, 1080, 380, 600, col); stairs(g, 380, 1600, 860, 1120, col); g.restore(); };
+    esc(46, 34, "rgba(20,5,0,.9)", .35); esc(0, 0, hsl(15, 20, 7), 1);
+    for (let i = 0; i < 5; i++) paint(g, 300 + (i % 3) * 78 + (i > 2 ? 40 : 0), 460 - (i > 2 ? 70 : 0), 72, 70, [30, 45, 46], { n: 40 });
+  });
+},
+draw(g, t, d) {
+  const x = -30 * ease(t / d); g.save(); g.translate(x, 0); g.drawImage(this.L, 0, 0);
+  person(g, 720, 560, 140, hsl(15, 30, 6), "crouch");
+  const on = clamp((t - 2.7) / .2);
+  if (on) { const ex = 680, ey = 540; glow(g, ex, ey, 160 + 30 * hash(Math.floor(t * 30)), "rgba(255,220,150,.8)", on);
+    g.save(); g.globalCompositeOperation = "lighter"; g.lineCap = "round";
+    for (let k = 0; k < 90; k++) { const born = 2.7 + k * .035, age = t - born; if (age < 0) continue; const a = age % .9; const vx = (hash(k) - .5) * 520, vy = -hash(k + 9) * 380;
+      const px = ex + vx * a, py = ey + vy * a + 600 * a * a; g.strokeStyle = hsl(38 + hash(k + 3) * 20, 100, 70, 1 - a / .9); g.lineWidth = 3; g.beginPath(); g.moveTo(px, py); g.lineTo(px - vx * .02, py - (vy + 1200 * a) * .02); g.stroke(); }
+    g.restore(); }
+  g.restore();
+} };
+
+S.street = { build() { // ref: painterly orange and teal street with old cars
+  this.L = layer(W, H, (g) => {
+    vgrad(g, 0, 0, W, 500, [[0, hsl(195, 40, 8)], [1, hsl(185, 35, 16)]]);
+    paint(g, 380, 0, 300, 520, [5, 50, 32], { n: 500 });
+    paint(g, 0, 120, 330, 1350, [52, 35, 33], { n: 2400, drips: 14 });
+    paint(g, 310, 380, 350, 1090, [18, 88, 48], { n: 2600, drips: 16, dl: 10 });
+    paint(g, 640, 60, 440, 1410, [168, 45, 40], { n: 2800, drips: 16 });
+    paint(g, 640, 60, 440, 1410, [190, 40, 25], { base: false, n: 600, a: [.05, .12], wid: [10, 26] });
+    g.fillStyle = hsl(20, 40, 12); g.beginPath(); g.moveTo(410, 1440); g.lineTo(410, 1180); g.arc(485, 1180, 75, Math.PI, 0); g.lineTo(560, 1440); g.closePath(); g.fill();
+    paint(g, 420, 1190, 130, 250, [20, 45, 20], { n: 120, clip: (c) => { c.moveTo(420, 1440); c.lineTo(420, 1185); c.arc(485, 1185, 65, Math.PI, 0); c.lineTo(550, 1440); c.closePath(); } });
+    g.fillStyle = hsl(20, 30, 20); g.fillRect(400, 1440, 170, 30);
+    this.wins = [[40, 300, 110, 170], [190, 520, 100, 160], [740, 260, 110, 170], [900, 420, 100, 160], [760, 760, 110, 170], [380, 520, 90, 120]];
+    for (const [x, y, w, h] of this.wins) { g.fillStyle = hsl(20, 30, 15); g.fillRect(x - 8, y - 8, w + 16, h + 16); }
+    paint(g, 0, 1450, W, 470, [36, 22, 22], { n: 3800, ang: 0, aj: .5, len: [10, 26], wid: [8, 16], a: [.15, .35], dl: 12 });
+    const pool = g.createRadialGradient(500, 1560, 20, 500, 1560, 520); pool.addColorStop(0, "rgba(255,190,90,.45)"); pool.addColorStop(1, "rgba(255,190,90,0)");
+    g.save(); g.globalCompositeOperation = "lighter"; g.fillStyle = pool; g.fillRect(0, 1400, W, 520); g.restore();
+    g.strokeStyle = hsl(20, 20, 8, .8); g.lineWidth = 3; g.beginPath(); g.moveTo(0, 360); g.quadraticCurveTo(500, 470, W, 330); g.moveTo(0, 420); g.quadraticCurveTo(560, 540, W, 400); g.stroke();
+    const car = (x, y, s) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = hsl(205, 18, 30); g.beginPath(); g.moveTo(-150, 0); g.quadraticCurveTo(-150, -70, -90, -80); g.quadraticCurveTo(-40, -150, 40, -140); g.quadraticCurveTo(110, -130, 130, -70); g.quadraticCurveTo(160, -60, 160, 0); g.closePath(); g.fill();
+      g.fillStyle = hsl(205, 25, 14); g.beginPath(); g.moveTo(-60, -85); g.quadraticCurveTo(-20, -130, 40, -128); g.quadraticCurveTo(90, -120, 105, -80); g.closePath(); g.fill();
+      g.fillStyle = hsl(205, 30, 8); for (const wx of [-95, 105]) { g.beginPath(); g.arc(wx, 0, 32, 0, 7); g.fill(); } g.fillStyle = hsl(40, 70, 55, .7); g.fillRect(120, -60, 24, 10); g.restore(); };
+    car(220, 1600, .9); car(840, 1760, 1.3);
+    paint(g, 0, 0, W, H, [30, 30, 40], { base: false, n: 1600, a: [.02, .05], wid: [10, 24] });
+  });
+},
+draw(g, t, d) {
+  const s = 1 + .07 * ease(t / d); g.save(); g.translate(W / 2, H * .55); g.scale(s, s); g.translate(-W / 2, -H * .55); g.drawImage(this.L, 0, 0);
+  this.wins.forEach(([x, y, w, h], i) => { const f = .8 + .2 * hash(Math.floor(t * 6) + i * 13); const gr = g.createLinearGradient(0, y, 0, y + h); gr.addColorStop(0, hsl(40, 100, 70, f)); gr.addColorStop(1, hsl(28, 95, 52, f)); g.fillStyle = gr; g.fillRect(x, y, w, h); g.fillStyle = hsl(20, 40, 15, .7); g.fillRect(x + w / 2 - 3, y, 6, h); g.fillRect(x, y + h * .45, w, 6); });
+  for (const [x, y] of [[485, 1090], [120, 760], [990, 640]]) { glow(g, x, y, 200, "rgba(255,180,90,.35)"); glow(g, x, y, 36, `rgba(255,230,160,${.85 + .15 * Math.sin(t * 9 + x)})`); }
+  g.restore();
+} };
+
+// ── timeline: scene, length (s), captions (local start time) ─────────────────
+const SRC = "SOURCES: ANTHROPIC RESEARCH · DIGITAL TODAY · NEOTEO";
+const TL = [
+  { s: "roof", d: 4.6, caps: [{ t: 0, kick: "New study", pre: "Robots can already do", big: { to: 74, fmt: (v) => Math.round(v) + "%" }, post: "of physical tasks in America." }] },
+  { s: "tenement", d: 4.4, caps: [{ t: 0, kick: "So", title: "Why haven't they [taken those jobs]?" }] },
+  { s: "city", d: 4.8, caps: [{ t: 0, kick: "The study", pre: "Anthropic, the company behind Claude, had its AI rate", big: { to: 19000, fmt: (v) => Math.round(v).toLocaleString("en-US") }, post: "job tasks. Many robot tasks only work in [factory-like settings]." }] },
+  { s: "wall", d: 5.2, caps: [{ t: 0, top: true, kick: "The catch", pre: "Robots are cheaper than people for just", big: { to: .3, fmt: (v) => v.toFixed(1) + "%" }, post: "of work." }] },
+  { s: "escape", d: 6.2, caps: [
+    { t: 0, kick: "One win", pre: "[Packing boxes.] A year of work costs about:", bars: [["Robot", 45, "$45,000"], ["Worker", 49, "$49,000"]] },
+    { t: 3, kick: "But", pre: "Welding robots cost about", big: { to: 5, fmt: (v) => Math.round(v) + "×", from: 1 }, post: "as much as welders. Dishwashing robots: [several times] more." }] },
+  { s: "street", d: 5.4, caps: [{ t: 0, kick: "The pace", pre: "Robot costs fall about 3% a year. At that pace, it takes about", big: { to: 40, fmt: (v) => Math.round(v) + "<small>years</small>" }, post: "before they're cheaper for even [10% of work]." }] },
+  { s: "roof", d: 5.6, cam: "end", caps: [
+    { t: 0, kick: "Who's most exposed", title: "Most: [drivers]. Least: [nurses]." },
+    { t: 2.6, kick: "Your turn", title: "What's your [job]?", post: "Tell us below.", src: SRC }] },
+];
+const DUR = TL.reduce((a, x) => a + x.d, 0), XF = .45;
+
+// ── captions ────────────────────────────────────────────────────────────────
+const panel = document.getElementById("panel"); let curCap = null;
+const words = (s, cls) => { let on = false; // "[key words]" turn yellow, word by word
+  return `<div class="${cls}">` + s.split(" ").map((w) => { let em = on; if (w.startsWith("[")) { on = em = true; w = w.slice(1); }
+    if (w.includes("]")) { w = w.replace("]", ""); on = false; } return `<span class="w">${em ? `<em>${w}</em>` : w}</span>`; }).join(" ") + "</div>"; };
+function capHTML(c) {
+  let h = `<div id="kick"><i></i><span>${c.kick.toUpperCase()}</span></div>`;
+  if (c.title) h += words(c.title, "title");
+  if (c.pre) h += words(c.pre, "line");
+  if (c.big) h += `<div class="big" id="bignum"></div>`;
+  if (c.post) h += words(c.post, "line");
+  if (c.bars) h += `<div class="bars">` + c.bars.map(([who, v, lab], i) => `<div class="bar ${i ? "h" : ""}"><b>${who}</b><div><span data-v="${v}">${lab}</span></div></div>`).join("") + `</div>`;
+  if (c.src) h += `<div class="src">${c.src}</div>`;
+  return h;
+}
+function updateCaps(c, lt) {
+  if (curCap !== c) { panel.innerHTML = capHTML(c); curCap = c; }
+  panel.querySelectorAll(".w").forEach((el, i) => { const k = out((lt - .15 - i * .05) / .3); el.style.opacity = k; el.style.transform = `translateY(${(1 - k) * 22}px)`; });
+  if (c.big) { const el = document.getElementById("bignum"), k = out((lt - .35) / 1.4), from = c.big.from ?? 0; el.innerHTML = c.big.fmt(from + (c.big.to - from) * k); el.style.opacity = clamp((lt - .25) / .2); }
+  panel.querySelectorAll(".bar span").forEach((el, i) => { const k = out((lt - .5 - i * .3) / .9); el.style.width = (Number(el.dataset.v) / 49 * 100 * k) + "%"; });
+  panel.style.opacity = clamp(lt / .2);
+  panel.style.top = c.top ? "250px" : "auto"; panel.style.bottom = c.top ? "auto" : "360px";
+}
+
+// ── frame ───────────────────────────────────────────────────────────────────
+const cv = document.getElementById("c"), g = cv.getContext("2d");
+let grain, vig;
+window.setup = async () => {
+  await Promise.all(["700 80px Bod", "italic 800 80px Bod", "800 20px Grot", "600 20px Grot"].map((f) => document.fonts.load(f)));
+  for (const k in S) S[k].build();
+  grain = layer(W + 200, H + 200, (gg, w, h) => { const im = gg.createImageData(w, h); for (let p = 0; p < im.data.length; p += 4) { const v = rnd() * 255; im.data[p] = im.data[p + 1] = im.data[p + 2] = v; im.data[p + 3] = 26; } gg.putImageData(im, 0, 0); });
+  vig = layer(W, H, (gg) => { const gr = gg.createRadialGradient(W / 2, H * .45, H * .3, W / 2, H * .45, H * .75); gr.addColorStop(0, "rgba(0,0,0,0)"); gr.addColorStop(1, "rgba(0,0,0,.55)"); gg.fillStyle = gr; gg.fillRect(0, 0, W, H);
+    vgrad(gg, 0, 0, W, 300, [[0, "rgba(10,14,18,.65)"], [1, "rgba(10,14,18,0)"]]); });
+  return { duration: DUR, fps: FPS };
+};
+function drawScene(i, lt) { const e = TL[i], sc = S[e.s];
+  if (e.cam === "end") { g.save(); g.translate(W / 2, H / 2); g.scale(1.25, 1.25); g.translate(-W / 2 + 120, -H / 2 + 120); sc.draw(g, 1.6 + lt * .3, e.d * 2); g.restore(); }
+  else sc.draw(g, lt, e.d); }
+window.frame = (t) => {
+  let i = 0, t0 = 0; while (i < TL.length - 1 && t >= t0 + TL[i].d) { t0 += TL[i].d; i++; }
+  const lt = t - t0, e = TL[i];
+  g.globalAlpha = 1; g.fillStyle = "#0b1a24"; g.fillRect(0, 0, W, H);
+  if (i > 0 && lt < XF) { drawScene(i - 1, TL[i - 1].d); g.globalAlpha = ease(lt / XF); }
+  drawScene(i, lt); g.globalAlpha = 1;
+  g.drawImage(vig, 0, 0);
+  g.drawImage(grain, -Math.floor(hash(t * 30) * 200), -Math.floor(hash(t * 30 + 1) * 200));
+  const c = [...e.caps].reverse().find((c) => lt >= c.t); updateCaps(c, lt - c.t);
+  const pin = document.getElementById("pin"), svg = document.getElementById("pinline");
+  if (e.s === "wall" && S.wall.screenDoor && S.wall.screenDoor.k > .97 && lt > 3.2) { const D = S.wall.screenDoor, a = clamp((lt - 3.2) / .3);
+    pin.style.display = "block"; pin.style.opacity = a; pin.textContent = "this door ≈ 0.3% of the picture"; pin.style.left = "120px"; pin.style.top = (D.y - 360) + "px";
+    svg.innerHTML = `<line x1="${D.x + D.w / 2}" y1="${D.y - 300}" x2="${D.x + D.w / 2}" y2="${D.y - 8}" stroke="#F5C400" stroke-width="4" opacity="${a}"/>`;
+  } else { pin.style.display = "none"; svg.innerHTML = ""; }
+};
+</script></body></html>

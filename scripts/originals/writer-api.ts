@@ -25,7 +25,9 @@ export async function requestWriter(system: string, user: string, keys: WriterKe
   }
   if (!res.ok) {
     const body = await res.text().catch(() => "");
-    throw limitError(service, res.status, body) ?? new SkipRun(`${service} unavailable`, `${service} HTTP ${res.status}. Check the configured model and provider status; the story stays queued.`);
+    throw limitError(service, res.status, body) ?? (res.status >= 500
+      ? new SkipRun(`${service} busy`, `${service} HTTP ${res.status}: the provider is busy or down. The story stays queued; the next scheduled run tries again.`, true)
+      : new SkipRun(`${service} unavailable`, `${service} HTTP ${res.status}. Check the configured model and provider status; the story stays queued.`));
   }
   let body: any;
   try { body = await res.json(); } catch { throw new SkipRun(`${service} invalid response`, "The provider response could not be read. No additional paid request was sent."); }

@@ -11,9 +11,11 @@ export function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, 
 /**
  * A run that cannot go ahead for a reason outside the code: a missing key, an
  * exhausted quota, a rejected key. The job fails visibly; the story is not consumed.
+ * `busy` marks a provider that is down or overloaded (HTTP 5xx): nothing for the
+ * owner to fix, so the run ends with a warning and the next scheduled run retries.
  */
 export class SkipRun extends Error {
-  constructor(public title: string, message: string) { super(message); this.name = "SkipRun"; }
+  constructor(public title: string, message: string, public busy = false) { super(message); this.name = "SkipRun"; }
 }
 
 /** HTTP statuses that mean "no key / no quota / not allowed" rather than a bug. */
@@ -25,7 +27,10 @@ export function limitError(service: string, status: number, body: string): SkipR
   if (status === 429 || status === 402 || (quota && status >= 400 && status < 500)) {
     return new SkipRun(`${service} quota`, `${service} answered HTTP ${status} (quota or rate limit). Nothing was published; the next scheduled run will try again.`);
   }
-  if (status === 401 || status === 403) {
+  if (/api_key_id_used_as_api_key/.test(body)) {
+    return new SkipRun(`${service} key`, `${service} says the secret holds the key's ID, not the key. Create or rotate a key in ${service} and paste the value that starts with "sk_" into the repository secret.`);
+  }
+  if (status === 401 || status === 403 || /authentication_error|invalid_api_key/.test(body)) {
     return new SkipRun(`${service} key`, `${service} rejected the key (HTTP ${status}). Check the repository secret.`);
   }
   return null;

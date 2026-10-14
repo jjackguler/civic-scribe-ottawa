@@ -128,10 +128,14 @@ function Home() {
   const ownAll = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   const ageH = (iso: string) => (nowMs - new Date(iso).getTime()) / 3600_000;
   const onStage = (o: { kind?: string; publishedAt: string }) => ageH(o.publishedAt) < (o.kind === "titles" ? 24 : 12);
-  const heroOwn = ownAll.filter(onStage).slice(0, 1);
+  const heroOwn = ownAll.filter(onStage).slice(0, 2);
   const steppedDown = ownAll.filter(o => !heroOwn.includes(o) && ageH(o.publishedAt) < 7 * 24).slice(0, 1);
-  // The newest top story leads; our own video takes the second slot while it is new.
-  const slides: HeroSlide[] = [...storySlides.slice(0, 1), ...heroOwn.map(o => ({ kind: "original" as const, original: o })), ...storySlides.slice(1)].slice(0, 6);
+  // The newest top story leads; our own videos take every other slot after it while they are new.
+  const ownSlides: HeroSlide[] = heroOwn.map((o) => ({ kind: "original" as const, original: o }));
+  const slides: HeroSlide[] = storySlides
+    .flatMap((s, i) => (i > 0 && ownSlides[i - 1] ? [ownSlides[i - 1], s] : [s]))
+    .concat(ownSlides.slice(Math.max(0, storySlides.length - 1)))
+    .slice(0, 6);
   const fromHero = useSteppedDown(slides.map(slideKey));
   const top = heroClusters[0];
   const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));

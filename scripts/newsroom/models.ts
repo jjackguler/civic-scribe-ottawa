@@ -6,6 +6,8 @@ export type CallCtx = { id: string; attempt: number };
 export interface Models {
   /** An infrastructure failure stops this run; it is not an editorial rejection. */
   readonly failure?: string;
+  /** The failure was the provider being busy or down (HTTP 5xx): nothing was billed, the next run tries again. */
+  readonly busy?: boolean;
   provider: "claude" | "gemini" | "canned";
   model(tier: Tier): string;
   json<T>(role: RoleName, tier: Tier, system: string, user: string, ctx: CallCtx, maxTokens?: number): Promise<T | null>;
@@ -82,11 +84,11 @@ export function geminiMaxOutput(maxTokens:number,e:Record<string,string|undefine
   const raw=Number(e.NEWSROOM_GEMINI_THINKING_HEADROOM?.trim()||"1024");
   return Math.max(1,Math.floor(maxTokens))+Math.floor(Math.min(4096,Math.max(0,Number.isFinite(raw)?raw:1024)));
 }
-export function liveModels(e:Record<string,string|undefined>=process.env, transport:typeof fetch=fetch, wait:(n:number)=>Promise<void>=(n)=>new Promise(r=>setTimeout(r,4000*n))):Models|null {
+export function liveModels(e:Record<string,string|undefined>=process.env, transport:typeof fetch=fetch, wait:(n:number)=>Promise<void>=(n)=>new Promise(r=>setTimeout(r,15000*n))):Models|null {
   const cfg=resolveConfig(e);
   if("error" in cfg){if(cfg.error!=="no API key")report("[newsroom] "+cfg.error);return null;}
   const budget=RunBudget.fromEnv(e);
-  let failure: string | undefined;
+  let failure: string | undefined, busy = false;
   // Prices for Claude/custom models must be supplied explicitly. Their defaults are not guessed.
   const customIn=Number(e.NEWSROOM_PRICE_INPUT_PER_M),customOut=Number(e.NEWSROOM_PRICE_OUTPUT_PER_M);
   const customValid=!!e.NEWSROOM_PRICE_INPUT_PER_M&&!!e.NEWSROOM_PRICE_OUTPUT_PER_M&&Number.isFinite(customIn)&&Number.isFinite(customOut)&&customIn>=0&&customOut>=0;
@@ -106,7 +108,7 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
   };
   report("[newsroom] provider "+cfg.provider+", profile "+cfg.profile+", writer "+cfg.names.writer+", checker "+cfg.names.checker);
   return {
-    provider:cfg.provider,usage:budget,model:t=>cfg.names[t],get failure(){return failure;},
+    provider:cfg.provider,usage:budget,model:t=>cfg.names[t],get failure(){return failure;},get busy(){return busy;},
     async json<T>(role:RoleName,tier:Tier,system:string,user:string,_ctx:CallCtx,maxTokens=8192) {
       if(failure)return null;
       for(const model of cfg.chain[tier]){
@@ -127,7 +129,9 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
             report("["+role+"] "+cfg.provider+" "+model+" HTTP "+res.status);
             // Only a missing MODEL may use an explicitly configured fallback. No key/quota escalation.
             if(res.status===404 && model!==cfg.chain[tier].at(-1))continue;
-            failure=cfg.provider+" HTTP "+res.status+"; check API access, quota and billing. Remaining calls stopped.";
+            busy=res.status>=500;
+            failure=busy ? cfg.provider+" HTTP "+res.status+": the provider is busy or down. Remaining calls stopped; the stories stay queued for the next run."
+                         : cfg.provider+" HTTP "+res.status+"; check API access, quota and billing. Remaining calls stopped.";
             return null;
           }
           const body=await res.json() as any;

@@ -1,0 +1,15 @@
+{
+  "name": "aibroadsheet-nightcity",
+  "description": "Night city news carousel: three.js illustration under the house news panel",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/schibsted-grotesk": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "playwright-core": "^1.55.0",
+    "three": "^0.169.0"
+  },
+  "private": true,
+  "type": "module"
+}

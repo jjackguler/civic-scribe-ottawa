@@ -263,7 +263,7 @@ async function main() {
 
 main()
   .catch(async e => {
-    if (e instanceof SkipRun) { warn(e.title, e.message); process.exitCode = 1; return; }
+    if (e instanceof SkipRun) { warn(e.title, e.message); if (!e.busy) process.exitCode = 1; return; }
     console.error(e);
     note(`failed: ${(e as Error).message}`);
     process.exitCode = 1;
