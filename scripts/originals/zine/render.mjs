@@ -60,7 +60,7 @@ if (flag === "--stills") {
   let n = 2;
   if (hasVoice) { inputs.push("-i", join(voiceDir, "voice.wav")); parts.push(`[${n}:a]volume=1.0[v]`); mix.push("[v]"); n++; }
   for (const e of sfx) { inputs.push("-i", join(here, ".assets", e.f)); parts.push(`[${n}:a]atrim=0:${e.d},afade=t=out:st=${Math.max(0, e.d - .2)}:d=0.2,volume=${e.v},adelay=${Math.round(e.t * 1000)}|${Math.round(e.t * 1000)}[s${n}]`); mix.push(`[s${n}]`); n++; }
-  parts.push(`${mix.join("")}amix=inputs=${mix.length}:normalize=0:duration=first,alimiter=limit=0.95[a]`);
+  parts.push(`${mix.join("")}amix=inputs=${mix.length}:normalize=0:duration=first,loudnorm=I=-16:TP=-1.5:LRA=11[a]`);
   const args = ["-y", "-loglevel", "error", ...inputs, "-filter_complex", parts.join(";"), "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", duration.toFixed(2), "-movflags", "+faststart", join(out, `${slug}.mp4`)];
   await new Promise((ok, no) => spawn("ffmpeg", args, { stdio: "inherit" }).on("close", (c) => c ? no(new Error("ffmpeg mix failed")) : ok()));
   await rm(silent);
