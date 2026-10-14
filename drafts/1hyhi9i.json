@@ -1,0 +1,373 @@
+{
+  "version": 1,
+  "id": "1hyhi9i",
+  "slug": {
+    "en": "openai-engineer-faces-foreign-spy-charges",
+    "fr": "ingenieur-openai-accuse-espionnage-micro"
+  },
+  "createdAt": "2026-10-14T22:57:35.148Z",
+  "updatedAt": "2026-10-14T22:57:35.148Z",
+  "topic": "research",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Wired",
+      "title": "An OpenAI Employee Allegedly Used a Chatbot to Help Plant a Recording Device at the Office",
+      "url": "https://www.wired.com/story/an-openai-employee-allegedly-used-a-chatbot-to-help-plant-a-recording-device-at-the-office/",
+      "publishedAt": "2026-10-13T23:17:59.000Z",
+      "storyId": "1r48l7f",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "The Decoder",
+      "title": "Alleged OpenAI spy vibe-coded a surveillance device using his wife's chatbot account",
+      "url": "https://the-decoder.com/alleged-openai-spy-vibe-coded-a-surveillance-device-using-his-wifes-chatbot-account/",
+      "publishedAt": "2026-10-14T12:37:05.000Z",
+      "storyId": "1z02dgt",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "Ars Technica",
+      "title": "Recording device hidden in toilet paper found in top-secret OpenAI meeting room",
+      "url": "https://arstechnica.com/tech-policy/2026/10/fbi-arrests-openai-engineer-suspected-of-planting-bug-in-conference-room/",
+      "publishedAt": "2026-10-14T16:41:49.000Z",
+      "storyId": "1hyhi9i",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "night",
+    "motif": "rules",
+    "en": {
+      "kicker": "Research",
+      "big": "OpenAI"
+    },
+    "fr": {
+      "kicker": "Recherche",
+      "big": "Un"
+    }
+  },
+  "en": {
+    "headline": "OpenAI engineer faces foreign spy charges over hidden device in executive meeting room",
+    "news": "An OpenAI engineer faces foreign spy charges after a covert recording device was found in an executive conference room.",
+    "thirty": [
+      "An OpenAI engineer was arrested on foreign spy charges by the FBI.",
+      "The indictment alleges he hid a recording device inside an executive conference room.",
+      "He allegedly used chatbot prompts from his wife's account to build it."
+    ],
+    "confirmed": [
+      {
+        "text": "An audio recording device wrapped in toilet paper was discovered inside an executive conference room at OpenAI.",
+        "src": [
+          "s2",
+          "s3"
+        ]
+      },
+      {
+        "text": "The OpenAI engineer accused in the case was arrested on foreign spy charges.",
+        "src": [
+          "s2",
+          "s3"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "The indictment says the engineer built the surveillance device using his wife's chatbot account.",
+        "by": "the indictment",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Chatbot prompts show the engineer attempted to configure a listening device days before it was discovered.",
+        "by": "Wired",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether any confidential discussions were successfully recorded or transmitted.",
+      "How the listening device was initially discovered by staff."
+    ],
+    "matters": "The case highlights growing legal scrutiny around insider threats and the physical security of proprietary artificial intelligence development.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "An engineer working at the artificial intelligence company OpenAI was arrested [s2,s3]. The indictment alleges the worker placed a hidden sound recorder inside a company meeting room used by high-level executives [s1,s2]. The recording device was found wrapped inside toilet paper [s2,s3].",
+        "To build the listening tool, the engineer allegedly asked an AI chatbot for assistance [s1,s2]. Chatbot prompts show the efforts were made through an account belonging to his wife days before the device was found [s1,s2]. The worker now faces foreign spy charges [s3]."
+      ],
+      "standard": [
+        "The FBI has brought foreign spy charges against an OpenAI engineer who was arrested after a covert listening device was found at the company's offices [s2,s3]. The engineer, identified as a Saudi national, faces up to 5 years in prison and a fine of $250K [s2,s3].",
+        "The audio recording device was found inside an executive conference room used by high-level executives [s1,s2]. The device had been wrapped in toilet paper and placed inside the room [s2,s3].",
+        "Chatbot prompts reveal that the worker allegedly made efforts to set up a covert listening device [s1]. According to an indictment, the engineer vibe-coded the device by accessing a chatbot account belonging to his wife [s2]. The prompts were made several days before the device was found inside the executive meeting room [s1].",
+        "The indictment brings foreign spy charges against the employee following the discovery [s2,s3]. It remains unstated whether the hidden recorder captured any confidential conversations before staff detected it [s1,s2].",
+        "The charges demonstrate that frontier artificial intelligence companies face severe operational security challenges from internal staff [s1,s3]. When sensitive corporate discussions are targeted, companies must confront vulnerabilities in both their physical facilities and digital tools [s1,s2]."
+      ],
+      "expert": [
+        "The FBI has charged the engineer with foreign spy charges carrying statutory penalties of up to 5 years in custody and a $250K fine [s3]. The indictment indicates the engineer used chatbot prompts to help set up the covert listening device [s1,s2].",
+        "According to the indictment, the engineer vibe-coded the surveillance device using his wife's chatbot account [s2]. Descriptions identify the targeted location as a top-secret executive meeting room [s1,s3]."
+      ]
+    },
+    "seoTitle": "OpenAI Engineer Faces Spy Charges Over Hidden Audio Device",
+    "dek": "The FBI charged an engineer who allegedly used a chatbot to help assemble an audio recorder hidden in an OpenAI conference room. The suspect faces up to 5 years in prison and a fine of $250K.",
+    "metaDescription": "An OpenAI engineer faces foreign spy charges after an audio recorder wrapped in toilet paper was discovered in an executive conference room.",
+    "keywords": [
+      "openai",
+      "fbi spy charges",
+      "audio device",
+      "executive conference room",
+      "vibe coding"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "The FBI has brought foreign spy charges against an OpenAI engineer who was arrested after a covert listening device was found at the company's offices [s2,s3]. The engineer, identified as a Saudi national, faces up to 5 years in prison and a fine of $250K [s2,s3].",
+          "The audio recording device was found inside an executive conference room used by high-level executives [s1,s2]. The device had been wrapped in toilet paper and placed inside the room [s2,s3]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Chatbot prompts reveal that the worker allegedly made efforts to set up a covert listening device [s1]. According to an indictment, the engineer vibe-coded the device by accessing a chatbot account belonging to his wife [s2]. The prompts were made several days before the device was found inside the executive meeting room [s1].",
+          "The indictment brings foreign spy charges against the employee following the discovery [s2,s3]. It remains unstated whether the hidden recorder captured any confidential conversations before staff detected it [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The charges demonstrate that frontier artificial intelligence companies face severe operational security challenges from internal staff [s1,s3]. When sensitive corporate discussions are targeted, companies must confront vulnerabilities in both their physical facilities and digital tools [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What penalties does the engineer face?",
+        "a": "The engineer, identified as a Saudi national, faces up to 5 years in prison and a fine of $250K."
+      },
+      {
+        "q": "Where was the recording device discovered?",
+        "a": "The audio recording device was found wrapped in toilet paper inside an executive conference room at OpenAI's offices."
+      },
+      {
+        "q": "Did the hidden device record confidential conversations?",
+        "a": "It remains unstated whether the hidden recorder captured any confidential conversations before staff detected it."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      },
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Un ingénieur d'OpenAI fait face à des accusations d'espionnage pour un micro dissimulé",
+    "news": "Un ingénieur d'OpenAI fait face à des accusations d'espionnage étranger après la découverte d'un appareil d'enregistrement clandestin dans une salle de conférence de la direction.",
+    "thirty": [
+      "Un ingénieur d'OpenAI a été arrêté par le FBI sous des accusations d'espionnage étranger.",
+      "L'acte d'accusation affirme qu'il a caché un enregistreur dans une salle de conférence de la direction.",
+      "Il aurait utilisé des requêtes sur le compte de son épouse pour concevoir l'appareil."
+    ],
+    "confirmed": [
+      {
+        "text": "Un appareil d'enregistrement audio enveloppé dans du papier hygiénique a été découvert dans une salle de conférence de la direction chez OpenAI.",
+        "src": [
+          "s2",
+          "s3"
+        ]
+      },
+      {
+        "text": "L'ingénieur d'OpenAI mis en cause a été arrêté sous des accusations d'espionnage étranger.",
+        "src": [
+          "s2",
+          "s3"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "L'acte d'accusation indique que l'ingénieur a fabriqué le dispositif de surveillance à l'aide du compte d'agent conversationnel de sa femme.",
+        "by": "l'acte d'accusation",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Les requêtes adressées au robot conversationnel montrent que l'ingénieur a tenté de configurer un appareil d'écoute quelques jours avant sa découverte.",
+        "by": "Wired",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La question de savoir si des discussions confidentielles ont été enregistrées ou transmises avec succès.",
+      "La manière dont l'appareil d'écoute a été repéré au départ par le personnel."
+    ],
+    "matters": "Cette affaire met en lumière la surveillance juridique accrue entourant les menaces internes et la sécurité matérielle du développement de l'intelligence artificielle exclusive.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Un ingénieur de l'entreprise d'intelligence artificielle OpenAI a été arrêté [s2,s3]. L'acte d'accusation soutient que le travailleur a placé un enregistreur sonore clandestin dans une salle de réunion fréquentée par les cadres supérieurs [s1,s2]. L'appareil d'enregistrement a été découvert enveloppé dans du papier hygiénique [s2,s3].",
+        "Pour fabriquer cet outil d'écoute, l'ingénieur aurait sollicité l'aide d'un agent conversationnel d'IA [s1,s2]. Les requêtes indiquent que ces démarches ont été menées depuis le compte de sa conjointe quelques jours avant la découverte de l'objet [s1,s2]. Le travailleur fait désormais face à des accusations d'espionnage étranger [s3]."
+      ],
+      "standard": [
+        "Le FBI a porté des accusations d'espionnage étranger contre un ingénieur d'OpenAI arrêté après la découverte d'un dispositif d'écoute clandestin dans les bureaux de l'entreprise [s2,s3]. L'ingénieur, identifié comme un ressortissant saoudien, est passible d'une peine maximale de 5 ans de prison et d'une amende de $250K [s2,s3].",
+        "L'appareil d'enregistrement audio a été trouvé à l'intérieur d'une salle de conférence réservée aux cadres supérieurs [s1,s2]. Ce dispositif avait été emballé dans du papier hygiénique avant d'être déposé dans la pièce [s2,s3].",
+        "Les requêtes soumises au robot conversationnel révèlent que l'employé aurait tenté de mettre au point un dispositif d'écoute clandestin [s1]. Selon un acte d'accusation, l'ingénieur a utilisé la méthode du « vibe-coding » pour concevoir l'appareil via le compte d'agent conversationnel de sa femme [s2]. Ces requêtes ont été formulées plusieurs jours avant la découverte de l'objet dans la salle de réunion de la direction [s1].",
+        "L'acte d'accusation retient des accusations d'espionnage étranger contre l'employé après cette découverte [s2,s3]. Les documents ne précisent pas si l'enregistreur dissimulé a capté des conversations confidentielles avant que le personnel ne le détecte [s1,s2].",
+        "Ces accusations indiquent que les entreprises d'intelligence artificielle de pointe font face à d'importants défis de sécurité opérationnelle venant de leur propre personnel [s1,s3]. Dès lors que des pourparlers internes stratégiques sont visés, les sociétés doivent gérer les failles de leurs locaux physiques tout comme celles de leurs outils numériques [s1,s2]."
+      ],
+      "expert": [
+        "Le FBI poursuit l'ingénieur pour espionnage étranger, une infraction passible de 5 ans d'emprisonnement et d'une amende de $250K [s3]. L'acte d'accusation précise que l'employé s'est servi de requêtes transmises à un agent conversationnel pour assembler le dispositif d'écoute clandestin [s1,s2].",
+        "Selon l'acte d'accusation, l'ingénieur a conçu le dispositif de surveillance par « vibe-coding » au moyen du compte de sa femme [s2]. Les signalements désignent l'endroit visé comme une salle de réunion hautement confidentielle de la direction [s1,s3]."
+      ]
+    },
+    "seoTitle": "Un ingénieur d'OpenAI accusé d'espionnage pour un micro",
+    "dek": "Le FBI accuse un ingénieur d'OpenAI d'avoir conçu un enregistreur audio dissimulé dans une salle de conférence. Il encourt jusqu'à 5 ans de prison et une amende de $250K.",
+    "metaDescription": "Un ingénieur d'OpenAI est accusé d'espionnage après la découverte d'un appareil d'écoute dans une salle de réunion de la direction.",
+    "keywords": [
+      "openai",
+      "espionnage",
+      "fbi",
+      "salle de conference",
+      "micro dissimule"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Le FBI a porté des accusations d'espionnage étranger contre un ingénieur d'OpenAI arrêté après la découverte d'un dispositif d'écoute clandestin dans les bureaux de l'entreprise [s2,s3]. L'ingénieur, identifié comme un ressortissant saoudien, est passible d'une peine maximale de 5 ans de prison et d'une amende de $250K [s2,s3].",
+          "L'appareil d'enregistrement audio a été trouvé à l'intérieur d'une salle de conférence réservée aux cadres supérieurs [s1,s2]. Ce dispositif avait été emballé dans du papier hygiénique avant d'être déposé dans la pièce [s2,s3]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Les requêtes soumises au robot conversationnel révèlent que l'employé aurait tenté de mettre au point un dispositif d'écoute clandestin [s1]. Selon un acte d'accusation, l'ingénieur a utilisé la méthode du « vibe-coding » pour concevoir l'appareil via le compte d'agent conversationnel de sa femme [s2]. Ces requêtes ont été formulées plusieurs jours avant la découverte de l'objet dans la salle de réunion de la direction [s1].",
+          "L'acte d'accusation retient des accusations d'espionnage étranger contre l'employé après cette découverte [s2,s3]. Les documents ne précisent pas si l'enregistreur dissimulé a capté des conversations confidentielles avant que le personnel ne le détecte [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Ces accusations indiquent que les entreprises d'intelligence artificielle de pointe font face à d'importants défis de sécurité opérationnelle venant de leur propre personnel [s1,s3]. Dès lors que des pourparlers internes stratégiques sont visés, les sociétés doivent gérer les failles de leurs locaux physiques tout comme celles de leurs outils numériques [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quelles peines l'ingénieur risque-t-il ?",
+        "a": "L'ingénieur, identifié comme un ressortissant saoudien, est passible d'une peine maximale de 5 ans de prison et d'une amende de $250K."
+      },
+      {
+        "q": "Où l'appareil d'enregistrement a-t-il été découvert ?",
+        "a": "Le dispositif a été trouvé emballé dans du papier hygiénique à l'intérieur d'une salle de conférence réservée aux cadres supérieurs."
+      },
+      {
+        "q": "Des échanges confidentiels ont-ils été captés ?",
+        "a": "Les documents ne précisent pas si l'enregistreur a capté des conversations confidentielles avant que le personnel ne le détecte."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      },
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 183,
+    "fr": 219
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-14T22:55:31.448Z",
+      "verdict": "done",
+      "notes": [
+        "191 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-14T22:56:22.104Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Authorities, Investigators, Federal, Bureau, Investigation, Officials, Records, Court, Reporting, Outlets."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-14T22:56:32.811Z",
+      "verdict": "pass",
+      "notes": [
+        "Consider replacing informal slang like 'vibe-coded' with clearer, professional terminology in broadsheet reporting, even though it appears in source headlines."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-14T22:56:46.735Z",
+      "verdict": "pass",
+      "notes": [
+        "219 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-14T22:57:11.543Z",
+      "verdict": "done",
+      "notes": [
+        "en: OpenAI Engineer Faces Spy Charges Over Hidden Audio Device (58)",
+        "fr: Un ingénieur d'OpenAI accusé d'espionnage pour un micro (55)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-14T22:57:35.148Z",
+      "verdict": "fixed",
+      "notes": [
+        "format: standard",
+        "cover: night/rules \"OpenAI\"",
+        "en big word not from the reporting: used \"OpenAI\"",
+        "fr big word not from the reporting: used \"Un\"",
+        "no reply: house cover built mechanically"
+      ]
+    }
+  ]
+}
