@@ -12,7 +12,7 @@ import { extname, join, resolve } from "node:path";
 const here = import.meta.dirname;
 const out = resolve(process.argv[2] ?? join(here, "out"));
 await mkdir(out, { recursive: true });
-const types = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".svg": "image/svg+xml", ".woff2": "font/woff2" };
+const types = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".woff2": "font/woff2" };
 const server = createServer(async (req, res) => {
   const path = join(here, decodeURIComponent(new URL(req.url, "http://x").pathname));
   if (!path.startsWith(here)) return res.writeHead(403).end();
