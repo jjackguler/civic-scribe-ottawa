@@ -50,6 +50,14 @@ for (const status of [401, 429, 503]) {
     assert.equal(n, 1); assert.match(m.failure!, new RegExp(`HTTP ${status}`));
   });
 }
+for (const [status, busy] of [[503, true], [500, true], [401, false], [429, false]] as const) {
+  await test(`HTTP ${status} ${busy ? "is a busy provider (warning)" : "stays a failure"} in both pipelines`, async () => {
+    const m = liveModels({ GEMINI_API_KEY: "fake", NEWSROOM_RETRIES: "0" }, (async () => new Response(null, { status })) as typeof fetch)!;
+    await m.json("reporter", "writer", "s", "u", { id: "fixture", attempt: 0 });
+    assert.equal(!!m.busy, busy);
+    await assert.rejects(requestWriter("s", "u", keys, 6000, (async () => new Response("x", { status })) as typeof fetch), (e: any) => e.busy === busy);
+  });
+}
 const root = await mkdtemp(join(tmpdir(), "aibroadsheet-check-"));
 try {
   const file = join(root, "new-song.mp3");

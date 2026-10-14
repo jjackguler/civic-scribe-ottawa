@@ -11,9 +11,11 @@ export function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, 
 /**
  * A run that cannot go ahead for a reason outside the code: a missing key, an
  * exhausted quota, a rejected key. The job fails visibly; the story is not consumed.
+ * `busy` marks a provider that is down or overloaded (HTTP 5xx): nothing for the
+ * owner to fix, so the run ends with a warning and the next scheduled run retries.
  */
 export class SkipRun extends Error {
-  constructor(public title: string, message: string) { super(message); this.name = "SkipRun"; }
+  constructor(public title: string, message: string, public busy = false) { super(message); this.name = "SkipRun"; }
 }
 
 /** HTTP statuses that mean "no key / no quota / not allowed" rather than a bug. */

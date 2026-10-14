@@ -241,7 +241,9 @@ async function main() {
 }
 
 async function finish(m: Models) {
-  if (m.failure) {
+  // A busy provider is not something the owner can fix: warn, don't fail (and don't email).
+  if (m.failure && m.busy) log(`::warning title=Newsroom paused: provider busy::${m.failure}`);
+  else if (m.failure) {
     log(`::error title=Newsroom production failed::${m.failure}`);
     process.exitCode = 1;
   }
