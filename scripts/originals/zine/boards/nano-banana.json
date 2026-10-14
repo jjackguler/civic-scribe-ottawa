@@ -1,0 +1,70 @@
+{
+  "format": "zine",
+  "slug": "nano-banana",
+  "style": "riso",
+  "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
+  "date": "October 8, 2026",
+  "music": "fs-upbeat-corporate-music--561190.mp3",
+  "sources": [
+    {
+      "name": "Notebookcheck",
+      "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
+    },
+    {
+      "name": "FourWeekMBA",
+      "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
+    },
+    {
+      "name": "XenoSpectrum",
+      "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "banana",
+      "say": [
+        "Google's new image model, Nano Banana 2.1, makes pictures for about half the price."
+      ],
+      "cue": "half"
+    },
+    {
+      "type": "tags",
+      "say": [
+        "On the Gemini API, a 1K image drops from 6.7 cents to about 3.4.",
+        "A 2K image, from about 10 cents to 5."
+      ],
+      "cue": "2K"
+    },
+    {
+      "type": "hypno",
+      "say": [
+        "But read the fine print.",
+        "Input now costs a dollar fifty per million tokens, three times as much.",
+        "Text and thinking output rose from three dollars to seven fifty."
+      ],
+      "cue": "Input"
+    },
+    {
+      "type": "save",
+      "say": [
+        "So if you send lots of reference images or long prompts, you'll save less than the headline suggests."
+      ],
+      "cue": "less"
+    },
+    {
+      "type": "limits",
+      "say": [
+        "Google also lists its limits.",
+        "Small text often stays blurry at 1K, and the model sometimes mixes up left and right.",
+        "Independent tests aren't out yet. Cheaper pictures, pricier words."
+      ],
+      "cue": "left"
+    }
+  ],
+  "art": [
+    "photographer-with-camera--jules-beau-1902-jpg.jpg",
+    "artist-painting-at-easel--lovis-corinth-selbstportr-t-mit-palette-1924-jpg.jpg",
+    "radio-announcer-micropho--radio-announcer-ebba-jakobson-lilius-in-a-continui.jpg"
+  ],
+  "ticker": "READ THE FINE PRINT — CHEAPER PICTURES — PRICIER WORDS"
+}

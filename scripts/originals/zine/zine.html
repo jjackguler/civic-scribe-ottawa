@@ -1,0 +1,495 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  AI Broadsheet "Zine" reels, 1080x1920: paper-collage explainers in three looks
+  (ink cats in a hand-drawn frame, Dada newsprint, riso grid with hypnotic eyes).
+  Archive photos are public domain (assets branch, credited on the end card) and
+  go through a xerox / halftone treatment; everything else is drawn here.
+  Narration comes from boards/<slug>.json: with voice/<slug>/timing.json the
+  picture follows the voice word by word, without it the timing is estimated.
+  render.mjs calls setup(slug) once and frame(t) per video frame.
+-->
+<style>
+@font-face{font-family:Anton;src:url("node_modules/@fontsource/anton/files/anton-latin-400-normal.woff2")}
+@font-face{font-family:Osw;src:url("node_modules/@fontsource/oswald/files/oswald-latin-700-normal.woff2");font-weight:700}
+@font-face{font-family:Osw;src:url("node_modules/@fontsource/oswald/files/oswald-latin-500-normal.woff2");font-weight:500}
+@font-face{font-family:Type;src:url("node_modules/@fontsource/special-elite/files/special-elite-latin-400-normal.woff2")}
+@font-face{font-family:Bod;src:url("node_modules/@fontsource/bodoni-moda/files/bodoni-moda-latin-700-normal.woff2");font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#111}
+canvas{position:absolute;inset:0}
+</style></head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920, FPS = 30, BOIL = 12;
+const INK = "#141210", PAPER = "#f1ede4", KRAFT = "#e2d3b5", RED = "#d9412b", YEL = "#F5C400", OLIVE = "#b3a245", IVORY = "#efe8da";
+let seed = 1;
+const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const R = (a, b) => a + rnd() * (b - a);
+const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const out = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const back = (x) => { x = clamp(x); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const ease = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const mk = (w, h, fn) => { const c = document.createElement("canvas"); c.width = Math.ceil(w); c.height = Math.ceil(h); if (fn) fn(c.getContext("2d"), c.width, c.height); return c; };
+const loadImg = (src) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => no(new Error("missing " + src)); i.src = src; });
+
+// ── stop-motion "boil": every cut-out jitters a little, 12 times a second ──
+let T = 0;
+const boil = (id, amt = 1) => { const k = Math.floor(T * BOIL) * 7.13 + id * 13.7; return { x: (hash(k) - .5) * 3 * amt, y: (hash(k + 1) - .5) * 3 * amt, r: (hash(k + 2) - .5) * .006 * amt }; };
+function place(g, c, x, y, { rot = 0, s = 1, id = 0, alpha = 1, boilAmt = 1, ax = .5, ay = .5 } = {}) {
+  if (alpha <= 0 || s <= 0) return; const b = boil(id, boilAmt); ax = c.ax ?? ax; ay = c.ay ?? ay;
+  g.save(); g.globalAlpha *= alpha; g.translate(x + b.x, y + b.y); g.rotate(rot + b.r); g.scale(s, s); g.drawImage(c, -c.width * ax, -c.height * ay); g.restore();
+}
+
+// ── paper ───────────────────────────────────────────────────────────────────
+function grain(g, w, h, amt = 22, dark = true) {
+  const im = g.getImageData(0, 0, w, h), d = im.data;
+  for (let i = 0; i < d.length; i += 4) { const n = (rnd() - .5) * amt; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+  g.putImageData(im, 0, 0);
+}
+function fibers(g, w, h, n, col) { g.strokeStyle = col; for (let i = 0; i < n; i++) { const x = R(0, w), y = R(0, h), a = R(0, 6.3), l = R(4, 18); g.lineWidth = R(.5, 1.4); g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke(); } }
+function stains(g, w, h, n, col) { for (let i = 0; i < n; i++) { const x = R(0, w), y = R(0, h), r = R(60, 320), gr = g.createRadialGradient(x, y, r * .2, x, y, r); gr.addColorStop(0, col); gr.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r); } }
+const paperTex = (w, h, base, { fib = .0009, st = 6, stainCol = "rgba(120,80,30,.10)", gr = 18 } = {}) => mk(w, h, (g) => {
+  g.fillStyle = base; g.fillRect(0, 0, w, h); stains(g, w, h, st, stainCol); fibers(g, w, h, Math.round(w * h * fib), "rgba(90,60,30,.18)");
+  g.strokeStyle = "rgba(255,255,255,.35)"; g.lineWidth = 2; for (let i = 0; i < 2; i++) { const y = R(h * .2, h * .8); g.beginPath(); g.moveTo(0, y); g.lineTo(w, y + R(-20, 20)); g.stroke(); }
+  grain(g, w, h, gr);
+});
+const gridTex = (w, h, base, line) => mk(w, h, (g) => {
+  g.drawImage(paperTex(w, h, base, { stainCol: "rgba(60,50,10,.12)", gr: 26 }), 0, 0);
+  g.strokeStyle = line; g.lineWidth = 2; for (let x = 0; x < w; x += 54) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); } for (let y = 0; y < h; y += 54) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+  grain(g, w, h, 16);
+});
+// newspaper columns of pseudo-text, the way the Dada poster uses them
+const WORDS = "the of and to in a is that for on it with as was by at from this be are or an have not which but they his were all one their there been has more when will would who can if about what so said no out up into than other time some could them only these two may then first any new like our over such man also most made after many did well years before must through back where much your way down should because each just those people how too little state good very make world still own see men work long here between both life being under never day same another know while last might us great old year off come since against go came right used take three states himself few house use during without again place around however home small found mrs thought went say part once general high upon school every don does got united left number course war until always away something fact though water less public put think almost hand enough far took head yet government system better set told nothing night end why called didn eyes find going look asked later knew point next program city business give group toward young days let room president side social given present several order national possible rather second face per among form important often things looked early white case john become large big need four within felt along children saw best church ever least power development light thing seemed family interest want members mind country area others done turned although open god service certain kind problem began different door thus help sense means whole matter perhaps itself york times law human line above name example action company hands local show whether five history gave today either act feet across taken past quite anything seen having death week experience body word half really field am car words already themselves information tell together college shall money period held keep sure probably free seems political real behind cannot miss question air office making brought whose special major heard problems federal became study ago moment available known result street economic boy position reason change south board individual job areas society west close turn love community true court force full seem am wife age policy future".split(" ");
+const pseudo = (n) => Array.from({ length: n }, () => WORDS[Math.floor(rnd() * WORDS.length)]).join(" ");
+const newsTex = (w, h, base = "#e9e0cc") => mk(w, h, (g) => {
+  g.drawImage(paperTex(w, h, base, { gr: 14 }), 0, 0);
+  const cols = Math.max(2, Math.round(w / 230)), cw = (w - 30) / cols; let hdY = 20;
+  g.fillStyle = "rgba(25,20,15,.85)"; g.font = "700 46px Osw"; g.fillText(pseudo(3).toUpperCase(), 18, hdY + 44); hdY += 70;
+  g.font = "15px serif"; g.fillStyle = "rgba(30,25,20,.78)";
+  for (let c = 0; c < cols; c++) { let y = hdY + R(0, 20); const x = 15 + c * cw;
+    while (y < h - 10) { if (rnd() < .06) { g.font = "700 22px serif"; g.fillText(pseudo(2), x, y + 18); y += 30; g.font = "15px serif"; continue; }
+      let line = ""; while (g.measureText(line).width < cw - 40) line += WORDS[Math.floor(rnd() * WORDS.length)] + " "; g.fillText(line, x, y + 14); y += 18; } }
+  grain(g, w, h, 20);
+});
+
+// ── torn cut-outs ───────────────────────────────────────────────────────────
+function tornPath(g, w, h, rough = 7, step = 9) {
+  const pts = [];
+  const edge = (x0, y0, x1, y1) => { const n = Math.max(2, Math.round(Math.hypot(x1 - x0, y1 - y0) / step)); for (let i = 0; i < n; i++) { const t = i / n; pts.push([x0 + (x1 - x0) * t + (rnd() - .5) * rough, y0 + (y1 - y0) * t + (rnd() - .5) * rough]); } };
+  edge(0, 0, w, 0); edge(w, 0, w, h); edge(w, h, 0, h); edge(0, h, 0, 0);
+  g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath();
+}
+/** Puts `src` on a torn scrap of paper with a white rim and a soft shadow. */
+function scrap(src, { pad = 14, rim = PAPER, rough = 9, shadow = true, bg = null } = {}) {
+  const w = src.width + pad * 2, h = src.height + pad * 2, m = 30;
+  return mk(w + m * 2, h + m * 2, (g) => {
+    g.translate(m, m);
+    if (shadow) { g.save(); g.translate(8, 10); tornPath(g, w, h, rough); g.fillStyle = "rgba(0,0,0,.28)"; g.filter = "blur(6px)"; g.fill(); g.restore(); }
+    g.save(); tornPath(g, w, h, rough); g.fillStyle = rim; g.fill(); g.clip();
+    if (bg) { g.drawImage(bg, 0, 0, w, h); }
+    g.drawImage(src, pad, pad); g.restore();
+    g.save(); tornPath(g, w, h, rough); g.strokeStyle = "rgba(0,0,0,.18)"; g.lineWidth = 1.5; g.stroke(); g.restore();
+  });
+}
+
+// ── photo treatments: xerox (stipple) and halftone ──────────────────────────
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + .5) / 16);
+function lumaGrid(img, [cx, cy, cw, ch], ow, oh, contrast, gamma, bright) {
+  const c = mk(ow, oh, (g) => { g.drawImage(img, cx, cy, cw, ch, 0, 0, ow, oh); });
+  const d = c.getContext("2d").getImageData(0, 0, ow, oh).data, L = new Float32Array(ow * oh);
+  let lo = 1, hi = 0; for (let i = 0; i < L.length; i++) { const v = (.299 * d[i * 4] + .587 * d[i * 4 + 1] + .114 * d[i * 4 + 2]) / 255; L[i] = v; }
+  const s = [...L].sort((a, b) => a - b); lo = s[Math.floor(s.length * .02)]; hi = s[Math.floor(s.length * .98)];
+  for (let i = 0; i < L.length; i++) { let v = (L[i] - lo) / Math.max(.05, hi - lo); v = clamp((v - .5) * contrast + .5 + bright); L[i] = Math.pow(v, gamma); }
+  return L;
+}
+function xerox(img, crop, ow, { contrast = 1.5, gamma = 1, bright = 0, noise = .28, dither = .35, ink = INK, paper = null } = {}) {
+  const oh = Math.round(ow * crop[3] / crop[2]); const L = lumaGrid(img, crop, ow, oh, contrast, gamma, bright);
+  return mk(ow, oh, (g) => {
+    const im = g.createImageData(ow, oh), d = im.data, ic = hexRgb(ink), pc = paper ? hexRgb(paper) : null;
+    for (let y = 0; y < oh; y++) for (let x = 0; x < ow; x++) { const i = y * ow + x, t = .5 + (BAYER[(y & 3) * 4 + (x & 3)] - .5) * dither + (rnd() - .5) * noise;
+      if (L[i] < t) { d[i * 4] = ic[0]; d[i * 4 + 1] = ic[1]; d[i * 4 + 2] = ic[2]; d[i * 4 + 3] = 255; } else if (pc) { d[i * 4] = pc[0]; d[i * 4 + 1] = pc[1]; d[i * 4 + 2] = pc[2]; d[i * 4 + 3] = 255; } }
+    g.putImageData(im, 0, 0);
+  });
+}
+function halftone(img, crop, ow, { cell = 9, angle = .785, ink = INK, paper = null, contrast = 1.4, gamma = 1, bright = 0 } = {}) {
+  const oh = Math.round(ow * crop[3] / crop[2]); const L = lumaGrid(img, crop, ow, oh, contrast, gamma, bright);
+  return mk(ow, oh, (g) => {
+    if (paper) { g.fillStyle = paper; g.fillRect(0, 0, ow, oh); }
+    g.fillStyle = ink; const ca = Math.cos(angle), sa = Math.sin(angle), D = Math.hypot(ow, oh);
+    for (let u = -D; u < D; u += cell) for (let v = -D; v < D; v += cell) { const x = u * ca - v * sa + ow / 2, y = u * sa + v * ca + oh / 2;
+      if (x < -cell || y < -cell || x > ow + cell || y > oh + cell) continue; const l = L[clamp(Math.round(y), 0, oh - 1) * ow + clamp(Math.round(x), 0, ow - 1)];
+      const r = cell * .72 * Math.sqrt(1 - l); if (r > .4) { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); } }
+  });
+}
+function hexRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+
+// ── type ────────────────────────────────────────────────────────────────────
+/** Inked type: solid letters with worn, speckled edges like a photocopy or a rubber stamp. */
+function inked(text, font, size, color, { wear = .5, pad = 20, track = 0, lines = null, lh = .92, align = "left" } = {}) {
+  const ls = lines ?? [text]; const m = mk(10, 10).getContext("2d"); m.font = `${size}px ${font}`; m.letterSpacing = track + "px";
+  const w = Math.max(...ls.map((l) => m.measureText(l).width)) + pad * 2, h = size * lh * ls.length + size * .3 + pad * 2;
+  return mk(w, h, (g) => {
+    g.font = `${size}px ${font}`; g.letterSpacing = track + "px"; g.fillStyle = color; g.textBaseline = "alphabetic"; g.textAlign = align;
+    ls.forEach((l, i) => g.fillText(l, align === "center" ? w / 2 : pad, pad + size * .82 + i * size * lh));
+    if (wear) { g.globalCompositeOperation = "destination-out"; for (let i = 0; i < w * h * .004 * wear; i++) { g.fillStyle = `rgba(0,0,0,${R(.3, 1)})`; g.beginPath(); g.arc(R(0, w), R(0, h), R(.5, 2.6), 0, 7); g.fill(); }
+      for (let i = 0; i < 6 * wear; i++) { g.fillStyle = "rgba(0,0,0,.25)"; g.fillRect(R(0, w), 0, R(1, 4), h); } }
+  });
+}
+/** Rubber stamp: double border, worn ink. */
+function stampC(lines, color, size = 70) {
+  const t = inked("", "Anton", size, color, { wear: 0, lines, align: "center", track: 2 }); const p = 22;
+  return mk(t.width + p * 2, t.height + p * 2, (g) => {
+    g.strokeStyle = color; g.lineWidth = 7; g.strokeRect(6, 6, t.width + p * 2 - 12, t.height + p * 2 - 12); g.lineWidth = 2.5; g.strokeRect(18, 18, t.width + p * 2 - 36, t.height + p * 2 - 36);
+    g.drawImage(t, p, p);
+    g.globalCompositeOperation = "destination-out"; for (let i = 0; i < g.canvas.width * g.canvas.height * .0035; i++) { g.fillStyle = `rgba(0,0,0,${R(.2, .9)})`; g.beginPath(); g.arc(R(0, g.canvas.width), R(0, g.canvas.height), R(.6, 3.2), 0, 7); g.fill(); }
+  });
+}
+/** A stamp slammed onto the page at time `at`. */
+function slam(g, c, x, y, rot, lt, at, id = 9) { const k = (lt - at) / .22; if (k < 0) return; const s = k < 1 ? 1.7 - .7 * out(k) : 1; place(g, c, x, y, { rot, s, id, alpha: clamp(k * 2) }); }
+/** Typewriter text in a box, typed out from `at`. */
+function typed(g, lines, x, y, size, color, lt, at, cps = 34, font = "Type") {
+  g.save(); g.font = `${size}px ${font}`; g.fillStyle = color; let n = Math.floor(Math.max(0, lt - at) * cps);
+  lines.forEach((l, i) => { if (n <= 0) return; const s = l.slice(0, n); n -= l.length; g.fillText(s, x, y + i * size * 1.35); });
+  g.restore();
+}
+function star8(g, x, y, r, col, rot = 0) { g.save(); g.translate(x, y); g.rotate(rot); g.fillStyle = col; g.beginPath(); for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8, rr = i % 2 ? r * .38 : r; g.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } g.closePath(); g.fill(); g.restore(); }
+function barcode(g, x, y, w, h, label) { g.fillStyle = INK; let cx = x; while (cx < x + w) { const bw = 1 + Math.floor(hash(cx) * 4); g.fillRect(cx, y, bw, h); cx += bw + 1 + Math.floor(hash(cx + 9) * 3); } g.font = "22px Type"; g.fillText(label, x, y + h + 26); }
+function scribble(g, pts, col, w, k) { // a marker line drawn on progressively
+  if (k <= 0) return; g.save(); g.strokeStyle = col; g.lineWidth = w; g.lineCap = g.lineJoin = "round"; g.beginPath(); const n = Math.max(2, Math.floor(pts.length * clamp(k)));
+  for (let i = 0; i < n; i++) i ? g.lineTo(...pts[i]) : g.moveTo(...pts[i]); g.stroke(); g.restore(); }
+const ring = (cx, cy, rx, ry, turns = 1.15, n = 60) => Array.from({ length: n }, (_, i) => { const a = -1.9 + i / n * Math.PI * 2 * turns; return [cx + Math.cos(a) * rx * (1 + .05 * Math.sin(i)), cy + Math.sin(a) * ry]; });
+
+// ── drawn things: cats, branches, hypnotic eyes, a banana, a profile ────────
+function fur(g, pts, len) { g.lineCap = "round"; for (let i = 0; i < pts.length; i++) { const [x, y, nx, ny] = pts[i]; const l = len * R(.3, 1); g.lineWidth = R(1.2, 3); g.beginPath(); g.moveTo(x, y); g.lineTo(x + nx * l + R(-3, 3), y + ny * l + R(-3, 3)); g.stroke(); } }
+function ellipsePts(cx, cy, rx, ry, n, a0 = 0, a1 = Math.PI * 2) { return Array.from({ length: n }, (_, i) => { const a = a0 + (a1 - a0) * i / n; return [cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, Math.cos(a), Math.sin(a)]; }); }
+/** An ink cat (the reference drawing): "peek" leans in from the right edge looking left, "sit" faces us.
+ *  Fur is drawn along the true outline of the union of shapes, eyes are pale almonds with slits. */
+function catC(kind = "peek", s = 1) {
+  const peek = kind === "peek", W0 = peek ? 900 : 380, H0 = peek ? 340 : 440, ox = peek ? 190 : 190, oy = peek ? 150 : 150;
+  const parts = new Path2D(), add = (p) => parts.addPath(p);
+  const el = (x, y, rx, ry) => { const p = new Path2D(); p.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); add(p); };
+  const poly = (pts) => { const p = new Path2D(); pts.forEach(([x, y], i) => i ? p.lineTo(x, y) : p.moveTo(x, y)); p.closePath(); add(p); };
+  if (peek) {
+    el(0, 0, 74, 62); el(-56, 18, 26, 20);
+    poly([[-60, -24], [-74, -112], [-48, -94], [-18, -54]]); poly([[8, -56], [42, -114], [56, -82], [60, -22]]);
+    const b = new Path2D(); b.moveTo(18, -50); b.bezierCurveTo(160, -100, 420, -96, 720, -70); b.lineTo(720, 190); b.bezierCurveTo(480, 186, 220, 140, 30, 54); b.closePath(); add(b);
+  } else {
+    el(0, 0, 80, 68); poly([[-64, -22], [-70, -116], [-40, -98], [-16, -60]]); poly([[16, -60], [40, -98], [70, -116], [64, -22]]);
+    el(0, 178, 128, 122); el(0, 70, 60, 50);
+  }
+  return Object.assign(mk(W0 * s, H0 * s, (g) => {
+    g.scale(s, s); g.translate(ox, oy); g.fillStyle = INK; g.fill(parts);
+    // fur: find points on the edge of the silhouette and brush outward along its normal
+    const probe = mk(1, 1).getContext("2d"), inside = (x, y) => probe.isPointInPath(parts, x, y);
+    g.strokeStyle = INK; g.lineCap = "round"; const dirs = Array.from({ length: 12 }, (_, k) => [Math.cos(k * Math.PI / 6), Math.sin(k * Math.PI / 6)]);
+    for (let n = 0; n < 26000; n++) { const x = R(-ox, W0 - ox), y = R(-oy, H0 - oy); if (!inside(x, y)) continue;
+      let nx = 0, ny = 0, edge = false; for (const [dx, dy] of dirs) if (!inside(x + dx * 5, y + dy * 5)) { nx += dx; ny += dy; edge = true; }
+      if (!edge) continue; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l; const len = R(5, peek && x > 100 ? 26 : 15);
+      g.lineWidth = R(1, 2.6); g.beginPath(); g.moveTo(x - nx * 3, y - ny * 3); g.quadraticCurveTo(x + nx * len * .5 + R(-3, 3), y + ny * len * .5 + R(-3, 3), x + nx * len + R(-4, 4), y + ny * len + R(-4, 4)); g.stroke(); }
+    g.lineWidth = 1.4; const wh = peek ? [[-70, 14], [-72, 22], [-70, 30]] : [[-30, 30], [-30, 38], [30, 30], [30, 38]];
+    wh.forEach(([x, y], k) => { const dir = x < 0 ? -1 : 1, sp = (k % 3 - 1) * .18; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + dir * 70, y + sp * 40, x + dir * 140, y + 6 + sp * 110); g.stroke(); });
+    const eyes = peek ? [[-46, -6, -.12], [-10, -9, -.05]] : [[-28, -2, .12], [28, -2, -.12]];
+    for (const [x, y, r] of eyes) { g.save(); g.translate(x, y); g.rotate(r); g.fillStyle = "#efe6c6"; g.beginPath(); g.moveTo(-12, 0); g.quadraticCurveTo(0, -9, 12, 0); g.quadraticCurveTo(0, 9, -12, 0); g.fill();
+      g.fillStyle = INK; g.beginPath(); g.ellipse(peek ? -3 : 0, 0, 2.4, 7, 0, 0, 7); g.fill(); g.restore(); }
+  }), { ax: ox / W0, ay: oy / H0 });
+}
+function catEyes(g, x, y, s, lt, id, look = 0) { // two eyes on a prebuilt cat placed at (x,y), scale s
+  const blink = (hash(Math.floor((lt + id) / 2.7) + id) < .35 && ((lt + id) % 2.7) < .14) ? .1 : 1;
+  for (const ex of [-44, -8]) { g.save(); g.translate(x + (ex + look) * s, y - 8 * s); g.scale(s, s * blink); g.fillStyle = "#f2e9c9"; g.beginPath(); g.ellipse(0, 0, 9, 6, 0, 0, 7); g.fill(); g.fillStyle = INK; g.beginPath(); g.ellipse(look * .3, 0, 2.2, 5.5, 0, 0, 7); g.fill(); g.restore(); }
+}
+/** Ink frame with wood-grain hatching (the cats drawing). */
+function inkFrame(border = 70) { return mk(W, H, (g) => {
+  g.fillStyle = "#0e0d0c"; g.fillRect(0, 0, W, H); g.save(); g.beginPath(); g.rect(border, border, W - border * 2, H - border * 2); g.fillStyle = PAPER; g.fill(); g.restore();
+  const inner = mk(W, H, (h) => { h.drawImage(paperTex(W, H, "#f3f1ec", { st: 3, stainCol: "rgba(80,70,50,.05)", gr: 10 }), 0, 0); });
+  g.save(); tornLike(g, border, border, W - border * 2, H - border * 2); g.clip(); g.drawImage(inner, 0, 0); g.restore();
+  g.strokeStyle = "rgba(235,230,220,.55)"; g.lineCap = "round";
+  for (let i = 0; i < 2600; i++) { const side = Math.floor(rnd() * 4); let x, y, dx, dy; const l = R(20, 120);
+    if (side < 2) { x = side ? R(W - border - 6, W - 8) : R(8, border + 6); y = R(0, H); dx = R(-.12, .12); dy = 1; } else { y = side === 2 ? R(8, border + 6) : R(H - border - 6, H - 8); x = R(0, W); dx = 1; dy = R(-.12, .12); }
+    g.lineWidth = R(.6, 1.8); g.globalAlpha = R(.15, .6); g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + dx * l / 2 + R(-4, 4), y + dy * l / 2 + R(-4, 4), x + dx * l, y + dy * l); g.stroke(); }
+  g.globalAlpha = 1;
+}); }
+function tornLike(g, x, y, w, h) { g.translate(x, y); tornPath(g, w, h, 10, 14); g.translate(-x, -y); }
+function branch(g, x, y, ang, len, depth, k, w) { // grows with k (0..1)
+  if (depth === 0 || k <= 0) return; const L = len * clamp(k * 1.6); const x2 = x + Math.cos(ang) * L, y2 = y + Math.sin(ang) * L;
+  g.lineWidth = w; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo((x + x2) / 2 + Math.sin(depth * 7) * 8, (y + y2) / 2, x2, y2); g.stroke();
+  const kk = (k - .35) / .65; branch(g, x2, y2, ang - .45 + Math.sin(depth * 3.1) * .15, len * .72, depth - 1, kk, w * .68); branch(g, x2, y2, ang + .38 + Math.cos(depth * 2.3) * .15, len * .66, depth - 1, kk, w * .66);
+}
+function hypnoEye(g, x, y, r, phase, sclera = IVORY) {
+  g.save(); g.translate(x, y); g.beginPath(); g.ellipse(0, 0, r * 1.6, r, 0, 0, 7); g.fillStyle = sclera; g.fill(); g.clip();
+  for (let k = Math.ceil(r / 10) + 2; k >= 0; k--) { const rr = k * 10 + (phase * 20) % 20 - 10; if (rr <= 0) continue; g.beginPath(); g.arc(0, 0, rr, 0, 7); g.fillStyle = k % 2 ? INK : sclera; g.fill(); }
+  g.restore(); g.save(); g.translate(x, y); g.lineWidth = 4; g.strokeStyle = INK; g.beginPath(); g.ellipse(0, 0, r * 1.6, r, 0, 0, 7); g.stroke();
+  g.lineWidth = 2.5; for (let i = -4; i <= 4; i++) { const a = -Math.PI / 2 + i * .22; g.beginPath(); g.moveTo(Math.cos(a) * r * 1.5, Math.sin(a) * r * .95); g.lineTo(Math.cos(a) * r * 1.8, Math.sin(a) * r * 1.35); g.stroke(); } g.restore();
+}
+function bananaC(s = 1) { return mk(620 * s, 360 * s, (g) => {
+  g.scale(s, s); g.translate(310, 190); g.rotate(-.18);
+  const path = () => { g.beginPath(); g.moveTo(-262, -64); g.bezierCurveTo(-120, 30, 120, 34, 262, -84); g.bezierCurveTo(170, 150, -150, 160, -262, -64); g.closePath(); };
+  path(); g.fillStyle = YEL; g.fill(); g.save(); path(); g.clip();
+  g.strokeStyle = "rgba(20,18,16,.85)"; for (let i = 0; i < 80; i++) { const t = i / 80, x = -240 + t * 480, top = 10 + Math.sin(t * Math.PI) * 50; g.lineWidth = R(1.2, 2.6); g.beginPath(); g.moveTo(x, top + 25); g.lineTo(x + 8, 140); g.stroke(); }
+  g.strokeStyle = "rgba(150,100,0,.55)"; g.lineWidth = 3; g.beginPath(); g.moveTo(-240, -40); g.bezierCurveTo(-110, 70, 120, 74, 248, -66); g.stroke(); g.restore();
+  path(); g.lineWidth = 7; g.strokeStyle = INK; g.stroke();
+  g.fillStyle = "#3a2a10"; g.beginPath(); g.ellipse(-258, -62, 14, 10, .6, 0, 7); g.fill(); g.beginPath(); g.moveTo(250, -80); g.lineTo(292, -126); g.lineTo(306, -112); g.lineTo(266, -66); g.fill();
+}); }
+/** A black profile looking right, with an ivory band across the eyes (the riso reference). */
+function profileC() { return mk(980, 1300, (g) => {
+  g.fillStyle = INK; g.beginPath(); g.moveTo(0, 60); g.bezierCurveTo(260, -40, 620, 10, 700, 250); g.bezierCurveTo(730, 330, 735, 400, 728, 470); g.lineTo(820, 610); g.bezierCurveTo(830, 640, 800, 655, 770, 660);
+  g.lineTo(778, 720); g.bezierCurveTo(790, 740, 770, 760, 760, 770); g.bezierCurveTo(780, 790, 770, 820, 745, 830); g.bezierCurveTo(740, 900, 690, 950, 600, 955); g.bezierCurveTo(560, 1000, 560, 1100, 620, 1300); g.lineTo(0, 1300); g.closePath(); g.fill();
+  g.strokeStyle = INK; g.lineCap = "round"; for (let i = 0; i < 900; i++) { const t = rnd(), x = 20 + t * 640, y = 60 - Math.sin(t * Math.PI) * 70 + R(-30, 60); g.lineWidth = R(1, 3.5); g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + R(10, 40), y - R(10, 50), x + R(30, 110), y - R(0, 40)); g.stroke(); }
+  const band = mk(980, 1300, (h) => { h.fillStyle = IVORY; h.fillRect(150, 300, 830, 200); grain(h, 980, 1300, 12); });
+  g.save(); g.beginPath(); g.rect(150, 300, 830, 200); g.clip(); g.globalCompositeOperation = "source-atop"; g.drawImage(band, 0, 0); g.restore();
+}); }
+
+// ── timing: voice timing.json when present, otherwise estimated ────────────
+let BOARD, TIMING, SC = [], DUR, OUTRO = 3.2, ART = {}, TEX = {}, music = "";
+function estimate(board) {
+  let t = .1; const scenes = [];
+  for (const s of board.scenes) { const sents = []; const st = t;
+    s.say.forEach((txt, i) => { const ws = txt.split(/\s+/); const d = ws.length / 2.65 + .15; const words = ws.map((w, k) => ({ w, start: t + d * k / ws.length, end: t + d * (k + 1) / ws.length }));
+      sents.push({ text: txt, start: t, end: t + d, words }); t += d + (i < s.say.length - 1 ? .2 : 0); });
+    scenes.push({ start: st, end: t, sentences: sents }); t += .8; }
+  return { duration: t - .8 + 1.4, scenes };
+}
+function wordsOf(sc) { return sc.sentences.flatMap((s) => s.words ?? s.text.split(/\s+/).map((w, k, a) => ({ w, start: s.start + (s.end - s.start) * k / a.length, end: s.start + (s.end - s.start) * (k + 1) / a.length }))); }
+/** Local time (from the scene start) when `word` is first spoken in scene i. */
+function cue(i, word, fb = .6) { const sc = TIMING.scenes[i]; const w = wordsOf(sc).find((x) => x.w.toLowerCase().replace(/[^a-z0-9.,%]/g, "").startsWith(String(word).toLowerCase())); return (w ? w.start : sc.start + (sc.end - sc.start) * fb) - SC[i].t0; }
+
+// ── captions (burned in, word by word) ─────────────────────────────────────
+function captions(g, t, i) {
+  const sents = TIMING.scenes[i].sentences; const s = sents.find((x) => t >= x.start - .05 && t < x.end + .35); if (!s) return;
+  const words = s.words ?? wordsOf({ sentences: [s] });
+  g.save(); g.font = "700 50px Osw"; const maxW = 900, lh = 64; const lines = [[]]; let lw = 0;
+  for (const w of words) { const ww = g.measureText(w.w.toUpperCase() + " ").width; if (lw + ww > maxW && lines.at(-1).length) { lines.push([]); lw = 0; } lines.at(-1).push({ ...w, ww }); lw += ww; }
+  const boxH = lines.length * lh + 34, y0 = 1560 - boxH;
+  g.fillStyle = INK; g.fillRect(70, y0, W - 140, boxH); g.fillStyle = RED; g.fillRect(70, y0, 12, boxH);
+  lines.forEach((ln, li) => { let x = 108; for (const w of ln) { const on = t >= w.start - .02; g.fillStyle = !on ? "rgba(239,232,218,.28)" : t < w.end + .08 ? YEL : IVORY; g.fillText(w.w.toUpperCase(), x, y0 + 60 + li * lh); x += w.ww; } });
+  g.restore();
+}
+/** The zine's running strip along the bottom, scrolling left. */
+function ticker(g, t) {
+  const y = 1700; g.save(); g.fillStyle = INK; g.fillRect(0, y, W, 66); g.font = "30px Type"; const unit = "— " + BOARD.ticker + " ", w = g.measureText(unit).width + 24, x0 = -((t * 70) % w);
+  g.fillStyle = IVORY; for (let x = x0; x < W; x += w) g.fillText(unit, x, y + 44); g.fillStyle = RED; g.fillRect(0, y - 6, W, 4); g.fillRect(0, y + 68, W, 4); g.restore();
+}
+function mast(g) {
+  g.save(); g.fillStyle = "rgba(14,13,12,.9)"; g.fillRect(56, 92, 420, 62); g.drawImage(TEX.mark, 64, 98, 50, 50); g.font = "700 26px Bod"; g.fillStyle = IVORY; g.letterSpacing = "5px"; g.fillText("AI BROADSHEET", 128, 134);
+  g.font = "18px Type"; g.letterSpacing = "1px"; const lab = "COLLAGE · ARCHIVE PHOTOS"; const lw = g.measureText(lab).width; g.fillStyle = "rgba(14,13,12,.9)"; g.fillRect(W - 76 - lw, 104, lw + 20, 40); g.fillStyle = IVORY; g.fillText(lab, W - 66 - lw, 130); g.restore();
+}
+function outro(g, lt) {
+  g.drawImage(TEX.kraft, 0, 0); const k = out(lt / .4);
+  place(g, TEX.outroMark, W / 2, 620, { s: .6 + .4 * k, id: 70, alpha: k });
+  place(g, TEX.outroName, W / 2, 900, { id: 71, alpha: clamp((lt - .2) / .3) });
+  g.save(); g.font = "26px Type"; g.fillStyle = INK; g.textAlign = "center";
+  const lines = ["Sources: " + BOARD.sources.map((s) => s.name).join(" · "), "Archive photos: public domain, via Wikimedia Commons", "Music and sounds: " + music, "aibroadsheet.com"];
+  lines.forEach((l, i) => { g.globalAlpha = clamp((lt - .5 - i * .15) / .3); wrapText(g, l, W / 2, 1100 + i * 110, 880, 34); }); g.restore();
+}
+function wrapText(g, s, x, y, maxW, lh) { const ws = s.split(" "); let line = "", yy = y; for (const w of ws) { if (g.measureText(line + w).width > maxW && line) { g.fillText(line.trim(), x, yy); line = ""; yy += lh; } line += w + " "; } g.fillText(line.trim(), x, yy); }
+
+// ═════ the three looks ═════════════════════════════════════════════════════
+const LOOKS = {};
+
+// ── 1. cats: ink frame, black cats as the agents, zine panels ──────────────
+LOOKS.cats = { async build() {
+  TEX.frame = inkFrame(); TEX.kraft = paperTex(W, H, KRAFT); TEX.cat = catC("peek", 1.35); TEX.catS = catC("peek", .8); TEX.catSit = catC("sit", 1.2); TEX.catSitS = catC("sit", .62);
+  TEX.title = inked("", "Anton", 150, INK, { lines: ["WHO IS", "EDITING", "WIKIPEDIA?"], lh: .95, wear: .6 });
+  TEX.catalog = scrap(xerox(ART[0], [0, 0, ART[0].width, ART[0].height], 820, { contrast: 1.3, noise: .2 }), { rim: "#f7f3ea" });
+  TEX.card = mk(820, 470, (g) => { g.fillStyle = "#fbf8f0"; g.fillRect(0, 0, 820, 470); g.strokeStyle = "rgba(60,110,170,.35)"; g.lineWidth = 2; for (let y = 110; y < 470; y += 48) { g.beginPath(); g.moveTo(0, y); g.lineTo(820, y); g.stroke(); } g.strokeStyle = RED; g.beginPath(); g.moveTo(0, 80); g.lineTo(820, 80); g.stroke(); grain(g, 820, 470, 12); });
+  TEX.news = newsTex(W, H); TEX.stampMal = stampC(["POTENTIALLY", "MALICIOUS"], RED, 76); TEX.stampFail = stampC(["FAILED"], RED, 150); TEX.stampNobody = stampC(["NOBODY", "ASKED"], RED, 110);
+  TEX.stampOutage = stampC(["PARTIAL OUTAGE", "MAY"], RED, 70); TEX.bots = inked("", "Anton", 170, INK, { lines: ["BOTS", "WELCOME*"], wear: .4 });
+  TEX.headB = mk(140, 120, (g) => { g.translate(70, 70); g.fillStyle = INK; g.beginPath(); g.ellipse(0, 0, 48, 40, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-36, -18); g.lineTo(-44, -66); g.lineTo(-10, -36); g.fill(); g.beginPath(); g.moveTo(10, -36); g.lineTo(44, -66); g.lineTo(36, -18); g.fill(); g.strokeStyle = INK; fur(g, ellipsePts(0, 0, 48, 40, 60), 9); g.fillStyle = "#f2e9c9"; for (const ex of [-16, 16]) { g.beginPath(); g.ellipse(ex, -4, 7, 5, 0, 0, 7); g.fill(); } g.fillStyle = INK; for (const ex of [-16, 16]) { g.fillRect(ex - 1.5, -8, 3, 8); } });
+},
+peek(g, lt, d, i) {
+  g.drawImage(TEX.frame, 0, 0); g.save(); g.strokeStyle = INK; g.lineCap = "round"; branch(g, 760, 1830, -1.75, 260, 7, clamp((lt - .2) / 3), 16); g.restore();
+  const enter = (at) => out((lt - at) / .5);
+  const k1 = enter(.2); place(g, TEX.cat, 860, 60 + 250 * k1, { rot: -Math.PI / 2, id: 1 }); // hangs from the top
+  const cats = [[1180, 860, -1, .8], [-100, 1060, 1, 1.4], [1180, 1250, -1, 2.0]];
+  cats.forEach(([x, y, dir, at], n) => { const k = enter(at); if (k <= 0) return; const tx = dir < 0 ? x - 400 * k : x + 400 * k;
+    g.save(); g.translate(tx, y); g.scale(dir < 0 ? 1 : -1, 1); place(g, TEX.cat, 0, 0, { id: 2 + n }); g.restore(); });
+  const ks = enter(2.7); if (ks > 0) place(g, TEX.catSit, 300, 1990 - 300 * ks, { id: 7 });
+  place(g, TEX.title, 440, 520, { id: 8, s: back((lt - cue(i, "Who")) / .35) * .8, rot: -.04 });
+},
+quote(g, lt, d, i) {
+  g.drawImage(TEX.news, 0, 0); g.fillStyle = "rgba(20,18,16,.35)"; g.fillRect(0, 0, W, H);
+  const pk = out((lt - 1) / .6); place(g, TEX.catSitS, 760, 420 - 170 * pk, { id: 12 });
+  place(g, TEX.catalog, W / 2, 470, { rot: -.05, id: 11, s: out(lt / .4) });
+  const ck = back((lt - cue(i, "Wikipedia") + .2) / .4); place(g, TEX.card, W / 2, 1040, { rot: .03, id: 13, s: ck * .98 });
+  if (ck > .5) { g.save(); g.translate(W / 2, 1040); g.rotate(.03); typed(g, ["“Wikipedia was designed", "for humans.”"], -370, -110, 54, INK, lt, cue(i, "Wikipedia")); g.font = "26px Type"; g.fillStyle = RED; g.globalAlpha = clamp((lt - cue(i, "humans")) / .3); g.fillText("— Selena Deckelmann, Wikimedia tech chief", -370, 150); g.restore(); }
+},
+sandbox(g, lt, d, i) {
+  g.drawImage(TEX.frame, 0, 0);
+  g.save(); g.setLineDash([22, 14]); g.lineWidth = 6; g.strokeStyle = INK; g.strokeRect(140, 300, 800, 460); g.restore();
+  g.font = "48px Anton"; g.fillStyle = INK; g.fillText("SANDBOX", 160, 290); g.font = "24px Type"; g.fillText("(readers don't see this)", 400, 288);
+  g.save(); g.beginPath(); g.rect(143, 303, 794, 454); g.clip(); [[360, 640, 0], [700, 660, 1]].forEach(([x, y, n]) => { const bob = Math.abs(Math.sin(lt * 3 + n * 2)) * -40; g.save(); g.translate(x, y + bob); g.rotate(Math.sin(lt * 3 + n) * .12); place(g, TEX.catSitS, 0, 0, { id: 20 + n }); g.restore(); }); g.restore();
+  const tk = cue(i, "But"); if (lt > tk - .3) { const k = out((lt - tk + .3) / .3); g.save(); g.globalAlpha = k; g.fillStyle = INK; g.fillRect(120, 860, 840, 360); g.restore();
+    typed(g, [">> CITATION TOOL", ">> SETTINGS ... CHANGED", ">> BY: AGENT"], 160, 940, 46, IVORY, lt, tk); }
+  slam(g, TEX.stampMal, W / 2, 1060, -.1, lt, cue(i, "malicious"));
+},
+proxy(g, lt, d, i) {
+  g.drawImage(TEX.kraft, 0, 0); star8(g, 170, 330, 110, RED, lt * .3);
+  place(g, inkedCache("PROXY?", "Anton", 220), W / 2 + 80, 330, { id: 30, rot: -.03 });
+  g.fillStyle = INK; g.fillRect(90, 520, 900, 560);
+  typed(g, [">> AGENT: fetch(other websites)", ">> VIA: public note-taking tool", ">> ROUTING ............", ">> RESULT:"], 130, 610, 40, IVORY, lt, .5, 30);
+  const jump = clamp((lt - 1.2) / 2.2); const jx = 160 + jump * 640, jy = 560 - Math.sin(jump * Math.PI) * 110;
+  if (lt < cue(i, "failed")) { g.save(); g.translate(jx, jy - 80); g.rotate(-.3 + jump * .6); place(g, TEX.catSitS, 0, 0, { id: 31 }); g.restore(); }
+  else { const fk = out((lt - cue(i, "failed")) / .5); g.save(); g.translate(800, 440 + fk * 900); g.rotate(fk * 2.6); place(g, TEX.catSitS, 0, 0, { id: 32 }); g.restore(); }
+  slam(g, TEX.stampFail, W / 2, 940, -.12, lt, cue(i, "failed"));
+},
+swarm(g, lt, d, i) {
+  g.drawImage(TEX.frame, 0, 0); const n = Math.floor(clamp((lt - .3) / 3) * 70);
+  for (let k = 0; k < n; k++) { const x = 140 + (k % 7) * 130 + (Math.floor(k / 7) % 2) * 65, y = 330 + Math.floor(k / 7) * 100; place(g, TEX.headB, x, y, { id: 40 + k, s: .9 }); }
+  g.fillStyle = INK; g.fillRect(140, 180, 800, 110); typed(g, ["REQUESTS: MILLIONS · PAGES CRAWLED: MILLIONS"], 165, 250, 34, IVORY, lt, cue(i, "Millions"), 40);
+  const ok = cue(i, "outage"); if (lt > ok) { const k = clamp((lt - ok) / .25); g.fillStyle = `rgba(10,9,8,${.85 * k})`; g.fillRect(70, 70, W - 140, H - 140);
+    for (let k2 = 0; k2 < 18; k2++) catEyes(g, 180 + (k2 % 6) * 140, 500 + Math.floor(k2 / 6) * 260, 1.2, lt, k2); slam(g, TEX.stampOutage, W / 2, 1180, -.08, lt, ok + .15); }
+},
+rules(g, lt, d, i) {
+  g.drawImage(TEX.kraft, 0, 0); g.fillStyle = INK; g.fillRect(90, 240, 900, 70); g.font = "34px Type"; g.fillStyle = IVORY; g.fillText("WIKIPEDIA HOUSE RULES  ·  NO. 1", 120, 287);
+  place(g, TEX.bots, W / 2, 560, { id: 50, s: back(lt / .35) * .95, rot: -.02 });
+  typed(g, ["*if the community", " approves them."], 190, 820, 54, INK, lt, cue(i, "if"), 26);
+  barcode(g, 120, 980, 340, 90, "BOT-POLICY-2026");
+  place(g, TEX.catSit, 800, 1250, { id: 51, s: .8 });
+  slam(g, TEX.stampNobody, 650, 1010, .12, lt, cue(i, "Nobody"));
+},
+end(g, lt, d, i) {
+  g.drawImage(TEX.frame, 0, 0); place(g, TEX.catSit, W / 2, 1720, { id: 60 });
+  const rows = [["NO SIGN SYSTEMS OR", "DATA WERE COMPROMISED"], ["OPENAI: WORKING WITH", "THE FOUNDATION"], ["“THE OPEN WEB IS", "A PUBLIC GOOD.”"]];
+  rows.forEach((r, n) => { const at = TIMING.scenes[i].sentences[n].start - SC[i].t0; place(g, inkedCache(r.join("\n"), "Anton", 78, n === 2 ? RED : INK), W / 2, 330 + n * 260, { id: 61 + n, s: back((lt - at) / .35), rot: (n - 1) * .03 }); });
+} };
+
+// ── 2. dada: torn newsprint, xerox eyes, shouted numbers ───────────────────
+LOOKS.dada = { async build() {
+  TEX.kraft = paperTex(W, H, "#e4d6b8"); TEX.news = newsTex(W, H, "#e8dfca"); TEX.grid = gridTex(W, H, "#e9dfc6", "rgba(120,100,60,.35)");
+  const face = ART[3]; // 1910 portrait, used only for its eyes
+  TEX.eyeL = scrap(xerox(face, [325, 535, 210, 115], 460, { contrast: 1.25, bright: .1, noise: .26 }), { rim: "#f6f1e6" });
+  TEX.eyeR = scrap(xerox(face, [550, 535, 210, 115], 400, { contrast: 1.25, bright: .1, noise: .26 }), { rim: "#f6f1e6" });
+  TEX.d7 = scrap(inked("7", "Anton", 560, INK, { wear: .7 }), { rim: KRAFT, bg: TEX.news }); TEX.d2a = scrap(inked("2", "Anton", 520, INK, { wear: .7 }), { rim: KRAFT, bg: TEX.news }); TEX.d2b = scrap(inked("2", "Anton", 500, RED, { wear: .7 }), { rim: "#f3ece0" });
+  TEX.math = inked("", "Anton", 120, RED, { lines: ["MATH", "PAPERS"], wear: .5, lh: .9 });
+  TEX.board = scrap(xerox(ART[0], [0, 0, ART[0].width, ART[0].height], 900, { contrast: 1.4, noise: .22, bright: .05 }), { rim: "#f4efe4" });
+  TEX.humans = scrap(halftone(ART[1], [0, 300, 1920, 1100], 960, { cell: 8, contrast: 1.5 }), { rim: "#f4efe4" });
+  TEX.punch = scrap(xerox(ART[2], [0, 0, ART[2].width, ART[2].height], 640, { contrast: 1.5 }), { rim: "#f4efe4" });
+  TEX.city = scrap(halftone(ART[4], [300, 200, 1300, 1000], 700, { cell: 7 }), { rim: "#f4efe4" });
+  TEX.n4000 = stampC(["≈4,000", "PROBLEMS"], INK, 90); TEX.n722 = stampC(["722", "MANUSCRIPTS"], INK, 90); TEX.n372 = stampC(["372", "FAMILIES"], INK, 90);
+  TEX.weak = stampC(["WEAKER", "VERSION"], RED, 92); TEX.noSolve = inked("", "Type", 44, RED, { lines: ["doesn't solve", "the famous problem"], wear: .2 });
+  TEX.meaning = stampC(["CHECKED ≠", "MEANINGFUL"], RED, 74); TEX.pre = stampC(["PREPRINT"], INK, 96); TEX.notPeer = stampC(["NOT PEER-", "REVIEWED"], RED, 74); TEX.checkWork = stampC(["CHECK THE WORK"], RED, 86);
+  TEX.drip = mk(400, 300, (g) => { g.fillStyle = INK; for (let k = 0; k < 9; k++) { const x = 20 + k * 42 + R(-8, 8), l = R(60, 260), w = R(8, 20); g.fillRect(x, 0, w, l); g.beginPath(); g.arc(x + w / 2, l, w * .75, 0, 7); g.fill(); } });
+},
+shout(g, lt, d, i) {
+  g.drawImage(TEX.news, 0, 0); place(g, TEX.kraft, 300, 1500, { rot: .2, s: .7, id: 1 });
+  const at = cue(i, "722") - .25; [[TEX.d7, 270, 560, -.08], [TEX.d2a, 590, 690, .06], [TEX.d2b, 860, 560, -.04]].forEach(([c, x, y, r], n) => place(g, c, x, y, { rot: r, id: 2 + n, s: back((lt - at - n * .12) / .3) * .82 }));
+  place(g, TEX.eyeL, 260, 1080, { rot: -.1, id: 6, s: out((lt - .2) / .3) }); place(g, TEX.eyeR, 820, 1150, { rot: .12, id: 7, s: out((lt - .45) / .3) });
+  g.save(); g.beginPath(); g.rect(0, 1150, W, 400); g.clip(); place(g, TEX.drip, 230, 1150 + 120 * out((lt - .8) / 2), { id: 8, ax: .5, ay: 1, alpha: .95 }); g.restore();
+  place(g, TEX.math, 560, 1290, { rot: -.05, id: 9, s: back((lt - cue(i, "math")) / .3) });
+  const lk = cue(i, "public"); if (lt > lk) slam(g, stampCache("THE PUBLIC CAN'T USE IT", INK, 54), W / 2, 290, .05, lt, lk);
+},
+units(g, lt, d, i) {
+  g.drawImage(TEX.grid, 0, 0);
+  slam(g, TEX.n4000, 330, 380, -.06, lt, cue(i, "4,000")); slam(g, TEX.n722, 740, 640, .05, lt, cue(i, "722")); slam(g, TEX.n372, 330, 900, -.03, lt, cue(i, "372"));
+  const c = cue(i, "Careful"); if (lt > c) { scribble(g, [[560, 380], [610, 640], [560, 900]], RED, 10, (lt - c) / .6); scribble(g, ring(560, 640, 470, 400), RED, 9, (lt - c - .3) / .8);
+    place(g, inkedCache("≠ SUCCESS RATE", "Anton", 96, RED), W / 2, 1180, { rot: -.04, id: 15, s: back((lt - c - .6) / .3) }); }
+  place(g, TEX.punch, 820, 1290, { rot: .08, id: 16, s: .55 * out(lt / .4) });
+},
+claims(g, lt, d, i) {
+  g.drawImage(TEX.kraft, 0, 0); place(g, TEX.board, W / 2, 650, { rot: -.03, id: 20, s: out(lt / .35) * 1.0 });
+  const ws = [["KAKEYA (4D)", "Kakeya", 230, 1000], ["RIEMANN", "Riemann", 560, 1110], ["HODGE", "Hodge", 300, 1220]];
+  ws.forEach(([txt, w, x, y], n) => { const at = cue(i, w); g.save(); g.fillStyle = INK; g.globalAlpha = clamp((lt - at) / .2); g.fillRect(x - 20, y - 70, txt.length * 44 + 40, 92); g.restore(); typed(g, [txt], x, y, 64, IVORY, lt, at, 22, "Anton"); });
+  const wk = cue(i, "weaker"); slam(g, TEX.weak, 800, 1080, .14, lt, wk); place(g, TEX.noSolve, 820, 1260, { id: 23, alpha: clamp((lt - cue(i, "solve")) / .3) });
+},
+checked(g, lt, d, i) {
+  g.drawImage(TEX.news, 0, 0); g.fillStyle = "rgba(226,211,181,.82)"; g.fillRect(60, 200, W - 120, 1120);
+  const c = cue(i, "162"), k = out((lt - c) / 1.2); place(g, inkedCache(String(Math.round(162 * k)), "Anton", 300, INK), 360, 470, { id: 30, alpha: clamp((lt - c) / .2) });
+  place(g, inkedCache("FORMALIZED", "Anton", 64, INK), 360, 650, { id: 31, alpha: clamp((lt - c - .3) / .3) });
+  const pk = cue(i, "22.4"); const pie = clamp((lt - pk) / .8); // 22.4% wedge, drawn to scale
+  g.save(); g.translate(790, 520); g.fillStyle = "#f3ece0"; g.beginPath(); g.arc(0, 0, 200, 0, 7); g.fill(); g.lineWidth = 6; g.strokeStyle = INK; g.stroke();
+  g.fillStyle = RED; g.beginPath(); g.moveTo(0, 0); g.arc(0, 0, 200, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * .224 * pie); g.closePath(); g.fill(); g.restore();
+  place(g, inkedCache("22.4%", "Anton", 120, RED), 790, 820, { id: 32, alpha: clamp((lt - pk) / .3) });
+  slam(g, TEX.meaning, W / 2, 1110, -.07, lt, cue(i, "meaningful"));
+  place(g, TEX.eyeR, 170, 1330, { rot: -.2, id: 33, s: .55 });
+},
+humans(g, lt, d, i) {
+  g.drawImage(TEX.kraft, 0, 0); place(g, TEX.humans, W / 2, 620, { rot: .02, id: 40, s: out(lt / .35) });
+  slam(g, TEX.pre, 270, 330, -.12, lt, cue(i, "preprints")); slam(g, TEX.notPeer, 790, 300, .1, lt, cue(i, "peer"));
+  const p = cue(i, "public"); typed(g, ["PROOFS: PUBLIC", "MODEL: NOT"], 160, 1050, 70, INK, lt, p, 20, "Anton");
+  const m = cue(i, "mathematicians"); for (let k = 0; k < 5; k++) scribble(g, [[200 + k * 150, 640], [225 + k * 150, 670], [270 + k * 150, 600]], RED, 9, (lt - m - k * .15) / .25);
+  place(g, TEX.eyeL, 860, 1060, { rot: .1, id: 41, s: .62 * out((lt - .4) / .3) });
+  slam(g, TEX.checkWork, 600, 1260, -.06, lt, m + .5);
+} };
+
+// ── 3. riso: olive grid, hypnotic eyes, banana ─────────────────────────────
+LOOKS.riso = { async build() {
+  TEX.grid = gridTex(W, H, OLIVE, "rgba(240,232,210,.6)"); TEX.kraft = paperTex(W, H, "#e8dcc0"); TEX.banana = bananaC(1.3); TEX.profile = profileC();
+  TEX.photog = scrap(xerox(ART[0], [100, 300, 1700, 2300], 560, { contrast: 1.5, noise: .25, ink: INK }), { rim: IVORY });
+  TEX.half = inked("½", "Anton", 520, IVORY, { wear: .5 }); TEX.halfP = inked("PRICE", "Anton", 170, INK, { wear: .5 });
+  const tag = (a, b, c) => mk(520, 300, (g) => { g.fillStyle = IVORY; g.beginPath(); g.moveTo(60, 0); g.lineTo(520, 0); g.lineTo(520, 300); g.lineTo(60, 300); g.lineTo(0, 150); g.closePath(); g.fill(); grain(g, 520, 300, 14);
+    g.fillStyle = OLIVE; g.beginPath(); g.arc(50, 150, 18, 0, 7); g.fill(); g.fillStyle = INK; g.font = "60px Anton"; g.fillText(a, 100, 90); g.font = "86px Anton"; g.fillText(b, 100, 200); g.fillStyle = RED; g.fillText(c, 330, 270); });
+  TEX.tag1 = tag("1K IMAGE", "6.7¢", "3.4¢"); TEX.tag2 = tag("2K IMAGE", "10¢", "5¢");
+  TEX.receipt = mk(560, 760, (g) => { g.fillStyle = "#f6f2e8"; g.fillRect(0, 0, 560, 760); grain(g, 560, 760, 10); g.fillStyle = INK; g.font = "34px Type";
+    ["  GEMINI API", "  ----------------", "INPUT", " per million tokens", "        $1.50  (×3)", "", "TEXT + THINKING", " output", "    $3.00 → $7.50", "  ----------------", "  READ THE FINE PRINT"].forEach((l, k) => g.fillText(l, 30, 70 + k * 58));
+    g.globalCompositeOperation = "destination-out"; for (let x = 0; x < 560; x += 28) { g.beginPath(); g.moveTo(x, 760); g.lineTo(x + 14, 744); g.lineTo(x + 28, 760); g.fill(); } });
+  TEX.saveLess = stampC(["YOU SAVE", "LESS"], RED, 110); TEX.cheap = inked("", "Anton", 150, IVORY, { lines: ["CHEAPER", "PICTURES"], wear: .5 }); TEX.pricey = inked("", "Anton", 150, RED, { lines: ["PRICIER", "WORDS"], wear: .5 });
+  TEX.notOut = stampC(["INDEPENDENT TESTS:", "NOT OUT YET"], INK, 56);
+  TEX.announcer = scrap(halftone(ART[2], [300, 100, 1400, 1700], 420, { cell: 7, contrast: 1.5 }), { rim: IVORY });
+},
+banana(g, lt, d, i) {
+  g.drawImage(TEX.grid, 0, 0); place(g, TEX.photog, 770, 900, { rot: .06, id: 1, s: out(lt / .35) });
+  const bk = out((lt - .2) / .7); g.save(); g.translate(-300 + bk * 680, 520); g.rotate(-.5 + bk * .5 + Math.sin(lt * 4) * .03); place(g, TEX.banana, 0, 0, { id: 2 }); g.restore();
+  const h = cue(i, "half"); if (lt > h - .1) { const f = clamp(1 - (lt - h + .1) / .35); g.fillStyle = `rgba(255,253,240,${f * .9})`; g.fillRect(0, 0, W, H); }
+  place(g, TEX.half, 300, 1080, { id: 3, s: back((lt - h) / .3), rot: -.08 }); place(g, TEX.halfP, 330, 1290, { id: 4, s: back((lt - h - .15) / .3), rot: -.08 });
+},
+tags(g, lt, d, i) {
+  g.drawImage(TEX.grid, 0, 0); const sw = (n) => Math.sin(lt * 2.2 + n) * .06;
+  [[TEX.tag1, 520, 470, cue(i, "1K"), cue(i, "3.4")], [TEX.tag2, 560, 940, cue(i, "2K"), cue(i, "5")]].forEach(([c, x, y, at, hit], n) => {
+    if (lt < at - .3) return; const k = back((lt - at + .3) / .4); g.strokeStyle = INK; g.lineWidth = 3; g.beginPath(); g.moveTo(x - 300, y - 340); g.lineTo(x - 240, y); g.stroke();
+    g.save(); g.translate(x, y); g.rotate(sw(n) - .1); place(g, c, 0, 0, { id: 10 + n, s: k }); scribble(g, [[-180, 30], [-40, 10]], RED, 9, (lt - hit + .2) / .3); g.restore(); });
+  place(g, TEX.banana, 830, 1300, { id: 12, s: .5, rot: .4 + Math.sin(lt * 3) * .08 });
+},
+hypno(g, lt, d, i) {
+  g.drawImage(TEX.grid, 0, 0); place(g, TEX.profile, 430, 820, { id: 20, s: .95 });
+  const ph = lt * 1.6; hypnoEye(g, 330, 585, 50, ph); hypnoEye(g, 545, 585, 46, ph + .3);
+  const tk = clamp((lt - .6) / 1.2); if (tk > 0) { g.save(); g.fillStyle = INK; g.translate(540, 645 + tk * 170); g.beginPath(); g.moveTo(0, -40); g.quadraticCurveTo(26, 10, 0, 32); g.quadraticCurveTo(-26, 10, 0, -40); g.fill(); g.restore(); }
+  const r = cue(i, "Input"); place(g, TEX.receipt, 810, 1150 + 400 * (1 - out((lt - r + .3) / .5)), { id: 21, rot: .08, s: .82 });
+},
+save(g, lt, d, i) {
+  g.drawImage(TEX.kraft, 0, 0); g.save(); g.font = "22px Type"; g.fillStyle = "rgba(20,18,16,.75)"; for (let y = 260; y < 1300; y += 30) g.fillText(pseudo(12), 70, y); g.restore();
+  const mx = 300 + Math.sin(lt * 1.3) * 160, my = 700 + Math.cos(lt * 1.1) * 140; g.save(); g.beginPath(); g.arc(mx, my, 190, 0, 7); g.clip(); g.fillStyle = "#f4ead2"; g.fillRect(0, 0, W, H);
+  g.translate(mx, my); g.scale(2.1, 2.1); g.translate(-mx, -my); g.font = "22px Type"; g.fillStyle = INK; ["more reference images,", "longer prompts:", "you pay more for words"].forEach((l, k) => g.fillText(l, mx - 120, my - 25 + k * 28)); g.restore();
+  g.lineWidth = 22; g.strokeStyle = INK; g.beginPath(); g.arc(mx, my, 196, 0, 7); g.stroke(); g.lineWidth = 34; g.beginPath(); g.moveTo(mx + 140, my + 140); g.lineTo(mx + 300, my + 330); g.stroke();
+  slam(g, TEX.saveLess, 700, 1150, -.1, lt, cue(i, "less")); place(g, TEX.announcer, 850, 560, { id: 30, rot: .1, s: .9 * out(lt / .4) });
+},
+limits(g, lt, d, i) {
+  g.drawImage(TEX.grid, 0, 0); const l = cue(i, "left");
+  g.save(); g.translate(W / 2, 420); g.scale(Math.cos(clamp(lt - l) * Math.PI), 1); place(g, TEX.banana, 0, 0, { id: 40, s: .85 }); g.restore();
+  place(g, inkedCache("L ↔ R ?", "Anton", 150, INK), W / 2, 640, { id: 41, s: back((lt - l) / .3) });
+  const b = cue(i, "blurry"); if (lt > b) { g.save(); g.filter = "blur(3px)"; g.font = "58px Type"; g.fillStyle = INK; g.fillText("small text at 1K", 110, 790); g.restore(); place(g, inkedCache("BLURRY", "Anton", 90, RED), 860, 770, { id: 42, s: back((lt - b) / .3) }); }
+  slam(g, TEX.notOut, W / 2, 930, .05, lt, cue(i, "Independent"));
+  const c = cue(i, "Cheaper"); place(g, TEX.cheap, 300, 1150, { id: 43, s: back((lt - c) / .3) * .82, rot: -.06 }); place(g, TEX.pricey, 790, 1260, { id: 44, s: back((lt - cue(i, "pricier")) / .3) * .82, rot: .06 });
+} };
+
+const _ic = new Map(); function inkedCache(text, font, size, col = INK) { const k = text + font + size + col; if (!_ic.has(k)) _ic.set(k, inked("", font, size, col, { lines: text.split("\n"), wear: .5 })); return _ic.get(k); }
+const _sc = new Map(); function stampCache(text, col, size) { const k = text + col + size; if (!_sc.has(k)) _sc.set(k, stampC(text.split("\n"), col, size)); return _sc.get(k); }
+
+// ── setup and frames ───────────────────────────────────────────────────────
+const g = document.getElementById("c").getContext("2d");
+window.setup = async (slug, timing, musicCredit) => {
+  BOARD = await (await fetch(`boards/${slug}.json`)).json(); TIMING = timing ?? estimate(BOARD); music = musicCredit || "CC0, via Freesound";
+  await Promise.all(["40px Anton", "700 40px Osw", "500 40px Osw", "40px Type", "700 40px Bod"].map((f) => document.fonts.load(f)));
+  ART = await Promise.all(BOARD.art.map((a) => loadImg(".assets/" + a)));
+  TEX.mark = await loadImg("../nightcity/mark.svg");
+  seed = [...slug].reduce((a, c) => a * 31 + c.charCodeAt(0), 7);
+  await LOOKS[BOARD.style].build();
+  TEX.outroMark = mk(420, 420, (h) => h.drawImage(TEX.mark, 10, 10, 400, 400)); TEX.outroName = inked("AI BROADSHEET", "Bod", 92, INK, { wear: .2, track: 6 });
+  // a scene holds its picture until just before the next one is spoken, so late cues get seen
+  SC = TIMING.scenes.map((s, i) => ({ t0: i ? Math.max(TIMING.scenes[i - 1].end + .1, s.start - .25) : 0 }));
+  DUR = TIMING.duration + OUTRO;
+  return { duration: DUR, fps: FPS, sfx: sfxPlan() };
+};
+/** Where the sound effects go: a tear at each scene change, a stamp at each cue. */
+function sfxPlan() {
+  const ev = []; TIMING.scenes.forEach((s, i) => { if (i) ev.push({ t: SC[i].t0, f: "fs-paper-tear--759323.mp3", v: .35, d: .7 }); const c = BOARD.scenes[i].cue; if (c) ev.push({ t: SC[i].t0 + cue(i, c), f: "fs-rubber-stamp--448474.mp3", v: .55, d: .5 }); });
+  ev.push({ t: TIMING.duration, f: "fs-whoosh--486234.mp3", v: .4, d: 1.2 }); return ev;
+}
+window.frame = (t) => {
+  T = t; g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.filter = "none";
+  if (t >= TIMING.duration) { outro(g, t - TIMING.duration); return; }
+  let i = 0; while (i < SC.length - 1 && t >= SC[i + 1].t0) i++;
+  const t0 = SC[i].t0, t1 = i < SC.length - 1 ? SC[i + 1].t0 : TIMING.duration, lt = t - t0;
+  LOOKS[BOARD.style][BOARD.scenes[i].type](g, lt, t1 - t0, i);
+  if (i > 0 && lt < .18) { g.save(); g.fillStyle = KRAFT; g.beginPath(); const k = 1 - lt / .18; tornLike(g, -20, H * (1 - k), W + 40, H * k + 40); g.fill(); g.restore(); } // paper wipe
+  ticker(g, t); mast(g); captions(g, t, i);
+};
+</script></body></html>

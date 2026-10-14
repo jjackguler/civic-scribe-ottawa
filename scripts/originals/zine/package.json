@@ -1,0 +1,16 @@
+{
+  "name": "aibroadsheet-zine",
+  "description": "Zine reels: paper-collage explainers (ink cats, Dada newsprint, riso grid)",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "@fontsource/oswald": "^5.3.0",
+    "@fontsource/special-elite": "^5.3.0",
+    "playwright-core": "^1.55.0"
+  },
+  "private": true,
+  "type": "module"
+}

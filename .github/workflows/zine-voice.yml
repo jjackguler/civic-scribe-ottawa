@@ -1,0 +1,44 @@
+# Voices the zine reels (scripts/originals/zine/boards/*.json) with ElevenLabs and
+# commits <slug>/voice.wav + timing.json to the `zine-voice` branch, where
+# scripts/originals/zine/render.mjs picks them up (copy into zine/voice/).
+# Runs when the `zine-voice-run` branch is pushed. Needs ELEVENLABS_API_KEY (the
+# key itself, starting with sk_); optional variable ZINE_VOICE_ID for a stock voice.
+name: Zine voice
+
+on:
+  push:
+    branches: [zine-voice-run]
+
+permissions:
+  contents: write
+
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        working-directory: scripts/originals
+        run: npm ci --no-audit --no-fund
+      - name: Narrate
+        working-directory: scripts/originals
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ vars.ZINE_VOICE_ID }}
+        run: npx tsx zine/narrate.ts "$RUNNER_TEMP/voice-out"
+      - name: Commit to zine-voice
+        run: |
+          B="$RUNNER_TEMP/zv"
+          git fetch origin zine-voice || true
+          if git rev-parse --verify origin/zine-voice >/dev/null 2>&1; then git worktree add -B zine-voice "$B" origin/zine-voice; else git worktree add --orphan -b zine-voice "$B"; fi
+          cp -r "$RUNNER_TEMP"/voice-out/* "$B/"
+          cd "$B"
+          git config user.name "AI Broadsheet Zine"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Zine narration $(date -u +%Y-%m-%dT%H:%MZ)" || echo "nothing new"
+          git push origin zine-voice
