@@ -27,7 +27,10 @@ export function limitError(service: string, status: number, body: string): SkipR
   if (status === 429 || status === 402 || (quota && status >= 400 && status < 500)) {
     return new SkipRun(`${service} quota`, `${service} answered HTTP ${status} (quota or rate limit). Nothing was published; the next scheduled run will try again.`);
   }
-  if (status === 401 || status === 403) {
+  if (/api_key_id_used_as_api_key/.test(body)) {
+    return new SkipRun(`${service} key`, `${service} says the secret holds the key's ID, not the key. Create or rotate a key in ${service} and paste the value that starts with "sk_" into the repository secret.`);
+  }
+  if (status === 401 || status === 403 || /authentication_error|invalid_api_key/.test(body)) {
     return new SkipRun(`${service} key`, `${service} rejected the key (HTTP ${status}). Check the repository secret.`);
   }
   return null;

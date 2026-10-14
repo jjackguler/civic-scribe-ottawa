@@ -58,6 +58,11 @@ for (const [status, busy] of [[503, true], [500, true], [401, false], [429, fals
     await assert.rejects(requestWriter("s", "u", keys, 6000, (async () => new Response("x", { status })) as typeof fetch), (e: any) => e.busy === busy);
   });
 }
+await test("an ElevenLabs key ID pasted as the key is reported as a key problem", async () => {
+  const { limitError } = await import("./util");
+  const e = limitError("ElevenLabs", 400, '{"detail":{"type":"authentication_error","code":"invalid_api_key","status":"api_key_id_used_as_api_key"}}');
+  assert.ok(e && /sk_/.test(e.message) && !e.busy);
+});
 const root = await mkdtemp(join(tmpdir(), "aibroadsheet-check-"));
 try {
   const file = join(root, "new-song.mp3");

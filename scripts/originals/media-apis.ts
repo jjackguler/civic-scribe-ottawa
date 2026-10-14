@@ -19,7 +19,7 @@ export async function pickVoice(apiKey: string, wanted?: string): Promise<{ id: 
   if (!res.ok) {
     const body = await res.text();
     const limit = limitError("ElevenLabs", res.status, body); if (limit) throw limit;
-    // Some keys may speak but not list voices: use the premade (stock) "Brian" voice by id, and say why.
+    // A valid key that may speak but not list voices: use the premade (stock) "Brian" voice by id, and say why.
     console.log(`::warning title=ElevenLabs voice list::HTTP ${res.status} ${body.replace(/\s+/g, " ").slice(0, 160)}; using the premade voice Brian.`);
     return { id: "nPczCjzI2devNBz1zQrb", name: "Brian" };
   }
