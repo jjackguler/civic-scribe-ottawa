@@ -35,3 +35,7 @@ jobs:
           npx tsx run.ts --dry-run --store out/ci-fixture
       - name: Build the existing site
         run: npm run build
+      - name: Validate standalone Cloudflare preview (no credentials)
+        run: |
+          node scripts/prepare-brief-preview.mjs
+          npx wrangler deploy --dry-run --config .output/server/wrangler.json

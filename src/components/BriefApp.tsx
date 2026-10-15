@@ -14,6 +14,9 @@ import {
   ExternalLink,
   FileText,
   Headphones,
+  Heart,
+  Repeat2,
+  Plus,
   Layers3,
   Menu,
   MessageCircle,
@@ -38,7 +41,14 @@ import {
 } from "@/lib/brief-feed";
 import { localePath } from "@/lib/seo";
 
-type Tab = "today" | "watch" | "saved";
+import {
+  BRIEF_PREFS_KEY,
+  parseBriefPreferences,
+  topicKey,
+  type BriefPreferences,
+} from "@/lib/brief-preferences";
+
+type Tab = "today" | "watch" | "following" | "saved";
 type Panel = "sources" | "share" | "discover" | "menu" | null;
 type Props = {
   initial: { newsroom: NewsroomList | null; originals: OriginalsManifest | null };
@@ -62,6 +72,10 @@ export function BriefApp({ initial, initialStory }: Props) {
   );
   const [tab, setTab] = useState<Tab>("today");
   const [saved, setSaved] = useState<Brief[]>([]);
+  const [preferences, setPreferences] = useState<BriefPreferences>({ liked: [], following: [] });
+  const [seen, setSeen] = useState<string[]>([]);
+  const [autoPlay, setAutoPlay] = useState(false);
+  const [shortOnly, setShortOnly] = useState(false);
   const [storageReady, setStorageReady] = useState(false);
   const [active, setActive] = useState("");
   const [panel, setPanel] = useState<Panel>(null);
@@ -83,6 +97,7 @@ export function BriefApp({ initial, initialStory }: Props) {
     const refresh = () => {
       try {
         setSaved(parseBriefSaved(localStorage.getItem(BRIEF_SAVED_KEY)));
+        setPreferences(parseBriefPreferences(localStorage.getItem(BRIEF_PREFS_KEY)));
       } catch {
         setSaved([]);
       }
@@ -104,7 +119,13 @@ export function BriefApp({ initial, initialStory }: Props) {
   const items = useMemo(() => {
     const all = tab === "saved" ? saved : edition;
     return all
-      .filter((s) => tab !== "watch" || s.format === "video")
+      .filter(
+        (s) =>
+          tab !== "watch" ||
+          (s.format === "video" &&
+            (!shortOnly || (s.duration != null && s.duration > 0 && s.duration <= 60))),
+      )
+      .filter((s) => tab !== "following" || preferences.following.includes(topicKey(s.topic)))
       .filter(
         (s) =>
           !query ||
@@ -112,8 +133,40 @@ export function BriefApp({ initial, initialStory }: Props) {
             .toLocaleLowerCase()
             .includes(query.toLocaleLowerCase()),
       );
-  }, [edition, saved, tab, query]);
+  }, [edition, saved, tab, query, shortOnly, preferences.following]);
   const current = items.find((s) => s.id === active) ?? items[0];
+  useEffect(() => {
+    if (current?.id)
+      setSeen((old) => (old.includes(current.id) ? old : [...old, current.id].slice(-100)));
+  }, [current?.id]);
+  const updatePreference = (kind: "liked" | "following", value: string, onlyAdd = false) => {
+    interacted.current = true;
+    try {
+      const previous = parseBriefPreferences(localStorage.getItem(BRIEF_PREFS_KEY));
+      const exists = previous[kind].includes(value);
+      const values =
+        exists && !onlyAdd ? previous[kind].filter((v) => v !== value) : [value, ...previous[kind]];
+      const next = parseBriefPreferences(JSON.stringify({ ...previous, [kind]: values }));
+      localStorage.setItem(BRIEF_PREFS_KEY, JSON.stringify(next));
+      setPreferences(next);
+      setNotice(
+        kind === "liked"
+          ? exists && !onlyAdd
+            ? t("Like removed.", "Mention retirée.")
+            : t("Liked on this device.", "Aimé sur cet appareil.")
+          : exists
+            ? t("Topic unfollowed.", "Thème retiré.")
+            : t("Following this topic on this device.", "Thème suivi sur cet appareil."),
+      );
+    } catch {
+      setNotice(
+        t(
+          "Storage unavailable. Your preference was not saved.",
+          "Stockage indisponible. Préférence non enregistrée.",
+        ),
+      );
+    }
+  };
   useEffect(() => {
     const node = feedRef.current;
     if (!node) return;
@@ -304,7 +357,7 @@ export function BriefApp({ initial, initialStory }: Props) {
         </div>
       </aside>
       <section
-        className="brief-device"
+        className={`brief-device ${tab === "watch" ? "brief-watch-mode" : ""}`}
         aria-label={t("The Brief news app", "L’application Le Brief")}
       >
         <header className="brief-header">
@@ -341,18 +394,69 @@ export function BriefApp({ initial, initialStory }: Props) {
             {t("All stories", "Tout")}
           </button>
           <button
-            onClick={() => {
-              changeTab("today");
-              setQuery(t("AI literacy", "Culture IA"));
-            }}
-            className={query === t("AI literacy", "Culture IA") ? "selected" : ""}
+            onClick={() => changeTab("following")}
+            className={tab === "following" ? "selected" : ""}
           >
-            {t("AI decoded", "IA décodée")}
+            {t("Following", "Suivis")}
           </button>
           <button onClick={() => changeTab("watch")} className={tab === "watch" ? "selected" : ""}>
             {t("Shorts", "Vidéos")}
           </button>
         </div>
+        {tab === "watch" ? (
+          <div className="brief-watch-options">
+            <button
+              aria-pressed={shortOnly}
+              onClick={() => {
+                setShortOnly(!shortOnly);
+                feedRef.current?.scrollTo(0, 0);
+              }}
+            >
+              {t("60 seconds or less", "60 secondes max")}
+            </button>
+            <button
+              aria-pressed={autoPlay}
+              onClick={() => {
+                setAutoPlay(!autoPlay);
+                setMuted(true);
+              }}
+            >
+              <Play size={12} /> {t("Auto-play", "Lecture auto")} {autoPlay ? "ON" : "OFF"}
+            </button>
+          </div>
+        ) : (
+          tab !== "saved" && (
+            <nav className="brief-circles" aria-label={t("Story highlights", "À la une")}>
+              {edition.slice(0, 8).map((story) => (
+                <button
+                  key={story.id}
+                  className={seen.includes(story.id) ? "seen" : ""}
+                  aria-label={t("Open story: ", "Ouvrir : ") + story.title}
+                  onClick={() => {
+                    changeTab("today");
+                    requestAnimationFrame(() => {
+                      const node = Array.from(
+                        feedRef.current?.querySelectorAll<HTMLElement>("[data-brief-id]") ?? [],
+                      ).find((el) => el.dataset.briefId === story.id);
+                      node?.scrollIntoView({ block: "start", behavior: "instant" });
+                      setActive(story.id);
+                    });
+                  }}
+                >
+                  <span className="brief-circle-image">
+                    {story.image ? (
+                      <img src={story.image} alt="" loading="lazy" />
+                    ) : (
+                      <b>{(story.coverWord || story.topic).slice(0, 3).toUpperCase()}</b>
+                    )}
+                    {story.format === "video" && <Play size={12} fill="currentColor" />}
+                  </span>
+                  <span>{clip(story.title, 29)}</span>
+                </button>
+              ))}
+            </nav>
+          )
+        )}
         {fresh && (
           <button
             className="brief-new"
@@ -400,6 +504,15 @@ export function BriefApp({ initial, initialStory }: Props) {
               total={items.length}
               fr={fr}
               saved={saved.some((s) => s.id === story.id)}
+              liked={preferences.liked.includes(story.id)}
+              following={preferences.following.includes(topicKey(story.topic))}
+              onLike={(onlyAdd = false) => updatePreference("liked", story.id, onlyAdd)}
+              onFollow={() => updatePreference("following", topicKey(story.topic))}
+              autoPlay={autoPlay && tab === "watch"}
+              watchMode={tab === "watch"}
+              onEnded={() => {
+                if (autoPlay && tab === "watch") move(1);
+              }}
               saveReady={storageReady}
               onSave={() => toggleSave(story)}
               onSources={() => open("sources", story)}
@@ -424,15 +537,20 @@ export function BriefApp({ initial, initialStory }: Props) {
                     "Saved briefs stay on this device. Find a story, then tap the bookmark.",
                     "Les favoris restent sur cet appareil. Touchez le signet pour enregistrer un article.",
                   )
-                : query
+                : tab === "following"
                   ? t(
-                      "Try another topic or explore all stories.",
-                      "Essayez un autre thème ou explorez tous les articles.",
+                      "Follow a topic on any story to build your own edit. Your choices stay on this device.",
+                      "Suivez un thème depuis un article. Vos choix restent sur cet appareil.",
                     )
-                  : t(
-                      "That’s this edition. Take a breath, explore a topic or open the full newspaper.",
-                      "C’est toute cette édition. Soufflez, explorez un thème ou ouvrez le journal.",
-                    )}
+                  : query
+                    ? t(
+                        "Try another topic or explore all stories.",
+                        "Essayez un autre thème ou explorez tous les articles.",
+                      )
+                    : t(
+                        "That’s this edition. Take a breath, explore a topic or open the full newspaper.",
+                        "C’est toute cette édition. Soufflez, explorez un thème ou ouvrez le journal.",
+                      )}
             </p>
             <button
               className="brief-pill"
@@ -463,7 +581,7 @@ export function BriefApp({ initial, initialStory }: Props) {
             aria-pressed={tab === "watch"}
           >
             <Play size={22} />
-            <span>{t("Watch", "Vidéos")}</span>
+            <span>{t("Shorts", "Vidéos")}</span>
           </button>
           <button onClick={() => open("discover")}>
             <Compass size={22} />
@@ -633,6 +751,13 @@ export function BriefApp({ initial, initialStory }: Props) {
                     <MessageCircle />
                     WhatsApp
                   </a>
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(selected.title)}&url=${encodeURIComponent(briefShareUrl(selected))}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Repeat2 /> {t("Repost on X", "Partager sur X")}
+                  </a>
                   <button onClick={() => nativeShare(selected)}>
                     <Share2 />
                     {t("Share…", "Partager…")}
@@ -735,8 +860,8 @@ export function BriefApp({ initial, initialStory }: Props) {
                 </div>
                 <p className="brief-method">
                   {t(
-                    "No account required. Your saved briefs stay on your device. Voices use your browser’s speech system. Videos start muted; sound is your choice.",
-                    "Sans compte. Les favoris restent sur votre appareil. La lecture audio utilise votre navigateur. Les vidéos démarrent sans son.",
+                    "No account required. Likes, followed topics and saved briefs stay on this device. There are no public like counts. Videos start muted. Auto-play is optional and resets when you reopen the app.",
+                    "Sans compte. Mentions, thèmes suivis et favoris restent sur cet appareil. Aucun compteur public. Vidéos muettes au départ. Lecture auto facultative, réinitialisée à la réouverture.",
                   )}
                 </p>
               </>
@@ -755,6 +880,13 @@ function BriefCard({
   total,
   fr,
   saved,
+  liked,
+  following,
+  onLike,
+  onFollow,
+  autoPlay,
+  watchMode,
+  onEnded,
   saveReady,
   onSave,
   onSources,
@@ -770,6 +902,13 @@ function BriefCard({
   total: number;
   fr: boolean;
   saved: boolean;
+  liked: boolean;
+  following: boolean;
+  onLike: (onlyAdd?: boolean) => void;
+  onFollow: () => void;
+  autoPlay: boolean;
+  watchMode: boolean;
+  onEnded: () => void;
   saveReady: boolean;
   onSave: () => void;
   onSources: () => void;
@@ -787,6 +926,46 @@ function BriefCard({
   const [videoError, setVideoError] = useState(false);
   const [duration, setDuration] = useState(story.duration ?? 0);
   const [position, setPosition] = useState(0);
+  const [speed, setSpeed] = useState(1);
+  const [heartBurst, setHeartBurst] = useState(false);
+  const lastTap = useRef(0);
+  const tapStart = useRef<{ x: number; y: number } | null>(null);
+  const likeCover = (event: React.PointerEvent<HTMLElement>) => {
+    const start = tapStart.current;
+    tapStart.current = null;
+    if (
+      !start ||
+      Math.abs(event.clientX - start.x) > 10 ||
+      Math.abs(event.clientY - start.y) > 10
+    ) {
+      lastTap.current = 0;
+      return;
+    }
+    if (!saveReady || (event.target as HTMLElement).closest("button, a, input")) return;
+    const now = Date.now();
+    if (now - lastTap.current < 300) {
+      onLike(true);
+      setHeartBurst(true);
+      lastTap.current = 0;
+    } else lastTap.current = now;
+  };
+  useEffect(() => {
+    if (!heartBurst) return;
+    const timer = setTimeout(() => setHeartBurst(false), 700);
+    return () => clearTimeout(timer);
+  }, [heartBurst]);
+  useEffect(() => {
+    if (video.current) video.current.playbackRate = speed;
+  }, [speed]);
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return;
+    if (!active || frame !== 0) el.pause();
+    else if (autoPlay && !document.hidden)
+      el.play().catch(() => {
+        /* Tap-to-play remains available. */
+      });
+  }, [active, autoPlay, frame]);
   const isVideo = story.format === "video" && !!story.video;
   useEffect(() => {
     if (!active && video.current) video.current.pause();
@@ -814,7 +993,7 @@ function BriefCard({
   };
   return (
     <article
-      className="brief-card"
+      className={`brief-card ${watchMode ? "brief-short-card" : ""}`}
       data-brief-id={story.id}
       aria-label={story.title}
       lang={story.id.startsWith("video-") ? "en" : fr ? "fr" : "en"}
@@ -830,6 +1009,14 @@ function BriefCard({
         <section
           className={`brief-frame brief-cover ${isVideo ? "is-video" : ""}`}
           aria-label={t("The story", "L’essentiel")}
+          onPointerDown={(event) => {
+            tapStart.current = event.button === 0 ? { x: event.clientX, y: event.clientY } : null;
+          }}
+          onPointerCancel={() => {
+            tapStart.current = null;
+            lastTap.current = 0;
+          }}
+          onPointerUp={likeCover}
         >
           {!story.image && !isVideo && (
             <div className="brief-type-art" aria-hidden="true">
@@ -861,19 +1048,73 @@ function BriefCard({
               muted={muted}
               onPlay={() => setPlaying(true)}
               onPause={() => setPlaying(false)}
-              onEnded={() => setPlaying(false)}
+              onEnded={() => {
+                setPlaying(false);
+                onEnded();
+              }}
               onError={() => setVideoError(true)}
-              onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
+              onLoadedMetadata={(e) => {
+                setDuration(e.currentTarget.duration);
+                e.currentTarget.playbackRate = speed;
+              }}
               onTimeUpdate={(e) => setPosition(e.currentTarget.currentTime)}
               aria-label={story.title}
             />
           )}
           <div className="brief-cover-shade" />
+          {heartBurst && (
+            <Heart className="brief-heart-burst" size={82} fill="currentColor" aria-hidden="true" />
+          )}
+          {watchMode && (
+            <div className="brief-social-rail">
+              <button
+                aria-label={t("Like story", "Aimer l’article")}
+                aria-pressed={liked}
+                disabled={!saveReady}
+                onClick={() => onLike()}
+                className={liked ? "selected" : ""}
+              >
+                <Heart fill={liked ? "currentColor" : "none"} />
+                <span>{t("Like", "J’aime")}</span>
+              </button>
+              <button
+                aria-label={t("Save story", "Enregistrer l’article")}
+                aria-pressed={saved}
+                disabled={!saveReady}
+                onClick={onSave}
+              >
+                <Bookmark fill={saved ? "currentColor" : "none"} />
+                <span>{t("Save", "Garder")}</span>
+              </button>
+              <button
+                aria-label={t("Repost or share story", "Partager l’article")}
+                onClick={onShare}
+              >
+                <Repeat2 />
+                <span>{t("Repost", "Partager")}</span>
+              </button>
+              <button aria-label={t("Show sources", "Voir les sources")} onClick={onSources}>
+                <FileText />
+                <span>{t("Sources", "Sources")}</span>
+              </button>
+            </div>
+          )}
           <div className="brief-card-meta">
-            <span className="brief-kind">
+            <button
+              className="brief-kind brief-follow"
+              onClick={onFollow}
+              disabled={!saveReady}
+              aria-pressed={following}
+              aria-label={
+                (following
+                  ? t("Unfollow topic: ", "Ne plus suivre : ")
+                  : t("Follow topic: ", "Suivre : ")) + story.topic
+              }
+            >
               {isVideo ? <Play size={12} fill="currentColor" /> : <Layers3 size={13} />}
-              {isVideo ? `${story.duration ?? 0}s ORIGINAL` : story.topic.toUpperCase()}
-            </span>
+              {isVideo ? "ORIGINAL" : story.topic.toUpperCase()}
+              {following ? <Check size={12} /> : <Plus size={12} />}
+            </button>
             <span>
               {String(index + 1).padStart(2, "0")}
               <i> / {String(total).padStart(2, "0")}</i>
@@ -881,6 +1122,13 @@ function BriefCard({
           </div>
           {isVideo && (
             <div className="brief-video-controls">
+              <button
+                className="brief-speed"
+                aria-label={t(`Playback speed: ${speed}x`, `Vitesse : ${speed}x`)}
+                onClick={() => setSpeed(speed === 1 ? 1.5 : speed === 1.5 ? 2 : 1)}
+              >
+                {speed}×
+              </button>
               <button
                 className="brief-play"
                 onClick={toggleVideo}
@@ -1050,6 +1298,17 @@ function BriefCard({
           {story.sources.length > 0 && <b>{story.sources.length}</b>}
         </button>
         <div>
+          {!watchMode && (
+            <button
+              onClick={() => onLike()}
+              disabled={!saveReady}
+              aria-label={t("Like story", "Aimer l’article")}
+              aria-pressed={liked}
+              className={liked ? "selected" : ""}
+            >
+              <Heart size={21} fill={liked ? "currentColor" : "none"} />
+            </button>
+          )}
           <button
             onClick={onListen}
             className={speaking ? "selected" : ""}
@@ -1062,19 +1321,21 @@ function BriefCard({
           >
             {speaking ? <Pause size={21} /> : <AudioLines size={21} />}
           </button>
-          <button
-            onClick={onSave}
-            disabled={!saveReady}
-            className={saved ? "selected" : ""}
-            aria-label={
-              saved
-                ? t("Remove saved story", "Retirer des favoris")
-                : t("Save story", "Enregistrer l’article")
-            }
-            aria-pressed={saved}
-          >
-            <Bookmark size={21} fill={saved ? "currentColor" : "none"} />
-          </button>
+          {!watchMode && (
+            <button
+              onClick={onSave}
+              disabled={!saveReady}
+              className={saved ? "selected" : ""}
+              aria-label={
+                saved
+                  ? t("Remove saved story", "Retirer des favoris")
+                  : t("Save story", "Enregistrer l’article")
+              }
+              aria-pressed={saved}
+            >
+              <Bookmark size={21} fill={saved ? "currentColor" : "none"} />
+            </button>
+          )}
           <button onClick={onShare} aria-label={t("Share story", "Partager l’article")}>
             <Share2 size={21} />
           </button>

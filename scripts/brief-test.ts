@@ -7,6 +7,7 @@ import {
   briefShareUrl,
 } from "../src/lib/brief-feed";
 import type { Original } from "../src/lib/originals-types";
+import { parseBriefPreferences, topicKey } from "../src/lib/brief-preferences";
 let checks = 0;
 function test(name: string, fn: () => void) {
   fn();
@@ -87,5 +88,17 @@ test("held music, titles and private YouTube-only assets never enter the player"
 test("original video shares reopen their precise card rather than a missing page", () => {
   assert.equal(originalBrief(video).path, "/app?story=video-allowed");
   assert.equal(originalBrief(video, "fr").path, "/fr/app?story=video-allowed");
+});
+test("private preferences tolerate malformed storage and enforce size limits", () => {
+  for (const raw of ["{", "null", "[]", "false"]) {
+    assert.deepEqual(parseBriefPreferences(raw), { liked: [], following: [] });
+  }
+  const values = Array.from({ length: 700 }, (_, i) => "story-" + i);
+  const prefs = parseBriefPreferences(
+    JSON.stringify({ liked: [...values, null, {}, values[0]], following: values }),
+  );
+  assert.equal(prefs.liked.length, 500);
+  assert.equal(prefs.following.length, 50);
+  assert.equal(topicKey("Culture IA"), topicKey("AI literacy"));
 });
 console.log(`${checks} Brief checks passed.`);

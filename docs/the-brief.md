@@ -4,7 +4,7 @@ An app edition at `/app` and `/fr/app`, within the existing AI Broadsheet websit
 
 ![Actual application screens: story, context and sources](./the-brief-preview.jpg)
 
-Validation: production build and TypeScript passed; 15 cache/reading-list checks, 6 Brief integrity checks and 23 browser checks passed. Browser coverage includes 320, 390, 430 and 1440px layouts, persistence, source drawer, WhatsApp URL, video play/pause, French deep links and the static offline reading list. Store signing and physical iOS/Android device verification are still separate release tasks.
+Validation: production build and TypeScript passed; 15 cache/reading-list checks, 7 Brief integrity/preferences checks, 23 baseline browser checks and 12 social/video browser checks passed. Browser coverage includes 320, 390, 430 and 1440px layouts, persistence, story rings, topic following, likes, share composers, video speed and auto-play, French deep links and the static offline reading list. Cloudflare's deployment dry run passed; the local Worker served SSR and assets with preview noindex headers. Store signing and physical iOS/Android device verification are still separate release tasks.
 
 ## Research and audience
 
@@ -27,6 +27,9 @@ These sources support testing short visual formats. They do not prove a single f
 - Native share, WhatsApp handoff and copy-link fallback. Sharing opens a composer; it does not send messages automatically.
 - Source drawers use Radix Dialog for focus containment and Escape dismissal. At least 44px action targets, reduced-motion support, full transcripts where available, source links and AI labels.
 - Search and topic filtering run locally. No opaque personalization profile is collected.
+- Circular story highlights jump directly to a real story; rings show which stories have been opened in this session. Follow a story's topic to populate Following.
+- Likes and follows are private device preferences with no public counters. Double-tap likes a cover; swiping does not count as a tap. X and WhatsApp open share composers without posting automatically.
+- Shorts includes an optional filter for known durations of 60 seconds or less, a right-hand action rail, 1/1.5/2x speed and opt-in muted auto-play. Auto-play resets on reopening; context cards, panels and hidden pages pause playback.
 
 ## Visual direction
 
@@ -51,6 +54,8 @@ Existing Cloudflare page analytics can measure `/app` visits, referrers and devi
 ## Deployment
 
 Implementation lives in GitHub. No Lovable agent build or credit-consuming operation is needed. PR validation includes TypeScript, the production build, the existing mobile/cache tests, new saved-content and media-rights checks, and responsive browser tests. Native App Store / Play Store signing and listings are outside this PWA release.
+
+See [the release handoff](./brief-release.md) for the separate Cloudflare preview workflow and remaining account authorization. Preview output is marked noindex and does not modify production DNS. The manifest includes screenshots for supported install dialogs.
 
 ## Model setting
 
