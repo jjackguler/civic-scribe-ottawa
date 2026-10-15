@@ -321,7 +321,10 @@ export function BriefApp({ initial, initialStory }: Props) {
         {t("Skip to stories", "Aller aux articles")}
       </a>
       <aside className="brief-intro">
-        <a href={localePath("/", locale)} className="brief-desktop-brand">
+        <a
+          href={"https://aibroadsheet.com" + localePath("/", locale)}
+          className="brief-desktop-brand"
+        >
           <img src="/brief/mark.webp" alt="" />
           AI Broadsheet<span>THE BRIEF</span>
         </a>
@@ -351,7 +354,7 @@ export function BriefApp({ initial, initialStory }: Props) {
         </div>
         <div className="brief-intro-bottom">
           <p>AI NEWS. HUMAN STAKES.</p>
-          <a href={localePath("/", locale)}>
+          <a href={"https://aibroadsheet.com" + localePath("/", locale)}>
             {t("Read the newspaper", "Lire le journal")} <ArrowUpRight size={15} />
           </a>
         </div>
@@ -361,7 +364,11 @@ export function BriefApp({ initial, initialStory }: Props) {
         aria-label={t("The Brief news app", "L’application Le Brief")}
       >
         <header className="brief-header">
-          <a href={localePath("/", locale)} className="brief-brand" aria-label="AI Broadsheet">
+          <a
+            href={"https://aibroadsheet.com" + localePath("/", locale)}
+            className="brief-brand"
+            aria-label="AI Broadsheet"
+          >
             <img src="/brief/mark.webp" alt="" />
             <span>
               AI Broadsheet
@@ -561,7 +568,7 @@ export function BriefApp({ initial, initialStory }: Props) {
             >
               {t("Back to the edit", "Retour à la sélection")} <ArrowRight size={17} />
             </button>
-            <a href={localePath("/", locale)}>
+            <a href={"https://aibroadsheet.com" + localePath("/", locale)}>
               {t("Open the newspaper", "Ouvrir le journal")} <ArrowUpRight size={16} />
             </a>
           </div>
@@ -833,7 +840,7 @@ export function BriefApp({ initial, initialStory }: Props) {
             {panel === "menu" && (
               <>
                 <div className="brief-menu-links">
-                  <a href={localePath("/", locale)}>
+                  <a href={"https://aibroadsheet.com" + localePath("/", locale)}>
                     <FileText />
                     {t("The newspaper", "Le journal")}
                     <ArrowUpRight />

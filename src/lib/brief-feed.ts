@@ -252,5 +252,8 @@ export function parseBriefSaved(raw: string | null): Brief[] {
 }
 
 export function briefShareUrl(brief: Brief): string {
-  return "https://aibroadsheet.com" + brief.path;
+  const host = /^\/(?:fr\/)?app(?:\?|$)/.test(brief.path)
+    ? "https://app.aibroadsheet.com"
+    : "https://aibroadsheet.com";
+  return host + brief.path;
 }
