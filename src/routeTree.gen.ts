@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdsDottxtRouteImport } from './routes/ads[.]txt'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AskRouteImport } from './routes/ask'
@@ -75,6 +76,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdsDottxtRoute = AdsDottxtRouteImport.update({
+  id: '/ads.txt',
+  path: '/ads.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdvertiseRoute = AdvertiseRouteImport.update({
@@ -356,6 +362,7 @@ const OgSectionNameRoute = OgSectionNameRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ads.txt': typeof AdsDottxtRoute
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
@@ -415,6 +422,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ads.txt': typeof AdsDottxtRoute
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
@@ -475,6 +483,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ads.txt': typeof AdsDottxtRoute
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
@@ -536,6 +545,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/ads.txt'
     | '/advertise'
     | '/app'
     | '/ask'
@@ -595,6 +605,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/ads.txt'
     | '/advertise'
     | '/app'
     | '/ask'
@@ -654,6 +665,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/ads.txt'
     | '/advertise'
     | '/app'
     | '/ask'
@@ -714,6 +726,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdsDottxtRoute: typeof AdsDottxtRoute
   AdvertiseRoute: typeof AdvertiseRoute
   AppRoute: typeof AppRoute
   AskRoute: typeof AskRoute
@@ -785,6 +798,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ads.txt': {
+      id: '/ads.txt'
+      path: '/ads.txt'
+      fullPath: '/ads.txt'
+      preLoaderRoute: typeof AdsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/advertise': {
@@ -1178,6 +1198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdsDottxtRoute: AdsDottxtRoute,
   AdvertiseRoute: AdvertiseRoute,
   AppRoute: AppRoute,
   AskRoute: AskRoute,
