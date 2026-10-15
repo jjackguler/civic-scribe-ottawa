@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { AD_DIMENSIONS, AD_LABEL_H, ADSENSE_CLIENT, ADSENSE_SLOTS, adsAllowed, directFor, loadAdsense, pushAd, type AdSize, type Placement } from "@/lib/ads";
+import { AD_DIMENSIONS, AD_LABEL_H, ADSENSE_CLIENT, ADSENSE_SLOTS, adsAllowed, adsenseReady, directFor, loadAdsense, pushAd, type AdSize, type Placement } from "@/lib/ads";
 import { personalisedAllowed, useConsent } from "@/lib/consent";
 import { useLocale } from "@/lib/locale-context";
 
@@ -55,7 +55,7 @@ function Fill({ size, placement }: { size: AdSize; placement: Placement }) {
       </div>
     );
   }
-  if (ADSENSE_CLIENT && ADSENSE_SLOTS[size]) {
+  if (adsenseReady() && ADSENSE_SLOTS[size]) {
     return (
       <div className="mx-auto w-full" style={frame}>
         {label}

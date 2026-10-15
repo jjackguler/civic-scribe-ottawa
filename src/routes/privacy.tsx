@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageIntro } from "@/components/PageShell";
-import { ADSENSE_CLIENT } from "@/lib/ads";
+import { adsenseReady } from "@/lib/ads";
 import { useLocale } from "@/lib/locale-context";
 import type { Bi } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -24,8 +24,8 @@ function Privacy() {
       p: { en: "You can read everything without signing up. We don't ask for your name and we don't build a profile of you.", fr: "Vous pouvez tout lire sans inscription. Nous ne demandons pas votre nom et ne créons aucun profil." },
     },
     {
-      h: { en: "Nothing stored in your browser", fr: "Rien n'est enregistré dans votre navigateur" },
-      p: { en: "We set no cookies of our own. Your language is part of the page address (/fr for French), so there is nothing to remember.", fr: "Nous ne déposons aucun témoin. La langue fait partie de l'adresse de la page (/fr pour le français); il n'y a donc rien à mémoriser." },
+      h: { en: "Storage on your device", fr: "Stockage sur votre appareil" },
+      p: { en: "The Brief uses local browser storage for saved stories, preferences and local interactions, and a service-worker cache for offline use. These records stay on this device; clearing site data removes them. Privacy preferences may also be stored locally. Language is part of the page address (/fr for French).", fr: "The Brief utilise le stockage local du navigateur pour les articles enregistrés, les préférences et les interactions locales, ainsi qu'un cache de service worker pour l'accès hors ligne. Ces données restent sur cet appareil; effacer les données du site les supprime. Les choix de confidentialité peuvent aussi être conservés localement. La langue fait partie de l'adresse (/fr pour le français)." },
     },
     {
       h: { en: "Visitor statistics", fr: "Statistiques de visite" },
@@ -43,8 +43,8 @@ function Privacy() {
     },
     {
       h: { en: "Advertising", fr: "Publicité" },
-      p: ADSENSE_CLIENT
-        ? { en: "We use Google AdSense. Google and its partners may use cookies to show ads based on your visits to this and other sites. You can turn off personalized ads at adssettings.google.com.", fr: "Nous utilisons Google AdSense. Google et ses partenaires peuvent utiliser des témoins pour afficher des annonces selon vos visites sur ce site et d'autres. Vous pouvez désactiver la personnalisation sur adssettings.google.com." }
+      p: adsenseReady()
+        ? { en: "We use Google AdSense. Google and its partners may use cookies or local storage, including for non-personalised ads. Personalised ads may use your visits to this and other sites. Use the consent controls to manage your choices; Google's advertising settings are also available at adssettings.google.com.", fr: "Nous utilisons Google AdSense. Google et ses partenaires peuvent utiliser des témoins ou le stockage local, y compris pour les annonces non personnalisées. Les annonces personnalisées peuvent utiliser vos visites sur ce site et d'autres. Gérez vos choix avec les contrôles de consentement; les paramètres publicitaires de Google sont aussi disponibles sur adssettings.google.com." }
         : { en: "Ads on this site are currently our own promotions or direct campaigns shown as images; they don't track you. If we add an ad network such as Google AdSense, this page will say so first.", fr: "Les publicités de ce site sont nos propres promotions ou des campagnes directes affichées en image; elles ne vous suivent pas. Si nous ajoutons un réseau comme Google AdSense, cette page l'indiquera d'abord." },
     },
     {

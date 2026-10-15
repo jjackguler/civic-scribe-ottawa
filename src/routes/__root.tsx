@@ -10,12 +10,13 @@ import { LocaleProvider } from "@/lib/locale-context";
 import { MobileRuntime } from "@/components/MobileApp";
 import mobileCss from "../mobile.css?url";
 import { SITE } from "@/lib/site";
-import { ADSENSE_CLIENT } from "@/lib/ads";
+import { ADSENSE_CLIENT, adsenseReady } from "@/lib/ads";
 import { isFrPath } from "@/lib/seo";
 import type { Locale } from "@/lib/i18n";
 
-// The consent bar only exists once an ad network is configured; until then it costs nothing.
-const ConsentBanner = ADSENSE_CLIENT ? lazy(() => import("@/components/ConsentBanner")) : null;
+// Ownership verification alone must not mount advertising UI or load ad code.
+// Replace this legacy preference bar with the validated CMP before enabling serving.
+const ConsentBanner = adsenseReady() ? lazy(() => import("@/components/ConsentBanner")) : null;
 
 const useFr = () => useRouterState({ select: st => isFrPath(st.location.publicHref ?? st.location.href) });
 

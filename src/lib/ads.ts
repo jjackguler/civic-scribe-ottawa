@@ -14,8 +14,10 @@
  *   the news; space is reserved so nothing jumps when it loads.
  * - No ads, and no ad script, on children's pages (Young Lab), the Keeper
  *   (/ask), /values, internal tools, and error pages (AD_FREE below).
- * - Ads are non-personalised until the reader agrees (src/lib/consent.ts),
- *   and a Global Privacy Control signal always means non-personalised.
+ * - Adding a publisher ID verifies ownership only. Serving stays disabled
+ *   until the site is approved and certified CMP integration is validated.
+ * - Non-personalised ads can still use cookies; our local preference banner
+ *   alone is not consent clearance for Google advertising.
  * - The AdSense script loads only when a slot is about to scroll into view,
  *   never in <head>, so it costs nothing on pages without ads.
  */
@@ -36,6 +38,13 @@ export const AD_LABEL_H = 20;
 
 /** TODO [ADSENSE_CLIENT] — e.g. "ca-pub-1234567890123456". Empty = AdSense off (house ads and direct campaigns only). */
 export const ADSENSE_CLIENT: string = "";
+/** Keep false until account approval AND certified CMP integration are verified. */
+export const ADSENSE_SERVING_ENABLED: boolean = false;
+
+/** Publisher verification must never implicitly activate ad requests. */
+export function adsenseReady(client = ADSENSE_CLIENT, enabled = ADSENSE_SERVING_ENABLED): boolean {
+  return enabled && /^ca-pub-\d{16}$/.test(client);
+}
 export const ADSENSE_SLOTS: Partial<Record<AdSize, string>> = {
   // billboard: "1234567890",
 };
@@ -48,8 +57,8 @@ const GOOGLE_TAG_ID = "f08c47fec0942fa0";
 /** The /ads.txt body. "pub-…" is the publisher ID without the "ca-" prefix. */
 export function adsTxt(): string {
   const lines = ["# ads.txt for AI Broadsheet — authorised digital sellers (IAB Tech Lab).", "# Generated from ADSENSE_CLIENT in src/lib/ads.ts."];
-  if (ADSENSE_CLIENT) lines.push(`google.com, ${ADSENSE_CLIENT.replace(/^ca-/, "")}, DIRECT, ${GOOGLE_TAG_ID}`);
-  else lines.push("# No programmatic sellers are authorised yet. Set ADSENSE_CLIENT once AdSense approves the site.");
+  if (/^ca-pub-\d{16}$/.test(ADSENSE_CLIENT)) lines.push(`google.com, ${ADSENSE_CLIENT.replace(/^ca-/, "")}, DIRECT, ${GOOGLE_TAG_ID}`);
+  else lines.push("# No programmatic sellers are authorised yet. Set the real publisher ID during AdSense setup.");
   lines.push(...ADS_TXT_EXTRA);
   return `${lines.join("\n")}\n`;
 }
@@ -104,7 +113,7 @@ let adsenseLoading: Promise<void> | null = null;
  * mode from the reader's consent: non-personalised unless they agreed.
  */
 export function loadAdsense(personalised: boolean): Promise<void> {
-  if (typeof window === "undefined" || !ADSENSE_CLIENT) return Promise.resolve();
+  if (typeof window === "undefined" || !adsenseReady()) return Promise.resolve();
   const w = window as AdsWindow;
   w.adsbygoogle = w.adsbygoogle || ([] as unknown as NonNullable<AdsWindow["adsbygoogle"]>);
   w.adsbygoogle.requestNonPersonalizedAds = personalised ? 0 : 1;
@@ -123,5 +132,6 @@ export function loadAdsense(personalised: boolean): Promise<void> {
 
 /** Ask AdSense to fill one <ins class="adsbygoogle"> that is now on screen. */
 export function pushAd() {
+  if (typeof window === "undefined" || !adsenseReady()) return;
   try { const w = window as AdsWindow; (w.adsbygoogle = w.adsbygoogle || ([] as unknown as NonNullable<AdsWindow["adsbygoogle"]>)).push({}); } catch { /* ad blockers */ }
 }
