@@ -14,6 +14,7 @@ type Item = { label: Bi; to: string; section?: SectionId };
 
 // One kind of thing per word: news, our explanations, learning, then media. (Strategy review, §07.)
 const MAIN: Item[] = [
+  { label: { en: "The Brief", fr: "Le Brief" }, to: "/app" },
   { label: { en: "Today", fr: "Aujourd'hui" }, to: "/news" },
   { label: { en: "Explained", fr: "Expliqué" }, to: "/dispatch" },
   { label: { en: "Videos", fr: "Vidéos" }, to: "/originals" },

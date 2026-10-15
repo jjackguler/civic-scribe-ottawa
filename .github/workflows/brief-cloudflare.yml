@@ -1,0 +1,41 @@
+name: Deploy Brief preview to Cloudflare
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: brief-cloudflare-preview
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: brief-preview
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check deployment credentials
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo 'Set CLOUDFLARE_API_TOKEN in GitHub Actions secrets.'; exit 1; }
+          test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo 'Set CLOUDFLARE_ACCOUNT_ID in GitHub Actions secrets.'; exit 1; }
+      - name: Install and validate
+        run: |
+          npm install --no-audit --no-fund
+          npm install --prefix scripts/newsroom --no-audit --no-fund
+          npx tsc --noEmit
+          cd scripts/newsroom
+          npx tsx ../mobile-test.ts
+          npx tsx ../brief-test.ts
+      - name: Build
+        run: npm run build
+      - name: Prepare non-indexed preview
+        run: node scripts/prepare-brief-preview.mjs
+      # The framework emits the Worker AND its assets configuration here.
+      # This is a separate workers.dev preview. It never changes production DNS.
+      - name: Publish preview
+        run: npx wrangler deploy --config .output/server/wrangler.json --name aibroadsheet-brief-preview

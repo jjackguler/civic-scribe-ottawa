@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as AskRouteImport } from './routes/ask'
 import { Route as CorrectionsRouteImport } from './routes/corrections'
 import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
@@ -79,6 +80,11 @@ const AboutRoute = AboutRouteImport.update({
 const AdvertiseRoute = AdvertiseRouteImport.update({
   id: '/advertise',
   path: '/advertise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AskRoute = AskRouteImport.update({
@@ -351,6 +357,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/app': typeof AppRoute
   '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
@@ -409,6 +416,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/app': typeof AppRoute
   '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
@@ -468,6 +476,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/advertise': typeof AdvertiseRoute
+  '/app': typeof AppRoute
   '/ask': typeof AskRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
@@ -528,6 +537,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/app'
     | '/ask'
     | '/corrections'
     | '/desk-health.json'
@@ -586,6 +596,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/app'
     | '/ask'
     | '/corrections'
     | '/desk-health.json'
@@ -644,6 +655,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/advertise'
+    | '/app'
     | '/ask'
     | '/corrections'
     | '/desk-health.json'
@@ -703,6 +715,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdvertiseRoute: typeof AdvertiseRoute
+  AppRoute: typeof AppRoute
   AskRoute: typeof AskRoute
   CorrectionsRoute: typeof CorrectionsRoute
   DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
@@ -779,6 +792,13 @@ declare module '@tanstack/react-router' {
       path: '/advertise'
       fullPath: '/advertise'
       preLoaderRoute: typeof AdvertiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ask': {
@@ -1159,6 +1179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdvertiseRoute: AdvertiseRoute,
+  AppRoute: AppRoute,
   AskRoute: AskRoute,
   CorrectionsRoute: CorrectionsRoute,
   DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
