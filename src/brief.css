@@ -1462,3 +1462,21 @@
   font-size: 12px !important;
   margin-bottom: 18px;
 }
+/* Small phones keep the beginning of long headlines below the topic badge.
+   The frame can scroll for the remaining copy; controls stay in view. */
+@media (max-height: 730px) and (max-width: 700px) {
+  .brief-cover {
+    align-items: flex-start;
+  }
+  .brief-cover-copy {
+    margin-top: 0;
+    min-height: 100%;
+    padding-top: 62px;
+  }
+  .brief-card-meta {
+    z-index: 4;
+  }
+  .brief-cover h2 {
+    font-size: 28px;
+  }
+}
