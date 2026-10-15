@@ -1,5 +1,43 @@
 [
   {
+    "id": "fo74l4",
+    "at": "2026-10-15T19:59:49.693Z",
+    "stage": "reporter",
+    "headline": "YouTube Music launches new labels as AI-generated music floods streaming platforms",
+    "reasons": [
+      "skip: The provided sources contain only two brief excerpts and headlines totaling roughly 40 words of factual content, which cannot support the required minimum of 120 words of real information without repe"
+    ]
+  },
+  {
+    "id": "8d0eg",
+    "at": "2026-10-15T19:59:09.365Z",
+    "stage": "reporter",
+    "headline": "Amp puts AI agents to work beyond code with OpenAI models",
+    "reasons": [
+      "skip: The sources cover two unrelated events with minimal excerpt details, offering insufficient factual material to meet the 120-word minimum without padding or speculation."
+    ]
+  },
+  {
+    "id": "17r7qh5",
+    "at": "2026-10-15T19:58:45.564Z",
+    "stage": "reporter",
+    "headline": "Cohere to acquire Czech AI cybersecurity firm Aisle, set up new cyber division",
+    "reasons": [
+      "skip: The provided reporting contains only brief snippets with minimal factual detail, which cannot support the required 120 words of real information without repeating points or adding generalities."
+    ]
+  },
+  {
+    "id": "246ia",
+    "at": "2026-10-15T19:58:17.369Z",
+    "stage": "copy",
+    "headline": "Welcome Muse Spark Open: open-weight frontier multimodal mixture-of-experts model from Meta",
+    "reasons": [
+      "Not in the sources (names or numbers): 816-billion-parameter, Computer, United, States.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Software."
+    ]
+  },
+  {
     "id": "1upki6z",
     "at": "2026-10-14T19:56:10.550Z",
     "stage": "reporter",
