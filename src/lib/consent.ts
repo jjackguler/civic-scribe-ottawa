@@ -1,8 +1,8 @@
 /**
- * Reader consent for personalised advertising — a small, CMP-ready state.
+ * Legacy local advertising preference. NOT clearance to request Google ads.
  *
- * - Until the reader chooses, ads are NON-personalised (no ad profile, no
- *   cross-site tracking). Choosing "No thanks" keeps it that way.
+ * - A non-personalised preference does not establish permission for cookies.
+ *   Non-personalised ads can still use local storage and require consent.
  * - A Global Privacy Control signal (navigator.globalPrivacyControl) counts as
  *   a refusal and cannot be overridden by a default; we don't even ask.
  * - The choice is stored in this browser only (localStorage key
@@ -14,8 +14,9 @@
  * This is NOT a certified CMP. For readers in the EEA, the UK and Switzerland,
  * Google requires a Google-certified CMP: the owner turns on Google's own
  * consent message in AdSense → Privacy & messaging (see docs/seo-launch.md).
- * That message is served by the AdSense script itself and takes precedence;
- * this state still governs everyone else (Canada, Québec Law 25, US GPC).
+ * Do not assume that message exists just because a publisher ID is configured.
+ * Before enabling serving, validate the actual CMP and withdrawal behaviour;
+ * this local state must not override its decisions. See docs/ad-readiness.md.
  */
 import { useEffect, useState } from "react";
 

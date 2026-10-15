@@ -1,37 +1,31 @@
-# Getting AI Broadsheet ready for advertising
+# AdSense launch readiness
 
-Two kinds of advertising: **direct campaigns** you sell yourself (media kit at `/advertise`, slots in `src/lib/ads.ts`) and **an ad network** such as Google AdSense. Both need the same basics.
+Updated 15 October 2026. Owner chose AdSense monetization, not paid Google Ads. Target site: https://aibroadsheet.com. The app hostname remains separate.
 
-## Done in the code
-- Standard IAB ad slots, labelled “Advertisement”, filled by direct campaigns → AdSense (once configured) → house ads.
-- Media kit at `/advertise`; editorial independence rules on `/standards`.
-- Trust pages: `/about` (who runs this), `/standards`, `/corrections` (dated log), `/privacy` (Claude, analytics, CASL), `/terms`.
-- Crawlable English and French pages, canonical and hreflang tags, share cards, JSON-LD, live sitemap, RSS.
-- Cookieless Cloudflare Web Analytics, ready for a token — this gives you real audience numbers for advertisers.
+## Verification and serving are separate
 
-## AI desk and search
+`ADSENSE_CLIENT` in `src/lib/ads.ts` supplies the ownership meta tag and generated `/ads.txt`. Use only the real publisher ID from the selected owner's AdSense account. Do not add a second static ads.txt file.
 
-The AI desk gives lead stories our own headline and brief (EN/FR), grounded in the publishers' text and checked mechanically. That makes those pages more than a copy of someone else's headline, which helps both readers and ad reviewers. It doesn't replace original reporting: Google's spam policies name "scaled content abuse" — many pages generated mainly to rank, with little value of their own — whether written by people or AI. Keep the AI desk to lead stories (it is limited to 6 per run), and keep publishing writing of your own.
+`ADSENSE_SERVING_ENABLED` remains false. Adding the publisher ID or ad-unit IDs alone cannot mount an AdSense unit, inject its script or enqueue requests. House promotions and direct campaigns continue. This is a launch gate, not a certified CMP implementation.
 
-## The two risks the code can't fix
+## Required before serving
 
-### 1. Original content
-AdSense commonly rejects sites for “low value content”, and a site made mostly of other publishers' headlines and excerpts is exposed to that. The fix is writing of your own, published on a schedule. Software must not write the news (see `/standards`), so this is the editor's job.
+1. Complete account enrollment and Google's site review. The owner supplies accurate account/payment information and handles identity verification. Never create a duplicate publisher account if the owner already has one.
+2. Verify the exact publisher ID and ownership using the method shown in the account, preferably the existing meta tag or generated ads.txt without an advertising script.
+3. Configure and publish a Google-certified CMP in AdSense Privacy & messaging, or another verified certified CMP. Replace the legacy local preference bar and connect actual consent decisions. Merely setting a publisher ID or a Consent Mode flag does not do this.
+4. Verify consent choice, rejection, withdrawal, GPC behaviour, regional configuration and absence of unintended requests in a real browser. Non-personalised ads can still use cookies; never treat rejection as automatic permission to load them. Do not let old localStorage preferences override CMP decisions.
+5. Review rights for every commercially displayed feed/image and keep original reporting and explicit editorial attribution. No fixed article count or traffic threshold guarantees approval.
+6. Add real ad-unit IDs only after the account permits serving; explicitly enable the serving flag only with documented approval and consent verification. Check mobile layout and reserved ad space. Children's pages, the Keeper and other excluded routes remain ad-free.
 
-A realistic launch rhythm for one person:
-- **Daily (10 minutes):** an editor's headline and one line of context for the top story of the day (`src/lib/desk.ts`). Shown with the publisher's original headline.
-- **Twice a week:** a short column on the Editor's desk (`src/lib/editorials.ts`): what a story means for Canadian businesses, workers or government.
-- **Monthly:** one practical guide (`src/lib/guides.ts`) and one refresh of `/funding` (see `docs/funding-todo.md`).
-- Apply to AdSense after about 20–30 original pieces and a few weeks of steady traffic.
+## Existing foundation
 
-### 2. Publisher feed terms
-Most publishers' feed terms limit use to personal, non-commercial purposes, and some forbid using their photos on other sites. Details and contacts: `docs/feed-terms.md`. Before ads go live, decide how much of each feed to show (`src/lib/rights.ts` switches a source to headline-and-link only) and ask the publishers you most want in full. Get a lawyer's view.
+Labelled reserved placements, house ads, `/advertise`, trust pages, canonical URLs, sitemap/RSS, server-rendered ownership meta tag and generated `/ads.txt` already exist. Privacy copy now acknowledges local storage and offline caching. Their presence does not mean Google has approved the site.
 
-## Owner checklist before applying to AdSense
-- [ ] Register the domain, connect it in Lovable, publish.
-- [ ] Fill in the TODO values in `src/lib/site.ts` (editor name, role, bio, email; newsletter; analytics token; social links).
-- [ ] Set up email forwarding for the editor and advertise addresses.
-- [ ] Decide the display mode per source (`src/lib/rights.ts`).
-- [ ] Publish original pieces on the rhythm above.
-- [ ] Submit the sitemap in Google Search Console.
-- [ ] Apply to AdSense; once approved, set `ADSENSE_CLIENT` and slot IDs in `src/lib/ads.ts` and add `public/ads.txt` with the line Google gives you.
+## Official references checked 15 October 2026
+
+- https://support.google.com/adsense/answer/9724?hl=en — eligibility
+- https://support.google.com/adsense/answer/13554020?hl=en — certified CMP requirements
+- https://support.google.com/adsense/answer/7670013?hl=en — CMP setup
+- https://support.google.com/adsense/answer/7670312?hl=en — non-personalised ads and cookies
+
+Account enrollment, publisher ID, site review, certified CMP and ad units remain pending. No Google advertising requests or spending have been enabled.
