@@ -5,5 +5,29 @@ const copy={en:{tag:'YOUR PAPER, EVEN OFFLINE',heading:'The connection can wait.
 const el=id=>document.getElementById(id);const add=(tag,text,at,cls)=>{const n=document.createElement(tag);n.textContent=text;if(cls)n.className=cls;at.appendChild(n);return n;};
 function render(){const t=copy[french?'fr':'en'];document.documentElement.lang=french?'fr':'en';el('language').textContent=french?'English':'Français';for(const [id,key] of [['tag','tag'],['heading','heading'],['intro','intro'],['retry','retry'],['saved-heading','saved'],['footer','footer']])el(id).textContent=t[key];el('stories').replaceChildren();let items=[];try{const a=JSON.parse(localStorage.getItem('ab-saved-v1')||'[]');if(Array.isArray(a))items=a.slice(0,100);}catch{}items=items.filter(s=>s&&typeof s.title==='string'&&typeof s.path==='string'&&/^\/(?:fr\/)?(?:story|article)\/[a-zA-Z0-9_%.-]+$/.test(s.path)&&!/%(?:2f|5c|00)/i.test(s.path));if(!items.length)add('p',t.empty,el('stories'));items.forEach(s=>{const a=add('article','',el('stories'));add('small',t.source+String(s.source||'AI Broadsheet').slice(0,120),a);add('h2',s.title.slice(0,300),a);add('p',String(s.summary||'').slice(0,1400),a);const date=new Date(s.savedAt);add('small',t.savedAt+(Number.isNaN(+date)?'—':date.toLocaleDateString(french?'fr-CA':'en-CA')),a,'date');if(Number.isNaN(+date)||Date.now()-date>3*86400000)add('p',t.older,a,'notice');const link=add('a',t.open,a);link.href=s.path;});el('connection').textContent=navigator.onLine?t.back:'';}
 el('language').onclick=()=>{french=!french;render();};el('retry').onclick=()=>{if(['/offline','/offline.html'].includes(location.pathname))location.assign(french?'/fr':'/');else location.reload();};window.addEventListener('online',render);window.addEventListener('offline',render);render();
+</script><script>
+// The Brief keeps only bounded public metadata; render through textContent.
+const renderPaperSaved = render;
+render = function () {
+  renderPaperSaved();
+  let briefs = [];
+  try { const data = JSON.parse(localStorage.getItem('ab-brief-saved-v1') || '[]'); if (Array.isArray(data)) briefs = data.slice(0, 100); } catch {}
+  briefs = briefs.filter(s => s && typeof s.title === 'string' && typeof s.path === 'string' && /^\/(?:fr\/)?(?:app\?story=[\w-]+|article\/[\w%-]+)$/.test(s.path) && !/%(?:2f|5c|00)/i.test(s.path));
+  if (!briefs.length) return;
+  const host = el('stories');
+  if (host.children.length === 1 && host.firstElementChild.tagName === 'P') host.firstElementChild.remove();
+  add('h2', french ? 'Vos favoris du Brief' : 'Your saved Briefs', host);
+  briefs.forEach(s => {
+    const article = add('article', '', host);
+    add('small', 'AI Broadsheet · The Brief', article);
+    add('h2', s.title.slice(0, 300), article);
+    add('p', String(s.summary || '').slice(0, 1400), article);
+    const link = add('a', french ? 'Ouvrir en ligne' : 'Open online', article);
+    link.href = s.path;
+  });
+};
+window.addEventListener('online', render);
+window.addEventListener('offline', render);
+render();
 </script></body></html>
 

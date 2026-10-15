@@ -31,6 +31,7 @@ jobs:
           npx tsx frontpage-test.ts
           npx tsx ../originals/test.ts
           npx tsx ../mobile-test.ts
+          npx tsx ../brief-test.ts
           npx tsx run.ts --dry-run --store out/ci-fixture
       - name: Build the existing site
         run: npm run build

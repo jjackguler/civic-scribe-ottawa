@@ -2,19 +2,19 @@
   "id": "/?source=pwa",
   "name": "AI Broadsheet",
   "short_name": "Broadsheet",
-  "description": "AI news, explained — in English and French.",
-  "start_url": "/?source=pwa",
+  "description": "The Brief: AI news, short videos and visual explainers. AI news. Human stakes.",
+  "start_url": "/app?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0B2A2F",
-  "background_color": "#0B2A2F",
+  "theme_color": "#111b13",
+  "background_color": "#111b13",
   "lang": "en-CA",
   "categories": ["news", "education"],
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/brief/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brief/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brief/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/brief/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

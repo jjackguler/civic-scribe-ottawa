@@ -22,13 +22,13 @@ export function MobileNav() {
   const path = useRouterState({ select: s => stripFr(s.location.pathname) });
   const { items } = useSaved();
   const links = [
-    { to: '/', en: 'Home', fr: 'Accueil', icon: Home },
+    { to: '/app', en: 'The Brief', fr: 'Le Brief', icon: Home },
     { to: '/news', en: 'Latest', fr: 'Fil', icon: List },
     { to: '/saved', en: 'Saved', fr: 'Enregistrés', icon: Bookmark },
     { to: '/more', en: 'More', fr: 'Plus', icon: Menu },
   ];
   return <nav className="mobile-nav" aria-label={locale === 'fr' ? 'Navigation de l’application' : 'App navigation'}>
-    {links.map(l => { const active = l.to === '/' ? path === '/' : path === l.to; return <Link key={l.to} to={l.to as never} className={active ? 'active' : ''} aria-current={active ? 'page' : undefined}>
+    {links.map(l => { const active = path === l.to; return <Link key={l.to} to={l.to as never} className={active ? 'active' : ''} aria-current={active ? 'page' : undefined}>
       <span className="relative"><l.icon size={21} strokeWidth={active ? 2.4 : 1.7} aria-hidden="true" />{l.to === '/saved' && items.length > 0 && <span className="saved-count">{items.length}</span>}</span>
       <span>{locale === 'fr' ? l.fr : l.en}</span>
     </Link>; })}
@@ -102,8 +102,9 @@ export function InstallCard() {
   const install = async () => { const ev = installEvent; if (!ev) return; try { await ev.prompt(); await ev.userChoice; } finally { installEvent = null; setCanInstall(false); } };
   return <section className="install-card" aria-labelledby="install-title">
     <span className="app-eyebrow">{fr ? 'VOTRE JOURNAL, À PORTÉE DE MAIN' : 'YOUR PAPER, ALWAYS AT HAND'}</span>
-    <div className="flex gap-4 mt-4 items-center"><img src="/icons/icon-192.png" width="56" height="56" className="rounded-xl" alt="" /><h2 id="install-title" className="masthead-serif text-2xl">AI Broadsheet</h2></div>
+    <div className="flex gap-4 mt-4 items-center"><img src="/brief/icon-192.png" width="56" height="56" className="rounded-xl" alt="" /><h2 id="install-title" className="masthead-serif text-2xl">AI Broadsheet</h2></div>
     <p className="mt-4 text-white/80">{installed ? (fr ? 'L’application est ouverte depuis votre écran d’accueil.' : 'You’re reading in the home-screen app.') : (fr ? 'Ajoutez votre journal à l’écran d’accueil. Sans boutique, sans abonnement supplémentaire.' : 'Add your newspaper to your home screen. No app store or extra subscription needed.')}</p>
+    <a className="app-button install-button mt-5" href={localePath('/app', locale)}>{fr ? 'Ouvrir Le Brief' : 'Open The Brief'}<ArrowRight size={18} /></a>
     {canInstall && !installed && <button className="app-button install-button mt-5" onClick={install}><Download size={18} />{fr ? 'Installer l’application' : 'Install app'}</button>}
     {!installed && <div className="mt-5 border-t border-white/20 pt-4 text-sm space-y-3"><p><strong>iPhone / iPad</strong><br />{fr ? 'Dans Safari : Partager → Sur l’écran d’accueil → Ajouter.' : 'In Safari: Share → Add to Home Screen → Add.'}</p><p><strong>Android</strong><br />{fr ? 'Dans Chrome : menu ⋮ → Installer l’application ou Ajouter à l’écran d’accueil.' : 'In Chrome: ⋮ menu → Install app or Add to Home screen.'}</p></div>}
   </section>;
