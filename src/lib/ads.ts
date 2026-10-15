@@ -36,8 +36,8 @@ export const AD_DIMENSIONS: Record<AdSize, { w: number; h: number; label: string
 /** Height of the "Advertisement" label row above every slot (px). Part of the reserved space. */
 export const AD_LABEL_H = 20;
 
-/** TODO [ADSENSE_CLIENT] — e.g. "ca-pub-1234567890123456". Empty = AdSense off (house ads and direct campaigns only). */
-export const ADSENSE_CLIENT: string = "";
+/** Verified in the owner's AdSense setup. Ownership metadata only while serving is disabled. */
+export const ADSENSE_CLIENT: string = "ca-pub-2619122418823802";
 /** Keep false until account approval AND certified CMP integration are verified. */
 export const ADSENSE_SERVING_ENABLED: boolean = false;
 
