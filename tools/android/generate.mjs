@@ -20,6 +20,8 @@ manifest.launcherName = "The Brief";
 manifest.startUrl = "/app?source=android";
 manifest.appVersionCode = 1;
 manifest.appVersionName = "1.0.0";
+// Android Browser Helper 2.7.4 requires Android 7.0 or newer.
+manifest.minSdkVersion = 24;
 manifest.enableNotifications = false;
 manifest.fallbackType = "customtabs";
 manifest.features = {};

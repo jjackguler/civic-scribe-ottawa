@@ -55,7 +55,7 @@ test("both language editions have real sources and stable share URLs", () => {
     for (const b of starterBriefs(locale)) {
       assert.ok(b.sources.length);
       assert.ok(b.aiLabel);
-      assert.ok(briefShareUrl(b).startsWith("https://aibroadsheet.com/"));
+      assert.ok(briefShareUrl(b).startsWith("https://app.aibroadsheet.com/"));
       assert.equal(parseBriefSaved(JSON.stringify([b])).length, 1);
     }
 });
@@ -88,6 +88,8 @@ test("held music, titles and private YouTube-only assets never enter the player"
 test("original video shares reopen their precise card rather than a missing page", () => {
   assert.equal(originalBrief(video).path, "/app?story=video-allowed");
   assert.equal(originalBrief(video, "fr").path, "/fr/app?story=video-allowed");
+  assert.equal(briefShareUrl(originalBrief(video)), "https://app.aibroadsheet.com/app?story=video-allowed");
+  assert.equal(briefShareUrl({ ...originalBrief(video), path: "/article/example" }), "https://aibroadsheet.com/article/example");
 });
 test("private preferences tolerate malformed storage and enforce size limits", () => {
   for (const raw of ["{", "null", "[]", "false"]) {
