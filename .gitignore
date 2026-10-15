@@ -20,6 +20,14 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Android generated project and private signing material
+/android/generated/
+*.keystore
+*.jks
+keystore.properties
+local.properties
+**/.gradle/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
