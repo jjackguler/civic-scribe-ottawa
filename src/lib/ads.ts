@@ -18,8 +18,9 @@
  *   until the site is approved and certified CMP integration is validated.
  * - Non-personalised ads can still use cookies; our local preference banner
  *   alone is not consent clearance for Google advertising.
- * - The AdSense script loads only when a slot is about to scroll into view,
- *   never in <head>, so it costs nothing on pages without ads.
+ * - During CMP review, GoogleConsent loads the tag only on the production
+ *   newspaper, with pauseAdRequests=1 before load. It never resumes requests.
+ *   The serving loader below is independently disabled by the release flag.
  */
 
 export type AdSize = "billboard" | "leaderboard" | "mpu" | "halfpage" | "mobile";

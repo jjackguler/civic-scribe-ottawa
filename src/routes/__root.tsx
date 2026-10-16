@@ -10,13 +10,12 @@ import { LocaleProvider } from "@/lib/locale-context";
 import { MobileRuntime } from "@/components/MobileApp";
 import mobileCss from "../mobile.css?url";
 import { SITE } from "@/lib/site";
-import { ADSENSE_CLIENT, adsenseReady } from "@/lib/ads";
+import { ADSENSE_CLIENT } from "@/lib/ads";
 import { isFrPath } from "@/lib/seo";
 import type { Locale } from "@/lib/i18n";
 
-// Ownership verification alone must not mount advertising UI or load ad code.
-// Replace this legacy preference bar with the validated CMP before enabling serving.
-const ConsentBanner = adsenseReady() ? lazy(() => import("@/components/ConsentBanner")) : null;
+// Certified Google CMP, with ad requests permanently paused during review.
+const GoogleConsent = lazy(() => import("@/components/GoogleConsent"));
 
 const useFr = () => useRouterState({ select: st => isFrPath(st.location.publicHref ?? st.location.href) });
 
@@ -129,7 +128,7 @@ function RootComponent() {
       <LocaleProvider>
         <Outlet />
         <MobileRuntime />
-        {ConsentBanner && <Suspense fallback={null}><ConsentBanner /></Suspense>}
+        <Suspense fallback={null}><GoogleConsent /></Suspense>
       </LocaleProvider>
     </QueryClientProvider>
   );
