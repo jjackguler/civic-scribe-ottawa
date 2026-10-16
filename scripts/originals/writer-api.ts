@@ -1,6 +1,7 @@
 import { SkipRun, limitError } from "./util";
 
-export type WriterKeys = { anthropic?: string; gemini?: string; claudeModel: string; geminiModel: string };
+/** geminiBusyFallback: a cheaper Gemini model tried once when the main one answers 5xx (overloaded). */
+export type WriterKeys = { anthropic?: string; gemini?: string; claudeModel: string; geminiModel: string; geminiBusyFallback?: string };
 
 /** One bounded request per draft. No cross-provider or model escalation on billing errors. */
 export async function requestWriter(system: string, user: string, keys: WriterKeys, maxTokens = 6000, transport: typeof fetch = fetch): Promise<{ text: string; model: string }> {
@@ -25,6 +26,11 @@ export async function requestWriter(system: string, user: string, keys: WriterKe
   }
   if (!res.ok) {
     const body = await res.text().catch(() => "");
+    const fb = keys.geminiBusyFallback;
+    if (!claude && res.status >= 500 && fb && fb !== model && !limitError(service, res.status, body)) {
+      console.warn(`[writer] ${model} HTTP ${res.status}: trying the cheaper ${fb} once`);
+      return requestWriter(system, user, { ...keys, geminiModel: fb, geminiBusyFallback: undefined }, maxTokens, transport);
+    }
     throw limitError(service, res.status, body) ?? (res.status >= 500
       ? new SkipRun(`${service} busy`, `${service} HTTP ${res.status}: the provider is busy or down. The story stays queued; the next scheduled run tries again.`, true)
       : new SkipRun(`${service} unavailable`, `${service} HTTP ${res.status}. Check the configured model and provider status; the story stays queued.`));

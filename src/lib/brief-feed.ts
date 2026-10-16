@@ -152,7 +152,7 @@ export function originalBrief(o: Original, locale: Locale = "en"): Brief {
     sources: o.sources,
     transcript: o.transcript,
     credits: o.credits,
-    aiLabel: o.aiImages ? "AI visuals & voice" : "AI voice · credits in sources",
+    aiLabel: /^no narration/i.test(o.voice) ? (o.aiImages ? "AI visuals · captions, no narration" : "Captions, no narration · credits in sources") : o.aiImages ? "AI visuals & voice" : "AI voice · credits in sources",
   };
 }
 

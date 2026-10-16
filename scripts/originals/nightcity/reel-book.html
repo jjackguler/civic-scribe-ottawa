@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  "The New Cave" book reel, 1080x1920. The editor's own book, so it says so on
+  screen. Lines are quoted from the publisher's description; the cave is drawn
+  in code, and the last scene shows the book's real cover.
+  render-reel.mjs calls window.setup() once, then window.frame(t) per video frame.
+-->
+<style>
+@font-face{font-family:Bod;src:url("node_modules/@fontsource/bodoni-moda/files/bodoni-moda-latin-700-normal.woff2");font-weight:700}
+@font-face{font-family:Bod;src:url("node_modules/@fontsource/bodoni-moda/files/bodoni-moda-latin-800-italic.woff2");font-weight:800;font-style:italic}
+@font-face{font-family:Grot;src:url("node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2");font-weight:400 900}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#121212;--ivory:#EFE8DA;--red:#B8322A;--y:#F5C400}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0c0a08;color:var(--ivory)}
+canvas{position:absolute;inset:0}
+#mast{position:absolute;left:56px;top:96px;display:flex;align-items:center;gap:16px;z-index:5}
+#mast img{width:50px;height:50px}
+#mast b{font-family:Bod;font-weight:700;font-size:28px;letter-spacing:5px}
+#tag{position:absolute;right:56px;top:108px;z-index:5;font-family:Grot;font-weight:700;font-size:17px;letter-spacing:2.5px;background:rgba(18,18,18,.82);padding:8px 13px;border-left:3px solid var(--red)}
+#cap{position:absolute;left:70px;right:70px;top:1440px;z-index:5;text-align:center}
+.q{font-family:Bod;font-weight:800;font-style:italic;font-size:76px;line-height:1.12;letter-spacing:-.5px;text-shadow:0 4px 30px rgba(0,0,0,.8)}
+.q em{color:#F2C98A;font-style:italic}
+.list{font-family:Grot;font-weight:800;font-size:46px;letter-spacing:6px;line-height:1.5;text-transform:uppercase}
+.w{display:inline-block;will-change:transform,opacity}
+#book{position:absolute;inset:0;z-index:6;display:none}
+#book img{position:absolute;left:265px;top:250px;width:550px;height:880px;box-shadow:0 30px 90px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08)}
+#meta{position:absolute;left:70px;right:70px;top:1200px;text-align:center}
+#meta .k{font-family:Grot;font-weight:800;font-size:24px;letter-spacing:5px;color:#E05A4E;margin-bottom:18px}
+#meta .t{font-family:Bod;font-weight:700;font-size:92px;letter-spacing:2px;line-height:1}
+#meta .s{font-family:Bod;font-weight:800;font-style:italic;font-size:37px;margin:16px 0 22px;color:#F2C98A}
+#meta .a{font-family:Grot;font-weight:700;font-size:30px;letter-spacing:4px}
+#meta .n{margin-top:30px;font-family:Grot;font-weight:600;font-size:22px;letter-spacing:1.5px;opacity:.75;line-height:1.5}
+</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div id="mast"><img src="mark.svg" alt=""><b>AI BROADSHEET</b></div>
+<div id="tag">THE EDITOR'S OWN BOOK</div>
+<div id="cap"></div>
+<div id="book"><img src="book-cover.jpg" alt="">
+  <div id="meta"><div class="k">FROM THE EDITOR</div><div class="t">THE NEW CAVE</div>
+  <div class="s">Reality, Responsibility, and the Human After AI</div>
+  <div class="a">CEM JACK GULER</div>
+  <div class="n">Eighteen chapters · Kindle edition on Amazon<br>Written by AI Broadsheet's editor, with AI, and the book says so.</div></div>
+</div>
+<script>
+const W = 1080, H = 1920, cv = document.getElementById("c"), g = cv.getContext("2d");
+const cap = document.getElementById("cap"), book = document.getElementById("book");
+// Captions: [start, end, html, class]. Words in quotes come from the publisher's description.
+const LINES = [
+  [0.4, 6.6, "The most famous cave in philosophy is <em>a prison.</em>", "q"],
+  [6.8, 11.6, "Every real one was <em>a shelter.</em>", "q"],
+  [11.8, 17.6, "For sixty thousand years, people went into caves <em>to survive.</em>", "q"],
+  [17.8, 23.4, "Later, they went in on purpose: <em>alone with a question.</em>", "q"],
+  [23.6, 28.4, "Hira · Sinai<br>The wilderness<br>A plague-year farmhouse", "list"],
+  [28.6, 34.6, "Now we have built the first cave <em>with no solitude in it.</em>", "q"],
+  [34.8, 40.6, "What happens to a person when the answer <em>always arrives first?</em>", "q"],
+];
+const DURATION = 48, BOOK_AT = 40.8;
+let rnd = 7; const R = () => ((rnd = (rnd * 16807) % 2147483647) / 2147483647);
+// Rock texture, made once: speckles, cracks and a vignette.
+const rock = document.createElement("canvas"); rock.width = W; rock.height = H;
+{ const r = rock.getContext("2d"); r.fillStyle = "#15110d"; r.fillRect(0, 0, W, H);
+  for (let i = 0; i < 26000; i++) { const v = 20 + R() * 40 | 0; r.fillStyle = `rgba(${v + 14},${v + 8},${v},${0.25 + R() * 0.4})`; r.fillRect(R() * W, R() * H, 1 + R() * 3, 1 + R() * 3); }
+  r.strokeStyle = "rgba(0,0,0,.55)"; r.lineWidth = 2;
+  for (let i = 0; i < 40; i++) { let x = R() * W, y = R() * H; r.beginPath(); r.moveTo(x, y); for (let k = 0; k < 8; k++) { x += (R() - .5) * 60; y += R() * 40; r.lineTo(x, y); } r.stroke(); }
+  const v = r.createRadialGradient(540, 1000, 200, 540, 1000, 1200); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,.85)"); r.fillStyle = v; r.fillRect(0, 0, W, H); }
+// Jagged cave mouth: apex at the top, wide at the floor.
+const mouth = []; { const N = 26; for (let i = 0; i <= N; i++) { const s = i / N, y = 560 + s * 820, half = 30 + Math.pow(s, 0.8) * 230;
+  mouth.push([540 - half - R() * 18, y]); } for (let i = N; i >= 0; i--) { const s = i / N, y = 560 + s * 820, half = 30 + Math.pow(s, 0.8) * 230; mouth.push([540 + half + R() * 18, y]); } }
+// Glowing screens for the "no solitude" scene.
+const screens = Array.from({ length: 70 }, () => ({ x: 340 + R() * 400, y: 760 + R() * 600, d: R() * 5, s: 0.6 + R() * 0.8, vx: (R() - .5) * 26, vy: (R() - .5) * 18, ph: R() * 6 }));
+const ease = (x) => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+const mix = (a, b, k) => a + (b - a) * k;
+function figure(x, y, h, a) { g.save(); g.globalAlpha = a; g.fillStyle = "#0a0806"; const u = h / 10;
+  g.beginPath(); g.arc(x, y - 9.1 * u, 0.9 * u, 0, 7); g.fill();
+  g.beginPath(); g.roundRect(x - 1.4 * u, y - 8 * u, 2.8 * u, 4.4 * u, u * .8); g.fill();
+  g.fillRect(x - 1.1 * u, y - 4 * u, 0.95 * u, 4 * u); g.fillRect(x + 0.15 * u, y - 4 * u, 0.95 * u, 4 * u); g.restore(); }
+function drawCave(t) {
+  g.drawImage(rock, 0, 0);
+  // light: warm sunrise, then cold screen-white after 28s
+  const cold = ease((t - 28.6) / 3), warm = ease(t / 6);
+  const lr = mix(255, 200, cold), lg = mix(226, 225, cold), lb = mix(170, 255, cold), k = 0.55 + 0.45 * warm;
+  g.save(); g.beginPath(); mouth.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.clip();
+  const lg1 = g.createRadialGradient(540, 1180, 20, 540, 1050, 640);
+  lg1.addColorStop(0, `rgba(255,252,240,${k})`); lg1.addColorStop(0.35, `rgba(${lr},${lg},${lb},${0.85 * k})`); lg1.addColorStop(1, `rgba(${lr * .45 | 0},${lg * .35 | 0},${lb * .3 | 0},${0.7 * k})`);
+  g.fillStyle = lg1; g.fillRect(0, 500, W, 900);
+  if (cold > 0) for (const s of screens) { const on = ease((t - 28.8 - s.d) / 0.5); if (!on) continue;
+    const x = s.x + s.vx * (t - 28), y = s.y + s.vy * (t - 28) + Math.sin(t * 2 + s.ph) * 6, w = 34 * s.s, h = 58 * s.s;
+    g.globalAlpha = on * 0.9; g.fillStyle = "rgba(120,190,255,.35)"; g.fillRect(x - w, y - h, w * 2, h * 2);
+    g.fillStyle = "#EAF6FF"; g.fillRect(x - w / 2, y - h / 2, w, h); g.fillStyle = "#3b6fd1"; g.fillRect(x - w / 2 + 4, y - h / 2 + 8, w - 8, 5); g.fillRect(x - w / 2 + 4, y - h / 2 + 18, (w - 8) * .6, 5); }
+  g.restore();
+  // glow spilling out of the mouth and onto the floor
+  g.save(); g.globalCompositeOperation = "lighter";
+  const sp = g.createRadialGradient(540, 1100, 40, 540, 1100, 620); sp.addColorStop(0, `rgba(${lr},${lg * .8 | 0},${lb * .6 | 0},${0.32 * k})`); sp.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = sp; g.fillRect(0, 400, W, 1300);
+  const fl = g.createRadialGradient(540, 1400, 10, 540, 1400, 420); fl.addColorStop(0, `rgba(${lr},${lg * .75 | 0},${lb * .5 | 0},${0.35 * k})`); fl.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = fl; g.save(); g.translate(540, 1400); g.scale(1, 0.25); g.translate(-540, -1400); g.fillRect(0, 900, W, 1000); g.restore();
+  // dust motes
+  for (let i = 0; i < 60; i++) { const px = 380 + ((i * 97) % 320) + Math.sin(t * .4 + i) * 20, py = 1350 - ((t * (8 + i % 7) + i * 41) % 760);
+    g.fillStyle = `rgba(255,240,210,${0.25 + 0.25 * Math.sin(t * 2 + i)})`; g.fillRect(px, py, 2.4, 2.4); }
+  g.restore();
+  // the figure walks in, stops while alone, and is swallowed by the screens' glow later
+  const walk = ease((t - 1) / 14), y = mix(1405, 1330, walk), h = mix(150, 110, walk);
+  figure(540 + Math.sin(t * 5) * 2 * (1 - walk), y, h, 1 - 0.55 * cold);
+}
+function caption(t) {
+  const L = LINES.find(([a, b]) => t >= a && t < b); if (!L) { cap.innerHTML = ""; return; }
+  const [a, b, html, cls] = L;
+  if (cap.dataset.k !== String(a)) { cap.dataset.k = a; const tokens = html.split(/(<br>|<em>|<\/em>| )/).filter(Boolean); let inEm = false, out = "";
+    for (const tk of tokens) { if (tk === "<em>") { inEm = true; continue; } if (tk === "</em>") { inEm = false; continue; } if (tk === " ") { out += " "; continue; } if (tk === "<br>") { out += "<br>"; continue; }
+      out += `<span class="w">${inEm ? `<em>${tk}</em>` : tk}</span>`; }
+    cap.innerHTML = `<div class="${cls}">${out}</div>`; }
+  const ws = cap.querySelectorAll(".w"), out = ease((t - (b - 0.5)) / 0.5);
+  ws.forEach((w, i) => { const k = ease((t - a - i * 0.12) / 0.45); w.style.opacity = k * (1 - out); w.style.transform = `translateY(${(1 - k) * 26}px)`; w.style.filter = `blur(${(1 - k) * 6}px)`; });
+}
+window.setup = async () => { await document.fonts.ready; await new Promise((r) => { const i = book.querySelector("img"); i.complete ? r() : i.onload = r; }); return { duration: DURATION, fps: 30 }; };
+window.frame = (t) => {
+  drawCave(t); caption(t);
+  const b = ease((t - BOOK_AT) / 1.2);
+  book.style.display = b > 0 ? "block" : "none";
+  if (b > 0) { g.fillStyle = `rgba(8,6,5,${0.82 * b})`; g.fillRect(0, 0, W, H);
+    const img = book.querySelector("img"), z = 1.06 - 0.06 * b + 0.012 * (t - BOOK_AT);
+    img.style.opacity = b; img.style.transform = `scale(${z}) translateY(${(1 - b) * 40}px)`;
+    const m = document.getElementById("meta"), mk = ease((t - BOOK_AT - 0.8) / 1); m.style.opacity = mk; m.style.transform = `translateY(${(1 - mk) * 24}px)`; }
+};
+</script></body></html>

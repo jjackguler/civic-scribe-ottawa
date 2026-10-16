@@ -93,7 +93,7 @@ export function OriginalCard({ o, justMoved = false }: { o: Original; justMoved?
         {" · "}
         {o.kind === "titles"
           ? (fr ? "Voix d'IA" : "AI voice")
-          : <>{fr ? "Voix d'IA, d'après " : "AI voice, from "}{o.sources.map(s => s.name).slice(0, 3).join(", ")}</>}
+          : <>{/^no narration/i.test(o.voice) ? (fr ? "Sous-titres, d'après " : "Captions, from ") : (fr ? "Voix d'IA, d'après " : "AI voice, from ")}{o.sources.map(s => s.name).slice(0, 3).join(", ")}</>}
       </p>
       {o.credits && <p className="text-[0.72rem] opacity-60 mt-1 line-clamp-2" title={o.credits}>{o.credits}</p>}
     </article>

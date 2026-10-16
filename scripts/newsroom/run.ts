@@ -24,7 +24,7 @@ import { appendFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { humanLens } from "../../src/lib/editorial";
 import { countWords, uniqueSlug, type NewsroomArticle, type NewsroomCopy, type RoleNote } from "../../src/lib/newsroom-types";
-import { loadAttempts, recordAttempt } from "./attempts";
+import { loadAttempts, recordAttempt, releaseAttempt } from "./attempts";
 import { cannedModels, illustrate, liveModels, type Models } from "./models";
 import { LINKS, loadGlossary } from "./library";
 import { pickEvents } from "./pick";
@@ -221,14 +221,17 @@ async function main() {
   for (const s of skipped.slice(0, 12)) log(`skip ${s.id}: ${s.why} — ${s.title}`);
   if (events.length === 0) { log("No new events to write."); return finish(models); }
 
-  let published = 0, rejected = 0, held = 0;
+  let published = 0, rejected = 0, held = 0, paused = 0;
   for (const e of events.slice(0, budget)) {
     if (models.failure || models.usage.capped) break;
     if (store.has(e.id)) continue;
     log(`\n▸ ${e.id}: ${e.sources[0]?.title} (${new Set(e.sources.map(s => s.outlet)).size} outlet(s)${e.sources.some(s => s.official) ? ", official" : ""})`);
+    const tokensBefore = models.usage.inTokens + models.usage.outTokens;
     await recordAttempt(STORE, attempts, e.id);
     try {
       const r = await writeOne(models, store, e);
+      // Busy before any token was billed: not an attempt, so it doesn't use up the daily cap.
+      if (models.busy && models.usage.inTokens + models.usage.outTokens === tokensBefore) { await releaseAttempt(STORE, attempts, e.id); paused++; continue; }
       if (r === "published") published++; else if (r === "held") held++; else rejected++;
     } catch (err) {
       // An unexpected error stops this event only; nothing half-written reaches the store.
@@ -236,7 +239,7 @@ async function main() {
       rejected++;
     }
   }
-  log(`\n${published} published, ${held} held for the editor, ${rejected} turned down, ${Math.max(0, events.length - budget)} left for a later run.`);
+  log(`\n${published} published, ${held} held for the editor, ${rejected} turned down${paused ? `, ${paused} paused (provider busy)` : ""}, ${Math.max(0, events.length - budget)} left for a later run.`);
   return finish(models);
 }
 

@@ -1,0 +1,31 @@
+# Output watch: once a day, checks what was actually published (newsroom
+# articles, Original videos), not whether the workflows went green. Fails,
+# and so emails once a day, only when nothing new was published for too long.
+# No credentials, no paid calls. Limits: vars OUTPUT_WATCH_STALE_HOURS (24),
+# OUTPUT_WATCH_ORIGINALS_STALE_HOURS (72).
+name: Output watch
+
+on:
+  schedule:
+    - cron: "17 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch the store branches
+        run: git fetch --depth=1 origin +refs/heads/newsroom:refs/remotes/origin/newsroom +refs/heads/media:refs/remotes/origin/media
+      - name: Check published output
+        env:
+          OUTPUT_WATCH_STALE_HOURS: ${{ vars.OUTPUT_WATCH_STALE_HOURS }}
+          OUTPUT_WATCH_ORIGINALS_STALE_HOURS: ${{ vars.OUTPUT_WATCH_ORIGINALS_STALE_HOURS }}
+        run: npx --yes tsx@4 scripts/output-watch.ts

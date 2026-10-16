@@ -25,7 +25,7 @@ export async function withRetry(f: () => Promise<Response>, max = 1, wait = (n: 
   return res;
 }
 export type Provider = "gemini" | "claude";
-export type NewsroomConfig = { provider: Provider; profile: "standard" | "economy"; names: Record<Tier, string>; chain: Record<Tier, string[]>; retries: number };
+export type NewsroomConfig = { provider: Provider; profile: "standard" | "economy"; names: Record<Tier, string>; chain: Record<Tier, string[]>; retries: number; busyFallback?: string };
 /** Known illustrative prices only; unrecognised models never borrow another model's price. */
 export const PRICE_PER_M: Record<string, [number, number]> = { "gemini-3.1-flash-lite": [0.25, 1.5], "gemini-3.8-flash": [0.75, 3.75] };
 export function priceOf(model: string): [number, number] | null { return PRICE_PER_M[model] ?? null; }
@@ -49,7 +49,10 @@ export function resolveConfig(e: Record<string, string | undefined>): NewsroomCo
   };
   const extra = provider === "gemini" ? g("NEWSROOM_GEMINI_FALLBACKS").split(",").map(x=>x.trim()).filter(Boolean).filter(x=>!/pro/i.test(x)||g("NEWSROOM_ALLOW_PRO")==="1") : [];
   const chain = (m: string) => [...new Set([m,...extra])].slice(0,2);
-  return { provider, profile, names, chain:{ writer:chain(names.writer),checker:chain(names.checker) }, retries };
+  // When Google answers 5xx (overloaded), the run may move to the cheaper economy model instead of stopping.
+  // Never a pricier model; NEWSROOM_BUSY_FALLBACK=0 turns it off.
+  const busyFallback = provider === "gemini" && g("NEWSROOM_BUSY_FALLBACK") !== "0" ? cheap : undefined;
+  return { provider, profile, names, chain:{ writer:chain(names.writer),checker:chain(names.checker) }, retries, busyFallback };
 }
 /** Calls are a hard per-process bound; tokens/USD are stop-after-usage thresholds,
  * can overshoot by ONE in-flight request, and are not account/monthly billing caps.
@@ -89,6 +92,7 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
   if("error" in cfg){if(cfg.error!=="no API key")report("[newsroom] "+cfg.error);return null;}
   const budget=RunBudget.fromEnv(e);
   let failure: string | undefined, busy = false;
+  const down=new Set<string>(), used:Partial<Record<Tier,string>>={};
   // Prices for Claude/custom models must be supplied explicitly. Their defaults are not guessed.
   const customIn=Number(e.NEWSROOM_PRICE_INPUT_PER_M),customOut=Number(e.NEWSROOM_PRICE_OUTPUT_PER_M);
   const customValid=!!e.NEWSROOM_PRICE_INPUT_PER_M&&!!e.NEWSROOM_PRICE_OUTPUT_PER_M&&Number.isFinite(customIn)&&Number.isFinite(customOut)&&customIn>=0&&customOut>=0;
@@ -106,12 +110,18 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
     budget.inTokens+=input;budget.outTokens+=output;
     const p=prices.get(model)!;if(budget.usd!==null)budget.usd+=(input*p[0]+output*p[1])/1e6;
   };
+  // The busy fallback is used only when its price is known and no higher than the model it replaces.
+  const fallbackFor=(model:string)=>{const f=cfg.busyFallback,a=f&&prices.get(f),b=prices.get(model);return f&&a&&b&&a[0]<=b[0]&&a[1]<=b[1]&&f!==model?f:undefined;};
   report("[newsroom] provider "+cfg.provider+", profile "+cfg.profile+", writer "+cfg.names.writer+", checker "+cfg.names.checker);
   return {
-    provider:cfg.provider,usage:budget,model:t=>cfg.names[t],get failure(){return failure;},get busy(){return busy;},
+    provider:cfg.provider,usage:budget,model:t=>used[t]??cfg.names[t],get failure(){return failure;},get busy(){return busy;},
     async json<T>(role:RoleName,tier:Tier,system:string,user:string,_ctx:CallCtx,maxTokens=8192) {
       if(failure)return null;
-      for(const model of cfg.chain[tier]){
+      const list=cfg.chain[tier].filter(m=>!down.has(m));
+      const fb=fallbackFor(cfg.chain[tier][0]);
+      if(fb&&!list.includes(fb)&&down.size)list.push(fb);
+      for(let i=0;i<list.length;i++){
+        const model=list[i];
         try {
           const isGemini=cfg.provider==="gemini";
           const res=await withRetry(async()=>{
@@ -128,7 +138,10 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
           if(!res.ok){
             report("["+role+"] "+cfg.provider+" "+model+" HTTP "+res.status);
             // Only a missing MODEL may use an explicitly configured fallback. No key/quota escalation.
-            if(res.status===404 && model!==cfg.chain[tier].at(-1))continue;
+            if(res.status===404 && i<list.length-1)continue;
+            // An overloaded model is skipped for the rest of this run; the cheaper fallback takes over.
+            if(res.status>=500){down.add(model);const f=fallbackFor(model);
+              if(f&&!down.has(f)){if(!list.includes(f))list.push(f);if(list.indexOf(f)>i){report("["+role+"] "+model+" is busy; switching to the cheaper "+f+" for the rest of this run");continue;}}}
             busy=res.status>=500;
             failure=busy ? cfg.provider+" HTTP "+res.status+": the provider is busy or down. Remaining calls stopped; the stories stay queued for the next run."
                          : cfg.provider+" HTTP "+res.status+"; check API access, quota and billing. Remaining calls stopped.";
@@ -139,6 +152,7 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
           const output=isGemini?(body.usageMetadata?.candidatesTokenCount??0)+(body.usageMetadata?.thoughtsTokenCount??0):body.usage?.output_tokens;
           if(!Number.isFinite(input)||!Number.isFinite(output)||input<0||output<0){budget.usd=null;failure="Missing provider usage; remaining paid calls stopped.";report("["+role+"] "+failure);return null;}
           recordUsage(model,input,output);
+          used[tier]=model;
           if(isGemini){
             const c=body.candidates?.[0];if(!c||["SAFETY","MAX_TOKENS"].includes(c.finishReason))return null;
             return parseJson<T>((c.content?.parts??[]).filter((p:any)=>!p.thought).map((p:any)=>p.text??"").join(""));
