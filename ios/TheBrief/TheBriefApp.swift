@@ -119,12 +119,14 @@ struct DetailView: View {
 
 struct BriefPlayer: View {
     let url: URL
+    var active = true
     @State private var player: AVPlayer?
     @Environment(\.scenePhase) private var phase
     var body: some View {
         VideoPlayer(player: player)
             .onAppear { player = AVPlayer(url: url) }
             .onDisappear { player?.pause(); player = nil }
+            .onChange(of: active) { _, value in if !value { player?.pause() } }
             .onChange(of: phase) { _, value in if value != .active { player?.pause() } }
             .accessibilityLabel("Video player. Playback starts when you press play.")
     }
@@ -132,6 +134,7 @@ struct BriefPlayer: View {
 
 struct ShortsView: View {
     @EnvironmentObject var store: BriefStore
+    @State private var visibleID: String?
     var body: some View {
         NavigationStack {
             let videos = store.items.filter { Brief.secureURL($0.video) != nil }
@@ -142,7 +145,7 @@ struct ShortsView: View {
                     LazyVStack(spacing: 0) {
                         ForEach(videos) { item in
                             VStack(alignment: .leading, spacing: 14) {
-                                BriefPlayer(url: Brief.secureURL(item.video)!).frame(maxHeight: .infinity)
+                                BriefPlayer(url: Brief.secureURL(item.video)!, active: visibleID == item.id).frame(maxHeight: .infinity)
                                 Text(item.title).font(.title2.bold())
                                 Text(item.aiLabel).font(.caption).foregroundStyle(.secondary)
                                 HStack {
@@ -151,10 +154,12 @@ struct ShortsView: View {
                                     Button { store.toggle(item) } label: { Image(systemName: store.isSaved(item) ? "bookmark.fill" : "bookmark") }.accessibilityLabel("Save video")
                                     ShareLink(item: item.shareURL)
                                 }
-                            }.padding().containerRelativeFrame(.vertical)
+                            }.padding().containerRelativeFrame(.vertical).id(item.id)
                         }
                     }.scrollTargetLayout()
-                }.scrollTargetBehavior(.paging).navigationTitle("Watch").navigationBarTitleDisplayMode(.inline)
+                }.scrollTargetBehavior(.paging).scrollPosition(id: $visibleID)
+                    .onAppear { if visibleID == nil { visibleID = videos.first?.id } }
+                    .navigationTitle("Watch").navigationBarTitleDisplayMode(.inline)
             }
         }
     }
