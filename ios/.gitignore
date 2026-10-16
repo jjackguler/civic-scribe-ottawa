@@ -1,5 +1,6 @@
 *.xcodeproj/
 build/
+screenshots/
 *.xcresult/
 *.ipa
 *.mobileprovision

@@ -24,6 +24,12 @@ jobs:
         run: |
           DEVICE=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")))')
           xcodebuild -project ios/TheBrief.xcodeproj -scheme TheBrief -destination "platform=iOS Simulator,id=$DEVICE" -derivedDataPath ios/build -resultBundlePath ios/TestResults.xcresult CODE_SIGNING_ALLOWED=NO test
+      - name: Export native screen evidence
+        if: always()
+        run: |
+          if [ -d ios/TestResults.xcresult ]; then
+            xcrun xcresulttool export attachments --path ios/TestResults.xcresult --output-path ios/screenshots
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -31,4 +37,5 @@ jobs:
           path: |
             ios/build/Build/Products/Debug-iphonesimulator/TheBrief.app
             ios/TestResults.xcresult
+            ios/screenshots
           retention-days: 14
