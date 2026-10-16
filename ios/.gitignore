@@ -1,0 +1,7 @@
+*.xcodeproj/
+build/
+*.xcresult/
+*.ipa
+*.mobileprovision
+*.p12
+TheBrief/Assets.xcassets/AppIcon.appiconset/icon.png
