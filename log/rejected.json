@@ -1,5 +1,35 @@
 [
   {
+    "id": "18qnngh",
+    "at": "2026-10-16T21:57:03.657Z",
+    "stage": "copy",
+    "headline": "Bringing GPT-Rosalind to academic research labs",
+    "reasons": [
+      "Not in the sources (names or numbers): American, United, States, denial not in the sources: \"To qualify, university laboratories must not hold an existing enterprise contrac\", denial not in the sources: \"This offer is currently open only to research teams at universities in the Unite\".",
+      "Too close to OpenAI's wording (\"eligible academic labs sponsored access to gpt rosalind and…\"): say it in our own words, or quote and attribute it.",
+      "Too close to The Decoder's wording (\"research labs up to 30 free seats for a…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
+    "id": "18b3jdu",
+    "at": "2026-10-16T21:56:02.613Z",
+    "stage": "reporter",
+    "headline": "Steve Walton’s 3C merges with UK’s Datalec to build full-service data centre platform",
+    "reasons": [
+      "skip: The provided source excerpts cover two separate developments with insufficient factual detail to reach the minimum 120-word threshold for an article without padding or speculation."
+    ]
+  },
+  {
+    "id": "1n13w6l",
+    "at": "2026-10-16T21:55:53.782Z",
+    "stage": "standards",
+    "headline": "ChatGPT can peek at your Chrome tabs now",
+    "reasons": [
+      "no verdict from the standards desk"
+    ]
+  },
+  {
     "id": "we6kek",
     "at": "2026-10-15T22:59:19.890Z",
     "stage": "translator",
