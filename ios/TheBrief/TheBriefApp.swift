@@ -59,7 +59,7 @@ struct FeedView: View {
                 Image(systemName: value == nil ? "sparkle.magnifyingglass" : "newspaper.fill")
                     .font(.title2).frame(width: 62, height: 62)
                     .background(.white.opacity(0.06), in: Circle())
-                    .overlay(Circle().stroke(topic == value ? ColorColor(red: 0.91, green: 0.29, blue: 0.22) : Color.white.opacity(0.25), lineWidth: 2))
+                    .overlay(Circle().stroke(topic == value ? Color(red: 0.91, green: 0.29, blue: 0.22) : Color.white.opacity(0.25), lineWidth: 2))
                 Text(title).font(.caption).lineLimit(2).frame(width: 80)
             }
         }.buttonStyle(.plain).accessibilityAddTraits(topic == value ? .isSelected : [])
