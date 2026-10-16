@@ -35,10 +35,19 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
+  TheBriefUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [TheBriefUITests]
+    dependencies:
+      - target: TheBrief
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
 schemes:
   TheBrief:
     build:
       targets:
         TheBrief: all
     test:
-      targets: [TheBriefTests]
+      targets: [TheBriefTests, TheBriefUITests]
