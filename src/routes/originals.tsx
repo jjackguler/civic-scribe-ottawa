@@ -12,8 +12,8 @@ export const Route = createFileRoute("/originals")({
     seoHead(match, {
       title: { en: `Explainers: AI news in a minute — ${SITE.name}`, fr: `Explicatifs : l'actualité IA en une minute — ${SITE.name}` },
       description: {
-        en: "Short video explainers of the day's biggest AI stories, written from the publishers' reporting and checked against it, with an AI voice.",
-        fr: "De courtes vidéos qui expliquent les grandes nouvelles en IA du jour, écrites à partir des reportages des éditeurs et vérifiées, avec une voix d'IA.",
+        en: "Short video explainers of the day's biggest AI stories, written from the publishers' reporting and checked against it, with an AI voice or on-screen captions.",
+        fr: "De courtes vidéos qui expliquent les grandes nouvelles en IA du jour, écrites à partir des reportages des éditeurs et vérifiées, avec une voix d'IA ou des sous-titres à l'écran.",
       },
     }),
   component: OriginalsPage,

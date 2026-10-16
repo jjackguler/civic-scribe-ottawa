@@ -108,5 +108,25 @@ await test("missing usage fails closed", async () => {
   assert.equal(await call(m),null); assert.equal(m.usage.usd,null);
 });
 
+const ok = () => Response.json({ usageMetadata:{promptTokenCount:10,candidatesTokenCount:10}, candidates:[{finishReason:"STOP",content:{parts:[{text:'{"ok":true}'}]}}] });
+const std = { GEMINI_API_KEY: "test-key-never-sent", NEWSROOM_RUN_MAX_CALLS: "10", NEWSROOM_RETRIES: "0" };
+await test("a busy model hands the run to the cheaper fallback, and stays skipped", async () => {
+  const hits: string[] = [];
+  const m = liveModels(std, (async (url) => { const model = String(url).split("/models/")[1].split(":")[0]; hits.push(model);
+    return model === "gemini-3.8-flash" ? new Response(null, {status: 503}) : ok(); }) as typeof fetch, async () => {})!;
+  assert.deepEqual(await call(m), {ok:true}); assert.deepEqual(await call(m), {ok:true});
+  assert.deepEqual(hits, ["gemini-3.8-flash", "gemini-3.1-flash-lite", "gemini-3.1-flash-lite"]);
+  assert.equal(m.model("writer"), "gemini-3.1-flash-lite"); assert.equal(m.failure, undefined);
+});
+await test("when the fallback is busy too, the run pauses as busy", async () => {
+  const m = liveModels(std, (async () => new Response(null, {status: 503})) as typeof fetch, async () => {})!;
+  assert.equal(await call(m), null); assert.equal(m.busy, true); assert.ok(m.failure);
+});
+await test("NEWSROOM_BUSY_FALLBACK=0 keeps the old stop-on-busy behaviour", async () => {
+  let n = 0;
+  const m = liveModels({...std, NEWSROOM_BUSY_FALLBACK:"0"}, (async () => { n++; return new Response(null, {status: 503}); }) as typeof fetch, async () => {})!;
+  assert.equal(await call(m), null); assert.equal(n, 1); assert.equal(m.busy, true);
+});
+
 console.log(`\n${passed} passed, ${failures.length} failed`);
 process.exit(failures.length ? 1 : 0);

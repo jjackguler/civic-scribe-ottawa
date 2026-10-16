@@ -30,3 +30,13 @@ export async function recordAttempt(dir: string, a: Attempts, id: string) {
   await rename(temp, join(dir, "attempts.json"));
   Object.assign(a, next);
 }
+
+/** Gives back an attempt that never reached the model (the provider was busy and billed nothing). */
+export async function releaseAttempt(dir: string, a: Attempts, id: string) {
+  const i = a.ids.lastIndexOf(id);
+  const next = { date: a.date, count: Math.max(0, a.count - 1), ids: i < 0 ? a.ids : [...a.ids.slice(0, i), ...a.ids.slice(i + 1)] };
+  const temp = join(dir, "attempts.json.tmp");
+  await writeFile(temp, JSON.stringify(next, null, 2) + "\n");
+  await rename(temp, join(dir, "attempts.json"));
+  Object.assign(a, next);
+}

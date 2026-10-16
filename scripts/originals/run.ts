@@ -93,6 +93,7 @@ async function makeCollage(brief: Brief): Promise<Made | string | null> {
     const r = await writeStoryboard(brief, figures, {
       anthropic: env("ANTHROPIC_API_KEY") || undefined, gemini: env("GEMINI_API_KEY") || undefined,
       claudeModel: env("CLAUDE_MODEL") || "claude-sonnet-5-5", geminiModel: env("ORIGINALS_GEMINI_MODEL") || "gemini-3.8-flash",
+      geminiBusyFallback: env("ORIGINALS_GEMINI_BUSY_FALLBACK") === "0" ? undefined : env("ORIGINALS_GEMINI_BUSY_FALLBACK") || "gemini-3.1-flash-lite",
     }, DATE);
     model = r.model;
     if (!r.board) return r.reason;

@@ -47,9 +47,18 @@ for (const status of [401, 429, 503]) {
     const m = liveModels({ GEMINI_API_KEY: "fake", NEWSROOM_RETRIES: "0" }, (async () => { n++; return new Response(null, { status }); }) as typeof fetch)!;
     await m.json("reporter", "writer", "s", "u", { id: "fixture", attempt: 0 });
     await m.json("reporter", "writer", "s", "u", { id: "fixture", attempt: 1 });
-    assert.equal(n, 1); assert.match(m.failure!, new RegExp(`HTTP ${status}`));
+    // A 503 tries the cheaper busy fallback once; after that, nothing more is sent.
+    assert.equal(n, status === 503 ? 2 : 1); assert.match(m.failure!, new RegExp(`HTTP ${status}`));
   });
 }
+await test("a busy Originals writer tries the cheaper fallback once", async () => {
+  const hits: string[] = [];
+  const r = await requestWriter("s", "u", { ...keys, geminiBusyFallback: "gemini-3.1-flash-lite" }, 6000, (async (url: string) => {
+    hits.push(url.split("/models/")[1].split(":")[0]);
+    return hits.length === 1 ? new Response("x", { status: 503 }) : Response.json({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: "{}" }] } }] });
+  }) as typeof fetch);
+  assert.deepEqual(hits, ["gemini-3.8-flash", "gemini-3.1-flash-lite"]); assert.equal(r.model, "gemini-3.1-flash-lite");
+});
 for (const [status, busy] of [[503, true], [500, true], [401, false], [429, false]] as const) {
   await test(`HTTP ${status} ${busy ? "is a busy provider (warning)" : "stays a failure"} in both pipelines`, async () => {
     const m = liveModels({ GEMINI_API_KEY: "fake", NEWSROOM_RETRIES: "0" }, (async () => new Response(null, { status })) as typeof fetch)!;
