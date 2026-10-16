@@ -4,7 +4,7 @@ import AVKit
 @main struct TheBriefApp: App {
     @StateObject private var store = BriefStore()
     var body: some Scene {
-        WindowGroup { RootView().environmentObject(store).preferredColorScheme(.dark).tint(.orange) }
+        WindowGroup { RootView().environmentObject(store).preferredColorScheme(.dark).tint(Color(red: 0.91, green: 0.29, blue: 0.22)) }
     }
 }
 
@@ -31,7 +31,7 @@ struct FeedView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("AI NEWS. HUMAN STAKES.").font(.caption.weight(.bold)).tracking(2).foregroundStyle(.orange)
+                    Text("AI NEWS. HUMAN STAKES.").font(.caption.weight(.bold)).tracking(2).foregroundStyle(Color(red: 0.91, green: 0.29, blue: 0.22))
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 18) {
                             topicButton("All", value: nil)
@@ -59,7 +59,7 @@ struct FeedView: View {
                 Image(systemName: value == nil ? "sparkle.magnifyingglass" : "newspaper.fill")
                     .font(.title2).frame(width: 62, height: 62)
                     .background(.white.opacity(0.06), in: Circle())
-                    .overlay(Circle().stroke(topic == value ? Color.orange : Color.white.opacity(0.25), lineWidth: 2))
+                    .overlay(Circle().stroke(topic == value ? ColorColor(red: 0.91, green: 0.29, blue: 0.22) : Color.white.opacity(0.25), lineWidth: 2))
                 Text(title).font(.caption).lineLimit(2).frame(width: 80)
             }
         }.buttonStyle(.plain).accessibilityAddTraits(topic == value ? .isSelected : [])
@@ -75,7 +75,7 @@ struct StoryCard: View {
                     Rectangle().fill(.white.opacity(0.05)).overlay(Image(systemName: "newspaper").font(.largeTitle))
                 }.frame(height: 220).clipped().clipShape(RoundedRectangle(cornerRadius: 18))
             }
-            Text(item.topic.uppercased()).font(.caption.bold()).foregroundStyle(.orange)
+            Text(item.topic.uppercased()).font(.caption.bold()).foregroundStyle(Color(red: 0.91, green: 0.29, blue: 0.22))
             Text(item.title).font(.system(.title, design: .serif, weight: .bold))
             Text(item.summary).font(.body).foregroundStyle(.secondary)
             Text(item.aiLabel).font(.caption2).foregroundStyle(.secondary)
@@ -210,3 +210,4 @@ struct AboutView: View {
         }
     }
 }
+
