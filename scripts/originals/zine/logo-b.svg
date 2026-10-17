@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254">
+  <!-- AI Broadsheet "b" mark (traced from the owner's logo; replace with the original file when available) -->
+  <rect width="1254" height="1254" fill="#17191b"/>
+  <path fill="#d5b74c" fill-rule="evenodd" d="
+    M298 258 C390 252 480 238 553 210 L567 210 L567 535 C640 485 700 468 752 468 C880 468 962 600 962 740
+    C962 900 840 1025 660 1025 L298 1025 L298 1016 C340 1010 360 980 360 920 L360 340 C360 295 340 272 298 268 Z
+    M567 550 L567 840 C567 930 530 1000 415 1018 L520 1018 C560 990 590 920 640 850 C690 780 750 742 803 740
+    L745 585 C720 535 690 522 652 522 C620 522 595 535 567 550 Z"/>
+</svg>

@@ -1,0 +1,96 @@
+{
+  "format": "zine",
+  "style": "noir",
+  "series": "Hidden Stories of AI",
+  "date": "October 17, 2026",
+  "label": "HIDDEN STORIES OF AI · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "slug": "hidden-stories-02",
+  "book": [
+    "THE SCIENTISTS",
+    "SCIENCE · 9TH CENTURY–1962"
+  ],
+  "next": "NEXT: THE ARTISTS",
+  "title": "Hidden Stories of AI, episode 2: four scientists AI stands on",
+  "summary": "Al-Khwarizmi, Isaac Newton, Albert Einstein and Katherine Johnson: the algorithm, calculus, the photon and the human check on a computer.",
+  "ticker": "HIDDEN STORIES OF AI · EPISODE 2 · SCIENCE · AL-KHWARIZMI · NEWTON · EINSTEIN · JOHNSON",
+  "sources": [
+    {
+      "name": "Britannica: al-Khwarizmi",
+      "url": "https://www.britannica.com/biography/al-Khwarizmi"
+    },
+    {
+      "name": "Britannica: Isaac Newton",
+      "url": "https://www.britannica.com/biography/Isaac-Newton"
+    },
+    {
+      "name": "Nobel Prize: Albert Einstein, facts",
+      "url": "https://www.nobelprize.org/prizes/physics/1921/einstein/facts/"
+    },
+    {
+      "name": "BuzzFeed News (quoting NASA)",
+      "url": "https://www.buzzfeednews.com/article/amberjamieson/katherine-johnson-hidden-figures-died"
+    },
+    {
+      "name": "The Root",
+      "url": "https://theroot.com/how-nasa-s-katherine-johnson-had-the-right-stuff-to-win-1790854690"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "title",
+      "say": [
+        "Every AI stands on the shoulders of scientists who never saw a computer like ours. Here are four."
+      ]
+    },
+    {
+      "type": "baghdad",
+      "year": "AL-KHWARIZMI · BAGHDAD",
+      "say": [
+        "In ninth-century Baghdad, the mathematician al-Khwarizmi wrote about the Hindu number system and about al-jabr.",
+        "Translated into Latin, his name became algorithm, and al-jabr became algebra."
+      ]
+    },
+    {
+      "type": "newton",
+      "year": "ISAAC NEWTON · 1687",
+      "say": [
+        "In England, Isaac Newton developed calculus and, in 1687, published his laws of motion.",
+        "Calculus is how an AI learns today: it measures the slope of its mistakes and steps downhill."
+      ],
+      "cue": "downhill"
+    },
+    {
+      "type": "einstein",
+      "year": "ALBERT EINSTEIN · 1905",
+      "say": [
+        "In 1905, Albert Einstein explained that light comes in packets that can knock electrons out of metal.",
+        "His Nobel Prize was for that work. The same effect lets every digital camera sensor turn light into data."
+      ],
+      "cue": "camera"
+    },
+    {
+      "type": "orbit",
+      "year": "KATHERINE JOHNSON · 1962",
+      "say": [
+        "In 1962, before John Glenn orbited the Earth, NASA's computers worked out his path.",
+        "Glenn asked for one more check: the mathematician Katherine Johnson ran the numbers by hand. Then he flew."
+      ],
+      "cue": "hand"
+    },
+    {
+      "type": "close",
+      "q": [
+        "CHECK THE",
+        "MACHINE"
+      ],
+      "say": [
+        "An algorithm, a slope, a photon, and a person checking the machine. AI needs all four.",
+        "Next: the artists."
+      ],
+      "cue": "Next"
+    }
+  ]
+}

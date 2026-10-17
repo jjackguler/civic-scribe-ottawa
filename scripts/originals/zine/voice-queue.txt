@@ -1,3 +1,6 @@
 # Boards the Zine voice workflow narrates on the next push to zine-voice-run (one slug per line).
-how-ai-got-here-01
 ai-on-screen-01
+hidden-stories-01
+hidden-stories-02
+hidden-stories-03
+hidden-stories-04
