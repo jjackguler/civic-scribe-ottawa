@@ -1,0 +1,113 @@
+{
+  "format": "zine",
+  "style": "noir",
+  "series": "Mind & Society",
+  "date": "October 17, 2026",
+  "label": "MIND & SOCIETY · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "slug": "mind-society-01",
+  "book": [
+    "IS AI MAKING US LONELY?",
+    "MIND & SOCIETY · THE 2025 STUDIES"
+  ],
+  "next": "NEXT: WHY PEOPLE SAY NO TO AI",
+  "title": "Mind & Society: is AI making us lonely?",
+  "summary": "In 2025, MIT Media Lab and OpenAI found that the heaviest chatbot users reported more loneliness and dependence. What the studies show, and what they don't.",
+  "ticker": "MIND & SOCIETY · IS AI MAKING US LONELY? · MIT MEDIA LAB AND OPENAI, 2025",
+  "sources": [
+    {
+      "name": "MIT Media Lab",
+      "url": "https://www.media.mit.edu/articles/chatgpt-may-be-making-us-lonelier/"
+    },
+    {
+      "name": "Fortune",
+      "url": "https://fortune.com/2025/03/24/chatgpt-making-frequent-users-more-lonely-study-openai-mit-media-lab"
+    },
+    {
+      "name": "Engadget",
+      "url": "https://engadget.com/ai/joint-studies-from-openai-and-mit-found-links-between-loneliness-and-chatgpt-use-193537421.html"
+    },
+    {
+      "name": "Tom's Guide",
+      "url": "https://www.tomsguide.com/ai/is-chatgpt-making-us-lonely-mit-openai-study-reveals-possible-link"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "title",
+      "say": [
+        "Millions of people talk to chatbots every day. Is it making us lonely?"
+      ]
+    },
+    {
+      "type": "lamp",
+      "year": "MARCH 2025",
+      "book": false,
+      "say": [
+        "In March 2025, MIT Media Lab and OpenAI published two studies on how chatbot use affects how people feel."
+      ]
+    },
+    {
+      "type": "stat",
+      "year": "THE EXPERIMENT",
+      "value": 1000,
+      "prefix": "≈",
+      "label": [
+        "PEOPLE",
+        "FOUR WEEKS OF CHATGPT"
+      ],
+      "say": [
+        "MIT followed about a thousand people using ChatGPT for four weeks."
+      ]
+    },
+    {
+      "type": "stat",
+      "year": "THE DATA",
+      "value": 40,
+      "suffix": "M",
+      "label": [
+        "CONVERSATIONS",
+        "ANALYSED BY OPENAI"
+      ],
+      "say": [
+        "OpenAI analysed nearly 40 million conversations."
+      ]
+    },
+    {
+      "type": "eliza",
+      "year": "THE HEAVIEST USERS",
+      "chat": [
+        "> Good night.",
+        "GOOD NIGHT. TALK TOMORROW?",
+        "> Same time?",
+        "I'LL BE HERE."
+      ],
+      "say": [
+        "The heaviest daily users reported more loneliness, more emotional dependence, and less time with other people."
+      ]
+    },
+    {
+      "type": "alley",
+      "year": "THE CAVEAT",
+      "say": [
+        "But the studies do not show that chatbots cause loneliness. Lonely people may simply reach for them more.",
+        "They measured loneliness, not depression, over just a month, and had not been peer reviewed."
+      ]
+    },
+    {
+      "type": "close",
+      "q": [
+        "WHO ARE",
+        "YOU TALKING",
+        "TO TONIGHT?"
+      ],
+      "say": [
+        "If a chatbot is your main conversation of the day, that is worth noticing.",
+        "Next: why so many people say no to AI."
+      ],
+      "cue": "Next"
+    }
+  ]
+}

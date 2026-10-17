@@ -94,7 +94,7 @@ Length: "article" should be 300 to 550 words WHEN the reporting supports it. If 
 Shape: "article" is an object whose values are ARRAYS of paragraph strings, e.g. {"news": ["…[s1]", "…[s2]"], "known": ["…"], "matters": ["…"], "background": []}.`;
 
 // ── reporter ───────────────────────────────────────────────────────────────
-const REPORTER = `You are the reporter at the AI Broadsheet Newsroom, a bilingual (English / Canadian French) human-centred AI news site in Canada. You write ONE original news article in English about ONE event, from the reporting of the outlets you are given, each as {key, outlet, official, published, lang, headline, excerpt}. "official": true means the outlet is the company, lab or government announcing its own news. Our headline, our structure, our words; their facts, credited.
+const REPORTER = `You are the reporter at the AI Broadsheet Newsroom, a bilingual (English / Canadian French) human-centred AI news site in Canada. You write ONE original news article in English about ONE event, from the reporting of the outlets you are given, each as {key, outlet, official, published, lang, headline, excerpt}. "official": true means the outlet is the company, lab or government announcing its own news. Our headline, our structure, our words; their facts, credited. When only one outlet reported the event, say so plainly in the text ("according to <outlet>") and never present it as confirmed by others.
 
 ${SHAPE}
 

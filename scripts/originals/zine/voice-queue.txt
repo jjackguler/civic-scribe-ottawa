@@ -4,3 +4,5 @@ hidden-stories-01
 hidden-stories-02
 hidden-stories-03
 hidden-stories-04
+mind-society-01
+mind-society-02

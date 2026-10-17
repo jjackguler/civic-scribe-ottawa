@@ -4,8 +4,8 @@
  * - An event several outlets report (a cluster from cluster.ts with two or
  *   more outlets), or
  * - one official announcement: the company, lab or government announcing its
- *   own news (a lab or government feed). Never a single outlet's scoop or
- *   rumour: one outlet reporting on someone else is not enough.
+ *   own news (a lab or government feed), then one newsroom's own detailed report
+ *   (named as the source). Never a trending link, a rumour or a leak.
  * - Never an event we already wrote (any of its stories is in the index), one
  *   the owner killed, or one rejected in the last three days.
  * - Never a story the charter's gate keeps off the site.
@@ -97,7 +97,13 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
   ].sort((a, b) => b.lead.publishedAt.localeCompare(a.lead.publishedAt));
   // One source has to carry a whole article (120+ words): thin blog excerpts only burn a model call and get turned down.
   for (const o of official) consider(o.id, o.lead, o.group, 600);
-  // 3. Everything else is one outlet reporting on someone else: not ours to write.
-  for (const c of clusters) if (c.sources === 1 && !c.lead.lab) skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, not the party itself" });
+  // 3. One newsroom's own detailed report (owner's decision, 2026-10-17): written with that outlet named as the source.
+  //    Never trending links, and never rumours, leaks or "reportedly" stories; thin excerpts can't carry an article.
+  const RUMOUR = /\b(reportedly|rumou?rs?|leak(ed|s)?|sources say|could be|might be|rumeur|selon des sources)\b/i;
+  for (const c of clusters) if (c.sources === 1 && !c.lead.lab) {
+    if (c.lead.kind === "trending") skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, a trending link" });
+    else if (RUMOUR.test(`${c.lead.title} ${c.lead.summary ?? ""}`)) skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, rumour or leak" });
+    else consider(c.id, c.lead, c.stories, 450);
+  }
   return { events, skipped };
 }

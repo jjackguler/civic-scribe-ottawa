@@ -77,6 +77,8 @@ export const WHY_DESK: Record<Topic, Bi> = {
   sustainability: { en: "AI uses energy and water. Its footprint, and how it might help the planet, affects us all.", fr: "L'IA consomme de l'énergie et de l'eau. Son empreinte, et l'aide qu'elle peut apporter à la planète, nous touchent tous." },
   robotics: { en: "Robots are moving into homes, farms and hospitals. How they work alongside people matters.", fr: "Les robots arrivent dans les maisons, les fermes et les hôpitaux. Leur façon de travailler avec les gens compte." },
   health: { en: "AI in medicine can help patients, but it has to be tested, safe and fair for everyone.", fr: "En médecine, l'IA peut aider les patients, mais elle doit être testée, sûre et équitable pour tous." },
+  tech: { en: "New gadgets and cars change how we live. Ask what they do with your data and who checks their safety.", fr: "Les nouveaux appareils et voitures changent notre quotidien. Demandez ce qu'ils font de vos données et qui vérifie leur sécurité." },
+  society: { en: "Technology changes how people feel and get along. Studies help, but one study is rarely the final word.", fr: "La technologie change ce que les gens ressentent et leurs relations. Les études aident, mais une seule étude est rarement le dernier mot." },
 };
 
 // ── The Broadsheet 5 ───────────────────────────────────────────────────────

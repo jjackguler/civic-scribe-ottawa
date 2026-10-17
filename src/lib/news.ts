@@ -75,6 +75,8 @@ export const TOPICS: { id: Topic; label: Bi }[] = [
   { id: "sustainability", label: { en: "Sustainability", fr: "Durabilité" } },
   { id: "robotics", label: { en: "Robotics", fr: "Robotique" } },
   { id: "health", label: { en: "Health & science", fr: "Santé et sciences" } },
+  { id: "tech", label: { en: "Technology", fr: "Technologie" } },
+  { id: "society", label: { en: "Mind & society", fr: "Esprit et société" } },
 ];
 
 export type SectionId = "canada" | "world" | "government" | "ministry" | "labs" | "analysis" | "trending" | Topic;

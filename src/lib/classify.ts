@@ -16,6 +16,7 @@ const RULES: [Topic, RegExp][] = [
   ["immersive", /\b(AR|VR|XR|virtual reality|augmented reality|mixed reality|spatial computing|headsets?|Vision Pro|Meta Quest|Quest \d|smart ?glasses|Ray-Ban Meta|metaverse|immersive|réalité virtuelle|réalité augmentée)\b/i],
   ["robotics", /\b(robots?|robotics|humanoids?|autonomous vehicles?|self-driving|driverless|robotaxis?|drones?|Waymo|Optimus|Figure AI|Boston Dynamics|robotique)\b/i],
   ["infrastructure", /\b(data cent(?:er|re)s?|chips?|chipmakers?|GPUs?|TPUs?|semiconductors?|Nvidia|AMD|TSMC|Broadcom|compute|supercomputers?|hyperscalers?|cloud capacity|gigawatts?|GW|power grid|centres? de données|puces?)\b/i],
+  ["society", /\b(psycholog\w*|mental health|loneliness|depress\w*|anxiety|wellbeing|well-being|sociolog\w*|public opinion|survey of|backlash|anti-AI|distrust)\b/i],
   ["health", /\b(health|healthcare|medical|medicine|hospitals?|patients?|doctors?|clinical|drugs?|biotech|protein|cancer|diagnos\w+|santé|médical)\b/i],
   ["sustainability", /\b(climate|emissions?|carbon|sustainab\w+|renewables?|nuclear|water use|energy use|electricity demand|environment\w*|climat|énergie)\b/i],
   ["business", /\b(raises?|raised|funding round|Series [A-F]|investors?|invest\w*|valuation|IPO|acqui\w+|merger|revenue|earnings|profit|startups?|unicorn|stock|shares|billion|financement|investissement|jeunes pousses)\b/i],

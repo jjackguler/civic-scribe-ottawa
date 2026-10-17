@@ -38,6 +38,8 @@ const DESK: Record<Topic, { en: string; fr: string }> = {
   sustainability: { en: "Sustainability", fr: "Durabilité" },
   robotics: { en: "Robotics", fr: "Robotique" },
   health: { en: "Health & science", fr: "Santé et sciences" },
+  tech: { en: "Technology", fr: "Technologie" },
+  society: { en: "Mind & society", fr: "Esprit et société" },
 };
 
 const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’‘]/g, "'").replace(/[“”«»]/g, '"').replace(/\s+/g, " ").trim();
