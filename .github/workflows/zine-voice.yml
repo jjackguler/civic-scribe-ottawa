@@ -3,6 +3,8 @@
 # scripts/originals/zine/render.mjs picks them up (copy into zine/voice/).
 # Runs when the `zine-voice-run` branch is pushed. Needs ELEVENLABS_API_KEY (the
 # key itself, starting with sk_); optional variable ZINE_VOICE_ID for a stock voice.
+# Only the slugs listed in scripts/originals/zine/voice-queue.txt are voiced (all boards
+# when the file is missing or empty), so old boards don't spend characters again.
 name: Zine voice
 
 on:
@@ -29,7 +31,7 @@ jobs:
         env:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ELEVENLABS_VOICE_ID: ${{ vars.ZINE_VOICE_ID }}
-        run: npx tsx zine/narrate.ts "$RUNNER_TEMP/voice-out"
+        run: npx tsx zine/narrate.ts "$RUNNER_TEMP/voice-out" $(grep -v "^#" zine/voice-queue.txt 2>/dev/null)
       - name: Commit to zine-voice
         run: |
           B="$RUNNER_TEMP/zv"

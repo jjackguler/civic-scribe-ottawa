@@ -1,7 +1,8 @@
 <!doctype html><html><head><meta charset="utf-8">
 <!--
   AI Broadsheet "Zine" reels, 1080x1920: paper-collage explainers in three looks
-  (ink cats in a hand-drawn frame, Dada newsprint, riso grid with hypnotic eyes).
+  (ink cats in a hand-drawn frame, Dada newsprint, riso grid with hypnotic eyes),
+  plus "chronicle", the gold-on-night look of the How AI Got Here history series.
   Archive photos are public domain (assets branch, credited on the end card) and
   go through a xerox / halftone treatment; everything else is drawn here.
   Narration comes from boards/<slug>.json: with voice/<slug>/timing.json the
@@ -270,14 +271,14 @@ function ticker(g, t) {
 }
 function mast(g) {
   g.save(); g.fillStyle = "rgba(14,13,12,.9)"; g.fillRect(56, 92, 420, 62); g.drawImage(TEX.mark, 64, 98, 50, 50); g.font = "700 26px Bod"; g.fillStyle = IVORY; g.letterSpacing = "5px"; g.fillText("AI BROADSHEET", 128, 134);
-  g.font = "18px Type"; g.letterSpacing = "1px"; const lab = "COLLAGE · ARCHIVE PHOTOS"; const lw = g.measureText(lab).width; g.fillStyle = "rgba(14,13,12,.9)"; g.fillRect(W - 76 - lw, 104, lw + 20, 40); g.fillStyle = IVORY; g.fillText(lab, W - 66 - lw, 130); g.restore();
+  g.font = "18px Type"; g.letterSpacing = "1px"; const lab = BOARD.label ?? "COLLAGE · ARCHIVE PHOTOS"; const lw = g.measureText(lab).width; g.fillStyle = "rgba(14,13,12,.9)"; g.fillRect(W - 76 - lw, 104, lw + 20, 40); g.fillStyle = IVORY; g.fillText(lab, W - 66 - lw, 130); g.restore();
 }
 function outro(g, lt) {
   g.drawImage(TEX.kraft, 0, 0); const k = out(lt / .4);
   place(g, TEX.outroMark, W / 2, 620, { s: .6 + .4 * k, id: 70, alpha: k });
   place(g, TEX.outroName, W / 2, 900, { id: 71, alpha: clamp((lt - .2) / .3) });
   g.save(); g.font = "26px Type"; g.fillStyle = INK; g.textAlign = "center";
-  const lines = ["Sources: " + BOARD.sources.map((s) => s.name).join(" · "), "Archive photos: public domain, via Wikimedia Commons", "Music and sounds: " + music, "aibroadsheet.com"];
+  const lines = ["Sources: " + BOARD.sources.map((s) => s.name).join(" · "), BOARD.artCredit ?? "Archive photos: public domain, via Wikimedia Commons", "Music and sounds: " + music, "aibroadsheet.com"];
   lines.forEach((l, i) => { g.globalAlpha = clamp((lt - .5 - i * .15) / .3); wrapText(g, l, W / 2, 1100 + i * 110, 880, 34); }); g.restore();
 }
 function wrapText(g, s, x, y, maxW, lh) { const ws = s.split(" "); let line = "", yy = y; for (const w of ws) { if (g.measureText(line + w).width > maxW && line) { g.fillText(line.trim(), x, yy); line = ""; yy += lh; } line += w + " "; } g.fillText(line.trim(), x, yy); }
@@ -460,6 +461,113 @@ limits(g, lt, d, i) {
   const c = cue(i, "Cheaper"); place(g, TEX.cheap, 300, 1150, { id: 43, s: back((lt - c) / .3) * .82, rot: -.06 }); place(g, TEX.pricey, 790, 1260, { id: 44, s: back((lt - cue(i, "pricier")) / .3) * .82, rot: .06 });
 } };
 
+// ── 4. chronicle: gold ink on a night sky, for the How AI Got Here series ──
+const GOLD = "#d9b26a", BRONZE = "#9a6a32", NIGHT = "#0d1424";
+function gearPath(g, r, n, depth = .14) { g.beginPath(); for (let k = 0; k < n * 4; k++) { const a = k / (n * 4) * Math.PI * 2, rr = (k % 4 < 2) ? r : r * (1 - depth); g.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } g.closePath(); }
+function gear(g, x, y, r, n, ang, { fill = "rgba(217,178,106,.16)", line = GOLD, w = 4, spokes = 4 } = {}) {
+  g.save(); g.translate(x, y); g.rotate(ang); gearPath(g, r, n); g.fillStyle = fill; g.fill(); g.lineWidth = w; g.strokeStyle = line; g.stroke();
+  g.beginPath(); g.arc(0, 0, r * .62, 0, 7); g.stroke(); g.beginPath(); g.arc(0, 0, r * .12, 0, 7); g.stroke();
+  for (let k = 0; k < spokes; k++) { const a = k / spokes * Math.PI * 2; g.beginPath(); g.moveTo(Math.cos(a) * r * .12, Math.sin(a) * r * .12); g.lineTo(Math.cos(a) * r * .62, Math.sin(a) * r * .62); g.stroke(); }
+  g.restore();
+}
+function sky(g, t, hue = NIGHT) {
+  const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, hue); gr.addColorStop(1, "#05070d"); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  for (let k = 0; k < 140; k++) { const x = hash(k) * W, y = hash(k + 99) * 1450, tw = .35 + .65 * Math.abs(Math.sin(t * (1 + hash(k + 7) * 2) + k)); g.fillStyle = `rgba(239,232,218,${tw * .7})`; g.fillRect(x, y, 2 + (k % 3), 2 + (k % 3)); }
+}
+function year(g, label, lt, col = GOLD) { // the era stamp, top centre
+  const k = out(lt / .5); g.save(); g.globalAlpha = k; g.textAlign = "center"; g.font = "700 30px Osw"; g.letterSpacing = "8px"; g.fillStyle = col; g.fillText(label, W / 2, 250 - (1 - k) * 20);
+  g.strokeStyle = col; g.lineWidth = 2; g.beginPath(); g.moveTo(W / 2 - 330, 238); g.lineTo(W / 2 - 200, 238); g.moveTo(W / 2 + 200, 238); g.lineTo(W / 2 + 330, 238); g.stroke(); g.restore();
+}
+function seaLines(g, y0, t, col = "rgba(217,178,106,.55)") { g.strokeStyle = col; g.lineWidth = 3; for (let r = 0; r < 7; r++) { const y = y0 + r * 34; g.beginPath(); for (let x = -20; x <= W + 20; x += 20) g.lineTo(x, y + Math.sin(x / 70 + t * 1.6 + r) * 7); g.stroke(); } }
+function giant(g, x, y, s, step, { glow = 1, eye = 1 } = {}) { // bronze giant, feet at (x,y)
+  g.save(); g.translate(x, y); g.scale(s, s);
+  const bz = g.createLinearGradient(-120, -700, 120, 0); bz.addColorStop(0, "#d79a4e"); bz.addColorStop(.5, BRONZE); bz.addColorStop(1, "#4a2f14"); g.fillStyle = bz; g.strokeStyle = GOLD; g.lineWidth = 5;
+  const limb = (px, py, ang, len, w) => { g.save(); g.translate(px, py); g.rotate(ang); g.beginPath(); g.roundRect(-w / 2, 0, w, len, w / 2); g.fill(); g.stroke(); g.restore(); };
+  const sw = Math.sin(step) * .35; limb(-34, -330, sw, 330, 62); limb(34, -330, -sw, 330, 62); // legs
+  limb(-98, -600, -sw * .8 + .08, 250, 48); limb(98, -600, sw * .8 - .08, 250, 48);           // arms
+  g.beginPath(); g.moveTo(-110, -620); g.lineTo(110, -620); g.lineTo(80, -320); g.lineTo(-80, -320); g.closePath(); g.fill(); g.stroke(); // torso
+  g.beginPath(); g.ellipse(0, -690, 52, 62, 0, 0, 7); g.fill(); g.stroke(); // head
+  g.beginPath(); g.moveTo(-50, -735); g.quadraticCurveTo(0, -830, 60, -760); g.lineTo(40, -740); g.closePath(); g.fillStyle = "#c0382b"; g.fill(); g.stroke(); // crest
+  g.fillStyle = `rgba(255,214,120,${eye})`; g.fillRect(-30, -700, 22, 9); g.fillRect(10, -700, 22, 9);
+  g.strokeStyle = "rgba(20,12,4,.55)"; g.lineWidth = 3; for (let k = 0; k < 5; k++) { g.beginPath(); g.moveTo(-90 + k * 8, -560 + k * 50); g.lineTo(90 - k * 8, -560 + k * 50); g.stroke(); }
+  g.restore();
+}
+function ship(g, x, y, s, t) { g.save(); g.translate(x, y + Math.sin(t * 2 + x) * 5); g.scale(s, s); g.fillStyle = "#1c1a16"; g.strokeStyle = GOLD; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(-90, 0); g.lineTo(90, 0); g.lineTo(60, 34); g.lineTo(-60, 34); g.closePath(); g.fill(); g.stroke(); g.beginPath(); g.moveTo(0, 0); g.lineTo(0, -120); g.stroke();
+  g.beginPath(); g.moveTo(4, -112); g.quadraticCurveTo(70, -70, 6, -20); g.closePath(); g.fillStyle = IVORY; g.fill(); g.stroke(); g.restore(); }
+function bigTitle(g, lines, y, size, col, alpha = 1) { g.save(); g.globalAlpha = alpha; g.textAlign = "center"; g.fillStyle = col; g.font = `${size}px Anton`; lines.forEach((l, k) => g.fillText(l, W / 2, y + k * size * 1.02)); g.restore(); }
+
+LOOKS.chronicle = { async build() { TEX.kraft = paperTex(W, H, "#e9dcc0"); },
+title(g, lt, d, i) {
+  sky(g, lt); const sp = lt * .5;
+  gear(g, 540, 820, 300, 30, sp); gear(g, 540 + 300 + 118, 820 - 40, 130, 13, -sp * 30 / 13 + Math.PI / 13); gear(g, 230, 1180, 150, 15, -sp * 2 + .1, { spokes: 3 });
+  const k = out((lt - .3) / .6); bigTitle(g, ["HOW AI", "GOT HERE"], 700, 190, IVORY, k);
+  g.save(); g.globalAlpha = out((lt - .9) / .5); g.textAlign = "center"; g.font = "700 46px Osw"; g.letterSpacing = "6px"; g.fillStyle = GOLD; g.fillText(BOARD.episode, W / 2, 1150); g.restore();
+},
+talos(g, lt, d, i) {
+  sky(g, lt, "#101a33"); year(g, BOARD.scenes[i].year, lt);
+  g.fillStyle = "#1a1408"; g.beginPath(); g.moveTo(-20, 1240); g.quadraticCurveTo(300, 1120, 620, 1180); g.quadraticCurveTo(820, 1210, 1100, 1250); g.lineTo(1100, 1400); g.lineTo(-20, 1400); g.fill(); seaLines(g, 1260, lt);
+  const walk = lt * 2.4, gx = 180 + (lt * 40) % 200; giant(g, gx, 1210, .95, walk);
+  ship(g, 860, 1250, .9, lt); const th = cue(i, "throwing"); if (lt > th) { const k = clamp((lt - th) / 1.1); const bx = gx + 120 + k * (860 - gx - 120), by = 600 - Math.sin(k * Math.PI) * 280 + k * 640;
+    g.fillStyle = "#6b5a40"; g.strokeStyle = GOLD; g.lineWidth = 3; g.beginPath(); g.arc(bx, by, 34, 0, 7); g.fill(); g.stroke(); if (k >= 1) { g.strokeStyle = IVORY; for (let s2 = 0; s2 < 8; s2++) { const a = s2 / 8 * 6.28; g.beginPath(); g.moveTo(860 + Math.cos(a) * 40, 1230 + Math.sin(a) * 20); g.lineTo(860 + Math.cos(a) * (60 + (lt - th) * 30), 1230 + Math.sin(a) * 40); g.stroke(); } } }
+  const c3 = cue(i, "three"); [0, 1, 2].forEach((n) => { const k = back((lt - c3 - n * .25) / .3); if (k <= 0) return; g.save(); g.translate(720 + n * 110, 420); g.scale(k, k); g.strokeStyle = GOLD; g.lineWidth = 6; g.beginPath(); g.arc(0, 0, 40, 0, 7); g.stroke(); g.beginPath(); g.moveTo(40, 0); g.lineTo(28, -14); g.lineTo(52, -12); g.closePath(); g.fillStyle = GOLD; g.fill(); g.restore(); });
+},
+ichor(g, lt, d, i) {
+  sky(g, lt, "#140f1f"); year(g, BOARD.scenes[i].year, lt);
+  const pull = cue(i, "Pull"), drained = clamp((lt - pull - .3) / 1.2);
+  giant(g, 540, 1330, 1.35, 0, { eye: 1 - drained });
+  const vk = clamp(lt / 2.2) * (1 - drained); g.save(); g.strokeStyle = `rgba(255,200,90,${.9 * (1 - drained)})`; g.shadowColor = "#ffb84a"; g.shadowBlur = 30 * vk; g.lineWidth = 10;
+  g.beginPath(); const pts = [[540, 1330 - 690 * 1.35 + 80], [520, 1330 - 560 * 1.35], [510, 1330 - 330 * 1.35], [500, 1330 - 140 * 1.35], [494, 1300]]; const L = pts.length - 1, upto = vk * L;
+  g.moveTo(...pts[0]); for (let k = 1; k <= Math.ceil(upto); k++) { const f = Math.min(1, upto - (k - 1)); g.lineTo(pts[k - 1][0] + (pts[k][0] - pts[k - 1][0]) * f, pts[k - 1][1] + (pts[k][1] - pts[k - 1][1]) * f); } g.stroke(); g.restore();
+  const nail = cue(i, "nail"); const fly = clamp((lt - pull) / .6); if (lt > nail - .2) { g.save(); g.translate(494 + fly * 300, 1300 - fly * 260 + fly * fly * 200); g.rotate(fly * 8); g.fillStyle = GOLD; g.fillRect(-40, -7, 80, 14); g.fillRect(-48, -16, 12, 32); g.restore();
+    if (lt < pull) { g.strokeStyle = IVORY; g.lineWidth = 4; g.beginPath(); g.arc(494, 1300, 46 + Math.sin(lt * 6) * 6, 0, 7); g.stroke(); } }
+  if (drained > 0) bigTitle(g, ["STOPPED."], 400, 140, GOLD, drained);
+},
+shipwreck(g, lt, d, i) {
+  const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "#0b3a52"); gr.addColorStop(1, "#020c14"); g.fillStyle = gr; g.fillRect(0, 0, W, H); year(g, BOARD.scenes[i].year, lt);
+  for (let r = 0; r < 6; r++) { g.fillStyle = `rgba(160,220,255,${.05 + r * .01})`; g.beginPath(); g.moveTo(200 + r * 120 + Math.sin(lt + r) * 30, 0); g.lineTo(260 + r * 120, 0); g.lineTo(120 + r * 160, 1400); g.lineTo(60 + r * 160, 1400); g.fill(); }
+  g.fillStyle = "#1a1308"; g.beginPath(); g.moveTo(0, 1320); g.quadraticCurveTo(540, 1240, 1080, 1330); g.lineTo(1080, 1500); g.lineTo(0, 1500); g.fill();
+  g.save(); g.translate(330, 1250); g.rotate(-.18); g.strokeStyle = "rgba(217,178,106,.6)"; g.lineWidth = 5; g.beginPath(); g.moveTo(-200, 0); g.quadraticCurveTo(0, 90, 220, -10); g.stroke(); for (let k = -160; k <= 180; k += 50) { g.beginPath(); g.moveTo(k, 30); g.lineTo(k + 10, -60); g.stroke(); } g.restore();
+  const rise = out((lt - 1.2) / 2.5); const lx = 700, ly = 1250 - rise * 650;
+  g.save(); g.translate(lx, ly); g.rotate(.2); g.fillStyle = "#4e6b4a"; g.beginPath(); g.moveTo(-90, -60); g.lineTo(80, -80); g.lineTo(110, 40); g.lineTo(-70, 70); g.closePath(); g.fill(); g.strokeStyle = GOLD; g.lineWidth = 3; g.stroke();
+  if (lt > 2.4) gear(g, 0, 0, 40, 12, lt * .3, { fill: "rgba(0,0,0,0)", w: 2 }); g.restore();
+  for (let k = 0; k < 24; k++) { const by = 1300 - ((lt * 90 + k * 63) % 1200); g.strokeStyle = "rgba(220,240,255,.55)"; g.lineWidth = 2; g.beginPath(); g.arc(lx - 60 + hash(k) * 120 + Math.sin(lt * 3 + k) * 8, by, 4 + hash(k + 3) * 8, 0, 7); g.stroke(); }
+  const yr = cue(i, "1901"); slam(g, inkedCache("1901", "Anton", 200, GOLD), W / 2, 470, -.05, lt, yr, 31);
+},
+gears(g, lt, d, i) {
+  sky(g, lt, "#16120a"); year(g, BOARD.scenes[i].year, lt);
+  const sp = lt * .6, r1 = 230, n1 = 32, r2 = 115, n2 = 16;
+  gear(g, 420, 760, r1, n1, sp); gear(g, 420 + r1 + r2 - 14, 760, r2, n2, -sp * n1 / n2 + Math.PI / n2);
+  gear(g, 420 + r1 + r2 - 14, 760 + r2 + 70 - 10, 70, 10, sp * n1 / 10 * .5, { spokes: 3 });
+  const n30 = cue(i, "30"); if (lt > n30 - .1) { const c = Math.min(30, Math.floor((lt - n30 + .1) / .6 * 30)); g.save(); g.font = "160px Anton"; g.fillStyle = IVORY; g.textAlign = "left"; g.fillText(c + (c >= 30 ? "+" : ""), 110, 470); g.font = "700 34px Osw"; g.fillStyle = GOLD; g.fillText("BRONZE GEARS", 118, 520); g.restore(); }
+  const sun = cue(i, "sun"); if (lt > sun - .2) { const k = out((lt - sun + .2) / .5); g.save(); g.globalAlpha = k; const cx = 540, cy = 1170; g.strokeStyle = GOLD; g.lineWidth = 4; g.beginPath(); g.arc(cx, cy, 170, 0, 7); g.stroke();
+    for (let m = 0; m < 12; m++) { const a = m / 12 * 6.28; g.beginPath(); g.moveTo(cx + Math.cos(a) * 150, cy + Math.sin(a) * 150); g.lineTo(cx + Math.cos(a) * 170, cy + Math.sin(a) * 170); g.stroke(); }
+    const ecl = cue(i, "eclipses"), m = clamp((lt - ecl + .4) / 1.6); g.fillStyle = "#ffcf6a"; g.beginPath(); g.arc(cx, cy, 70, 0, 7); g.fill();
+    g.fillStyle = "#0b0b10"; g.beginPath(); g.arc(cx - 200 + m * 200, cy, 68, 0, 7); g.fill(); if (m > .97) { g.strokeStyle = "#ffe7a8"; g.lineWidth = 6; g.shadowColor = "#ffcf6a"; g.shadowBlur = 40; g.beginPath(); g.arc(cx, cy, 72, 0, 7); g.stroke(); } g.restore(); }
+},
+hero(g, lt, d, i) {
+  g.drawImage(TEX.kraft, 0, 0); year(g, BOARD.scenes[i].year, lt, INK);
+  g.save(); g.strokeStyle = "rgba(20,18,16,.5)"; g.setLineDash([14, 14]); g.lineWidth = 5; g.beginPath(); g.moveTo(150, 1260); g.lineTo(560, 1260); g.quadraticCurveTo(760, 1260, 800, 1060); g.lineTo(840, 860); g.stroke(); g.restore();
+  const p = clamp(lt / (d - .3)); const path = (q) => q < .5 ? [150 + q * 2 * 410, 1260, 0] : [560 + Math.sin((q - .5) * 2 * Math.PI / 2) * 240, 1260 - (1 - Math.cos((q - .5) * 2 * Math.PI / 2)) * 400, -(q - .5) * 2 * Math.PI / 2.6];
+  const [cx, cy, ca] = path(p * .98);
+  g.save(); g.translate(cx, cy); g.rotate(ca); g.fillStyle = "#6b4a22"; g.strokeStyle = INK; g.lineWidth = 5; g.beginPath(); g.roundRect(-110, -70, 220, 90, 10); g.fill(); g.stroke();
+  for (const wx of [-70, 70]) { g.save(); g.translate(wx, 30); g.rotate(lt * 3); g.fillStyle = "#3a2a14"; g.beginPath(); g.arc(0, 0, 36, 0, 7); g.fill(); g.stroke(); g.beginPath(); g.moveTo(-36, 0); g.lineTo(36, 0); g.moveTo(0, -36); g.lineTo(0, 36); g.stroke(); g.restore(); }
+  g.fillStyle = INK; g.fillRect(-8, -160, 16, 90); g.fillStyle = "#2b2b2b"; const wy = -150 + clamp(lt / (d)) * 70; g.fillRect(-26, wy - 30, 52, 40); g.restore();
+  // close-up of the axle: rope wound around, pegs deciding the turn
+  const cu = out((lt - cue(i, "rope") + .2) / .5); g.save(); g.globalAlpha = cu; g.translate(540, 650); g.fillStyle = "#f4ead2"; g.strokeStyle = INK; g.lineWidth = 6; g.beginPath(); g.roundRect(-380, -230, 760, 430, 20); g.fill(); g.stroke();
+  g.fillStyle = "#7a5a2e"; g.fillRect(-300, -40, 600, 80); g.strokeRect(-300, -40, 600, 80);
+  const turn = lt * 160; g.strokeStyle = "#c0382b"; g.lineWidth = 7; for (let x = -300; x < 300; x += 26) { const ph = ((x + turn) % 52 + 52) % 52; g.beginPath(); g.moveTo(x + ph * .2, -40); g.lineTo(x + 18 + ph * .2, 40); g.stroke(); }
+  const pg = cue(i, "pegs"); [-180, -20, 160].forEach((px, n) => { const k = back((lt - pg - n * .2) / .3); if (k <= 0) return; g.save(); g.translate(px, -40); g.scale(k, k); g.fillStyle = GOLD; g.strokeStyle = INK; g.lineWidth = 4; g.fillRect(-12, -70, 24, 70); g.strokeRect(-12, -70, 24, 70); g.restore(); });
+  g.font = "700 40px Osw"; g.fillStyle = INK; g.textAlign = "center"; g.fillText("ROPE + PEGS = A PROGRAM", 0, 150); g.restore();
+},
+close(g, lt, d, i) {
+  sky(g, lt); g.save(); g.strokeStyle = GOLD; g.lineWidth = 6; const y = 820; g.beginPath(); g.moveTo(80, y); g.lineTo(80 + out(lt / 1) * 920, y); g.stroke();
+  const marks = BOARD.timeline; marks.forEach((m, k) => { const x = 140 + k * (800 / (marks.length - 1)), a = out((lt - .3 - k * .25) / .4); if (a <= 0) return; g.globalAlpha = a;
+    const next = k === marks.length - 1; g.fillStyle = next ? "#0d1424" : GOLD; g.lineWidth = 5; g.beginPath(); g.arc(x, y, next ? 26 + Math.sin(lt * 5) * 4 : 20, 0, 7); g.fill(); g.stroke();
+    g.textAlign = "center"; g.font = "700 34px Osw"; g.fillStyle = IVORY; g.fillText(m.y, x, y - 60 - (k % 2) * 70); g.font = "500 30px Osw"; g.fillStyle = next ? GOLD : "rgba(239,232,218,.75)"; wrapText(g, m.t, x, y + 80 + (k % 2) * 90, 220, 34); });
+  g.restore(); const nx = cue(i, "Next"); bigTitle(g, ["NEXT"], 480, 120, GOLD, out((lt - nx) / .4));
+} };
+
 const _ic = new Map(); function inkedCache(text, font, size, col = INK) { const k = text + font + size + col; if (!_ic.has(k)) _ic.set(k, inked("", font, size, col, { lines: text.split("\n"), wear: .5 })); return _ic.get(k); }
 const _sc = new Map(); function stampCache(text, col, size) { const k = text + col + size; if (!_sc.has(k)) _sc.set(k, stampC(text.split("\n"), col, size)); return _sc.get(k); }
 
@@ -480,7 +588,7 @@ window.setup = async (slug, timing, musicCredit) => {
 };
 /** Where the sound effects go: a tear at each scene change, a stamp at each cue. */
 function sfxPlan() {
-  const ev = []; TIMING.scenes.forEach((s, i) => { if (i) ev.push({ t: SC[i].t0, f: "fs-paper-tear--759323.mp3", v: .35, d: .7 }); const c = BOARD.scenes[i].cue; if (c) ev.push({ t: SC[i].t0 + cue(i, c), f: "fs-rubber-stamp--448474.mp3", v: .55, d: .5 }); });
+  const ev = []; TIMING.scenes.forEach((s, i) => { if (i) ev.push(BOARD.style === "chronicle" ? { t: SC[i].t0, f: "fs-whoosh--486234.mp3", v: .2, d: 1 } : { t: SC[i].t0, f: "fs-paper-tear--759323.mp3", v: .35, d: .7 }); const c = BOARD.scenes[i].cue; if (c) ev.push({ t: SC[i].t0 + cue(i, c), f: "fs-rubber-stamp--448474.mp3", v: .55, d: .5 }); });
   ev.push({ t: TIMING.duration, f: "fs-whoosh--486234.mp3", v: .4, d: 1.2 }); return ev;
 }
 window.frame = (t) => {
@@ -489,7 +597,8 @@ window.frame = (t) => {
   let i = 0; while (i < SC.length - 1 && t >= SC[i + 1].t0) i++;
   const t0 = SC[i].t0, t1 = i < SC.length - 1 ? SC[i + 1].t0 : TIMING.duration, lt = t - t0;
   LOOKS[BOARD.style][BOARD.scenes[i].type](g, lt, t1 - t0, i);
-  if (i > 0 && lt < .18) { g.save(); g.fillStyle = KRAFT; g.beginPath(); const k = 1 - lt / .18; tornLike(g, -20, H * (1 - k), W + 40, H * k + 40); g.fill(); g.restore(); } // paper wipe
+  if (i > 0 && lt < .3 && BOARD.style === "chronicle") { g.fillStyle = `rgba(5,7,13,${1 - lt / .3})`; g.fillRect(0, 0, W, H); } // fade from night
+  else if (i > 0 && lt < .18) { g.save(); g.fillStyle = KRAFT; g.beginPath(); const k = 1 - lt / .18; tornLike(g, -20, H * (1 - k), W + 40, H * k + 40); g.fill(); g.restore(); } // paper wipe
   ticker(g, t); mast(g); captions(g, t, i);
 };
 </script></body></html>
