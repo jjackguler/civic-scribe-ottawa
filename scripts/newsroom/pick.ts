@@ -95,7 +95,8 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
     ...clusters.filter(c => c.sources === 1 && c.lead.lab).map(c => ({ id: c.id, lead: c.lead, group: c.stories })),
     ...govFresh.filter(s => !joined.has(s.id)).map(s => ({ id: s.id, lead: s, group: [s] })),
   ].sort((a, b) => b.lead.publishedAt.localeCompare(a.lead.publishedAt));
-  for (const o of official) consider(o.id, o.lead, o.group, 200);
+  // One source has to carry a whole article (120+ words): thin blog excerpts only burn a model call and get turned down.
+  for (const o of official) consider(o.id, o.lead, o.group, 600);
   // 3. Everything else is one outlet reporting on someone else: not ours to write.
   for (const c of clusters) if (c.sources === 1 && !c.lead.lab) skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, not the party itself" });
   return { events, skipped };
