@@ -1,5 +1,16 @@
 [
   {
+    "id": "160x7md",
+    "at": "2026-10-17T04:47:01.952Z",
+    "stage": "copy",
+    "headline": "Anthropic is letting METR researchers look under the hood with employee-level access",
+    "reasons": [
+      "Not in the sources (names or numbers): Allowing, Crucially.",
+      "Too close to The Decoder's wording (\"access to audit its ai models and safety practices…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: missing fields"
+    ]
+  },
+  {
     "id": "18qnngh",
     "at": "2026-10-16T21:57:03.657Z",
     "stage": "copy",
