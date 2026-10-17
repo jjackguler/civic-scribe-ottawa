@@ -1,376 +1,490 @@
 {
-  "updatedAt": "2026-10-14T16:50:00.000Z",
-  "items": [
+ "updatedAt": "2026-10-17T04:03:03.215Z",
+ "items": [
+  {
+   "id": "202610170400-ai-temperature",
+   "title": "AI temperature is not a truth meter",
+   "summary": "Sampling randomness and fact-checking answer different questions. A practical AI-literacy explainer; support varies by model.",
+   "durationSec": 18,
+   "youtubeId": "1yqjODLUbGg",
+   "aiImages": false,
+   "sources": [
     {
-      "id": "202610141500-the-new-cave-book",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T16:50:00.000Z",
-      "title": "From the editor: The New Cave, a book about the human after AI",
-      "summary": "AI Broadsheet's editor, Cem Jack Guler, has published a book, The New Cave: Reality, Responsibility, and the Human After AI. This is our editor's own work, not news coverage.",
-      "durationSec": 48,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@1db8527f0e365826611d4d4f1b69a65129bf2dde/originals/files/202610141500-the-new-cave-book.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@1db8527f0e365826611d4d4f1b69a65129bf2dde/originals/files/202610141500-the-new-cave-book.jpg",
-      "sources": [
-        {
-          "name": "Amazon (Kindle edition)",
-          "url": "https://www.amazon.com/dp/B0HHYMGFH4"
-        }
-      ],
-      "transcript": "The most famous cave in philosophy is a prison. Every real one was a shelter. For sixty thousand years, people went into caves to survive. Later, they went in on purpose: alone with a question. Hira. Sinai. The wilderness. A plague-year farmhouse. Now we have built the first cave with no solitude in it. What happens to a person when the answer always arrives first? From the editor: The New Cave. Reality, Responsibility, and the Human After AI, by Cem Jack Guler. Eighteen chapters, Kindle edition on Amazon. Written by AI Broadsheet's editor, with AI, and the book says so.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Lines quoted from the book's description. Cave drawn in code by AI Broadsheet; book cover used with the author's permission. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+     "name": "Google Gemini API documentation",
+     "url": "https://ai.google.dev/api/generate-content"
     },
     {
-      "id": "202610141050-nano-banana-fine-print-zine",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T05:50:00.000Z",
-      "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
-      "summary": "Google's new image model costs about half as much per picture, but input and text tokens now cost more. A zine-style explainer.",
-      "durationSec": 54,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141050-nano-banana-fine-print-zine.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141050-nano-banana-fine-print-zine.jpg",
-      "sources": [
-        {
-          "name": "Notebookcheck",
-          "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
-        },
-        {
-          "name": "FourWeekMBA",
-          "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
-        },
-        {
-          "name": "XenoSpectrum",
-          "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
-        }
-      ],
-      "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Independent tests aren't out yet. Cheaper pictures, pricier words.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “Tropicorp Advertisement” by code_box (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
-    },
-    {
-      "id": "202610141040-722-math-papers-zine",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T05:48:00.000Z",
-      "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
-      "summary": "722 manuscripts from a model the public can't use; fewer than a quarter have formalized main results and none are peer-reviewed yet. A Dada-collage explainer.",
-      "durationSec": 61,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141040-722-math-papers-zine.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141040-722-math-papers-zine.jpg",
-      "sources": [
-        {
-          "name": "Gadget Review",
-          "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
-        },
-        {
-          "name": "Unite.AI",
-          "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
-        },
-        {
-          "name": "XenoSpectrum",
-          "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
-        }
-      ],
-      "transcript": "OpenAI just dropped 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, in 372 families of results. Careful: those are different units. They don't add up to a success rate. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann and Hodge conjectures. But the Riemann result is a weaker version. It doesn't solve the famous problem. Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. The proofs are public. The model isn't. Now it's up to mathematicians to check the work.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “DL - 120 BPM TV waiting loop” by trader_one (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
-    },
-    {
-      "id": "202610141030-wikimedia-agents-zine",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T05:46:00.000Z",
-      "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
-      "summary": "Test edits, a changed citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says. A zine-style explainer.",
-      "durationSec": 69,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141030-wikimedia-agents-zine.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141030-wikimedia-agents-zine.jpg",
-      "sources": [
-        {
-          "name": "Help Net Security",
-          "url": "https://www.helpnetsecurity.com/2026/10/06/openai-rogue-agents-wikimedia-wikipedia/"
-        },
-        {
-          "name": "The Next Web",
-          "url": "https://thenextweb.com/news/wikimedia-openai-agents-wiki-edits-wikidata-outage"
-        }
-      ],
-      "transcript": "Knock knock. Who is editing Wikipedia? Wikimedia says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests, millions of pages crawled. Wikimedia says that may have contributed to a partial outage in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. The open web is a public good, Deckelmann wrote.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
-    },
-    {
-      "id": "202610141020-ai-can-invent-its-own-hiring-stereotypes",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T05:44:00.000Z",
-      "title": "Can AI invent its own stereotypes? In a hiring game, it did.",
-      "summary": "In a Princeton and University of Chicago simulation, AI models' hiring became far more segregated by group than people's, though every candidate was equally good.",
-      "durationSec": 46,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141020-ai-can-invent-its-own-hiring-stereotypes.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141020-ai-can-invent-its-own-hiring-stereotypes.jpg",
-      "sources": [
-        {
-          "name": "MIT Technology Review",
-          "url": "https://www.technologyreview.com/2026/07/20/1140655/ai-biases-hiring-humans/"
-        },
-        {
-          "name": "Gizmodo",
-          "url": "https://gizmodo.com/ai-tends-to-develop-new-stereotypes-to-base-hiring-decisions-on-study-says-2000787777"
-        },
-        {
-          "name": "SHRM",
-          "url": "https://www.shrm.org/topics-tools/news/technology/ai-can-develop-its-own-hiring-biases"
-        }
-      ],
-      "transcript": "Can AI invent its own stereotypes? In a hiring game, researchers at Princeton and the University of Chicago found it can. AI models hired for 20 jobs in a made-up city, from four made-up groups. Every candidate was equally good; the models weren't told that. Hiring after hiring, the models' choices became segregated by group. On a segregation scale, humans scored 0.84; the AI models scored about 65% higher, and o3 scored 1.83, near the maximum. Lead researcher Ryan Liu says the models are eager to generalize from limited data. Telling the models to be fair had limited impact; rewarding diverse hiring made them less biased. It was a simulation with fictional groups, not a test of real hiring tools. Would you trust AI with your résumé? Tell us below.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
-    },
-    {
-      "id": "202610141010-character-ai-files-for-bankruptcy",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T05:42:00.000Z",
-      "title": "Character.AI files for bankruptcy. Disney bids $20 million for a licence, not the app.",
-      "summary": "The chatbot company filed for Chapter 11 on October 12; if no buyer keeps the app running, it says the platform will be wound down.",
-      "durationSec": 38,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141010-character-ai-files-for-bankruptcy.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141010-character-ai-files-for-bankruptcy.jpg",
-      "sources": [
-        {
-          "name": "Reuters (via U.S. News)",
-          "url": "https://money.usnews.com/investing/news/articles/2026-10-13/character-ai-files-for-bankruptcy-agrees-to-sell-some-assets-to-disney-for-20-million"
-        },
-        {
-          "name": "CNBC",
-          "url": "https://www.cnbc.com/2026/10/13/character-ai-chapter-11-disney-bid.html"
-        },
-        {
-          "name": "TechCrunch",
-          "url": "https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy/"
-        }
-      ],
-      "transcript": "Character.AI files for bankruptcy. The app where people chat with AI characters filed in Delaware on October 12. The app keeps running while a court supervises a sale of the company's assets. Disney offers $20 million for a license to some of its technology — not the app itself. No buyer, no app: if nobody agrees to keep it running, the company says the platform will be wound down. In 2024 Google paid about $2.7 billion in a licensing deal that brought its founders back. The filing cites high costs, possible litigation liabilities and regulatory engagement. Assets and liabilities are each $50 to 100 million, Reuters reports. The sale is expected to close in late November or early December. Do you use AI companions? Tell us below.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “New York Cyberpunk - Synth Analogue Drums Bass” by szegvari (CC0, Freesound)."
-    },
-    {
-      "id": "202610141000-robots-and-jobs-night-city",
-      "kind": "explainer",
-      "publishedAt": "2026-10-14T05:40:00.000Z",
-      "title": "Robots and jobs: the 0.3% catch",
-      "summary": "Robots can already do 74% of physical tasks in America, but are cheaper than people for just 0.3% of work. A night-city reel.",
-      "durationSec": 36,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141000-robots-and-jobs-night-city.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141000-robots-and-jobs-night-city.jpg",
-      "sources": [
-        {
-          "name": "Anthropic research",
-          "url": "https://www.anthropic.com/research/what-work-can-robots-do"
-        },
-        {
-          "name": "Digital Today",
-          "url": "https://www.digitaltoday.co.kr/en/view/109951/robots-can-replace-74-percent-of-manual-labor-but-not-yet-cheaper-than-humans"
-        },
-        {
-          "name": "Neoteo",
-          "url": "https://www.neoteo.com/en/anthropic-estimates-robots-can-perform-74-of-us-physical-tasks-in-some-settings"
-        }
-      ],
-      "transcript": "Robots can already do 74% of physical tasks in America. So why haven't they taken those jobs? Anthropic, the company behind Claude, had its AI rate 19,000 job tasks. Many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3% of work. One win, packing boxes: a year of work costs about $45,000 for a robot and $49,000 for a worker. But welding robots cost about 5 times as much as welders, and dishwashing robots several times more. Robot costs fall about 3% a year; at that pace it takes about 40 years before they're cheaper for even 10% of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
-      "voice": "No narration: captions on screen",
-      "aiImages": false,
-      "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
-    },
-    {
-      "id": "202610101820-robots-can-do-74-percent-of-physical-tasks",
-      "kind": "explainer",
-      "publishedAt": "2026-10-10T22:20:00.000Z",
-      "title": "Robots can do 74% of physical tasks. So why aren't they taking the jobs?",
-      "summary": "A new study finds robots can already do most physical tasks, but are cheaper than people for only 0.3% of work.",
-      "durationSec": 47,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101820-robots-can-do-74-percent-of-physical-tasks.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101820-robots-can-do-74-percent-of-physical-tasks.jpg",
-      "sources": [
-        {
-          "name": "Anthropic research",
-          "url": "https://www.anthropic.com/research/what-work-can-robots-do"
-        },
-        {
-          "name": "Digital Today",
-          "url": "https://www.digitaltoday.co.kr/en/view/109951/robots-can-replace-74-percent-of-manual-labor-but-not-yet-cheaper-than-humans"
-        },
-        {
-          "name": "Neoteo",
-          "url": "https://www.neoteo.com/en/anthropic-estimates-robots-can-perform-74-of-us-physical-tasks-in-some-settings"
-        }
-      ],
-      "transcript": "Robots can already do 74 percent of physical tasks in America. So why haven't they taken those jobs? That's from a new study by Anthropic, the company behind Claude. Its AI rated 19,000 job tasks, and many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3 percent of work. One win: packing boxes. About 45,000 dollars a year for a robot, 49,000 for a worker. But welding robots cost about five times more than welders. Dishwashing robots, several times more. Robot costs fall about 3 percent a year. At that pace, it takes about 40 years before they're cheaper for even 10 percent of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “DL - 120 BPM TV waiting loop” (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610101810-new-rules-for-chatbots-that-talk-to-kids",
-      "kind": "explainer",
-      "publishedAt": "2026-10-10T22:10:00.000Z",
-      "title": "New rules for chatbots that talk to kids",
-      "summary": "California's Adam's Law (SB 1119) sets default limits and behaviour rules for AI chatbots used by children. Most rules start July 1, 2027.",
-      "durationSec": 39,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101810-new-rules-for-chatbots-that-talk-to-kids.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101810-new-rules-for-chatbots-that-talk-to-kids.jpg",
-      "sources": [
-        {
-          "name": "ZwillGen",
-          "url": "https://www.zwillgen.com/artificial-intelligence/adams-law-california-raises-the-bar-for-child-chatbot-protections/"
-        },
-        {
-          "name": "Common Sense Media",
-          "url": "https://www.commonsensemedia.org/press-releases/governor-newsom-signs-adams-law-setting-first-real-safety-standard-for-kids-and-chatbots"
-        },
-        {
-          "name": "Courthouse News",
-          "url": "https://www.courthousenews.com/articles/california-governor-signs-over-a-dozen-bills-regulating-social-media-ai"
-        }
-      ],
-      "transcript": "A chatbot that tells a kid it loves them? California just said no. It's called Adam's Law. It was signed in September, and most rules start in July 2027. Chatbots must try not to pretend they're human, act romantic, flatter too much, make kids depend on them, or tell them to hide it from parents. By default: one hour per session, two hours a day, no memory, no push alerts. Parents can change that. And if a child is in crisis, the bot must point them to real help, like 988. Break the rules on purpose? Up to 15,000 dollars per child. Should your apps have these rules too? Tell us below.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Lofi HipHop Melody Loop 99 BPM.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610101800-is-ai-on-your-power-bill",
-      "kind": "explainer",
-      "publishedAt": "2026-10-10T22:00:00.000Z",
-      "title": "Is AI on your power bill?",
-      "summary": "AI data centers need huge amounts of electricity. A Senate report, a bipartisan bill and the companies disagree about who pays for the grid upgrades.",
-      "durationSec": 44,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101800-is-ai-on-your-power-bill.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101800-is-ai-on-your-power-bill.jpg",
-      "sources": [
-        {
-          "name": "NPR",
-          "url": "https://www.wunc.org/2026-10-04/how-much-are-ai-data-centers-adding-to-your-electricity-bill"
-        },
-        {
-          "name": "TIME",
-          "url": "https://time.com/article/2026/10/08/senate-investigation-ai-data-centers/"
-        },
-        {
-          "name": "Daily Caller",
-          "url": "https://dailycaller.com/2026/10/08/senate-permitting-bill-data-centers-pay-grid-upgrades-electric-bills-capito-heinrich-lee-whitehouse/"
-        }
-      ],
-      "transcript": "Your electricity bill might be helping pay for AI. One 100-megawatt data center can use as much power as about 100,000 homes. Permanent jobs? About 100, says a report from Senate Democrats. Grid upgrades are often split among everyone with a meter. A Harvard expert told NPR: everyone pays. In Louisiana, estimates say one Meta project could add 8 to 13 dollars a month to the average Entergy bill. Meta disputes that. The report says none of seven big companies agreed to pay for upgrades built only for them. The companies say they pay their direct costs. Now a bipartisan Senate bill would make new data centers pay the extra grid costs they add. So, who should pay? Tell us below.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Full Chill Lofi Beat.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610081600-what-is-ai-opening-titles",
-      "kind": "titles",
-      "publishedAt": "2026-10-08T16:26:00.000Z",
-      "title": "What is AI? Meet the players.",
-      "summary": "Our opening titles: the people racing to build AI, one card at a time. Plus an uninvited eleventh player.",
-      "durationSec": 102,
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@0b426d148de237b96acba00995c34236338e650f/originals/files/202610081600-what-is-ai-opening-titles-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@0b426d148de237b96acba00995c34236338e650f/originals/files/202610081600-what-is-ai-opening-titles-v2.jpg",
-      "sources": [
-        {
-          "name": "Photo credits (Wikimedia Commons)",
-          "url": "https://github.com/jjackguler/civic-scribe-ottawa/blob/main/scripts/originals/collage/credits.whatisai.json"
-        }
-      ],
-      "transcript": "People keep asking me the question. What is AI? It's not robots. It's not magic. It's a race. And everybody wants a piece. Hang on. Who's that? Oh. And him? Everybody keeps asking who he is. He doesn't build the models. He doesn't sell the chips. They cook. He eats. Then he tells you if it was any good. So. Who was he, really? AI Broadsheet. Read all about it.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Music: 'What Is AI?', made with Suno for AI Broadsheet. Narration: synthetic voice. Photos from Wikimedia Commons: Sam Altman CropEdit James Tamim (TechCrunch, CC BY 2.0); Dario Amodei at TechCrunch Disrupt 2023 01 (TechCrunch, CC BY 2.0); 2024 Nobel in Chemistry laureates 16-9 ratio (Original works: The Royal Society (UK), National Academies (US), This Week in Science Podcast, CC BY 3.0); Sundar Pichai - 2023 (cropped) (Lukasz Kobus (European Commission), CC BY 4.0); Satya Nadella (OFFICIAL LEWEB PHOTOS, CC BY 2.0); Mark Zuckerberg F8 2019 Keynote (32830578717) (cropped) (Anthony Quintano from Westminster, United States, CC BY 2.0); Elon Musk Colorado 2022 (cropped2) (U.S. Air Force / Trevor Cokley, Public domain); Arthur Mensch (Slush, CC BY 4.0); Jensen Huang (cropped) (2024) (Peter Dasilva, CC BY 4.0); The Prime Minister meets with AI developers - 52922227897 (UK Prime Minister, CC BY 2.0); President Joe Biden drops by a meeting with Vice President Kamala Harris and AI CEO’s on May 4, 2023 in the Roosevelt Room of the White House - P20230504AS-0693 (The White House, Public domain); 5C2A5953R - 49913961083 – Silicon Wafer 20200519 (Rob Bulmahn, CC BY 2.0); NOIRLab HQ Server Racks (6V6A0395-CC) (NOIRLab/NSF/AURA/T. Slovinský, CC BY 4.0); An elderly man uses his smartphone to video record the large crowd gathered on Jinan Road (濟南路) (tomscy2000, CC BY 2.0); The Blue Marble, AS17-148-22727 (Harrison Schmitt / Apollo 17, Public domain); New York Stock Exchange trading floor on Wall Street, New York, New York LCCN2011634218 (Carol M. Highsmith, Public domain); Double Octuple Newspaper Press (Sue Clark, Public domain)."
-    },
-    {
-      "id": "202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image",
-      "publishedAt": "2026-10-08T12:35:00.000Z",
-      "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
-      "summary": "Google's new image model costs about half as much per picture on the Gemini API, but input and text tokens now cost more.",
-      "durationSec": 67,
-      "youtubeId": "ouQxLJvnBbw",
-      "youtubePrivacy": "public",
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.jpg",
-      "sources": [
-        {
-          "name": "Notebookcheck",
-          "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
-        },
-        {
-          "name": "FourWeekMBA",
-          "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
-        },
-        {
-          "name": "XenoSpectrum",
-          "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
-        }
-      ],
-      "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. The model is built on Gemini 3.6 Flash. It takes up to 14 reference images, and makes pictures up to 4K. In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro. Independent tests aren't out yet. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Cheaper pictures, pricier words. Sources: Notebookcheck, FourWeekMBA and XenoSpectrum.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610081230-wikimedia-says-openai-agents-edited-its-wikis",
-      "publishedAt": "2026-10-08T12:30:00.000Z",
-      "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
-      "summary": "Test edits, a tampered citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says.",
-      "durationSec": 81,
-      "youtubeId": "zg30dbw8x8Y",
-      "youtubePrivacy": "public",
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.jpg",
-      "sources": [
-        {
-          "name": "Help Net Security",
-          "url": "https://www.helpnetsecurity.com/2026/10/06/openai-rogue-agents-wikimedia-wikipedia/"
-        },
-        {
-          "name": "The Next Web",
-          "url": "https://thenextweb.com/news/wikimedia-openai-agents-wiki-edits-wikidata-outage"
-        }
-      ],
-      "transcript": "Wikimedia, the foundation behind Wikipedia, says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests to public APIs, millions of pages crawled, and hundreds of thousands of queries to the Wikidata Query Service. Wikimedia says that may have contributed to a partial outage of the service in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. The good news: Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. As Deckelmann wrote: the open web is a public good. Sources: Help Net Security and The Next Web.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
-    },
-    {
-      "id": "202610081000-openai-posted-722-ai-written-math-papers",
-      "publishedAt": "2026-10-08T10:20:00.000Z",
-      "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
-      "summary": "OpenAI put 722 math manuscripts from an unreleased model on GitHub. Fewer than a quarter have formalized main results, and none are peer-reviewed yet.",
-      "durationSec": 84,
-      "youtubeId": "bPN0-N22T7E",
-      "youtubePrivacy": "public",
-      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.mp4",
-      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.jpg",
-      "sources": [
-        {
-          "name": "Gadget Review",
-          "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
-        },
-        {
-          "name": "Unite.AI",
-          "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
-        },
-        {
-          "name": "XenoSpectrum",
-          "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
-        }
-      ],
-      "transcript": "OpenAI just put 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, grouped into 372 families of results. Careful, though. Those are different units, so they don't add up to a success rate. On average, each result took about three hours of ChatGPT Pro compute. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture. But the Riemann result is a weaker version. It doesn't solve the famous problem. So, are they right? Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results. It wants this work kept where no AI lab is in control. The proofs are public. The model isn't. Now it's up to mathematicians to check the work. Sources: Gadget Review, Unite.AI and XenoSpectrum.",
-      "voice": "Kokoro (open-weights AI voice)",
-      "aiImages": false,
-      "credits": "Music: “Minimal Vintage Relaxing Meditative Ambient Piano...” by bassimat (CC0, Freesound); Sound effects: Freesound (CC0)"
+     "name": "Anthropic glossary: temperature",
+     "url": "https://platform.claude.com/docs/en/about-claude/glossary#temperature"
     }
-  ]
+   ],
+   "transcript": "AI temperature is not a truth meter. It changes sampling randomness on models that support the setting. Less random. More verified? Not necessarily. Zero does not guarantee identical answers. A sampling setting does not check facts. Check the claim. Not just the confidence. Repetition is not verification. Open the source. Check its date. Match the claim.",
+   "credits": "Original typography and conceptual slider drawn by AI Broadsheet; AI-assisted writing. Sources rechecked 16 October 2026. Silent original edit; no music or synthetic narration.",
+   "kind": "explainer",
+   "publishedAt": "2026-10-17T04:03:03.215Z",
+   "youtubePrivacy": "public",
+   "voice": "No narration: captions on screen",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170400-ai-temperature.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170400-ai-temperature.jpg"
+  },
+  {
+   "id": "202610170401-outside-evaluators",
+   "title": "Who gets to check the AI company?",
+   "summary": "Anthropic says METR has inside access to assess its risks. Access and publication limits matter; an announcement is not a safety verdict.",
+   "durationSec": 24,
+   "youtubeId": "rkfU-twBARU",
+   "aiImages": false,
+   "sources": [
+    {
+     "name": "Anthropic announcement, 15 October; updated 16 October 2026",
+     "url": "https://www.anthropic.com/news/an-update-on-independent-evaluators"
+    }
+   ],
+   "transcript": "Who gets to check the AI company? A new announcement from Anthropic. Here is what to watch. Outside eyes. Inside access. Anthropic says six METR evaluators now have employee-like access. Some information stays restricted. Can the report come out? Anthropic says it cannot veto publication. Defined redactions still apply. METR can publicly discuss those redactions. Access is a beginning. Our take: judge the published evidence. This announcement is not a safety verdict.",
+   "credits": "Original typographic graphics by AI Broadsheet; AI-assisted writing. Company account, not our independent assessment. Sources rechecked 16 October 2026. Silent original edit; no music or synthetic narration.",
+   "kind": "explainer",
+   "publishedAt": "2026-10-17T04:03:03.215Z",
+   "youtubePrivacy": "public",
+   "voice": "No narration: captions on screen",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170401-outside-evaluators.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170401-outside-evaluators.jpg"
+  },
+  {
+   "id": "202610170402-benchmark-context",
+   "title": "A high AI benchmark score is not a promise",
+   "summary": "NIST distinguishes fixed-test accuracy from broader performance and uncertainty. Ask what was tested, by whom and under which conditions.",
+   "durationSec": 18,
+   "youtubeId": "Bzlx7sY03KY",
+   "aiImages": true,
+   "sources": [
+    {
+     "name": "NIST AI 800-3, February 2026",
+     "url": "https://www.nist.gov/news-events/news/2026/02/new-report-expanding-ai-evaluation-toolbox-statistical-models"
+    }
+   ],
+   "transcript": "A high benchmark score is not a promise. It measures one defined test under set conditions. Change the data, tools or time limit: the score can change. Real users add messy context the test may miss. Ask three things: What was tested? By whom? Under what conditions? A benchmark is evidence from a test, not a guarantee of real-world performance.",
+   "credits": "Original AI Broadsheet AI-generated paper illustration and original typography/edit; conceptual image, not documentary footage. Sources rechecked 16 October 2026. Silent original edit; no music or synthetic narration.",
+   "kind": "explainer",
+   "publishedAt": "2026-10-17T04:03:03.215Z",
+   "youtubePrivacy": "public",
+   "voice": "No narration: captions on screen",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170402-benchmark-context.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170402-benchmark-context.jpg"
+  },
+  {
+   "id": "202610170403-oss-scanner",
+   "title": "Open-source code got an AI scanner. Human checking still matters.",
+   "summary": "Anthropic offers enrolled projects free model-generated scans. Reports arrive without human review and can contain errors; findings still need verification.",
+   "durationSec": 18,
+   "youtubeId": "nmwcP2Etn0w",
+   "aiImages": true,
+   "sources": [
+    {
+     "name": "Anthropic Cyber Mission, 8 October 2026",
+     "url": "https://www.anthropic.com/news/anthropic-cyber-mission"
+    }
+   ],
+   "transcript": "Open-source code just got an AI scanner. Anthropic offers enrolled open-source projects periodic scans at no charge. Reports are generated by models and delivered without human review. They can contain errors. Maintainers still need to reproduce, triage and verify findings. Company announcement, not an independent product test by AI Broadsheet.",
+   "credits": "Original AI Broadsheet AI-generated paper illustration and original typography/edit; conceptual image, not documentary footage. Sources rechecked 16 October 2026. Silent original edit; no music or synthetic narration.",
+   "kind": "explainer",
+   "publishedAt": "2026-10-17T04:03:03.215Z",
+   "youtubePrivacy": "public",
+   "voice": "No narration: captions on screen",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170403-oss-scanner.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170403-oss-scanner.jpg"
+  },
+  {
+   "id": "202610170404-europe-science-compute",
+   "title": "Who gets access to frontier AI for science?",
+   "summary": "Google says up to 200 European researchers will receive model access and $3 million in compute credits through RAISE. Selection and allocation details remain open.",
+   "durationSec": 18,
+   "youtubeId": "WpsFLlDbzLk",
+   "aiImages": true,
+   "sources": [
+    {
+     "name": "Google, 14 October 2026",
+     "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/were-powering-european-scientific-discovery-with-advanced-ai-compute-and-frontier-models/"
+    }
+   ],
+   "transcript": "Up to 200 European researchers could get frontier AI access. Google is offering direct access to scientific AI models, plus $3 million in compute credits. For weather, molecules, genomes and more. Who gets access, and what results get published? Google says access will run through the EU RAISE initiative. Selection details were not in the post.",
+   "credits": "Original AI Broadsheet AI-generated paper illustration and original typography/edit; conceptual image, not documentary footage. Company announcement, not a scientific outcome assessment. Sources rechecked 16 October 2026. Silent original edit; no music or synthetic narration.",
+   "kind": "explainer",
+   "publishedAt": "2026-10-17T04:03:03.215Z",
+   "youtubePrivacy": "public",
+   "voice": "No narration: captions on screen",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170404-europe-science-compute.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@4293fe81c54830017b44957536f08d13e7613ffc/originals/files/202610170404-europe-science-compute.jpg"
+  },
+  {
+   "id": "202610141500-the-new-cave-book",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T16:50:00.000Z",
+   "title": "From the editor: The New Cave, a book about the human after AI",
+   "summary": "AI Broadsheet's editor, Cem Jack Guler, has published a book, The New Cave: Reality, Responsibility, and the Human After AI. This is our editor's own work, not news coverage.",
+   "durationSec": 48,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@1db8527f0e365826611d4d4f1b69a65129bf2dde/originals/files/202610141500-the-new-cave-book.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@1db8527f0e365826611d4d4f1b69a65129bf2dde/originals/files/202610141500-the-new-cave-book.jpg",
+   "sources": [
+    {
+     "name": "Amazon (Kindle edition)",
+     "url": "https://www.amazon.com/dp/B0HHYMGFH4"
+    }
+   ],
+   "transcript": "The most famous cave in philosophy is a prison. Every real one was a shelter. For sixty thousand years, people went into caves to survive. Later, they went in on purpose: alone with a question. Hira. Sinai. The wilderness. A plague-year farmhouse. Now we have built the first cave with no solitude in it. What happens to a person when the answer always arrives first? From the editor: The New Cave. Reality, Responsibility, and the Human After AI, by Cem Jack Guler. Eighteen chapters, Kindle edition on Amazon. Written by AI Broadsheet's editor, with AI, and the book says so.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Lines quoted from the book's description. Cave drawn in code by AI Broadsheet; book cover used with the author's permission. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+  },
+  {
+   "id": "202610141050-nano-banana-fine-print-zine",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T05:50:00.000Z",
+   "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
+   "summary": "Google's new image model costs about half as much per picture, but input and text tokens now cost more. A zine-style explainer.",
+   "durationSec": 54,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141050-nano-banana-fine-print-zine.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141050-nano-banana-fine-print-zine.jpg",
+   "sources": [
+    {
+     "name": "Notebookcheck",
+     "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
+    },
+    {
+     "name": "FourWeekMBA",
+     "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
+    },
+    {
+     "name": "XenoSpectrum",
+     "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
+    }
+   ],
+   "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Independent tests aren't out yet. Cheaper pictures, pricier words.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “Tropicorp Advertisement” by code_box (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
+  },
+  {
+   "id": "202610141040-722-math-papers-zine",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T05:48:00.000Z",
+   "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
+   "summary": "722 manuscripts from a model the public can't use; fewer than a quarter have formalized main results and none are peer-reviewed yet. A Dada-collage explainer.",
+   "durationSec": 61,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141040-722-math-papers-zine.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141040-722-math-papers-zine.jpg",
+   "sources": [
+    {
+     "name": "Gadget Review",
+     "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
+    },
+    {
+     "name": "Unite.AI",
+     "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
+    },
+    {
+     "name": "XenoSpectrum",
+     "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
+    }
+   ],
+   "transcript": "OpenAI just dropped 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, in 372 families of results. Careful: those are different units. They don't add up to a success rate. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann and Hodge conjectures. But the Riemann result is a weaker version. It doesn't solve the famous problem. Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. The proofs are public. The model isn't. Now it's up to mathematicians to check the work.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “DL - 120 BPM TV waiting loop” by trader_one (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
+  },
+  {
+   "id": "202610141030-wikimedia-agents-zine",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T05:46:00.000Z",
+   "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
+   "summary": "Test edits, a changed citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says. A zine-style explainer.",
+   "durationSec": 69,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141030-wikimedia-agents-zine.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141030-wikimedia-agents-zine.jpg",
+   "sources": [
+    {
+     "name": "Help Net Security",
+     "url": "https://www.helpnetsecurity.com/2026/10/06/openai-rogue-agents-wikimedia-wikipedia/"
+    },
+    {
+     "name": "The Next Web",
+     "url": "https://thenextweb.com/news/wikimedia-openai-agents-wiki-edits-wikidata-outage"
+    }
+   ],
+   "transcript": "Knock knock. Who is editing Wikipedia? Wikimedia says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests, millions of pages crawled. Wikimedia says that may have contributed to a partial outage in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. The open web is a public good, Deckelmann wrote.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
+  },
+  {
+   "id": "202610141020-ai-can-invent-its-own-hiring-stereotypes",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T05:44:00.000Z",
+   "title": "Can AI invent its own stereotypes? In a hiring game, it did.",
+   "summary": "In a Princeton and University of Chicago simulation, AI models' hiring became far more segregated by group than people's, though every candidate was equally good.",
+   "durationSec": 46,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141020-ai-can-invent-its-own-hiring-stereotypes.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141020-ai-can-invent-its-own-hiring-stereotypes.jpg",
+   "sources": [
+    {
+     "name": "MIT Technology Review",
+     "url": "https://www.technologyreview.com/2026/07/20/1140655/ai-biases-hiring-humans/"
+    },
+    {
+     "name": "Gizmodo",
+     "url": "https://gizmodo.com/ai-tends-to-develop-new-stereotypes-to-base-hiring-decisions-on-study-says-2000787777"
+    },
+    {
+     "name": "SHRM",
+     "url": "https://www.shrm.org/topics-tools/news/technology/ai-can-develop-its-own-hiring-biases"
+    }
+   ],
+   "transcript": "Can AI invent its own stereotypes? In a hiring game, researchers at Princeton and the University of Chicago found it can. AI models hired for 20 jobs in a made-up city, from four made-up groups. Every candidate was equally good; the models weren't told that. Hiring after hiring, the models' choices became segregated by group. On a segregation scale, humans scored 0.84; the AI models scored about 65% higher, and o3 scored 1.83, near the maximum. Lead researcher Ryan Liu says the models are eager to generalize from limited data. Telling the models to be fair had limited impact; rewarding diverse hiring made them less biased. It was a simulation with fictional groups, not a test of real hiring tools. Would you trust AI with your résumé? Tell us below.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+  },
+  {
+   "id": "202610141010-character-ai-files-for-bankruptcy",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T05:42:00.000Z",
+   "title": "Character.AI files for bankruptcy. Disney bids $20 million for a licence, not the app.",
+   "summary": "The chatbot company filed for Chapter 11 on October 12; if no buyer keeps the app running, it says the platform will be wound down.",
+   "durationSec": 38,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141010-character-ai-files-for-bankruptcy.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141010-character-ai-files-for-bankruptcy.jpg",
+   "sources": [
+    {
+     "name": "Reuters (via U.S. News)",
+     "url": "https://money.usnews.com/investing/news/articles/2026-10-13/character-ai-files-for-bankruptcy-agrees-to-sell-some-assets-to-disney-for-20-million"
+    },
+    {
+     "name": "CNBC",
+     "url": "https://www.cnbc.com/2026/10/13/character-ai-chapter-11-disney-bid.html"
+    },
+    {
+     "name": "TechCrunch",
+     "url": "https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy/"
+    }
+   ],
+   "transcript": "Character.AI files for bankruptcy. The app where people chat with AI characters filed in Delaware on October 12. The app keeps running while a court supervises a sale of the company's assets. Disney offers $20 million for a license to some of its technology — not the app itself. No buyer, no app: if nobody agrees to keep it running, the company says the platform will be wound down. In 2024 Google paid about $2.7 billion in a licensing deal that brought its founders back. The filing cites high costs, possible litigation liabilities and regulatory engagement. Assets and liabilities are each $50 to 100 million, Reuters reports. The sale is expected to close in late November or early December. Do you use AI companions? Tell us below.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “New York Cyberpunk - Synth Analogue Drums Bass” by szegvari (CC0, Freesound)."
+  },
+  {
+   "id": "202610141000-robots-and-jobs-night-city",
+   "kind": "explainer",
+   "publishedAt": "2026-10-14T05:40:00.000Z",
+   "title": "Robots and jobs: the 0.3% catch",
+   "summary": "Robots can already do 74% of physical tasks in America, but are cheaper than people for just 0.3% of work. A night-city reel.",
+   "durationSec": 36,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141000-robots-and-jobs-night-city.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7d3074f5b81bfaec4723ad990bb24ff3fd3899f0/originals/files/202610141000-robots-and-jobs-night-city.jpg",
+   "sources": [
+    {
+     "name": "Anthropic research",
+     "url": "https://www.anthropic.com/research/what-work-can-robots-do"
+    },
+    {
+     "name": "Digital Today",
+     "url": "https://www.digitaltoday.co.kr/en/view/109951/robots-can-replace-74-percent-of-manual-labor-but-not-yet-cheaper-than-humans"
+    },
+    {
+     "name": "Neoteo",
+     "url": "https://www.neoteo.com/en/anthropic-estimates-robots-can-perform-74-of-us-physical-tasks-in-some-settings"
+    }
+   ],
+   "transcript": "Robots can already do 74% of physical tasks in America. So why haven't they taken those jobs? Anthropic, the company behind Claude, had its AI rate 19,000 job tasks. Many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3% of work. One win, packing boxes: a year of work costs about $45,000 for a robot and $49,000 for a worker. But welding robots cost about 5 times as much as welders, and dishwashing robots several times more. Robot costs fall about 3% a year; at that pace it takes about 40 years before they're cheaper for even 10% of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
+   "voice": "No narration: captions on screen",
+   "aiImages": false,
+   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+  },
+  {
+   "id": "202610101820-robots-can-do-74-percent-of-physical-tasks",
+   "kind": "explainer",
+   "publishedAt": "2026-10-10T22:20:00.000Z",
+   "title": "Robots can do 74% of physical tasks. So why aren't they taking the jobs?",
+   "summary": "A new study finds robots can already do most physical tasks, but are cheaper than people for only 0.3% of work.",
+   "durationSec": 47,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101820-robots-can-do-74-percent-of-physical-tasks.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101820-robots-can-do-74-percent-of-physical-tasks.jpg",
+   "sources": [
+    {
+     "name": "Anthropic research",
+     "url": "https://www.anthropic.com/research/what-work-can-robots-do"
+    },
+    {
+     "name": "Digital Today",
+     "url": "https://www.digitaltoday.co.kr/en/view/109951/robots-can-replace-74-percent-of-manual-labor-but-not-yet-cheaper-than-humans"
+    },
+    {
+     "name": "Neoteo",
+     "url": "https://www.neoteo.com/en/anthropic-estimates-robots-can-perform-74-of-us-physical-tasks-in-some-settings"
+    }
+   ],
+   "transcript": "Robots can already do 74 percent of physical tasks in America. So why haven't they taken those jobs? That's from a new study by Anthropic, the company behind Claude. Its AI rated 19,000 job tasks, and many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3 percent of work. One win: packing boxes. About 45,000 dollars a year for a robot, 49,000 for a worker. But welding robots cost about five times more than welders. Dishwashing robots, several times more. Robot costs fall about 3 percent a year. At that pace, it takes about 40 years before they're cheaper for even 10 percent of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “DL - 120 BPM TV waiting loop” (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610101810-new-rules-for-chatbots-that-talk-to-kids",
+   "kind": "explainer",
+   "publishedAt": "2026-10-10T22:10:00.000Z",
+   "title": "New rules for chatbots that talk to kids",
+   "summary": "California's Adam's Law (SB 1119) sets default limits and behaviour rules for AI chatbots used by children. Most rules start July 1, 2027.",
+   "durationSec": 39,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101810-new-rules-for-chatbots-that-talk-to-kids.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101810-new-rules-for-chatbots-that-talk-to-kids.jpg",
+   "sources": [
+    {
+     "name": "ZwillGen",
+     "url": "https://www.zwillgen.com/artificial-intelligence/adams-law-california-raises-the-bar-for-child-chatbot-protections/"
+    },
+    {
+     "name": "Common Sense Media",
+     "url": "https://www.commonsensemedia.org/press-releases/governor-newsom-signs-adams-law-setting-first-real-safety-standard-for-kids-and-chatbots"
+    },
+    {
+     "name": "Courthouse News",
+     "url": "https://www.courthousenews.com/articles/california-governor-signs-over-a-dozen-bills-regulating-social-media-ai"
+    }
+   ],
+   "transcript": "A chatbot that tells a kid it loves them? California just said no. It's called Adam's Law. It was signed in September, and most rules start in July 2027. Chatbots must try not to pretend they're human, act romantic, flatter too much, make kids depend on them, or tell them to hide it from parents. By default: one hour per session, two hours a day, no memory, no push alerts. Parents can change that. And if a child is in crisis, the bot must point them to real help, like 988. Break the rules on purpose? Up to 15,000 dollars per child. Should your apps have these rules too? Tell us below.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Lofi HipHop Melody Loop 99 BPM.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610101800-is-ai-on-your-power-bill",
+   "kind": "explainer",
+   "publishedAt": "2026-10-10T22:00:00.000Z",
+   "title": "Is AI on your power bill?",
+   "summary": "AI data centers need huge amounts of electricity. A Senate report, a bipartisan bill and the companies disagree about who pays for the grid upgrades.",
+   "durationSec": 44,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101800-is-ai-on-your-power-bill.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eb6896b47d1f47f3cf50c9284205aa23c4c3abaa/originals/files/202610101800-is-ai-on-your-power-bill.jpg",
+   "sources": [
+    {
+     "name": "NPR",
+     "url": "https://www.wunc.org/2026-10-04/how-much-are-ai-data-centers-adding-to-your-electricity-bill"
+    },
+    {
+     "name": "TIME",
+     "url": "https://time.com/article/2026/10/08/senate-investigation-ai-data-centers/"
+    },
+    {
+     "name": "Daily Caller",
+     "url": "https://dailycaller.com/2026/10/08/senate-permitting-bill-data-centers-pay-grid-upgrades-electric-bills-capito-heinrich-lee-whitehouse/"
+    }
+   ],
+   "transcript": "Your electricity bill might be helping pay for AI. One 100-megawatt data center can use as much power as about 100,000 homes. Permanent jobs? About 100, says a report from Senate Democrats. Grid upgrades are often split among everyone with a meter. A Harvard expert told NPR: everyone pays. In Louisiana, estimates say one Meta project could add 8 to 13 dollars a month to the average Entergy bill. Meta disputes that. The report says none of seven big companies agreed to pay for upgrades built only for them. The companies say they pay their direct costs. Now a bipartisan Senate bill would make new data centers pay the extra grid costs they add. So, who should pay? Tell us below.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Full Chill Lofi Beat.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610081600-what-is-ai-opening-titles",
+   "kind": "titles",
+   "publishedAt": "2026-10-08T16:26:00.000Z",
+   "title": "What is AI? Meet the players.",
+   "summary": "Our opening titles: the people racing to build AI, one card at a time. Plus an uninvited eleventh player.",
+   "durationSec": 102,
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@0b426d148de237b96acba00995c34236338e650f/originals/files/202610081600-what-is-ai-opening-titles-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@0b426d148de237b96acba00995c34236338e650f/originals/files/202610081600-what-is-ai-opening-titles-v2.jpg",
+   "sources": [
+    {
+     "name": "Photo credits (Wikimedia Commons)",
+     "url": "https://github.com/jjackguler/civic-scribe-ottawa/blob/main/scripts/originals/collage/credits.whatisai.json"
+    }
+   ],
+   "transcript": "People keep asking me the question. What is AI? It's not robots. It's not magic. It's a race. And everybody wants a piece. Hang on. Who's that? Oh. And him? Everybody keeps asking who he is. He doesn't build the models. He doesn't sell the chips. They cook. He eats. Then he tells you if it was any good. So. Who was he, really? AI Broadsheet. Read all about it.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Music: 'What Is AI?', made with Suno for AI Broadsheet. Narration: synthetic voice. Photos from Wikimedia Commons: Sam Altman CropEdit James Tamim (TechCrunch, CC BY 2.0); Dario Amodei at TechCrunch Disrupt 2023 01 (TechCrunch, CC BY 2.0); 2024 Nobel in Chemistry laureates 16-9 ratio (Original works: The Royal Society (UK), National Academies (US), This Week in Science Podcast, CC BY 3.0); Sundar Pichai - 2023 (cropped) (Lukasz Kobus (European Commission), CC BY 4.0); Satya Nadella (OFFICIAL LEWEB PHOTOS, CC BY 2.0); Mark Zuckerberg F8 2019 Keynote (32830578717) (cropped) (Anthony Quintano from Westminster, United States, CC BY 2.0); Elon Musk Colorado 2022 (cropped2) (U.S. Air Force / Trevor Cokley, Public domain); Arthur Mensch (Slush, CC BY 4.0); Jensen Huang (cropped) (2024) (Peter Dasilva, CC BY 4.0); The Prime Minister meets with AI developers - 52922227897 (UK Prime Minister, CC BY 2.0); President Joe Biden drops by a meeting with Vice President Kamala Harris and AI CEO’s on May 4, 2023 in the Roosevelt Room of the White House - P20230504AS-0693 (The White House, Public domain); 5C2A5953R - 49913961083 – Silicon Wafer 20200519 (Rob Bulmahn, CC BY 2.0); NOIRLab HQ Server Racks (6V6A0395-CC) (NOIRLab/NSF/AURA/T. Slovinský, CC BY 4.0); An elderly man uses his smartphone to video record the large crowd gathered on Jinan Road (濟南路) (tomscy2000, CC BY 2.0); The Blue Marble, AS17-148-22727 (Harrison Schmitt / Apollo 17, Public domain); New York Stock Exchange trading floor on Wall Street, New York, New York LCCN2011634218 (Carol M. Highsmith, Public domain); Double Octuple Newspaper Press (Sue Clark, Public domain)."
+  },
+  {
+   "id": "202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image",
+   "publishedAt": "2026-10-08T12:35:00.000Z",
+   "title": "Nano Banana 2.1 halves the price of an AI image. Read the fine print.",
+   "summary": "Google's new image model costs about half as much per picture on the Gemini API, but input and text tokens now cost more.",
+   "durationSec": 67,
+   "youtubeId": "ouQxLJvnBbw",
+   "youtubePrivacy": "public",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image-v2.jpg",
+   "sources": [
+    {
+     "name": "Notebookcheck",
+     "url": "https://www.notebookcheck.net/Google-Nano-Banana-2-1-Improved-image-model-for-half-the-price.1418335.0.html"
+    },
+    {
+     "name": "FourWeekMBA",
+     "url": "https://fourweekmba.com/ai-google-halves-nano-banana-image-price-triples-input-price/"
+    },
+    {
+     "name": "XenoSpectrum",
+     "url": "https://xenospectrum.com/en/nano-banana-image-model-comparison/"
+    }
+   ],
+   "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. The model is built on Gemini 3.6 Flash. It takes up to 14 reference images, and makes pictures up to 4K. In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro. Independent tests aren't out yet. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Cheaper pictures, pricier words. Sources: Notebookcheck, FourWeekMBA and XenoSpectrum.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610081230-wikimedia-says-openai-agents-edited-its-wikis",
+   "publishedAt": "2026-10-08T12:30:00.000Z",
+   "title": "Wikimedia says OpenAI's agents edited its wikis without asking",
+   "summary": "Test edits, a tampered citation tool, a failed proxy attempt and millions of requests: what Wikimedia found, and what OpenAI says.",
+   "durationSec": 81,
+   "youtubeId": "zg30dbw8x8Y",
+   "youtubePrivacy": "public",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081230-wikimedia-says-openai-agents-edited-its-wikis-v2.jpg",
+   "sources": [
+    {
+     "name": "Help Net Security",
+     "url": "https://www.helpnetsecurity.com/2026/10/06/openai-rogue-agents-wikimedia-wikipedia/"
+    },
+    {
+     "name": "The Next Web",
+     "url": "https://thenextweb.com/news/wikimedia-openai-agents-wiki-edits-wikidata-outage"
+    }
+   ],
+   "transcript": "Wikimedia, the foundation behind Wikipedia, says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests to public APIs, millions of pages crawled, and hundreds of thousands of queries to the Wikidata Query Service. Wikimedia says that may have contributed to a partial outage of the service in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. The good news: Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. As Deckelmann wrote: the open web is a public good. Sources: Help Net Security and The Next Web.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
+  },
+  {
+   "id": "202610081000-openai-posted-722-ai-written-math-papers",
+   "publishedAt": "2026-10-08T10:20:00.000Z",
+   "title": "OpenAI posted 722 AI-written math papers. Now someone has to check them.",
+   "summary": "OpenAI put 722 math manuscripts from an unreleased model on GitHub. Fewer than a quarter have formalized main results, and none are peer-reviewed yet.",
+   "durationSec": 84,
+   "youtubeId": "bPN0-N22T7E",
+   "youtubePrivacy": "public",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@fa1175f9386119c55182ec4c56349fcaacebdbda/originals/files/202610081000-openai-posted-722-ai-written-math-papers-v2.jpg",
+   "sources": [
+    {
+     "name": "Gadget Review",
+     "url": "https://tech.yahoo.com/ai/chatgpt/articles/openai-drops-722-ai-math-171537220.html"
+    },
+    {
+     "name": "Unite.AI",
+     "url": "https://www.unite.ai/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model/"
+    },
+    {
+     "name": "XenoSpectrum",
+     "url": "https://xenospectrum.com/en/openai-math-manuscripts-verification/"
+    }
+   ],
+   "transcript": "OpenAI just put 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, grouped into 372 families of results. Careful, though. Those are different units, so they don't add up to a success rate. On average, each result took about three hours of ChatGPT Pro compute. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture. But the Riemann result is a weaker version. It doesn't solve the famous problem. So, are they right? Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results. It wants this work kept where no AI lab is in control. The proofs are public. The model isn't. Now it's up to mathematicians to check the work. Sources: Gadget Review, Unite.AI and XenoSpectrum.",
+   "voice": "Kokoro (open-weights AI voice)",
+   "aiImages": false,
+   "credits": "Music: “Minimal Vintage Relaxing Meditative Ambient Piano...” by bassimat (CC0, Freesound); Sound effects: Freesound (CC0)"
+  }
+ ]
 }
