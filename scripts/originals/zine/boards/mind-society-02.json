@@ -1,0 +1,104 @@
+{
+  "format": "zine",
+  "style": "noir",
+  "series": "Mind & Society",
+  "date": "October 17, 2026",
+  "label": "MIND & SOCIETY · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "slug": "mind-society-02",
+  "book": [
+    "WHY PEOPLE SAY NO TO AI",
+    "MIND & SOCIETY · THE SCEPTICS"
+  ],
+  "next": "NEXT: MORE HIDDEN STORIES",
+  "title": "Mind & Society: why so many people say no to AI",
+  "summary": "Half of Americans are more concerned than excited about AI. The sceptics' main arguments, in their own survey answers, and the uses they do support.",
+  "ticker": "MIND & SOCIETY · WHY PEOPLE SAY NO TO AI · PEW RESEARCH CENTER SURVEY, 2025",
+  "sources": [
+    {
+      "name": "MarketingProfs (Pew Research Center data)",
+      "url": "https://www.marketingprofs.com/charts/2025/53727/americans-more-concerned-than-excited-about-ai-study-pew"
+    },
+    {
+      "name": "Fact Check Team (Sinclair)",
+      "url": "https://abcnews4.com/news/nation-world/fact-check-team-ai-is-booming-but-americans-remain-skeptical-tension-national-surveys-investing-artificial-intelligence"
+    },
+    {
+      "name": "Feedbagel",
+      "url": "https://feedbagel.com/post/pew-study-50-of-americans-express-concern-over-ais-role-in-daily-life"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "title",
+      "say": [
+        "AI is everywhere. So why do so many people want less of it?"
+      ]
+    },
+    {
+      "type": "stat",
+      "year": "PEW RESEARCH · 2025",
+      "value": 50,
+      "suffix": "%",
+      "red": true,
+      "bar": 0.5,
+      "label": [
+        "MORE CONCERNED",
+        "THAN EXCITED"
+      ],
+      "say": [
+        "In a 2025 Pew Research Center survey of more than 5,000 American adults, half said they were more concerned than excited about AI.",
+        "Only one in ten was more excited than concerned."
+      ]
+    },
+    {
+      "type": "factory",
+      "year": "ARGUMENT 1 · OUR MINDS",
+      "figure": true,
+      "say": [
+        "The first argument is about us. More than half expect AI to make people worse at thinking creatively.",
+        "Half expect it to weaken our ability to form meaningful relationships."
+      ]
+    },
+    {
+      "type": "morph",
+      "year": "ARGUMENT 2 · TRUST",
+      "words": [
+        {
+          "t": "MADE BY A HUMAN?",
+          "cue": "tell"
+        },
+        {
+          "t": "OR BY AI?",
+          "cue": "confident"
+        }
+      ],
+      "say": [
+        "The second is trust. Most say it matters to tell AI-made content from human work.",
+        "Most are not confident they can."
+      ]
+    },
+    {
+      "type": "lamp",
+      "year": "WHERE THEY SAY YES",
+      "say": [
+        "But this is not a blanket no. Seventy-four percent support AI for weather forecasting.",
+        "For mental health support, it's forty-six percent."
+      ]
+    },
+    {
+      "type": "close",
+      "q": [
+        "DOUBT",
+        "IS DATA"
+      ],
+      "say": [
+        "The sceptics are not just afraid of the new. Their doubts are a list of what AI still has to earn.",
+        "Next: more hidden stories."
+      ],
+      "cue": "Next"
+    }
+  ]
+}

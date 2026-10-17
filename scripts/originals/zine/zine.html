@@ -875,6 +875,14 @@ auction(g, lt, d, i) {
     if (lt > st) { const k = clamp((lt - st) / .25); g.save(); g.translate(860, 860); g.rotate(-.8 + k * .8); g.fillStyle = "#7a5a32"; g.fillRect(-10, -10, 160, 20); g.fillRect(130, -40, 50, 80); g.restore(); } }
   year(g, BOARD.scenes[i].year, lt, NLIGHT);
 },
+stat(g, lt, d, i) {
+  g.fillStyle = "#070707"; g.fillRect(0, 0, W, H); cone(g, 540, 0, 70, 1300, 440, "250,248,235", .26); dust(g, lt, 300, 150, 480, 1050, 50);
+  const sc = BOARD.scenes[i], k = out(clamp(lt / 1.6)), v = sc.value * k; g.save(); g.textAlign = "center";
+  g.font = "250px Anton"; g.fillStyle = sc.red ? NRED : NLIGHT; g.fillText((sc.prefix ?? "") + Math.round(v).toLocaleString("en-US") + (sc.suffix ?? ""), 540, 820);
+  g.font = "700 46px Osw"; g.letterSpacing = "6px"; g.fillStyle = NLIGHT; g.globalAlpha = out((lt - .8) / .5); (sc.label ?? []).forEach((l, n) => g.fillText(l, 540, 930 + n * 62)); g.restore();
+  if (sc.bar) { const b = out((lt - .6) / 1.2); g.fillStyle = "#222"; g.fillRect(190, 1110, 700, 34); g.fillStyle = sc.red ? NRED : NLIGHT; g.fillRect(190, 1110, 700 * sc.bar * b, 34); }
+  year(g, sc.year, lt, NLIGHT);
+},
 wall(g, lt, d, i) {
   g.fillStyle = "#0b0b0b"; g.fillRect(0, 0, W, H); const z = 1.8 - out(lt / (d * .8)) * 1.35; g.save(); g.translate(540, 760); g.scale(z, z);
   for (let r = -9; r <= 9; r++) for (let c = -7; c <= 7; c++) { const x = c * 92, y = r * 112, k = hash(r * 31 + c); g.fillStyle = "#4a3c24"; g.fillRect(x - 38, y - 48, 76, 96); g.fillStyle = `rgb(${40 + k * 40 | 0},${36 + k * 30 | 0},${28 + k * 20 | 0})`; g.fillRect(x - 32, y - 42, 64, 84);

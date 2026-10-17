@@ -13,7 +13,8 @@ export type Region = "canada" | "world";
 /** Topic desks, modelled on how trade publications organise AI coverage. */
 export type Topic =
   | "agents" | "applications" | "immersive" | "data" | "infrastructure" | "research"
-  | "people" | "responsible" | "policy" | "business" | "sustainability" | "robotics" | "health";
+  | "people" | "responsible" | "policy" | "business" | "sustainability" | "robotics" | "health"
+  | "tech" | "society";
 /** "beat" = a specialist newsroom (VR, robotics, data centres): shown on its topic desk; on the front page only when the story is about AI. */
 export type Kind = "news" | "gov" | "lab" | "analysis" | "trending" | "beat";
 export type Level = "federal" | "provincial" | "municipal";
@@ -102,6 +103,14 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "dcd", name: "DatacenterDynamics", url: "https://www.datacenterdynamics.com/en/rss/", home: "https://www.datacenterdynamics.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "infrastructure", slow: true },
   { id: "vector", name: "Vector Institute", url: "https://vectorinstitute.ai/feed/", home: "https://vectorinstitute.ai", region: "canada", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "aws-ml", name: "AWS Machine Learning", url: "https://aws.amazon.com/blogs/machine-learning/feed/", home: "https://aws.amazon.com/blogs/machine-learning/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
+
+  // Added 2026-10-17 (owner's request): technology beyond AI, and psychology and society.
+  { id: "verge-all", name: "The Verge", url: "https://www.theverge.com/rss/index.xml", home: "https://www.theverge.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
+  { id: "ars-all", name: "Ars Technica", url: "https://feeds.arstechnica.com/arstechnica/index", home: "https://arstechnica.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
+  { id: "electrek", name: "Electrek", url: "https://electrek.co/feed/", home: "https://electrek.co", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
+  { id: "psypost", name: "PsyPost", url: "https://www.psypost.org/feed/", home: "https://www.psypost.org", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "society", slow: true },
+  { id: "conversation", name: "The Conversation", url: "https://theconversation.com/global/articles.atom", home: "https://theconversation.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "society", slow: true },
+  { id: "pew", name: "Pew Research Center", url: "https://www.pewresearch.org/feed/", home: "https://www.pewresearch.org", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "society", slow: true },
 
   // ── Provincial and municipal governments (AI items only) ────────────────
   { id: "ontario", name: "Government of Ontario", url: "https://news.ontario.ca/opo/en/rss/news.rss", home: "https://news.ontario.ca", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "provincial", slow: true },
