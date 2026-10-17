@@ -1,0 +1,35 @@
+{
+  "format": "zine",
+  "slug": "how-ai-got-here-01",
+  "style": "chronicle",
+  "series": "How AI Got Here",
+  "episode": "EPISODE 1 · BRONZE AND GEARS",
+  "title": "How AI Got Here, episode 1: a bronze giant and a box of gears",
+  "summary": "Before computers, people imagined thinking machines and built mechanical ones: the myth of Talos, the Antikythera mechanism and Hero of Alexandria's rope-programmed cart.",
+  "date": "October 17, 2026",
+  "label": "ANIMATED DOCUMENTARY · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet",
+  "ticker": "HOW AI GOT HERE · EPISODE 1 OF 12 · FROM MYTH TO MACHINE",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "sources": [
+    { "name": "Stanford News", "url": "https://news.stanford.edu/2019/02/28/ancient-myths-reveal-early-fantasies-artificial-life/" },
+    { "name": "Encyclopaedia Britannica", "url": "https://www.britannica.com/topic/Antikythera-mechanism" },
+    { "name": "History Is Now Magazine", "url": "https://historyisnowmagazine.com/blog/2024/10/8/hero-of-alexandria-the-father-of-automation" }
+  ],
+  "timeline": [
+    { "y": "MYTH", "t": "Talos, the bronze guard" },
+    { "y": "c. 100 BCE", "t": "Antikythera gears" },
+    { "y": "c. 60 CE", "t": "Hero's cart" },
+    { "y": "1206", "t": "Al-Jazari's machines" }
+  ],
+  "scenes": [
+    { "type": "title", "say": ["Long before computers, people dreamed of machines that could act on their own.", "This is how AI got here."] },
+    { "type": "talos", "year": "GREEK MYTH", "say": ["In Greek myth, a bronze giant named Talos guarded the island of Crete.", "He circled its shores three times a day, throwing rocks at approaching ships."], "cue": "three" },
+    { "type": "ichor", "year": "GREEK MYTH", "say": ["A single vein ran from his neck to his ankle, sealed by a bronze nail.", "Pull the nail, and the machine stopped."], "cue": "Pull" },
+    { "type": "shipwreck", "year": "ANTIKYTHERA · 1901", "say": ["In 1901, divers raised lumps of corroded bronze from an ancient shipwreck off the Greek island of Antikythera."], "cue": "1901" },
+    { "type": "gears", "year": "ABOUT 2,000 YEARS OLD", "say": ["Inside were at least 30 hand-cut bronze gears.", "Turn its handle, and it tracked the sun and the moon, and predicted eclipses."], "cue": "30" },
+    { "type": "hero", "year": "ALEXANDRIA · 1ST CENTURY", "say": ["In the first century, Hero of Alexandria described a cart that moved on its own.", "A falling weight pulled a rope wound around its axles, and pegs set where it turned.", "Some computer scientists call it an early program."], "cue": "pegs" },
+    { "type": "close", "say": ["Myth gave us the dream. Gears gave us the method.", "Next: a 13th-century engineer and his water-powered machines."], "cue": "Next" }
+  ]
+}

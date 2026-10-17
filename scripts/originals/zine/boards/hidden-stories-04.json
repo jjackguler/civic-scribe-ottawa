@@ -1,0 +1,100 @@
+{
+  "format": "zine",
+  "style": "noir",
+  "series": "Hidden Stories of AI",
+  "date": "October 17, 2026",
+  "label": "HIDDEN STORIES OF AI · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "slug": "hidden-stories-04",
+  "book": [
+    "THE MYSTERIES",
+    "MYSTERY · 100 BCE–1966"
+  ],
+  "next": "NEXT SEASON: MORE HIDDEN STORIES",
+  "title": "Hidden Stories of AI, episode 4: machines that seemed to think",
+  "summary": "A 2,000-year-old computer, a chess machine with a man inside, a horse that could count and a chatbot people confided in: four mysteries about what thinking looks like.",
+  "ticker": "HIDDEN STORIES OF AI · EPISODE 4 · MYSTERY · ANTIKYTHERA · THE TURK · CLEVER HANS · ELIZA",
+  "sources": [
+    {
+      "name": "Britannica: Antikythera mechanism",
+      "url": "https://www.britannica.com/topic/Antikythera-mechanism"
+    },
+    {
+      "name": "History.com: the Mechanical Turk",
+      "url": "https://www.history.com/articles/how-a-phony-18th-century-chess-robot-fooled-the-world"
+    },
+    {
+      "name": "Britannica: Clever Hans",
+      "url": "https://www.britannica.com/topic/Clever-Hans"
+    },
+    {
+      "name": "Wikipedia: ELIZA",
+      "url": "https://en.wikipedia.org/wiki/ELIZA"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "title",
+      "say": [
+        "Some machines only seemed to think. Their stories are mysteries, and lessons for the age of AI."
+      ]
+    },
+    {
+      "type": "relic",
+      "year": "ANTIKYTHERA · 1901",
+      "say": [
+        "In 1901, divers pulled a corroded lump of bronze from a Greek shipwreck.",
+        "X-rays later revealed dozens of gears: a 2,000-year-old calculator for the sun, the moon and eclipses."
+      ],
+      "cue": "gears"
+    },
+    {
+      "type": "turk",
+      "year": "THE TURK · 1770",
+      "open": "inside",
+      "reveal": "master",
+      "say": [
+        "In 1770, a chess-playing machine amazed the court in Vienna and later toured Europe and America.",
+        "Its secret: a human chess master hidden inside."
+      ],
+      "cue": "master"
+    },
+    {
+      "type": "hans",
+      "year": "CLEVER HANS · 1907",
+      "say": [
+        "In Berlin, a horse called Clever Hans seemed to solve sums by tapping his hoof.",
+        "In 1907, a psychologist showed he was reading tiny, unconscious cues from the people watching."
+      ],
+      "cue": "cues"
+    },
+    {
+      "type": "eliza",
+      "year": "ELIZA · 1966",
+      "chat": [
+        "> I feel lonely.",
+        "WHY DO YOU FEEL LONELY?",
+        "> Nobody listens to me.",
+        "TELL ME MORE ABOUT THAT."
+      ],
+      "say": [
+        "In 1966, Joseph Weizenbaum at MIT built ELIZA, a simple chatbot that played a therapist by turning your words into questions.",
+        "People confided in it anyway, and that worried its creator."
+      ]
+    },
+    {
+      "type": "close",
+      "q": [
+        "IS IT",
+        "THINKING?"
+      ],
+      "say": [
+        "Hidden people, hidden cues, and our wish to be understood. Remember them the next time a machine seems to think.",
+        "See you next season."
+      ],
+      "cue": "next"
+    }
+  ]
+}

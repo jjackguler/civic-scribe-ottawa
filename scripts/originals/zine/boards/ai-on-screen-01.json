@@ -1,0 +1,28 @@
+{
+  "format": "zine",
+  "slug": "ai-on-screen-01",
+  "style": "poster",
+  "series": "AI on Screen",
+  "title": "AI on Screen, episode 1: the calm voice of 2001: A Space Odyssey",
+  "summary": "How a 1968 film made audiences fear a polite computer, and the real 1961 Bell Labs song that HAL 9000 sings as it shuts down.",
+  "date": "October 17, 2026",
+  "label": "AI ON SCREEN · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; no film stills or posters used",
+  "ticker": "AI ON SCREEN · EPISODE 1 · 2001: A SPACE ODYSSEY (1968)",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "next": "NEXT: THE TERMINATOR · 1984",
+  "art": [],
+  "sources": [
+    { "name": "History of Information", "url": "https://www.historyofinformation.com/detail.php?id=3986" },
+    { "name": "Universe Today", "url": "https://www.universetoday.com/44482/why-did-hal-sing-daisy/" },
+    { "name": "BRG", "url": "https://www.thinkbrg.com/insights/publications/nervous-system-the-computer-that-taught-hal-to-sing" }
+  ],
+  "scenes": [
+    { "type": "eye", "year": "1968", "say": ["In 1968, a film taught the world to fear a calm, polite voice.", "Not a monster. A computer."] },
+    { "type": "town", "marquee": ["2001", "A SPACE ODYSSEY"], "credit": ["DIRECTED BY STANLEY KUBRICK", "WRITTEN WITH ARTHUR C. CLARKE"], "say": ["2001: A Space Odyssey was directed by Stanley Kubrick and written with the novelist Arthur C. Clarke."] },
+    { "type": "chess", "year": "HAL 9000", "say": ["On board its spaceship is HAL 9000, a computer that talks, plays chess with the crew, and can read their lips."], "cue": "chess" },
+    { "type": "daisy", "year": "A TRUE STORY", "say": ["As HAL is shut down, it sings an old song, Daisy Bell.", "That is real history. In 1961, an IBM computer at Bell Labs sang Daisy Bell, one of the first songs ever sung by a computer.", "Clarke heard that demonstration on a visit to Bell Labs."], "cue": "1961" },
+    { "type": "door", "say": ["The film's most famous line is a refusal: I'm sorry, Dave. I'm afraid I can't do that.", "A machine politely closing a door on a human."], "cue": "sorry" },
+    { "type": "heads", "say": ["Nearly sixty years later, we still ask the question HAL raised: who's in control?", "Next: The Terminator."], "cue": "who's" }
+  ]
+}
