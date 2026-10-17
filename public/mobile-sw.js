@@ -1,7 +1,7 @@
 importScripts('/mobile-policy.js');
-const CACHE = 'broadsheet-mobile-assets-v3';
+const CACHE = 'broadsheet-mobile-assets-v4';
 const MAX_ENTRIES = 128, MAX_AGE = 30 * 86400_000;
-const SHELL = ['/offline', '/brief/icon-192.png', '/favicon.svg'];
+const SHELL = ['/offline', '/brief/icon-192.png', '/favicon-96.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(async cache => {
     for (const path of SHELL) {

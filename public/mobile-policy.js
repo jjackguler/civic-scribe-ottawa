@@ -15,7 +15,7 @@
     }
     if (/^\/(api|_serverFn|_server|editor|auth|admin|login|dev|cdn-cgi)(\/|$)/i.test(path)) return null;
     if (/^\/assets\/[\w./-]+\.(?:js|css|woff2?|png|svg|webp|jpe?g|ico)$/i.test(path) && !u.search) return 'asset';
-    if (/^\/icons\/[\w-]+\.png$/.test(path) || path === '/favicon.svg' || path === '/offline') return 'asset';
+    if (/^\/icons\/[\w-]+\.png$/.test(path) || path === '/favicon-96.png' || path === '/offline') return 'asset';
     if (/^\/brief\/[\w-]+\.(?:png|webp)$/.test(path) && !u.search) return 'asset';
     if (req.mode === 'navigate' && pages.test(path)) return 'page';
     return null;
