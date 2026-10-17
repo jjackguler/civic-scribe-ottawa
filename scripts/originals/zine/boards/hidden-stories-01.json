@@ -1,0 +1,115 @@
+{
+  "format": "zine",
+  "style": "noir",
+  "series": "Hidden Stories of AI",
+  "date": "October 17, 2026",
+  "label": "HIDDEN STORIES OF AI · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "slug": "hidden-stories-01",
+  "book": [
+    "THE NOVELISTS",
+    "LITERATURE · 1818–1950"
+  ],
+  "next": "NEXT: THE SCIENTISTS",
+  "title": "Hidden Stories of AI, episode 1: the novelists who imagined it first",
+  "summary": "Mary Shelley, Karel Čapek, Isaac Asimov and George Orwell imagined made minds, robots, robot laws and watching machines long before modern AI.",
+  "ticker": "HIDDEN STORIES OF AI · EPISODE 1 · LITERATURE · SHELLEY · ČAPEK · ASIMOV · ORWELL",
+  "sources": [
+    {
+      "name": "Britannica: Mary Shelley",
+      "url": "https://www.britannica.com/biography/Mary-Wollstonecraft-Shelley"
+    },
+    {
+      "name": "Britannica: R.U.R.",
+      "url": "https://www.britannica.com/topic/RUR"
+    },
+    {
+      "name": "Britannica: Who coined the term robot?",
+      "url": "https://www.britannica.com/question/Who-coined-the-term-robot"
+    },
+    {
+      "name": "Britannica: Isaac Asimov",
+      "url": "https://www.britannica.com/biography/Isaac-Asimov"
+    },
+    {
+      "name": "Britannica: Robotics",
+      "url": "https://www.britannica.com/technology/robotics"
+    },
+    {
+      "name": "Britannica: George Orwell",
+      "url": "https://www.britannica.com/biography/George-Orwell"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "title",
+      "say": [
+        "Long before ChatGPT, four writers imagined it. Their words still shape how we talk about AI."
+      ]
+    },
+    {
+      "type": "storm",
+      "year": "MARY SHELLEY · 1818",
+      "say": [
+        "In 1816, during a stormy summer near Lake Geneva, eighteen-year-old Mary Shelley began Frankenstein.",
+        "Its scientist builds a living mind, then abandons it."
+      ]
+    },
+    {
+      "type": "march",
+      "year": "KAREL ČAPEK · 1920",
+      "say": [
+        "In 1920, the Czech writer Karel Čapek wrote the play R.U.R., about artificial workers who rebel.",
+        "It gave us the word robot, from robota, Czech for forced labour."
+      ]
+    },
+    {
+      "type": "laws",
+      "year": "ISAAC ASIMOV · 1942",
+      "head": "THE THREE LAWS (PARAPHRASED)",
+      "lines": [
+        {
+          "text": "1. A robot may not harm a human.",
+          "cue": "harm"
+        },
+        {
+          "text": "2. It must obey, unless that causes harm.",
+          "cue": "obey"
+        },
+        {
+          "text": "3. It must protect itself, unless that breaks the first two.",
+          "cue": "protect"
+        }
+      ],
+      "say": [
+        "In 1942, Isaac Asimov gave robots three laws: do not harm a human, obey orders, and protect yourself.",
+        "Then he wrote story after story about the rules going wrong."
+      ],
+      "cue": "harm"
+    },
+    {
+      "type": "watch",
+      "year": "GEORGE ORWELL · 1949",
+      "say": [
+        "In 1949, George Orwell's Nineteen Eighty-Four put a telescreen in every home that watched you back.",
+        "Big Brother is watching you."
+      ],
+      "cue": "Big"
+    },
+    {
+      "type": "close",
+      "q": [
+        "WHO ANSWERS",
+        "FOR WHAT",
+        "WE MAKE?"
+      ],
+      "say": [
+        "A made mind, a rebel worker, rules that fail, a machine that watches. We are still living inside their questions.",
+        "Next: the scientists."
+      ],
+      "cue": "Next"
+    }
+  ]
+}

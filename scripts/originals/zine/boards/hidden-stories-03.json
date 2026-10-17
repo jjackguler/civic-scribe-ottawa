@@ -1,0 +1,98 @@
+{
+  "format": "zine",
+  "style": "noir",
+  "series": "Hidden Stories of AI",
+  "date": "October 17, 2026",
+  "label": "HIDDEN STORIES OF AI · ILLUSTRATION",
+  "artCredit": "Illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced",
+  "music": "fs-tension-pulse-music--609250.mp3",
+  "art": [],
+  "slug": "hidden-stories-03",
+  "book": [
+    "THE ARTISTS",
+    "ART · 1970s–2022"
+  ],
+  "next": "NEXT: THE MYSTERIES",
+  "title": "Hidden Stories of AI, episode 3: the artists who painted with machines",
+  "summary": "Harold Cohen's AARON, the AI portrait that sold for $432,500 at Christie's, and Refik Anadol's machine dreams at MoMA.",
+  "ticker": "HIDDEN STORIES OF AI · EPISODE 3 · ART · COHEN · OBVIOUS · ANADOL",
+  "sources": [
+    {
+      "name": "Aesthetica: Dreaming in Digital",
+      "url": "https://aestheticamagazine.com/dreaming-in-digital/"
+    },
+    {
+      "name": "Smithsonian Magazine",
+      "url": "https://www.smithsonianmag.com/smart-news/christies-first-sell-art-made-artificial-intelligence-what-does-mean-180970642/"
+    },
+    {
+      "name": "CBC News",
+      "url": "https://www.cbc.ca/1.4877945"
+    },
+    {
+      "name": "Artnet: Refik Anadol, Unsupervised",
+      "url": "https://news.artnet.com/art-world/refik-anadol-unsupervised-moma-2242329"
+    },
+    {
+      "name": "My Art Guides: Unsupervised",
+      "url": "https://myartguides.com/exhibitions/new-york/refik-anadol-unsupervised"
+    }
+  ],
+  "scenes": [
+    {
+      "type": "title",
+      "say": [
+        "Can a machine make art? Artists have been testing that question for more than fifty years."
+      ]
+    },
+    {
+      "type": "plotter",
+      "year": "HAROLD COHEN · AARON",
+      "say": [
+        "Starting in the early 1970s, the British painter Harold Cohen built AARON, a program that made its own drawings.",
+        "He kept teaching it for decades, until it could draw figures and plants, and add colour."
+      ]
+    },
+    {
+      "type": "auction",
+      "year": "OBVIOUS · 2018",
+      "price": [
+        7000,
+        432500
+      ],
+      "say": [
+        "In 2018, a Paris collective called Obvious sold an AI-made portrait at Christie's in New York.",
+        "Expected to fetch up to 10,000 dollars, it sold for 432,500."
+      ],
+      "cue": "sold"
+    },
+    {
+      "type": "wall",
+      "year": "THE ARGUMENT",
+      "say": [
+        "The AI had learned from 15,000 old portraits, and much of the code came from a 19-year-old artist, Robbie Barrat.",
+        "Who, then, was the artist?"
+      ]
+    },
+    {
+      "type": "fluid",
+      "year": "REFIK ANADOL · MoMA 2022",
+      "say": [
+        "In 2022, the Turkish-American artist Refik Anadol showed Unsupervised at the Museum of Modern Art in New York.",
+        "An AI trained on the museum's own collection dreamed new images on a giant wall, changing with the light, movement and weather around it."
+      ]
+    },
+    {
+      "type": "close",
+      "q": [
+        "WHO IS",
+        "THE ARTIST?"
+      ],
+      "say": [
+        "A painter's program, a sold portrait, a dreaming museum. The question is still open.",
+        "Next: the mysteries."
+      ],
+      "cue": "Next"
+    }
+  ]
+}
