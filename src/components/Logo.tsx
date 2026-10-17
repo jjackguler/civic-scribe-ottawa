@@ -1,12 +1,12 @@
 import { SITE } from "@/lib/site";
 
 /**
- * A folded front page with a spark of intelligence. Use the same mark on
+ * Broadsheet's lowercase b contains a turning-page curve. Use this mark on
  * the masthead, browser tab, installed app and social profiles.
  */
 export function LogoMark({ size = 32, className = "" }: { size?: number; className?: string; inverse?: boolean }) {
   return (
-    <img src="/favicon.svg?v=news-spark" width={size} height={size} alt="" aria-hidden="true" className={`shrink-0 ${className}`} />
+    <img src="/favicon-96.png?v=editorial-b" width={size} height={size} alt="" aria-hidden="true" className={`shrink-0 rounded-full ${className}`} />
   );
 }
 

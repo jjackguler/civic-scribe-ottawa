@@ -13,12 +13,12 @@ export const SITE = {
    */
   domain: "aibroadsheet.com",
   tagline: {
-    en: "The world's AI newspaper, live",
-    fr: "Le journal mondial de l'IA, en direct",
+    en: "AI news. Human stakes.",
+    fr: "L'actualité IA. Les enjeux humains.",
   },
   description: {
-    en: "Live artificial intelligence news from the world's newsrooms, labs and governments — with video, interviews and podcasts. Every story credited and linked to its source.",
-    fr: "L'actualité de l'intelligence artificielle en direct, des salles de nouvelles, laboratoires et gouvernements du monde entier — avec vidéos, entrevues et balados. Chaque article est crédité et lié à sa source.",
+    en: "Independent AI news, short videos and visual explainers. Understand artificial intelligence and its human impact, with sources linked and limits explained.",
+    fr: "Actualité indépendante de l'IA, vidéos courtes et explications visuelles. Comprendre l'intelligence artificielle et ses effets humains, sources à l'appui.",
   },
   /** The business that publishes the site. */
   publisher: {

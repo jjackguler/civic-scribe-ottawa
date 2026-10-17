@@ -20,7 +20,7 @@ test('credentials, POST and cross-origin requests excluded',()=>{assert.equal(po
 test('unknown queries bypass service worker',()=>assert.equal(policy.classify(req('/news?token=private'),origin),null));
 test('Brief deep links receive only offline fallback, never HTML caching',()=>{assert.equal(policy.classify(req('/app?story=read-the-number'),origin),'page');assert.equal(policy.classify(req('/fr/app?story=read-the-number'),origin),'page');assert.equal(policy.classify(req('/app?story=bad%2Fpath'),origin),null);});
 test('Brief artwork can cache but its video is never cached',()=>{assert.equal(policy.classify(req('/brief/icon-192.png'),origin),'asset');assert.equal(policy.classify(req('/brief/benchmark-18.mp4'),origin),null);});
-test('static assets can be cached',()=>assert.equal(policy.classify(req('/assets/index-AbC123.js'),origin),'asset'));
+test('static assets and the current favicon can be cached',()=>{assert.equal(policy.classify(req('/assets/index-AbC123.js'),origin),'asset');assert.equal(policy.classify(req('/favicon-96.png'),origin),'asset');assert.equal(policy.classify(req('/favicon.svg'),origin),null);});
 const res=(path:string,headers:Record<string,string>={},extra:any={})=>({ok:true,status:200,type:'basic',redirected:false,url:origin+path,headers:new Headers({'content-type':'text/html',...headers}),...extra});
 test('SSR HTML and server functions cannot be stored',()=>{assert.equal(policy.storable(res('/news'),origin),false);assert.equal(policy.storable(res('/_serverFn/data'),origin),false);});
 test('offline shell can be stored',()=>assert.equal(policy.storable(res('/offline'),origin),true));
