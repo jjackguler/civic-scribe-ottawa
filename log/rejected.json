@@ -1,5 +1,23 @@
 [
   {
+    "id": "vwsabn",
+    "at": "2026-10-17T12:43:09.741Z",
+    "stage": "reporter",
+    "headline": "Introducing Reflection Beam: an open-weight model for agentic coding on AWS",
+    "reasons": [
+      "skip: The single brief source excerpt contains insufficient factual detail to support a 120-word news article without padding or repetition."
+    ]
+  },
+  {
+    "id": "1mgztl7",
+    "at": "2026-10-17T12:42:26.341Z",
+    "stage": "reporter",
+    "headline": "Building trust in AI agents: A production-ready evaluation framework with Amazon Bedrock AgentCore",
+    "reasons": [
+      "skip: The provided source contains insufficient information to support a 120-word article without padding or repetition."
+    ]
+  },
+  {
     "id": "160x7md",
     "at": "2026-10-17T04:47:01.952Z",
     "stage": "copy",
