@@ -1,6 +1,66 @@
 {
-  "updatedAt": "2026-10-17T05:24:00.000Z",
+  "updatedAt": "2026-10-17T13:32:00.000Z",
   "items": [
+    {
+      "id": "202610171330-mind-society-01",
+      "kind": "explainer",
+      "publishedAt": "2026-10-17T13:32:00.000Z",
+      "title": "Mind & Society: is AI making us lonely?",
+      "summary": "In 2025, MIT Media Lab and OpenAI found that the heaviest chatbot users reported more loneliness and dependence. What the studies show, and what they don't.",
+      "durationSec": 57,
+      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@2b0ed96828b8219ecb9153144c37a513588d1f72/originals/files/202610171330-mind-society-01.mp4",
+      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@2b0ed96828b8219ecb9153144c37a513588d1f72/originals/files/202610171330-mind-society-01.jpg",
+      "sources": [
+        {
+          "name": "MIT Media Lab",
+          "url": "https://www.media.mit.edu/articles/chatgpt-may-be-making-us-lonelier/"
+        },
+        {
+          "name": "Fortune",
+          "url": "https://fortune.com/2025/03/24/chatgpt-making-frequent-users-more-lonely-study-openai-mit-media-lab"
+        },
+        {
+          "name": "Engadget",
+          "url": "https://engadget.com/ai/joint-studies-from-openai-and-mit-found-links-between-loneliness-and-chatgpt-use-193537421.html"
+        },
+        {
+          "name": "Tom's Guide",
+          "url": "https://www.tomsguide.com/ai/is-chatgpt-making-us-lonely-mit-openai-study-reveals-possible-link"
+        }
+      ],
+      "transcript": "Millions of people talk to chatbots every day. Is it making us lonely? In March 2025, MIT Media Lab and OpenAI published two studies on how chatbot use affects how people feel. MIT followed about a thousand people using ChatGPT for four weeks. OpenAI analysed nearly 40 million conversations. The heaviest daily users reported more loneliness, more emotional dependence, and less time with other people. But the studies do not show that chatbots cause loneliness. Lonely people may simply reach for them more. They measured loneliness, not depression, over just a month, and had not been peer reviewed. If a chatbot is your main conversation of the day, that is worth noticing. Next: why so many people say no to AI.",
+      "voice": "No narration: captions on screen",
+      "aiImages": false,
+      "credits": "Noir illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+    },
+    {
+      "id": "202610171330-mind-society-02",
+      "kind": "explainer",
+      "publishedAt": "2026-10-17T13:31:00.000Z",
+      "title": "Mind & Society: why so many people say no to AI",
+      "summary": "Half of Americans are more concerned than excited about AI. The sceptics' main arguments, in their own survey answers, and the uses they do support.",
+      "durationSec": 65,
+      "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@2b0ed96828b8219ecb9153144c37a513588d1f72/originals/files/202610171330-mind-society-02.mp4",
+      "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@2b0ed96828b8219ecb9153144c37a513588d1f72/originals/files/202610171330-mind-society-02.jpg",
+      "sources": [
+        {
+          "name": "MarketingProfs (Pew Research Center data)",
+          "url": "https://www.marketingprofs.com/charts/2025/53727/americans-more-concerned-than-excited-about-ai-study-pew"
+        },
+        {
+          "name": "Fact Check Team (Sinclair)",
+          "url": "https://abcnews4.com/news/nation-world/fact-check-team-ai-is-booming-but-americans-remain-skeptical-tension-national-surveys-investing-artificial-intelligence"
+        },
+        {
+          "name": "Feedbagel",
+          "url": "https://feedbagel.com/post/pew-study-50-of-americans-express-concern-over-ais-role-in-daily-life"
+        }
+      ],
+      "transcript": "AI is everywhere. So why do so many people want less of it? In a 2025 Pew Research Center survey of more than 5,000 American adults, half said they were more concerned than excited about AI. Only one in ten was more excited than concerned. The first argument is about us. More than half expect AI to make people worse at thinking creatively. Half expect it to weaken our ability to form meaningful relationships. The second is trust. Most say it matters to tell AI-made content from human work. Most are not confident they can. But this is not a blanket no. Seventy-four percent support AI for weather forecasting. For mental health support, it's forty-six percent. The sceptics are not just afraid of the new. Their doubts are a list of what AI still has to earn. Next: more hidden stories.",
+      "voice": "No narration: captions on screen",
+      "aiImages": false,
+      "credits": "Noir illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+    },
     {
       "id": "202610170530-hidden-stories-01-literature",
       "kind": "explainer",
