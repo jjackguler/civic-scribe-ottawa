@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "id": "126g7au",
+  "slug": {
+    "en": "anthropic-cuts-junior-hiring-ai-agents",
+    "fr": "anthropic-reduit-embauche-debutants-agents-ia"
+  },
+  "createdAt": "2026-10-18T14:47:49.071Z",
+  "updatedAt": "2026-10-18T14:47:49.071Z",
+  "topic": "people",
+  "format": "people",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "TechCrunch",
+      "title": "Anthropic says its workforce has become less junior and is spending more time in meetings",
+      "url": "https://techcrunch.com/2026/10/17/anthropic-says-its-workforce-has-become-less-junior-and-is-spending-more-time-in-meetings/",
+      "publishedAt": "2026-10-17T20:21:19.000Z",
+      "storyId": "126g7au",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "The Decoder",
+      "title": "Anthropic has nearly stopped hiring junior staff because AI agents now work six times as many hours",
+      "url": "https://the-decoder.com/anthropic-has-nearly-stopped-hiring-junior-staff-because-ai-agents-now-work-six-times-as-many-hours/",
+      "publishedAt": "2026-10-18T13:22:26.000Z",
+      "storyId": "1kwzwkz",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "spruce",
+    "motif": "bars",
+    "en": {
+      "kicker": "People & skills",
+      "big": "junior",
+      "small": "Hiring falls as automated agents expand"
+    },
+    "fr": {
+      "kicker": "Compétences",
+      "big": "recrutement"
+    }
+  },
+  "en": {
+    "headline": "Anthropic cuts junior hiring as automated AI agents take on workplace tasks",
+    "news": "Anthropic has sharply reduced hiring for junior technical positions while automated software agents take on more company work.",
+    "thirty": [
+      "The share of junior roles among Anthropic new hires dropped from 27 to 9 percent.",
+      "Anthropic stated that its staff now spends more time attending meetings.",
+      "The changes follow automated agents logging six times as many hours."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Anthropic stated that its staff now includes fewer junior roles and spends more time in meetings.",
+        "by": "Anthropic",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether Anthropic plans to stop entry-level technical hiring entirely.",
+      "The total number of staff hours automated agents logged by August 2026."
+    ],
+    "matters": "The decline in hiring leaves junior technical job seekers facing fewer entry-level opportunities as companies rely on AI agents to handle starting tasks.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Anthropic is a technology firm that builds artificial intelligence systems. Over the past year, the company recruited fewer junior staff for technical positions, with junior roles dropping from 27 to 9 percent of new hires [s1,s2].",
+        "Instead of entry-level workers, AI agents are handling more assignments [s2]. As these programs logged six times as many working hours, staff spent more of their workdays attending meetings [s1,s2]."
+      ],
+      "standard": [
+        "Anthropic has sharply cut back on recruiting junior technical staff over the past year [s1,s2]. The share of junior positions among new hires at the company fell from 27 to 9 percent since early 2025 [s2].",
+        "The change comes as automated AI agents across the organization took on a larger workload [s2]. By August 2026, AI agents across Anthropic were logging six times as many hours as before, according to The Decoder [s2].",
+        "Anthropic stated that its technical team has fewer junior members as hiring patterns shifted [s1]. The company reports that the makeup of its staff and the nature of daily work have both transformed substantially in the past year [s1].",
+        "Anthropic says staff at the firm also spend more time in meetings [s1]. The Decoder reports that the shift away from junior technical hiring is tied directly to the rising workload carried by AI agents [s2].",
+        "The outlets leave open how many entry-level workers remain at the company [s1,s2]. It is also unknown whether Anthropic intends to phase out junior technical roles altogether [s2].",
+        "The reduction in entry-level hiring shows how software agents can alter pathways for junior workers in the technology industry [s2]. When automated tools absorb introductory tasks, fewer openings emerge for newcomers seeking to enter technical fields [s2]."
+      ],
+      "expert": [
+        "The Decoder reports that the share of junior positions among new hires at Anthropic fell from 27 to 9 percent since early 2025 [s2]. AI agents deployed throughout the enterprise were logging six times as many hours by August 2026 [s2].",
+        "TechCrunch noted that Anthropic reported a less junior workforce while staff dedicate an increasing proportion of time to meetings [s1]."
+      ]
+    },
+    "seoTitle": "Anthropic cuts junior hiring as AI agents take on work",
+    "dek": "The share of junior roles dropped from 27 to 9 percent of new hires at Anthropic as AI agents logged six times as many hours across the firm.",
+    "metaDescription": "Anthropic cut junior hiring from 27 to 9 percent of new hires as automated AI agents logged six times as many hours across company tasks.",
+    "keywords": [
+      "anthropic",
+      "junior hiring",
+      "ai agents",
+      "tech jobs",
+      "workplace automation"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Anthropic has sharply cut back on recruiting junior technical staff over the past year [s1,s2]. The share of junior positions among new hires at the company fell from 27 to 9 percent since early 2025 [s2].",
+          "The change comes as automated AI agents across the organization took on a larger workload [s2]. By August 2026, AI agents across Anthropic were logging six times as many hours as before, according to The Decoder [s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Anthropic stated that its technical team has fewer junior members as hiring patterns shifted [s1]. The company reports that the makeup of its staff and the nature of daily work have both transformed substantially in the past year [s1].",
+          "Anthropic says staff at the firm also spend more time in meetings [s1]. The Decoder reports that the shift away from junior technical hiring is tied directly to the rising workload carried by AI agents [s2].",
+          "The outlets leave open how many entry-level workers remain at the company [s1,s2]. It is also unknown whether Anthropic intends to phase out junior technical roles altogether [s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The reduction in entry-level hiring shows how software agents can alter pathways for junior workers in the technology industry [s2]. When automated tools absorb introductory tasks, fewer openings emerge for newcomers seeking to enter technical fields [s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "By how much did junior hiring decline at Anthropic?",
+        "a": "The share of junior positions among new hires at Anthropic fell from 27 to 9 percent since early 2025."
+      },
+      {
+        "q": "How much work are AI agents handling at Anthropic?",
+        "a": "According to The Decoder, AI agents across the organization were logging six times as many hours as before by August 2026."
+      },
+      {
+        "q": "Will Anthropic eliminate junior technical roles entirely?",
+        "a": "It is unknown whether Anthropic intends to phase out junior technical roles altogether."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Agents"
+      },
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Anthropic réduit l'embauche de débutants alors que les agents d'IA effectuent plus de tâches",
+    "news": "Anthropic a nettement freiné le recrutement pour les postes techniques subalternes pendant que des agents logiciels automatisés prennent en charge davantage de travail interne.",
+    "thirty": [
+      "La proportion de postes subalternes parmi les nouvelles embauches d'Anthropic a chuté de 27 à 9 %.",
+      "Anthropic a indiqué que son personnel passe désormais davantage de temps en réunion.",
+      "Ces changements surviennent alors que les agents automatisés ont multiplié leurs heures par six."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Anthropic a déclaré que son personnel compte moins de profils subalternes et consacre plus de temps aux réunions.",
+        "by": "Anthropic",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La question de savoir si Anthropic compte cesser totalement le recrutement technique de niveau débutant.",
+      "Le nombre total d'heures effectuées par les agents automatisés jusqu'en août 2026."
+    ],
+    "matters": "Ce recul des embauches laisse moins de débouchés aux chercheurs d'emploi débutants dans le secteur technique, les entreprises s'en remettant aux agents d'IA pour exécuter les tâches de base.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Anthropic est une entreprise technologique qui conçoit des systèmes d'intelligence artificielle. Au cours de la dernière année, la société a engagé moins de recrues débutantes dans des fonctions techniques, ces postes tombant de 27 à 9 % des nouveaux arrivants [s1,s2].",
+        "Au lieu de travailleurs de premier échelon, ce sont des agents d'IA qui assument davantage de tâches [s2]. Pendant que ces logiciels cumulaient six fois plus d'heures de travail, les employés consacraient une plus grande part de leurs journées à des réunions [s1,s2]."
+      ],
+      "standard": [
+        "Anthropic a nettement réduit le recrutement de personnel technique débutant au cours de la dernière année [s1,s2]. La part des postes subalternes parmi les nouvelles recrues de l'entreprise est passée de 27 à 9 % depuis le début de 2025 [s2].",
+        "Ce virage s'explique par la prise en charge d'une charge de travail accrue par des agents d'IA automatisés à travers l'entreprise [s2]. Dès août 2026, les agents d'IA déployés chez Anthropic enregistraient six fois plus d'heures qu'auparavant, selon The Decoder [s2].",
+        "Anthropic a précisé que son équipe technique comprend moins de membres débutants à la suite d'une réorientation de ses embauches [s1]. L'entreprise indique que la composition de ses effectifs et la nature du travail accompli ont toutes deux profondément changé au cours de la dernière année [s1].",
+        "Anthropic affirme que ses employés passent également plus de temps dans des réunions [s1]. The Decoder rapporte que le délaissement de l'embauche technique subalterne découle directement de la charge grandissante assumée par les agents d'IA [s2].",
+        "Les médias ne précisent pas combien d'employés de premier échelon travaillent encore pour l'entreprise [s1,s2]. On ignore également si Anthropic prévoit d'éliminer complètement les postes techniques débutants [s2].",
+        "Cette diminution du recrutement de premier échelon illustre la façon dont les agents logiciels peuvent modifier les perspectives des travailleurs juniors dans l'industrie des technologies [s2]. Lorsque des outils automatisés absorbent les tâches initiales, les occasions d'accès aux carrières techniques se raréfient pour les nouveaux venus [s2]."
+      ],
+      "expert": [
+        "The Decoder rapporte que la proportion de postes de débutants parmi les nouvelles embauches d'Anthropic a chuté de 27 à 9 % depuis le début de 2025 [s2]. Les agents d'IA déployés dans l'entreprise accumulaient six fois plus d'heures de travail en août 2026 [s2].",
+        "TechCrunch a souligné qu'Anthropic signalait un effectif moins débutant alors que son personnel consacre une part grandissante de son temps aux réunions [s1]."
+      ]
+    },
+    "seoTitle": "Anthropic réduit l'embauche junior avec les agents IA",
+    "dek": "La part des postes subalternes est passée de 27 à 9 % des nouvelles embauches chez Anthropic, où les agents d'IA enregistrent six fois plus d'heures.",
+    "metaDescription": "La part des postes subalternes chez Anthropic est passée de 27 à 9 % alors que les agents d'IA assument une part grandissante du travail.",
+    "keywords": [
+      "anthropic",
+      "embauche débutants",
+      "agents d'ia",
+      "emploi technologique",
+      "automatisation"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Anthropic a nettement réduit le recrutement de personnel technique débutant au cours de la dernière année [s1,s2]. La part des postes subalternes parmi les nouvelles recrues de l'entreprise est passée de 27 à 9 % depuis le début de 2025 [s2].",
+          "Ce virage s'explique par la prise en charge d'une charge de travail accrue par des agents d'IA automatisés à travers l'entreprise [s2]. Dès août 2026, les agents d'IA déployés chez Anthropic enregistraient six fois plus d'heures qu'auparavant, selon The Decoder [s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Anthropic a précisé que son équipe technique comprend moins de membres débutants à la suite d'une réorientation de ses embauches [s1]. L'entreprise indique que la composition de ses effectifs et la nature du travail accompli ont toutes deux profondément changé au cours de la dernière année [s1].",
+          "Anthropic affirme que ses employés passent également plus de temps dans des réunions [s1]. The Decoder rapporte que le délaissement de l'embauche technique subalterne découle directement de la charge grandissante assumée par les agents d'IA [s2].",
+          "Les médias ne précisent pas combien d'employés de premier échelon travaillent encore pour l'entreprise [s1,s2]. On ignore également si Anthropic prévoit d'éliminer complètement les postes techniques débutants [s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Cette diminution du recrutement de premier échelon illustre la façon dont les agents logiciels peuvent modifier les perspectives des travailleurs juniors dans l'industrie des technologies [s2]. Lorsque des outils automatisés absorbent les tâches initiales, les occasions d'accès aux carrières techniques se raréfient pour les nouveaux venus [s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "De combien l'embauche de profils juniors a-t-elle diminué chez Anthropic ?",
+        "a": "La part des postes subalternes parmi les nouvelles recrues est passée de 27 à 9 % depuis le début de 2025."
+      },
+      {
+        "q": "Quelle charge de travail les agents d'IA assument-ils chez Anthropic ?",
+        "a": "Selon The Decoder, les agents d'IA déployés dans l'entreprise enregistraient six fois plus d'heures qu'auparavant dès août 2026."
+      },
+      {
+        "q": "Anthropic prévoit-elle d'éliminer complètement les postes juniors ?",
+        "a": "On ignore si Anthropic a l'intention d'éliminer complètement les postes techniques subalternes."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Les agents"
+      },
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 201,
+    "fr": 227
+  },
+  "lens": [
+    "work"
+  ],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T14:46:09.502Z",
+      "verdict": "done",
+      "notes": [
+        "206 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T14:46:48.119Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Early-career, 27 percent, Employees, Reporting, Autonomous.",
+        "Too close to TechCrunch's wording (\"anthropic says its workforce has become less junior and…\"): say it in our own words, or quote and attribute it."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T14:46:54.774Z",
+      "verdict": "pass",
+      "notes": [
+        "The article adheres closely to the sources, accurately reporting the hiring percentages and meeting trends without speculation or hype."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T14:47:17.670Z",
+      "verdict": "pass",
+      "notes": [
+        "227 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T14:47:34.205Z",
+      "verdict": "done",
+      "notes": [
+        "en: Anthropic cuts junior hiring as AI agents take on work (54)",
+        "fr: Anthropic réduit l'embauche junior avec les agents IA (53)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T14:47:49.071Z",
+      "verdict": "done",
+      "notes": [
+        "format: people",
+        "cover: spruce/bars \"junior\""
+      ]
+    }
+  ]
+}

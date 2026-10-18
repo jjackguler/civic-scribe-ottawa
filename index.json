@@ -1,6 +1,55 @@
 {
-  "updatedAt": "2026-10-18T01:24:02.668Z",
+  "updatedAt": "2026-10-18T14:47:49.074Z",
   "items": [
+    {
+      "id": "126g7au",
+      "slug": {
+        "en": "anthropic-cuts-junior-hiring-ai-agents",
+        "fr": "anthropic-reduit-embauche-debutants-agents-ia"
+      },
+      "createdAt": "2026-10-18T14:47:49.071Z",
+      "updatedAt": "2026-10-18T14:47:49.071Z",
+      "topic": "people",
+      "format": "people",
+      "outlets": [
+        "TechCrunch",
+        "The Decoder"
+      ],
+      "times": [
+        "2026-10-17T20:21:19.000Z",
+        "2026-10-18T13:22:26.000Z"
+      ],
+      "storyIds": [
+        "126g7au",
+        "1kwzwkz"
+      ],
+      "cover": {
+        "color": "spruce",
+        "motif": "bars",
+        "en": {
+          "kicker": "People & skills",
+          "big": "junior",
+          "small": "Hiring falls as automated agents expand"
+        },
+        "fr": {
+          "kicker": "Compétences",
+          "big": "recrutement"
+        }
+      },
+      "words": 201,
+      "en": {
+        "headline": "Anthropic cuts junior hiring as automated AI agents take on workplace tasks",
+        "dek": "The share of junior roles dropped from 27 to 9 percent of new hires at Anthropic as AI agents logged six times as many hours across the firm.",
+        "news": "Anthropic has sharply reduced hiring for junior technical positions while automated software agents take on more company work.",
+        "matters": "The decline in hiring leaves junior technical job seekers facing fewer entry-level opportunities as companies rely on AI agents to handle starting tasks."
+      },
+      "fr": {
+        "headline": "Anthropic réduit l'embauche de débutants alors que les agents d'IA effectuent plus de tâches",
+        "dek": "La part des postes subalternes est passée de 27 à 9 % des nouvelles embauches chez Anthropic, où les agents d'IA enregistrent six fois plus d'heures.",
+        "news": "Anthropic a nettement freiné le recrutement pour les postes techniques subalternes pendant que des agents logiciels automatisés prennent en charge davantage de travail interne.",
+        "matters": "Ce recul des embauches laisse moins de débouchés aux chercheurs d'emploi débutants dans le secteur technique, les entreprises s'en remettant aux agents d'IA pour exécuter les tâches de base."
+      }
+    },
     {
       "id": "1k605g6",
       "slug": {
