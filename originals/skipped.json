@@ -1,5 +1,10 @@
 [
   {
+    "key": "article:1k605g6",
+    "at": "2026-10-18T14:44:37.276Z",
+    "reason": "fact guard / layout check failed twice: scene 1 (ransom): \"SCRAPING\" is too long for one row (at most 7 letters)"
+  },
+  {
     "key": "story:6hkfa1",
     "at": "2026-10-16T23:49:25.552Z",
     "reason": "the writer declined: The provided source text is too thin to sustain a 45-second explainer video without introducing details not present in the sources."
