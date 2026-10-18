@@ -1,0 +1,24 @@
+# One-off check that the voice and AI keys work. Reads account info only; spends no characters.
+name: Key check
+on:
+  push:
+    branches: [claude/key-check]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ElevenLabs
+        env:
+          K: ${{ secrets.ELEVENLABS_API_KEY }}
+        run: |
+          case "$K" in sk_*) echo "format: starts with sk_ (ok)";; "") echo "format: EMPTY";; *) echo "format: does NOT start with sk_";; esac
+          code=$(curl -s -o r.json -w '%{http_code}' -H "xi-api-key: $K" https://api.elevenlabs.io/v1/user/subscription)
+          echo "subscription HTTP $code"; jq -r 'if .tier then "tier=\(.tier) used=\(.character_count)/\(.character_limit) status=\(.status)" else (.detail|tostring) end' r.json 2>/dev/null | cut -c1-300
+          code=$(curl -s -o v.json -w '%{http_code}' -H "xi-api-key: $K" https://api.elevenlabs.io/v1/voices)
+          echo "voices HTTP $code count=$(jq '.voices|length' v.json 2>/dev/null)"
+      - name: Gemini
+        env:
+          K: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          code=$(curl -s -o g.json -w '%{http_code}' "https://generativelanguage.googleapis.com/v1beta/models?key=$K")
+          echo "models HTTP $code"
