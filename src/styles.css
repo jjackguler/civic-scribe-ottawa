@@ -35,6 +35,11 @@
   --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Newsreader", Georgia, serif;
+  --font-brand: "Bodoni Moda", Georgia, serif;
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-paper: var(--brand-paper);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-red: var(--brand-red);
 
   --radius-sm: 3px;
   --radius-md: 5px;
@@ -79,6 +84,10 @@
 }
 
 :root {
+  --brand-ink: #16181A;
+  --brand-paper: #EFE8DA;
+  --brand-gold: #D7B54A;
+  --brand-red: #D9412B;
   --radius: 5px;
   --ink: #10191b;
   --night: #0b2a2f;
@@ -133,6 +142,12 @@
 }
 
 @layer components {
+  .brand-wordmark {
+    font-family: var(--font-brand);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
   /* News headlines: semi-condensed, heavy, tight — built to scan fast. */
   /* News headlines: a heavy grotesk built for newsprint, set tight to scan fast. */
   .hl {

@@ -52,7 +52,7 @@ export const Route = createFileRoute("/")({
   head: ({ match }) =>
     seoHead(match, {
       title: { en: `${SITE.name} — ${SITE.tagline.en}`, fr: `${SITE.name} — ${SITE.tagline.fr}` },
-      description: SITE.description,
+      description: SITE.tagline,
       jsonLd: (locale) => [
         organizationLd(locale),
         {

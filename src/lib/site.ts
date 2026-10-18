@@ -13,8 +13,8 @@ export const SITE = {
    */
   domain: "aibroadsheet.com",
   tagline: {
-    en: "AI news. Human stakes.",
-    fr: "L'actualité IA. Les enjeux humains.",
+    en: "AI news, with the human stakes left in. One catch a day.",
+    fr: "L'actualité IA, sans perdre de vue les enjeux humains. Une mise au point par jour.",
   },
   description: {
     en: "Independent AI news, short videos and visual explainers. Understand artificial intelligence and its human impact, with sources linked and limits explained.",
@@ -58,6 +58,6 @@ export const SITE = {
     facebook: "https://www.facebook.com/profile.php?id=61594952624655",
     linkedin: "https://www.linkedin.com/company/aibroadsheet/",
     x: "https://x.com/aibroadsheet",
-    youtube: "https://www.youtube.com/@AIBroadsheet",
+    youtube: "https://www.youtube.com/channel/UCbs9TPhUYPPxA0aRkdT7uvQ",
   },
 } as const;

@@ -6,6 +6,7 @@ import appCss from "../styles.css?url";
 // Self-hosted variable fonts (SIL OFL): the two Latin files every page needs are preloaded.
 import grotesk from "../fonts/schibsted-grotesk-latin-wght-normal.woff2?url";
 import newsreader from "../fonts/newsreader-latin-opsz-normal.woff2?url";
+import brandFont from "@/assets/bodoni-moda-brand.woff.asset.json";
 import { LocaleProvider } from "@/lib/locale-context";
 import { MobileRuntime } from "@/components/MobileApp";
 import mobileCss from "../mobile.css?url";
@@ -76,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       // Fallbacks; every page sets its own through seoHead().
       { title: `${SITE.name} — ${SITE.tagline.en}` },
-      { name: "description", content: SITE.description.en },
+      { name: "description", content: SITE.tagline.en },
       { name: "theme-color", content: "#0B2A2F" },
       { property: "og:site_name", content: SITE.name },
       ...(SITE.social.x ? [{ name: "twitter:site", content: `@${String(SITE.social.x).replace(/\/+$/, "").split("/").pop()}` }] : []),
@@ -89,12 +90,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: mobileCss },
       { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "icon", href: "/favicon-96.png?v=editorial-b", type: "image/png", sizes: "96x96" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=editorial-b", sizes: "180x180" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=ink-gold", sizes: "180x180" },
       { rel: "alternate", type: "application/rss+xml", title: `${SITE.name} (English)`, href: "/rss.xml" },
       { rel: "alternate", type: "application/rss+xml", title: `${SITE.name} (français)`, href: "/fr/rss.xml" },
     ],
     scripts: [
+      { children: `document.fonts.add(new FontFace("Bodoni Moda", "url(${brandFont.url})", { weight: "700", style: "normal" }));` },
       // Cloudflare Web Analytics: cookieless, no personal data. Off until a token is set.
       ...(SITE.cloudflareAnalyticsToken
         ? [{ src: "https://static.cloudflareinsights.com/beacon.min.js", defer: true, "data-cf-beacon": JSON.stringify({ token: SITE.cloudflareAnalyticsToken }) }]
