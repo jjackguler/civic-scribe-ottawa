@@ -1,0 +1,42 @@
+# Renders the sample explainer in scripts/originals/sample (voice by ElevenLabs, scenes drawn
+# in code) and pushes video.mp4 to the claude/sample-video-out branch. Runs on push to
+# claude/sample-video only; nothing is published anywhere.
+name: Sample video
+on:
+  push:
+    branches: [claude/sample-video]
+    paths: ["scripts/originals/sample/**", ".github/workflows/sample-video.yml"]
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out the CC0 music
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with: { ref: assets, path: .assets, sparse-checkout: collage/music }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install FFmpeg and Chromium
+        working-directory: scripts/originals/sample
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          npm init -y >/dev/null && npm i -s playwright@1.56.1 && npx playwright install --with-deps chromium >/dev/null
+      - name: Voice the script
+        working-directory: scripts/originals/sample
+        env: { ELEVENLABS_API_KEY: "${{ secrets.ELEVENLABS_API_KEY }}" }
+        run: node voice.mjs
+      - name: Render
+        working-directory: scripts/originals/sample
+        run: node render.mjs --music "$GITHUB_WORKSPACE/.assets/collage/music/fs-cinematic-underscore--868507.mp3"
+      - uses: actions/upload-artifact@v4
+        with: { name: sample-video, path: "scripts/originals/sample/out/video.mp4" }
+      - name: Push the video to claude/sample-video-out
+        run: |
+          mkdir /tmp/pub && cp scripts/originals/sample/out/{video.mp4,timing.json} /tmp/pub/
+          cd /tmp/pub && git init -q -b claude/sample-video-out && git add -A
+          git -c user.name="AI Broadsheet Originals" -c user.email="actions@users.noreply.github.com" commit -q -m "Sample video ${GITHUB_SHA::7}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" claude/sample-video-out
