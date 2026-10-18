@@ -1,6 +1,56 @@
 {
-  "updatedAt": "2026-10-11T23:51:15.190Z",
+  "updatedAt": "2026-10-18T01:24:02.668Z",
   "items": [
+    {
+      "id": "1k605g6",
+      "slug": {
+        "en": "meta-drops-ai-scraping-policy-language",
+        "fr": "meta-retire-clause-aspiration-ia-presse"
+      },
+      "createdAt": "2026-10-18T01:24:02.665Z",
+      "updatedAt": "2026-10-18T01:24:02.665Z",
+      "topic": "business",
+      "format": "standard",
+      "outlets": [
+        "The Verge",
+        "TechCrunch"
+      ],
+      "times": [
+        "2026-10-17T15:04:36.000Z",
+        "2026-10-17T21:31:32.000Z"
+      ],
+      "storyIds": [
+        "1r3tb6y",
+        "1k605g6"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "rules",
+        "en": {
+          "kicker": "AI policies",
+          "big": "Scraping",
+          "small": "Meta removes language on news site data"
+        },
+        "fr": {
+          "kicker": "Affaires",
+          "big": "Meta",
+          "small": "Meta retire sa clause sur la presse"
+        }
+      },
+      "words": 170,
+      "en": {
+        "headline": "Meta drops policy language on scraping content and news sites for AI training",
+        "dek": "The company revised its terms following public backlash over wording that suggested it could collect publisher material to develop artificial intelligence.",
+        "news": "Meta has removed policy wording that suggested it could scrape websites, including news outlets, to train artificial intelligence models.",
+        "matters": "The change alters the written rules governing whether news sites and online publishers have their reporting harvested for artificial intelligence. For creators, it addresses growing tension over how tech companies collect digital content without explicit permission."
+      },
+      "fr": {
+        "headline": "Meta retire une clause sur l'aspiration de contenus de presse pour entraîner son IA",
+        "dek": "L'entreprise a révisé ses conditions après des critiques visant des termes qui laissaient entendre qu'elle pouvait collecter les contenus d'éditeurs en ligne.",
+        "news": "Meta a retiré de ses politiques le texte laissant entendre qu’elle pouvait aspirer des sites web, y compris des médias d’information, pour entraîner des modèles d’intelligence artificielle.",
+        "matters": "Le changement modifie les règles écrites déterminant si les reportages des sites d’information et des éditeurs en ligne peuvent être moissonnés pour l’intelligence artificielle. Pour les créateurs, cette mise au point répond aux tensions entourant la collecte de contenus numériques sans autorisation explicite par les géants technologiques."
+      }
+    },
     {
       "id": "wsr938",
       "slug": {

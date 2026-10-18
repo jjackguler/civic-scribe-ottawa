@@ -1,0 +1,326 @@
+{
+  "version": 1,
+  "id": "1k605g6",
+  "slug": {
+    "en": "meta-drops-ai-scraping-policy-language",
+    "fr": "meta-retire-clause-aspiration-ia-presse"
+  },
+  "createdAt": "2026-10-18T01:24:02.665Z",
+  "updatedAt": "2026-10-18T01:24:02.665Z",
+  "topic": "business",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "The Verge",
+      "title": "Meta removes language that may have allowed it to scrape news sites",
+      "url": "https://www.theverge.com/tech/1013409/meta-removes-language-that-may-have-allowed-it-to-scrape-news-sites",
+      "publishedAt": "2026-10-17T15:04:36.000Z",
+      "storyId": "1r3tb6y",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "TechCrunch",
+      "title": "Meta removes language that raised scraping and AI training concerns",
+      "url": "https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/",
+      "publishedAt": "2026-10-17T21:31:32.000Z",
+      "storyId": "1k605g6",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "brass",
+    "motif": "rules",
+    "en": {
+      "kicker": "AI policies",
+      "big": "Scraping",
+      "small": "Meta removes language on news site data"
+    },
+    "fr": {
+      "kicker": "Affaires",
+      "big": "Meta",
+      "small": "Meta retire sa clause sur la presse"
+    }
+  },
+  "en": {
+    "headline": "Meta drops policy language on scraping content and news sites for AI training",
+    "news": "Meta has removed policy wording that suggested it could scrape websites, including news outlets, to train artificial intelligence models.",
+    "thirty": [
+      "Meta revised terms that raised concerns regarding scraping and AI training.",
+      "The removed text suggested the firm could collect material from news sites.",
+      "A Meta spokesperson insisted crawling practices have not changed."
+    ],
+    "confirmed": [
+      {
+        "text": "Meta removed policy language that raised concerns about scraping web and news content to train artificial intelligence models.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "A Meta spokesperson says the updated terms do not alter how the company scans online pages.",
+        "by": "a Meta spokesperson",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether publishers will seek further technical verification of Meta's crawler activities."
+    ],
+    "matters": "The change alters the written rules governing whether news sites and online publishers have their reporting harvested for artificial intelligence. For creators, it addresses growing tension over how tech companies collect digital content without explicit permission.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Web scraping involves using automated software programs to scan the internet and copy text from published web pages [s1,s2]. Tech companies often rely on this copied text to train artificial intelligence, feeding massive datasets into algorithms so software can learn language patterns [s1].",
+        "Meta modified its written terms following public pushback against rules that seemed to grant broad permission to gather material from online news sites [s1]. While the company removed that specific language, a Meta spokesperson stated that the firm's actual web-crawling behaviour has not changed [s2]."
+      ],
+      "standard": [
+        "Meta has updated its terms to eliminate language that suggested the platform could scrape content from across the internet to train its artificial intelligence [s1,s2].",
+        "The change arrived following public backlash over terms that specifically indicated Meta could collect material from websites, including news publishers [s1].",
+        "Both The Verge and TechCrunch reported that Meta removed the wording that triggered concerns over automated web scraping and artificial intelligence training [s1,s2]. The contested phrases no longer appear in the company's posted documentation [s1].",
+        "A Meta spokesperson insisted that the updated language did not alter how the company scans online sites [s2]. The reporting leaves open how independent websites will monitor Meta's automated data gathering going forward.",
+        "The revision directly touches on the rights of online creators and newsrooms seeking to protect their written work from automated collection [s1].",
+        "The scraping policies determine how digital reporting is respected when large technology systems search for training data [s1,s2].",
+        "For ordinary web users and publishers, the update reflects ongoing sensitivity around how personal work and intellectual property feed commercial artificial intelligence tools [s1,s2]."
+      ],
+      "expert": [
+        "The policy adjustment addresses concerns regarding large-scale data extraction for generative model training sets [s1,s2]. While The Verge emphasized the removal of text permitting the ingestion of news content, TechCrunch focused on the firm's technical defense [s1,s2].",
+        "Meta attempted to separate contractual wording from its engineering practices, with a company spokesperson asserting that the revision represents no functional difference in crawler activity across the web [s2]."
+      ]
+    },
+    "seoTitle": "Meta drops policy language on scraping content and news",
+    "dek": "The company revised its terms following public backlash over wording that suggested it could collect publisher material to develop artificial intelligence.",
+    "metaDescription": "Meta removed policy terms suggesting it could scrape web content and news sites to train artificial intelligence after public backlash.",
+    "keywords": [
+      "meta",
+      "ai training",
+      "web scraping",
+      "news publishers",
+      "content scraping"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Meta has updated its terms to eliminate language that suggested the platform could scrape content from across the internet to train its artificial intelligence [s1,s2].",
+          "The change arrived following public backlash over terms that specifically indicated Meta could collect material from websites, including news publishers [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Both The Verge and TechCrunch reported that Meta removed the wording that triggered concerns over automated web scraping and artificial intelligence training [s1,s2]. The contested phrases no longer appear in the company's posted documentation [s1].",
+          "A Meta spokesperson insisted that the updated language did not alter how the company scans online sites [s2]. The reporting leaves open how independent websites will monitor Meta's automated data gathering going forward."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The revision directly touches on the rights of online creators and newsrooms seeking to protect their written work from automated collection [s1].",
+          "The scraping policies determine how digital reporting is respected when large technology systems search for training data [s1,s2].",
+          "For ordinary web users and publishers, the update reflects ongoing sensitivity around how personal work and intellectual property feed commercial artificial intelligence tools [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Did Meta change how it scans online websites?",
+        "a": "A Meta spokesperson insisted that the updated language did not alter how the company scans online sites."
+      },
+      {
+        "q": "Why did Meta revise its policy wording?",
+        "a": "Meta changed the terms following public backlash over wording indicating it could collect material from websites, including news publishers."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Meta retire une clause sur l'aspiration de contenus de presse pour entraîner son IA",
+    "news": "Meta a retiré de ses politiques le texte laissant entendre qu’elle pouvait aspirer des sites web, y compris des médias d’information, pour entraîner des modèles d’intelligence artificielle.",
+    "thirty": [
+      "Meta a révisé des conditions qui suscitaient des craintes quant à l’aspiration de données et à l’entraînement de l’IA.",
+      "Le texte supprimé laissait entendre que la firme pouvait recueillir des contenus sur des sites de nouvelles.",
+      "Un porte-parole de Meta insiste sur le fait que les pratiques d’indexation n’ont pas changé."
+    ],
+    "confirmed": [
+      {
+        "text": "Meta a retiré des formulations de ses politiques qui suscitaient des inquiétudes quant à l’aspiration de contenus web et de presse pour entraîner des modèles d’intelligence artificielle.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Un porte-parole de Meta affirme que les conditions mises à jour ne changent rien à la manière dont l’entreprise explore les pages en ligne.",
+        "by": "un porte-parole de Meta",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "La question de savoir si les éditeurs chercheront à vérifier techniquement les activités des robots d’indexation de Meta."
+    ],
+    "matters": "Le changement modifie les règles écrites déterminant si les reportages des sites d’information et des éditeurs en ligne peuvent être moissonnés pour l’intelligence artificielle. Pour les créateurs, cette mise au point répond aux tensions entourant la collecte de contenus numériques sans autorisation explicite par les géants technologiques.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "L’aspiration de données consiste à utiliser des logiciels automatisés pour parcourir le web et copier le texte de pages publiées [s1,s2]. Les entreprises technologiques s’appuient souvent sur ces textes pour entraîner l’intelligence artificielle, fournissant d’immenses corpus à des algorithmes afin que le logiciel apprenne les structures du langage [s1].",
+        "Meta a modifié ses règles écrites à la suite de réactions publiques contre des clauses semblant accorder une vaste autorisation de collecter des articles de presse en ligne [s1]. Meta a retiré ce passage spécifique, mais un porte-parole a affirmé que les pratiques réelles d’indexation de la société n’ont pas changé [s2]."
+      ],
+      "standard": [
+        "Meta a mis à jour ses conditions pour retirer un passage qui laissait entendre que la plateforme pouvait aspirer des contenus en ligne pour entraîner son intelligence artificielle [s1,s2].",
+        "Le changement survient après de vives critiques visant des modalités indiquant précisément que Meta pouvait collecter des contenus sur des sites web, notamment chez les éditeurs de presse [s1].",
+        "The Verge et TechCrunch ont tous deux rapporté que Meta a retiré la formulation ayant suscité des craintes sur l’aspiration automatisée et l’entraînement de l’intelligence artificielle [s1,s2]. Les mentions contestées ne figurent plus dans la documentation publiée par l’entreprise [s1].",
+        "Un porte-parole de Meta a soutenu que les conditions révisées ne modifient pas la façon dont l’entreprise explore les sites web [s2]. Les informations disponibles ne précisent pas comment les sites indépendants surveilleront dorénavant la collecte automatisée de Meta.",
+        "Cette révision touche directement les droits des créateurs en ligne et des salles de rédaction qui cherchent à protéger leurs écrits du moissonnage automatisé [s1].",
+        "Les politiques d’aspiration encadrent la protection du journalisme numérique lorsque de grands systèmes technologiques recherchent des données d’entraînement [s1,s2].",
+        "Cette mise à jour reflète, pour les internautes et les éditeurs, la sensibilité persistante entourant l’usage du travail personnel et de la propriété intellectuelle pour alimenter des outils commerciaux d’intelligence artificielle [s1,s2]."
+      ],
+      "expert": [
+        "Cet ajustement de politique répond aux inquiétudes relatives à l’extraction massive de données destinée aux ensembles d’entraînement des modèles génératifs [s1,s2]. Si The Verge a mis l’accent sur la suppression du texte autorisant l’ingestion de contenus de presse, TechCrunch s’est concentré sur la défense technique de l’entreprise [s1,s2].",
+        "Meta a cherché à dissocier les formulations contractuelles de ses pratiques d’ingénierie, un porte-parole affirmant que la révision ne traduit aucun changement fonctionnel dans l’activité de ses robots sur le web [s2]."
+      ]
+    },
+    "seoTitle": "Meta retire sa clause sur le moissonnage pour l'IA",
+    "dek": "L'entreprise a révisé ses conditions après des critiques visant des termes qui laissaient entendre qu'elle pouvait collecter les contenus d'éditeurs en ligne.",
+    "metaDescription": "Meta a supprimé de ses conditions le texte suggérant l'aspiration de sites de presse pour entraîner ses modèles d'intelligence artificielle.",
+    "keywords": [
+      "meta",
+      "intelligence artificielle",
+      "aspiration de contenus",
+      "presse en ligne",
+      "entraînement ia"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Meta a mis à jour ses conditions pour retirer un passage qui laissait entendre que la plateforme pouvait aspirer des contenus en ligne pour entraîner son intelligence artificielle [s1,s2].",
+          "Le changement survient après de vives critiques visant des modalités indiquant précisément que Meta pouvait collecter des contenus sur des sites web, notamment chez les éditeurs de presse [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "The Verge et TechCrunch ont tous deux rapporté que Meta a retiré la formulation ayant suscité des craintes sur l’aspiration automatisée et l’entraînement de l’intelligence artificielle [s1,s2]. Les mentions contestées ne figurent plus dans la documentation publiée par l’entreprise [s1].",
+          "Un porte-parole de Meta a soutenu que les conditions révisées ne modifient pas la façon dont l’entreprise explore les sites web [s2]. Les informations disponibles ne précisent pas comment les sites indépendants surveilleront dorénavant la collecte automatisée de Meta."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Cette révision touche directement les droits des créateurs en ligne et des salles de rédaction qui cherchent à protéger leurs écrits du moissonnage automatisé [s1].",
+          "Les politiques d’aspiration encadrent la protection du journalisme numérique lorsque de grands systèmes technologiques recherchent des données d’entraînement [s1,s2].",
+          "Cette mise à jour reflète, pour les internautes et les éditeurs, la sensibilité persistante entourant l’usage du travail personnel et de la propriété intellectuelle pour alimenter des outils commerciaux d’intelligence artificielle [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "La pratique de Meta concernant l'exploration du web a-t-elle changé ?",
+        "a": "Un porte-parole de Meta a affirmé que les conditions révisées ne modifient pas la façon dont l'entreprise explore les sites web."
+      },
+      {
+        "q": "Pourquoi Meta a-t-elle révisé sa politique ?",
+        "a": "La révision est intervenue après de vives critiques visant des mentions indiquant que Meta pouvait collecter des contenus sur des sites web d'éditeurs."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 170,
+    "fr": 205
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T01:20:30.323Z",
+      "verdict": "done",
+      "notes": [
+        "175 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T01:21:53.194Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Clear.",
+        "Too close to TechCrunch's wording (\"not reflect a change in the way meta crawls…\"): say it in our own words, or quote and attribute it."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T01:23:12.990Z",
+      "verdict": "pass",
+      "notes": []
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T01:23:43.010Z",
+      "verdict": "pass",
+      "notes": [
+        "205 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T01:23:56.470Z",
+      "verdict": "done",
+      "notes": [
+        "en: Meta drops policy language on scraping content and news (55)",
+        "fr: Meta retire sa clause sur le moissonnage pour l'IA (50)",
+        "en seoTitle dropped (not in the sources: Drops, Policy)",
+        "en seoTitle clipped to 60 characters"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-18T01:24:02.665Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: brass/rules \"Scraping\"",
+        "fr big word not from the reporting: used \"Meta\""
+      ]
+    }
+  ]
+}
