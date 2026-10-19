@@ -1,6 +1,35 @@
 {
- "updatedAt": "2026-10-19T13:18:31.663Z",
+ "updatedAt": "2026-10-19T14:48:42.031Z",
  "items": [
+  {
+   "id": "202610191450-titanic-01",
+   "kind": "explainer",
+   "section": "culture",
+   "publishedAt": "2026-10-19T14:48:42.031Z",
+   "title": "The Sir Jack Files #8, Part 1: The Case of the Unsinkable Ship",
+   "summary": "April 1912: ignored ice warnings, a lookout’s call, compartments built for four floods and twenty lifeboats for 2,200 people. How and why Titanic sank.",
+   "durationSec": 69,
+   "sources": [
+    {
+     "name": "Encyclopedia Titanica",
+     "url": "https://www.encyclopedia-titanica.org/"
+    },
+    {
+     "name": "US Senate & British Wreck Commissioner inquiries (1912)",
+     "url": "https://www.titanicinquiry.org/"
+    },
+    {
+     "name": "Encyclopaedia Britannica: Titanic",
+     "url": "https://www.britannica.com/topic/Titanic"
+    }
+   ],
+   "transcript": "Case eight, part one. April fourteenth, nineteen twelve. The largest ship afloat crosses a calm, black Atlantic. All day, the wireless room took ice warnings from other ships. Not all of them reached the bridge. Eleven forty at night. A lookout in the crow's nest sees a shape ahead, and rings the bell. Iceberg, right ahead. Too late to turn. The ice scraped along the starboard side and opened the forward compartments. She could float with four flooded. At least five were open. There were twenty lifeboats, with room for about eleven hundred and seventy people. More than twenty-two hundred were aboard. At two twenty in the morning, Titanic was gone. More than fifteen hundred people died. After that night the rules changed: lifeboats for all, radios on watch all night, an ice patrol. Part two: why we never stopped watching.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@308f98e01fc14d771e8e110ef80af8814d19553d/originals/files/202610191450-titanic-01.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@308f98e01fc14d771e8e110ef80af8814d19553d/originals/files/202610191450-titanic-01.jpg"
+  },
   {
    "id": "202610191320-sir-jack-07",
    "kind": "explainer",
