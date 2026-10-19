@@ -1,0 +1,284 @@
+{
+  "slug": "unsinkable-ship",
+  "title": "The Case of the Unsinkable Ship",
+  "series": "The Sir Jack Files",
+  "episode": 8,
+  "grain": 0.14,
+  "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+  "music": "Elegiac cinematic score for a night at sea in 1912: slow solo cello and piano, soft strings, distant ship bell, sorrowful but dignified, minor key, no vocals.",
+  "ambience": "Calm open ocean at night, gentle water lapping against a large ship's hull, faint wind, distant engine hum, no music.",
+  "sources": [
+    {
+      "name": "Encyclopedia Titanica",
+      "url": "https://www.encyclopedia-titanica.org/"
+    },
+    {
+      "name": "US Senate & British Wreck Commissioner inquiries (1912)",
+      "url": "https://www.titanicinquiry.org/"
+    },
+    {
+      "name": "Encyclopaedia Britannica: Titanic",
+      "url": "https://www.britannica.com/topic/Titanic"
+    }
+  ],
+  "shots": [
+    {
+      "id": "t-ocean",
+      "say": "Case eight, part one. April fourteenth, nineteen twelve. The largest ship afloat crosses a calm, black Atlantic.",
+      "cam": {
+        "from": [
+          1.16,
+          0,
+          0.03
+        ],
+        "to": [
+          1.04,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {
+        "fog": 0.2
+      },
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.3,
+          "text": "THE SIR JACK FILES · CASE 08 · PART 1"
+        },
+        {
+          "t": "title",
+          "at": 1,
+          "lines": [
+            "THE CASE OF THE",
+            "UNSINKABLE",
+            "SHIP"
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "id": "ship-horn",
+          "at": 0.6,
+          "dur": 4,
+          "gain": -14,
+          "prompt": "Deep steamship horn far away on a calm sea at night"
+        }
+      ]
+    },
+    {
+      "id": "t-radio",
+      "say": "All day, the wireless room took ice warnings from other ships. Not all of them reached the bridge.",
+      "cam": {
+        "from": [
+          1.04,
+          0.02,
+          0.02
+        ],
+        "to": [
+          1.18,
+          -0.02,
+          -0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "type",
+          "at": 0.4,
+          "text": "ICE WARNINGS:\nSEVERAL. HEEDED: TOO FEW.",
+          "y": 0.12
+        }
+      ],
+      "sfx": [
+        {
+          "id": "morse",
+          "at": 0.2,
+          "dur": 6,
+          "gain": -16,
+          "prompt": "Old wireless telegraph morse code beeping with static crackle"
+        }
+      ]
+    },
+    {
+      "id": "t-nest",
+      "say": "Eleven forty at night. A lookout in the crow's nest sees a shape ahead, and rings the bell. Iceberg, right ahead.",
+      "cam": {
+        "from": [
+          1.05,
+          0,
+          0
+        ],
+        "to": [
+          1.2,
+          0,
+          0.02
+        ]
+      },
+      "fx": {
+        "fog": 0.3
+      },
+      "ov": [
+        {
+          "t": "type",
+          "at": 0.3,
+          "text": "23:40",
+          "y": 0.12
+        },
+        {
+          "t": "quote",
+          "w": "Iceberg",
+          "at": -0.1,
+          "text": "“Iceberg, right ahead.”",
+          "by": "lookout Frederick Fleet, as reported to the inquiries"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "bell3",
+          "w": "rings",
+          "at": 0,
+          "dur": 3,
+          "gain": -10,
+          "prompt": "Ship's brass bell struck three times sharply at night"
+        }
+      ]
+    },
+    {
+      "id": "t-hull",
+      "say": "Too late to turn. The ice scraped along the starboard side and opened the forward compartments. She could float with four flooded. At least five were open.",
+      "cam": {
+        "from": [
+          1.16,
+          0,
+          0
+        ],
+        "to": [
+          1.05,
+          0,
+          0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "label",
+          "w": "four",
+          "at": -0.1,
+          "text": "BUILT FOR 4 FLOODED · AT LEAST 5 OPEN",
+          "sub": "watertight compartments, forward",
+          "y": 0.2
+        }
+      ],
+      "sfx": [
+        {
+          "id": "scrape",
+          "at": 0.3,
+          "dur": 4,
+          "gain": -10,
+          "prompt": "Long deep metallic scraping and grinding of a ship hull against ice, low rumble"
+        },
+        {
+          "id": "water-rush",
+          "at": 3,
+          "dur": 6,
+          "gain": -14,
+          "prompt": "Water rushing into a large metal compartment, deep and echoing"
+        }
+      ]
+    },
+    {
+      "id": "t-boats",
+      "say": "There were twenty lifeboats, with room for about eleven hundred and seventy people. More than twenty-two hundred were aboard.",
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          0.03
+        ],
+        "to": [
+          1.16,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "counter",
+          "w": "twenty",
+          "at": -0.1,
+          "from": 0,
+          "to": 1178,
+          "label": "lifeboat seats, for 2,200+ aboard"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "oars",
+          "at": 0.5,
+          "dur": 7,
+          "gain": -18,
+          "prompt": "Wooden oars rowing slowly on calm water at night, quiet voices far away"
+        }
+      ]
+    },
+    {
+      "id": "t-stars",
+      "say": "At two twenty in the morning, Titanic was gone. More than fifteen hundred people died. After that night the rules changed: lifeboats for all, radios on watch all night, an ice patrol. Part two: why we never stopped watching.",
+      "cam": {
+        "from": [
+          1.12,
+          0,
+          0.02
+        ],
+        "to": [
+          1.03,
+          0,
+          0
+        ]
+      },
+      "fx": {
+        "fog": 0.2
+      },
+      "ov": [
+        {
+          "t": "type",
+          "at": 0.3,
+          "text": "02:20",
+          "y": 0.12
+        },
+        {
+          "t": "check",
+          "w": "lifeboats",
+          "at": -0.1,
+          "items": [
+            "Lifeboats for everyone aboard",
+            "Radio on watch 24 hours",
+            "An international ice patrol"
+          ],
+          "ws": [
+            "lifeboats",
+            "radios",
+            "ice"
+          ]
+        },
+        {
+          "t": "stamp",
+          "w": "watching",
+          "at": 0.2,
+          "text": "TO BE CONTINUED"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "calm-sea",
+          "at": 0,
+          "dur": 8,
+          "gain": -20,
+          "prompt": "Utterly calm sea at night, faint lapping water, deep silence"
+        }
+      ]
+    }
+  ]
+}
