@@ -1,6 +1,34 @@
 {
- "updatedAt": "2026-10-19T13:17:25.055Z",
+ "updatedAt": "2026-10-19T13:18:31.663Z",
  "items": [
+  {
+   "id": "202610191320-sir-jack-07",
+   "kind": "explainer",
+   "publishedAt": "2026-10-19T13:18:31.663Z",
+   "title": "The Sir Jack Files #7: The Case of the Invisible Hands",
+   "summary": "TIME revealed that workers in Nairobi were paid about $1.32–$2 an hour to label harmful text so ChatGPT would learn what not to say. The people behind the polite machine.",
+   "durationSec": 64,
+   "sources": [
+    {
+     "name": "TIME, Billy Perrigo (Jan 18, 2023)",
+     "url": "https://time.com/6247678/openai-chatgpt-kenya-workers/"
+    },
+    {
+     "name": "Business & Human Rights Resource Centre",
+     "url": "https://www.business-humanrights.org/en/latest-news/openai-and-sama-hired-underpaid-workers-in-kenia-to-filter-toxic-content-for-chatgpt"
+    },
+    {
+     "name": "BigDATAwire",
+     "url": "https://www.hpcwire.com/bigdatawire/2023/01/20/openai-outsourced-data-labeling-to-kenyan-workers-earning-less-than-2-per-hour-time-report/"
+    }
+   ],
+   "transcript": "Case seven. Every chatbot you have ever talked to has a backstage. And someone is always working back there. January twenty twenty-three. TIME reporter Billy Perrigo revealed how OpenAI made ChatGPT less toxic. Through an outsourcing firm called Sama, workers in Nairobi labelled tens of thousands of snippets of harmful text, so the model could learn what not to say. Their take-home pay: about one dollar thirty-two to two dollars an hour. Workers told TIME the content left them mentally scarred. Sama disputed some figures, and ended the contract eight months early. AI looks automatic. It isn't. Behind every polite answer are people, and their dignity is part of the product. So next time a machine sounds polite, remember who taught it. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@e4d22bcefe231f8ba010190e57b75b0a5087276e/originals/files/202610191320-sir-jack-07.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@e4d22bcefe231f8ba010190e57b75b0a5087276e/originals/files/202610191320-sir-jack-07.jpg"
+  },
   {
    "id": "202610191320-sir-jack-06",
    "kind": "explainer",
