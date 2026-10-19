@@ -1,0 +1,42 @@
+{
+  "slug": "suspicion-machine",
+  "title": "The Case of the Suspicion Machine",
+  "series": "The Sir Jack Files",
+  "episode": 6,
+  "grain": 0.14,
+  "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+  "music": "1930s art deco film-noir jazz: smoky muted trumpet, walking upright bass, brushed snare, soft big-band brass swells, elegant and mysterious, minor key, no vocals.",
+  "ambience": "Night city in light rain, distant elevated train rumble, far traffic, no music.",
+  "sources": [
+    { "name": "Lighthouse Reports, Suspicion Machines (2023)", "url": "https://www.lighthousereports.com/suspicion-machines-methodology/" },
+    { "name": "WIRED, Inside the Suspicion Machine (2023)", "url": "https://www.lighthousereports.com/?p=2584" },
+    { "name": "Pulitzer Center", "url": "https://pulitzercenter.org/node/29358" }
+  ],
+  "shots": [
+    { "id": "d-skyline", "say": "Case six. A city let a machine decide whom to suspect. Two newsrooms opened it up.",
+      "cam": { "from": [1.16, 0, 0.03], "to": [1.04, 0, -0.02] }, "fx": { "rain": 0.4, "fog": 0.3 },
+      "ov": [ { "t": "kicker", "at": 0.3, "text": "THE SIR JACK FILES · CASE 06" }, { "t": "title", "at": 1.0, "lines": ["THE CASE OF THE", "SUSPICION", "MACHINE"] } ],
+      "sfx": [ { "id": "train-far", "at": 0.5, "dur": 6, "gain": -20, "prompt": "Distant elevated train rumbling over steel tracks at night in the rain" } ] },
+    { "id": "d-office", "say": "Rotterdam, the Netherlands. From twenty seventeen to twenty twenty-one, the city scored people on welfare with an algorithm. The top ten percent were investigated for fraud.",
+      "cam": { "from": [1.04, 0.02, 0.02], "to": [1.18, -0.02, -0.02] }, "fx": { "fog": 0.15 },
+      "ov": [ { "t": "type", "at": 0.4, "text": "ROTTERDAM\n2017 – 2021", "y": 0.12 }, { "t": "label", "w": "top", "at": -0.1, "text": "TOP 10% → INVESTIGATED", "sub": "people on welfare, ranked by a risk score", "y": 0.86 } ],
+      "sfx": [ { "id": "typewriter2", "at": 0.4, "dur": 3, "gain": -14, "prompt": "Vintage typewriter typing a short line with a carriage bell" } ] },
+    { "id": "d-dial", "say": "The model weighed three hundred and fifteen inputs: age, gender, language skills, neighbourhood, even a caseworker's impressions. Out came a score from zero to one.",
+      "cam": { "from": [1.16, 0, 0.0], "to": [1.05, 0, 0.02] }, "fx": {},
+      "ov": [ { "t": "counter", "w": "three", "at": -0.1, "from": 0, "to": 315, "label": "inputs into one risk score" } ],
+      "sfx": [ { "id": "gauge", "at": 1.0, "dur": 4, "gain": -16, "prompt": "Old mechanical gauge needle ticking and creaking as it rises, then a soft click" } ] },
+    { "id": "d-lobby", "say": "Reporters at Lighthouse Reports and WIRED did something rare. Through freedom of information requests, they obtained the model itself, and tested it from the inside.",
+      "cam": { "from": [1.04, 0, 0.03], "to": [1.18, 0, -0.02] }, "fx": { "fog": 0.2 },
+      "ov": [ { "t": "label", "w": "freedom", "at": -0.1, "text": "THEY GOT THE CODE", "sub": "via freedom of information requests", "y": 0.18 } ],
+      "sfx": [ { "id": "doors", "at": 0.5, "dur": 3, "gain": -14, "prompt": "Heavy brass revolving door turning in a quiet marble lobby, footsteps echo" } ] },
+    { "id": "d-scales", "say": "They found it treated people differently by ethnicity and gender, with flaws that made it both inaccurate and unfair. The city had already paused it, and later dropped plans for a new one.",
+      "cam": { "from": [1.18, 0, 0.0], "to": [1.05, 0, 0.02] }, "fx": {},
+      "ov": [ { "t": "label", "w": "inaccurate", "at": -0.1, "text": "INACCURATE · UNFAIR", "sub": "findings of the Lighthouse Reports investigation", "y": 0.15 } ],
+      "sfx": [ { "id": "scale-creak", "at": 0.5, "dur": 3, "gain": -16, "prompt": "Brass balance scale creaking and settling, a soft metallic clink" } ] },
+    { "id": "d-train", "say": "A machine can sort people. Only people can be held to account for it. And sometimes it takes a reporter to open the box. Case closed.",
+      "cam": { "from": [1.14, 0, 0.03], "to": [1.04, 0, 0.0] }, "fx": { "rain": 0.3, "fog": 0.2 },
+      "ov": [ { "t": "stamp", "w": "closed", "at": -0.05, "text": "CASE CLOSED" } ],
+      "sfx": [ { "id": "train-pass", "at": 0.0, "dur": 8, "gain": -16, "prompt": "Elevated train passing overhead with rhythmic clatter, fading away" },
+               { "id": "stamp", "w": "closed", "at": -0.05, "dur": 1, "gain": -8, "prompt": "Single heavy rubber stamp thud on paper on a wooden desk" } ] }
+  ]
+}
