@@ -204,7 +204,8 @@ function overlay(o, k, fade) {
     const y = (o.y ?? 0.72) * H, p = out3(k / 0.7);
     band(y - 120, y + 140, 0.5 * p);
     x.fillStyle = GOLD; x.fillRect(W / 2 - 60 * p, y - 78, 120 * p, 3);
-    text(o.text, W / 2, y + (1 - p) * 20, `800 54px ${SANS}`, PAPER, { track: 5, alpha: p });
+    x.font = `800 54px ${SANS}`; x.letterSpacing = "5px"; const fit = Math.min(54, 54 * 960 / x.measureText(o.text).width); x.letterSpacing = "0px";
+    text(o.text, W / 2, y + (1 - p) * 20, `800 ${fit.toFixed(0)}px ${SANS}`, PAPER, { track: 5, alpha: p });
     if (o.sub) for (const [i, l] of wrap(o.sub, `italic 500 40px ${SERIF}`, 860).entries()) text(l, W / 2, y + 62 + i * 50, `italic 500 40px ${SERIF}`, GOLD, { alpha: clamp((k - 0.4) / 0.6) });
   } else if (o.t === "counter") {
     const p = out3(k / 1.6), v = Math.round(o.from + (o.to - o.from) * p), y = H * 0.44;
