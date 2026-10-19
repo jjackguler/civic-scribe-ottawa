@@ -8,129 +8,446 @@
   "music": "Tense minimal film-noir underscore for a mystery about deception: low pulsing synth bass, sparse muted trumpet, ticking clock texture, brushed snare, slow and suspenseful, minor key, no vocals.",
   "ambience": "Quiet city night in light rain, distant traffic, a faint electrical hum of an office building, no music.",
   "sources": [
-    { "name": "Fortune / Arup statement (May 2024)", "url": "https://fortune.com/europe/2024/05/17/arup-deepfake-fraud-scam-victim-hong-kong-25-million-cfo" },
-    { "name": "World Economic Forum (Rob Greig, Arup)", "url": "https://www.weforum.org/stories/2025/02/deepfake-ai-cybercrime-arup" },
-    { "name": "Construction Briefing", "url": "https://www.constructionbriefing.com/news/arup-employee-falls-victim-to-us-25-million-deepfake-video-call-scam/8037338.article" }
+    {
+      "name": "Fortune / Arup statement (May 2024)",
+      "url": "https://fortune.com/europe/2024/05/17/arup-deepfake-fraud-scam-victim-hong-kong-25-million-cfo"
+    },
+    {
+      "name": "World Economic Forum (Rob Greig, Arup)",
+      "url": "https://www.weforum.org/stories/2025/02/deepfake-ai-cybercrime-arup"
+    },
+    {
+      "name": "Construction Briefing",
+      "url": "https://www.constructionbriefing.com/news/arup-employee-falls-victim-to-us-25-million-deepfake-video-call-scam/8037338.article"
+    }
   ],
   "shots": [
     {
       "id": "eyes",
       "say": "Case two. A video call. Every face on the screen belonged to someone you knew. None of them were real.",
-      "cam": { "from": [1.16, 0, 0.04], "to": [1.04, 0, -0.02] },
+      "cam": {
+        "from": [
+          1.16,
+          0,
+          0.04
+        ],
+        "to": [
+          1.04,
+          0,
+          -0.02
+        ]
+      },
       "fx": {},
       "ov": [
-        { "t": "kicker", "at": 0.3, "text": "THE SIR JACK FILES · CASE 02" },
-        { "t": "title", "at": 1.0, "lines": ["THE CASE OF THE", "FACES THAT", "WEREN'T THERE"] }
+        {
+          "t": "kicker",
+          "at": 0.3,
+          "text": "THE SIR JACK FILES · CASE 02"
+        },
+        {
+          "t": "title",
+          "at": 1,
+          "lines": [
+            "THE CASE OF THE",
+            "FACES THAT",
+            "WEREN'T THERE"
+          ]
+        }
       ],
       "sfx": [
-        { "id": "drone", "at": 0.0, "dur": 6, "gain": -14, "prompt": "Low ominous cinematic drone swelling slowly, dark and tense" },
-        { "id": "ring", "w": "video", "at": 0, "dur": 2, "gain": -16, "prompt": "Video call incoming ringtone, soft modern digital chime, two short tones" }
+        {
+          "id": "drone",
+          "at": 0,
+          "dur": 6,
+          "gain": -14,
+          "prompt": "Low ominous cinematic drone swelling slowly, dark and tense"
+        },
+        {
+          "id": "ring",
+          "w": "video",
+          "at": 0,
+          "dur": 2,
+          "gain": -16,
+          "prompt": "Video call incoming ringtone, soft modern digital chime, two short tones"
+        }
       ]
     },
     {
       "id": "tower",
       "say": "Hong Kong, January twenty twenty-four. An employee at the engineering firm Arup gets an email from the company's chief financial officer. A secret transaction.",
-      "cam": { "from": [1.05, 0.02, 0.05], "to": [1.2, -0.02, -0.04] },
-      "fx": { "rain": 0.7 },
+      "cam": {
+        "from": [
+          1.05,
+          0.02,
+          0.05
+        ],
+        "to": [
+          1.2,
+          -0.02,
+          -0.04
+        ]
+      },
+      "fx": {
+        "rain": 0.7
+      },
       "ov": [
-        { "t": "type", "at": 0.5, "text": "HONG KONG\nJANUARY 2024", "y": 0.16 },
-        { "t": "label", "w": "email", "at": 0, "text": "FROM: \"CFO\"", "sub": "Subject: a secret transaction", "y": 0.7 }
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "HONG KONG\nJANUARY 2024",
+          "y": 0.16
+        },
+        {
+          "t": "label",
+          "w": "email",
+          "at": 0,
+          "text": "FROM: \"CFO\"",
+          "sub": "Subject: a secret transaction",
+          "y": 0.7
+        }
       ],
       "sfx": [
-        { "id": "rain-umbrella", "at": 0.0, "dur": 8, "gain": -18, "prompt": "Rain falling on an umbrella while walking on a city sidewalk, close" },
-        { "id": "email", "w": "email", "at": 0, "dur": 1, "gain": -14, "prompt": "Short soft email notification ping" }
+        {
+          "id": "rain-umbrella",
+          "at": 0,
+          "dur": 8,
+          "gain": -18,
+          "prompt": "Rain falling on an umbrella while walking on a city sidewalk, close"
+        },
+        {
+          "id": "email",
+          "w": "email",
+          "at": 0,
+          "dur": 1,
+          "gain": -14,
+          "prompt": "Short soft email notification ping"
+        }
       ]
     },
     {
       "id": "balcony",
       "say": "The employee suspects phishing. So the fraudsters send an invitation. A video call with the bosses.",
-      "cam": { "from": [1.2, -0.03, 0.02], "to": [1.06, 0.02, 0.0] },
-      "fx": { "fog": 0.15 },
+      "cam": {
+        "from": [
+          1.2,
+          -0.03,
+          0.02
+        ],
+        "to": [
+          1.06,
+          0.02,
+          0
+        ]
+      },
+      "fx": {
+        "fog": 0.15
+      },
       "ov": [
-        { "t": "label", "w": "phishing", "at": 0, "text": "FIRST INSTINCT: PHISHING", "sub": "the employee was suspicious", "y": 0.2 }
+        {
+          "t": "label",
+          "w": "phishing",
+          "at": 0,
+          "text": "FIRST INSTINCT: PHISHING",
+          "sub": "the employee was suspicious",
+          "y": 0.2
+        }
       ],
       "sfx": [
-        { "id": "lighter", "at": 0.3, "dur": 2, "gain": -16, "prompt": "Zippo lighter flick open and ignite, then a slow exhale, quiet night" },
-        { "id": "wind-high", "at": 0.0, "dur": 7, "gain": -26, "prompt": "Soft wind high on a city balcony at night, distant traffic below" }
+        {
+          "id": "lighter",
+          "at": 0.3,
+          "dur": 2,
+          "gain": -16,
+          "prompt": "Zippo lighter flick open and ignite, then a slow exhale, quiet night"
+        },
+        {
+          "id": "wind-high",
+          "at": 0,
+          "dur": 7,
+          "gain": -26,
+          "prompt": "Soft wind high on a city balcony at night, distant traffic below"
+        }
       ]
     },
     {
       "id": "faces",
       "say": "On the screen, the finance chief and other colleagues. Familiar faces, familiar voices. Every one of them a deepfake.",
-      "cam": { "from": [1.04, 0, 0.0], "to": [1.16, 0, 0.02] },
-      "fx": { "glitch": 0.5 },
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          0
+        ],
+        "to": [
+          1.16,
+          0,
+          0.02
+        ]
+      },
+      "fx": {
+        "glitch": 0.5
+      },
       "ov": [
-        { "t": "stamp", "w": "deepfake", "at": 0.1, "text": "DEEPFAKE" }
+        {
+          "t": "stamp",
+          "w": "deepfake",
+          "at": 0.1,
+          "text": "DEEPFAKE"
+        }
       ],
       "sfx": [
-        { "id": "call-murmur", "at": 0.2, "dur": 6, "gain": -22, "prompt": "Muffled business video call chatter, several people talking through laptop speakers" },
-        { "id": "glitch", "w": "deepfake", "at": -0.1, "dur": 2, "gain": -10, "prompt": "Harsh digital glitch and static burst, video signal breaking up" }
+        {
+          "id": "call-murmur",
+          "at": 0.2,
+          "dur": 6,
+          "gain": -22,
+          "prompt": "Muffled business video call chatter, several people talking through laptop speakers"
+        },
+        {
+          "id": "glitch",
+          "w": "deepfake",
+          "at": -0.1,
+          "dur": 2,
+          "gain": -10,
+          "prompt": "Harsh digital glitch and static burst, video signal breaking up"
+        }
       ]
     },
     {
       "id": "runway",
       "say": "Fifteen transfers. Five bank accounts. Two hundred million Hong Kong dollars, about twenty-five million US.",
-      "cam": { "from": [1.04, 0, 0.06], "to": [1.22, 0, -0.04] },
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          0.06
+        ],
+        "to": [
+          1.22,
+          0,
+          -0.04
+        ]
+      },
       "fx": {},
       "ov": [
-        { "t": "counter", "w": "fifteen", "at": -0.1, "from": 0, "to": 15, "suffix": "", "label": "transfers" },
-        { "t": "counter", "w": "five", "at": 0, "from": 0, "to": 5, "suffix": "", "label": "bank accounts" },
-        { "t": "counter", "w": "two", "at": 0, "from": 0, "to": 25.6, "prefix": "US$", "suffix": "M", "label": "HK$200 million" }
+        {
+          "t": "counter",
+          "w": "fifteen",
+          "at": -0.1,
+          "from": 0,
+          "to": 15,
+          "suffix": "",
+          "label": "transfers"
+        },
+        {
+          "t": "counter",
+          "w": "five",
+          "at": 0,
+          "from": 0,
+          "to": 5,
+          "suffix": "",
+          "label": "bank accounts"
+        },
+        {
+          "t": "counter",
+          "w": "two",
+          "at": 0,
+          "from": 0,
+          "to": 25.6,
+          "prefix": "US$",
+          "suffix": "M",
+          "label": "HK$200 million"
+        }
       ],
       "sfx": [
-        { "id": "stamps", "w": "fifteen", "at": 0, "dur": 4, "gain": -14, "prompt": "Rapid series of bank transfer confirmation clicks and soft cash register chimes" }
+        {
+          "id": "stamps",
+          "w": "fifteen",
+          "at": 0,
+          "dur": 4,
+          "gain": -14,
+          "prompt": "Rapid series of bank transfer confirmation clicks and soft cash register chimes"
+        }
       ]
     },
     {
       "id": "shadow",
       "say": "The truth only surfaced when the employee checked with head office.",
-      "cam": { "from": [1.04, 0, -0.04], "to": [1.16, 0, 0.04] },
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          -0.04
+        ],
+        "to": [
+          1.16,
+          0,
+          0.04
+        ]
+      },
       "fx": {},
       "ov": [
-        { "t": "type", "at": 0.6, "text": "CHECK WITH HEAD OFFICE:\n\"WHAT CALL?\"", "y": 0.82 }
+        {
+          "t": "type",
+          "at": 0.6,
+          "text": "CHECK WITH HEAD OFFICE:\n\"WHAT CALL?\"",
+          "y": 0.82
+        }
       ],
       "sfx": [
-        { "id": "phone-line", "at": 0.3, "dur": 4, "gain": -16, "prompt": "Office desk phone ringing twice then picked up, quiet room" },
-        { "id": "heartbeat", "at": 1.5, "dur": 4, "gain": -18, "prompt": "Slow heavy heartbeat, tense realization" }
+        {
+          "id": "phone-line",
+          "at": 0.3,
+          "dur": 4,
+          "gain": -16,
+          "prompt": "Office desk phone ringing twice then picked up, quiet room"
+        },
+        {
+          "id": "heartbeat",
+          "at": 1.5,
+          "dur": 4,
+          "gain": -18,
+          "prompt": "Slow heavy heartbeat, tense realization"
+        }
       ]
     },
     {
       "id": "red-towers",
       "say": "No systems were hacked. Arup's own technology chief called it technology-enhanced social engineering. The target wasn't the computer. It was trust.",
-      "cam": { "from": [1.18, 0, 0.04], "to": [1.04, 0, -0.03] },
+      "cam": {
+        "from": [
+          1.18,
+          0,
+          0.04
+        ],
+        "to": [
+          1.04,
+          0,
+          -0.03
+        ]
+      },
       "fx": {},
       "ov": [
-        { "t": "quote", "w": "technology-enhanced", "at": -0.2, "text": "“Technology-enhanced social engineering.”", "by": "Rob Greig, Arup CIO" },
-        { "t": "label", "w": "target", "at": 0, "text": "THE TARGET: TRUST", "sub": "none of Arup's systems were compromised", "y": 0.74 }
+        {
+          "t": "quote",
+          "w": "technology-enhanced",
+          "at": -0.2,
+          "text": "“Technology-enhanced social engineering.”",
+          "by": "Rob Greig, Arup CIO"
+        },
+        {
+          "t": "label",
+          "w": "target",
+          "at": 0,
+          "text": "THE TARGET: TRUST",
+          "sub": "none of Arup's systems were compromised",
+          "y": 0.74
+        }
       ],
       "sfx": [
-        { "id": "wind-canyon", "at": 0.0, "dur": 9, "gain": -22, "prompt": "Deep wind howling between skyscrapers, low and ominous" }
+        {
+          "id": "wind-canyon",
+          "at": 0,
+          "dur": 9,
+          "gain": -22,
+          "prompt": "Deep wind howling between skyscrapers, low and ominous"
+        }
       ]
     },
     {
       "id": "slit",
       "say": "So what stops a perfect fake? Call back on a number you already know. Ask something only the real person would know. And when you hear secret and urgent, slow down.",
-      "cam": { "from": [1.05, 0, 0.0], "to": [1.18, 0, 0.02] },
+      "cam": {
+        "from": [
+          1.05,
+          0,
+          0
+        ],
+        "to": [
+          1.18,
+          0,
+          0.02
+        ]
+      },
       "fx": {},
       "ov": [
-        { "t": "check", "w": "Call", "at": -0.1, "items": ["Call back on a number you already know", "Ask what only the real person would know", "Hear “secret” + “urgent”? Slow down"], "ws": ["Call", "Ask", "And"] }
+        {
+          "t": "check",
+          "w": "Call",
+          "at": -0.1,
+          "items": [
+            "Call back on a number you already know",
+            "Ask what only the real person would know",
+            "Hear “secret” + “urgent”? Slow down"
+          ],
+          "ws": [
+            "Call",
+            "Ask",
+            "And"
+          ]
+        }
       ],
       "sfx": [
-        { "id": "steps-hall", "at": 0.2, "dur": 8, "gain": -18, "prompt": "Slow footsteps echoing in a large empty concrete hall" },
-        { "id": "tick", "w": "Call", "at": 0, "dur": 7, "gain": -24, "prompt": "Three soft pen check mark ticks on paper, spaced apart" }
+        {
+          "id": "steps-hall",
+          "at": 0.2,
+          "dur": 8,
+          "gain": -18,
+          "prompt": "Slow footsteps echoing in a large empty concrete hall"
+        },
+        {
+          "id": "tick",
+          "w": "Call",
+          "at": 0,
+          "dur": 7,
+          "gain": -24,
+          "prompt": "Three soft pen check mark ticks on paper, spaced apart"
+        }
       ]
     },
     {
       "id": "sun-trees",
       "say": "A machine can fake a face. It can't fake the people who actually know you. Case closed.",
-      "cam": { "from": [1.2, 0, 0.04], "to": [1.05, 0, 0.0] },
-      "fx": { "snow": 0.25 },
+      "cam": {
+        "from": [
+          1.2,
+          0,
+          0.04
+        ],
+        "to": [
+          1.05,
+          0,
+          0
+        ]
+      },
+      "fx": {
+        "snow": 0.25
+      },
       "ov": [
-        { "t": "stamp", "w": "closed", "at": -0.05, "text": "CASE CLOSED" }
+        {
+          "t": "stamp",
+          "w": "closed",
+          "at": -0.05,
+          "text": "CASE CLOSED",
+          "color": "#0b0b0c"
+        }
       ],
       "sfx": [
-        { "id": "snow-wind", "at": 0.0, "dur": 7, "gain": -22, "prompt": "Gentle wind over a quiet snowy field, peaceful" },
-        { "id": "stamp", "w": "closed", "at": -0.05, "dur": 1, "gain": -8, "prompt": "Single heavy rubber stamp thud on paper on a wooden desk" }
+        {
+          "id": "snow-wind",
+          "at": 0,
+          "dur": 7,
+          "gain": -22,
+          "prompt": "Gentle wind over a quiet snowy field, peaceful"
+        },
+        {
+          "id": "stamp",
+          "w": "closed",
+          "at": -0.05,
+          "dur": 1,
+          "gain": -8,
+          "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+        }
       ]
     }
   ]
