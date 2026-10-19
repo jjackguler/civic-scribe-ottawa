@@ -1,5 +1,5 @@
 importScripts('/mobile-policy.js');
-const CACHE = 'broadsheet-mobile-assets-v4';
+const CACHE = 'broadsheet-mobile-assets-v5-ink-gold';
 const MAX_ENTRIES = 128, MAX_AGE = 30 * 86400_000;
 const SHELL = ['/offline', '/brief/icon-192.png', '/favicon-96.png'];
 self.addEventListener('install', event => {

@@ -23,7 +23,7 @@ export const Route = createFileRoute("/app")({
     });
     return {
       ...head,
-      meta: [...head.meta, { name: "theme-color", content: "#111b13" }],
+      meta: [...head.meta, { name: "theme-color", content: "#16181A" }],
       links: [
         ...head.links,
         { rel: "stylesheet", href: briefCss },

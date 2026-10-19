@@ -96,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "alternate", type: "application/rss+xml", title: `${SITE.name} (français)`, href: "/fr/rss.xml" },
     ],
     scripts: [
-      { children: `document.fonts.add(new FontFace("Bodoni Moda", "url(${brandFont.url})", { weight: "700", style: "normal" }));` },
+      { children: `document.fonts.add(new FontFace("Bodoni Moda", "url(/brand/bodoni-moda-brand.woff), url(${new URL(brandFont.url, `https://${SITE.domain}`).href})", { weight: "700", style: "normal" }));` },
       // Cloudflare Web Analytics: cookieless, no personal data. Off until a token is set.
       ...(SITE.cloudflareAnalyticsToken
         ? [{ src: "https://static.cloudflareinsights.com/beacon.min.js", defer: true, "data-cf-beacon": JSON.stringify({ token: SITE.cloudflareAnalyticsToken }) }]
