@@ -1,6 +1,35 @@
 {
- "updatedAt": "2026-10-19T14:48:42.031Z",
+ "updatedAt": "2026-10-19T14:49:48.565Z",
  "items": [
+  {
+   "id": "202610191450-titanic-02",
+   "kind": "explainer",
+   "section": "culture",
+   "publishedAt": "2026-10-19T14:49:48.565Z",
+   "title": "The Sir Jack Files #8, Part 2: The Case of the Ship That Never Sank",
+   "summary": "Jack and Rose were fiction, but a grave marked J. Dawson is real. Why a 1997 film and a 1912 ship still hold millions: the people on board.",
+   "durationSec": 83,
+   "sources": [
+    {
+     "name": "CBC: J. Dawson grave, Halifax",
+     "url": "https://amp.cbc.ca/lite/story/1.1191689"
+    },
+    {
+     "name": "Encyclopedia Titanica (Joseph Dawson; survival by class)",
+     "url": "https://www.encyclopedia-titanica.org/biography/1460/"
+    },
+    {
+     "name": "PetaPixel: first full-sized Titanic scans (2023)",
+     "url": "https://petapixel.com/2023/05/17/first-full-sized-scans-of-titanic-reveal-shipwreck-in-unprecedented-detail/"
+    }
+   ],
+   "transcript": "Case eight, part two. Nineteen ninety-seven. A love story on a sinking ship becomes one of the most watched films in history. Titanic took in more than two billion dollars and won eleven Oscars. For twelve years, no film earned more. Was Jack real? No. Jack and Rose were invented. But in Halifax, a grave marked J. Dawson belongs to Joseph Dawson, a coal trimmer who died that night. Fans still visit. The director says the name was a coincidence. Here is the secret. The film turned a statistic into faces. About sixty-two percent of first-class passengers survived. In third class, about one in four. In twenty twenty-two, deep-sea robots took about seven hundred thousand images of the wreck and built a full digital twin. Technology lets us see the ship. A story lets us feel it. Even now, new Titanic videos, some made with AI, find millions of viewers. Because Titanic never sank from memory. Not because of the ship, but because of the people on it. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@a3bef3e96a63a4a502a124aa1cc0f77ab75b6b7f/originals/files/202610191450-titanic-02.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@a3bef3e96a63a4a502a124aa1cc0f77ab75b6b7f/originals/files/202610191450-titanic-02.jpg"
+  },
   {
    "id": "202610191450-titanic-01",
    "kind": "explainer",
