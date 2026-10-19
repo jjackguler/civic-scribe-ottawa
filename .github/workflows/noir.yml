@@ -13,7 +13,7 @@ on:
     inputs:
       slug:
         description: Story slug (scripts/originals/noir/stories/<slug>.json)
-        default: vanishing-radiologist
+        default: faces-that-werent-there
       fresh:
         description: Regenerate stills and audio (ignore the cache)
         type: boolean
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      SLUG: ${{ inputs.slug || vars.NOIR_SLUG || 'vanishing-radiologist' }}
+      SLUG: ${{ inputs.slug || vars.NOIR_SLUG || 'faces-that-werent-there' }}
     defaults:
       run:
         working-directory: scripts/originals/noir

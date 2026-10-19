@@ -4,6 +4,7 @@
 <style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
 </head><body><canvas id="c" width="1080" height="1920"></canvas>
 <script src="scenes.js"></script>
+<script src="scenes2.js"></script>
 <script>
 // Film-noir reel: one Gemini still per shot, brought to life with camera moves, rain,
 // snow, fog, light, grain and Ink & Gold motion type. window.setup() loads a story and
@@ -56,7 +57,7 @@ window.setup = async () => {
       if (o.w) { const w = T.words.find((w) => w.w.toLowerCase().replace(/[^a-z0-9'-]/g, "").startsWith(o.w.toLowerCase())); if (w) t = T.voAt + w.start + (o.at ?? 0); }
       return Math.min(t, T.dur - 1.1);
     };
-    for (const o of s.ov ?? []) o.T = at(o);
+    for (const o of s.ov ?? []) { o.T = at(o); if (o.ws) o.WT = o.ws.map((w) => at({ w })); }
     // A card stays up until the next card in the shot (kicker and title stay throughout).
     const cards = (s.ov ?? []).filter((o) => o.t !== "kicker" && o.t !== "title").sort((a, b) => a.T - b.T);
     cards.forEach((o, k) => { o.E = cards[k + 1]?.T ?? Infinity; });
@@ -77,7 +78,14 @@ function drawn(shot, T, u, alpha) {
   const dx = (p - 0.5) * 80 * (x1 >= x0 ? 1 : -1), dy = (p - 0.5) * 50 * (y1 >= y0 ? 1 : -1);
   const L = (d, fn) => { g.save(); g.translate((d - 0.5) * dx, (d - 0.5) * dy); fn(); g.restore(); };
   window.NOIR_SCENES[shot.id](g, u, L);
-  x.save(); x.globalAlpha = alpha; x.drawImage(sc, 0, 0); x.restore();
+  const gl = shot.fx?.glitch ?? 0, burst = gl && (hash(Math.floor(u * 9) * 1.7) > 1 - gl * 0.3 || (shot.ov ?? []).some((o) => o.t === "stamp" && u >= o.T - 0.15 && u < o.T + 0.6));
+  x.save(); x.globalAlpha = alpha;
+  if (burst) { // deepfake glitch: sliced rows plus a split ghost
+    const f = Math.floor(u * 30);
+    for (let yy = 0; yy < H; yy += 60) { const off = hash(f + yy) > 0.6 ? (hash(f * 3 + yy) - 0.5) * 140 : 0; x.drawImage(sc, 0, yy, W, 60, off, yy, W, 60); }
+    x.globalCompositeOperation = "screen"; x.globalAlpha = alpha * 0.35; x.drawImage(sc, 14, 0); x.globalAlpha = alpha * 0.25; x.drawImage(sc, -12, 4);
+  } else x.drawImage(sc, 0, 0);
+  x.restore();
   fx(shot.fx ?? {}, u, alpha);
 }
 function plate(shot, T, u, alpha) {
@@ -150,7 +158,7 @@ function finish(t) {
   const v = x.createRadialGradient(W / 2, H * 0.5, H * 0.25, W / 2, H * 0.5, H * 0.75);
   v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.6)");
   x.fillStyle = v; x.fillRect(0, 0, W, H);
-  x.save(); x.globalCompositeOperation = "overlay"; x.globalAlpha = 0.11;
+  x.save(); x.globalCompositeOperation = "overlay"; x.globalAlpha = story.grain ?? 0.11;
   x.drawImage(grain[Math.floor(t * 24) % grain.length], 0, 0, W, H); x.restore();
   const f = Math.floor(t * 24); // film scratches and dust, a few frames at a time
   if (hash(f * 0.37) > 0.72) { x.fillStyle = "rgba(230,225,210,0.12)"; x.fillRect(hash(f) * W, 0, 1.5, H); }
@@ -182,7 +190,8 @@ function overlay(o, k, fade) {
     o.lines.forEach((l, i) => {
       const p = out3((k - i * 0.45) / 0.9); if (p <= 0) return;
       x.save(); x.beginPath(); x.rect(0, ys[i] - sizes[i] * 1.05, W, sizes[i] * 1.3); x.clip();
-      text(l, W / 2, ys[i] + (1 - p) * sizes[i], `${i ? 800 : 600} ${sizes[i]}px ${SERIF}`, cols[i], { track: i ? 2 : 10, alpha: p });
+      x.font = `${i ? 800 : 600} ${sizes[i]}px ${SERIF}`; x.letterSpacing = `${i ? 2 : 10}px`; const sz = Math.min(sizes[i], sizes[i] * 980 / x.measureText(l).width); x.letterSpacing = "0px";
+      text(l, W / 2, ys[i] + (1 - p) * sz, `${i ? 800 : 600} ${sz.toFixed(0)}px ${SERIF}`, cols[i], { track: i ? 2 : 10, alpha: p });
       x.restore();
     });
     const p = out3((k - 1.4) / 0.8); x.fillStyle = RED; x.fillRect(W / 2 - 160 * p, 612, 320 * p, 4);
@@ -208,11 +217,12 @@ function overlay(o, k, fade) {
     text(o.text, W / 2, y + (1 - p) * 20, `800 ${fit.toFixed(0)}px ${SANS}`, PAPER, { track: 5, alpha: p });
     if (o.sub) for (const [i, l] of wrap(o.sub, `italic 500 40px ${SERIF}`, 860).entries()) text(l, W / 2, y + 62 + i * 50, `italic 500 40px ${SERIF}`, GOLD, { alpha: clamp((k - 0.4) / 0.6) });
   } else if (o.t === "counter") {
-    const p = out3(k / 1.6), v = Math.round(o.from + (o.to - o.from) * p), y = H * 0.44;
+    const p = out3(k / 1.6), raw = o.from + (o.to - o.from) * p, v = Number.isInteger(o.to) ? Math.round(raw) : raw.toFixed(1), y = H * 0.44;
     band(y - 360, y + 190, 0.8 * clamp(k / 0.4));
     const pop = 1 + 0.06 * Math.max(0, 1 - Math.abs(k - 1.6) / 0.25);
     x.save(); x.translate(W / 2, y); x.scale(pop, pop);
-    text(`${o.prefix ?? ""}${v}${o.suffix ?? ""}`, 0, 0, `800 ${String(o.to).length + (o.suffix?.length ?? 0) > 6 ? 170 : 260}px ${SERIF}`, GOLD, { alpha: clamp(k / 0.3), track: -4 });
+    const str = `${o.prefix ?? ""}${Number.isInteger(o.to) ? o.to : o.to.toFixed(1)}${o.suffix ?? ""}`; x.font = `800 260px ${SERIF}`; const csz = Math.min(260, 260 * 940 / x.measureText(str).width);
+    text(`${o.prefix ?? ""}${v}${o.suffix ?? ""}`, 0, 0, `800 ${csz.toFixed(0)}px ${SERIF}`, GOLD, { alpha: clamp(k / 0.3), track: -4 });
     x.restore();
     x.fillStyle = PAPER; x.fillRect(W / 2 - 180, y + 48, 360 * p, 2);
     text(o.label.toUpperCase(), W / 2, y + 108, `600 30px ${SANS}`, PAPER, { track: 4, alpha: clamp((k - 0.5) / 0.6) });
@@ -224,6 +234,17 @@ function overlay(o, k, fade) {
     text(o.leftSub, W * 0.27, y + 58, `italic 500 36px ${SERIF}`, PAPER, { alpha: a * 0.85 });
     text(o.right, W * 0.73, y, `800 56px ${SANS}`, GOLD, { track: 4, alpha: b });
     text(o.rightSub, W * 0.73, y + 58, `italic 500 36px ${SERIF}`, GOLD, { alpha: b });
+  } else if (o.t === "check") {
+    const y0 = H * 0.2;
+    band(y0 - 140, y0 + o.items.length * 160 + 60, 0.65 * clamp(k / 0.4));
+    o.items.forEach((it, i) => {
+      const kk = k - ((o.WT?.[i] ?? o.T + i * 2) - o.T); if (kk < 0) return;
+      const p = out3(kk / 0.5), y = y0 + i * 160, c = clamp((kk - 0.3) / 0.35);
+      x.save(); x.globalAlpha = fade * p; x.strokeStyle = PAPER; x.lineWidth = 4; x.strokeRect(80, y - 44, 56, 56);
+      x.strokeStyle = GOLD; x.lineWidth = 8; x.lineCap = "round"; x.beginPath(); x.moveTo(90, y - 18); x.lineTo(90 + 16 * Math.min(1, c * 2), y - 18 + 16 * Math.min(1, c * 2));
+      if (c > 0.5) x.lineTo(106 + 40 * (c - 0.5) * 2, y - 2 - 52 * (c - 0.5) * 2); x.stroke(); x.restore();
+      wrap(it, `700 44px ${SANS}`, 840).forEach((l, j) => text(l, 166, y + j * 54 + (1 - p) * 16, `700 44px ${SANS}`, PAPER, { align: "left", alpha: p }));
+    });
   } else if (o.t === "stamp") {
     if (k < 0) { x.restore(); return; }
     const s = 1 + 1.3 * (1 - out3(k / 0.16)), sh = k < 0.4 ? (hash(Math.floor(k * 60)) - 0.5) * 10 * (1 - k / 0.4) : 0;
