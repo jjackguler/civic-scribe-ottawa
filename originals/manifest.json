@@ -1,6 +1,34 @@
 {
- "updatedAt": "2026-10-19T05:50:21.357Z",
+ "updatedAt": "2026-10-19T05:52:27.595Z",
  "items": [
+  {
+   "id": "202610190600-sir-jack-04",
+   "kind": "explainer",
+   "publishedAt": "2026-10-19T05:52:27.595Z",
+   "title": "The Sir Jack Files #4: The Case of the Missing Idea",
+   "summary": "If a machine can write anything, what is left for you? From Socrates’ fear of writing to an MIT study of ChatGPT users: why the idea is the human part.",
+   "durationSec": 70,
+   "sources": [
+    {
+     "name": "MIT Media Lab, Your Brain on ChatGPT (2025 preprint)",
+     "url": "https://www.techlearning.com/news/your-brain-on-chatgpt-everything-educators-need-to-know-about-mits-ai-study"
+    },
+    {
+     "name": "Plato, Phaedrus (274c–277a)",
+     "url": "https://www.gutenberg.org/ebooks/1636"
+    },
+    {
+     "name": "ConsumerAffairs",
+     "url": "https://www.consumeraffairs.com/news/chatgpt-may-affect-your-critical-thinking-skills-study-finds-062625.html"
+    }
+   ],
+   "transcript": "Case four starts with a question. If a machine can write anything, what is left for you? Twenty-four centuries ago, Socrates had the same fear. In Plato's Phaedrus, writing is blamed for making people forgetful, and wise only in appearance. In twenty twenty-five, MIT researchers asked fifty-four people to write essays. One group used ChatGPT. One used a search engine. One used only their brains. The ChatGPT group showed the lowest brain engagement, and struggled to recall what they had written. It's a small study, not yet peer reviewed. But the question stands. Writing, search, AI. The tools keep changing. What never moved is where ideas come from: a person asking a question nobody asked before. So use the machine. Let it draft, search, check. But bring your own idea. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@c3bb55512a49c7a117074de5932e259820dbd081/originals/files/202610190600-sir-jack-04.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@c3bb55512a49c7a117074de5932e259820dbd081/originals/files/202610190600-sir-jack-04.jpg"
+  },
   {
    "id": "202610190600-sir-jack-03",
    "kind": "explainer",
