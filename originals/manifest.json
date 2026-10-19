@@ -1,6 +1,34 @@
 {
- "updatedAt": "2026-10-19T05:54:30.794Z",
+ "updatedAt": "2026-10-19T13:17:25.055Z",
  "items": [
+  {
+   "id": "202610191320-sir-jack-06",
+   "kind": "explainer",
+   "publishedAt": "2026-10-19T13:17:25.055Z",
+   "title": "The Sir Jack Files #6: The Case of the Suspicion Machine",
+   "summary": "Rotterdam scored people on welfare with a 315-input algorithm. Reporters at Lighthouse Reports and WIRED obtained the model and found it inaccurate and unfair.",
+   "durationSec": 73,
+   "sources": [
+    {
+     "name": "Lighthouse Reports, Suspicion Machines (2023)",
+     "url": "https://www.lighthousereports.com/suspicion-machines-methodology/"
+    },
+    {
+     "name": "WIRED, Inside the Suspicion Machine (2023)",
+     "url": "https://www.lighthousereports.com/?p=2584"
+    },
+    {
+     "name": "Pulitzer Center",
+     "url": "https://pulitzercenter.org/node/29358"
+    }
+   ],
+   "transcript": "Case six. A city let a machine decide whom to suspect. Two newsrooms opened it up. Rotterdam, the Netherlands. From twenty seventeen to twenty twenty-one, the city scored people on welfare with an algorithm. The top ten percent were investigated for fraud. The model weighed three hundred and fifteen inputs: age, gender, language skills, neighbourhood, even a caseworker's impressions. Out came a score from zero to one. Reporters at Lighthouse Reports and WIRED did something rare. Through freedom of information requests, they obtained the model itself, and tested it from the inside. They found it treated people differently by ethnicity and gender, with flaws that made it both inaccurate and unfair. The city had already paused it, and later dropped plans for a new one. A machine can sort people. Only people can be held to account for it. And sometimes it takes a reporter to open the box. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@dbfcabc0932034e9b736ec0bd4cb478f42a80aab/originals/files/202610191320-sir-jack-06.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@dbfcabc0932034e9b736ec0bd4cb478f42a80aab/originals/files/202610191320-sir-jack-06.jpg"
+  },
   {
    "id": "202610190600-sir-jack-05",
    "kind": "explainer",
