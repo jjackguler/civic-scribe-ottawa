@@ -117,19 +117,7 @@ async function music(seconds, out) {
 
 const silent = (sec, out) => run("ffmpeg", ["-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-t", String(sec), "-c:a", "libmp3lame", "-q:a", "6", out]);
 
-// ── Stills ──────────────────────────────────────────────────────────────────
 const credits = { images: new Set(), voice: "", music: "" };
-for (const [i, shot] of story.shots.entries()) {
-  const out = join(dir, "img", `${shot.id}.png`);
-  if (existsSync(out)) continue;
-  if (mock) {
-    const hue = (i * 37) % 360;
-    await run("ffmpeg", ["-y", "-loglevel", "error", "-f", "lavfi", "-i", `gradients=s=1080x1920:c0=0x0b1726:c1=0x${hue < 180 ? "c8902a" : "8a2a1c"}:x0=540:y0=300:x1=540:y1=1900:d=1`, "-frames:v", "1", out]);
-  } else {
-    credits.images.add(await still(shot.image, out));
-    console.log(`still ${shot.id}`);
-  }
-}
 
 // ── Narration ───────────────────────────────────────────────────────────────
 const v = mock ? { id: "", name: "mock" } : await voice();
@@ -177,6 +165,21 @@ if (!existsSync(amb)) { if (mock) await silent(22, amb); else await sfx(story.am
 const mus = join(dir, "music.mp3");
 if (!existsSync(mus)) { if (mock) { await silent(Math.ceil(total + 1), mus); credits.music = "mock"; } else credits.music = await music(Math.ceil(total + 1), mus); }
 
+const missing = [];
+// ── Stills (last, so narration and sound are kept even if the image quota runs out) ──────────────────────────────────────────────────────────────────
+for (const [i, shot] of story.shots.entries()) {
+  const out = join(dir, "img", `${shot.id}.png`);
+  if (existsSync(out)) continue;
+  if (mock) {
+    const hue = (i * 37) % 360;
+    await run("ffmpeg", ["-y", "-loglevel", "error", "-f", "lavfi", "-i", `gradients=s=1080x1920:c0=0x0b1726:c1=0x${hue < 180 ? "c8902a" : "8a2a1c"}:x0=540:y0=300:x1=540:y1=1900:d=1`, "-frames:v", "1", out]);
+  } else {
+    if (missing.length) { missing.push(shot.id); continue; } // one failure is usually the quota: don't burn time on the rest
+    try { credits.images.add(await still(shot.image, out)); console.log(`still ${shot.id}`); }
+    catch (e) { missing.push(shot.id); console.error(e.message); }
+  }
+}
+
 const prev = existsSync(join(dir, "timeline.json")) ? JSON.parse(await readFile(join(dir, "timeline.json"), "utf8")) : {};
 await writeFile(join(dir, "timeline.json"), JSON.stringify({
   slug, total, end: { start: +t.toFixed(3), dur: END }, shots,
@@ -187,3 +190,4 @@ await writeFile(join(dir, "timeline.json"), JSON.stringify({
   },
 }, null, 1));
 console.log(`timeline: ${total.toFixed(1)} s, ${shots.length} shots`);
+if (missing.length) { console.log(`::error title=Gemini stills::No still for ${missing.join(", ")} (see the log above); narration and sound are saved.`); process.exit(1); }
