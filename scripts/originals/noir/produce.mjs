@@ -163,6 +163,7 @@ for (const shot of story.shots) for (const s of shot.sfx ?? []) {
 const amb = join(dir, "sfx", "_ambience.mp3");
 if (!existsSync(amb)) { if (mock) await silent(22, amb); else await sfx(story.ambience, 22, amb); }
 const mus = join(dir, "music.mp3");
+if (!existsSync(mus) && story.musicFrom && existsSync(join(here, "build", story.musicFrom, "music.mp3"))) { await writeFile(mus, await readFile(join(here, "build", story.musicFrom, "music.mp3"))); credits.music = "ElevenLabs Music"; } // reuse a series track
 if (!existsSync(mus)) { if (mock) { await silent(Math.ceil(total + 1), mus); credits.music = "mock"; } else credits.music = await music(Math.ceil(total + 1), mus); }
 
 const missing = [];

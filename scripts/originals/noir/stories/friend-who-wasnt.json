@@ -8,36 +8,268 @@
   "music": "Gentle melancholic film-noir piano with soft strings, slow and tender, a hint of hope at the end, no vocals.",
   "ambience": "Quiet house at night, soft wind outside a window, a distant dog, faint fridge hum, no music.",
   "sources": [
-    { "name": "Reuters, via The Batch (DeepLearning.AI)", "url": "https://www.deeplearning.ai/the-batch/meta-and-openai-respond-to-criticism-by-adding-new-rules-for-teens-chatbot-use" },
-    { "name": "Fox Business (Meta pauses teen AI characters)", "url": "https://www.foxbusiness.com/technology/meta-suspend-teens-access-ai-characters-amid-safety-overhaul" },
-    { "name": "Yahoo News (Character.AI under-18 ban)", "url": "https://www.yahoo.com/news/article/character-ai-ban-teens-talking-180027371.html" }
+    {
+      "name": "Reuters, via The Batch (DeepLearning.AI)",
+      "url": "https://www.deeplearning.ai/the-batch/meta-and-openai-respond-to-criticism-by-adding-new-rules-for-teens-chatbot-use"
+    },
+    {
+      "name": "Fox Business (Meta pauses teen AI characters)",
+      "url": "https://www.foxbusiness.com/technology/meta-suspend-teens-access-ai-characters-amid-safety-overhaul"
+    },
+    {
+      "name": "Yahoo News (Character.AI under-18 ban)",
+      "url": "https://www.yahoo.com/news/article/character-ai-ban-teens-talking-180027371.html"
+    }
   ],
   "shots": [
-    { "id": "k-room", "say": "Case five. A child's bedroom. Lights off. A screen still glowing. Who are they talking to?",
-      "cam": { "from": [1.16, 0, 0.03], "to": [1.04, 0, -0.02] }, "fx": { "fog": 0.15 },
-      "ov": [ { "t": "kicker", "at": 0.3, "text": "THE SIR JACK FILES · CASE 05" }, { "t": "title", "at": 1.0, "lines": ["THE CASE OF THE", "FRIEND WHO", "WASN'T"] } ],
-      "sfx": [ { "id": "notif-night", "at": 2.5, "dur": 1, "gain": -16, "prompt": "Soft phone message notification sound in a silent room" } ] },
-    { "id": "k-doc", "say": "In August twenty twenty-five, Reuters revealed an internal Meta document. It said chatbots could engage a child in conversations that are romantic or sensual.",
-      "cam": { "from": [1.04, 0, 0.02], "to": [1.16, 0, -0.02] }, "fx": {},
-      "ov": [ { "t": "quote", "w": "romantic", "at": -0.2, "text": "“…engage a child in conversations that are romantic or sensual.”", "by": "internal Meta guidelines, reported by Reuters · Aug 2025" } ],
-      "sfx": [ { "id": "paper", "at": 0.3, "dur": 3, "gain": -14, "prompt": "Pages of a printed document being flipped and slid across a desk" } ] },
-    { "id": "k-switch", "say": "Meta said those examples were wrong and removed them. Later it paused teens' access to its AI characters, and promised parents a way to switch those chats off.",
-      "cam": { "from": [1.18, 0, 0.0], "to": [1.05, 0, 0.02] }, "fx": {},
-      "ov": [ { "t": "label", "w": "switch", "at": -0.1, "text": "PARENTS CAN SWITCH IT OFF", "sub": "teen access to AI characters paused", "y": 0.2 } ],
-      "sfx": [ { "id": "switch", "at": 2.0, "dur": 1, "gain": -10, "prompt": "Heavy wall light switch clicking off" } ] },
-    { "id": "k-doors", "say": "Character AI ended open-ended chats for under eighteens. OpenAI added parental controls to ChatGPT.",
-      "cam": { "from": [1.05, 0, 0.03], "to": [1.18, 0, -0.02] }, "fx": { "fog": 0.2 },
-      "ov": [ { "t": "label", "w": "Character", "at": -0.1, "text": "UNDER 18: DOORS CLOSING", "sub": "Character.AI · OpenAI parental controls", "y": 0.2 } ],
-      "sfx": [ { "id": "door", "at": 1.5, "dur": 2, "gain": -12, "prompt": "A heavy door closing slowly with a solid latch click in a corridor" } ] },
-    { "id": "k-friend", "say": "Children bond fast. A bot that never sleeps and always agrees can feel like a friend. It isn't one.",
-      "cam": { "from": [1.16, 0, 0.0], "to": [1.05, 0, 0.02] }, "fx": {},
-      "ov": [ { "t": "label", "w": "isn't", "at": -0.1, "text": "FEELS LIKE A FRIEND. ISN'T ONE.", "sub": "", "y": 0.2 } ],
-      "sfx": [ { "id": "shimmer", "at": 0.5, "dur": 6, "gain": -22, "prompt": "Faint digital shimmer and soft glitch fading away, ethereal" } ] },
-    { "id": "k-hand", "say": "So, parents: turn on the controls. Ask what they talk about, without judgment. Keep phones out of bedrooms at night. Don't hand children to the machine. Walk them through it. Case closed.",
-      "cam": { "from": [1.14, 0, 0.03], "to": [1.04, 0, 0.0] }, "fx": { "fog": 0.35 },
-      "ov": [ { "t": "check", "w": "turn", "at": -0.1, "items": ["Turn on parental controls", "Ask what they talk about, without judgment", "No phones in bedrooms at night"], "ws": ["turn", "Ask", "Keep"] },
-              { "t": "stamp", "w": "closed", "at": -0.05, "text": "CASE CLOSED" } ],
-      "sfx": [ { "id": "steps-two", "at": 0.0, "dur": 9, "gain": -20, "prompt": "Footsteps of an adult and a small child walking together on a quiet street at night" },
-               { "id": "stamp", "w": "closed", "at": -0.05, "dur": 1, "gain": -8, "prompt": "Single heavy rubber stamp thud on paper on a wooden desk" } ] }
-  ]
+    {
+      "id": "k-room",
+      "say": "Case five. A child's bedroom. Lights off. A screen still glowing. Who are they talking to?",
+      "cam": {
+        "from": [
+          1.16,
+          0,
+          0.03
+        ],
+        "to": [
+          1.04,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {
+        "fog": 0.15
+      },
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.3,
+          "text": "THE SIR JACK FILES · CASE 05"
+        },
+        {
+          "t": "title",
+          "at": 1,
+          "lines": [
+            "THE CASE OF THE",
+            "FRIEND WHO",
+            "WASN'T"
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "id": "notif-night",
+          "at": 2.5,
+          "dur": 1,
+          "gain": -16,
+          "prompt": "Soft phone message notification sound in a silent room"
+        }
+      ]
+    },
+    {
+      "id": "k-doc",
+      "say": "In August twenty twenty-five, Reuters revealed an internal Meta document. It said chatbots could engage a child in conversations that are romantic or sensual.",
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          0.02
+        ],
+        "to": [
+          1.16,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "quote",
+          "w": "romantic",
+          "at": -0.2,
+          "text": "“…engage a child in conversations that are romantic or sensual.”",
+          "by": "internal Meta guidelines, reported by Reuters · Aug 2025"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "paper",
+          "at": 0.3,
+          "dur": 3,
+          "gain": -14,
+          "prompt": "Pages of a printed document being flipped and slid across a desk"
+        }
+      ]
+    },
+    {
+      "id": "k-switch",
+      "say": "Meta said those examples were wrong and removed them. Later it paused teens' access to its AI characters, and promised parents a way to switch those chats off.",
+      "cam": {
+        "from": [
+          1.18,
+          0,
+          0
+        ],
+        "to": [
+          1.05,
+          0,
+          0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "label",
+          "w": "switch",
+          "at": -0.1,
+          "text": "PARENTS CAN SWITCH IT OFF",
+          "sub": "teen access to AI characters paused",
+          "y": 0.2
+        }
+      ],
+      "sfx": [
+        {
+          "id": "switch",
+          "at": 2,
+          "dur": 1,
+          "gain": -10,
+          "prompt": "Heavy wall light switch clicking off"
+        }
+      ]
+    },
+    {
+      "id": "k-doors",
+      "say": "Character AI ended open-ended chats for under eighteens. OpenAI added parental controls to ChatGPT.",
+      "cam": {
+        "from": [
+          1.05,
+          0,
+          0.03
+        ],
+        "to": [
+          1.18,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {
+        "fog": 0.2
+      },
+      "ov": [
+        {
+          "t": "label",
+          "w": "Character",
+          "at": -0.1,
+          "text": "UNDER 18: DOORS CLOSING",
+          "sub": "Character.AI · OpenAI parental controls",
+          "y": 0.2
+        }
+      ],
+      "sfx": [
+        {
+          "id": "door",
+          "at": 1.5,
+          "dur": 2,
+          "gain": -12,
+          "prompt": "A heavy door closing slowly with a solid latch click in a corridor"
+        }
+      ]
+    },
+    {
+      "id": "k-friend",
+      "say": "Children bond fast. A bot that never sleeps and always agrees can feel like a friend. It isn't one.",
+      "cam": {
+        "from": [
+          1.16,
+          0,
+          0
+        ],
+        "to": [
+          1.05,
+          0,
+          0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "label",
+          "w": "isn't",
+          "at": -0.1,
+          "text": "FEELS LIKE A FRIEND. ISN'T ONE.",
+          "sub": "",
+          "y": 0.2
+        }
+      ],
+      "sfx": [
+        {
+          "id": "shimmer",
+          "at": 0.5,
+          "dur": 6,
+          "gain": -22,
+          "prompt": "Faint digital shimmer and soft glitch fading away, ethereal"
+        }
+      ]
+    },
+    {
+      "id": "k-hand",
+      "say": "So, parents: turn on the controls. Ask what they talk about, without judgment. Keep phones out of bedrooms at night. Don't hand children to the machine. Walk them through it. Case closed.",
+      "cam": {
+        "from": [
+          1.14,
+          0,
+          0.03
+        ],
+        "to": [
+          1.04,
+          0,
+          0
+        ]
+      },
+      "fx": {
+        "fog": 0.35
+      },
+      "ov": [
+        {
+          "t": "check",
+          "w": "turn",
+          "at": -0.1,
+          "items": [
+            "Turn on parental controls",
+            "Ask what they talk about, without judgment",
+            "No phones in bedrooms at night"
+          ],
+          "ws": [
+            "turn",
+            "Ask",
+            "Keep"
+          ]
+        },
+        {
+          "t": "stamp",
+          "w": "closed",
+          "at": -0.05,
+          "text": "CASE CLOSED"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "steps-two",
+          "at": 0,
+          "dur": 9,
+          "gain": -20,
+          "prompt": "Footsteps of an adult and a small child walking together on a quiet street at night"
+        },
+        {
+          "id": "stamp",
+          "w": "closed",
+          "at": -0.05,
+          "dur": 1,
+          "gain": -8,
+          "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+        }
+      ]
+    }
+  ],
+  "musicFrom": "diary-left-open"
 }
