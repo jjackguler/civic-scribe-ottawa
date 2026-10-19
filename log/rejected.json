@@ -1,5 +1,15 @@
 [
   {
+    "id": "qjj12w",
+    "at": "2026-10-19T21:56:02.684Z",
+    "stage": "copy",
+    "headline": "Tenstorrent secures $1.5 billion USD at $6.2-billion valuation to challenge GPU dominance",
+    "reasons": [
+      "Not in the sources (names or numbers): 6.2 billion, Today, GPUs, denial not in the sources: \"The firm previously rejected buyout bids from Intel and Qualcomm.\", denial not in the sources: \"The Toronto-founded firm previously rejected acquisition offers from Intel and Q\".",
+      "rewrite: no reply"
+    ]
+  },
+  {
     "id": "102aonh",
     "at": "2026-10-19T17:39:36.010Z",
     "stage": "reporter",
