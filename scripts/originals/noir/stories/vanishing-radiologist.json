@@ -51,7 +51,7 @@
         {
           "t": "kicker",
           "at": 0.3,
-          "text": "AI BROADSHEET · CASE FILE"
+          "text": "THE SIR JACK FILES · CASE 01"
         },
         {
           "t": "title",
@@ -547,5 +547,7 @@
         }
       ]
     }
-  ]
+  ],
+  "series": "The Sir Jack Files",
+  "episode": 1
 }
