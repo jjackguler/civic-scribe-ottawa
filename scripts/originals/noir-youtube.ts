@@ -20,7 +20,11 @@ const up = await uploadToYouTube(
   { clientId: env("YOUTUBE_CLIENT_ID"), clientSecret: env("YOUTUBE_CLIENT_SECRET"), refreshToken: env("YOUTUBE_REFRESH_TOKEN") },
   file,
   { title: "AI said this job would disappear. It grew 55%. #Shorts", description, tags: ["AI", "future of work", "radiology", "Sir Jack Files", "AI Broadsheet", "Shorts"], privacy: "public" },
-);
+).catch((e: Error) => {
+  // Annotations are readable without the job log.
+  console.log(`::error title=YouTube upload failed::${e.message.replace(/\s+/g, " ").slice(0, 400)}`);
+  process.exit(1);
+});
 const line = `YouTube: https://youtube.com/shorts/${up.id} (${up.privacy})`;
 console.log(line);
 if (env("GITHUB_STEP_SUMMARY")) appendFileSync(env("GITHUB_STEP_SUMMARY"), line + "\n");
