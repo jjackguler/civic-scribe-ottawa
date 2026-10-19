@@ -1,0 +1,93 @@
+# One-off: publish the approved noir reel (The Sir Jack Files, case 1) to the
+# site's explainer list. Takes the MP4 from the Noir reel run the owner watched,
+# re-encodes it under jsDelivr's 20 MB per-file limit, commits it and a poster to
+# the media branch, then lists it in originals/manifest.json pinned to that commit,
+# the same way scripts/originals/publish.ts does.
+name: Noir publish
+
+on:
+  push:
+    branches: [claude/noir-publish]
+    paths: [".github/workflows/noir-publish.yml", "scripts/originals/noir-publish/**"]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: originals
+  cancel-in-progress: false
+
+env:
+  ENTRY: scripts/originals/noir-publish/sir-jack-01.json
+  SOURCE_RUN: "39191331551"
+  ARTIFACT: noir-vanishing-radiologist
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT }}
+          run-id: ${{ env.SOURCE_RUN }}
+          github-token: ${{ github.token }}
+          path: in
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+
+      - name: Encode the video and poster
+        run: |
+          set -euo pipefail
+          find in -type f -exec ls -la {} +
+          src=$(find in -name '*.mp4' -printf '%s %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
+          id=$(jq -r .id "$ENTRY")
+          dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$src")
+          echo "source $src $(stat -c %s "$src") bytes, ${dur}s"
+          # ~17.5 MB total: 128 kb/s audio, the rest video, two passes.
+          vbr=$(python3 -c "print(int(17.5*8*1024/float('$dur') - 128))")
+          mkdir -p out
+          ffmpeg -y -v error -i "$src" -c:v libx264 -preset slow -b:v ${vbr}k -pix_fmt yuv420p -pass 1 -passlogfile out/x264 -an -f mp4 /dev/null
+          ffmpeg -y -v error -i "$src" -c:v libx264 -preset slow -b:v ${vbr}k -pix_fmt yuv420p -pass 2 -passlogfile out/x264 \
+            -c:a aac -b:a 128k -movflags +faststart "out/$id.mp4"
+          ffmpeg -y -v error -ss 3 -i "$src" -frames:v 1 -q:v 3 "out/$id.jpg"
+          size=$(stat -c %s "out/$id.mp4")
+          echo "encoded $size bytes"
+          test "$size" -lt 19500000
+
+      - name: Publish to the media branch
+        run: |
+          set -euo pipefail
+          id=$(jq -r .id "$ENTRY")
+          git fetch origin media:media
+          git worktree add ../media media
+          cd ../media
+          git config user.name "AI Broadsheet Originals"
+          git config user.email "actions@users.noreply.github.com"
+          mkdir -p originals/files
+          cp "$GITHUB_WORKSPACE/out/$id.mp4" "$GITHUB_WORKSPACE/out/$id.jpg" originals/files/
+          git add "originals/files/$id.mp4" "originals/files/$id.jpg"
+          git commit -m "Originals: $(jq -r .title "$GITHUB_WORKSPACE/$ENTRY") (files)"
+          list() {
+            sha=$(git log -1 --format=%H -- "originals/files/$id.mp4")
+            cdn="https://cdn.jsdelivr.net/gh/$GITHUB_REPOSITORY@$sha/originals/files"
+            jq --arg f "$cdn/$id.mp4" --arg p "$cdn/$id.jpg" '. + {fileUrl: $f, posterUrl: $p}' "$GITHUB_WORKSPACE/$ENTRY" > /tmp/entry.json
+            jq --slurpfile e /tmp/entry.json '.items = ($e + [.items[] | select(.id != $e[0].id)])[:200] | .updatedAt = $e[0].publishedAt' \
+              originals/manifest.json > /tmp/manifest.json
+            jq --indent 1 . /tmp/manifest.json > originals/manifest.json
+            git add originals/manifest.json
+            git commit -m "Originals: list $(jq -r .title /tmp/entry.json)"
+          }
+          list
+          if ! git push origin HEAD:media; then
+            # Someone pushed meanwhile: replay on top and re-pin to the files commit's new SHA.
+            git reset --hard HEAD~1
+            git pull --rebase origin media
+            list
+            git push origin HEAD:media
+          fi
+          echo "published $(jq -r .fileUrl /tmp/entry.json)" >> "$GITHUB_STEP_SUMMARY"

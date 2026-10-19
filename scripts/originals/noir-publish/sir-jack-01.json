@@ -1,0 +1,17 @@
+{
+ "id": "202610190330-sir-jack-files-01-vanishing-radiologist",
+ "kind": "explainer",
+ "publishedAt": "2026-10-19T03:30:00.000Z",
+ "title": "The Sir Jack Files, case 1: the vanishing radiologist",
+ "summary": "In 2016 an AI pioneer said to stop training radiologists. Nine years later, Mayo Clinic's radiology staff had grown 55% to about 400 doctors, working beside more than 250 AI models.",
+ "durationSec": 76,
+ "sources": [
+  { "name": "The New York Times, via Radiology Business", "url": "https://radiologybusiness.com/topics/artificial-intelligence/ny-times-revisits-nobel-prize-winners-prediction-ai-will-render-radiologists-obsolete" },
+  { "name": "The Decoder", "url": "https://the-decoder.com/geoffrey-hintons-wildly-overconfident-ai-prediction-failed-now-its-a-lesson-in-humility/" },
+  { "name": "CNBC (IMF, Oct 12 2026)", "url": "https://www.cnbc.com/2026/10/12/imf-world-bank-ai-jobs-inflation-.html" }
+ ],
+ "transcript": "October. Rain on the city, and a question on everybody's lips. The IMF calls AI a slow-moving tsunami for job seekers. In every window, the same question. Am I next? So I pulled a cold case. Twenty sixteen. The victims: radiologists. The doctors who read the shadows inside us. The tip came from a pioneer of AI himself. People should stop training radiologists now. He gave them five years. Nine years later, I went looking for the body. There wasn't one. At Mayo Clinic, the radiology staff grew fifty-five percent, to about four hundred doctors. They work beside more than two hundred and fifty AI models. The machines help measure, sort and flag. The humans make the call. Even the man who made the prediction says he spoke too broadly. Every job is a bundle of tasks. AI takes some. So the question isn't whether your job survives. It's which part of it you keep. Case closed.",
+ "voice": "Synthetic narration (ElevenLabs)",
+ "aiImages": false,
+ "credits": "Noir illustrations drawn in code by AI Broadsheet; figures are anonymous silhouettes, not the people in the story. Narration, sound effects and music generated with ElevenLabs."
+}
