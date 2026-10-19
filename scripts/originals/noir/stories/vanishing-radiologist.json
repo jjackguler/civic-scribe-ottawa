@@ -1,0 +1,551 @@
+{
+  "slug": "vanishing-radiologist",
+  "title": "The Case of the Vanishing Radiologist",
+  "style": "Cinematic film-noir graphic illustration, like a screen-printed movie poster: flat layered shapes with fine grainy risograph texture, deep ink-navy and teal shadows, a single warm practical light source glowing amber-gold, sparing signal-red accents, fog, wet reflective ground, anonymous silhouetted figures seen from behind or far away with no visible faces, strong negative space, moody and cinematic, vertical 9:16 composition, highly detailed. No text, no letters, no readable signs, no logos, no watermark.",
+  "voiceStyle": "a weary film-noir detective narrating a case, low and unhurried",
+  "music": "Slow film-noir jazz underscore for a detective story: brushed drums, upright bass walking softly, muted trumpet and smoky tenor saxophone phrases, late-night rain mood, minor key, sparse and cinematic, no vocals.",
+  "ambience": "Steady rain falling on a city street at night, distant traffic hiss, water dripping from gutters, no music.",
+  "sources": [
+    {
+      "name": "The New York Times, via Radiology Business",
+      "url": "https://radiologybusiness.com/topics/artificial-intelligence/ny-times-revisits-nobel-prize-winners-prediction-ai-will-render-radiologists-obsolete"
+    },
+    {
+      "name": "The Decoder",
+      "url": "https://the-decoder.com/geoffrey-hintons-wildly-overconfident-ai-prediction-failed-now-its-a-lesson-in-humility/"
+    },
+    {
+      "name": "CNBC (IMF, Oct 12 2026)",
+      "url": "https://www.cnbc.com/2026/10/12/imf-world-bank-ai-jobs-inflation-.html"
+    }
+  ],
+  "shots": [
+    {
+      "id": "city",
+      "say": "October. Rain on the city, and a question on everybody's lips.",
+      "image": "A lone man in a long coat walks away from camera down a rain-soaked canyon of tall night skyscrapers; scattered warm amber-lit windows; the wet pavement mirrors the lights; deep blue fog; the upper third is dark open sky between buildings.",
+      "cam": {
+        "from": [
+          1.18,
+          0,
+          0.06
+        ],
+        "to": [
+          1.04,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {
+        "rain": 1,
+        "fog": 0.5,
+        "glow": [
+          0.5,
+          0.62,
+          0.35,
+          "#D7B54A",
+          0.18
+        ]
+      },
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.3,
+          "text": "AI BROADSHEET · CASE FILE"
+        },
+        {
+          "t": "title",
+          "at": 1.2,
+          "lines": [
+            "THE CASE OF THE",
+            "VANISHING",
+            "RADIOLOGIST"
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "id": "thunder",
+          "at": 0,
+          "dur": 5,
+          "gain": -10,
+          "prompt": "Distant rolling thunder over a city at night, deep and cinematic"
+        },
+        {
+          "id": "steps-wet",
+          "at": 1,
+          "dur": 6,
+          "gain": -14,
+          "prompt": "Slow footsteps of leather shoes walking on wet pavement in the rain, close, steady pace"
+        }
+      ]
+    },
+    {
+      "id": "windows",
+      "say": "The IMF calls AI a slow-moving tsunami for job seekers. In every window, the same question. Am I next?",
+      "image": "The facade of a tall apartment block at night in the rain, a grid of windows: most are dark blue, a few glow warm amber; in the lit ones small anonymous silhouettes sit alone at kitchen tables and desks, one stares at a laptop, one reads a letter; rain streaks across the scene.",
+      "cam": {
+        "from": [
+          1.05,
+          0,
+          0.08
+        ],
+        "to": [
+          1.22,
+          0,
+          -0.06
+        ]
+      },
+      "fx": {
+        "rain": 0.8,
+        "fog": 0.2,
+        "flicker": 0.2
+      },
+      "ov": [
+        {
+          "t": "quote",
+          "at": 0.6,
+          "text": "“A slow-moving tsunami.”",
+          "by": "IMF chief, on AI and job seekers · Oct 2026"
+        },
+        {
+          "t": "type",
+          "at": 0,
+          "text": "AM I NEXT?",
+          "w": "Am"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "tv-murmur",
+          "at": 0.4,
+          "dur": 6,
+          "gain": -24,
+          "prompt": "Muffled television news murmur heard through an apartment wall in the rain"
+        }
+      ]
+    },
+    {
+      "id": "desk",
+      "say": "So I pulled a cold case. Twenty sixteen.",
+      "image": "Overhead view of a detective's wooden desk at night lit by one green-shaded banker's lamp: a thick closed manila case folder, an old typewriter, a cold cup of coffee, an ashtray-free clean surface, rain-blurred window light on one side; deep shadows everywhere else.",
+      "cam": {
+        "from": [
+          1.25,
+          0.04,
+          0
+        ],
+        "to": [
+          1.08,
+          -0.02,
+          0.02
+        ]
+      },
+      "fx": {
+        "fog": 0.15,
+        "glow": [
+          0.45,
+          0.4,
+          0.4,
+          "#E8B04A",
+          0.22
+        ]
+      },
+      "trans": "dip",
+      "ov": [
+        {
+          "t": "type",
+          "at": 0.4,
+          "text": "CASE NO. 2016-R\nTHE VANISHING RADIOLOGIST",
+          "y": 0.2
+        }
+      ],
+      "sfx": [
+        {
+          "id": "folder",
+          "at": 0.1,
+          "dur": 2,
+          "gain": -10,
+          "prompt": "A thick paper folder dropped onto a wooden desk, then pages slid out"
+        },
+        {
+          "id": "typewriter",
+          "at": 0.5,
+          "dur": 4,
+          "gain": -12,
+          "prompt": "Vintage manual typewriter typing a short line, crisp key strikes and a carriage bell at the end"
+        }
+      ]
+    },
+    {
+      "id": "lightbox",
+      "say": "The victims: radiologists. The doctors who read the shadows inside us.",
+      "image": "A dark hospital reading room at night: an anonymous doctor silhouette seen from behind studies glowing chest X-ray films clipped to a bright backlit lightbox wall; the lightbox is the only light, cold white-blue with warm amber edges; long shadows on the floor.",
+      "cam": {
+        "from": [
+          1.04,
+          -0.03,
+          0
+        ],
+        "to": [
+          1.2,
+          0.03,
+          -0.03
+        ]
+      },
+      "fx": {
+        "fog": 0.25,
+        "flicker": 0.35,
+        "glow": [
+          0.55,
+          0.38,
+          0.45,
+          "#CFE3F0",
+          0.16
+        ]
+      },
+      "ov": [
+        {
+          "t": "label",
+          "at": 0.5,
+          "text": "THE VICTIMS",
+          "sub": "Radiologists: the doctors who read X-rays, CT and MRI scans"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "lightbox",
+          "at": 0,
+          "dur": 4,
+          "gain": -16,
+          "prompt": "Fluorescent light tube flickering on with a click and a low electrical hum, quiet room"
+        }
+      ]
+    },
+    {
+      "id": "booth",
+      "say": "The tip came from a pioneer of AI himself. People should stop training radiologists now. He gave them five years.",
+      "image": "A lone figure in a glowing amber telephone booth on a dark rainy street corner at night, holding the receiver, seen in silhouette from the side; the booth light spills orange across the wet sidewalk; a parked old car and a full moon behind clouds in the background.",
+      "cam": {
+        "from": [
+          1.2,
+          0.05,
+          0.02
+        ],
+        "to": [
+          1.06,
+          -0.02,
+          0
+        ]
+      },
+      "fx": {
+        "rain": 0.7,
+        "fog": 0.2,
+        "glow": [
+          0.3,
+          0.45,
+          0.35,
+          "#FF8A2A",
+          0.2
+        ]
+      },
+      "trans": "flash",
+      "ov": [
+        {
+          "t": "quote",
+          "at": -0.2,
+          "text": "“People should stop training radiologists now.”",
+          "by": "Geoffrey Hinton, AI pioneer · 2016",
+          "w": "People"
+        },
+        {
+          "t": "counter",
+          "at": 0.1,
+          "from": 0,
+          "to": 5,
+          "suffix": " YEARS",
+          "label": "his deadline for the profession",
+          "w": "five"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "phone",
+          "at": 0.3,
+          "dur": 3,
+          "gain": -14,
+          "prompt": "Old payphone line crackle and a rotary dial turning, then a click"
+        }
+      ]
+    },
+    {
+      "id": "fog-light",
+      "say": "Nine years later, I went looking for the body.",
+      "image": "An empty foggy intersection at night, cracked wet asphalt, a single traffic light glowing red overhead and a streetlamp casting a cone of red light through thick fog; tall dark pine trees; nobody there.",
+      "cam": {
+        "from": [
+          1.06,
+          0,
+          -0.04
+        ],
+        "to": [
+          1.18,
+          0,
+          0.04
+        ]
+      },
+      "fx": {
+        "fog": 0.9,
+        "rain": 0.3,
+        "glow": [
+          0.4,
+          0.42,
+          0.3,
+          "#D9412B",
+          0.25
+        ]
+      },
+      "ov": [
+        {
+          "t": "type",
+          "at": 0.4,
+          "text": "2025. NINE YEARS LATER."
+        }
+      ],
+      "sfx": [
+        {
+          "id": "relay",
+          "at": 0.2,
+          "dur": 2,
+          "gain": -18,
+          "prompt": "Traffic light relay clicking at an empty intersection, wind"
+        },
+        {
+          "id": "siren",
+          "at": 1,
+          "dur": 4,
+          "gain": -26,
+          "prompt": "Very distant police siren fading away in a foggy city"
+        }
+      ]
+    },
+    {
+      "id": "hospital",
+      "say": "There wasn't one. At Mayo Clinic, the radiology staff grew fifty-five percent, to about four hundred doctors.",
+      "image": "A large modern hospital building at night seen from across an empty snowy plaza, many windows glowing warm amber floor after floor, small silhouettes of staff visible in the lit windows, falling snow, deep blue sky, a sense of a place busy and alive.",
+      "cam": {
+        "from": [
+          1.22,
+          0,
+          0
+        ],
+        "to": [
+          1.05,
+          0,
+          0.02
+        ]
+      },
+      "fx": {
+        "snow": 0.7,
+        "fog": 0.3,
+        "glow": [
+          0.5,
+          0.5,
+          0.5,
+          "#D7B54A",
+          0.14
+        ]
+      },
+      "ov": [
+        {
+          "t": "type",
+          "at": 0.1,
+          "text": "THERE WASN'T ONE."
+        },
+        {
+          "t": "counter",
+          "at": -0.3,
+          "from": 0,
+          "to": 55,
+          "prefix": "+",
+          "suffix": "%",
+          "label": "radiology staff at Mayo Clinic since 2016",
+          "w": "fifty"
+        },
+        {
+          "t": "label",
+          "at": 0,
+          "text": "≈ 400 RADIOLOGISTS",
+          "sub": "and still hiring",
+          "y": 0.82,
+          "w": "four"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "monitor",
+          "at": 1,
+          "dur": 5,
+          "gain": -24,
+          "prompt": "Soft hospital heart monitor beeping slowly in a quiet ward, gentle"
+        }
+      ]
+    },
+    {
+      "id": "screens",
+      "say": "They work beside more than two hundred and fifty AI models. The machines help measure, sort and flag. The humans make the call.",
+      "image": "A radiologist seen from behind in a dark reading room, sitting before several large monitors showing grayscale scans with thin glowing outlines and markers around regions of interest, warm desk lamp on one side, cool blue screen light on the figure's shoulders, calm focused mood.",
+      "cam": {
+        "from": [
+          1.05,
+          0.03,
+          0.02
+        ],
+        "to": [
+          1.22,
+          -0.03,
+          -0.02
+        ]
+      },
+      "fx": {
+        "fog": 0.15,
+        "scan": 1,
+        "glow": [
+          0.6,
+          0.4,
+          0.4,
+          "#9FD3FF",
+          0.14
+        ]
+      },
+      "ov": [
+        {
+          "t": "counter",
+          "at": -0.2,
+          "from": 0,
+          "to": 250,
+          "suffix": "+",
+          "label": "AI models in use at Mayo Clinic",
+          "w": "two"
+        },
+        {
+          "t": "split",
+          "at": -0.1,
+          "left": "MACHINES",
+          "leftSub": "measure · sort · flag",
+          "right": "HUMANS",
+          "rightSub": "make the call",
+          "w": "machines"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "keys",
+          "at": 0.2,
+          "dur": 4,
+          "gain": -22,
+          "prompt": "Quiet computer mouse clicks and soft keyboard typing in a calm dark room, subtle digital beeps"
+        }
+      ]
+    },
+    {
+      "id": "red-moon",
+      "say": "Even the man who made the prediction says he spoke too broadly. Every job is a bundle of tasks. AI takes some.",
+      "image": "A lone figure in a long coat and hat walks away down a snowy country road at night, leaving deep footprints, wooden telephone poles and a weathered red farmhouse on the left, a huge blood-red moon in a starry teal sky.",
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          0.06
+        ],
+        "to": [
+          1.2,
+          0,
+          -0.04
+        ]
+      },
+      "fx": {
+        "snow": 0.5,
+        "fog": 0.15
+      },
+      "ov": [
+        {
+          "t": "label",
+          "at": 0,
+          "text": "EVERY JOB IS A BUNDLE OF TASKS",
+          "sub": "AI takes some. Not all.",
+          "w": "Every"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "steps-snow",
+          "at": 0,
+          "dur": 7,
+          "gain": -14,
+          "prompt": "Slow footsteps crunching through fresh snow at night, cold wind, quiet"
+        },
+        {
+          "id": "wind",
+          "at": 0,
+          "dur": 8,
+          "gain": -22,
+          "prompt": "Cold winter night wind across open fields, hollow and soft"
+        }
+      ]
+    },
+    {
+      "id": "kiosk",
+      "say": "So the question isn't whether your job survives. It's which part of it you keep. Case closed.",
+      "image": "A small corner café kiosk glowing bright orange at the bottom of an immense blue foggy city of towering buildings; a few silhouetted people sit at tables under an umbrella and stand on the corner; a vintage yellow taxi waits; the light from the kiosk reflects on the wet street; huge empty blue space above.",
+      "cam": {
+        "from": [
+          1.2,
+          0,
+          0.1
+        ],
+        "to": [
+          1.04,
+          0,
+          0
+        ]
+      },
+      "fx": {
+        "rain": 0.25,
+        "fog": 0.35,
+        "glow": [
+          0.4,
+          0.82,
+          0.25,
+          "#FF8A2A",
+          0.2
+        ]
+      },
+      "ov": [
+        {
+          "t": "stamp",
+          "at": -0.05,
+          "text": "CASE CLOSED",
+          "w": "closed"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "neon",
+          "at": 0,
+          "dur": 6,
+          "gain": -22,
+          "prompt": "Neon sign buzzing softly, cafe murmur and a cup set on a saucer, rainy evening street"
+        },
+        {
+          "id": "stamp",
+          "at": -0.05,
+          "dur": 1,
+          "gain": -8,
+          "prompt": "Single heavy rubber stamp thud on paper on a wooden desk",
+          "w": "closed"
+        }
+      ]
+    }
+  ]
+}

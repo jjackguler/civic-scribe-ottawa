@@ -1,0 +1,77 @@
+# Film-noir news reels (scripts/originals/noir): Gemini stills, ElevenLabs narration,
+# sound effects and music, canvas motion graphics, FFmpeg mix. Runs when the `noir-run`
+# branch is pushed (NOIR_SLUG picks the story, default below) or by hand from that branch.
+# Needs GEMINI_API_KEY and ELEVENLABS_API_KEY. Generated stills and audio are cached per
+# story, so a re-run after a renderer change only re-renders. The MP4 is uploaded as the
+# run's artifact; nothing is published from here.
+name: Noir reel
+
+on:
+  push:
+    branches: [noir-run]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: Story slug (scripts/originals/noir/stories/<slug>.json)
+        default: vanishing-radiologist
+      fresh:
+        description: Regenerate stills and audio (ignore the cache)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      SLUG: ${{ inputs.slug || vars.NOIR_SLUG || 'vanishing-radiologist' }}
+    defaults:
+      run:
+        working-directory: scripts/originals/noir
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Restore generated media
+        if: ${{ !inputs.fresh }}
+        uses: actions/cache/restore@v4
+        with:
+          path: scripts/originals/noir/build
+          key: noir-${{ env.SLUG }}-${{ github.run_id }}
+          restore-keys: noir-${{ env.SLUG }}-
+      - name: Produce (Gemini + ElevenLabs)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          NOIR_VOICE_ID: ${{ vars.NOIR_VOICE_ID }}
+          NOIR_IMAGE_MODELS: ${{ vars.NOIR_IMAGE_MODELS }}
+        run: node produce.mjs "$SLUG"
+      - name: Save generated media
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: scripts/originals/noir/build
+          key: noir-${{ env.SLUG }}-${{ github.run_id }}
+      - name: Render
+        run: |
+          node render.mjs "$SLUG" --stills 3.6,12,24,40
+          node render.mjs "$SLUG"
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noir-${{ env.SLUG }}
+          path: |
+            scripts/originals/noir/out/${{ env.SLUG }}.mp4
+            scripts/originals/noir/out/*.jpg
+            scripts/originals/noir/build/${{ env.SLUG }}/img
+            scripts/originals/noir/build/${{ env.SLUG }}/timeline.json
+          retention-days: 30

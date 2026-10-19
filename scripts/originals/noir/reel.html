@@ -1,0 +1,278 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Schibsted+Grotesk:wght@400..900&family=Special+Elite&display=block">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Film-noir reel: one Gemini still per shot, brought to life with camera moves, rain,
+// snow, fog, light, grain and Ink & Gold motion type. window.setup() loads a story and
+// its timeline (build/<slug>/timeline.json); window.frame(t) draws time t deterministically.
+const W = 1080, H = 1920, FPS = 30, XF = 0.55;
+const INK = "#16181A", PAPER = "#EFE8DA", GOLD = "#D7B54A", RED = "#D9412B";
+const SERIF = '"Bodoni Moda", serif', SANS = '"Schibsted Grotesk", sans-serif', TYPE = '"Special Elite", monospace';
+const c = document.getElementById("c"), x = c.getContext("2d");
+let story, tl, imgs = {}, grain = [], fogTex;
+
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (p) => 0.5 - 0.5 * Math.cos(Math.PI * clamp(p));
+const out3 = (p) => 1 - Math.pow(1 - clamp(p), 3);
+const back = (p) => { p = clamp(p); const s = 1.7; return 1 + (s + 1) * Math.pow(p - 1, 3) + s * Math.pow(p - 1, 2); };
+const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+const noise = (t) => { const i = Math.floor(t), f = t - i; return hash(i) * (1 - ease(f)) + hash(i + 1) * ease(f); };
+const load = (src) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; });
+
+window.setup = async () => {
+  const slug = new URLSearchParams(location.search).get("slug");
+  story = await (await fetch(`stories/${slug}.json`)).json();
+  tl = await (await fetch(`build/${slug}/timeline.json`)).json();
+  for (const s of story.shots) imgs[s.id] = await load(`build/${slug}/img/${s.id}.png`);
+  await Promise.all([`700 100px ${SERIF}`, `italic 500 100px ${SERIF}`, `800 50px ${SANS}`, `500 50px ${SANS}`, `60px ${TYPE}`].map((f) => document.fonts.load(f)));
+  for (let k = 0; k < 6; k++) { // film grain plates
+    const g = document.createElement("canvas"); g.width = 540; g.height = 960;
+    const gx = g.getContext("2d"), d = gx.createImageData(540, 960);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    gx.putImageData(d, 0, 0); grain.push(g);
+  }
+  fogTex = document.createElement("canvas"); fogTex.width = 1080; fogTex.height = 960;
+  const fx = fogTex.getContext("2d");
+  for (let i = 0; i < 140; i++) {
+    const px = hash(i) * 1080, py = hash(i + 50) * 960, r = 80 + hash(i + 99) * 260;
+    const g = fx.createRadialGradient(px, py, 0, px, py, r);
+    g.addColorStop(0, `rgba(190,205,220,${0.05 + hash(i + 7) * 0.07})`); g.addColorStop(1, "rgba(190,205,220,0)");
+    fx.fillStyle = g; fx.fillRect(px - r, py - r, 2 * r, 2 * r);
+    for (const dx of [-1080, 1080]) { fx.fillStyle = g; fx.save(); fx.translate(dx, 0); fx.fillRect(px - r, py - r, 2 * r, 2 * r); fx.restore(); }
+  }
+  { // soften the fog plate's top and bottom so it never shows an edge
+    fx.globalCompositeOperation = "destination-in";
+    const m = fx.createLinearGradient(0, 0, 0, 960); m.addColorStop(0, "rgba(0,0,0,0)"); m.addColorStop(0.3, "#000"); m.addColorStop(0.7, "#000"); m.addColorStop(1, "rgba(0,0,0,0)");
+    fx.fillStyle = m; fx.fillRect(0, 0, 1080, 960);
+  }
+  // Resolve word-synced cue times once.
+  story.shots.forEach((s, i) => {
+    const T = tl.shots[i];
+    const at = (o) => {
+      let t = o.at ?? 0;
+      if (o.w) { const w = T.words.find((w) => w.w.toLowerCase().replace(/[^a-z0-9'-]/g, "").startsWith(o.w.toLowerCase())); if (w) t = T.voAt + w.start + (o.at ?? 0); }
+      return Math.min(t, T.dur - 1.1);
+    };
+    for (const o of s.ov ?? []) o.T = at(o);
+    // A card stays up until the next card in the shot (kicker and title stay throughout).
+    const cards = (s.ov ?? []).filter((o) => o.t !== "kicker" && o.t !== "title").sort((a, b) => a.T - b.T);
+    cards.forEach((o, k) => { o.E = cards[k + 1]?.T ?? Infinity; });
+  });
+  return { duration: tl.total, fps: FPS };
+};
+
+// ── layers ───────────────────────────────────────────────────────────────────
+function plate(shot, T, u, alpha) {
+  const im = imgs[shot.id], [s0, x0, y0] = shot.cam.from, [s1, x1, y1] = shot.cam.to;
+  const p = ease((u + XF) / (T.dur + 2 * XF));
+  const s = s0 + (s1 - s0) * p, ox = (x0 + (x1 - x0) * p) * W, oy = (y0 + (y1 - y0) * p) * H;
+  const cover = Math.max(W / im.width, H / im.height) * s;
+  const mx = Math.max(0, (im.width * cover - W) / 2 - 8), my = Math.max(0, (im.height * cover - H) / 2 - 8);
+  const cx = clamp(ox, -mx, mx), cy = clamp(oy, -my, my); // never show the still's edge
+  const wob = (noise(u * 0.7 + 3) - 0.5) * 6, wob2 = (noise(u * 0.6 + 9) - 0.5) * 6, rot = (noise(u * 0.4 + 5) - 0.5) * 0.004;
+  x.save(); x.globalAlpha = alpha;
+  x.translate(W / 2 + cx + wob, H / 2 + cy + wob2); x.rotate(rot);
+  x.drawImage(im, -im.width * cover / 2, -im.height * cover / 2, im.width * cover, im.height * cover);
+  x.restore();
+  fx(shot.fx ?? {}, u, alpha);
+}
+
+function fx(f, u, alpha) {
+  x.save(); x.globalAlpha = alpha;
+  if (f.glow) {
+    const [gx, gy, gr, col, ga] = f.glow, a = ga * (0.8 + 0.2 * Math.sin(u * 1.8)) * (f.flicker ? 1 - f.flicker * Math.max(0, noise(u * 14) - 0.55) : 1);
+    const g = x.createRadialGradient(gx * W, gy * H, 0, gx * W, gy * H, gr * H);
+    g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)");
+    x.globalCompositeOperation = "screen"; x.globalAlpha = alpha * a; x.fillStyle = g; x.fillRect(0, 0, W, H);
+    x.globalAlpha = alpha;
+  }
+  if (f.fog) {
+    x.globalCompositeOperation = "screen";
+    for (const [k, sp, y, sc] of [[0, 22, 0.35, 1.4], [1, -14, 0.6, 1.1], [2, 34, 0.82, 1.7]]) {
+      const off = ((u * sp + k * 300) % 1080 + 1080) % 1080;
+      x.globalAlpha = alpha * f.fog * 0.75;
+      for (const dx of [-1080, 0, 1080]) x.drawImage(fogTex, off + dx, y * H - 480 * sc, 1080, 960 * sc);
+    }
+  }
+  x.globalCompositeOperation = "source-over";
+  if (f.rain) {
+    x.lineCap = "round";
+    for (const [n, len, sp, wd, a, sl] of [[Math.round(320 * f.rain), 40, 1900, 1.2, 0.22, 0.12], [Math.round(110 * f.rain), 120, 2900, 2.4, 0.3, 0.16]]) {
+      x.strokeStyle = `rgba(205,222,240,${a})`; x.lineWidth = wd; x.beginPath();
+      for (let i = 0; i < n; i++) {
+        const L = len * (0.6 + hash(i + n) * 0.8), v = sp * (0.8 + hash(i * 3 + n) * 0.4);
+        const yy = ((hash(i * 7 + n) * (H + L) + u * v) % (H + L)) - L, xx = hash(i * 13 + n) * (W + 300) - 150 + yy * sl;
+        x.moveTo(xx, yy); x.lineTo(xx + L * sl, yy + L);
+      }
+      x.stroke();
+    }
+  }
+  if (f.snow) {
+    x.fillStyle = "rgba(235,240,245,0.75)";
+    for (let i = 0; i < Math.round(260 * f.snow); i++) {
+      const r = 1.2 + hash(i * 5) * 3.4, v = 60 + r * 28;
+      const yy = ((hash(i * 11) * (H + 20) + u * v) % (H + 20)) - 10, xx = hash(i * 17) * W + Math.sin(u * 0.8 + i) * 18 * r / 3;
+      x.globalAlpha = alpha * (0.4 + r / 6); x.beginPath(); x.arc(xx, yy, r, 0, 7); x.fill();
+    }
+  }
+  if (f.scan) {
+    const sy = ((u * 0.22) % 1) * H * 0.9 + H * 0.05;
+    const g = x.createLinearGradient(0, sy - 60, 0, sy + 60);
+    g.addColorStop(0, "rgba(159,211,255,0)"); g.addColorStop(0.5, "rgba(159,211,255,0.16)"); g.addColorStop(1, "rgba(159,211,255,0)");
+    x.globalCompositeOperation = "screen"; x.fillStyle = g; x.fillRect(0, sy - 60, W, 120);
+    x.globalCompositeOperation = "source-over";
+    if (Math.floor(u * 2) % 2 === 0) { x.globalAlpha = alpha * 0.8; x.fillStyle = "#9FD3FF"; x.font = `500 24px ${SANS}`; x.letterSpacing = "4px"; x.fillText("● AI ASSIST · ANALYSING", 72, 110); x.letterSpacing = "0px"; }
+  }
+  if (f.flicker) { x.globalAlpha = alpha * f.flicker * 0.5 * Math.max(0, noise(u * 11 + 2) - 0.6); x.fillStyle = "#000"; x.fillRect(0, 0, W, H); }
+  x.restore();
+}
+
+function finish(t) {
+  const v = x.createRadialGradient(W / 2, H * 0.5, H * 0.25, W / 2, H * 0.5, H * 0.75);
+  v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.6)");
+  x.fillStyle = v; x.fillRect(0, 0, W, H);
+  x.save(); x.globalCompositeOperation = "overlay"; x.globalAlpha = 0.11;
+  x.drawImage(grain[Math.floor(t * 24) % grain.length], 0, 0, W, H); x.restore();
+  const f = Math.floor(t * 24); // film scratches and dust, a few frames at a time
+  if (hash(f * 0.37) > 0.72) { x.fillStyle = "rgba(230,225,210,0.12)"; x.fillRect(hash(f) * W, 0, 1.5, H); }
+  if (hash(f * 1.3) > 0.85) { x.fillStyle = "rgba(0,0,0,0.25)"; x.beginPath(); x.arc(hash(f + 4) * W, hash(f + 8) * H, 2 + hash(f + 2) * 3, 0, 7); x.fill(); }
+}
+
+// ── type ─────────────────────────────────────────────────────────────────────
+function text(str, px, py, font, color, { align = "center", track = 0, alpha = 1, shadow = 28 } = {}) {
+  x.save(); x.globalAlpha *= alpha; x.font = font; x.textAlign = align; x.textBaseline = "alphabetic";
+  x.letterSpacing = `${track}px`; x.fillStyle = color;
+  if (shadow) { x.shadowColor = "rgba(0,0,0,0.85)"; x.shadowBlur = shadow; }
+  x.fillText(str, px, py); x.restore();
+}
+function wrap(str, font, max) {
+  x.font = font; const out = []; let line = "";
+  for (const w of str.split(" ")) { const tr = line ? `${line} ${w}` : w; if (x.measureText(tr).width > max && line) { out.push(line); line = w; } else line = tr; }
+  return line ? [...out, line] : out;
+}
+function band(y0, y1, a) { const g = x.createLinearGradient(0, y0, 0, y1); g.addColorStop(0, "rgba(10,12,14,0)"); g.addColorStop(0.5, `rgba(10,12,14,${a})`); g.addColorStop(1, "rgba(10,12,14,0)"); x.fillStyle = g; x.fillRect(0, y0, W, y1 - y0); }
+
+function overlay(o, k, fade) {
+  x.save(); x.globalAlpha = fade;
+  if (o.t === "kicker") {
+    const p = out3(k / 0.8);
+    x.fillStyle = GOLD; x.fillRect(W / 2 - 70 * p, 128, 140 * p, 3);
+    text(o.text, W / 2, 178, `600 30px ${SANS}`, PAPER, { track: 7, alpha: clamp((k - 0.3) / 0.6) });
+  } else if (o.t === "title") {
+    const sizes = [54, 148, 112], ys = [300, 450, 570], cols = [PAPER, GOLD, PAPER];
+    o.lines.forEach((l, i) => {
+      const p = out3((k - i * 0.45) / 0.9); if (p <= 0) return;
+      x.save(); x.beginPath(); x.rect(0, ys[i] - sizes[i] * 1.05, W, sizes[i] * 1.3); x.clip();
+      text(l, W / 2, ys[i] + (1 - p) * sizes[i], `${i ? 800 : 600} ${sizes[i]}px ${SERIF}`, cols[i], { track: i ? 2 : 10, alpha: p });
+      x.restore();
+    });
+    const p = out3((k - 1.4) / 0.8); x.fillStyle = RED; x.fillRect(W / 2 - 160 * p, 612, 320 * p, 4);
+  } else if (o.t === "quote") {
+    const font = `italic 500 74px ${SERIF}`, lines = wrap(o.text, font, 900), y0 = H * 0.3 - lines.length * 45;
+    band(y0 - 160, y0 + lines.length * 92 + 140, 0.55);
+    let n = 0;
+    lines.forEach((l, i) => { const p = out3((k - i * 0.25) / 0.7); text(l, W / 2, y0 + i * 92 + (1 - p) * 30, font, PAPER, { alpha: p }); n++; });
+    const p = clamp((k - 0.6) / 0.6);
+    x.fillStyle = GOLD; x.fillRect(W / 2 - 40, y0 + n * 92 + 2, 80 * p, 3);
+    text(o.by, W / 2, y0 + n * 92 + 60, `600 28px ${SANS}`, GOLD, { track: 3, alpha: p });
+  } else if (o.t === "type") {
+    const n = Math.floor(k * 17), str = o.text.slice(0, Math.max(0, n)), lines = str.split("\n"), y = (o.y ?? 0.42) * H;
+    lines.forEach((l, i) => {
+      const last = i === lines.length - 1 && (n < o.text.length || Math.floor(k * 2.4) % 2 === 0);
+      text(l + (last ? "▌" : ""), W / 2, y + i * 84, `${i ? 52 : 66}px ${TYPE}`, i ? GOLD : PAPER, { track: 2 });
+    });
+  } else if (o.t === "label") {
+    const y = (o.y ?? 0.72) * H, p = out3(k / 0.7);
+    band(y - 120, y + 140, 0.5 * p);
+    x.fillStyle = GOLD; x.fillRect(W / 2 - 60 * p, y - 78, 120 * p, 3);
+    text(o.text, W / 2, y + (1 - p) * 20, `800 54px ${SANS}`, PAPER, { track: 5, alpha: p });
+    if (o.sub) for (const [i, l] of wrap(o.sub, `italic 500 40px ${SERIF}`, 860).entries()) text(l, W / 2, y + 62 + i * 50, `italic 500 40px ${SERIF}`, GOLD, { alpha: clamp((k - 0.4) / 0.6) });
+  } else if (o.t === "counter") {
+    const p = out3(k / 1.6), v = Math.round(o.from + (o.to - o.from) * p), y = H * 0.44;
+    band(y - 330, y + 170, 0.55 * clamp(k / 0.4));
+    const pop = 1 + 0.06 * Math.max(0, 1 - Math.abs(k - 1.6) / 0.25);
+    x.save(); x.translate(W / 2, y); x.scale(pop, pop);
+    text(`${o.prefix ?? ""}${v}${o.suffix ?? ""}`, 0, 0, `800 ${String(o.to).length + (o.suffix?.length ?? 0) > 6 ? 170 : 260}px ${SERIF}`, GOLD, { alpha: clamp(k / 0.3), track: -4 });
+    x.restore();
+    x.fillStyle = PAPER; x.fillRect(W / 2 - 180, y + 48, 360 * p, 2);
+    text(o.label.toUpperCase(), W / 2, y + 108, `600 30px ${SANS}`, PAPER, { track: 4, alpha: clamp((k - 0.5) / 0.6) });
+  } else if (o.t === "split") {
+    const y = H * 0.73, a = out3(k / 0.6), b = out3((k - 0.9) / 0.6);
+    band(y - 150, y + 170, 0.6 * a);
+    x.fillStyle = GOLD; x.fillRect(W / 2 - 1, y - 90, 2, 190 * out3((k - 0.4) / 0.6));
+    text(o.left, W * 0.27, y, `800 56px ${SANS}`, PAPER, { track: 4, alpha: a });
+    text(o.leftSub, W * 0.27, y + 58, `italic 500 36px ${SERIF}`, PAPER, { alpha: a * 0.85 });
+    text(o.right, W * 0.73, y, `800 56px ${SANS}`, GOLD, { track: 4, alpha: b });
+    text(o.rightSub, W * 0.73, y + 58, `italic 500 36px ${SERIF}`, GOLD, { alpha: b });
+  } else if (o.t === "stamp") {
+    if (k < 0) { x.restore(); return; }
+    const s = 1 + 1.3 * (1 - out3(k / 0.16)), sh = k < 0.4 ? (hash(Math.floor(k * 60)) - 0.5) * 10 * (1 - k / 0.4) : 0;
+    x.translate(W / 2 + sh, H * 0.42); x.rotate(-0.13); x.scale(s, s); x.globalAlpha = fade * clamp(k / 0.08) * 0.92;
+    x.strokeStyle = RED; x.lineWidth = 10; x.strokeRect(-400, -105, 800, 210); x.lineWidth = 3; x.strokeRect(-382, -87, 764, 174);
+    x.font = `112px ${TYPE}`; x.textAlign = "center"; x.textBaseline = "middle"; x.fillStyle = RED; x.letterSpacing = "6px"; x.fillText(o.text, 0, 6);
+    x.globalCompositeOperation = "destination-out"; x.globalAlpha = 0.35; x.drawImage(grain[2], -400, -105, 800, 210);
+  }
+  x.restore();
+}
+
+function subtitles(T, u, fade) {
+  const ws = T.words.map((w) => ({ ...w, s: T.voAt + w.start, e: T.voAt + w.end }));
+  const chunks = []; let cur = [];
+  for (const w of ws) { cur.push(w); if (cur.length >= 4 || /[.,?!:;]$/.test(w.w)) { chunks.push(cur); cur = []; } }
+  if (cur.length) chunks.push(cur);
+  const ch = chunks.find((c, i) => u >= c[0].s - 0.05 && u < (chunks[i + 1]?.[0].s ?? c[c.length - 1].e + 0.35) - 0.05 && u < c[c.length - 1].e + 0.35);
+  if (!ch) return;
+  const font = `800 52px ${SANS}`; x.save(); x.globalAlpha = fade; x.font = font; x.letterSpacing = "1px";
+  const parts = ch.map((w) => w.w.toUpperCase()), widths = parts.map((p) => x.measureText(p + " ").width), total = widths.reduce((a, b) => a + b, 0);
+  let px = W / 2 - total / 2; const y = H * 0.905;
+  ch.forEach((w, i) => {
+    const on = u >= w.s - 0.03, now = on && u < w.e + 0.05;
+    text(parts[i], px, y - (now ? 4 : 0), font, now ? GOLD : PAPER, { align: "left", alpha: on ? 1 : 0.45, shadow: 18, track: 1 });
+    px += widths[i];
+  });
+  x.restore();
+}
+
+function endCard(t) {
+  const k = t - tl.end.start, a = clamp(k / 0.6);
+  x.fillStyle = INK; x.globalAlpha = a; x.fillRect(0, 0, W, H); x.globalAlpha = 1;
+  fx({ rain: 0.25, fog: 0.2 }, t, a * 0.6);
+  const p = out3((k - 0.3) / 0.9);
+  text("AI BROADSHEET", W / 2, H * 0.42 + (1 - p) * 30, `800 112px ${SERIF}`, PAPER, { alpha: p, track: 4 });
+  x.fillStyle = GOLD; x.fillRect(W / 2 - 150 * p, H * 0.42 + 44, 300 * p, 4);
+  text("AI news, with the human stakes left in.", W / 2, H * 0.42 + 130, `italic 500 44px ${SERIF}`, PAPER, { alpha: clamp((k - 0.9) / 0.6) });
+  text("ONE CATCH A DAY · AIBROADSHEET.COM", W / 2, H * 0.42 + 205, `700 28px ${SANS}`, GOLD, { alpha: clamp((k - 1.3) / 0.6), track: 5 });
+  const srcA = clamp((k - 1.6) / 0.6) * 0.7;
+  text("Sources: " + story.sources.map((s) => s.name).join(" · "), W / 2, H * 0.86, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
+  const cr = tl.credits ?? {};
+  text(`Illustrations: Google Gemini · Voice, sound & music: ElevenLabs${cr.voice ? ` (${cr.voice})` : ""}`, W / 2, H * 0.86 + 36, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
+}
+
+// ── frame ────────────────────────────────────────────────────────────────────
+window.frame = (t) => {
+  x.setTransform(1, 0, 0, 1, 0, 0); x.globalAlpha = 1; x.globalCompositeOperation = "source-over";
+  x.fillStyle = "#000"; x.fillRect(0, 0, W, H);
+  const i = tl.shots.findIndex((s) => t >= s.start && t < s.start + s.dur);
+  if (i >= 0) {
+    const T = tl.shots[i], shot = story.shots[i], u = t - T.start;
+    const next = story.shots[i + 1], NT = tl.shots[i + 1];
+    const toEnd = T.dur - u;
+    // incoming dip (from black) for shots marked "dip"
+    const inA = shot.trans === "dip" ? clamp(u / 0.45) : 1;
+    plate(shot, T, u, inA);
+    if (next && toEnd < XF && next.trans !== "dip" && next.trans !== "flash") plate(next, NT, -toEnd, ease(1 - toEnd / XF));
+    if (next?.trans === "dip" && toEnd < 0.45) { x.fillStyle = `rgba(0,0,0,${ease(1 - toEnd / 0.45)})`; x.fillRect(0, 0, W, H); }
+    if (shot.trans === "flash" && u < 0.35) { x.fillStyle = `rgba(255,236,200,${0.85 * (1 - u / 0.35)})`; x.fillRect(0, 0, W, H); }
+    const fade = clamp(toEnd / 0.35) * (i === tl.shots.length - 1 ? 1 : 1);
+    for (const o of shot.ov ?? []) if (u >= o.T && u < (o.E ?? Infinity)) overlay(o, u - o.T, fade * clamp(((o.E ?? Infinity) - u) / 0.3));
+    subtitles(T, u, clamp(toEnd / 0.2));
+  } else if (t >= tl.end.start) {
+    const L = tl.shots.length - 1;
+    plate(story.shots[L], tl.shots[L], t - tl.shots[L].start, 1);
+    endCard(t);
+  }
+  finish(t);
+};
+</script></body></html>

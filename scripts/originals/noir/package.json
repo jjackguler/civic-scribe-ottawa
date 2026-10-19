@@ -1,0 +1,9 @@
+{
+  "name": "aibroadsheet-noir",
+  "private": true,
+  "type": "module",
+  "description": "Film-noir news reels: Gemini stills, ElevenLabs voice and sound, canvas motion graphics. See produce.mjs and render.mjs.",
+  "dependencies": {
+    "playwright": "^1.55.0"
+  }
+}
