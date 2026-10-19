@@ -54,6 +54,8 @@ jobs:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           NOIR_VOICE_ID: ${{ vars.NOIR_VOICE_ID }}
           NOIR_IMAGE_MODELS: ${{ vars.NOIR_IMAGE_MODELS }}
+          # "drawn": skip Gemini and let scenes.js draw every shot; "gemini" to generate stills
+          NOIR_STILLS: ${{ vars.NOIR_STILLS || 'drawn' }}
         run: node produce.mjs "$SLUG"
       - name: Save generated media
         if: always()

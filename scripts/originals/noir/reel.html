@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Schibsted+Grotesk:wght@400..900&family=Special+Elite&display=block">
 <style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
 </head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="scenes.js"></script>
 <script>
 // Film-noir reel: one Gemini still per shot, brought to life with camera moves, rain,
 // snow, fog, light, grain and Ink & Gold motion type. window.setup() loads a story and
@@ -25,7 +26,7 @@ window.setup = async () => {
   const slug = new URLSearchParams(location.search).get("slug");
   story = await (await fetch(`stories/${slug}.json`)).json();
   tl = await (await fetch(`build/${slug}/timeline.json`)).json();
-  for (const s of story.shots) imgs[s.id] = await load(`build/${slug}/img/${s.id}.png`);
+  for (const s of story.shots) imgs[s.id] = await load(`build/${slug}/img/${s.id}.png`).catch(() => null); // no still: the shot is drawn by scenes.js
   await Promise.all([`700 100px ${SERIF}`, `italic 500 100px ${SERIF}`, `800 50px ${SANS}`, `500 50px ${SANS}`, `60px ${TYPE}`].map((f) => document.fonts.load(f)));
   for (let k = 0; k < 6; k++) { // film grain plates
     const g = document.createElement("canvas"); g.width = 540; g.height = 960;
@@ -64,7 +65,23 @@ window.setup = async () => {
 };
 
 // ── layers ───────────────────────────────────────────────────────────────────
+const sceneCanvas = {};
+function drawn(shot, T, u, alpha) {
+  const [s0, x0, y0] = shot.cam.from, [s1, x1, y1] = shot.cam.to, p = ease((u + XF) / (T.dur + 2 * XF));
+  const s = s0 + (s1 - s0) * p, m = (s - 1) * W / 2;
+  const cx = clamp((x0 + (x1 - x0) * p) * W, -m, m), cy = clamp((y0 + (y1 - y0) * p) * H, -m, m);
+  const wob = (noise(u * 0.7 + 3) - 0.5) * 6, wob2 = (noise(u * 0.6 + 9) - 0.5) * 6;
+  const sc = sceneCanvas[shot.id] ??= Object.assign(document.createElement("canvas"), { width: W, height: H }), g = sc.getContext("2d");
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = "source-over"; g.clearRect(0, 0, W, H);
+  g.translate(W / 2 + cx + wob, H / 2 + cy + wob2); g.scale(s, s); g.translate(-W / 2, -H / 2);
+  const dx = (p - 0.5) * 80 * (x1 >= x0 ? 1 : -1), dy = (p - 0.5) * 50 * (y1 >= y0 ? 1 : -1);
+  const L = (d, fn) => { g.save(); g.translate((d - 0.5) * dx, (d - 0.5) * dy); fn(); g.restore(); };
+  window.NOIR_SCENES[shot.id](g, u, L);
+  x.save(); x.globalAlpha = alpha; x.drawImage(sc, 0, 0); x.restore();
+  fx(shot.fx ?? {}, u, alpha);
+}
 function plate(shot, T, u, alpha) {
+  if (!imgs[shot.id]) return drawn(shot, T, u, alpha);
   const im = imgs[shot.id], [s0, x0, y0] = shot.cam.from, [s1, x1, y1] = shot.cam.to;
   const p = ease((u + XF) / (T.dur + 2 * XF));
   const s = s0 + (s1 - s0) * p, ox = (x0 + (x1 - x0) * p) * W, oy = (y0 + (y1 - y0) * p) * H;
@@ -191,7 +208,7 @@ function overlay(o, k, fade) {
     if (o.sub) for (const [i, l] of wrap(o.sub, `italic 500 40px ${SERIF}`, 860).entries()) text(l, W / 2, y + 62 + i * 50, `italic 500 40px ${SERIF}`, GOLD, { alpha: clamp((k - 0.4) / 0.6) });
   } else if (o.t === "counter") {
     const p = out3(k / 1.6), v = Math.round(o.from + (o.to - o.from) * p), y = H * 0.44;
-    band(y - 330, y + 170, 0.55 * clamp(k / 0.4));
+    band(y - 360, y + 190, 0.8 * clamp(k / 0.4));
     const pop = 1 + 0.06 * Math.max(0, 1 - Math.abs(k - 1.6) / 0.25);
     x.save(); x.translate(W / 2, y); x.scale(pop, pop);
     text(`${o.prefix ?? ""}${v}${o.suffix ?? ""}`, 0, 0, `800 ${String(o.to).length + (o.suffix?.length ?? 0) > 6 ? 170 : 260}px ${SERIF}`, GOLD, { alpha: clamp(k / 0.3), track: -4 });
@@ -247,7 +264,7 @@ function endCard(t) {
   const srcA = clamp((k - 1.6) / 0.6) * 0.7;
   text("Sources: " + story.sources.map((s) => s.name).join(" · "), W / 2, H * 0.86, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
   const cr = tl.credits ?? {};
-  text(`Illustrations: Google Gemini · Voice, sound & music: ElevenLabs${cr.voice ? ` (${cr.voice})` : ""}`, W / 2, H * 0.86 + 36, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
+  text(`${cr.images ? "Illustrations: Google Gemini" : "Illustrated in code by AI Broadsheet"} · Voice, sound & music: ElevenLabs`, W / 2, H * 0.86 + 36, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
 }
 
 // ── frame ────────────────────────────────────────────────────────────────────

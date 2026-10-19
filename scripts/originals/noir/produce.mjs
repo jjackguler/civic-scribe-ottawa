@@ -173,6 +173,8 @@ for (const [i, shot] of story.shots.entries()) {
   if (mock) {
     const hue = (i * 37) % 360;
     await run("ffmpeg", ["-y", "-loglevel", "error", "-f", "lavfi", "-i", `gradients=s=1080x1920:c0=0x0b1726:c1=0x${hue < 180 ? "c8902a" : "8a2a1c"}:x0=540:y0=300:x1=540:y1=1900:d=1`, "-frames:v", "1", out]);
+  } else if (process.env.NOIR_STILLS === "drawn") {
+    continue; // scenes.js draws this shot
   } else {
     if (missing.length) { missing.push(shot.id); continue; } // one failure is usually the quota: don't burn time on the rest
     try { credits.images.add(await still(shot.image, out)); console.log(`still ${shot.id}`); }

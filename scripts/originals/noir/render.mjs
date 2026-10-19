@@ -15,12 +15,13 @@ const build = join(here, "build", slug);
 const story = JSON.parse(await readFile(join(here, "stories", `${slug}.json`), "utf8"));
 const tl = JSON.parse(await readFile(join(build, "timeline.json"), "utf8"));
 
-const types = { ".html": "text/html", ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg" };
+const types = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg" };
 const server = createServer(async (req, res) => {
   const path = join(here, decodeURIComponent(new URL(req.url, "http://x").pathname));
   if (!path.startsWith(here)) return res.writeHead(403).end();
-  try { res.writeHead(200, { "content-type": types[extname(path)] ?? "application/octet-stream" }).end(await readFile(path)); }
-  catch { res.writeHead(404).end(); }
+  let body;
+  try { body = await readFile(path); } catch { return res.writeHead(404).end(); }
+  res.writeHead(200, { "content-type": types[extname(path)] ?? "application/octet-stream" }).end(body);
 }).listen(0);
 
 const ffmpeg = (args) => new Promise((ok, no) => { const p = spawn("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: ["pipe", "inherit", "inherit"] }); p.on("close", (c) => c ? no(new Error(`ffmpeg exit ${c}`)) : ok()); return p; });
