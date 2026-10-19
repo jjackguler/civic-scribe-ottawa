@@ -1,0 +1,38 @@
+# One-off: put The Sir Jack Files, case 1 on YouTube Shorts, using the copy the
+# site already serves from the media branch and the existing YOUTUBE_* secrets.
+name: Noir YouTube
+
+on:
+  push:
+    branches: [claude/noir-publish]
+    paths: [".github/workflows/noir-youtube.yml", "scripts/originals/noir-youtube.ts"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: noir-youtube
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch the published reel
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/reel.mp4" "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/media/originals/files/202610190320-sir-jack-01.mp4"
+          ls -la "$RUNNER_TEMP/reel.mp4"
+      - name: Upload to YouTube
+        working-directory: scripts/originals
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          npm install --no-audit --no-fund
+          npx tsx noir-youtube.ts "$RUNNER_TEMP/reel.mp4"
