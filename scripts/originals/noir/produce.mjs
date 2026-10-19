@@ -143,11 +143,11 @@ for (const [i, shot] of story.shots.entries()) {
 }
 
 // ── Timeline ────────────────────────────────────────────────────────────────
-const END = 4.6, shots = [];
+const END = 4.0, shots = [];
 let t = 0;
 for (const [i, shot] of story.shots.entries()) {
   const vo = await probe(join(dir, "vo", `${shot.id}.mp3`));
-  const lead = i === 0 ? 2.4 : 0.45, tail = i === story.shots.length - 1 ? 2.4 : 0.55;
+  const lead = i === 0 ? 1.8 : 0.35, tail = i === story.shots.length - 1 ? 2.2 : 0.45;
   const ws = JSON.parse(await readFile(join(dir, "vo", `${shot.id}.json`), "utf8"));
   shots.push({ id: shot.id, start: +t.toFixed(3), dur: +(lead + vo + tail).toFixed(3), voAt: lead, vo: +vo.toFixed(3), words: ws });
   t += lead + vo + tail;
