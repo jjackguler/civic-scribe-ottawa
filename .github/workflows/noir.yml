@@ -13,21 +13,21 @@ on:
     inputs:
       slug:
         description: Story slug (scripts/originals/noir/stories/<slug>.json)
-        default: vanishing-radiologist
+        default: phantom-meeting
       fresh:
         description: Regenerate stills and audio (ignore the cache)
         type: boolean
         default: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   reel:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      SLUG: ${{ inputs.slug || vars.NOIR_SLUG || 'vanishing-radiologist' }}
+      SLUG: ${{ inputs.slug || 'phantom-meeting' }}
     defaults:
       run:
         working-directory: scripts/originals/noir
@@ -77,3 +77,14 @@ jobs:
             scripts/originals/noir/build/${{ env.SLUG }}/img
             scripts/originals/noir/build/${{ env.SLUG }}/timeline.json
           retention-days: 30
+      # A preview copy on the noir-previews branch, so the reel can be watched by link
+      # (jsDelivr) without downloading the artifact. Nothing is published to the site.
+      - name: Preview copy
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/p" && cd "$RUNNER_TEMP/p"
+          git init -q && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          git fetch -q --depth 1 origin noir-previews && git checkout -q FETCH_HEAD || git checkout -q --orphan noir-previews
+          mkdir -p "$SLUG" && cp "$GITHUB_WORKSPACE/scripts/originals/noir/out/$SLUG.mp4" "$GITHUB_WORKSPACE"/scripts/originals/noir/out/$SLUG-*.jpg "$SLUG/"
+          git add -A && git -c user.name="AI Broadsheet Originals" -c user.email="actions@users.noreply.github.com" commit -qm "Preview: $SLUG" && git push -q origin HEAD:noir-previews
+          echo "preview https://cdn.jsdelivr.net/gh/${{ github.repository }}@$(git rev-parse HEAD)/$SLUG/$SLUG.mp4" >> "$GITHUB_STEP_SUMMARY"
