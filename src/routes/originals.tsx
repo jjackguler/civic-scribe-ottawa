@@ -4,6 +4,7 @@ import { OriginalCard } from "@/components/Originals";
 import { getOriginalsFast, useOriginals } from "@/lib/originals";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
+import { ORIGINAL_SECTIONS, originalSection } from "@/lib/originals-types";
 import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/originals")({
@@ -37,9 +38,19 @@ function OriginalsPage() {
         {items.length === 0 ? (
           <p className="font-serif text-[1.15rem] max-w-xl">{fr ? "Les premiers explicatifs arrivent bientôt." : "The first explainers are on their way."}</p>
         ) : (
-          <div className="grid gap-x-6 gap-y-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            {items.map(o => <OriginalCard key={o.id} o={o} />)}
-          </div>
+          ORIGINAL_SECTIONS.map(s => {
+            const shelf = items.filter(o => originalSection(o) === s.id);
+            if (!shelf.length) return null;
+            return (
+              <div key={s.id} id={s.id} className="mb-14 scroll-mt-24">
+                <h2 className="masthead-serif text-[1.8rem]">{fr ? s.fr : s.en}</h2>
+                <p className="font-serif text-[1.05rem] text-muted-foreground mb-5">{fr ? s.dekFr : s.dekEn}</p>
+                <div className="grid gap-x-6 gap-y-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                  {shelf.map(o => <OriginalCard key={o.id} o={o} />)}
+                </div>
+              </div>
+            );
+          })
         )}
       </section>
       <section className="container-mw mt-14 max-w-3xl">

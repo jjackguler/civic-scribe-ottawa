@@ -5,10 +5,27 @@
  */
 export type OriginalSource = { name: string; url: string };
 
+/** Shelves on the Explainers page, in display order. */
+export type OriginalSection = "noir" | "culture" | "mind" | "news";
+export const ORIGINAL_SECTIONS: { id: OriginalSection; en: string; fr: string; dekEn: string; dekFr: string }[] = [
+  { id: "noir", en: "The Sir Jack Files", fr: "Les dossiers Sir Jack", dekEn: "Film-noir investigations into AI and the people it touches.", dekFr: "Des enquêtes façon film noir sur l'IA et les personnes qu'elle touche." },
+  { id: "culture", en: "Culture, Art & Cinema", fr: "Culture, art et cinéma", dekEn: "Stories, films and art, and why they stay with us.", dekFr: "Des histoires, des films et de l'art, et pourquoi ils nous marquent." },
+  { id: "mind", en: "Mind & Society", fr: "Esprit et société", dekEn: "Psychology, behaviour and how AI changes everyday life.", dekFr: "Psychologie, comportements et la façon dont l'IA change le quotidien." },
+  { id: "news", en: "News explainers", fr: "Explicatifs d'actualité", dekEn: "The day's AI stories in about a minute.", dekFr: "L'actualité de l'IA en une minute environ." },
+];
+export function originalSection(o: { id: string; section?: OriginalSection }): OriginalSection {
+  if (o.section) return o.section;
+  if (o.id.includes("sir-jack")) return "noir";
+  if (o.id.includes("mind-society")) return "mind";
+  return "news";
+}
+
 export type Original = {
   id: string;
   /** "explainer" (default): a news explainer written from publishers' reporting. "titles": our own opening titles. */
   kind?: "explainer" | "titles";
+  /** Shelf on the Explainers page; inferred from the id when missing (see originalSection). */
+  section?: OriginalSection;
   publishedAt: string;
   /** Headline of the explainer (ours, checked against the sources). */
   title: string;
