@@ -1,5 +1,6 @@
 import { SITE } from "@/lib/site";
 import avatarAsset from "@/assets/ai-broadsheet-avatar.png.asset.json";
+const avatarUrl = new URL(avatarAsset.url, `https://${SITE.domain}`).href;
 
 /**
  * Broadsheet's gold lowercase b and red news dot. Use this mark on
@@ -7,7 +8,7 @@ import avatarAsset from "@/assets/ai-broadsheet-avatar.png.asset.json";
  */
 export function LogoMark({ size = 32, className = "" }: { size?: number; className?: string; inverse?: boolean }) {
   return (
-    <img src={avatarAsset.url} width={size} height={size} alt="" aria-hidden="true" className={`shrink-0 rounded-[4px] ${className}`} />
+    <img src={avatarUrl} width={size} height={size} alt="" aria-hidden="true" className={`shrink-0 rounded-[4px] ${className}`} />
   );
 }
 

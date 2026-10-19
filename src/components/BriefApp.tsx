@@ -40,6 +40,7 @@ import {
   type Brief,
 } from "@/lib/brief-feed";
 import { localePath } from "@/lib/seo";
+import { SITE } from "@/lib/site";
 
 import {
   BRIEF_PREFS_KEY,
@@ -353,7 +354,7 @@ export function BriefApp({ initial, initialStory }: Props) {
           </div>
         </div>
         <div className="brief-intro-bottom">
-          <p>AI NEWS. HUMAN STAKES.</p>
+          <p>{SITE.tagline[locale]}</p>
           <a href={"https://aibroadsheet.com" + localePath("/", locale)}>
             {t("Read the newspaper", "Lire le journal")} <ArrowUpRight size={15} />
           </a>
@@ -1222,7 +1223,7 @@ function BriefCard({
               <ArrowUpRight size={17} />
             </a>
           )}
-          <span className="brief-page-foot">AI NEWS. HUMAN STAKES.</span>
+          <span className="brief-page-foot">{t("One catch a day.", "Une mise au point par jour.")}</span>
         </section>
         <section
           className="brief-frame brief-evidence"

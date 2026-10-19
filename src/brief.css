@@ -1658,3 +1658,39 @@
     font-size: 28px;
   }
 }
+
+/* Ink & Gold applies to the app identity and navigation, not article typography. */
+@font-face {
+  font-family: "Brief Brand";
+  src: url("/brand/bodoni-moda-brand.woff") format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+.brief-shell {
+  --b-paper: var(--brand-paper, #EFE8DA);
+  --b-ink: var(--brand-ink, #16181A);
+  --b-red: var(--brand-red, #D9412B);
+}
+.brief-shell .brief-desktop-brand,
+.brief-shell .brief-brand > span {
+  font-family: "Brief Brand", var(--font-brand), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.brief-shell .brief-header,
+.brief-shell .brief-topics,
+.brief-shell .brief-nav {
+  background: var(--brand-ink, #16181A);
+  color: var(--brand-paper, #EFE8DA);
+}
+.brief-shell .brief-brand img,
+.brief-shell .brief-desktop-brand img { border-radius: 4px; }
+.brief-shell .brief-brand-dot { background: var(--brand-red, #D9412B); }
+.brief-shell .brief-topics button.selected,
+.brief-shell .brief-nav button.active { color: var(--brand-gold, #D7B54A); }
+.brief-shell .brief-nav button.active:before,
+.brief-shell .brief-nav b { background: var(--brand-gold, #D7B54A); }
+.brief-shell .brief-nav b { color: var(--brand-ink, #16181A); }
+.brief-shell :focus-visible,
+.brief-sheet :focus-visible { outline-color: var(--brand-gold, #D7B54A); }
