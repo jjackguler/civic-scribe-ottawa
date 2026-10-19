@@ -5,6 +5,7 @@
 </head><body><canvas id="c" width="1080" height="1920"></canvas>
 <script src="scenes.js"></script>
 <script src="scenes2.js"></script>
+<script src="scenes3.js"></script>
 <script>
 // Film-noir reel: one Gemini still per shot, brought to life with camera moves, rain,
 // snow, fog, light, grain and Ink & Gold motion type. window.setup() loads a story and
@@ -285,9 +286,9 @@ function endCard(t) {
   x.fillStyle = GOLD; x.fillRect(W / 2 - 150 * p, H * 0.42 + 44, 300 * p, 4);
   text("AI news, with the human stakes left in.", W / 2, H * 0.42 + 130, `italic 500 44px ${SERIF}`, PAPER, { alpha: clamp((k - 0.9) / 0.6) });
   if (story.series) text(`${story.series.toUpperCase()} · NEXT CASE SOON`, W / 2, H * 0.42 - 150, `600 30px ${SANS}`, GOLD, { alpha: clamp((k - 0.2) / 0.6), track: 7 });
-  text("ONE CATCH A DAY · AIBROADSHEET.COM", W / 2, H * 0.42 + 205, `700 28px ${SANS}`, GOLD, { alpha: clamp((k - 1.3) / 0.6), track: 5 });
+  text(story.slogan ?? "ONE CATCH A DAY · AIBROADSHEET.COM", W / 2, H * 0.42 + 205, `700 28px ${SANS}`, GOLD, { alpha: clamp((k - 1.3) / 0.6), track: 5 });
   const srcA = clamp((k - 1.6) / 0.6) * 0.7;
-  text("Sources: " + story.sources.map((s) => s.name).join(" · "), W / 2, H * 0.86, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
+  { const st = "Sources: " + story.sources.map((s) => s.name).join(" · "); x.font = `500 22px ${SANS}`; const fs = Math.min(22, 22 * 980 / x.measureText(st).width); text(st, W / 2, H * 0.86, `500 ${fs.toFixed(1)}px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 }); }
   const cr = tl.credits ?? {};
   text(`${cr.images ? "Illustrations: Google Gemini" : "Illustrated in code by AI Broadsheet"} · Voice, sound & music: ElevenLabs`, W / 2, H * 0.86 + 36, `500 22px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 });
 }

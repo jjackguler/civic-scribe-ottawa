@@ -25,7 +25,7 @@ permissions:
 jobs:
   reel:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       SLUG: ${{ inputs.slug || vars.NOIR_SLUG || 'faces-that-werent-there' }}
     defaults:
@@ -46,8 +46,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: scripts/originals/noir/build
-          key: noir-${{ env.SLUG }}-${{ github.run_id }}
-          restore-keys: noir-${{ env.SLUG }}-
+          key: noir-${{ github.run_id }}
+          restore-keys: noir-
       - name: Produce (Gemini + ElevenLabs)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -56,24 +56,22 @@ jobs:
           NOIR_IMAGE_MODELS: ${{ vars.NOIR_IMAGE_MODELS }}
           # "drawn": skip Gemini and let scenes.js draw every shot; "gemini" to generate stills
           NOIR_STILLS: ${{ vars.NOIR_STILLS || 'drawn' }}
-        run: node produce.mjs "$SLUG"
+        run: for s in $(cat queue.txt 2>/dev/null || echo "$SLUG"); do node produce.mjs "$s"; done
       - name: Save generated media
         if: always()
         uses: actions/cache/save@v4
         with:
           path: scripts/originals/noir/build
-          key: noir-${{ env.SLUG }}-${{ github.run_id }}
+          key: noir-${{ github.run_id }}
       - name: Render
         run: |
-          node render.mjs "$SLUG" --stills 3.6,12,24,40
-          node render.mjs "$SLUG"
+          for s in $(cat queue.txt 2>/dev/null || echo "$SLUG"); do node render.mjs "$s"; done
           ls -la out
       - uses: actions/upload-artifact@v4
         with:
           name: noir-${{ env.SLUG }}
           path: |
-            scripts/originals/noir/out/${{ env.SLUG }}.mp4
+            scripts/originals/noir/out/*.mp4
             scripts/originals/noir/out/*.jpg
-            scripts/originals/noir/build/${{ env.SLUG }}/img
-            scripts/originals/noir/build/${{ env.SLUG }}/timeline.json
+            !scripts/originals/noir/out/*-video.mp4
           retention-days: 30

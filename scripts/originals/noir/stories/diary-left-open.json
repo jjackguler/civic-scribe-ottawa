@@ -1,0 +1,43 @@
+{
+  "slug": "diary-left-open",
+  "title": "The Case of the Diary Left Open",
+  "series": "The Sir Jack Files",
+  "episode": 3,
+  "grain": 0.16,
+  "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+  "music": "Slow black-and-white film-noir jazz: lonely muted trumpet, soft upright bass, brushed drums, rain mood, minor key, no vocals.",
+  "ambience": "Night rain on an empty city street, distant traffic hiss, a buzzing neon sign, no music.",
+  "sources": [
+    { "name": "Android Authority (June 2025)", "url": "https://androidauthority.com/meta-ai-sharing-chats-public-feed-3567084" },
+    { "name": "Tom's Guide", "url": "https://www.tomsguide.com/computing/online-security/meta-ais-discover-feed-is-full-of-revealing-personal-info-heres-how-to-protect-your-privacy" },
+    { "name": "Yahoo Tech", "url": "https://tech.yahoo.com/cybersecurity/articles/meta-ai-warns-chatbot-conversations-072327281.html" }
+  ],
+  "shots": [
+    { "id": "p-street", "say": "Case three. A confession, typed alone at night. Where do our secrets go when we tell them to a machine?",
+      "cam": { "from": [1.16, 0, 0.04], "to": [1.04, 0, -0.02] }, "fx": { "rain": 0.9, "fog": 0.5 },
+      "ov": [ { "t": "kicker", "at": 0.3, "text": "THE SIR JACK FILES · CASE 03" }, { "t": "title", "at": 1.0, "lines": ["THE CASE OF THE", "DIARY LEFT", "OPEN"] } ],
+      "sfx": [ { "id": "car-pass", "at": 0.5, "dur": 5, "gain": -16, "prompt": "A car driving slowly past on a wet street at night, tires on water" },
+               { "id": "steps-wet3", "at": 1.5, "dur": 6, "gain": -18, "prompt": "Slow footsteps on wet pavement at night" } ] },
+    { "id": "p-phone", "say": "June twenty twenty-five. People pour their lives into Meta's AI app. Health worries. Legal trouble. Then they tap a button called share.",
+      "cam": { "from": [1.04, 0, 0.02], "to": [1.18, 0, -0.03] }, "fx": { "rain": 0.25 },
+      "ov": [ { "t": "type", "at": 0.4, "text": "JUNE 2025", "y": 0.12 } ],
+      "sfx": [ { "id": "typing", "at": 0.6, "dur": 6, "gain": -18, "prompt": "Soft phone screen keyboard typing taps in a quiet room" },
+               { "id": "tap", "w": "share", "at": 0, "dur": 1, "gain": -12, "prompt": "Single soft phone screen tap with a subtle confirmation click" } ] },
+    { "id": "p-billboard", "say": "Those chats could land on a public feed called Discover. Some showed addresses and phone numbers. Meta says chats are private by default, and you have to choose to share.",
+      "cam": { "from": [1.18, 0, 0.0], "to": [1.05, 0, 0.03] }, "fx": { "rain": 0.7, "fog": 0.3 },
+      "ov": [ { "t": "label", "w": "addresses", "at": -0.3, "text": "PRIVATE CHATS, PUBLIC FEED", "sub": "medical worries · legal trouble · addresses", "y": 0.78 } ],
+      "sfx": [ { "id": "crowd-rain", "at": 0.0, "dur": 9, "gain": -22, "prompt": "Murmuring crowd under umbrellas in the rain in a city square" } ] },
+    { "id": "p-alley", "say": "Critics said the button never made clear where the words would go. Meta added a warning: prompts you post are public.",
+      "cam": { "from": [1.05, 0.02, 0.02], "to": [1.2, -0.02, -0.02] }, "fx": { "rain": 0.5, "fog": 0.3 },
+      "ov": [ { "t": "quote", "w": "prompts", "at": -0.1, "text": "“Prompts you post are public and visible to everyone.”", "by": "Meta AI app warning" } ],
+      "sfx": [ { "id": "neon-buzz", "at": 0.0, "dur": 7, "gain": -20, "prompt": "Flickering neon sign buzzing and clicking in a rainy alley" } ] },
+    { "id": "p-window", "say": "So before you confess to a machine: read the button. Check the settings. And remember, a chatbot is not a diary with a lock.",
+      "cam": { "from": [1.2, 0, 0.0], "to": [1.06, 0, 0.02] }, "fx": { "fog": 0.15 },
+      "ov": [ { "t": "check", "w": "read", "at": -0.1, "items": ["Read the button before you tap", "Check who can see your chats", "A chatbot is not a locked diary"], "ws": ["read", "Check", "And"] } ],
+      "sfx": [ { "id": "clock", "at": 0.0, "dur": 8, "gain": -24, "prompt": "Old wall clock ticking slowly in a quiet dark room" } ] },
+    { "id": "p-end", "say": "Privacy isn't a setting you find once. It's a habit. Case closed.",
+      "cam": { "from": [1.16, 0, 0.03], "to": [1.04, 0, 0.0] }, "fx": { "rain": 0.6, "fog": 0.4 },
+      "ov": [ { "t": "stamp", "w": "closed", "at": -0.05, "text": "CASE CLOSED" } ],
+      "sfx": [ { "id": "stamp", "w": "closed", "at": -0.05, "dur": 1, "gain": -8, "prompt": "Single heavy rubber stamp thud on paper on a wooden desk" } ] }
+  ]
+}

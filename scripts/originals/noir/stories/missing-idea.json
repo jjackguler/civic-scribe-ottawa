@@ -1,0 +1,246 @@
+{
+  "slug": "missing-idea",
+  "title": "The Case of the Missing Idea",
+  "series": "The Sir Jack Files",
+  "episode": 4,
+  "grain": 0.16,
+  "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+  "music": "Urban lo-fi hip hop beat with a noir edge: dusty boom-bap drums, deep bass, muted jazz piano chords, vinyl crackle, thoughtful, no vocals.",
+  "ambience": "City rooftop at dusk, distant traffic, a far siren, wind, pigeons, no music.",
+  "sources": [
+    {
+      "name": "MIT Media Lab, Your Brain on ChatGPT (2025 preprint)",
+      "url": "https://www.techlearning.com/news/your-brain-on-chatgpt-everything-educators-need-to-know-about-mits-ai-study"
+    },
+    {
+      "name": "Plato, Phaedrus (274c–277a)",
+      "url": "https://www.gutenberg.org/ebooks/1636"
+    },
+    {
+      "name": "ConsumerAffairs",
+      "url": "https://www.consumeraffairs.com/news/chatgpt-may-affect-your-critical-thinking-skills-study-finds-062625.html"
+    }
+  ],
+  "shots": [
+    {
+      "id": "i-wall",
+      "say": "Case four starts with a question. If a machine can write anything, what is left for you?",
+      "cam": {
+        "from": [
+          1.16,
+          0,
+          0.03
+        ],
+        "to": [
+          1.04,
+          0,
+          -0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.3,
+          "text": "THE SIR JACK FILES · CASE 04"
+        },
+        {
+          "t": "title",
+          "at": 1,
+          "lines": [
+            "THE CASE OF THE",
+            "MISSING",
+            "IDEA"
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "id": "spray",
+          "at": 0.8,
+          "dur": 3,
+          "gain": -14,
+          "prompt": "Spray paint can shaking with the rattle ball, then a long spray hiss on a wall"
+        }
+      ]
+    },
+    {
+      "id": "i-athens",
+      "say": "Twenty-four centuries ago, Socrates had the same fear. In Plato's Phaedrus, writing is blamed for making people forgetful, and wise only in appearance.",
+      "cam": {
+        "from": [
+          1.04,
+          0,
+          0.04
+        ],
+        "to": [
+          1.18,
+          0,
+          -0.03
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "quote",
+          "w": "forgetful",
+          "at": -0.2,
+          "text": "“They will appear wise, without being wise.”",
+          "by": "Plato, Phaedrus (paraphrased) · on the invention of writing"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "wind-ancient",
+          "at": 0,
+          "dur": 8,
+          "gain": -24,
+          "prompt": "Warm Mediterranean wind over stone ruins, cicadas far away"
+        }
+      ]
+    },
+    {
+      "id": "i-lab",
+      "say": "In twenty twenty-five, MIT researchers asked fifty-four people to write essays. One group used ChatGPT. One used a search engine. One used only their brains.",
+      "cam": {
+        "from": [
+          1.18,
+          0,
+          0
+        ],
+        "to": [
+          1.05,
+          0,
+          0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "counter",
+          "w": "fifty-four",
+          "at": -0.1,
+          "from": 0,
+          "to": 54,
+          "label": "people, three groups"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "eeg",
+          "at": 0.3,
+          "dur": 7,
+          "gain": -22,
+          "prompt": "Soft electronic beeps of brain monitoring equipment in a lab"
+        }
+      ]
+    },
+    {
+      "id": "i-dim",
+      "say": "The ChatGPT group showed the lowest brain engagement, and struggled to recall what they had written. It's a small study, not yet peer reviewed. But the question stands.",
+      "cam": {
+        "from": [
+          1.05,
+          0.02,
+          0.02
+        ],
+        "to": [
+          1.2,
+          -0.02,
+          -0.02
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "label",
+          "w": "small",
+          "at": -0.2,
+          "text": "SMALL STUDY · NOT PEER REVIEWED",
+          "sub": "a signal, not a verdict",
+          "y": 0.2
+        }
+      ],
+      "sfx": [
+        {
+          "id": "power-down",
+          "at": 1,
+          "dur": 3,
+          "gain": -18,
+          "prompt": "Soft electric power down hum fading out"
+        }
+      ]
+    },
+    {
+      "id": "i-bulb",
+      "say": "Writing, search, AI. The tools keep changing. What never moved is where ideas come from: a person asking a question nobody asked before.",
+      "cam": {
+        "from": [
+          1.2,
+          0,
+          0.02
+        ],
+        "to": [
+          1.05,
+          0,
+          -0.01
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "label",
+          "w": "ideas",
+          "at": -0.1,
+          "text": "TOOLS CHANGE. IDEAS ARE HUMAN.",
+          "sub": "the question is the part you bring",
+          "y": 0.86
+        }
+      ],
+      "sfx": [
+        {
+          "id": "bulb",
+          "at": 0.4,
+          "dur": 2,
+          "gain": -14,
+          "prompt": "Old filament light bulb switching on with a warm electric buzz"
+        }
+      ]
+    },
+    {
+      "id": "i-roof",
+      "say": "So use the machine. Let it draft, search, check. But bring your own idea. Case closed.",
+      "cam": {
+        "from": [
+          1.14,
+          0,
+          0.03
+        ],
+        "to": [
+          1.04,
+          0,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "stamp",
+          "w": "closed",
+          "at": -0.05,
+          "text": "CASE CLOSED"
+        }
+      ],
+      "sfx": [
+        {
+          "id": "stamp",
+          "w": "closed",
+          "at": -0.05,
+          "dur": 1,
+          "gain": -8,
+          "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+        }
+      ]
+    }
+  ]
+}
