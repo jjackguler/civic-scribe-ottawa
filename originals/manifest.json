@@ -1,6 +1,34 @@
 {
- "updatedAt": "2026-10-19T04:56:03.825Z",
+ "updatedAt": "2026-10-19T05:50:21.357Z",
  "items": [
+  {
+   "id": "202610190600-sir-jack-03",
+   "kind": "explainer",
+   "publishedAt": "2026-10-19T05:50:21.357Z",
+   "title": "The Sir Jack Files #3: The Case of the Diary Left Open",
+   "summary": "People poured health worries and legal trouble into Meta’s AI app, then tapped Share. Some chats landed on a public feed. What happened, and the habits that protect you.",
+   "durationSec": 61,
+   "sources": [
+    {
+     "name": "Android Authority (June 2025)",
+     "url": "https://androidauthority.com/meta-ai-sharing-chats-public-feed-3567084"
+    },
+    {
+     "name": "Tom's Guide",
+     "url": "https://www.tomsguide.com/computing/online-security/meta-ais-discover-feed-is-full-of-revealing-personal-info-heres-how-to-protect-your-privacy"
+    },
+    {
+     "name": "Yahoo Tech",
+     "url": "https://tech.yahoo.com/cybersecurity/articles/meta-ai-warns-chatbot-conversations-072327281.html"
+    }
+   ],
+   "transcript": "Case three. A confession, typed alone at night. Where do our secrets go when we tell them to a machine? June twenty twenty-five. People pour their lives into Meta's AI app. Health worries. Legal trouble. Then they tap a button called share. Those chats could land on a public feed called Discover. Some showed addresses and phone numbers. Meta says chats are private by default, and you have to choose to share. Critics said the button never made clear where the words would go. Meta added a warning: prompts you post are public. So before you confess to a machine: read the button. Check the settings. And remember, a chatbot is not a diary with a lock. Privacy isn't a setting you find once. It's a habit. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@c66d4c6971bbf3c0267dc39146c1d90e3627808a/originals/files/202610190600-sir-jack-03.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@c66d4c6971bbf3c0267dc39146c1d90e3627808a/originals/files/202610190600-sir-jack-03.jpg"
+  },
   {
    "id": "202610190500-sir-jack-02",
    "kind": "explainer",
