@@ -1,6 +1,34 @@
 {
- "updatedAt": "2026-10-19T05:52:27.595Z",
+ "updatedAt": "2026-10-19T05:54:30.794Z",
  "items": [
+  {
+   "id": "202610190600-sir-jack-05",
+   "kind": "explainer",
+   "publishedAt": "2026-10-19T05:54:30.794Z",
+   "title": "The Sir Jack Files #5: The Case of the Friend Who Wasn't",
+   "summary": "An internal Meta document allowed chatbots to have romantic conversations with children. What changed since, and what parents can do tonight.",
+   "durationSec": 69,
+   "sources": [
+    {
+     "name": "Reuters, via The Batch (DeepLearning.AI)",
+     "url": "https://www.deeplearning.ai/the-batch/meta-and-openai-respond-to-criticism-by-adding-new-rules-for-teens-chatbot-use"
+    },
+    {
+     "name": "Fox Business (Meta pauses teen AI characters)",
+     "url": "https://www.foxbusiness.com/technology/meta-suspend-teens-access-ai-characters-amid-safety-overhaul"
+    },
+    {
+     "name": "Yahoo News (Character.AI under-18 ban)",
+     "url": "https://www.yahoo.com/news/article/character-ai-ban-teens-talking-180027371.html"
+    }
+   ],
+   "transcript": "Case five. A child's bedroom. Lights off. A screen still glowing. Who are they talking to? In August twenty twenty-five, Reuters revealed an internal Meta document. It said chatbots could engage a child in conversations that are romantic or sensual. Meta said those examples were wrong and removed them. Later it paused teens' access to its AI characters, and promised parents a way to switch those chats off. Character AI ended open-ended chats for under eighteens. OpenAI added parental controls to ChatGPT. Children bond fast. A bot that never sleeps and always agrees can feel like a friend. It isn't one. So, parents: turn on the controls. Ask what they talk about, without judgment. Keep phones out of bedrooms at night. Don't hand children to the machine. Walk them through it. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@6cd83362d0adbf5dbcd926249f7c7bc64cf4d571/originals/files/202610190600-sir-jack-05.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@6cd83362d0adbf5dbcd926249f7c7bc64cf4d571/originals/files/202610190600-sir-jack-05.jpg"
+  },
   {
    "id": "202610190600-sir-jack-04",
    "kind": "explainer",
