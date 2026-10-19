@@ -1,5 +1,36 @@
 [
   {
+    "id": "102aonh",
+    "at": "2026-10-19T17:39:36.010Z",
+    "stage": "reporter",
+    "headline": "Disney Asked Character.AI to Go Bankrupt for a Get-Out-of-Lawsuits Card",
+    "reasons": [
+      "missing fields"
+    ]
+  },
+  {
+    "id": "1wkcnyg",
+    "at": "2026-10-19T17:39:31.526Z",
+    "stage": "reporter",
+    "headline": "Tenstorrent secures $1.5 billion USD at $6.2-billion valuation to challenge GPU dominance",
+    "reasons": [
+      "missing fields"
+    ]
+  },
+  {
+    "id": "133jno",
+    "at": "2026-10-19T17:39:26.877Z",
+    "stage": "copy",
+    "headline": "Investing in the public benefit",
+    "reasons": [
+      "Not in the sources (names or numbers): Following, Elon, Reporting, denial not in the sources: \"Because the fund remains under corporate control, public oversight of the disbur\", denial not in the sources: \"The company has not yet laid out exact rules for how workers would apply or when\".",
+      "Too close to The Decoder's wording (\"look into direct payments to workers at risk of…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): 1, b1.",
+      "Background paragraph 1 must cite our background text with a [bN] marker, or be removed."
+    ]
+  },
+  {
     "id": "4zxsfw",
     "at": "2026-10-19T11:04:29.465Z",
     "stage": "translator",
