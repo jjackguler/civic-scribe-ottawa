@@ -1,6 +1,34 @@
 {
- "updatedAt": "2026-10-19T03:18:32.894Z",
+ "updatedAt": "2026-10-19T04:56:03.825Z",
  "items": [
+  {
+   "id": "202610190500-sir-jack-02",
+   "kind": "explainer",
+   "publishedAt": "2026-10-19T04:56:03.825Z",
+   "title": "The Sir Jack Files #2: The Case of the Faces That Weren’t There",
+   "summary": "An Arup employee joined a video call with the finance chief and colleagues. Every face was a deepfake, and US$25.6 million was gone. How it worked, and the human checks that stop it.",
+   "durationSec": 86,
+   "sources": [
+    {
+     "name": "Fortune / Arup statement (May 2024)",
+     "url": "https://fortune.com/europe/2024/05/17/arup-deepfake-fraud-scam-victim-hong-kong-25-million-cfo"
+    },
+    {
+     "name": "World Economic Forum (Rob Greig, Arup)",
+     "url": "https://www.weforum.org/stories/2025/02/deepfake-ai-cybercrime-arup"
+    },
+    {
+     "name": "Construction Briefing",
+     "url": "https://www.constructionbriefing.com/news/arup-employee-falls-victim-to-us-25-million-deepfake-video-call-scam/8037338.article"
+    }
+   ],
+   "transcript": "Case two. A video call. Every face on the screen belonged to someone you knew. None of them were real. Hong Kong, January twenty twenty-four. An employee at the engineering firm Arup gets an email from the company's chief financial officer. A secret transaction. The employee suspects phishing. So the fraudsters send an invitation. A video call with the bosses. On the screen, the finance chief and other colleagues. Familiar faces, familiar voices. Every one of them a deepfake. Fifteen transfers. Five bank accounts. Two hundred million Hong Kong dollars, about twenty-five million US. The truth only surfaced when the employee checked with head office. No systems were hacked. Arup's own technology chief called it technology-enhanced social engineering. The target wasn't the computer. It was trust. So what stops a perfect fake? Call back on a number you already know. Ask something only the real person would know. And when you hear secret and urgent, slow down. A machine can fake a face. It can't fake the people who actually know you. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Scenes drawn in code by AI Broadsheet. Narration, sound effects and music generated with ElevenLabs.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@dbaf29364827596a474532060f6f617826f1bac1/originals/files/202610190500-sir-jack-02.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@dbaf29364827596a474532060f6f617826f1bac1/originals/files/202610190500-sir-jack-02.jpg"
+  },
   {
    "id": "202610190320-sir-jack-01",
    "kind": "explainer",
