@@ -25,7 +25,16 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
           npm init -y >/dev/null && npm i -s playwright@1.56.1 && npx playwright install --with-deps chromium >/dev/null
+      - name: Reuse voice takes for an unchanged script
+        id: voicecache
+        uses: actions/cache@v4
+        with:
+          path: |
+            scripts/originals/sample/out/line-*.mp3
+            scripts/originals/sample/out/timing.json
+          key: sample-voice-${{ hashFiles('scripts/originals/sample/script.json', 'scripts/originals/sample/voice.mjs') }}
       - name: Voice the script
+        if: steps.voicecache.outputs.cache-hit != 'true'
         working-directory: scripts/originals/sample
         env: { ELEVENLABS_API_KEY: "${{ secrets.ELEVENLABS_API_KEY }}" }
         run: node voice.mjs

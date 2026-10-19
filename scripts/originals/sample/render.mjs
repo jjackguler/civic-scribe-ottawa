@@ -20,11 +20,11 @@ const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-fr
   "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "medium", "-crf", "20", out + "silent.mp4"], { stdio: ["pipe", "inherit", "inherit"] });
 for (let i = 0; i < n; i++) { const buf = await shot(i / FPS); if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once("drain", r)); if (i % 300 === 0) console.log("frame", i, "/", n); }
 ff.stdin.end(); await new Promise(r => ff.on("close", r)); await browser.close();
-// audio: each line delayed to its start, plus music bed under it
-const ins = [], filt = []; timing.lines.forEach((l, i) => { ins.push("-i", `${out}line-${i}.mp3`); filt.push(`[${i}:a]adelay=${Math.round(l.start * 1000)}:all=1[v${i}]`); });
+// audio: input 0 is the silent video; each line is delayed to its start, music bed under it
+const ins = [], filt = []; timing.lines.forEach((l, i) => { ins.push("-i", `${out}line-${i}.mp3`); filt.push(`[${i + 1}:a]adelay=${Math.round(l.start * 1000)}:all=1[v${i}]`); });
 const N = timing.lines.length; let mix = timing.lines.map((_, i) => `[v${i}]`).join("") + `amix=inputs=${N}:normalize=0[vo]`;
 const music = arg("--music");
-if (music && fs.existsSync(music)) { ins.push("-i", music); mix += `;[${N}:a]atrim=0:${timing.total},volume=0.10,afade=t=in:d=1,afade=t=out:st=${timing.total - 2}:d=2[mu];[vo][mu]amix=inputs=2:normalize=0[a]`; } else mix += ";[vo]anull[a]";
+if (music && fs.existsSync(music)) { ins.push("-i", music); mix += `;[${N + 1}:a]atrim=0:${timing.total},volume=0.10,afade=t=in:d=1,afade=t=out:st=${timing.total - 2}:d=2[mu];[vo][mu]amix=inputs=2:normalize=0[a]`; } else mix += ";[vo]anull[a]";
 execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", out + "silent.mp4", ...ins, "-filter_complex", filt.join(";") + ";" + mix,
   "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", String(timing.total), "-movflags", "+faststart", out + "video.mp4"], { stdio: "inherit" });
 console.log("wrote", out + "video.mp4");
