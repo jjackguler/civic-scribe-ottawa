@@ -1,7 +1,7 @@
 {
  "title": "After the Headline",
  "description": "The story under the AI story, from the AI Broadsheet newsroom. Short conversations; every number sourced; synthetic voices, disclosed. New episodes with the week's biggest AI stories.",
- "imageUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/after-the-headline.jpg",
+ "imageUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/after-the-headline.jpg",
  "updatedAt": "2026-10-20T06:40:46.000Z",
  "episodes": [
   {
@@ -11,9 +11,9 @@
    "summary": "A burglar with an army of AI agents, a lab that measured its own office, and a shopper with no body. Three stories from one week, and the one question underneath them.",
    "publishedAt": "2026-10-20T06:35:46.000Z",
    "durationSec": 327,
-   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep01-agents-week.mp3",
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep01-agents-week.mp3",
    "fileSize": 6541214,
-   "imageUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep01.jpg",
+   "imageUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep01.jpg",
    "opinion": false,
    "voices": "ElevenLabs stock voices (Brian, Alice), synthetic",
    "sources": [
@@ -43,9 +43,9 @@
    "summary": "Millions of people have visited Lascaux. Almost none of them have been to Lascaux. An opinion episode on copies that are better than the original, AI answers that arrive too complete, and the discipline of letting a gap stay a gap.",
    "publishedAt": "2026-10-20T06:40:46.000Z",
    "durationSec": 290,
-   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep02-the-good-room.mp3",
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep02-the-good-room.mp3",
    "fileSize": 5807158,
-   "imageUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep02.jpg",
+   "imageUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/d1905ad2e34202ceddca7fe349cc25087864256a/originals/podcast/ep02.jpg",
    "opinion": true,
    "voices": "ElevenLabs stock voices (Brian, Alice), synthetic",
    "sources": [

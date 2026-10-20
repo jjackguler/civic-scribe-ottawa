@@ -81,8 +81,8 @@
    "en": "Read The Decoder's report",
    "fr": "Lire le reportage de The Decoder"
   },
-  "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.mp4",
-  "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.jpg"
+  "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.mp4",
+  "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.jpg"
  },
  {
   "id": "202610211600-op-doc-the-good-room",
@@ -112,7 +112,7 @@
    "en": "Listen: the podcast episode",
    "fr": "Écouter l'épisode du balado"
   },
-  "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.mp4",
-  "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.jpg"
+  "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.mp4",
+  "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.jpg"
  }
 ]
