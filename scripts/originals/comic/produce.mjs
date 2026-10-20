@@ -23,7 +23,7 @@ await mkdir(join(dir, "sfx"), { recursive: true });
 const XI = process.env.ELEVENLABS_API_KEY?.trim();
 if (!mock && !XI) { console.error("ELEVENLABS_API_KEY is needed (or pass --mock)"); process.exit(1); }
 const IMAGE_MODELS = (process.env.NOIR_IMAGE_MODELS || "gemini-3-pro-image-preview,gemini-2.5-flash-image").split(",").map((s) => s.trim()).filter(Boolean);
-const VOICES = (process.env.NOIR_VOICES || "Brian,George,Bill,Daniel").split(",");
+const VOICES = (process.env.NOIR_VOICES || (story.voices ?? ["Brian", "George", "Bill", "Daniel"]).join(",")).split(",");
 const VO_MODEL = process.env.ELEVENLABS_MODEL || "eleven_multilingual_v2";
 
 const probe = async (f) => Number((await run("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f])).stdout.trim());
@@ -45,7 +45,7 @@ async function xi(path, body, accept = "audio/mpeg") {
 }
 
 async function voice() {
-  const wanted = process.env.NOIR_VOICE_ID?.trim();
+  const wanted = story.voices ? "" : process.env.NOIR_VOICE_ID?.trim(); // a story that names its voices keeps them
   if (wanted) return { id: wanted, name: "custom" };
   const res = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": XI } });
   if (!res.ok) return { id: "nPczCjzI2devNBz1zQrb", name: "Brian" };

@@ -1,0 +1,931 @@
+{
+ "slug": "the-good-room",
+ "title": "The Good Room",
+ "series": "AI Broadsheet Op-Docs",
+ "posterAt": 22.0,
+ "voices": [
+  "George",
+  "Daniel",
+  "Brian"
+ ],
+ "images": {
+  "frieze": "art/the-good-room/replica3.jpg",
+  "horse": "art/the-good-room/horse.jpg",
+  "replica": "art/the-good-room/replica5.jpg",
+  "replica2": "art/the-good-room/replica4.jpg",
+  "megaloceros": "art/the-good-room/megaloceros.jpg"
+ },
+ "music": "Spare, elegant score for a documentary essay: solo cello and felt piano, slow, warm, a hint of strings at the end, no vocals.",
+ "ambience": "Very quiet room tone with faint distant wind, no music.",
+ "cta": "MORE OP-DOCS + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "next": "AN AI BROADSHEET OP-DOC · OPINION",
+ "disclosure": "Opinion. Photographs of the Lascaux replicas: public domain (HTO), Wikimedia Commons. Other scenes drawn in code.",
+ "sources": [
+  {
+   "name": "French Ministry of Culture, Lascaux",
+   "url": "https://archeologie.culture.gouv.fr/lascaux/en"
+  },
+  {
+   "name": "Pew Research Center (July 2025)",
+   "url": "https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "g01",
+   "lead": 2.0,
+   "say": "In September nineteen forty, four teenagers climbed down a hole in the ground in south-western France, and found a room with animals on the walls.",
+   "panels": [
+    {
+     "scene": "o-hole",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.5,
+     "text": "MONTIGNAC, FRANCE · SEPTEMBER 1940",
+     "x": 80,
+     "y": 120
+    }
+   ],
+   "sfx": [
+    {
+     "id": "night",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Night countryside, crickets, wind in trees, a dog's paws on dry leaves"
+    }
+   ]
+  },
+  {
+   "id": "g02",
+   "say": "Horses. Stags. Aurochs. A bear. Painted with charcoal and ochre, around twenty thousand years ago.",
+   "hold": 4.4,
+   "panels": [
+    {
+     "scene": "o-wall",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.06,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "title",
+     "w": "ago",
+     "at": 1.0,
+     "kicker": "AN AI BROADSHEET OP-DOC · OPINION",
+     "text": "THE GOOD ROOM",
+     "sub": "On copies, answers, and the cave we stop visiting"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "cave",
+     "at": 0,
+     "dur": 12,
+     "gain": -16,
+     "prompt": "Deep cave ambience, slow water drips, a small oil lamp flame flickering"
+    }
+   ]
+  },
+  {
+   "id": "g03",
+   "say": "In nineteen forty-eight the cave opened to the public, and it did what any wonder does. It drew crowds. At its peak, about eighteen hundred people a day.",
+   "panels": [
+    {
+     "scene": "o-crowds",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.12,
+       0,
+       0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    860,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "eighteen",
+     "at": -0.2,
+     "from": 0,
+     "to": 1800,
+     "suffix": " / DAY",
+     "x": 1400,
+     "y": 380,
+     "size": 170,
+     "label": "visitors at the peak",
+     "color": "#EFE8DA"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "crowd",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Murmur of a 1950s tourist crowd walking on gravel, distant voices"
+    }
+   ]
+  },
+  {
+   "id": "g04",
+   "say": "Within a few years, the paintings began to sicken. Not from vandalism. From breath, and heat, and electric light. Green algae. White crystals.",
+   "panels": [
+    {
+     "scene": "o-sickness",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "w": "green",
+     "at": -0.2,
+     "text": "LA MALADIE VERTE · LA MALADIE BLANCHE",
+     "x": 80,
+     "y": 120
+    }
+   ],
+   "sfx": [
+    {
+     "id": "hum",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Electric lights buzzing in a damp stone room, slow breathing of many people"
+    }
+   ]
+  },
+  {
+   "id": "g05",
+   "say": "Looking at the paintings was destroying the paintings. So in nineteen sixty-three, France closed the cave.",
+   "panels": [
+    {
+     "scene": "o-closed",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.06,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": 0.2,
+     "text": "CLOSED 1963",
+     "x": 960,
+     "y": 540
+    }
+   ],
+   "sfx": [
+    {
+     "id": "door",
+     "w": "closed",
+     "at": 0,
+     "dur": 3,
+     "gain": -10,
+     "prompt": "A heavy steel door rolling shut and locking, echoing in a cave"
+    }
+   ]
+  },
+  {
+   "id": "g06",
+   "say": "And built another one. The newest copy opened in December twenty sixteen, built from millimetre-scale scans. It is better lit than the original ever was. There are no queues that damage anything. You can stand in front of one horse for as long as you like.",
+   "panels": [
+    {
+     "scene": "o-replica",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "w": "december",
+     "at": -0.2,
+     "text": "LASCAUX IV · DECEMBER 2016",
+     "x": 80,
+     "y": 120
+    }
+   ],
+   "sfx": [
+    {
+     "id": "museum",
+     "at": 0,
+     "dur": 14,
+     "gain": -18,
+     "prompt": "Quiet modern museum hall, soft footsteps, gentle ventilation"
+    }
+   ]
+  },
+  {
+   "id": "g07",
+   "say": "By almost every measure, the copy is better. And it is honest: nobody is told it is the real cave. Several million people have now been to Lascaux. Almost none of them have been to Lascaux.",
+   "panels": [
+    {
+     "scene": "o-split",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.06,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    860,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "split",
+     "w": "several",
+     "at": -0.1,
+     "left": "MILLIONS",
+     "leftSub": "have been to Lascaux",
+     "right": "ALMOST NONE",
+     "rightSub": "have been to Lascaux",
+     "y": 880
+    }
+   ],
+   "sfx": [
+    {
+     "id": "tone",
+     "w": "almost",
+     "at": 0,
+     "dur": 5,
+     "gain": -14,
+     "prompt": "A single low piano note, held, then silence"
+    }
+   ]
+  },
+  {
+   "id": "g08",
+   "say": "The original is still there, a short walk away, in the dark. Watched very closely, and hardly ever entered. And that is the right decision.",
+   "panels": [
+    {
+     "scene": "o-sensors",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "sfx": [
+    {
+     "id": "sensors",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Faint electronic beeps of monitoring sensors in a silent cave, water drips"
+    }
+   ]
+  },
+  {
+   "id": "g09",
+   "say": "Think about who made those paintings. Someone who had been outside. Who had seen a horse move, in weather, on a day when seeing mattered.",
+   "panels": [
+    {
+     "scene": "o-outside",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.12,
+       0,
+       0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    860,
+    "top"
+   ],
+   "sfx": [
+    {
+     "id": "plain",
+     "at": 0,
+     "dur": 10,
+     "gain": -16,
+     "prompt": "Wind across an open grassland, distant galloping horses"
+    }
+   ]
+  },
+  {
+   "id": "g10",
+   "say": "They brought that inside, for people who would go back out. The copy reproduces the pigment to a fraction of a millimetre. It cannot reproduce that. Because that was never in the pigment.",
+   "panels": [
+    {
+     "scene": "o-painter",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    990,
+    1010,
+    860
+   ],
+   "sfx": [
+    {
+     "id": "charcoal",
+     "at": 0,
+     "dur": 10,
+     "gain": -16,
+     "prompt": "Charcoal scraping on stone, an oil lamp crackling"
+    }
+   ]
+  },
+  {
+   "id": "g11",
+   "say": "This is the shape of our lives now. A copy good enough, and available enough, and comfortable enough, that the thing it stands for stops being visited. In classrooms. In clinics. In courtrooms.",
+   "panels": [
+    {
+     "scene": "o-class",
+     "r": [
+      60,
+      60,
+      1800,
+      480
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.12,
+       0,
+       0.01
+      ]
+     }
+    },
+    {
+     "scene": "o-clinic",
+     "r": [
+      60,
+      580,
+      880,
+      440
+     ],
+     "from": "left",
+     "w": "clinics"
+    },
+    {
+     "scene": "o-court",
+     "r": [
+      980,
+      580,
+      880,
+      440
+     ],
+     "from": "right",
+     "w": "courtrooms"
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    860,
+    "top"
+   ],
+   "sfx": [
+    {
+     "id": "rooms",
+     "at": 0,
+     "dur": 12,
+     "gain": -20,
+     "prompt": "Soft keyboard tapping and the hum of screens in quiet rooms"
+    }
+   ]
+  },
+  {
+   "id": "g12",
+   "say": "Nobody decides it. Nobody objects. There is no moment when anyone could be expected to notice.",
+   "panels": [
+    {
+     "scene": "o-class",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.25,
+       0,
+       0.1
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ]
+  },
+  {
+   "id": "g13",
+   "say": "Ask a machine what one famous scene at Lascaux means, a bird-headed figure, a bison, a bird on a stick, and you will get an answer. Fluent. Sourced. Complete. But the honest answer is that nobody knows.",
+   "panels": [
+    {
+     "scene": "o-shaft",
+     "r": [
+      60,
+      60,
+      1150,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "o-answer",
+     "r": [
+      1270,
+      60,
+      590,
+      960
+     ],
+     "from": "right",
+     "w": "answer"
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    860,
+    "top"
+   ],
+   "sfx": [
+    {
+     "id": "typing",
+     "w": "answer",
+     "at": 0,
+     "dur": 5,
+     "gain": -18,
+     "prompt": "Soft rapid text appearing on a phone, gentle digital ticks"
+    }
+   ]
+  },
+  {
+   "id": "g14",
+   "say": "The answer isn't a lie. It's just missing the hesitation. And the hesitation was the truth.",
+   "panels": [
+    {
+     "scene": "o-answer",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.12,
+       0,
+       0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "w": "hesitation",
+     "at": 0,
+     "text": "THE HESITATION WAS THE TRUTH",
+     "x": 80,
+     "y": 120
+    }
+   ]
+  },
+  {
+   "id": "g15",
+   "say": "Studies of search already show it. When an AI summary appears, people click through to the sources far less often. The summary is the good room. The source is the cave.",
+   "panels": [
+    {
+     "scene": "o-summary",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "w": "summary",
+     "at": 0,
+     "text": "PEW RESEARCH CENTER · JULY 2025",
+     "x": 80,
+     "y": 120
+    }
+   ]
+  },
+  {
+   "id": "g16",
+   "say": "The skill we are most likely to lose is a small one: knowing when a gap should stay a gap. A teacher saying I'm not sure, in front of a class. An editor asking: how do you know that?",
+   "panels": [
+    {
+     "scene": "o-teacher",
+     "r": [
+      60,
+      60,
+      900,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "o-editor",
+     "r": [
+      1000,
+      60,
+      860,
+      960
+     ],
+     "from": "right",
+     "w": "editor"
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    860,
+    "top"
+   ],
+   "sfx": [
+    {
+     "id": "chalk",
+     "at": 0.5,
+     "dur": 8,
+     "gain": -16,
+     "prompt": "Chalk on a blackboard, then a red pencil scratching on paper"
+    }
+   ]
+  },
+  {
+   "id": "g17",
+   "say": "And underneath, there is a fear. Not that machines will be smarter. That we will be unnecessary. But that fear is not about machines. It is about what we do with people we no longer need. And that is decided by people. In rooms. On Tuesdays.",
+   "panels": [
+    {
+     "scene": "o-tuesday",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.12,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    990,
+    1010,
+    860
+   ],
+   "sfx": [
+    {
+     "id": "meeting",
+     "at": 0,
+     "dur": 12,
+     "gain": -20,
+     "prompt": "Quiet meeting room, papers shuffling, a chair moving"
+    }
+   ]
+  },
+  {
+   "id": "g18",
+   "say": "So use the good room. It is a very good room. But the cave is still there. Walk toward it, sometimes.",
+   "hold": 3.0,
+   "panels": [
+    {
+     "scene": "o-walk",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.1,
+       0.02,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    860
+   ],
+   "sfx": [
+    {
+     "id": "end",
+     "at": 0,
+     "dur": 12,
+     "gain": -16,
+     "prompt": "Night wind on a hillside, crickets, a single distant bell"
+    }
+   ]
+  }
+ ]
+}

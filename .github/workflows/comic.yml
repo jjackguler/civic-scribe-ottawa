@@ -7,7 +7,7 @@ name: Comic
 on:
   push:
     branches: [comic-run]
-    paths: ["scripts/originals/comic/**", ".github/workflows/comic.yml"]
+    paths: ["scripts/originals/comic/comic*", "scripts/originals/comic/stories/**", "scripts/originals/comic/produce.mjs", "scripts/originals/comic/render.mjs", "scripts/originals/comic/queue.txt", "scripts/originals/comic/art/**", ".github/workflows/comic.yml"]
   workflow_dispatch:
     inputs:
       slug:
@@ -46,7 +46,7 @@ jobs:
         env:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           NOIR_VOICE_ID: ${{ vars.NOIR_VOICE_ID }}
-        run: node produce.mjs "$SLUG"
+        run: for s in $(cat queue.txt 2>/dev/null || echo "$SLUG"); do node produce.mjs "$s"; done
       - name: Save generated audio
         if: always()
         uses: actions/cache/save@v4
@@ -54,10 +54,12 @@ jobs:
           path: scripts/originals/comic/build
           key: comic-${{ github.run_id }}
       - name: Render
-        run: node render.mjs "$SLUG" && ls -la out
+        run: |
+          for s in $(cat queue.txt 2>/dev/null || echo "$SLUG"); do node render.mjs "$s"; done
+          ls -la out
       - uses: actions/upload-artifact@v4
         with:
-          name: comic-${{ env.SLUG }}
+          name: comic-${{ github.run_id }}
           path: |
             scripts/originals/comic/out/*.mp4
             scripts/originals/comic/out/*.jpg

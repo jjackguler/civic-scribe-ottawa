@@ -5,6 +5,7 @@
 </head><body><canvas id="c" width="1920" height="1080"></canvas>
 <script>window.COMIC_SCENES = {};</script>
 <script src="comic-scenes.js"></script>
+<script src="comic-scenes-cave.js"></script>
 <script>
 // Motion comic, 16:9. Each shot is a comic page: panels (drawn in code by comic-scenes.js)
 // slide in on spoken words, the page camera drifts, narration appears in caption boxes,
@@ -26,6 +27,8 @@ window.setup = async () => {
   const slug = new URLSearchParams(location.search).get("slug");
   story = await (await fetch(`stories/${slug}.json`)).json();
   tl = await (await fetch(`build/${slug}/timeline.json`)).json();
+  window.COMIC_IMAGES = {};
+  await Promise.all(Object.entries(story.images ?? {}).map(([k, src]) => new Promise((ok) => { const im = new Image(); im.onload = () => { window.COMIC_IMAGES[k] = im; ok(); }; im.onerror = () => ok(); im.src = src; })));
   await Promise.all([`700 100px ${SERIF}`, `italic 500 100px ${SERIF}`, `800 50px ${SANS}`, `600 50px ${SANS}`, `60px ${TYPE}`, `60px ${POSTER}`].map((f) => document.fonts.load(f)));
   for (let k = 0; k < 6; k++) {
     const g = document.createElement("canvas"); g.width = 960; g.height = 540;
