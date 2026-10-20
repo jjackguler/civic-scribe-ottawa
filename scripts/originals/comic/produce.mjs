@@ -140,7 +140,7 @@ const prev = existsSync(join(dir, "timeline.json")) ? JSON.parse(await readFile(
 await writeFile(join(dir, "timeline.json"), JSON.stringify({
   slug, total, end: { start: +t.toFixed(3), dur: END }, shots,
   credits: {
-    images: "",
+    images: story.aiImages ? "Google Flow (Nano Banana Pro)" : "",
     voice: credits.voice || prev.credits?.voice || "",
     music: credits.music || prev.credits?.music || "",
   },
