@@ -1,35 +1,5 @@
 [
  {
-  "id": "202610202130-sir-jack-11",
-  "kind": "explainer",
-  "section": "noir",
-  "publishedAt": "2026-10-20T21:30:00.000Z",
-  "title": "The Sir Jack Files #11: The Case of the Ghost Shopper",
-  "summary": "Stripe says AI agents' purchases through Link grew 38-fold in September, but won't say how much money that is. Who's shopping, what they buy, and how to keep the final yes for yourself.",
-  "durationSec": 81,
-  "sources": [
-   {
-    "name": "The Decoder, Maximilian Schreiner (Oct 19, 2026)",
-    "url": "https://the-decoder.com/stripe-says-ai-agent-purchases-are-adding-up-but-it-wont-share-the-numbers/"
-   },
-   {
-    "name": "Upstarts Media (cited by The Decoder)",
-    "url": "https://the-decoder.com/stripe-says-ai-agent-purchases-are-adding-up-but-it-wont-share-the-numbers/"
-   }
-  ],
-  "transcript": "Case eleven. Someone is shopping with your money. And it isn't you. It's your AI. September. Stripe says purchases made by AI agents through Link, its payment service, grew thirty-eight times in one month. Payment volume: up twenty times. How much money is that? Stripe won't say. And when you start small, big multipliers can hide small numbers. That's clue number one. Clue two: who's shopping. About seventy agents when Stripe looked. Around two hundred now, according to Stripe executive Dan Hill, including Meta's Muse. Most spend about a hundred dollars a purchase. Some book flights, or buy furniture worth thousands. Retail leads. Travel is next. The safety catch: the agent never sees your real card. Link hands it a separate sixteen-digit number, and you can set a limit. So before you hand an assistant your wallet: set the limit. Read every receipt. And keep the final yes for yourself. The machine can do the shopping. The money is still yours. Case closed.",
-  "voice": "ElevenLabs stock voice (Brian)",
-  "aiImages": false,
-  "credits": "Noir illustrations drawn in code by AI Broadsheet; figures are anonymous silhouettes, not the people in the story. Narration, sound effects and music generated with ElevenLabs.",
-  "readMore": {
-   "url": "https://the-decoder.com/stripe-says-ai-agent-purchases-are-adding-up-but-it-wont-share-the-numbers/",
-   "en": "Read The Decoder's report",
-   "fr": "Lire le reportage de The Decoder"
-  },
-  "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.mp4",
-  "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.jpg"
- },
- {
   "id": "202610211600-op-doc-the-good-room",
   "kind": "explainer",
   "section": "mind",
