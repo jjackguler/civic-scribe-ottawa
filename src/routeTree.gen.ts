@@ -33,6 +33,8 @@ import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
+import { Route as PodcastDotxmlRouteImport } from './routes/podcast[.]xml'
+import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as SirJackRouteImport } from './routes/sir-jack'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StandardsRouteImport } from './routes/standards'
@@ -188,6 +190,16 @@ const SearchRoute = SearchRouteImport.update({
 const ShowcaseRoute = ShowcaseRouteImport.update({
   id: '/showcase',
   path: '/showcase',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastDotxmlRoute = PodcastDotxmlRouteImport.update({
+  id: '/podcast.xml',
+  path: '/podcast.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastRoute = PodcastRouteImport.update({
+  id: '/podcast',
+  path: '/podcast',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SirJackRoute = SirJackRouteImport.update({
@@ -396,6 +408,8 @@ export interface FileRoutesByFullPath {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
+  '/podcast': typeof PodcastRoute
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
@@ -458,6 +472,8 @@ export interface FileRoutesByTo {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
+  '/podcast': typeof PodcastRoute
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
@@ -521,6 +537,8 @@ export interface FileRoutesById {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
+  '/podcast': typeof PodcastRoute
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
@@ -585,6 +603,8 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/showcase'
+    | '/podcast.xml'
+    | '/podcast'
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
@@ -647,6 +667,8 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/showcase'
+    | '/podcast.xml'
+    | '/podcast'
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
@@ -709,6 +731,8 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/showcase'
+    | '/podcast.xml'
+    | '/podcast'
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
@@ -772,6 +796,8 @@ export interface RootRouteChildren {
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   ShowcaseRoute: typeof ShowcaseRoute
+  PodcastDotxmlRoute: typeof PodcastDotxmlRoute
+  PodcastRoute: typeof PodcastRoute
   SirJackRoute: typeof SirJackRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
@@ -978,6 +1004,20 @@ declare module '@tanstack/react-router' {
       path: '/showcase'
       fullPath: '/showcase'
       preLoaderRoute: typeof ShowcaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/podcast.xml': {
+      id: '/podcast.xml'
+      path: '/podcast.xml'
+      fullPath: '/podcast.xml'
+      preLoaderRoute: typeof PodcastDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/podcast': {
+      id: '/podcast'
+      path: '/podcast'
+      fullPath: '/podcast'
+      preLoaderRoute: typeof PodcastRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sir-jack': {
@@ -1260,6 +1300,8 @@ const rootRouteChildren: RootRouteChildren = {
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   ShowcaseRoute: ShowcaseRoute,
+  PodcastDotxmlRoute: PodcastDotxmlRoute,
+  PodcastRoute: PodcastRoute,
   SirJackRoute: SirJackRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,

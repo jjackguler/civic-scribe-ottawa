@@ -77,6 +77,19 @@ export type Original = {
 
 export type OriginalsManifest = { updatedAt: string; items: Original[] };
 
+/** schema.org VideoObject for an original, so search engines can list it as a video. */
+export function videoLd(o: Original, pageUrl: string, publisher: unknown) {
+  const thumb = o.posterUrl ?? (o.youtubeId ? `https://i.ytimg.com/vi/${o.youtubeId}/hqdefault.jpg` : undefined);
+  return {
+    "@type": "VideoObject", name: o.title, description: o.summary, uploadDate: o.publishedAt,
+    duration: `PT${Math.floor(o.durationSec / 60)}M${o.durationSec % 60}S`,
+    ...(thumb ? { thumbnailUrl: [thumb] } : {}),
+    ...(o.fileUrl ? { contentUrl: o.fileUrl } : {}),
+    ...(o.youtubeId ? { embedUrl: `https://www.youtube.com/embed/${o.youtubeId}` } : {}),
+    url: `${pageUrl}#${o.id}`, inLanguage: "en", publisher, transcript: o.transcript,
+  };
+}
+
 export const ORIGINALS_MANIFEST_URL = "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/media/originals/manifest.json";
 
 /** Whether the YouTube copy can be embedded (public or unlisted). */

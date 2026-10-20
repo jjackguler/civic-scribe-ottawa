@@ -4,13 +4,14 @@ import { OriginalCard } from "@/components/Originals";
 import { getOriginalsFast, useOriginals } from "@/lib/originals";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
-import { ORIGINAL_SECTIONS, originalSection } from "@/lib/originals-types";
-import { seoHead } from "@/lib/seo";
+import { ORIGINAL_SECTIONS, originalSection, videoLd } from "@/lib/originals-types";
+import { seoHead, publisherRef } from "@/lib/seo";
 
 export const Route = createFileRoute("/originals")({
   loader: () => getOriginalsFast(),
-  head: ({ match }) =>
+  head: ({ match, loaderData }) =>
     seoHead(match, {
+      jsonLd: (_l, url) => [{ "@context": "https://schema.org", "@type": "ItemList", name: "AI Broadsheet Originals", itemListElement: (loaderData?.items ?? []).slice(0, 30).map((o, i) => ({ "@type": "ListItem", position: i + 1, item: videoLd(o, url, publisherRef) })) }],
       title: { en: `Explainers: AI news in a minute — ${SITE.name}`, fr: `Explicatifs : l'actualité IA en une minute — ${SITE.name}` },
       description: {
         en: "Short video explainers of the day's biggest AI stories, written from the publishers' reporting and checked against it, with an AI voice or on-screen captions.",

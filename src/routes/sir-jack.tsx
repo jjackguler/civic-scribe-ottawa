@@ -7,8 +7,8 @@ import { AdSlot } from "@/components/AdSlot";
 import { getOriginalsFast, useOriginals } from "@/lib/originals";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
-import { SIR_JACK_SEASONS, caseNumber, isSirJack, type Original } from "@/lib/originals-types";
-import { seoHead } from "@/lib/seo";
+import { SIR_JACK_SEASONS, caseNumber, isSirJack, videoLd, type Original } from "@/lib/originals-types";
+import { seoHead, publisherRef } from "@/lib/seo";
 
 const cases = (items: Original[]) =>
   items.filter(isSirJack).sort((a, b) => (caseNumber(b) ?? 0) - (caseNumber(a) ?? 0) || b.publishedAt.localeCompare(a.publishedAt));
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/sir-jack")({
       image: latest?.posterUrl,
       imageWidth: latest?.posterUrl ? 1080 : undefined,
       imageHeight: latest?.posterUrl ? 1920 : undefined,
+      jsonLd: (_l, url) => [{ "@context": "https://schema.org", "@type": "ItemList", name: "The Sir Jack Files", itemListElement: cases(loaderData?.items ?? []).slice(0, 30).map((o, i) => ({ "@type": "ListItem", position: i + 1, item: videoLd(o, url, publisherRef) })) }],
     });
   },
   component: SirJackPage,

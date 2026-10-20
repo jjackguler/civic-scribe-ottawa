@@ -35,6 +35,14 @@ function ListenPage() {
           ? "Les nouveaux épisodes des balados IA les plus écoutés. Écoutez ici, directement depuis le fichier de l'émission, ou ouvrez la page de l'épisode."
           : "New episodes from the AI podcasts people actually listen to. Play them here, straight from each show's own feed, or open the episode page."}
       />
+      <div className="container-mw mt-8">
+        <a href="/podcast" className="group flex flex-wrap items-center gap-x-4 gap-y-1 bg-night text-white px-5 py-4 rounded-[4px]">
+          <span className="text-brass font-bold text-[0.78rem] tracking-[0.18em] uppercase">{fr ? "Notre balado" : "Our own show"}</span>
+          <span className="masthead-serif text-[1.3rem]">After the Headline</span>
+          <span className="text-white/70 text-[0.95rem]">{fr ? "L'histoire derrière la nouvelle en IA" : "The story under the AI story"}</span>
+          <span className="ml-auto font-bold">→</span>
+        </a>
+      </div>
       <div className="container-mw mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div>
           {!data ? (
