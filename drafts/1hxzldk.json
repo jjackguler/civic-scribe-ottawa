@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "id": "1hxzldk",
+  "slug": {
+    "en": "meta-pauses-muse-chat-sharing-after-public-links-expose",
+    "fr": "meta-suspend-le-partage-de-conversations-sur-muse-apres"
+  },
+  "createdAt": "2026-10-20T19:50:46.587Z",
+  "updatedAt": "2026-10-20T19:50:46.587Z",
+  "topic": "agents",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Ars Technica",
+      "title": "Meta Muse exposes users' personal and business secrets when they share conversations",
+      "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/",
+      "publishedAt": "2026-10-20T12:33:13.000Z",
+      "storyId": "19rclnd",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "TechCrunch",
+      "title": "Meta’s Muse hits 10M U.S. downloads in 40 days, a milestone reached by only 11 other apps",
+      "url": "https://techcrunch.com/2026/10/20/metas-muse-hits-10m-u-s-downloads-in-40-days-a-milestone-reached-by-only-11-other-apps/",
+      "publishedAt": "2026-10-20T17:12:48.000Z",
+      "storyId": "1jow8gv",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "The Verge",
+      "title": "Meta pauses Muse sharing after researchers find AI chats on the web",
+      "url": "https://www.theverge.com/tech/1014627/meta-muse-ai-sharing-ai-chats",
+      "publishedAt": "2026-10-20T18:07:34.000Z",
+      "storyId": "1hxzldk",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b2",
+      "path": "/learn/small-business-first-steps",
+      "title": {
+        "en": "AI for small business: five first steps",
+        "fr": "L'IA pour les petites entreprises : cinq premiers pas"
+      }
+    }
+  ],
+  "cover": {
+    "color": "night",
+    "motif": "rules",
+    "en": {
+      "kicker": "AI agents",
+      "big": "1,"
+    },
+    "fr": {
+      "kicker": "Agents IA",
+      "big": "1,"
+    }
+  },
+  "en": {
+    "headline": "Meta pauses Muse chat sharing after public links expose personal details",
+    "news": "Meta suspended the conversation-sharing tool on its Muse assistant after researchers discovered private chats exposed on the public web [s1, s3].",
+    "thirty": [
+      "Meta halted the sharing tool for its Muse AI companion.",
+      "Web links had exposed users' private and business secrets.",
+      "The halt comes as Muse reached 10 million downloads."
+    ],
+    "confirmed": [
+      {
+        "text": "Meta suspended the chat-sharing option on its Muse AI assistant after shared links were found publicly exposed on the web [s1, s3].",
+        "src": [
+          "s1",
+          "s3"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Meta says it paused the feature while it investigates the privacy of the tool [s1, s3].",
+        "by": "Meta",
+        "src": [
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "text": "TechCrunch says new data shows Muse keeps users at higher rates than competing AI products [s2].",
+        "by": "TechCrunch",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "When Meta will finish its investigation and whether it will reactivate chat sharing.",
+      "How many user conversations and secrets were exposed to the public."
+    ],
+    "matters": "Users who shared chats through the app risked exposing personal details or workplace secrets to the public web [s1, s3]. The suspension stops further link creation while Meta reviews the feature's privacy protections [s1].",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Meta stopped a feature in its Muse assistant that allowed people to send copies of their chats to others using a web link [s1,s3]. An artificial intelligence assistant is a computer program that chats with people and answers questions, and Muse is Meta's mobile app version [s2,s3]. The researchers discovered that these shared web links could be found and viewed on the public internet [s3].",
+        "This meant that personal messages and confidential workplace details entered into the app were exposed online [s1]. Meta is now reviewing the security of the tool, even as Muse rapidly grows after reaching 10 million downloads [s1,s2]."
+      ],
+      "standard": [
+        "Meta has suspended a conversation-sharing feature in its Muse artificial intelligence assistant after researchers discovered that links to private dialogues were publicly accessible across the web [s1,s3]. The pause took place following findings that shared conversations exposed both personal information and business secrets [s1,s3].",
+        "Meta stated that it halted the capability while it investigates the privacy of the tool [s1]. The Verge reported that researchers detailed in a report published this week that web links containing Muse chats could be found openly online [s3].",
+        "Meanwhile, data reported by TechCrunch indicates that Muse reached 10 million downloads in its first 40 days, placing it alongside 11 other applications such as Threads [s2]. TechCrunch also reported that Muse keeps users at higher rates than competing AI products [s2].",
+        "The exposure highlights the risks of generating public links for AI discussions that contain sensitive material [s1]. Users who shared a Muse conversation risked leaving private details or commercial data visible on the open internet [s1,s3].",
+        "Business financials and personal client data should never be entered into AI systems [b2]."
+      ],
+      "expert": [
+        "Meta suspended the conversation-sharing URL feature for its Muse companion after researchers revealed that links to shared sessions were indexable and exposed on the open web [s1,s3]. Ars Technica first reported that the exposed chats contained both personal and commercial data, leading Meta to launch an internal privacy investigation [s1,s3].",
+        "The privacy shutdown coincides with rapid user growth, with Muse hitting 10 million downloads within 40 days [s2]. TechCrunch noted that only 11 other apps, including Threads, have matched that pace, and reported that Muse is achieving higher retention rates than rival AI companions [s2]."
+      ]
+    },
+    "seoTitle": "Meta pauses Muse chat sharing after public links expose",
+    "dek": "The company halted the feature to investigate privacy issues as its AI companion reached 10 million downloads.",
+    "metaDescription": "Meta suspended the conversation-sharing tool on its Muse assistant after researchers discovered private chats exposed on the public web [s1, s3].",
+    "keywords": [],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Meta has suspended a conversation-sharing feature in its Muse artificial intelligence assistant after researchers discovered that links to private dialogues were publicly accessible across the web [s1,s3]. The pause took place following findings that shared conversations exposed both personal information and business secrets [s1,s3]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Meta stated that it halted the capability while it investigates the privacy of the tool [s1]. The Verge reported that researchers detailed in a report published this week that web links containing Muse chats could be found openly online [s3].",
+          "Meanwhile, data reported by TechCrunch indicates that Muse reached 10 million downloads in its first 40 days, placing it alongside 11 other applications such as Threads [s2]. TechCrunch also reported that Muse keeps users at higher rates than competing AI products [s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The exposure highlights the risks of generating public links for AI discussions that contain sensitive material [s1]. Users who shared a Muse conversation risked leaving private details or commercial data visible on the open internet [s1,s3]."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Business financials and personal client data should never be entered into AI systems [b2]."
+        ]
+      }
+    ],
+    "faq": [],
+    "links": []
+  },
+  "fr": {
+    "headline": "Meta suspend le partage de conversations sur Muse après des fuites de données privées",
+    "news": "Meta a suspendu l'outil de partage de conversations de son assistant Muse après que des chercheurs ont découvert des échanges privés accessibles sur le web public [s1, s3].",
+    "thirty": [
+      "Meta a interrompu l'outil de partage pour son assistant IA Muse.",
+      "Des liens web exposaient des secrets privés et professionnels d'utilisateurs.",
+      "Cette suspension survient alors que Muse atteint 10 millions de téléchargements."
+    ],
+    "confirmed": [
+      {
+        "text": "Meta a suspendu l'option de partage de conversations sur son assistant IA Muse après que des liens partagés ont été trouvés exposés publiquement sur le web [s1, s3].",
+        "src": [
+          "s1",
+          "s3"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Meta indique avoir suspendu la fonctionnalité le temps d'enquêter sur la confidentialité de l'outil [s1, s3].",
+        "by": "Meta",
+        "src": [
+          "s1",
+          "s3"
+        ]
+      },
+      {
+        "text": "TechCrunch affirme que de nouvelles données montrent que Muse retient ses utilisateurs à des taux plus élevés que les produits IA concurrents [s2].",
+        "by": "TechCrunch",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Le moment où Meta terminera son enquête et la décision de réactiver ou non le partage de conversations.",
+      "Le nombre exact de conversations et de secrets d'utilisateurs ayant été exposés au public."
+    ],
+    "matters": "Les utilisateurs ayant partagé des conversations via l'application risquaient d'exposer des détails personnels ou des secrets professionnels sur le web public [s1, s3]. La suspension empêche la création de nouveaux liens pendant que Meta révise les protections de confidentialité de la fonction [s1].",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Meta a mis fin à une fonctionnalité de son assistant Muse qui permettait aux gens d'envoyer des copies de leurs discussions à d'autres personnes via un lien web [s1,s3]. Un assistant d'intelligence artificielle est un programme informatique qui communique avec les gens et répond à des questions, et Muse est la version mobile de Meta [s2,s3]. Les chercheurs ont découvert que ces liens web partagés pouvaient être trouvés et consultés sur l'internet public [s3].",
+        "Cette situation signifiait que des messages personnels et des détails professionnels confidentiels entrés dans l'application étaient exposés en ligne [s1]. Meta révise maintenant la sécurité de l'outil, alors même que Muse connaît une croissance rapide après avoir atteint 10 millions de téléchargements [s1,s2]."
+      ],
+      "standard": [
+        "Meta a suspendu une fonctionnalité de partage de conversations dans son assistant d'intelligence artificielle Muse après que des chercheurs ont découvert que des liens vers des dialogues privés étaient accessibles publiquement sur le web [s1,s3]. La pause fait suite à des constats selon lesquels les conversations partagées exposaient des renseignements personnels ainsi que des secrets d'affaires [s1,s3].",
+        "Meta a déclaré avoir interrompu cette capacité pendant qu'elle examine la confidentialité de l'outil [s1]. The Verge a rapporté que des chercheurs ont détaillé dans un rapport publié cette semaine que des liens web contenant des discussions Muse pouvaient être trouvés ouvertement en ligne [s3].",
+        "Par ailleurs, des données rapportées par TechCrunch indiquent que Muse a atteint 10 millions de téléchargements en 40 jours, se classant aux côtés de 11 autres applications comme Threads [s2]. TechCrunch a également rapporté que Muse retient ses utilisateurs à des taux plus élevés que les assistants IA rivaux [s2].",
+        "L'exposition souligne les risques liés à la génération de liens publics pour des discussions IA contenant du matériel sensible [s1]. Les utilisateurs ayant partagé une conversation Muse risquaient de laisser des détails privés ou des données commerciales visibles sur l'internet ouvert [s1,s3].",
+        "Les données financières d'entreprise et les renseignements personnels des clients ne devraient jamais être saisis dans des systèmes d'IA [b2]."
+      ],
+      "expert": [
+        "Meta a suspendu la fonctionnalité d'URL de partage de conversations pour son compagnon Muse après que des chercheurs ont révélé que les liens vers des sessions partagées étaient indexables et exposés sur le web ouvert [s1,s3]. Ars Technica a rapporté en premier que les discussions exposées contenaient des données personnelles et commerciales, menant Meta à lancer une enquête interne sur la confidentialité [s1,s3].",
+        "L'arrêt lié à la confidentialité coïncide avec une croissance rapide du nombre d'utilisateurs, Muse ayant atteint 10 millions de téléchargements en 40 jours [s2]. TechCrunch a noté que seulement 11 autres applications, dont Threads, ont atteint ce rythme, et a rapporté que Muse obtient des taux de rétention supérieurs à ceux des compagnons IA rivaux [s2]."
+      ]
+    },
+    "seoTitle": "Meta suspend le partage de conversations sur Muse après",
+    "dek": "L'entreprise a mis fin à cette fonctionnalité pour examiner des enjeux de confidentialité alors que son assistant IA atteint 10 millions de téléchargements.",
+    "metaDescription": "Meta a suspendu l'outil de partage de conversations de son assistant Muse après que des chercheurs ont découvert des échanges privés accessibles…",
+    "keywords": [],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Meta a suspendu une fonctionnalité de partage de conversations dans son assistant d'intelligence artificielle Muse après que des chercheurs ont découvert que des liens vers des dialogues privés étaient accessibles publiquement sur le web [s1,s3]. La pause fait suite à des constats selon lesquels les conversations partagées exposaient des renseignements personnels ainsi que des secrets d'affaires [s1,s3]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Meta a déclaré avoir interrompu cette capacité pendant qu'elle examine la confidentialité de l'outil [s1]. The Verge a rapporté que des chercheurs ont détaillé dans un rapport publié cette semaine que des liens web contenant des discussions Muse pouvaient être trouvés ouvertement en ligne [s3].",
+          "Par ailleurs, des données rapportées par TechCrunch indiquent que Muse a atteint 10 millions de téléchargements en 40 jours, se classant aux côtés de 11 autres applications comme Threads [s2]. TechCrunch a également rapporté que Muse retient ses utilisateurs à des taux plus élevés que les assistants IA rivaux [s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "L'exposition souligne les risques liés à la génération de liens publics pour des discussions IA contenant du matériel sensible [s1]. Les utilisateurs ayant partagé une conversation Muse risquaient de laisser des détails privés ou des données commerciales visibles sur l'internet ouvert [s1,s3]."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Les données financières d'entreprise et les renseignements personnels des clients ne devraient jamais être saisis dans des systèmes d'IA [b2]."
+        ]
+      }
+    ],
+    "faq": [],
+    "links": []
+  },
+  "model": "gemini",
+  "words": {
+    "en": 167,
+    "fr": 205
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-20T19:48:55.931Z",
+      "verdict": "done",
+      "notes": [
+        "181 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-20T19:49:57.743Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): United, States, Shared, Anyone, Guidance.",
+        "Too close to TechCrunch's wording (\"shows muse is retaining users at higher rates than…\"): say it in our own words, or quote and attribute it."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-20T19:50:03.443Z",
+      "verdict": "pass",
+      "notes": [
+        "The article is well-structured and adheres to the house voice by focusing on the privacy implications for users and maintaining a neutral tone regarding the technology's growth."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-20T19:50:26.472Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: missing fields",
+        "205 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-20T19:50:46.586Z",
+      "verdict": "fixed",
+      "notes": [
+        "en: Meta pauses Muse chat sharing after public links expose (55)",
+        "fr: Meta suspend le partage de conversations sur Muse après (55)",
+        "en seoTitle clipped to 60 characters",
+        "fr seoTitle clipped to 60 characters",
+        "no reply: kept the reporter's headline and dek, built titles and slugs mechanically"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-20T19:50:46.587Z",
+      "verdict": "fixed",
+      "notes": [
+        "format: standard",
+        "cover: night/rules \"1,\"",
+        "en big word not from the reporting: used \"1,\"",
+        "fr big word not from the reporting: used \"1,\"",
+        "no reply: house cover built mechanically"
+      ]
+    }
+  ]
+}
