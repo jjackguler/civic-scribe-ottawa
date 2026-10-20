@@ -4,7 +4,8 @@
 import { chromium } from "playwright";
 import { createServer } from "node:http";
 import { spawn, spawnSync } from "node:child_process";
-import { readFile, mkdir } from "node:fs/promises";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { existsSync, readdirSync } from "node:fs";
 import { extname, join } from "node:path";
 
 const here = import.meta.dirname;
@@ -25,6 +26,18 @@ const server = createServer(async (req, res) => {
 }).listen(0);
 
 const ffmpeg = (args) => new Promise((ok, no) => { const p = spawn("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: ["pipe", "inherit", "inherit"] }); p.on("close", (c) => c ? no(new Error(`ffmpeg exit ${c}`)) : ok()); return p; });
+
+// Generated clips are unpacked to numbered JPEG frames (build/<slug>/frames/<scene>/0001.jpg…): a paused
+// <video> in headless Chromium does not repaint after a seek, so frames are loaded as images instead.
+if (story.clips) {
+  const index = {};
+  for (const [k, src] of Object.entries(story.clips)) {
+    const d = join(build, "frames", k);
+    if (!existsSync(join(d, "0001.jpg"))) { await mkdir(d, { recursive: true }); await ffmpeg(["-i", join(here, src), "-vf", "fps=24,scale=1920:-2:flags=lanczos", "-q:v", "3", join(d, "%04d.jpg")]); }
+    index[k] = readdirSync(d).filter((f) => f.endsWith(".jpg")).length;
+  }
+  await writeFile(join(build, "frames", "index.json"), JSON.stringify(index));
+}
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });

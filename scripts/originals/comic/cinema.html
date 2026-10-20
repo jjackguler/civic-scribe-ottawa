@@ -109,12 +109,12 @@ const loadImg = (src) => new Promise((ok) => { const im = new Image(); im.onload
 function shoot(key, cam, video) {
   const T = tex[key]; if (!T) return;
   gl.activeTexture(gl.TEXTURE0);
-  if (video) { gl.bindTexture(gl.TEXTURE_2D, video.t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video.v); }
+  if (video) gl.bindTexture(gl.TEXTURE_2D, video.t);
   else gl.bindTexture(gl.TEXTURE_2D, T.img);
   gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, T.dep);
   const u = (n) => gl.getUniformLocation(prog, n);
   gl.uniform2f(u("res"), W, H); gl.uniform2f(u("pan"), cam.px, cam.py); gl.uniform2f(u("orbit"), cam.ox, cam.oy);
-  gl.uniform1f(u("zoom"), cam.z); gl.uniform1f(u("rot"), cam.r); gl.uniform1f(u("dolly"), cam.d); gl.uniform1f(u("ia"), video ? (video.v.videoWidth / video.v.videoHeight) / (W / H) : T.aspect); gl.uniform1f(u("cctv"), cam.cctv ? 1 : 0);
+  gl.uniform1f(u("zoom"), cam.z); gl.uniform1f(u("rot"), cam.r); gl.uniform1f(u("dolly"), cam.d); gl.uniform1f(u("ia"), video ? (video.w / video.h) / (W / H) : T.aspect); gl.uniform1f(u("cctv"), cam.cctv ? 1 : 0);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   x.drawImage(glc, 0, 0);
 }
@@ -129,10 +129,9 @@ window.setup = async () => {
     const [im, dp] = await Promise.all([loadImg(src), loadImg(src.replace(/\.jpg$/, ".depth.png"))]);
     if (im && dp) tex[k] = { img: upload(im), dep: upload(dp), aspect: (im.width / im.height) / (W / H) };
   }));
-  await Promise.all(Object.entries(story.clips ?? {}).map(([k, src]) => new Promise((ok) => {
-    const v = document.createElement("video"); v.muted = true; v.preload = "auto"; v.src = src;
-    v.oncanplaythrough = () => { if (!clips[k]) { clips[k] = { v, t: upload(v) }; ok(); } }; v.onerror = () => ok(); v.load();
-  })));
+  // Clips arrive as numbered frames at 24 fps (render.mjs unpacks them); each frame is loaded when it is needed.
+  const fi = story.clips ? await (await fetch(`build/${slug}/frames/index.json`)).json().catch(() => ({})) : {};
+  for (const [k, n] of Object.entries(fi)) if (n) clips[k] = { n, dir: `build/${slug}/frames/${k}`, t: gl.createTexture(), cur: -1, w: 1920, h: 1080 };
   await Promise.all([`700 100px ${SERIF}`, `italic 500 100px ${SERIF}`, `800 50px ${SANS}`, `600 50px ${SANS}`, `60px ${POSTER}`].map((f) => document.fonts.load(f)));
   for (let k = 0; k < 6; k++) {
     const g = document.createElement("canvas"); g.width = 960; g.height = 540;
@@ -310,8 +309,15 @@ async function drawCut(cut, t) {
   if (clip) {
     // Generated motion: the clip is stretched to the cut (never faster than real time) and lightly pushed in.
     // Limited animation: a clip can step at 8 or 12 drawings a second (L.fps) while the weather and light stay smooth.
-    const v = clip.v, rate = Math.min(1, (v.duration - 0.1) / dur), kk = L.fps ? Math.floor(k * L.fps) / L.fps : k, want = Math.min(v.duration - 0.05, kk * rate);
-    if (Math.abs(v.currentTime - want) > 0.001) await new Promise((ok) => { v.onseeked = ok; v.currentTime = want; });
+    const len = clip.n / 24, rate = Math.min(1, (len - 0.1) / dur), kk = L.fps ? Math.floor(k * L.fps) / L.fps : k;
+    const f = Math.min(clip.n - 1, Math.floor(kk * rate * 24));
+    if (f !== clip.cur) {
+      const im = await loadImg(`${clip.dir}/${String(f + 1).padStart(4, "0")}.jpg`);
+      if (im) { gl.bindTexture(gl.TEXTURE_2D, clip.t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, im);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        clip.w = im.width; clip.h = im.height; clip.cur = f; }
+    }
     const q = ease(k / dur), z = 1.04 + 0.05 * q;
     shoot(img, { z: z * (1 + (cut.kind === "dip" ? 0 : 0.03 * (1 - out3(k / 0.55)))), r: 0, px: 0, py: 0, ox: 0, oy: 0, d: 0 }, clip);
     atmosphere({ fx: L.clipFx ?? {} }, t - cut.start, k, { ox: 0 });
