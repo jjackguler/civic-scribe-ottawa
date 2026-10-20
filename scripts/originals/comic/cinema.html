@@ -1,0 +1,335 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Schibsted+Grotesk:wght@400..900&family=Anton&display=block">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Cinematic edition, 16:9, full frame. Every painted panel (story.images) is animated as a
+// 2.5D shot: a depth map (<image>.depth.png, from depth.py) drives parallax, dolly and
+// rotation in a WebGL shader, and per-scene weather and light (snow, rain, fog, police
+// strobes, flickering lamps, scanning beams, dust) is layered on top. No panels, borders,
+// caption boxes or balloons: the narration carries the story; the only text is the title
+// and the end card. Shares stories/<slug>.json and build/<slug>/timeline.json with comic.html.
+const W = 1920, H = 1080;
+const INK = "#0b0b0e", PAPER = "#EFE8DA", GOLD = "#D7B54A", RED = "#D9412B";
+const SERIF = '"Bodoni Moda", serif', SANS = '"Schibsted Grotesk", sans-serif', POSTER = '"Anton", sans-serif';
+const c = document.getElementById("c"), x = c.getContext("2d");
+let story, tl, cuts = [], grain = [], fogTex, gl, prog, tex = {}, clips = {}, glc;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (p) => 0.5 - 0.5 * Math.cos(Math.PI * clamp(p));
+const out3 = (p) => 1 - Math.pow(1 - clamp(p), 3);
+const lerp = (a, b, q) => a + (b - a) * q;
+const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+const noise = (t) => { const i = Math.floor(t), f = t - i; return hash(i) * (1 - ease(f)) + hash(i + 1) * ease(f); };
+const norm = (w) => w.toLowerCase().replace(/[^a-z0-9'-]/g, "");
+
+// Camera and atmosphere per scene. z: zoom from/to; o: parallax orbit from/to (uv);
+// p: pan from/to (uv); rot: roll from/to (rad); dolly: depth-dependent zoom.
+const LOOK = {
+  "city-dusk": { z: [1.06, 1.24], o: [[0, -0.02], [0, 0.02]], dolly: 0.14, fx: { snow: 0.7, fog: 0.3 } },
+  "driveway": { z: [1.08, 1.2], o: [[-0.03, 0], [0.02, 0]], dolly: 0.1, fx: { snow: 0.8 } },
+  "doorway": { z: [1.16, 1.06], o: [[0.025, 0.006], [-0.02, 0]], fx: { snow: 0.9, strobe: { side: "right", a: 0.55 } } },
+  "police-car": { z: [1.06, 1.16], o: [[0.03, 0], [-0.012, 0]], dolly: 0.1, fx: { snow: 0.7, strobe: { side: "both", a: 0.6 } } },
+  "cuffs": { z: [1.2, 1.08], o: [[0, 0.016], [0, -0.016]], fx: { snow: 0.5, strobe: { side: "both", a: 0.5 }, shake: 1 } },
+  "warrant": { z: [1.08, 1.18], o: [[-0.025, 0], [0.025, 0]], fx: { rain: 0.3, strobe: { side: "left", a: 0.45 } } },
+  "backseat": { z: [1.06, 1.18], o: [[0.025, 0], [-0.025, 0]], fx: { rain: 0.4, strobe: { side: "right", a: 0.45 } } },
+  "storefront": { z: [1.16, 1.06], p: [[0, -0.03], [0, 0.02]], o: [[0, -0.025], [0, 0.02]], fx: { dust: 0.4 } },
+  "watch-case": { z: [1.08, 1.22], o: [[-0.03, 0], [0.03, 0]], fx: { sweep: 0.6, rain: 0.15 } },
+  "cctv": { z: [1.04, 1.12], cctv: true, fx: { scan: 1 } },
+  "detective-desk": { z: [1.06, 1.18], o: [[0.025, 0], [-0.015, 0]], fx: { lamp: 0.25, fog: 0.25 } },
+  "blurry-still": { z: [1.08, 1.24], p: [[-0.02, 0.01], [0.02, -0.01]], fx: { lamp: 0.15 } },
+  "mesh-face": { z: [1.04, 1.18], o: [[0, 0.02], [0, -0.02]], fx: { beam: 1, pulse: { x: 0.5, y: 0.45, c: "80,200,255", a: 0.3 } } },
+  "face-grid": { z: [1.06, 1.16], o: [[-0.04, 0], [0.04, 0]], dolly: 0.12, fx: { pulse: { x: 0.24, y: 0.5, c: "255,40,40", a: 0.4 } } },
+  "licence": { z: [1.08, 1.24], rot: [-0.025, 0.01], fx: { sweep: 0.7 } },
+  "report-desk": { z: [1.06, 1.2], o: [[0.02, 0], [-0.02, 0]], fx: { lamp: 0.3, fog: 0.2 } },
+  "lineup": { z: [1.04, 1.2], rot: [0.025, -0.012], fx: { lamp: 0.3, fog: 0.2 } },
+  "contractor": { z: [1.06, 1.16], o: [[-0.025, 0], [0.02, 0]], fx: { lamp: 0.2, fog: 0.2 } },
+  "circle": { z: [1.08, 1.3], fx: { lamp: 0.15 } },
+  "rigged": { z: [1.06, 1.18], o: [[0.025, 0], [-0.02, 0]], fx: { flicker: 0.25 } },
+  "signature": { z: [1.06, 1.22], o: [[-0.02, 0], [0.025, 0]], fx: { lamp: 0.2, dust: 0.35 } },
+  "rules": { img: "signature", z: [1.32, 1.42], p: [[0.06, -0.03], [0.02, 0]], o: [[0.02, 0], [-0.02, 0]], fx: { lamp: 0.2, dust: 0.5 } },
+  "goodbye": { z: [1.1, 1.22], o: [[0.02, 0], [-0.02, 0]], fx: { snow: 0.6, strobe: { side: "both", a: 0.45 } } },
+  "cell": { z: [1.06, 1.16], o: [[-0.03, 0], [0.025, 0]], dolly: 0.1, fx: { tube: 0.6, fog: 0.25 } },
+  "concrete": { z: [1.14, 1.04], rot: [0.05, -0.02], fx: { tube: 0.5 } },
+  "table": { z: [1.06, 1.16], rot: [-0.04, 0.02], fx: { lamp: 0.25, fog: 0.25 } },
+  "two-faces": { z: [1.06, 1.16], o: [[-0.025, 0], [0.02, 0]], fx: { dust: 0.35, lamp: 0.12 } },
+  "detective": { z: [1.14, 1.04], o: [[0.02, 0], [-0.02, 0]], fx: { fog: 0.4, flicker: 0.15 } },
+  "release": { z: [1.04, 1.18], o: [[0, 0.02], [0, -0.02]], dolly: 0.1, fx: { rain: 0.8 } },
+  "portrait": { z: [1.06, 1.18], o: [[-0.025, 0], [0.02, 0]], fx: { lamp: 0.22, dust: 0.25 } },
+  "dismissed": { z: [1.04, 1.16], o: [[0.025, 0], [-0.025, 0]], fx: { dust: 0.8 } },
+  "orange-street": { z: [1.04, 1.18], dolly: 0.16, fx: { fog: 0.3, leaves: 0.5 } },
+  "faces-96": { z: [1.04, 1.16], o: [[-0.03, 0], [0.03, 0]], fx: { screens: 0.4, fog: 0.2 } },
+  "nist": { z: [1.06, 1.18], o: [[0.025, 0], [-0.025, 0]], fx: { flicker: 0.15 } },
+  "courthouse": { z: [1.16, 1.04], p: [[0, 0.03], [0, -0.02]], o: [[0, 0.025], [0, -0.025]], fx: { dust: 0.45 } },
+  "morning-drive": { z: [1.04, 1.16], o: [[0.03, 0], [-0.02, 0]], fx: { dust: 0.3 } },
+  "database": { z: [1.06, 1.2], o: [[-0.025, 0.012], [0.025, -0.012]], fx: { rain: 0.45 } },
+  "booth": { z: [1.04, 1.2], dolly: 0.12, fx: { rain: 0.5, fog: 0.35, flicker: 0.12 } },
+};
+const ALIAS = { "rules-poster": "rules" };
+
+// ── WebGL: depth parallax ────────────────────────────────────────────────────
+const VS = `#version 300 es
+in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
+const FS = `#version 300 es
+precision highp float;
+uniform sampler2D img, dep; uniform vec2 res, pan, orbit; uniform float zoom, rot, dolly, ia, cctv;
+out vec4 o;
+void main(){
+  vec2 v = vec2(gl_FragCoord.x / res.x, 1. - gl_FragCoord.y / res.y);
+  float sa = res.x / res.y;
+  vec2 p = v - .5; p.x *= sa;
+  float cr = cos(rot), sr = sin(rot); p = mat2(cr, -sr, sr, cr) * p;
+  p /= zoom; p.x /= sa * ia;                  // back to uv, cover-fitting the image aspect
+  vec2 base = p + .5 + pan, q = base;
+  for (int i = 0; i < 12; i++) { float d = texture(dep, q).r - .45; q = base - orbit * d - (base - .5) * dolly * d; }
+  vec3 col = texture(img, clamp(q, .001, .999)).rgb;
+  if (cctv > 0.) { float l = dot(col, vec3(.3, .59, .11)); col = mix(col, vec3(l) * vec3(.92, 1., .95), .25) * (.9 + .1 * sin(v.y * res.y * 1.6)); }
+  o = vec4(col, 1.);
+}`;
+function initGL() {
+  glc = document.createElement("canvas"); glc.width = W; glc.height = H;
+  gl = glc.getContext("webgl2", { preserveDrawingBuffer: true, antialias: false });
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+  prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog); gl.useProgram(prog);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "a"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  gl.uniform1i(gl.getUniformLocation(prog, "img"), 0); gl.uniform1i(gl.getUniformLocation(prog, "dep"), 1);
+  gl.viewport(0, 0, W, H);
+}
+function upload(im) {
+  const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, im);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  return t;
+}
+const loadImg = (src) => new Promise((ok) => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = src; });
+function shoot(key, cam, video) {
+  const T = tex[key]; if (!T) return;
+  gl.activeTexture(gl.TEXTURE0);
+  if (video) { gl.bindTexture(gl.TEXTURE_2D, video.t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video.v); }
+  else gl.bindTexture(gl.TEXTURE_2D, T.img);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, T.dep);
+  const u = (n) => gl.getUniformLocation(prog, n);
+  gl.uniform2f(u("res"), W, H); gl.uniform2f(u("pan"), cam.px, cam.py); gl.uniform2f(u("orbit"), cam.ox, cam.oy);
+  gl.uniform1f(u("zoom"), cam.z); gl.uniform1f(u("rot"), cam.r); gl.uniform1f(u("dolly"), cam.d); gl.uniform1f(u("ia"), video ? (video.v.videoWidth / video.v.videoHeight) / (W / H) : T.aspect); gl.uniform1f(u("cctv"), cam.cctv ? 1 : 0);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  x.drawImage(glc, 0, 0);
+}
+
+// ── setup: images, depth maps, cut list ──────────────────────────────────────
+window.setup = async () => {
+  const slug = new URLSearchParams(location.search).get("slug");
+  story = await (await fetch(`stories/${slug}.json`)).json();
+  tl = await (await fetch(`build/${slug}/timeline.json`)).json();
+  initGL();
+  await Promise.all(Object.entries(story.images ?? {}).map(async ([k, src]) => {
+    const [im, dp] = await Promise.all([loadImg(src), loadImg(src.replace(/\.jpg$/, ".depth.png"))]);
+    if (im && dp) tex[k] = { img: upload(im), dep: upload(dp), aspect: (im.width / im.height) / (W / H) };
+  }));
+  await Promise.all(Object.entries(story.clips ?? {}).map(([k, src]) => new Promise((ok) => {
+    const v = document.createElement("video"); v.muted = true; v.preload = "auto"; v.src = src;
+    v.oncanplaythrough = () => { if (!clips[k]) { clips[k] = { v, t: upload(v) }; ok(); } }; v.onerror = () => ok(); v.load();
+  })));
+  await Promise.all([`700 100px ${SERIF}`, `italic 500 100px ${SERIF}`, `800 50px ${SANS}`, `600 50px ${SANS}`, `60px ${POSTER}`].map((f) => document.fonts.load(f)));
+  for (let k = 0; k < 6; k++) {
+    const g = document.createElement("canvas"); g.width = 960; g.height = 540;
+    const gx = g.getContext("2d"), d = gx.createImageData(960, 540);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    gx.putImageData(d, 0, 0); grain.push(g);
+  }
+  fogTex = document.createElement("canvas"); fogTex.width = W; fogTex.height = 700;
+  { const f = fogTex.getContext("2d"); for (let i = 0; i < 120; i++) { const px = hash(i) * W, py = hash(i + 50) * 700, r = 90 + hash(i + 99) * 300; const g = f.createRadialGradient(px, py, 0, px, py, r); g.addColorStop(0, `rgba(190,205,220,${0.04 + hash(i + 7) * 0.06})`); g.addColorStop(1, "rgba(190,205,220,0)"); f.fillStyle = g; f.fillRect(px - r, py - r, 2 * r, 2 * r); } }
+  // One full-frame cut per panel, starting on its cue word; chapters dip to black, sound-effect beats flash.
+  cuts = [];
+  story.shots.forEach((s, i) => {
+    const T = tl.shots[i];
+    const at = (o) => { let t = o.at ?? 0; if (o.w) { const w = T.words.find((w) => norm(w.w).startsWith(o.w.toLowerCase())); if (w) t = T.voAt + w.start + (o.at ?? 0); } return Math.min(t, T.dur - 0.3); };
+    const chapter = (s.ov ?? []).some((o) => o.t === "chapter") || i === 0, impact = (s.ov ?? []).some((o) => o.t === "sfx");
+    (s.panels ?? []).forEach((p, j) => {
+      const scene = ALIAS[p.scene] ?? p.scene;
+      cuts.push({ scene, start: T.start + (j === 0 ? 0 : at(p)), seed: cuts.length, shot: i, kind: j === 0 ? (chapter ? "dip" : "cut") : (impact && j === 1 ? "flash" : "cut") });
+    });
+    for (const o of s.ov ?? []) if (o.t === "title") cuts.title = { ...o, T: T.start + at(o), end: T.start + (o.until ?? T.dur) };
+  });
+  cuts.forEach((k, i) => { k.end = cuts[i + 1]?.start ?? tl.end.start; });
+  return { duration: tl.total, fps: 30 };
+};
+
+// ── atmosphere ───────────────────────────────────────────────────────────────
+function snow(u, amt, cam) {
+  x.save(); x.globalCompositeOperation = "screen";
+  for (const [L, n, sz, sp, al] of [[0.3, 260, 1.6, 60, 0.5], [0.7, 120, 3, 110, 0.6], [1.4, 30, 6, 190, 0.45]]) {
+    x.fillStyle = `rgba(235,242,250,${al * Math.min(1, amt)})`;
+    const N = Math.round(n * amt), ox = -cam.ox * W * L * 2;
+    for (let i = 0; i < N; i++) {
+      const yy = ((hash(i * 3.1 + L) * (H + 40) + u * sp * (0.7 + hash(i + L * 9) * 0.6)) % (H + 40)) - 20;
+      const xx = (((hash(i * 7.7 + L) * W + Math.sin(u * 0.8 + i) * 30 + ox) % W) + W) % W, r = sz * (0.6 + hash(i * 1.3) * 0.8);
+      x.beginPath(); x.arc(xx, yy, r, 0, 7); x.fill();
+    }
+  }
+  x.restore();
+}
+function rain(u, amt) {
+  x.save(); x.lineCap = "round";
+  for (const [n, len, sp, wd, a, sl] of [[Math.round(420 * amt), 40, 1500, 1.2, 0.2, 0.18], [Math.round(140 * amt), 110, 2300, 2.2, 0.28, 0.22]]) {
+    x.strokeStyle = `rgba(205,222,240,${a})`; x.lineWidth = wd; x.beginPath();
+    for (let i = 0; i < n; i++) { const L = len * (0.6 + hash(i + n) * 0.8), v = sp * (0.8 + hash(i * 3 + n) * 0.4); const yy = ((hash(i * 7 + n) * (H + L) + u * v) % (H + L)) - L, xx = hash(i * 13 + n) * (W + 400) - 200 + yy * sl; x.moveTo(xx, yy); x.lineTo(xx + L * sl, yy + L); }
+    x.stroke();
+  }
+  x.restore();
+}
+function fog(u, amt) { x.save(); x.globalCompositeOperation = "screen"; for (const [k, sp, y] of [[0, 18, 0.3], [1, -12, 0.75]]) { const off = ((u * sp + k * 400) % W + W) % W; x.globalAlpha = amt * 0.7; for (const dx of [-W, 0, W]) x.drawImage(fogTex, off + dx, y * H - 350, W, 700); } x.restore(); }
+function glow(cx, cy, r, rgb, a) { if (a <= 0) return; const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},0)`); x.fillStyle = g; x.fillRect(cx - r, cy - r, 2 * r, 2 * r); }
+function strobe(u, o) {
+  // Police light bar: red and blue alternate in double flashes.
+  const ph = (u * 2.2) % 1, red = ph < 0.5, on = (ph % 0.5) < 0.12 || ((ph % 0.5) > 0.2 && (ph % 0.5) < 0.3);
+  const a = o.a * (on ? 1 : 0.25), rgb = red ? "255,30,40" : "40,90,255";
+  x.save(); x.globalCompositeOperation = "screen";
+  const spots = o.side === "left" ? [[0.05, 0.45]] : o.side === "right" ? [[0.95, 0.45]] : o.side === "center" ? [[0.5, 0.55]] : [[red ? 0.1 : 0.9, 0.45]];
+  for (const [sx, sy] of spots) glow(sx * W, sy * H, W * 0.75, rgb, a * 0.55);
+  x.restore();
+}
+function dust(u, amt) {
+  x.save(); x.globalCompositeOperation = "screen";
+  for (let i = 0; i < Math.round(160 * amt); i++) {
+    const xx = (hash(i * 5.3) * W + Math.sin(u * 0.3 + i) * 40 + u * 6) % W, yy = (hash(i * 2.9) * H - u * (8 + hash(i) * 14) + H * 4) % H;
+    const tw = 0.4 + 0.6 * Math.abs(Math.sin(u * (0.8 + hash(i * 9)) + i));
+    glow(xx, yy, 2 + hash(i * 3.3) * 4, "255,236,200", 0.5 * tw);
+  }
+  x.restore();
+}
+function leaves(u, amt) {
+  x.save();
+  for (let i = 0; i < Math.round(26 * amt); i++) {
+    const sp = 120 + hash(i) * 160, xx = ((hash(i * 4.1) * W - u * sp * 0.8) % W + W) % W, yy = ((hash(i * 6.7) * H + u * sp * 0.35 + Math.sin(u * 2 + i) * 30) % H);
+    x.save(); x.translate(xx, yy); x.rotate(u * (1 + hash(i) * 3) + i); x.fillStyle = `rgba(${150 + hash(i) * 60 | 0},30,25,0.8)`;
+    x.beginPath(); x.ellipse(0, 0, 9, 4, 0, 0, 7); x.fill(); x.restore();
+  }
+  x.restore();
+}
+function beam(u) {
+  const y = H * (0.3 + 0.32 * (0.5 + 0.5 * Math.sin(u * 1.4)));
+  x.save(); x.globalCompositeOperation = "screen";
+  const g = x.createLinearGradient(0, y - 60, 0, y + 60); g.addColorStop(0, "rgba(255,60,50,0)"); g.addColorStop(0.5, "rgba(255,70,55,0.45)"); g.addColorStop(1, "rgba(255,60,50,0)");
+  x.fillStyle = g; x.fillRect(W * 0.12, y - 60, W * 0.76, 120);
+  x.fillStyle = "rgba(255,200,190,0.8)"; x.fillRect(W * 0.12, y - 1.5, W * 0.76, 3);
+  x.restore();
+}
+function sweep(u, k, amt) {
+  const p = (k % 5) / 5, cx = -W * 0.3 + p * W * 1.6;
+  x.save(); x.globalCompositeOperation = "screen"; x.translate(cx, H / 2); x.rotate(0.35);
+  const g = x.createLinearGradient(-160, 0, 160, 0); g.addColorStop(0, "rgba(255,245,225,0)"); g.addColorStop(0.5, `rgba(255,245,225,${0.22 * amt})`); g.addColorStop(1, "rgba(255,245,225,0)");
+  x.fillStyle = g; x.fillRect(-160, -H, 320, H * 2); x.restore();
+}
+function dim(a) { if (a > 0) { x.fillStyle = `rgba(0,0,0,${Math.min(0.9, a)})`; x.fillRect(0, 0, W, H); } }
+
+function atmosphere(L, u, k, cam) {
+  const f = L.fx ?? {};
+  if (f.fog) fog(u, f.fog);
+  if (f.snow) snow(u, f.snow, cam);
+  if (f.rain) rain(u, f.rain);
+  if (f.dust) dust(u, f.dust);
+  if (f.leaves) leaves(u, f.leaves);
+  if (f.beam) beam(u);
+  if (f.sweep) sweep(u, k, f.sweep);
+  if (f.pulse) { x.save(); x.globalCompositeOperation = "screen"; glow(f.pulse.x * W, f.pulse.y * H, H * 0.45, f.pulse.c, f.pulse.a * (0.55 + 0.45 * Math.sin(u * 3.2))); x.restore(); }
+  if (f.strobe) strobe(u, f.strobe);
+  if (f.screens) { x.save(); x.globalCompositeOperation = "screen"; x.fillStyle = `rgba(255,40,40,${f.screens * 0.18 * (hash(Math.floor(u * 9)) > 0.6 ? 1 : 0.3)})`; x.fillRect(0, 0, W, H); x.restore(); }
+  if (f.lamp) dim(f.lamp * 0.35 * noise(u * 5 + 2) + (hash(Math.floor(u * 14)) > 0.96 ? f.lamp * 0.4 : 0));
+  if (f.flicker) dim(f.flicker * 0.5 * noise(u * 9));
+  if (f.tube) dim(hash(Math.floor(u * 12) + 0.5) > 0.88 ? f.tube * 0.55 : f.tube * 0.05);
+  if (f.scan) {
+    x.save(); x.fillStyle = "rgba(0,0,0,0.18)"; for (let y = 0; y < H; y += 4) x.fillRect(0, y, W, 2);
+    const g = Math.floor(u * 8); if (hash(g * 1.7) > 0.85) { const gy = hash(g) * H; x.drawImage(c, 0, gy, W, 24, (hash(g * 3) - 0.5) * 40, gy, W, 24); }
+    x.restore();
+  }
+}
+
+// ── text ─────────────────────────────────────────────────────────────────────
+function text(str, px, py, font, color, { align = "left", track = 0, alpha = 1, shadow = 0 } = {}) {
+  x.save(); x.globalAlpha *= alpha; x.font = font; x.textAlign = align; x.textBaseline = "alphabetic"; x.letterSpacing = `${track}px`; x.fillStyle = color;
+  if (shadow) { x.shadowColor = "rgba(0,0,0,0.85)"; x.shadowBlur = shadow; }
+  x.fillText(str, px, py); x.restore();
+}
+function wrap(str, font, max, track = 0) {
+  x.save(); x.font = font; x.letterSpacing = `${track}px`; const out = []; let line = "";
+  for (const w of str.split(" ")) { const tr = line ? `${line} ${w}` : w; if (x.measureText(tr).width > max && line) { out.push(line); line = w; } else line = tr; }
+  x.restore(); return line ? [...out, line] : out;
+}
+function title(o, t) {
+  const k = t - o.T, a = clamp(k / 0.6) * clamp((o.end - t) / 0.6);
+  if (a <= 0) return;
+  dim(0.62 * a);
+  text(o.kicker ?? "", W / 2, 400, `600 30px ${SANS}`, PAPER, { align: "center", track: 12, alpha: a * clamp((k - 0.2) / 0.6) });
+  const p = out3((k - 0.3) / 1.2);
+  x.font = `170px ${POSTER}`; x.letterSpacing = "16px"; const tsz = Math.min(170, 170 * 1400 / x.measureText(o.text).width); x.letterSpacing = "0px";
+  text(o.text, W / 2, 610, `${tsz.toFixed(0)}px ${POSTER}`, PAPER, { align: "center", track: 16 + (1 - p) * 30, alpha: a * p, shadow: 40 });
+  x.fillStyle = RED; x.globalAlpha = a; const bw = 460 * out3((k - 1.0) / 0.7); x.fillRect(W / 2 - bw / 2, 650, bw, 6); x.globalAlpha = 1;
+  if (o.sub) text(o.sub, W / 2, 730, `italic 500 40px ${SERIF}`, GOLD, { align: "center", alpha: a * clamp((k - 1.4) / 0.6) });
+}
+function endCard(t) {
+  const k = t - tl.end.start, a = clamp(k / 0.8);
+  x.fillStyle = INK; x.globalAlpha = a; x.fillRect(0, 0, W, H); x.globalAlpha = 1;
+  rain(t, 0.25 * a);
+  const p = out3((k - 0.3) / 0.9);
+  text(story.next ?? "THE SIR JACK FILES", W / 2, 300, `600 28px ${SANS}`, GOLD, { align: "center", track: 10, alpha: clamp((k - 0.2) / 0.6) });
+  text("AI BROADSHEET", W / 2, 420 + (1 - p) * 30, `800 118px ${SERIF}`, PAPER, { align: "center", track: 6, alpha: p });
+  x.fillStyle = GOLD; x.fillRect(W / 2 - 160 * p, 452, 320 * p, 4);
+  text("AI news, with the human stakes left in.", W / 2, 520, `italic 500 42px ${SERIF}`, PAPER, { align: "center", alpha: clamp((k - 0.9) / 0.6) });
+  if (story.cta) { const ca = clamp((k - 1.2) / 0.5); x.font = `800 40px ${SANS}`; x.letterSpacing = "2px"; const cw = x.measureText(story.cta).width + 120; x.letterSpacing = "0px"; x.save(); x.globalAlpha = ca; x.fillStyle = RED; x.fillRect(W / 2 - cw / 2, 580, cw, 96); x.restore(); text(story.cta, W / 2, 643, `800 40px ${SANS}`, PAPER, { align: "center", track: 2, alpha: ca }); }
+  const srcA = clamp((k - 1.8) / 0.6) * 0.75;
+  wrap("Sources: " + story.sources.map((s) => s.name).join(" · "), `500 21px ${SANS}`, 1600).forEach((l, i) => text(l, W / 2, 800 + i * 30, `500 21px ${SANS}`, PAPER, { align: "center", alpha: srcA }));
+  text(story.disclosure ?? "", W / 2, 1000, `500 21px ${SANS}`, PAPER, { align: "center", alpha: srcA });
+  const cr = tl.credits ?? {};
+  text(`Images & motion: Google Flow (Nano Banana Pro, Veo), edited by AI Broadsheet · Voice${cr.voice ? ` (${cr.voice})` : ""}, sound & score: ElevenLabs`, W / 2, 1034, `500 21px ${SANS}`, PAPER, { align: "center", alpha: srcA });
+}
+
+// ── frame ────────────────────────────────────────────────────────────────────
+function camera(L, cut, k, dur) {
+  const q = ease(k / dur), z = L.z ?? [1.06, 1.16], o = L.o ?? [[-0.015, 0], [0.015, 0]], p = L.p ?? [[0, 0], [0, 0]], r = L.rot ?? [0, 0];
+  const punch = cut.kind === "dip" ? 0 : 0.045 * (1 - out3(k / 0.55));
+  let sx = 0, sy = 0;
+  if (L.fx?.shake) { const s = L.fx.shake * 0.012 * Math.max(0, 1 - k / 0.7); sx = (hash(Math.floor(k * 30)) - 0.5) * s; sy = (hash(Math.floor(k * 30) + 7) - 0.5) * s; }
+  const hand = 0.0025; // a hand-held float, never perfectly still
+  return {
+    z: lerp(z[0], z[1], q) * (1 + punch), r: lerp(r[0], r[1], q) + (noise(k * 0.4 + cut.seed) - 0.5) * 0.004,
+    px: lerp(p[0][0], p[1][0], q) + sx + (noise(k * 0.5 + cut.seed * 3) - 0.5) * hand, py: lerp(p[0][1], p[1][1], q) + sy + (noise(k * 0.45 + cut.seed * 5) - 0.5) * hand,
+    ox: lerp(o[0][0], o[1][0], q), oy: lerp(o[0][1], o[1][1], q), d: (L.dolly ?? 0.06) * q, cctv: !!L.cctv,
+  };
+}
+async function drawCut(cut, t) {
+  const L = LOOK[cut.scene] ?? {}, img = L.img ?? cut.scene, dur = cut.end - cut.start + 0.6, clip = clips[cut.scene];
+  let k = t - cut.start; if (L.cctv) k = Math.floor(k * 10) / 10; // security footage runs at a stuttering frame rate
+  if (clip) {
+    // Generated motion: the clip is stretched to the cut (never faster than real time) and lightly pushed in.
+    const v = clip.v, rate = Math.min(1, (v.duration - 0.1) / dur), want = Math.min(v.duration - 0.05, k * rate);
+    if (Math.abs(v.currentTime - want) > 0.001) await new Promise((ok) => { v.onseeked = ok; v.currentTime = want; });
+    const q = ease(k / dur), z = 1.02 + 0.05 * q;
+    shoot(img, { z: z * (1 + (cut.kind === "dip" ? 0 : 0.03 * (1 - out3(k / 0.55)))), r: 0, px: 0, py: 0, ox: 0, oy: 0, d: 0 }, clip);
+    atmosphere({ fx: L.clipFx ?? {} }, t - cut.start, k, { ox: 0 });
+    return;
+  }
+  const cam = camera(L, cut, k, dur);
+  shoot(img, cam);
+  atmosphere(L, t - cut.start, k, cam);
+}
+function finish(t) {
+  const v = x.createRadialGradient(W / 2, H / 2, H * 0.4, W / 2, H / 2, H * 1.05); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.5)");
+  x.fillStyle = v; x.fillRect(0, 0, W, H);
+  x.save(); x.globalCompositeOperation = "overlay"; x.globalAlpha = 0.1; x.drawImage(grain[Math.floor(t * 24) % grain.length], 0, 0, W, H); x.restore();
+}
+window.frame = async (t) => {
+  x.setTransform(1, 0, 0, 1, 0, 0); x.globalAlpha = 1; x.globalCompositeOperation = "source-over";
+  x.fillStyle = "#000"; x.fillRect(0, 0, W, H);
+  if (t >= tl.end.start) { const last = cuts[cuts.length - 1]; if (t < tl.end.start + 0.8) await drawCut(last, t); endCard(t); finish(t); return; }
+  const i = cuts.findIndex((k) => t >= k.start && t < k.end); if (i < 0) return;
+  const cut = cuts[i], k = t - cut.start, next = cuts[i + 1];
+  await drawCut(cut, t);
+  if (cut.kind === "dip") dim(1 - clamp(k / (i === 0 ? 1.2 : 0.5)));
+  if (next?.kind === "dip") dim(1 - clamp((cut.end - t) / 0.45));
+  if (cut.kind === "flash" && k < 0.18) { x.fillStyle = `rgba(255,248,235,${0.75 * (1 - k / 0.18)})`; x.fillRect(0, 0, W, H); }
+  if (cuts.title) title(cuts.title, t);
+  finish(t);
+};
+</script></body></html>

@@ -9,9 +9,10 @@
  "ambience": "Distant city at night, light rain, faint traffic, no music.",
  "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
  "next": "THE SIR JACK FILES · SPECIAL EDITION",
- "disclosure": "Dramatized illustration based on court records and published reporting. Panels generated with AI (Google Flow, Nano Banana Pro); no real person's likeness is shown.",
+ "disclosure": "Dramatized illustration based on court records and published reporting. Images and motion generated with AI (Google Flow: Nano Banana Pro, Veo); no real person's likeness is shown.",
  "aiImages": true,
  "halftone": 0,
+ "page": "cinema.html",
  "images": {
   "city-dusk": "art/the-wrong-face/city-dusk.jpg",
   "driveway": "art/the-wrong-face/driveway.jpg",
@@ -1801,5 +1802,16 @@
     }
    ]
   }
- ]
+ ],
+ "clips": {
+  "backseat": "art/the-wrong-face/clips/backseat.webm",
+  "city-dusk": "art/the-wrong-face/clips/city-dusk.webm",
+  "cuffs": "art/the-wrong-face/clips/cuffs.webm",
+  "doorway": "art/the-wrong-face/clips/doorway.webm",
+  "driveway": "art/the-wrong-face/clips/driveway.webm",
+  "mesh-face": "art/the-wrong-face/clips/mesh-face.webm",
+  "orange-street": "art/the-wrong-face/clips/orange-street.webm",
+  "police-car": "art/the-wrong-face/clips/police-car.webm",
+  "release": "art/the-wrong-face/clips/release.webm"
+ }
 }
