@@ -59,6 +59,15 @@ jobs:
           ls -la out
       - uses: actions/upload-artifact@v4
         with:
+          name: build-${{ github.run_id }}
+          path: |
+            scripts/originals/comic/build/*/timeline.json
+            scripts/originals/comic/build/*/music.mp3
+            scripts/originals/comic/build/*/vo/**
+            scripts/originals/comic/build/*/sfx/**
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
           name: comic-${{ github.run_id }}
           path: |
             scripts/originals/comic/out/*.mp4
