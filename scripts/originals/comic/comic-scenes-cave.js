@@ -152,7 +152,13 @@ S["o-outside"] = (g, u) => {
   g.fillStyle = lin(g, 0, H, [[0, "#d9c39a"], [0.6, "#e9d6b0"], [1, "#8c7450"]]); g.fillRect(0, 0, W, H);
   g.fillStyle = "#a08a64"; g.beginPath(); g.moveTo(0, 700); g.bezierCurveTo(500, 650, 1300, 690, 1920, 640); g.lineTo(1920, 1080); g.lineTo(0, 1080); g.fill();
   const run = (u * 220) % 2600;
-  for (let i = 0; i < 4; i++) horse(g, -300 + run - i * 260, 740 + (i % 2) * 40, 0.55, 1, 1, "#2a1d12", "#5c3a1e");
+  // Wild horses far off on the horizon, dark silhouettes in their own dust.
+  for (let i = 0; i < 6; i++) { const hx = -200 + ((run * 0.6 + i * 170) % 2300), hy = 668 + (i % 3) * 10;
+    g.save(); g.globalAlpha = 0.35; g.fillStyle = "#c9b48a"; g.beginPath(); g.ellipse(hx - 60, hy + 6, 90, 14, 0, 0, 7); g.fill(); g.restore();
+    g.save(); g.translate(hx, hy); g.scale(0.22, 0.22); g.fillStyle = "#2a1d12";
+    g.beginPath(); g.ellipse(0, -60, 170, 62, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(110, -90); g.lineTo(190, -170); g.lineTo(240, -150); g.lineTo(150, -60); g.fill();
+    const ph = (u * 9 + i) % (2 * Math.PI); [[-120, 1], [-80, -1], [90, 1], [130, -1]].forEach(([lx, d]) => { g.save(); g.translate(lx, -20); g.rotate(Math.sin(ph) * 0.5 * d); g.fillRect(-9, 0, 18, 110); g.restore(); });
+    g.beginPath(); g.moveTo(-165, -80); g.quadraticCurveTo(-230, -40, -220, 10); g.lineWidth = 14; g.strokeStyle = "#2a1d12"; g.stroke(); g.restore(); }
   g.strokeStyle = "rgba(255,255,255,0.4)"; g.lineWidth = 2; for (let i = 0; i < 30; i++) { const yy = 200 + hash(i) * 500, xx = ((hash(i + 3) * W + u * 400) % (W + 200)) - 100; g.beginPath(); g.moveTo(xx, yy); g.lineTo(xx + 80, yy + 6); g.stroke(); } // wind
   person(g, 1500, 900, 420, "#1a120b");
 };
