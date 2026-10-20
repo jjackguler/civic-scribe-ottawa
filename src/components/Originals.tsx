@@ -88,6 +88,12 @@ export function OriginalCard({ o, justMoved = false }: { o: Original; justMoved?
         )}
       </div>
       <p className="text-[0.88rem] opacity-80 mt-2 line-clamp-2">{o.summary}</p>
+      {o.readMore && (
+        <a href={fr && o.readMore.urlFr ? o.readMore.urlFr : o.readMore.url} className="inline-block text-[0.85rem] font-bold underline underline-offset-4 decoration-2 mt-1.5"
+          {...(/^https?:/.test(o.readMore.url) ? { target: "_blank", rel: "noopener" } : {})}>
+          {fr ? o.readMore.fr : o.readMore.en} →
+        </a>
+      )}
       <p className="text-[0.8rem] opacity-70 mt-1">
         <time dateTime={o.publishedAt} suppressHydrationWarning>{timeAgo(o.publishedAt, now, locale)}</time>
         {" · "}

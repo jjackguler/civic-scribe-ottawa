@@ -44,7 +44,9 @@ function OriginalsPage() {
             return (
               <div key={s.id} id={s.id} className="mb-14 scroll-mt-24">
                 <h2 className="masthead-serif text-[1.8rem]">{fr ? s.fr : s.en}</h2>
-                <p className="font-serif text-[1.05rem] text-muted-foreground mb-5">{fr ? s.dekFr : s.dekEn}</p>
+                <p className="font-serif text-[1.05rem] text-muted-foreground mb-5">{fr ? s.dekFr : s.dekEn}
+                  {s.id === "noir" && <> <Link to="/sir-jack" className="text-lake font-semibold hover:underline whitespace-nowrap">{fr ? "Ouvrir les dossiers →" : "Open the case files →"}</Link></>}
+                </p>
                 <div className="grid gap-x-6 gap-y-10 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                   {shelf.map(o => <OriginalCard key={o.id} o={o} />)}
                 </div>

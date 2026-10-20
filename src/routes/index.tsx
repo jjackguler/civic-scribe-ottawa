@@ -12,6 +12,7 @@ import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { OriginalCard } from "@/components/Originals";
+import { NextCase } from "@/components/SirJack";
 import { DispatchRail } from "@/components/Dispatch";
 import { getDispatchesFast } from "@/lib/dispatch";
 import { LabsBand } from "@/components/Labs";
@@ -302,6 +303,7 @@ function Home() {
               </div>
               <Link to="/originals" className="inline-flex items-center gap-1 font-bold underline underline-offset-4 decoration-2">{locale === "fr" ? "Tous les explicatifs" : "All explainers"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
+            <NextCase variant="strip" />
             <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
               {ownAll.filter(o => !steppedDown.includes(o)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
             </div>
