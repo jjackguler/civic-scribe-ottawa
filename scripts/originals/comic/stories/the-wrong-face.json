@@ -9,11 +9,27 @@
  "ambience": "Distant city at night, light rain, faint traffic, no music.",
  "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
  "next": "THE SIR JACK FILES · SPECIAL EDITION",
- "disclosure": "Dramatized illustration based on court records and published reporting. Images and motion generated with AI (Google Flow: Nano Banana Pro, Veo); no real person's likeness is shown.",
+ "disclosure": "Dramatized illustration based on court records and published reporting. Images and motion generated with AI (Google Flow: Nano Banana Pro, Veo). Dialogue is quoted from court filings and interviews and voiced by synthetic stock voices; no real person's likeness or voice is used.",
  "aiImages": true,
+ "cast": {
+  "officer": [
+   "Roger",
+   "Callum"
+  ],
+  "robert": [
+   "Chris",
+   "Eric"
+  ],
+  "detective": [
+   "Bill",
+   "George"
+  ]
+ },
  "halftone": 0,
  "page": "cinema.html",
  "images": {
+  "arrival": "art/the-wrong-face/arrival.jpg",
+  "overhead": "art/the-wrong-face/overhead.jpg",
   "city-dusk": "art/the-wrong-face/city-dusk.jpg",
   "driveway": "art/the-wrong-face/driveway.jpg",
   "doorway": "art/the-wrong-face/doorway.jpg",
@@ -202,7 +218,7 @@
    "say": "Seconds later, a police car pulls in behind him. Handcuffs. He asks what for. The warrant says: larceny.",
    "panels": [
     {
-     "scene": "police-car",
+     "scene": "arrival",
      "r": [
       60,
       60,
@@ -233,6 +249,17 @@
      ],
      "from": "left",
      "w": "handcuffs"
+    },
+    {
+     "scene": "police-car",
+     "r": [
+      60,
+      660,
+      880,
+      360
+     ],
+     "from": "up",
+     "w": "asks"
     },
     {
      "scene": "warrant",
@@ -279,6 +306,47 @@
      "dur": 1.5,
      "gain": -8,
      "prompt": "Metal handcuffs clicking shut"
+    }
+   ]
+  },
+  {
+   "id": "s03g",
+   "say": "His wife asks for a card, some way to reach him. An officer tells her:",
+   "panels": [
+    {
+     "scene": "overhead",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "full": true
+    },
+    {
+     "scene": "doorway",
+     "line": 0,
+     "at": -0.25
+    }
+   ],
+   "noCaps": true,
+   "hold": 1.0,
+   "lines": [
+    {
+     "id": "a",
+     "who": "officer",
+     "text": "Google it.",
+     "gap": 0.4
+    }
+   ],
+   "sfx": [
+    {
+     "id": "radio",
+     "at": 0,
+     "dur": 6,
+     "gain": -19,
+     "prompt": "Police radio chatter, distorted and unintelligible, short bursts with static, outdoors in snow"
     }
    ]
   },
@@ -1044,8 +1112,16 @@
    ]
   },
   {
-   "id": "s16",
-   "say": "Robert picks it up and holds it next to his own face. \"That's not me,\" he says.",
+   "id": "s16d",
+   "say": "Robert picks it up and holds it next to his own face.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "robert",
+     "text": "That's not me at all. Y'all can't tell that?",
+     "gap": 0.35
+    }
+   ],
    "panels": [
     {
      "scene": "two-faces",
@@ -1076,21 +1152,6 @@
     1010,
     820
    ],
-   "ov": [
-    {
-     "t": "balloon",
-     "w": "that's",
-     "at": -0.1,
-     "text": "That's not me.",
-     "x": 1410,
-     "y": 190,
-     "width": 520,
-     "tail": [
-      -150,
-      140
-     ]
-    }
-   ],
    "sfx": [
     {
      "id": "paper",
@@ -1103,8 +1164,17 @@
    ]
   },
   {
-   "id": "s17",
-   "say": "One detective, he recalls, answers: \"So I guess the computer got it wrong, too.\"",
+   "id": "s17d",
+   "say": "One detective, he recalls, answers:",
+   "lines": [
+    {
+     "id": "a",
+     "who": "detective",
+     "text": "So I guess the computer got it wrong, too.",
+     "gap": 0.3,
+     "speed": 0.9
+    }
+   ],
    "panels": [
     {
      "scene": "detective",
@@ -1134,22 +1204,6 @@
     70,
     1010,
     820
-   ],
-   "ov": [
-    {
-     "t": "balloon",
-     "w": "so",
-     "at": -0.1,
-     "text": "So I guess the computer got it wrong, too.",
-     "x": 1240,
-     "y": 250,
-     "width": 560,
-     "tail": [
-      120,
-      170
-     ],
-     "by": "as Robert Williams recalls it"
-    }
    ],
    "sfx": [
     {

@@ -61,6 +61,10 @@ if (flag === "--stills") {
     const T = tl.shots[i];
     const k = add(join(build, "vo", `${shot.id}.mp3`));
     chains.push(`[${k}]adelay=${ms(T.start + T.voAt)}:all=1[v${i}]`); vo.push(`[v${i}]`);
+    for (const l of T.lines ?? []) { // character dialogue sits in the voice bus, so the score ducks under it too
+      const j = add(join(build, "vo", `${shot.id}-${l.id}.mp3`));
+      chains.push(`[${j}]volume=1.5dB,adelay=${ms(T.start + l.at)}:all=1[v${i}${l.id}]`); vo.push(`[v${i}${l.id}]`);
+    }
     for (const s of shot.sfx ?? []) {
       let at = s.at ?? 0;
       if (s.w) { const w = T.words.find((w) => w.w.toLowerCase().replace(/[^a-z0-9'-]/g, "").startsWith(s.w.toLowerCase())); if (w) at = T.voAt + w.start + (s.at ?? 0); }
@@ -69,13 +73,19 @@ if (flag === "--stills") {
     }
   });
   const amb = add(join(build, "sfx", "_ambience.mp3"), true), mus = add(join(build, "music.mp3"), true), D = tl.total.toFixed(3);
-  chains.push(`${vo.join("")}amix=inputs=${vo.length}:normalize=0,asplit=2[vo][key]`);
+  chains.push(`${vo.join("")}amix=inputs=${vo.length}:normalize=0,apad=whole_dur=${D},asplit=2[vo][key]`); // padded: the ducking key must outlast the narration or the score stops with it
   chains.push(`${fx.join("")}amix=inputs=${fx.length}:normalize=0[fx]`);
   chains.push(`[${amb}]atrim=0:${D},volume=-24dB,afade=t=in:d=1.2,afade=t=out:st=${(tl.total - 2).toFixed(2)}:d=2[amb]`);
   // A score shorter than the film is slowed to fit (pitch kept) rather than looped, so it runs through the end card.
-  const musLen = Number(spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", join(build, "music.mp3")], { encoding: "utf8" }).stdout) || tl.total;
+  // Its length is where it actually ends: a long silent tail (the track's own fade) does not count.
+  const lead0 = (d) => Number(/silence_start: 0\s[\s\S]*?silence_end: ([\d.]+)/.exec(d)?.[1] ?? 0);
+  const det = spawnSync("ffmpeg", ["-i", join(build, "music.mp3"), "-af", "silencedetect=noise=-28dB:d=1.5", "-f", "null", "-"], { encoding: "utf8" }).stderr;
+  const full = Number(/Duration: (\d+):(\d+):([\d.]+)/.exec(det)?.slice(1).reduce((a, v) => a * 60 + Number(v), 0)) || tl.total;
+  const tail = [...det.matchAll(/silence_start: ([\d.]+)/g)].map((m) => Number(m[1])).filter((v) => v > full - 30).at(-1);
+  const musLen = (tail ? tail - 4 : full) - lead0(det); // land the decay that leads into the tail on the last frames
   const stretch = musLen < tl.total && musLen / tl.total >= 0.75 ? `atempo=${(musLen / tl.total).toFixed(4)},` : "";
-  chains.push(`[${mus}]${stretch}atrim=0:${D},volume=-11dB,afade=t=in:d=2,afade=t=out:st=${(tl.total - 3).toFixed(2)}:d=3[mus0]`);
+  const lead = lead0(det); // a silent lead-in would leave the opening mute
+  chains.push(`[${mus}]atrim=start=${lead.toFixed(2)},asetpts=PTS-STARTPTS,${stretch}atrim=0:${D},volume=-11dB,afade=t=in:d=0.6,afade=t=out:st=${(tl.total - 3).toFixed(2)}:d=3[mus0]`);
   chains.push(`[mus0][key]sidechaincompress=threshold=0.02:ratio=6:attack=30:release=600[mus]`);
   chains.push(`[vo][fx][amb][mus]amix=inputs=4:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]`);
   await ffmpeg([...inputs, "-i", video, "-filter_complex", chains.join(";"), "-map", `${inputs.filter((a) => a === "-i").length}:v`, "-map", "[a]",

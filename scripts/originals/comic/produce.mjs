@@ -44,14 +44,19 @@ async function xi(path, body, accept = "audio/mpeg") {
   throw new Error(`ElevenLabs ${path}: gave up`);
 }
 
-async function voice() {
-  const wanted = story.voices ? "" : process.env.NOIR_VOICE_ID?.trim(); // a story that names its voices keeps them
-  if (wanted) return { id: wanted, name: "custom" };
+let stockVoices;
+async function stock() {
+  if (stockVoices) return stockVoices;
   const res = await fetch("https://api.elevenlabs.io/v1/voices", { headers: { "xi-api-key": XI } });
-  if (!res.ok) return { id: "nPczCjzI2devNBz1zQrb", name: "Brian" };
-  const { voices } = await res.json();
-  const stock = voices.filter((v) => v.category === "premade"); // stock voices only, never a clone of a real person
-  return VOICES.map((n) => stock.find((v) => v.name.startsWith(n))).find(Boolean) ?? stock[0];
+  stockVoices = res.ok ? (await res.json()).voices.filter((v) => v.category === "premade") : []; // stock voices only, never a clone of a real person
+  return stockVoices;
+}
+async function voice(names = VOICES) {
+  const wanted = story.voices ? "" : process.env.NOIR_VOICE_ID?.trim(); // a story that names its voices keeps them
+  if (wanted && names === VOICES) return { id: wanted, name: "custom" };
+  const list = await stock();
+  if (!list.length) return { id: "nPczCjzI2devNBz1zQrb", name: "Brian" };
+  return names.map((n) => list.find((v) => v.name.startsWith(n))).find(Boolean) ?? list[0];
 }
 
 function words(alignment) {
@@ -112,6 +117,23 @@ for (const [i, shot] of story.shots.entries()) {
   console.log(`voice ${shot.id}`);
 }
 
+// ── Dialogue ────────────────────────────────────────────────────────────────
+// shot.lines: [{ id, who, text, gap }], spoken after the narration by a stock voice per character
+// (story.cast: { who: [voice names] }). Only words on the record: quotes from filings and interviews.
+const cast = {};
+for (const shot of story.shots) for (const l of shot.lines ?? []) {
+  const mp3 = join(dir, "vo", `${shot.id}-${l.id}.mp3`);
+  if (existsSync(mp3)) continue;
+  if (mock) { await silent(Math.max(1, l.text.split(/\s+/).length * 0.4), mp3); continue; }
+  const who = cast[l.who] ??= await voice([].concat(story.cast?.[l.who] ?? "Bill"));
+  const res = await xi(`/v1/text-to-speech/${who.voice_id ?? who.id}?output_format=mp3_44100_128`, {
+    text: l.text, model_id: VO_MODEL,
+    voice_settings: { stability: 0.35, similarity_boost: 0.8, style: 0.55, use_speaker_boost: true, speed: l.speed ?? 0.95 },
+  });
+  await writeFile(mp3, Buffer.from(await res.arrayBuffer()));
+  console.log(`line ${shot.id}-${l.id} (${who.name})`);
+}
+
 // ── Timeline ────────────────────────────────────────────────────────────────
 const END = story.endCard ?? 7.0, shots = [];
 let t = 0;
@@ -119,8 +141,10 @@ for (const [i, shot] of story.shots.entries()) {
   const vo = await probe(join(dir, "vo", `${shot.id}.mp3`));
   const lead = shot.lead ?? (i === 0 ? 1.8 : 0.35), tail = shot.hold ?? (i === story.shots.length - 1 ? 2.2 : 0.45);
   const ws = JSON.parse(await readFile(join(dir, "vo", `${shot.id}.json`), "utf8"));
-  shots.push({ id: shot.id, start: +t.toFixed(3), dur: +(lead + vo + tail).toFixed(3), voAt: lead, vo: +vo.toFixed(3), words: ws });
-  t += lead + vo + tail;
+  let at = lead + vo; const lines = [];
+  for (const l of shot.lines ?? []) { at += l.gap ?? 0.45; const d = await probe(join(dir, "vo", `${shot.id}-${l.id}.mp3`)); lines.push({ id: l.id, who: l.who, at: +at.toFixed(3), dur: +d.toFixed(3) }); at += d; }
+  shots.push({ id: shot.id, start: +t.toFixed(3), dur: +(at + tail).toFixed(3), voAt: lead, vo: +vo.toFixed(3), words: ws, lines });
+  t += at + tail;
 }
 const total = +(t + END).toFixed(3);
 
