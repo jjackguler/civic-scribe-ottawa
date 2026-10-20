@@ -1,0 +1,378 @@
+{
+ "slug": "ghost-shopper",
+ "title": "The Case of the Ghost Shopper",
+ "series": "The Sir Jack Files",
+ "episode": 11,
+ "grain": 0.14,
+ "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "next": "THE AGENTS · CASE 3 OF 3 · MORE CASES SOON",
+ "musicFrom": "suspicion-machine",
+ "music": "Playful but suspicious noir jazz: plucked bass, muted trumpet, vibraphone, minor key, no vocals.",
+ "ambience": "Quiet city shopping street at night in light rain, a shop door bell far away, no music.",
+ "sources": [
+  {
+   "name": "The Decoder, Maximilian Schreiner (Oct 19, 2026)",
+   "url": "https://the-decoder.com/stripe-says-ai-agent-purchases-are-adding-up-but-it-wont-share-the-numbers/"
+  },
+  {
+   "name": "Upstarts Media (cited by The Decoder)",
+   "url": "https://the-decoder.com/stripe-says-ai-agent-purchases-are-adding-up-but-it-wont-share-the-numbers/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "y-street",
+   "say": "Case eleven. Someone is shopping with your money. And it isn't you. It's your AI.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "rain": 0.3,
+    "fog": 0.2
+   },
+   "ov": [
+    {
+     "t": "kicker",
+     "at": 0.3,
+     "text": "THE SIR JACK FILES · CASE 11"
+    },
+    {
+     "t": "title",
+     "at": 1.0,
+     "lines": [
+      "THE CASE OF THE",
+      "GHOST",
+      "SHOPPER"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "shop-bell",
+     "at": 1.5,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Old shop door bell jingling, door closing, on a rainy street"
+    }
+   ]
+  },
+  {
+   "id": "y-sun",
+   "say": "September. Stripe says purchases made by AI agents through Link, its payment service, grew thirty-eight times in one month. Payment volume: up twenty times.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "thirty",
+     "at": -0.2,
+     "from": 0,
+     "to": 38,
+     "suffix": "×",
+     "label": "agent purchases via Link, September"
+    },
+    {
+     "t": "label",
+     "w": "volume",
+     "at": -0.1,
+     "text": "PAYMENT VOLUME ×20",
+     "sub": "Stripe's figures, as reported",
+     "y": 0.78
+    }
+   ],
+   "sfx": [
+    {
+     "id": "stamp2",
+     "w": "thirty",
+     "at": 0,
+     "dur": 1,
+     "gain": -10,
+     "prompt": "Heavy ink stamp hitting paper"
+    }
+   ]
+  },
+  {
+   "id": "y-ledger",
+   "say": "How much money is that? Stripe won't say. And when you start small, big multipliers can hide small numbers. That's clue number one.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.55,
+     0.35,
+     "rgba(255,179,71,1)",
+     0.3
+    ]
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "say",
+     "at": -0.1,
+     "text": "TOTALS: NOT DISCLOSED",
+     "sub": "the growth started from a small base",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pages",
+     "at": 0.5,
+     "dur": 3,
+     "gain": -16,
+     "prompt": "Pages of an old ledger book being turned"
+    }
+   ]
+  },
+  {
+   "id": "y-queue",
+   "say": "Clue two: who's shopping. About seventy agents when Stripe looked. Around two hundred now, according to Stripe executive Dan Hill, including Meta's Muse.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.2
+   },
+   "ov": [
+    {
+     "t": "split",
+     "w": "seventy",
+     "at": -0.1,
+     "left": "≈70",
+     "leftSub": "agents at first count",
+     "right": "≈200",
+     "rightSub": "now, per Dan Hill"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "steps",
+     "at": 0.5,
+     "dur": 6,
+     "gain": -18,
+     "prompt": "Many soft footsteps shuffling in a queue on a wooden floor"
+    }
+   ]
+  },
+  {
+   "id": "y-receipt",
+   "say": "Most spend about a hundred dollars a purchase. Some book flights, or buy furniture worth thousands. Retail leads. Travel is next.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "hundred",
+     "at": -0.2,
+     "from": 0,
+     "to": 100,
+     "prefix": "≈$",
+     "label": "typical agent purchase"
+    },
+    {
+     "t": "label",
+     "w": "Retail",
+     "at": -0.1,
+     "text": "RETAIL 32% · TRAVEL 28%",
+     "sub": "share of agent payment volume",
+     "y": 0.78
+    }
+   ],
+   "sfx": [
+    {
+     "id": "register",
+     "w": "hundred",
+     "at": 0,
+     "dur": 2,
+     "gain": -12,
+     "prompt": "Vintage cash register ka-ching"
+    }
+   ]
+  },
+  {
+   "id": "y-mirror",
+   "say": "The safety catch: the agent never sees your real card. Link hands it a separate sixteen-digit number, and you can set a limit.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "label",
+     "w": "separate",
+     "at": -0.1,
+     "text": "A SEPARATE 16-DIGIT NUMBER",
+     "sub": "your real card stays hidden · you set the limit",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "car-night",
+     "at": 0,
+     "dur": 7,
+     "gain": -20,
+     "prompt": "Inside a car driving slowly at night, soft engine hum, rain on the windshield"
+    }
+   ]
+  },
+  {
+   "id": "y-check",
+   "say": "So before you hand an assistant your wallet: set the limit. Read every receipt. And keep the final yes for yourself.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.72,
+     0.3,
+     "rgba(226,179,60,1)",
+     0.25
+    ]
+   },
+   "ov": [
+    {
+     "t": "check",
+     "w": "set",
+     "at": -0.1,
+     "items": [
+      "Set the limit",
+      "Read every receipt",
+      "Keep the final yes for yourself"
+     ],
+     "ws": [
+      "set",
+      "Read",
+      "keep"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pencil-ticks",
+     "at": 0.2,
+     "dur": 5,
+     "gain": -14,
+     "prompt": "Three pencil tick marks on paper, a few seconds apart",
+     "w": "set"
+    }
+   ]
+  },
+  {
+   "id": "y-roof",
+   "say": "The machine can do the shopping. The money is still yours. Case closed.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "rain": 0.25,
+    "fog": 0.2
+   },
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "roof-wind",
+     "at": 0,
+     "dur": 6,
+     "gain": -22,
+     "prompt": "Wind on a high city rooftop at night, distant traffic far below"
+    },
+    {
+     "id": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  }
+ ]
+}

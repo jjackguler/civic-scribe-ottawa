@@ -1,0 +1,396 @@
+{
+ "slug": "missing-junior",
+ "title": "The Case of the Missing Junior",
+ "series": "The Sir Jack Files",
+ "episode": 10,
+ "grain": 0.14,
+ "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "next": "NEXT CASE · TONIGHT 5:30 PM ET · THE GHOST SHOPPER",
+ "musicFrom": "suspicion-machine",
+ "music": "Melancholy late-night noir jazz: soft piano, muted trumpet, upright bass, minor key, no vocals.",
+ "ambience": "Empty open-plan office at night, air conditioning hum, faint computer fans, distant rain, no music.",
+ "sources": [
+  {
+   "name": "TechCrunch, Anthony Ha (Oct 17, 2026)",
+   "url": "https://techcrunch.com/2026/10/17/anthropic-says-its-workforce-has-become-less-junior-and-is-spending-more-time-in-meetings/"
+  },
+  {
+   "name": "The Decoder (Oct 18, 2026)",
+   "url": "https://the-decoder.com/anthropic-has-nearly-stopped-hiring-junior-staff-because-ai-agents-now-work-six-times-as-many-hours/"
+  },
+  {
+   "name": "Anthropic, Employment at Anthropic",
+   "url": "https://www.anthropic.com/research/employment-at-anthropic"
+  }
+ ],
+ "shots": [
+  {
+   "id": "w-office",
+   "say": "Case ten. In case one, I went looking for a body, and found none. This time, there's an empty chair.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.15
+   },
+   "ov": [
+    {
+     "t": "kicker",
+     "at": 0.3,
+     "text": "THE SIR JACK FILES · CASE 10"
+    },
+    {
+     "t": "title",
+     "at": 1.0,
+     "lines": [
+      "THE CASE OF THE",
+      "MISSING",
+      "JUNIOR"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "office-hum",
+     "at": 0,
+     "dur": 8,
+     "gain": -20,
+     "prompt": "Empty office at night, quiet computer fans and a soft air conditioning hum"
+    }
+   ]
+  },
+  {
+   "id": "w-report",
+   "say": "October seventeenth. Anthropic, the company behind Claude, publishes a report on its own workforce. A lab measuring what its machine did to its own office.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.62,
+     0.36,
+     0.3,
+     "rgba(255,179,71,1)",
+     0.35
+    ]
+   },
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.3,
+     "text": "OCTOBER 17\nA LAB STUDIES ITSELF",
+     "y": 0.12
+    }
+   ],
+   "sfx": [
+    {
+     "id": "paper-drop",
+     "at": 1.0,
+     "dur": 2,
+     "gain": -12,
+     "prompt": "A thick paper report dropped onto a wooden desk"
+    }
+   ]
+  },
+  {
+   "id": "w-bars",
+   "say": "Early twenty twenty-five: juniors were twenty-seven percent of its technical hires. Now: nine.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "label",
+     "w": "juniors",
+     "at": -0.1,
+     "text": "JUNIORS' SHARE OF TECHNICAL HIRES",
+     "sub": "Anthropic's own report",
+     "y": 0.14
+    },
+    {
+     "t": "split",
+     "w": "nine",
+     "at": -0.6,
+     "left": "27%",
+     "leftSub": "early 2025",
+     "right": "9%",
+     "rightSub": "now"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "descend",
+     "w": "nine",
+     "at": 0,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Short descending low piano notes, ominous"
+    }
+   ]
+  },
+  {
+   "id": "w-hours",
+   "say": "Since March, its AI agents have logged more hours than its people. By August: six agent hours for every human hour.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "six",
+     "at": -0.2,
+     "from": 0,
+     "to": 6,
+     "suffix": " : 1",
+     "label": "agent hours per human hour, August 2026"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "ticks6",
+     "w": "six",
+     "at": 0,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Six quick clock ticks"
+    }
+   ]
+  },
+  {
+   "id": "w-meetings",
+   "say": "And the humans? More meetings. Up twenty percent in a year. One in five staff said their job had shifted from doing the work to managing Claudes.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "twenty",
+     "at": -0.2,
+     "from": 0,
+     "to": 20,
+     "prefix": "+",
+     "suffix": "%",
+     "label": "meeting time per employee"
+    },
+    {
+     "t": "label",
+     "w": "One",
+     "at": -0.1,
+     "text": "1 IN 5: MANAGING CLAUDES",
+     "sub": "staff survey: from doing the work to managing it",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pings",
+     "w": "meetings",
+     "at": 0,
+     "dur": 4,
+     "gain": -16,
+     "prompt": "Several soft calendar notification chimes overlapping"
+    }
+   ]
+  },
+  {
+   "id": "w-stack",
+   "say": "The report admits Anthropic is a special case. And more code does not necessarily mean better code.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.15
+   },
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "special",
+     "at": 0,
+     "text": "SPECIAL CASE",
+     "color": "#E2B33C"
+    },
+    {
+     "t": "label",
+     "w": "more",
+     "at": 0,
+     "text": "MORE CODE ≠ BETTER CODE",
+     "sub": "the report's own caveat",
+     "y": 0.78
+    }
+   ],
+   "sfx": [
+    {
+     "id": "stamp-soft",
+     "w": "special",
+     "at": 0,
+     "dur": 1,
+     "gain": -10,
+     "prompt": "Rubber stamp on paper, one firm thud"
+    }
+   ]
+  },
+  {
+   "id": "w-ladder",
+   "say": "But here's the clue nobody can ignore. Every senior was once a junior. Cut the first rung, and who's left, in ten years, to check the machine?",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.62,
+     0.3,
+     "rgba(226,179,60,1)",
+     0.25
+    ]
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "Every",
+     "at": -0.1,
+     "text": "EVERY SENIOR WAS ONCE A JUNIOR",
+     "sub": "",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "swell",
+     "w": "Every",
+     "at": 0,
+     "dur": 5,
+     "gain": -18,
+     "prompt": "Slow warm low string swell, contemplative"
+    }
+   ]
+  },
+  {
+   "id": "w-pencil",
+   "say": "If you're starting out: learn to judge the work, not just produce it. That's the part that's hardest to hand over. Case closed.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.8,
+     0.3,
+     0.4,
+     "rgba(255,217,120,1)",
+     0.3
+    ]
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "judge",
+     "at": -0.1,
+     "text": "LEARN TO JUDGE THE WORK",
+     "sub": "the hardest part to hand over",
+     "y": 0.14
+    },
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pencil",
+     "w": "judge",
+     "at": 0,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Red pencil scratching corrections on paper"
+    },
+    {
+     "id": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  }
+ ]
+}

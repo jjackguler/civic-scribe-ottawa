@@ -9,6 +9,7 @@
 <script src="scenes4.js"></script>
 <script src="scenes5.js"></script>
 <script src="scenes6.js"></script>
+<script src="scenes7.js"></script>
 <script>
 // Film-noir reel: one Gemini still per shot, brought to life with camera moves, rain,
 // snow, fog, light, grain and Ink & Gold motion type. window.setup() loads a story and
@@ -288,7 +289,8 @@ function endCard(t) {
   text("AI BROADSHEET", W / 2, H * 0.42 + (1 - p) * 30, `800 112px ${SERIF}`, PAPER, { alpha: p, track: 4 });
   x.fillStyle = GOLD; x.fillRect(W / 2 - 150 * p, H * 0.42 + 44, 300 * p, 4);
   text("AI news, with the human stakes left in.", W / 2, H * 0.42 + 130, `italic 500 44px ${SERIF}`, PAPER, { alpha: clamp((k - 0.9) / 0.6) });
-  if (story.series) text(`${story.series.toUpperCase()} · NEXT CASE SOON`, W / 2, H * 0.42 - 150, `600 30px ${SANS}`, GOLD, { alpha: clamp((k - 0.2) / 0.6), track: 7 });
+  if (story.series) { const nx = story.next ? story.next : `${story.series.toUpperCase()} · NEXT CASE SOON`; x.font = `600 30px ${SANS}`; x.letterSpacing = "7px"; const nf = Math.min(30, 30 * 980 / x.measureText(nx).width); x.letterSpacing = "0px"; text(nx, W / 2, H * 0.42 - 150, `600 ${nf.toFixed(1)}px ${SANS}`, GOLD, { alpha: clamp((k - 0.2) / 0.6), track: 7 }); }
+  if (story.cta) { const ca = clamp((k - 1.0) / 0.5); x.save(); x.globalAlpha = ca; x.fillStyle = RED; x.fillRect(90, H * 0.42 + 290, W - 180, 104); x.restore(); x.font = `800 40px ${SANS}`; const cf = Math.min(40, 40 * 860 / x.measureText(story.cta).width); text(story.cta, W / 2, H * 0.42 + 357, `800 ${cf.toFixed(1)}px ${SANS}`, PAPER, { alpha: ca, shadow: 0, track: 1 }); }
   text(story.slogan ?? "ONE CATCH A DAY · AIBROADSHEET.COM", W / 2, H * 0.42 + 205, `700 28px ${SANS}`, GOLD, { alpha: clamp((k - 1.3) / 0.6), track: 5 });
   const srcA = clamp((k - 1.6) / 0.6) * 0.7;
   { const st = "Sources: " + story.sources.map((s) => s.name).join(" · "); x.font = `500 22px ${SANS}`; const fs = Math.min(22, 22 * 980 / x.measureText(st).width); text(st, W / 2, H * 0.86, `500 ${fs.toFixed(1)}px ${SANS}`, PAPER, { alpha: srcA, shadow: 0 }); }

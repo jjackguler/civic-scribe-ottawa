@@ -1,0 +1,439 @@
+{
+ "slug": "burglar-who-never-slept",
+ "title": "The Case of the Burglar Who Never Slept",
+ "series": "The Sir Jack Files",
+ "episode": 9,
+ "grain": 0.14,
+ "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "next": "NEXT CASE · TOMORROW 7:30 AM ET · THE MISSING JUNIOR",
+ "musicFrom": "suspicion-machine",
+ "music": "Tense 1940s film-noir jazz: muted trumpet, pizzicato upright bass, brushed snare, minor key, no vocals.",
+ "ambience": "Steady night rain on a window, distant city traffic, faint electrical hum, no music.",
+ "sources": [
+  {
+   "name": "Reuters, Raphael Satter (Oct 19, 2026)",
+   "url": "https://www.staradvertiser.com/2026/10/19/breaking-news/how-one-hacker-used-ai-agents-to-break-into-over-100-company-websites/"
+  },
+  {
+   "name": "Quartz",
+   "url": "https://qz.com/ai-agents-hacker-john-deere-sharkninja-cummins-breach-101926"
+  }
+ ],
+ "shots": [
+  {
+   "id": "v-rain",
+   "say": "Case nine. A burglar who never sleeps, never gets bored, and works for about fifty dollars a job.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "rain": 0.5,
+    "fog": 0.2
+   },
+   "ov": [
+    {
+     "t": "kicker",
+     "at": 0.3,
+     "text": "THE SIR JACK FILES · CASE 09"
+    },
+    {
+     "t": "title",
+     "at": 1.0,
+     "lines": [
+      "THE CASE OF THE",
+      "BURGLAR",
+      "WHO NEVER SLEPT"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "rain-window",
+     "at": 0,
+     "dur": 8,
+     "gain": -18,
+     "prompt": "Heavy rain against a window pane at night, close and intimate"
+    }
+   ]
+  },
+  {
+   "id": "v-order",
+   "say": "September twenty-fifth. One hacker types a few orders. Fewer than a hundred Chinese characters. Then lets the machines go to work.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.42,
+     0.35,
+     "rgba(159,211,255,1)",
+     0.35
+    ],
+    "flicker": 0.2
+   },
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.3,
+     "text": "SEPTEMBER 25\nFEWER THAN 100 CHARACTERS",
+     "y": 0.12
+    }
+   ],
+   "sfx": [
+    {
+     "id": "keys-short",
+     "at": 1.2,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "A few quick keystrokes on a computer keyboard, then the enter key"
+    },
+    {
+     "id": "swarm",
+     "w": "machines",
+     "at": 0,
+     "dur": 4,
+     "gain": -18,
+     "prompt": "Rising digital whirr of many small machines starting up at once, subtle"
+    }
+   ]
+  },
+  {
+   "id": "v-doors",
+   "say": "AI agents, running on an open-source platform called Cairn, start trying doors. Shopping sites in the US, Canada, Australia and Japan. More than twelve hundred of them.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "label",
+     "w": "Cairn",
+     "at": -0.1,
+     "text": "OPEN-SOURCE PLATFORM: CAIRN",
+     "sub": "AI agents trying shop doors in the US, Canada, Australia, Japan",
+     "y": 0.14
+    },
+    {
+     "t": "counter",
+     "w": "twelve",
+     "at": -0.2,
+     "from": 0,
+     "to": 1200,
+     "suffix": "+",
+     "label": "shopping sites tried"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "knocks",
+     "at": 0.8,
+     "dur": 6,
+     "gain": -16,
+     "prompt": "Many door handles rattling and soft knocks along a long corridor, one after another"
+    }
+   ]
+  },
+  {
+   "id": "v-clock",
+   "say": "A typical break-in: about twenty-three hours of patient, automated probing.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.15
+   },
+   "ov": [
+    {
+     "t": "counter",
+     "w": "twenty",
+     "at": -0.2,
+     "from": 0,
+     "to": 23,
+     "suffix": " HRS",
+     "label": "per break-in, the researcher's estimate"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "clock-fast",
+     "at": 0.2,
+     "dur": 5,
+     "gain": -14,
+     "prompt": "Old clock ticking, speeding up into a fast whirr of turning gears"
+    }
+   ]
+  },
+  {
+   "id": "v-alley",
+   "say": "When the front door held, the agents went round the back. A forgotten control panel. A flaw. Hours of trial and error.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "rain": 0.35,
+    "fog": 0.25
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "forgotten",
+     "at": -0.1,
+     "text": "THE BACK DOOR",
+     "sub": "a forgotten control panel, a flaw, hours of trial and error",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "alley",
+     "at": 0,
+     "dur": 7,
+     "gain": -20,
+     "prompt": "Rainy back alley at night, dripping gutters, a metal door creaking open slowly"
+    },
+    {
+     "id": "lock-click",
+     "w": "flaw",
+     "at": 0.1,
+     "dur": 1,
+     "gain": -10,
+     "prompt": "A single metal lock clicking open"
+    }
+   ]
+  },
+  {
+   "id": "v-wall",
+   "say": "More than a hundred companies were hit. Reuters named some: John Deere and SharkNinja. Deere says there's no sign sensitive information was accessed. SharkNinja says the site held only product support, and the threat is contained.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "label",
+     "w": "hundred",
+     "at": -0.1,
+     "text": "100+ COMPANIES HIT",
+     "sub": "named by Reuters from the hacker's own activity",
+     "y": 0.14
+    },
+    {
+     "t": "split",
+     "w": "Deere",
+     "at": 0,
+     "left": "DEERE",
+     "leftSub": "no sign data accessed",
+     "right": "SHARKNINJA",
+     "rightSub": "support-only site, contained"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "low-hit",
+     "w": "hundred",
+     "at": 0,
+     "dur": 3,
+     "gain": -12,
+     "prompt": "Deep cinematic low drum hit with a short tail"
+    }
+   ]
+  },
+  {
+   "id": "v-receipt",
+   "say": "The researcher who found it says it's not script kiddie stuff. His estimate: about five thousand dollars in AI tokens.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "quote",
+     "at": 0.3,
+     "text": "It's not script kiddie stuff.",
+     "by": "SNORRE FAGERLAND · NORFORGE, TO REUTERS"
+    },
+    {
+     "t": "counter",
+     "w": "five",
+     "at": -0.2,
+     "from": 0,
+     "to": 5000,
+     "prefix": "$",
+     "label": "in AI tokens, estimate"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "printer",
+     "w": "estimate",
+     "at": 0,
+     "dur": 4,
+     "gain": -14,
+     "prompt": "Receipt printer printing a long receipt, then a tear"
+    }
+   ]
+  },
+  {
+   "id": "v-locks",
+   "say": "The burglar got cheaper. So the basics matter more. Patch what you forgot you had. Turn on two-step login. Check your statements.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.7,
+     0.3,
+     "rgba(226,179,60,1)",
+     0.25
+    ]
+   },
+   "ov": [
+    {
+     "t": "check",
+     "w": "Patch",
+     "at": -0.1,
+     "items": [
+      "Patch what you forgot you had",
+      "Turn on two-step login",
+      "Check your statements"
+     ],
+     "ws": [
+      "Patch",
+      "Turn",
+      "Check"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pencil-ticks",
+     "at": 0.2,
+     "dur": 5,
+     "gain": -14,
+     "prompt": "Three pencil tick marks on paper, a few seconds apart",
+     "w": "Patch"
+    }
+   ]
+  },
+  {
+   "id": "v-roof",
+   "say": "The machines don't sleep. So the basics can't either. Case closed.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "rain": 0.25,
+    "fog": 0.2
+   },
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "roof-rain",
+     "at": 0,
+     "dur": 6,
+     "gain": -20,
+     "prompt": "Rain on a city rooftop at night, distant siren far away"
+    },
+    {
+     "id": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  }
+ ]
+}
