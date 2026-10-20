@@ -240,6 +240,17 @@
      }
     },
     {
+     "scene": "police-car",
+     "r": [
+      60,
+      660,
+      880,
+      360
+     ],
+     "from": "up",
+     "w": "him"
+    },
+    {
      "scene": "cuffs",
      "r": [
       60,
@@ -251,17 +262,6 @@
      "w": "handcuffs"
     },
     {
-     "scene": "police-car",
-     "r": [
-      60,
-      660,
-      880,
-      360
-     ],
-     "from": "up",
-     "w": "asks"
-    },
-    {
      "scene": "warrant",
      "r": [
       980,
@@ -270,7 +270,7 @@
       360
      ],
      "from": "right",
-     "w": "warrant"
+     "w": "asks"
     }
    ],
    "cap": [
@@ -1858,14 +1858,30 @@
   }
  ],
  "clips": {
+  "arrival": "art/the-wrong-face/clips/arrival.webm",
   "backseat": "art/the-wrong-face/clips/backseat.webm",
+  "booth": "art/the-wrong-face/clips/booth.webm",
+  "cctv": "art/the-wrong-face/clips/cctv.webm",
+  "cell": "art/the-wrong-face/clips/cell.webm",
+  "circle": "art/the-wrong-face/clips/circle.webm",
   "city-dusk": "art/the-wrong-face/clips/city-dusk.webm",
+  "contractor": "art/the-wrong-face/clips/contractor.webm",
+  "courthouse": "art/the-wrong-face/clips/courthouse.webm",
   "cuffs": "art/the-wrong-face/clips/cuffs.webm",
+  "detective": "art/the-wrong-face/clips/detective.webm",
   "doorway": "art/the-wrong-face/clips/doorway.webm",
   "driveway": "art/the-wrong-face/clips/driveway.webm",
+  "goodbye": "art/the-wrong-face/clips/goodbye.webm",
+  "lineup": "art/the-wrong-face/clips/lineup.webm",
   "mesh-face": "art/the-wrong-face/clips/mesh-face.webm",
   "orange-street": "art/the-wrong-face/clips/orange-street.webm",
+  "overhead": "art/the-wrong-face/clips/overhead.webm",
   "police-car": "art/the-wrong-face/clips/police-car.webm",
-  "release": "art/the-wrong-face/clips/release.webm"
+  "portrait": "art/the-wrong-face/clips/portrait.webm",
+  "release": "art/the-wrong-face/clips/release.webm",
+  "signature": "art/the-wrong-face/clips/signature.webm",
+  "table": "art/the-wrong-face/clips/table.webm",
+  "two-faces": "art/the-wrong-face/clips/two-faces.webm",
+  "warrant": "art/the-wrong-face/clips/warrant.webm"
  }
 }
