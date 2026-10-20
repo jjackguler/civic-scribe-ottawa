@@ -1,0 +1,65 @@
+# Motion comics (scripts/originals/comic): ElevenLabs narration, sound and score, panels drawn
+# in code, 1920x1080. Runs when the `comic-run` branch is pushed (COMIC_SLUG or the default
+# below) or by hand. Generated audio is cached per story, so a re-run after a drawing change only
+# re-renders. The MP4 is uploaded as the run's artifact; nothing is published from here.
+name: Comic
+
+on:
+  push:
+    branches: [comic-run]
+    paths: ["scripts/originals/comic/**", ".github/workflows/comic.yml"]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: Story slug (scripts/originals/comic/stories/<slug>.json)
+        default: the-wrong-face
+
+permissions:
+  contents: read
+
+jobs:
+  comic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      SLUG: ${{ inputs.slug || vars.COMIC_SLUG || 'the-wrong-face' }}
+    defaults:
+      run:
+        working-directory: scripts/originals/comic
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Restore generated audio
+        uses: actions/cache/restore@v4
+        with:
+          path: scripts/originals/comic/build
+          key: comic-${{ github.run_id }}
+          restore-keys: comic-
+      - name: Produce (ElevenLabs)
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          NOIR_VOICE_ID: ${{ vars.NOIR_VOICE_ID }}
+        run: node produce.mjs "$SLUG"
+      - name: Save generated audio
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: scripts/originals/comic/build
+          key: comic-${{ github.run_id }}
+      - name: Render
+        run: node render.mjs "$SLUG" && ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: comic-${{ env.SLUG }}
+          path: |
+            scripts/originals/comic/out/*.mp4
+            scripts/originals/comic/out/*.jpg
+            !scripts/originals/comic/out/*-video.mp4
+          retention-days: 30

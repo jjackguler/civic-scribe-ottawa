@@ -1,0 +1,1764 @@
+{
+ "slug": "the-wrong-face",
+ "title": "The Wrong Face",
+ "series": "The Sir Jack Files",
+ "episode": 0,
+ "special": true,
+ "posterAt": 30.0,
+ "music": "Dark, elegant neo-noir orchestral score for a true-crime motion comic: low strings, muted trumpet, brushed jazz drums, piano motif, slow build of tension, a quiet resolve at the end, no vocals.",
+ "ambience": "Distant city at night, light rain, faint traffic, no music.",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "next": "THE SIR JACK FILES · SPECIAL EDITION",
+ "disclosure": "Dramatized illustration based on court records and published reporting. No real person's likeness is shown.",
+ "sources": [
+  {
+   "name": "Williams v. City of Detroit, First Amended Complaint (E.D. Mich., 2023)",
+   "url": "https://assets.aclu.org/live/uploads/2024/01/54.-First-Amended-Complaint.pdf"
+  },
+  {
+   "name": "NPR (June 24, 2020)",
+   "url": "https://www.hawaiipublicradio.org/2020-06-24/the-computer-got-it-wrong-how-facial-recognition-led-to-a-false-arrest-in-michigan"
+  },
+  {
+   "name": "ACLU",
+   "url": "https://www.aclu.org/cases/williams-v-city-of-detroit-face-recognition-false-arrest"
+  },
+  {
+   "name": "AP (June 2020; June 2024)",
+   "url": "https://www.news4jax.com/tech/2020/06/26/detroit-says-shoddy-work-led-to-arrest-tied-to-technology/"
+  },
+  {
+   "name": "Michigan Public (June 28, 2024)",
+   "url": "https://www.michiganpublic.org/criminal-justice-legal-system/2024-06-28/it-didnt-make-sense-at-all-wrongful-facial-recognition-arrest-leads-to-landmark-settlement"
+  },
+  {
+   "name": "NBC News (Porcha Woodruff, 2023)",
+   "url": "https://www.nbcnews.com/news/us-news/detroit-woman-sues-city-falsely-arrested-8-months-pregnant-due-facial-rcna98447"
+  },
+  {
+   "name": "NIST, NISTIR 8280 (2019)",
+   "url": "https://nvlpubs.nist.gov/nistpubs/ir/2019/NIST.IR.8280.pdf"
+  },
+  {
+   "name": "Georgetown Law, The Perpetual Line-Up (2016)",
+   "url": "https://www.perpetuallineup.org/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s01",
+   "say": "Detroit. January ninth, twenty twenty. Twenty-two minutes past five.",
+   "lead": 2.2,
+   "panels": [
+    {
+     "scene": "city-dusk",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "fx": {
+    "rain": 0.25
+   },
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.6,
+     "text": "DETROIT · JANUARY 9, 2020 · 5:22 P.M.",
+     "x": 80,
+     "y": 120
+    }
+   ],
+   "sfx": [
+    {
+     "id": "wind",
+     "at": 0,
+     "dur": 8,
+     "gain": -18,
+     "prompt": "Cold winter wind in a quiet suburban street at dusk, distant traffic"
+    }
+   ]
+  },
+  {
+   "id": "s02",
+   "say": "A man pulls into his own driveway after a day at work. His wife is at the door. His two little girls are watching.",
+   "panels": [
+    {
+     "scene": "driveway",
+     "r": [
+      60,
+      60,
+      1150,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "doorway",
+     "r": [
+      1270,
+      60,
+      590,
+      960
+     ],
+     "from": "right",
+     "w": "wife"
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    820,
+    "top"
+   ],
+   "sfx": [
+    {
+     "id": "car",
+     "at": 0.3,
+     "dur": 5,
+     "gain": -14,
+     "prompt": "A car slowly pulling into a driveway and the engine switching off"
+    }
+   ]
+  },
+  {
+   "id": "s03",
+   "say": "Seconds later, a police car pulls in behind him. Handcuffs. He asks what for. The warrant says: larceny.",
+   "panels": [
+    {
+     "scene": "police-car",
+     "r": [
+      60,
+      60,
+      1800,
+      560
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.14,
+       0,
+       0.01
+      ]
+     }
+    },
+    {
+     "scene": "cuffs",
+     "r": [
+      60,
+      660,
+      880,
+      360
+     ],
+     "from": "left",
+     "w": "handcuffs"
+    },
+    {
+     "scene": "warrant",
+     "r": [
+      980,
+      660,
+      880,
+      360
+     ],
+     "from": "right",
+     "w": "warrant"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "sfx",
+     "w": "handcuffs",
+     "at": 0.1,
+     "text": "CLICK",
+     "x": 470,
+     "y": 760,
+     "size": 150,
+     "color": "#EFE8DA"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "siren",
+     "at": 0.2,
+     "dur": 3,
+     "gain": -12,
+     "prompt": "Short police siren whoop and tyres on wet asphalt"
+    },
+    {
+     "id": "cuffs",
+     "w": "handcuffs",
+     "at": 0,
+     "dur": 1.5,
+     "gain": -8,
+     "prompt": "Metal handcuffs clicking shut"
+    }
+   ]
+  },
+  {
+   "id": "s04",
+   "say": "His name is Robert Williams. And the witness against him was a machine.",
+   "hold": 4.6,
+   "panels": [
+    {
+     "scene": "backseat",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.18,
+       0.02,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "title",
+     "w": "machine",
+     "at": 1.0,
+     "kicker": "THE SIR JACK FILES · SPECIAL EDITION",
+     "text": "THE WRONG FACE",
+     "sub": "A true story, from court records"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "hum",
+     "w": "machine",
+     "at": 0.6,
+     "dur": 5,
+     "gain": -10,
+     "prompt": "Low electronic hum swelling into a deep cinematic boom"
+    }
+   ]
+  },
+  {
+   "id": "s05",
+   "say": "Rewind. October second, twenty eighteen. A man walks into a Shinola store in downtown Detroit, and walks out with five watches. About thirty-eight hundred dollars.",
+   "panels": [
+    {
+     "scene": "storefront",
+     "r": [
+      60,
+      60,
+      1150,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "watch-case",
+     "r": [
+      1270,
+      60,
+      590,
+      960
+     ],
+     "from": "right",
+     "w": "five"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "lead": 0.6,
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER ONE",
+     "title": "TWO MINUTES",
+     "sub": "October 2, 2018",
+     "color": "#E2B33C",
+     "until": 3.0
+    },
+    {
+     "t": "counter",
+     "w": "thirty-eight",
+     "from": 0,
+     "to": 3800,
+     "prefix": "$",
+     "x": 1565,
+     "y": 900,
+     "size": 120,
+     "label": "five watches"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "rewind",
+     "at": 0,
+     "dur": 2,
+     "gain": -14,
+     "prompt": "Tape rewinding fast then a click"
+    },
+    {
+     "id": "bell",
+     "w": "walks",
+     "at": 0,
+     "dur": 2,
+     "gain": -16,
+     "prompt": "Shop door bell jingle in a quiet store"
+    }
+   ]
+  },
+  {
+   "id": "s06",
+   "say": "The cameras catch him, barely. Head down. A red St. Louis Cardinals cap hiding his face.",
+   "panels": [
+    {
+     "scene": "cctv",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.22,
+       -0.03,
+       0.05
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    1030,
+    1010,
+    820
+   ],
+   "sfx": [
+    {
+     "id": "cctv",
+     "at": 0,
+     "dur": 6,
+     "gain": -18,
+     "prompt": "CCTV camera motor whirr and faint digital static"
+    }
+   ]
+  },
+  {
+   "id": "s07",
+   "say": "March twenty nineteen. A detective takes one blurry frame from that video and sends it for a facial recognition search.",
+   "panels": [
+    {
+     "scene": "detective-desk",
+     "r": [
+      60,
+      60,
+      1150,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "blurry-still",
+     "r": [
+      1270,
+      60,
+      590,
+      960
+     ],
+     "from": "right",
+     "w": "blurry"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "lead": 0.6,
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER TWO",
+     "title": "THE MACHINE",
+     "sub": "March 2019",
+     "color": "#E05A4E",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "printer",
+     "w": "frame",
+     "at": 0,
+     "dur": 4,
+     "gain": -16,
+     "prompt": "Old laser printer printing a page in a quiet office at night"
+    }
+   ]
+  },
+  {
+   "id": "s08",
+   "say": "Michigan State Police run it. The software, from a company called DataWorks Plus, offers a name: Robert Williams. It had matched an old, expired photo from his driver's licence.",
+   "panels": [
+    {
+     "scene": "mesh-face",
+     "r": [
+      60,
+      60,
+      1800,
+      560
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.14,
+       0,
+       0.01
+      ]
+     }
+    },
+    {
+     "scene": "face-grid",
+     "r": [
+      60,
+      660,
+      880,
+      360
+     ],
+     "from": "left",
+     "w": "software"
+    },
+    {
+     "scene": "licence",
+     "r": [
+      980,
+      660,
+      880,
+      360
+     ],
+     "from": "right",
+     "w": "expired"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "sfx",
+     "w": "name",
+     "at": 0.1,
+     "text": "MATCH",
+     "x": 1420,
+     "y": 330,
+     "size": 150,
+     "color": "#E05A4E"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "scan",
+     "w": "software",
+     "at": 0,
+     "dur": 6,
+     "gain": -14,
+     "prompt": "Computer scanning beeps and a rising data hum, then one sharp alert tone"
+    }
+   ]
+  },
+  {
+   "id": "s09",
+   "say": "The report came back with a warning, in capital letters. This document is not a positive identification. It is an investigative lead only, and is not probable cause to arrest.",
+   "panels": [
+    {
+     "scene": "report-desk",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.06,
+       0,
+       0
+      ],
+      "to": [
+       1.0,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "doc",
+     "at": 0.0,
+     "r": [
+      930,
+      120,
+      900
+     ],
+     "head": "INVESTIGATIVE LEAD REPORT",
+     "skip": 10,
+     "red": [
+      3
+     ],
+     "lines": [
+      "THIS DOCUMENT IS NOT A",
+      "POSITIVE IDENTIFICATION.",
+      "IT IS AN",
+      "INVESTIGATIVE LEAD ONLY",
+      "AND IS NOT PROBABLE",
+      "CAUSE TO ARREST."
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "typewriter",
+     "w": "This",
+     "at": 0,
+     "dur": 9,
+     "gain": -16,
+     "prompt": "Vintage typewriter typing steadily, carriage bell at the end"
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "say": "Here is where a lead became an accusation. In July, detectives showed six photos to a loss-prevention contractor working for Shinola.",
+   "panels": [
+    {
+     "scene": "lineup",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "lead": 0.6,
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER THREE",
+     "title": "THE LINEUP",
+     "sub": "July 30, 2019",
+     "color": "#F07A2A",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "lamp",
+     "w": "six",
+     "at": -0.3,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Desk lamp switched on with a click, quiet room hum"
+    }
+   ]
+  },
+  {
+   "id": "s11",
+   "say": "She had not been in the store. She had only seen the same grainy video. She picked Robert.",
+   "panels": [
+    {
+     "scene": "contractor",
+     "r": [
+      60,
+      60,
+      1150,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "circle",
+     "r": [
+      1270,
+      60,
+      590,
+      960
+     ],
+     "from": "right",
+     "w": "picked"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "sfx",
+     "w": "picked",
+     "at": 0.15,
+     "text": "#3",
+     "x": 1565,
+     "y": 220,
+     "size": 150,
+     "color": "#F07A2A"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "marker",
+     "w": "picked",
+     "at": 0,
+     "dur": 2,
+     "gain": -12,
+     "prompt": "A marker pen squeaking a circle on glossy paper"
+    }
+   ]
+  },
+  {
+   "id": "s12",
+   "say": "His lawyers would later call it a rigged lineup, built by a computer. On that, a warrant was signed.",
+   "panels": [
+    {
+     "scene": "rigged",
+     "r": [
+      60,
+      60,
+      1800,
+      560
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.14,
+       0,
+       0.01
+      ]
+     }
+    },
+    {
+     "scene": "signature",
+     "r": [
+      60,
+      660,
+      1800,
+      360
+     ],
+     "from": "up",
+     "w": "warrant"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "signed",
+     "at": 0.1,
+     "text": "WARRANT ISSUED",
+     "x": 1240,
+     "y": 840
+    }
+   ],
+   "sfx": [
+    {
+     "id": "stamp2",
+     "w": "signed",
+     "at": 0.1,
+     "dur": 1,
+     "gain": -9,
+     "prompt": "Heavy official stamp hitting paper"
+    }
+   ]
+  },
+  {
+   "id": "s13",
+   "say": "Back to the driveway. He tells his five-year-old he'll see her soon.",
+   "panels": [
+    {
+     "scene": "goodbye",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    1030,
+    1010,
+    820
+   ],
+   "lead": 0.6,
+   "fx": {
+    "rain": 0.15
+   },
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER FOUR",
+     "title": "THIRTY HOURS",
+     "sub": "January 9–10, 2020",
+     "color": "#2BB3A3",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "door",
+     "w": "soon",
+     "at": 0.2,
+     "dur": 3,
+     "gain": -12,
+     "prompt": "Police car door closing, muffled, engine idling"
+    }
+   ]
+  },
+  {
+   "id": "s14",
+   "say": "Then a crowded cell in the Detroit Detention Center. Not enough mats, his lawsuit says, so he slept on concrete. Nobody tells him why he's there.",
+   "panels": [
+    {
+     "scene": "cell",
+     "r": [
+      60,
+      60,
+      1150,
+      960
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     }
+    },
+    {
+     "scene": "concrete",
+     "r": [
+      1270,
+      60,
+      590,
+      960
+     ],
+     "from": "right",
+     "w": "concrete"
+    }
+   ],
+   "cap": [
+    1030,
+    60,
+    820,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "sfx",
+     "w": "cell",
+     "at": 0.2,
+     "text": "CLANG",
+     "x": 560,
+     "y": 300,
+     "size": 160,
+     "color": "#EFE8DA"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "bars",
+     "w": "cell",
+     "at": 0,
+     "dur": 3,
+     "gain": -9,
+     "prompt": "Heavy steel cell door slamming shut with an echo"
+    },
+    {
+     "id": "cellroom",
+     "at": 1,
+     "dur": 8,
+     "gain": -22,
+     "prompt": "Murmur of many men in a concrete holding cell, echoing"
+    }
+   ]
+  },
+  {
+   "id": "s15",
+   "say": "The next day, two detectives slide a picture across the table: the man from the store.",
+   "panels": [
+    {
+     "scene": "table",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.0,
+       0,
+       0
+      ],
+      "to": [
+       1.12,
+       0,
+       0.02
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "sfx": [
+    {
+     "id": "slide",
+     "w": "slide",
+     "at": 0,
+     "dur": 2,
+     "gain": -10,
+     "prompt": "A sheet of paper sliding across a metal table"
+    }
+   ]
+  },
+  {
+   "id": "s16",
+   "say": "Robert picks it up and holds it next to his own face. \"That's not me,\" he says.",
+   "panels": [
+    {
+     "scene": "two-faces",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.04,
+       0,
+       0
+      ],
+      "to": [
+       1.16,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "balloon",
+     "w": "that's",
+     "at": -0.1,
+     "text": "That's not me.",
+     "x": 1410,
+     "y": 190,
+     "width": 520,
+     "tail": [
+      -150,
+      140
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "paper",
+     "w": "picks",
+     "at": 0,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Paper being picked up and held, a single tense heartbeat"
+    }
+   ]
+  },
+  {
+   "id": "s17",
+   "say": "One detective, he recalls, answers: \"So I guess the computer got it wrong, too.\"",
+   "panels": [
+    {
+     "scene": "detective",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "balloon",
+     "w": "so",
+     "at": -0.1,
+     "text": "So I guess the computer got it wrong, too.",
+     "x": 1240,
+     "y": 250,
+     "width": 560,
+     "tail": [
+      120,
+      170
+     ],
+     "by": "as Robert Williams recalls it"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "roomtone",
+     "at": 0,
+     "dur": 6,
+     "gain": -20,
+     "prompt": "Quiet interrogation room, fluorescent light buzz"
+    }
+   ]
+  },
+  {
+   "id": "s18",
+   "say": "Still, it's hours more before he walks out on bond, into a rainy January night. Thirty hours, in all.",
+   "panels": [
+    {
+     "scene": "release",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "fx": {
+    "rain": 0.55
+   },
+   "ov": [
+    {
+     "t": "counter",
+     "w": "thirty",
+     "at": -0.1,
+     "from": 0,
+     "to": 30,
+     "suffix": " HOURS",
+     "x": 1400,
+     "y": 560,
+     "size": 170,
+     "color": "#EFE8DA"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "rain",
+     "at": 0,
+     "dur": 9,
+     "gain": -14,
+     "prompt": "Heavy rain on a city street at night, a heavy door closing behind"
+    }
+   ]
+  },
+  {
+   "id": "s19",
+   "say": "At home, the family portrait in the living room has been turned to face the wall. His older daughter did it, his lawsuit says, because the girls cried every time they saw it.",
+   "panels": [
+    {
+     "scene": "portrait",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.16,
+       0.03,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "lead": 0.6,
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER FIVE",
+     "title": "THE PORTRAIT",
+     "sub": "Farmington Hills, Michigan",
+     "color": "#D9412B",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "clock",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Quiet living room at night, a slow clock ticking, rain outside"
+    }
+   ]
+  },
+  {
+   "id": "s20",
+   "say": "Two weeks later, prosecutors drop the charges. The county prosecutor apologizes. Detroit's police chief calls it shoddy investigative work, not a failure of the technology.",
+   "panels": [
+    {
+     "scene": "dismissed",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.14,
+       0,
+       0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    60,
+    820,
+    "top"
+   ],
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "drop",
+     "at": 0.1,
+     "text": "CHARGES DISMISSED",
+     "y": 420
+    },
+    {
+     "t": "split",
+     "w": "county",
+     "at": -0.1,
+     "left": "THE PROSECUTOR",
+     "leftSub": "apologizes",
+     "right": "THE POLICE CHIEF",
+     "rightSub": "“shoddy investigative work”",
+     "y": 870
+    }
+   ],
+   "sfx": [
+    {
+     "id": "stamp",
+     "w": "drop",
+     "at": 0.1,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  },
+  {
+   "id": "s21",
+   "say": "But it happened again. February twenty twenty-three. Porcha Woodruff, eight months pregnant, is arrested for a carjacking she didn't commit. Another facial recognition lead. Another lineup.",
+   "panels": [
+    {
+     "scene": "orange-street",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "lead": 0.6,
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER SIX",
+     "title": "THE PATTERN",
+     "sub": "February 16, 2023",
+     "color": "#F07A2A",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "morning",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Early morning city street, distant police radio chatter"
+    }
+   ]
+  },
+  {
+   "id": "s22",
+   "say": "In twenty twenty, Detroit's own police chief put it plainly: used by itself, he said, the technology would misidentify ninety-six percent of the time.",
+   "panels": [
+    {
+     "scene": "faces-96",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.14,
+       0,
+       0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "ninety-six",
+     "at": -0.2,
+     "from": 0,
+     "to": 96,
+     "suffix": "%",
+     "x": 1500,
+     "y": 600,
+     "size": 260,
+     "label": "if used by itself · Chief James Craig, 2020"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "ticks",
+     "w": "used",
+     "at": 0,
+     "dur": 5,
+     "gain": -16,
+     "prompt": "Rapid mechanical ticking like flipping counters"
+    }
+   ]
+  },
+  {
+   "id": "s23",
+   "say": "A federal study by NIST found many algorithms more likely to falsely match Black and Asian faces.",
+   "panels": [
+    {
+     "scene": "nist",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "w": "federal",
+     "at": 0,
+     "text": "NIST · 2019 · 189 ALGORITHMS TESTED",
+     "x": 80,
+     "y": 120
+    }
+   ],
+   "sfx": [
+    {
+     "id": "data",
+     "at": 0.3,
+     "dur": 5,
+     "gain": -18,
+     "prompt": "Soft electronic data pulses, clinical"
+    }
+   ]
+  },
+  {
+   "id": "s24",
+   "say": "June twenty-eighth, twenty twenty-four. After three years in federal court, Detroit settles. Three hundred thousand dollars, and new rules the ACLU calls the strongest in the nation.",
+   "panels": [
+    {
+     "scene": "courthouse",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "lead": 0.6,
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER SEVEN",
+     "title": "THE RULES",
+     "sub": "June 28, 2024",
+     "color": "#2BB3A3",
+     "until": 3.0
+    },
+    {
+     "t": "counter",
+     "w": "three",
+     "at": -0.2,
+     "from": 0,
+     "to": 300000,
+     "prefix": "$",
+     "x": 1380,
+     "y": 560,
+     "size": 190,
+     "label": "settlement · Williams v. City of Detroit"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "gavel",
+     "w": "settles",
+     "at": 0,
+     "dur": 2,
+     "gain": -9,
+     "prompt": "A single wooden gavel strike in a large courtroom"
+    }
+   ]
+  },
+  {
+   "id": "s25",
+   "say": "No arrest on a face match alone. No photo lineup built straight from a match. Training. And an audit of cases going back to twenty seventeen.",
+   "panels": [
+    {
+     "scene": "rules-poster",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.08,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "ov": [
+    {
+     "t": "check",
+     "w": "no",
+     "at": -0.1,
+     "r": [
+      980,
+      300
+     ],
+     "items": [
+      "No arrest on a match alone",
+      "No lineup straight from a match",
+      "Training",
+      "Audit of cases since 2017"
+     ],
+     "ws": [
+      "no",
+      "lineup",
+      "training",
+      "audit"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "ticks4",
+     "w": "no",
+     "at": 0.1,
+     "dur": 7,
+     "gain": -14,
+     "prompt": "Four firm pencil tick marks on paper, a second or two apart"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "s26",
+   "say": "Robert Williams got the rules. He didn't get what he wanted most: for the police to stop using it.",
+   "panels": [
+    {
+     "scene": "morning-drive",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.14,
+       0,
+       0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    1030,
+    1010,
+    820
+   ],
+   "sfx": [
+    {
+     "id": "birds",
+     "at": 0,
+     "dur": 7,
+     "gain": -20,
+     "prompt": "Quiet suburban morning, a few birds, distant car"
+    }
+   ]
+  },
+  {
+   "id": "s27",
+   "say": "Researchers at Georgetown estimated that one in two American adults is in a police face recognition network. Which means somewhere, right now, a machine has a picture of you.",
+   "panels": [
+    {
+     "scene": "database",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.35,
+       0.05,
+       0.03
+      ],
+      "to": [
+       1.0,
+       0,
+       0
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "one",
+     "at": -0.1,
+     "from": 1,
+     "to": 1,
+     "suffix": " IN 2",
+     "x": 1450,
+     "y": 560,
+     "size": 230,
+     "label": "American adults · Georgetown Law, 2016"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "servers",
+     "at": 0,
+     "dur": 12,
+     "gain": -18,
+     "prompt": "Low hum of a server room, fans and faint clicks"
+    }
+   ]
+  },
+  {
+   "id": "s28",
+   "say": "A match is not a witness. It's a question. The rules decide who has to answer it. The Sir Jack Files. Case closed.",
+   "panels": [
+    {
+     "scene": "booth",
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.14,
+       0,
+       0.01
+      ],
+      "to": [
+       1.02,
+       0,
+       -0.01
+      ]
+     },
+     "full": true
+    }
+   ],
+   "cap": [
+    70,
+    1010,
+    820
+   ],
+   "fx": {
+    "rain": 0.35
+   },
+   "hold": 2.6,
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED",
+     "x": 1350,
+     "y": 470
+    }
+   ],
+   "sfx": [
+    {
+     "id": "street",
+     "at": 0,
+     "dur": 10,
+     "gain": -16,
+     "prompt": "Rain on a phone booth at night, distant city"
+    },
+    {
+     "id": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  }
+ ]
+}

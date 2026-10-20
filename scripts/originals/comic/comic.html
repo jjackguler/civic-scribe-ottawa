@@ -1,0 +1,305 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Schibsted+Grotesk:wght@400..900&family=Special+Elite&family=Anton&display=block">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script>window.COMIC_SCENES = {};</script>
+<script src="comic-scenes.js"></script>
+<script>
+// Motion comic, 16:9. Each shot is a comic page: panels (drawn in code by comic-scenes.js)
+// slide in on spoken words, the page camera drifts, narration appears in caption boxes,
+// quotes in balloons, sound effects as lettering. window.setup() loads the story and its
+// timeline (build/<slug>/timeline.json); window.frame(t) draws time t deterministically.
+const W = 1920, H = 1080, FPS = 30, XF = 0.5;
+const INK = "#0b0b0e", PAPER = "#EFE8DA", GOLD = "#D7B54A", RED = "#D9412B", CAPTION = "#F3D36B";
+const SERIF = '"Bodoni Moda", serif', SANS = '"Schibsted Grotesk", sans-serif', TYPE = '"Special Elite", monospace', POSTER = '"Anton", sans-serif';
+const c = document.getElementById("c"), x = c.getContext("2d");
+let story, tl, grain = [], halftone, fogTex;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (p) => 0.5 - 0.5 * Math.cos(Math.PI * clamp(p));
+const out3 = (p) => 1 - Math.pow(1 - clamp(p), 3);
+const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+const noise = (t) => { const i = Math.floor(t), f = t - i; return hash(i) * (1 - ease(f)) + hash(i + 1) * ease(f); };
+const norm = (w) => w.toLowerCase().replace(/[^a-z0-9'-]/g, "");
+
+window.setup = async () => {
+  const slug = new URLSearchParams(location.search).get("slug");
+  story = await (await fetch(`stories/${slug}.json`)).json();
+  tl = await (await fetch(`build/${slug}/timeline.json`)).json();
+  await Promise.all([`700 100px ${SERIF}`, `italic 500 100px ${SERIF}`, `800 50px ${SANS}`, `600 50px ${SANS}`, `60px ${TYPE}`, `60px ${POSTER}`].map((f) => document.fonts.load(f)));
+  for (let k = 0; k < 6; k++) {
+    const g = document.createElement("canvas"); g.width = 960; g.height = 540;
+    const gx = g.getContext("2d"), d = gx.createImageData(960, 540);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    gx.putImageData(d, 0, 0); grain.push(g);
+  }
+  halftone = document.createElement("canvas"); halftone.width = W; halftone.height = H; // print dots, strongest at the edges
+  { const h = halftone.getContext("2d"); for (let yy = 0; yy < H; yy += 9) for (let xx = (yy / 9) % 2 ? 4.5 : 0; xx < W; xx += 9) { const dx = (xx - W / 2) / (W / 2), dy = (yy - H / 2) / (H / 2), r = 0.4 + 2.6 * Math.min(1, Math.hypot(dx, dy) ** 2); h.fillStyle = "rgba(0,0,0,0.5)"; h.beginPath(); h.arc(xx, yy, r, 0, 7); h.fill(); } }
+  fogTex = document.createElement("canvas"); fogTex.width = W; fogTex.height = 700;
+  { const f = fogTex.getContext("2d"); for (let i = 0; i < 120; i++) { const px = hash(i) * W, py = hash(i + 50) * 700, r = 90 + hash(i + 99) * 300; const g = f.createRadialGradient(px, py, 0, px, py, r); g.addColorStop(0, `rgba(190,205,220,${0.04 + hash(i + 7) * 0.06})`); g.addColorStop(1, "rgba(190,205,220,0)"); f.fillStyle = g; f.fillRect(px - r, py - r, 2 * r, 2 * r); } }
+  story.shots.forEach((s, i) => {
+    const T = tl.shots[i];
+    const at = (o) => {
+      let t = o.at ?? 0;
+      if (o.w) { const w = T.words.find((w) => norm(w.w).startsWith(o.w.toLowerCase())); if (w) t = T.voAt + w.start + (o.at ?? 0); }
+      return Math.min(t, T.dur - 0.3);
+    };
+    for (const p of s.panels ?? []) p.T = at(p);
+    for (const o of s.ov ?? []) o.T = at(o);
+    // Narration captions: one per sentence, from the word timings. Quotes are in balloons instead.
+    const ws = T.words; s.caps = []; let cur = [];
+    ws.forEach((w, k) => { cur.push(w); if (/[.?!:]["”]?$/.test(w.w) || k === ws.length - 1) { s.caps.push(cur); cur = []; } });
+    s.caps = s.caps.filter((c) => !/^["“]/.test(c[0].w)).map((c) => ({ text: c.map((w) => w.w).join(" "), s: T.voAt + c[0].start, e: T.voAt + c[c.length - 1].end }));
+  });
+  return { duration: tl.total, fps: FPS };
+};
+
+// ── panels ───────────────────────────────────────────────────────────────────
+const sceneCanvas = {};
+function scene(id, u) {
+  const sc = sceneCanvas[id] ??= Object.assign(document.createElement("canvas"), { width: W, height: H }), g = sc.getContext("2d");
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = "source-over"; g.clearRect(0, 0, W, H);
+  (window.COMIC_SCENES[id] ?? ((g) => { g.fillStyle = "#222"; g.fillRect(0, 0, W, H); }))(g, u);
+  return sc;
+}
+function panel(p, u, dur) {
+  const k = u - p.T; if (k < 0) return;
+  const [px, py, pw, ph] = p.r, rev = out3(k / 0.7);
+  const sc = scene(p.scene, Math.max(0, u - (p.lag ?? 0)));
+  const cam = p.cam ?? { from: [1.12, 0, 0], to: [1.02, 0, 0] }, q = ease(u / Math.max(1, dur));
+  const s = cam.from[0] + (cam.to[0] - cam.from[0]) * q, ox = (cam.from[1] + (cam.to[1] - cam.from[1]) * q) * pw, oy = (cam.from[2] + (cam.to[2] - cam.from[2]) * q) * ph;
+  const cover = Math.max(pw / W, ph / H) * s;
+  const dir = p.from ?? "up", off = (1 - rev) * 60;
+  const dx = dir === "left" ? -off : dir === "right" ? off : 0, dy = dir === "up" ? off : dir === "down" ? -off : 0;
+  x.save(); x.globalAlpha = clamp(k / 0.35);
+  x.translate(dx, dy);
+  if (!p.full) { x.fillStyle = "rgba(0,0,0,0.55)"; x.fillRect(px + 14, py + 16, pw, ph); } // drop shadow
+  x.save(); x.beginPath(); x.rect(px, py, pw, ph); x.clip();
+  x.drawImage(sc, px + pw / 2 - (W * cover) / 2 + ox, py + ph / 2 - (H * cover) / 2 + oy, W * cover, H * cover);
+  x.restore();
+  if (!p.full) { x.strokeStyle = PAPER; x.lineWidth = 6; x.strokeRect(px, py, pw, ph); x.strokeStyle = INK; x.lineWidth = 2; x.strokeRect(px - 4, py - 4, pw + 8, ph + 8); }
+  x.restore();
+}
+
+// ── lettering ────────────────────────────────────────────────────────────────
+function text(str, px, py, font, color, { align = "left", track = 0, alpha = 1, shadow = 0, base = "alphabetic" } = {}) {
+  x.save(); x.globalAlpha *= alpha; x.font = font; x.textAlign = align; x.textBaseline = base; x.letterSpacing = `${track}px`; x.fillStyle = color;
+  if (shadow) { x.shadowColor = "rgba(0,0,0,0.8)"; x.shadowBlur = shadow; }
+  x.fillText(str, px, py); x.restore();
+}
+function wrap(str, font, max, track = 0) {
+  x.save(); x.font = font; x.letterSpacing = `${track}px`; const out = []; let line = "";
+  for (const w of str.split(" ")) { const tr = line ? `${line} ${w}` : w; if (x.measureText(tr).width > max && line) { out.push(line); line = w; } else line = tr; }
+  x.restore(); return line ? [...out, line] : out;
+}
+function caption(cap, u, shot) {
+  const k = u - cap.s, gone = u - cap.e; if (k < -0.05 || gone > 0.55) return;
+  const a = clamp((k + 0.05) / 0.2) * (1 - clamp(gone / 0.5));
+  const pos = shot.cap ?? [80, 820, 760], [cx, cy, cw] = pos;
+  const font = `700 34px ${SANS}`, lines = wrap(cap.text.toUpperCase(), font, cw - 56, 1);
+  const bh = 34 + lines.length * 44, by = pos[3] === "top" ? cy : cy - bh;
+  x.save(); x.globalAlpha = a;
+  x.fillStyle = "rgba(0,0,0,0.6)"; x.fillRect(cx + 8, by + 10, cw, bh);
+  x.fillStyle = CAPTION; x.fillRect(cx, by, cw, bh); x.strokeStyle = INK; x.lineWidth = 4; x.strokeRect(cx, by, cw, bh);
+  lines.forEach((l, i) => text(l, cx + 28, by + 52 + i * 44, font, INK, { track: 1 }));
+  x.restore();
+}
+function balloon(o, k, fade) {
+  const font = `italic 600 40px ${SANS}`, lines = wrap(o.text.toUpperCase(), font, o.width ?? 520, 1);
+  const bw = Math.max(...lines.map((l) => { x.font = font; return x.measureText(l).width; })) + 90, bh = lines.length * 50 + 60;
+  const p = out3(k / 0.35), s = 0.6 + 0.4 * p, [bx, by] = [o.x, o.y];
+  x.save(); x.globalAlpha = fade * clamp(k / 0.2); x.translate(bx, by); x.scale(s, s);
+  x.fillStyle = "#fbf7ec"; x.strokeStyle = INK; x.lineWidth = 5;
+  x.beginPath(); x.ellipse(0, 0, bw / 2, bh / 2, 0, 0, 7); x.fill();
+  const [tx, ty] = o.tail ?? [-bw / 4, bh]; x.beginPath(); x.moveTo(-30, bh / 2 - 12); x.lineTo(tx, ty); x.lineTo(20, bh / 2 - 8); x.fill();
+  x.beginPath(); x.ellipse(0, 0, bw / 2, bh / 2, 0, 0, 7); x.stroke(); x.beginPath(); x.moveTo(-30, bh / 2 - 6); x.lineTo(tx, ty); x.lineTo(20, bh / 2 - 4); x.stroke();
+  x.fillStyle = "#fbf7ec"; x.fillRect(-34, bh / 2 - 24, 58, 20);
+  lines.forEach((l, i) => text(l, 0, -bh / 2 + 62 + i * 50, font, INK, { align: "center", track: 1 }));
+  if (o.by) text(o.by.toUpperCase(), -bw / 2 - 20, -bh / 2 - 22, `700 22px ${SANS}`, CAPTION, { align: "left", track: 4, shadow: 10 });
+  x.restore();
+}
+function sfx(o, k, fade) {
+  const p = out3(k / 0.25), s = 1.6 - 0.6 * p, shake = k < 0.3 ? (hash(Math.floor(k * 60)) - 0.5) * 8 : 0;
+  x.save(); x.globalAlpha = fade * clamp(k / 0.08); x.translate(o.x + shake, o.y); x.rotate(o.rot ?? -0.08); x.scale(s, s);
+  x.font = `${o.size ?? 140}px ${POSTER}`; x.textAlign = "center"; x.textBaseline = "middle"; x.letterSpacing = "4px";
+  x.lineJoin = "round"; x.strokeStyle = INK; x.lineWidth = 16; x.strokeText(o.text, 6, 8); x.strokeText(o.text, 0, 0);
+  x.fillStyle = o.color ?? CAPTION; x.fillText(o.text, 0, 0);
+  x.restore();
+}
+function chapter(o, k, fade) {
+  const a = clamp(k / 0.3) * fade, p = out3(k / 0.8);
+  x.save(); x.globalAlpha = a;
+  x.fillStyle = "rgba(8,8,10,0.82)"; x.fillRect(0, 380, W * p, 300);
+  x.fillStyle = o.color ?? RED; x.fillRect(0, 380, 18, 300);
+  text(o.n, 120, 470, `700 30px ${SANS}`, o.color ?? RED, { track: 10, alpha: clamp((k - 0.2) / 0.4) });
+  text(o.title, 116, 610, `130px ${POSTER}`, PAPER, { track: 6, alpha: clamp((k - 0.35) / 0.4) });
+  if (o.sub) text(o.sub, 120, 655, `italic 500 30px ${SERIF}`, GOLD, { alpha: clamp((k - 0.6) / 0.4) });
+  x.restore();
+}
+function title(o, k, fade) {
+  const a = clamp(k / 0.5) * fade;
+  x.save(); x.globalAlpha = a; x.fillStyle = "rgba(5,5,7,0.78)"; x.fillRect(0, 0, W, H); x.restore();
+  text(o.kicker, W / 2, 360, `600 30px ${SANS}`, PAPER, { align: "center", track: 12, alpha: a * clamp((k - 0.2) / 0.5) });
+  const p = out3((k - 0.4) / 1.0);
+  x.save(); x.beginPath(); x.rect(0, 380, W, 260); x.clip();
+  x.font = `150px ${POSTER}`; x.letterSpacing = "14px"; const tsz = Math.min(150, 150 * 1400 / x.measureText(o.text).width); x.letterSpacing = "0px";
+  text(o.text, W / 2, 590 + (1 - p) * 120, `${tsz.toFixed(0)}px ${POSTER}`, PAPER, { align: "center", track: 14, alpha: a, shadow: 30 });
+  x.restore();
+  x.fillStyle = RED; x.globalAlpha = a; x.fillRect(W / 2 - 220 * out3((k - 1.1) / 0.6), 630, 440 * out3((k - 1.1) / 0.6), 6); x.globalAlpha = 1;
+  if (o.sub) text(o.sub, W / 2, 712, `italic 500 38px ${SERIF}`, GOLD, { align: "center", alpha: a * clamp((k - 1.4) / 0.6) });
+}
+function counter(o, k, fade) {
+  const p = out3(k / 1.4), raw = o.from + (o.to - o.from) * p, v = Math.round(raw).toLocaleString("en-US");
+  const [cx, cy] = [o.x ?? W / 2, o.y ?? 540];
+  x.save(); x.globalAlpha = fade * clamp(k / 0.25);
+  const str = `${o.prefix ?? ""}${v}${o.suffix ?? ""}`; x.font = `${o.size ?? 230}px ${POSTER}`; x.textAlign = "center"; x.lineJoin = "round";
+  x.strokeStyle = INK; x.lineWidth = 18; x.strokeText(str, cx + 8, cy + 10); x.strokeText(str, cx, cy); x.fillStyle = o.color ?? CAPTION; x.fillText(str, cx, cy);
+  x.restore();
+  if (o.label) text(o.label.toUpperCase(), cx, cy + 62, `700 30px ${SANS}`, PAPER, { align: "center", track: 6, alpha: fade * clamp((k - 0.4) / 0.4), shadow: 14 });
+}
+function doc(o, k, fade, T) {
+  // A typed document whose words appear as they are spoken (the Investigative Lead Report).
+  const [dx, dy, dw] = o.r; x.save(); x.globalAlpha = fade * clamp(k / 0.3);
+  x.translate(dx, dy); x.rotate(o.rot ?? -0.015);
+  const lines = o.lines, lh = 58, dh = 150 + lines.length * lh;
+  x.fillStyle = "rgba(0,0,0,0.5)"; x.fillRect(14, 18, dw, dh); x.fillStyle = "#efe9da"; x.fillRect(0, 0, dw, dh);
+  text(o.head, 50, 76, `700 30px ${TYPE}`, "#2a2a2a", { track: 3 });
+  x.fillStyle = "#2a2a2a"; x.fillRect(50, 96, dw - 100, 3);
+  const spoken = T.words.filter((w) => T.voAt + w.start <= (o.T + k)).length - (o.skip ?? 0);
+  let n = 0;
+  lines.forEach((l, i) => {
+    const ws = l.split(" "), show = Math.max(0, Math.min(ws.length, spoken - n)); n += ws.length;
+    const str = ws.slice(0, show).join(" ");
+    if (o.red?.includes(i) && show > 0) { x.font = `700 38px ${TYPE}`; x.letterSpacing = "2px"; const m = x.measureText(str).width; x.fillStyle = "rgba(217,65,43,0.85)"; x.fillRect(44, 150 + i * lh - 38, m + 14, 50); }
+    text(str, 50, 150 + i * lh, `700 38px ${TYPE}`, o.red?.includes(i) ? "#fff" : "#1e1e1e", { track: 2 });
+  });
+  x.restore();
+}
+function split(o, k, fade) {
+  const a = out3(k / 0.6), b = out3((k - 0.9) / 0.6), y = o.y ?? 860;
+  x.save(); x.globalAlpha = fade;
+  x.fillStyle = "rgba(8,8,10,0.8)"; x.fillRect(0, y - 110, W, 220);
+  x.fillStyle = GOLD; x.fillRect(W / 2 - 2, y - 80, 4, 160 * out3((k - 0.3) / 0.6));
+  text(o.left, W * 0.27, y - 4, `64px ${POSTER}`, PAPER, { align: "center", track: 4, alpha: a });
+  text(o.leftSub, W * 0.27, y + 52, `italic 500 34px ${SERIF}`, PAPER, { align: "center", alpha: a * 0.9 });
+  text(o.right, W * 0.73, y - 4, `64px ${POSTER}`, CAPTION, { align: "center", track: 4, alpha: b });
+  text(o.rightSub, W * 0.73, y + 52, `italic 500 34px ${SERIF}`, CAPTION, { align: "center", alpha: b });
+  x.restore();
+}
+function checklist(o, k, fade, T) {
+  const [lx, ly] = o.r ?? [980, 250];
+  o.items.forEach((it, i) => {
+    const t0 = o.ws ? ((T.words.find((w) => norm(w.w).startsWith(o.ws[i].toLowerCase()))?.start ?? i * 2) + T.voAt) - o.T : i * 1.6;
+    const kk = k - t0; if (kk < 0) return;
+    const p = out3(kk / 0.4), y = ly + i * 130;
+    x.save(); x.globalAlpha = fade * p;
+    x.fillStyle = "rgba(8,8,10,0.75)"; x.fillRect(lx - 30, y - 70, 860, 110);
+    x.strokeStyle = PAPER; x.lineWidth = 5; x.strokeRect(lx, y - 52, 60, 60);
+    const c = clamp((kk - 0.2) / 0.3); x.strokeStyle = RED; x.lineWidth = 10; x.lineCap = "round"; x.beginPath(); x.moveTo(lx + 10, y - 24); x.lineTo(lx + 26, y - 6); if (c > 0.3) x.lineTo(lx + 26 + 40 * c, y - 6 - 56 * c); x.stroke();
+    x.restore();
+    x.font = `52px ${POSTER}`; x.letterSpacing = "3px"; const cf = Math.min(52, 52 * 720 / x.measureText(it.toUpperCase()).width); x.letterSpacing = "0px";
+    text(it.toUpperCase(), lx + 96, y, `${cf.toFixed(0)}px ${POSTER}`, PAPER, { track: 3, alpha: fade * p });
+  });
+}
+function stamp(o, k, fade) {
+  if (k < 0) return;
+  const s = 1 + 1.3 * (1 - out3(k / 0.16)), sh = k < 0.4 ? (hash(Math.floor(k * 60)) - 0.5) * 10 * (1 - k / 0.4) : 0;
+  x.save(); x.translate((o.x ?? W / 2) + sh, o.y ?? 470); x.rotate(-0.1); x.scale(s, s); x.globalAlpha = fade * clamp(k / 0.08) * 0.92;
+  const sc = o.color ?? RED; x.strokeStyle = sc; x.lineWidth = 10; x.strokeRect(-430, -100, 860, 200); x.lineWidth = 3; x.strokeRect(-412, -82, 824, 164);
+  x.font = `110px ${TYPE}`; x.textAlign = "center"; x.textBaseline = "middle"; x.fillStyle = sc; x.letterSpacing = "6px"; x.fillText(o.text, 0, 6);
+  x.globalCompositeOperation = "destination-out"; x.globalAlpha = 0.35; x.drawImage(grain[2], -430, -100, 860, 200);
+  x.restore();
+}
+function typeline(o, k, fade) {
+  const n = Math.floor(k * 22), str = o.text.slice(0, Math.max(0, n));
+  const blink = n < o.text.length || Math.floor(k * 2.4) % 2 === 0;
+  x.save(); x.globalAlpha = fade; x.fillStyle = "rgba(8,8,10,0.7)"; x.font = `46px ${TYPE}`; x.letterSpacing = "3px"; const m = x.measureText(o.text).width;
+  x.fillRect((o.x ?? 80) - 24, (o.y ?? 120) - 58, m + 70, 82); x.restore();
+  text(str + (blink ? "▌" : ""), o.x ?? 80, o.y ?? 120, `46px ${TYPE}`, PAPER, { track: 3, alpha: fade });
+}
+function overlay(o, k, fade, T) {
+  if (o.t === "balloon") balloon(o, k, fade);
+  else if (o.t === "sfx") sfx(o, k, fade);
+  else if (o.t === "chapter") chapter(o, k, fade);
+  else if (o.t === "title") title(o, k, fade);
+  else if (o.t === "counter") counter(o, k, fade);
+  else if (o.t === "doc") doc(o, k, fade, T);
+  else if (o.t === "split") split(o, k, fade);
+  else if (o.t === "check") checklist(o, k, fade, T);
+  else if (o.t === "stamp") stamp(o, k, fade);
+  else if (o.t === "type") typeline(o, k, fade);
+}
+
+// ── atmosphere ───────────────────────────────────────────────────────────────
+function rain(u, amt) {
+  x.save(); x.lineCap = "round";
+  for (const [n, len, sp, wd, a, sl] of [[Math.round(420 * amt), 40, 1500, 1.2, 0.2, 0.18], [Math.round(140 * amt), 110, 2300, 2.2, 0.28, 0.22]]) {
+    x.strokeStyle = `rgba(205,222,240,${a})`; x.lineWidth = wd; x.beginPath();
+    for (let i = 0; i < n; i++) { const L = len * (0.6 + hash(i + n) * 0.8), v = sp * (0.8 + hash(i * 3 + n) * 0.4); const yy = ((hash(i * 7 + n) * (H + L) + u * v) % (H + L)) - L, xx = hash(i * 13 + n) * (W + 400) - 200 + yy * sl; x.moveTo(xx, yy); x.lineTo(xx + L * sl, yy + L); }
+    x.stroke();
+  }
+  x.restore();
+}
+function fog(u, amt) { x.save(); x.globalCompositeOperation = "screen"; for (const [k, sp, y] of [[0, 18, 0.3], [1, -12, 0.75]]) { const off = ((u * sp + k * 400) % W + W) % W; x.globalAlpha = amt * 0.7; for (const dx of [-W, 0, W]) x.drawImage(fogTex, off + dx, y * H - 350, W, 700); } x.restore(); }
+function finish(t, shot) {
+  const v = x.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, H * 1.05); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.55)");
+  x.fillStyle = v; x.fillRect(0, 0, W, H);
+  x.save(); x.globalCompositeOperation = "multiply"; x.globalAlpha = shot?.halftone ?? 0.18; x.drawImage(halftone, 0, 0); x.restore();
+  x.save(); x.globalCompositeOperation = "overlay"; x.globalAlpha = 0.12; x.drawImage(grain[Math.floor(t * 24) % grain.length], 0, 0, W, H); x.restore();
+  const f = Math.floor(t * 24);
+  if (hash(f * 0.37) > 0.8) { x.fillStyle = "rgba(230,225,210,0.08)"; x.fillRect(hash(f) * W, 0, 1.5, H); }
+}
+
+function endCard(t) {
+  const k = t - tl.end.start, a = clamp(k / 0.6);
+  x.fillStyle = INK; x.globalAlpha = a; x.fillRect(0, 0, W, H); x.globalAlpha = 1;
+  rain(t, 0.25 * a);
+  const p = out3((k - 0.3) / 0.9);
+  text(story.next ?? "THE SIR JACK FILES", W / 2, 300, `600 28px ${SANS}`, GOLD, { align: "center", track: 10, alpha: clamp((k - 0.2) / 0.6) });
+  text("AI BROADSHEET", W / 2, 420 + (1 - p) * 30, `800 118px ${SERIF}`, PAPER, { align: "center", track: 6, alpha: p });
+  x.fillStyle = GOLD; x.fillRect(W / 2 - 160 * p, 452, 320 * p, 4);
+  text("AI news, with the human stakes left in.", W / 2, 520, `italic 500 42px ${SERIF}`, PAPER, { align: "center", alpha: clamp((k - 0.9) / 0.6) });
+  if (story.cta) { const ca = clamp((k - 1.2) / 0.5); x.font = `800 40px ${SANS}`; x.letterSpacing = "2px"; const cw = x.measureText(story.cta).width + 120; x.letterSpacing = "0px"; x.save(); x.globalAlpha = ca; x.fillStyle = RED; x.fillRect(W / 2 - cw / 2, 580, cw, 96); x.restore(); text(story.cta, W / 2, 643, `800 40px ${SANS}`, PAPER, { align: "center", track: 2, alpha: ca }); }
+  const srcA = clamp((k - 1.8) / 0.6) * 0.75;
+  const st = "Sources: " + story.sources.map((s) => s.name).join(" · ");
+  wrap(st, `500 21px ${SANS}`, 1600).forEach((l, i) => text(l, W / 2, 800 + i * 30, `500 21px ${SANS}`, PAPER, { align: "center", alpha: srcA }));
+  text(story.disclosure ?? "", W / 2, 1000, `500 21px ${SANS}`, PAPER, { align: "center", alpha: srcA });
+  const cr = tl.credits ?? {};
+  text(`Illustrated in code by AI Broadsheet · Voice${cr.voice ? ` (${cr.voice})` : ""}, sound & score: ElevenLabs`, W / 2, 1034, `500 21px ${SANS}`, PAPER, { align: "center", alpha: srcA });
+}
+
+// ── frame ────────────────────────────────────────────────────────────────────
+function page(shot, T, u, alpha) {
+  x.save(); x.globalAlpha = alpha;
+  x.fillStyle = shot.bg ?? INK; x.fillRect(0, 0, W, H);
+  const cam = shot.cam ?? { from: [1.03, 0, 0], to: [1.0, 0, 0] }, q = ease((u + XF) / (T.dur + 2 * XF));
+  const s = cam.from[0] + (cam.to[0] - cam.from[0]) * q, ox = (cam.from[1] + (cam.to[1] - cam.from[1]) * q) * W, oy = (cam.from[2] + (cam.to[2] - cam.from[2]) * q) * H;
+  const wob = (noise(u * 0.6 + 3) - 0.5) * 5, wob2 = (noise(u * 0.5 + 9) - 0.5) * 5;
+  x.translate(W / 2 + ox + wob, H / 2 + oy + wob2); x.scale(s, s); x.translate(-W / 2, -H / 2);
+  for (const p of shot.panels ?? []) panel(p, u, T.dur);
+  x.restore();
+  x.save(); x.globalAlpha = alpha;
+  if (shot.fx?.fog) fog(u, shot.fx.fog);
+  if (shot.fx?.rain) rain(u, shot.fx.rain);
+  if (shot.fx?.flash && u < 0.3) { x.fillStyle = `rgba(255,240,220,${0.8 * (1 - u / 0.3)})`; x.fillRect(0, 0, W, H); }
+  x.restore();
+}
+window.frame = (t) => {
+  x.setTransform(1, 0, 0, 1, 0, 0); x.globalAlpha = 1; x.globalCompositeOperation = "source-over";
+  x.fillStyle = "#000"; x.fillRect(0, 0, W, H);
+  const i = tl.shots.findIndex((s) => t >= s.start && t < s.start + s.dur);
+  let shot = null;
+  if (i >= 0) {
+    const T = tl.shots[i], u = t - T.start; shot = story.shots[i];
+    const next = story.shots[i + 1], NT = tl.shots[i + 1], toEnd = T.dur - u;
+    page(shot, T, u, 1);
+    if (next && toEnd < XF) page(next, NT, -toEnd, ease(1 - toEnd / XF));
+    const fade = clamp(toEnd / 0.3);
+    for (const o of shot.ov ?? []) { const k = u - o.T, end = o.until != null ? o.until - o.T : Infinity; if (k >= 0 && k < end) overlay(o, k, fade * clamp((end - k) / 0.3), T); }
+    if (!shot.noCaps) { const live = shot.caps.filter((c) => c.s <= u + 0.05); const cap = live[live.length - 1]; if (cap) caption(cap, u, shot); }
+  } else if (t >= tl.end.start) {
+    endCard(t);
+  }
+  finish(t, shot);
+};
+</script></body></html>
