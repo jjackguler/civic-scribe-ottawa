@@ -33,6 +33,9 @@ import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
+import { Route as PodcastDotxmlRouteImport } from './routes/podcast[.]xml'
+import { Route as PodcastRouteImport } from './routes/podcast'
+import { Route as SirJackRouteImport } from './routes/sir-jack'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -187,6 +190,21 @@ const SearchRoute = SearchRouteImport.update({
 const ShowcaseRoute = ShowcaseRouteImport.update({
   id: '/showcase',
   path: '/showcase',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastDotxmlRoute = PodcastDotxmlRouteImport.update({
+  id: '/podcast.xml',
+  path: '/podcast.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastRoute = PodcastRouteImport.update({
+  id: '/podcast',
+  path: '/podcast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SirJackRoute = SirJackRouteImport.update({
+  id: '/sir-jack',
+  path: '/sir-jack',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -390,6 +408,9 @@ export interface FileRoutesByFullPath {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
+  '/podcast': typeof PodcastRoute
+  '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -451,6 +472,9 @@ export interface FileRoutesByTo {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
+  '/podcast': typeof PodcastRoute
+  '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -513,6 +537,9 @@ export interface FileRoutesById {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
+  '/podcast': typeof PodcastRoute
+  '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
@@ -576,6 +603,9 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/showcase'
+    | '/podcast.xml'
+    | '/podcast'
+    | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -637,6 +667,9 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/showcase'
+    | '/podcast.xml'
+    | '/podcast'
+    | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -698,6 +731,9 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/showcase'
+    | '/podcast.xml'
+    | '/podcast'
+    | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
@@ -760,6 +796,9 @@ export interface RootRouteChildren {
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   ShowcaseRoute: typeof ShowcaseRoute
+  PodcastDotxmlRoute: typeof PodcastDotxmlRoute
+  PodcastRoute: typeof PodcastRoute
+  SirJackRoute: typeof SirJackRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   TermsRoute: typeof TermsRoute
@@ -965,6 +1004,27 @@ declare module '@tanstack/react-router' {
       path: '/showcase'
       fullPath: '/showcase'
       preLoaderRoute: typeof ShowcaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/podcast.xml': {
+      id: '/podcast.xml'
+      path: '/podcast.xml'
+      fullPath: '/podcast.xml'
+      preLoaderRoute: typeof PodcastDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/podcast': {
+      id: '/podcast'
+      path: '/podcast'
+      fullPath: '/podcast'
+      preLoaderRoute: typeof PodcastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sir-jack': {
+      id: '/sir-jack'
+      path: '/sir-jack'
+      fullPath: '/sir-jack'
+      preLoaderRoute: typeof SirJackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -1240,6 +1300,9 @@ const rootRouteChildren: RootRouteChildren = {
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   ShowcaseRoute: ShowcaseRoute,
+  PodcastDotxmlRoute: PodcastDotxmlRoute,
+  PodcastRoute: PodcastRoute,
+  SirJackRoute: SirJackRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   TermsRoute: TermsRoute,

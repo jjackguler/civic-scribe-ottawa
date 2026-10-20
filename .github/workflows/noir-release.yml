@@ -1,0 +1,48 @@
+# Releases scheduled Originals at their time. A case is rendered and its files are
+# committed to the media branch ahead of time, with its manifest entry waiting in
+# originals/scheduled.json. Every ten minutes this job moves the entries whose
+# publishedAt has passed into originals/manifest.json, where the site lists them.
+# The site's "next case" countdown reads originals/scheduled.json.
+name: Noir release
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: originals
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Release the cases that are due
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git clone -q --depth 1 --branch media "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" media
+          cd media
+          [ -f originals/scheduled.json ] || { echo "Nothing scheduled."; exit 0; }
+          now=$(date -u +%Y-%m-%dT%H:%M:%S.999Z)
+          due=$(jq -c --arg now "$now" '[.[] | select(.publishedAt <= $now)]' originals/scheduled.json)
+          if [ "$(jq length <<<"$due")" -eq 0 ]; then echo "Nothing due before $now."; exit 0; fi
+          ids=$(jq -c 'map(.id)' <<<"$due")
+          jq --argjson due "$due" --argjson ids "$ids" \
+            '.items = ($due + [.items[] | select(.id as $i | $ids | index($i) | not)])[:200] | .updatedAt = ($due | map(.publishedAt) | max)' \
+            originals/manifest.json > /tmp/manifest.json
+          jq --indent 1 . /tmp/manifest.json > originals/manifest.json
+          jq --indent 1 --arg now "$now" '[.[] | select(.publishedAt > $now)]' originals/scheduled.json > /tmp/scheduled.json
+          mv /tmp/scheduled.json originals/scheduled.json
+          git config user.name "AI Broadsheet Originals"
+          git config user.email "actions@users.noreply.github.com"
+          git add originals/manifest.json originals/scheduled.json
+          git commit -q -m "Originals: release $(jq -r 'map(.title) | join("; ")' <<<"$due")"
+          git push -q origin HEAD:media
+          jq -r 'map("Released: " + .title) | .[]' <<<"$due" >> "$GITHUB_STEP_SUMMARY"
