@@ -11,7 +11,7 @@ const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const ease = (p) => 0.5 - 0.5 * Math.cos(Math.PI * clamp(p));
 const lin = (x, y0, y1, st, x0 = 0, x1 = 0) => { const g = x.createLinearGradient(x0, y0, x1, y1); st.forEach(([o, c]) => g.addColorStop(o, c)); return g; };
 const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
-function glow(x, cx, cy, r, col, a) { x.save(); x.globalCompositeOperation = "screen"; const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, rgba(col, a)); g.addColorStop(1, rgba(col, 0)); x.fillStyle = g; x.fillRect(cx - r, cy - r, 2 * r, 2 * r); x.restore(); }
+function glow(x, cx, cy, r, col, a) { r = Math.max(1, r); x.save(); x.globalCompositeOperation = "screen"; const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, rgba(col, a)); g.addColorStop(1, rgba(col, 0)); x.fillStyle = g; x.fillRect(cx - r, cy - r, 2 * r, 2 * r); x.restore(); }
 function fig(x, fx, fy, h, col = K, { hat = true, walk = null } = {}) {
   x.save(); x.fillStyle = col; x.translate(fx, fy); const sw = walk == null ? 0 : Math.sin(walk) * h * 0.05;
   x.beginPath(); x.moveTo(-h * 0.07, -h * 0.36); x.lineTo(-h * 0.07 + sw, 0); x.lineTo(-h * 0.02 + sw, 0); x.lineTo(0, -h * 0.34); x.fill();
@@ -307,7 +307,7 @@ S["y-receipt"] = (x, u, L) => {
 };
 S["y-mirror"] = (x, u, L) => {
   night(x, "#0e1020", "#26213a");
-  L(0.2, () => { for (let i = 0; i < 10; i++) { const p = ((u * 0.35 + i / 10) % 1), r = 30 + p * 400; glow(x, 540 + (i % 2 ? 1 : -1) * p * 700, 1500 + p * 300, r, AM, 0.25 * (1 - p)); } });
+  L(0.2, () => { for (let i = 0; i < 10; i++) { const p = (((u * 0.35 + i / 10) % 1) + 1) % 1, r = 30 + p * 400; glow(x, 540 + (i % 2 ? 1 : -1) * p * 700, 1500 + p * 300, r, AM, 0.25 * (1 - p)); } });
   L(0.5, () => {
     x.fillStyle = "#0b0c10"; x.fillRect(500, 560, 80, 70); x.fillStyle = "#0b0c10"; x.beginPath(); x.roundRect(110, 620, 860, 400, 200); x.fill(); x.fillStyle = PAPER; x.beginPath(); x.roundRect(134, 644, 812, 352, 176); x.fill();
     spot(x, 540, 820, 165, 0.18);
