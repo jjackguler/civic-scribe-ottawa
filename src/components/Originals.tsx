@@ -27,6 +27,7 @@ export function usePreviewOk() {
 
 /** One AI Broadsheet Original: vertical video, a silent preview on hover, click to play with sound. */
 export function OriginalCard({ o, justMoved = false }: { o: Original; justMoved?: boolean }) {
+  const wide = o.aspect === "16:9";
   const { locale } = useLocale();
   const fr = locale === "fr";
   const now = useNow();
@@ -45,8 +46,8 @@ export function OriginalCard({ o, justMoved = false }: { o: Original; justMoved?
   }, [preview]);
 
   return (
-    <article id={o.id} className={`min-w-0 ${justMoved ? "moved-in" : ""}`}>
-      <div className="relative aspect-[9/16] bg-signal overflow-hidden">
+    <article id={o.id} className={`min-w-0 ${wide ? "col-span-2" : ""} ${justMoved ? "moved-in" : ""}`}>
+      <div className={`relative ${wide ? "aspect-video" : "aspect-[9/16]"} bg-signal overflow-hidden`}>
         {playing && !yt ? (
           <video src={o.fileUrl} poster={o.posterUrl} controls autoPlay playsInline className="absolute inset-0 h-full w-full object-cover bg-black">
             <track kind="captions" />

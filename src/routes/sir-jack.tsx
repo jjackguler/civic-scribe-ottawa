@@ -37,7 +37,8 @@ function SirJackPage() {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const all = cases(data?.items ?? []);
-  const latest = all[0];
+  const specials = all.filter(o => o.aspect === "16:9");
+  const latest = all.filter(o => o.aspect !== "16:9")[0];
 
   return (
     <PageShell>
@@ -71,11 +72,21 @@ function SirJackPage() {
         </div>
       </section>
 
+      {specials.length > 0 && (
+        <section className="container-mw mt-10">
+          <h2 className="masthead-serif text-[1.9rem]">{fr ? "Éditions spéciales" : "Special editions"}</h2>
+          <p className="font-serif text-[1.05rem] text-muted-foreground mb-5 max-w-3xl">{fr ? "Des enquêtes de quatre minutes en bande dessinée animée, tirées des dossiers judiciaires." : "Four-minute motion-comic investigations, built from court records."}</p>
+          <div className="grid gap-x-6 gap-y-10 grid-cols-2 lg:grid-cols-4">
+            {specials.map(o => <OriginalCard key={o.id} o={o} />)}
+          </div>
+        </section>
+      )}
+
       <AdSlot size="leaderboard" placement="section" className="container-mw mt-8" />
 
       <section className="container-mw mt-10">
         {SIR_JACK_SEASONS.map(season => {
-          const shelf = all.filter(o => { const n = caseNumber(o) ?? 0; return n >= season.from && n <= season.to; });
+          const shelf = all.filter(o => { const n = caseNumber(o) ?? 0; return o.aspect !== "16:9" && n >= season.from && n <= season.to; });
           if (!shelf.length) return null;
           return (
             <div key={season.n} id={`season-${season.n}`} className="mb-14 scroll-mt-24">

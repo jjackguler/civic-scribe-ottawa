@@ -69,6 +69,8 @@ export type Original = {
   aiImages: boolean;
   /** Sources and licences for archive photos, music and sound effects actually used. */
   credits?: string;
+  /** Frame shape; vertical (9:16) unless set. Motion-comic specials are 16:9. */
+  aspect?: "16:9" | "9:16";
   /** Where the video sends the reader next: our article, or the reporting it was built from. */
   readMore?: { url: string; urlFr?: string; en: string; fr: string };
 };
