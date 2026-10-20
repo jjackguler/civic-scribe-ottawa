@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:1li1enc",
+    "at": "2026-10-20T15:45:56.220Z",
+    "reason": "the writer declined: The provided text contains only two short sentences, which is too thin to sustain a 45-second explainer without adding external facts."
+  },
+  {
     "key": "article:126g7au",
     "at": "2026-10-19T17:40:07.504Z",
     "reason": "fact guard / layout check failed twice: not in the sources: Rather, 6, 6x, Future"
