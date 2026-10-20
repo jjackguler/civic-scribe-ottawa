@@ -1,40 +1,5 @@
 [
  {
-  "id": "202610201130-sir-jack-10",
-  "kind": "explainer",
-  "section": "noir",
-  "publishedAt": "2026-10-20T11:30:00.000Z",
-  "title": "The Sir Jack Files #10: The Case of the Missing Junior",
-  "summary": "Anthropic studied its own staff. Junior technical hires fell from 27% to 9%, and its AI agents now log six hours for every human hour. Sir Jack follows the empty chair.",
-  "durationSec": 82,
-  "sources": [
-   {
-    "name": "TechCrunch, Anthony Ha (Oct 17, 2026)",
-    "url": "https://techcrunch.com/2026/10/17/anthropic-says-its-workforce-has-become-less-junior-and-is-spending-more-time-in-meetings/"
-   },
-   {
-    "name": "The Decoder (Oct 18, 2026)",
-    "url": "https://the-decoder.com/anthropic-has-nearly-stopped-hiring-junior-staff-because-ai-agents-now-work-six-times-as-many-hours/"
-   },
-   {
-    "name": "Anthropic, Employment at Anthropic",
-    "url": "https://www.anthropic.com/research/employment-at-anthropic"
-   }
-  ],
-  "transcript": "Case ten. In case one, I went looking for a body, and found none. This time, there's an empty chair. October seventeenth. Anthropic, the company behind Claude, publishes a report on its own workforce. A lab measuring what its machine did to its own office. Early twenty twenty-five: juniors were twenty-seven percent of its technical hires. Now: nine. Since March, its AI agents have logged more hours than its people. By August: six agent hours for every human hour. And the humans? More meetings. Up twenty percent in a year. One in five staff said their job had shifted from doing the work to managing Claudes. The report admits Anthropic is a special case. And more code does not necessarily mean better code. But here's the clue nobody can ignore. Every senior was once a junior. Cut the first rung, and who's left, in ten years, to check the machine? If you're starting out: learn to judge the work, not just produce it. That's the part that's hardest to hand over. Case closed.",
-  "voice": "ElevenLabs stock voice (Brian)",
-  "aiImages": false,
-  "credits": "Noir illustrations drawn in code by AI Broadsheet; figures are anonymous silhouettes, not the people in the story. Narration, sound effects and music generated with ElevenLabs.",
-  "readMore": {
-   "url": "/article/anthropic-cuts-junior-hiring-ai-agents",
-   "urlFr": "/fr/article/anthropic-reduit-embauche-debutants-agents-ia",
-   "en": "Read our full story",
-   "fr": "Lire notre article"
-  },
-  "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@9ccf06e27d868182d79df34e44625466fa431472/originals/files/202610201130-sir-jack-10.mp4",
-  "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@9ccf06e27d868182d79df34e44625466fa431472/originals/files/202610201130-sir-jack-10.jpg"
- },
- {
   "id": "202610201600-sir-jack-special-the-wrong-face",
   "kind": "explainer",
   "section": "noir",
