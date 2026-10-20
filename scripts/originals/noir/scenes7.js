@@ -270,7 +270,7 @@ S["y-street"] = (x, u, L) => {
 };
 S["y-sun"] = (x, u, L) => {
   x.fillStyle = "#EFE8DA"; x.fillRect(-200, -200, W + 400, H + 400);
-  L(0.3, () => { const s = ease(clamp(u / 1.5)); x.fillStyle = RED; x.beginPath(); x.arc(540, 820, 360 * s, 0, 7); x.fill(); });
+  L(0.3, () => { const s = ease(clamp(u / 1.5)); x.fillStyle = RED; x.beginPath(); x.arc(540, 1290 - 60 * s, 330 * s, 0, 7); x.fill(); }); // a sun rising behind the bars, clear of the counter
   L(0.6, () => { // a Saul Bass road of rising bars
     x.fillStyle = "#16181A"; x.fillRect(-200, 1250, W + 400, 900);
     for (let i = 0; i < 9; i++) { const h = 40 + Math.pow(i, 2.1) * 9 * clamp((u - 0.5 - i * 0.15) * 2); x.fillStyle = i === 8 ? RED : "#16181A"; x.fillRect(80 + i * 110, 1250 - h, 80, h); }
