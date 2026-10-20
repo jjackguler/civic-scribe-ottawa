@@ -3,7 +3,7 @@
 //   node render.mjs <slug> [--stills 3,12.5,40]     (run produce.mjs first)
 import { chromium } from "playwright";
 import { createServer } from "node:http";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { readFile, mkdir } from "node:fs/promises";
 import { extname, join } from "node:path";
 
@@ -72,7 +72,10 @@ if (flag === "--stills") {
   chains.push(`${vo.join("")}amix=inputs=${vo.length}:normalize=0,asplit=2[vo][key]`);
   chains.push(`${fx.join("")}amix=inputs=${fx.length}:normalize=0[fx]`);
   chains.push(`[${amb}]atrim=0:${D},volume=-24dB,afade=t=in:d=1.2,afade=t=out:st=${(tl.total - 2).toFixed(2)}:d=2[amb]`);
-  chains.push(`[${mus}]atrim=0:${D},volume=-11dB,afade=t=in:d=2,afade=t=out:st=${(tl.total - 3).toFixed(2)}:d=3[mus0]`);
+  // A score shorter than the film is slowed to fit (pitch kept) rather than looped, so it runs through the end card.
+  const musLen = Number(spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", join(build, "music.mp3")], { encoding: "utf8" }).stdout) || tl.total;
+  const stretch = musLen < tl.total && musLen / tl.total >= 0.75 ? `atempo=${(musLen / tl.total).toFixed(4)},` : "";
+  chains.push(`[${mus}]${stretch}atrim=0:${D},volume=-11dB,afade=t=in:d=2,afade=t=out:st=${(tl.total - 3).toFixed(2)}:d=3[mus0]`);
   chains.push(`[mus0][key]sidechaincompress=threshold=0.02:ratio=6:attack=30:release=600[mus]`);
   chains.push(`[vo][fx][amb][mus]amix=inputs=4:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]`);
   await ffmpeg([...inputs, "-i", video, "-filter_complex", chains.join(";"), "-map", `${inputs.filter((a) => a === "-i").length}:v`, "-map", "[a]",
