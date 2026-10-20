@@ -91,7 +91,7 @@ const inputs = [], chains = [];
 parts.forEach((p, i) => { inputs.push("-i", p.f); chains.push(`[${i}]adelay=${Math.round(p.at * 1000)}:all=1[v${i}]`); });
 const m = parts.length;
 inputs.push("-stream_loop", "-1", "-i", theme);
-chains.push(`${parts.map((_, i) => `[v${i}]`).join("")}amix=inputs=${m}:normalize=0,asplit=2[vo][key]`);
+chains.push(`${parts.map((_, i) => `[v${i}]`).join("")}amix=inputs=${m}:normalize=0,apad=whole_dur=${total.toFixed(2)},asplit=2[vo][key]`); // padded, so the ducked bed (and the outro) runs to the end
 // Theme full at the top, ducked under the voices, back up at the end.
 chains.push(`[${m}]atrim=0:${total.toFixed(2)},volume='if(lt(t,${INTRO - 1}),1,if(gt(t,${(total - OUTRO + 0.5).toFixed(2)}),1,0.16))':eval=frame,afade=t=in:d=1.5,afade=t=out:st=${(total - 4).toFixed(2)}:d=4[bed0]`);
 chains.push(`[bed0][key]sidechaincompress=threshold=0.03:ratio=4:attack=40:release=500[bed]`);
