@@ -1,10 +1,40 @@
 {
- "updatedAt": "2026-10-19T14:49:48.565Z",
+ "updatedAt": "2026-10-20T04:26:18.000Z",
  "items": [
+  {
+   "id": "202610200430-sir-jack-09",
+   "kind": "explainer",
+   "section": "noir",
+   "publishedAt": "2026-10-20T04:26:18.000Z",
+   "title": "The Sir Jack Files #9: The Case of the Burglar Who Never Slept",
+   "summary": "One hacker, a few lines of instructions and an army of AI agents: more than 1,200 shopping sites tried, more than 100 companies hit, including John Deere and SharkNinja. What Reuters found, and the basics that still stop it.",
+   "durationSec": 92,
+   "sources": [
+    {
+     "name": "Reuters, Raphael Satter (Oct 19, 2026)",
+     "url": "https://www.staradvertiser.com/2026/10/19/breaking-news/how-one-hacker-used-ai-agents-to-break-into-over-100-company-websites/"
+    },
+    {
+     "name": "Quartz",
+     "url": "https://qz.com/ai-agents-hacker-john-deere-sharkninja-cummins-breach-101926"
+    }
+   ],
+   "transcript": "Case nine. A burglar who never sleeps, never gets bored, and works for about fifty dollars a job. September twenty-fifth. One hacker types a few orders. Fewer than a hundred Chinese characters. Then lets the machines go to work. AI agents, running on an open-source platform called Cairn, start trying doors. Shopping sites in the US, Canada, Australia and Japan. More than twelve hundred of them. A typical break-in: about twenty-three hours of patient, automated probing. When the front door held, the agents went round the back. A forgotten control panel. A flaw. Hours of trial and error. More than a hundred companies were hit. Reuters named some: John Deere and SharkNinja. Deere says there's no sign sensitive information was accessed. SharkNinja says the site held only product support, and the threat is contained. The researcher who found it says it's not script kiddie stuff. His estimate: about five thousand dollars in AI tokens. The burglar got cheaper. So the basics matter more. Patch what you forgot you had. Turn on two-step login. Check your statements. The machines don't sleep. So the basics can't either. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; figures are anonymous silhouettes, not the people in the story. Narration, sound effects and music generated with ElevenLabs.",
+   "readMore": {
+    "url": "https://www.staradvertiser.com/2026/10/19/breaking-news/how-one-hacker-used-ai-agents-to-break-into-over-100-company-websites/",
+    "en": "Read Reuters' investigation",
+    "fr": "Lire l'enquête de Reuters"
+   },
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@9ccf06e27d868182d79df34e44625466fa431472/originals/files/202610200430-sir-jack-09.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@9ccf06e27d868182d79df34e44625466fa431472/originals/files/202610200430-sir-jack-09.jpg"
+  },
   {
    "id": "202610191450-titanic-02",
    "kind": "explainer",
-   "section": "culture",
+   "section": "noir",
    "publishedAt": "2026-10-19T14:49:48.565Z",
    "title": "The Sir Jack Files #8, Part 2: The Case of the Ship That Never Sank",
    "summary": "Jack and Rose were fiction, but a grave marked J. Dawson is real. Why a 1997 film and a 1912 ship still hold millions: the people on board.",
@@ -33,7 +63,7 @@
   {
    "id": "202610191450-titanic-01",
    "kind": "explainer",
-   "section": "culture",
+   "section": "noir",
    "publishedAt": "2026-10-19T14:48:42.031Z",
    "title": "The Sir Jack Files #8, Part 1: The Case of the Unsinkable Ship",
    "summary": "April 1912: ignored ice warnings, a lookout’s call, compartments built for four floods and twenty lifeboats for 2,200 people. How and why Titanic sank.",
