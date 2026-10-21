@@ -54,10 +54,12 @@ jobs:
           path: scripts/originals/comic/build
           key: comic-${{ github.run_id }}
       - name: Render
+        if: ${{ !contains(github.event.head_commit.message, '[norender]') }}
         run: |
           for s in $(cat queue.txt 2>/dev/null || echo "$SLUG"); do node render.mjs "$s"; done
           ls -la out
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: build-${{ github.run_id }}
           path: |

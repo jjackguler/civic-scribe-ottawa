@@ -1,0 +1,233 @@
+{
+ "slug": "bulletin-panic",
+ "title": "The Panic That Wasn't",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.08,
+ "endCard": 3.0,
+ "trend": "THE SIR JACK FILES · 30 OCT 1938",
+ "kicker": "THE PANIC THAT WASN'T",
+ "date": "WAR OF THE WORLDS",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "musicFrom": "bulletin-psg",
+ "ambience": "Faint vintage radio static, no music.",
+ "images": {
+  "panic-studio": "art/bulletins/panic-studio.jpg",
+  "panic-papers": "art/bulletins/panic-papers.jpg",
+  "panic-flash": "art/bulletins/panic-flash.jpg",
+  "panic-phone": "art/bulletins/panic-phone.jpg",
+  "panic-dummy": "art/bulletins/panic-dummy.jpg",
+  "panic-ads": "art/bulletins/panic-ads.jpg",
+  "panic-quito": "art/bulletins/panic-quito.jpg",
+  "panic-radio": "art/bulletins/panic-radio.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts: Pooley & Socolow (Slate, 2013); Hooper survey via Broadcasting (1938); Radiolab (2010) on Quito, 1949.",
+ "sources": [
+  {
+   "name": "Slate (Pooley & Socolow, 2013)",
+   "url": "https://slate.com/culture/2013/10/orson-welles-war-of-the-worlds-panic-myth-the-infamous-radio-broadcast-did-not-cause-a-nationwide-hysteria.html"
+  },
+  {
+   "name": "Radiolab (2010)",
+   "url": "https://www.radiolab.org/story/91624-could-it-happen-again-and-again/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "October thirtieth, nineteen thirty-eight. Orson Welles reads a Martian invasion on CBS radio. Next morning, the papers scream: mass panic. Lovely story. One problem. That night, a ratings firm rang five thousand homes. Two percent said Welles. Not one said news. The big crowd was on NBC, laughing at a ventriloquist's dummy. So who cooked up the panic? Newspapers, sore at radio for nicking their advertisers. The real panic came eleven years later, in Quito, Ecuador. A station burned. People died. Nobody remembers that one. The full film is on AI Broadsheet.",
+   "lead": 0.25,
+   "hold": 0.5,
+   "panels": [
+    {
+     "scene": "panic-studio"
+    },
+    {
+     "scene": "panic-papers",
+     "w": "Next"
+    },
+    {
+     "scene": "panic-flash",
+     "w": "Lovely"
+    },
+    {
+     "scene": "panic-phone",
+     "w": "That"
+    },
+    {
+     "scene": "panic-dummy",
+     "w": "big"
+    },
+    {
+     "scene": "panic-ads",
+     "w": "So"
+    },
+    {
+     "scene": "panic-quito",
+     "w": "real"
+    },
+    {
+     "scene": "panic-radio",
+     "w": "Nobody"
+    }
+   ],
+   "cards": [
+    {
+     "w": "thirtieth",
+     "text": "OCT 30, 1938",
+     "sub": "CBS RADIO"
+    },
+    {
+     "w": "panic",
+     "text": "“MASS PANIC”",
+     "sub": "THE PAPERS"
+    },
+    {
+     "w": "five",
+     "text": "5,000 HOMES",
+     "sub": "RATINGS CALLS"
+    },
+    {
+     "w": "Two",
+     "text": "2%",
+     "sub": "SAID WELLES"
+    },
+    {
+     "w": "advertisers",
+     "text": "AD MONEY",
+     "sub": "THE MOTIVE"
+    },
+    {
+     "w": "Quito",
+     "text": "QUITO, 1949",
+     "sub": "THE REAL ONE"
+    },
+    {
+     "w": "died",
+     "text": "PEOPLE DIED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "Next",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "Lovely",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "That",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "big",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "So",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "real",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "Nobody",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "panic",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "five",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "Two",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "advertisers",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "Quito",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "died",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

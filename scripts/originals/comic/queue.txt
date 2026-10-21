@@ -8,3 +8,5 @@ bulletin-burgerking
 bulletin-tenthings
 bulletin-chevron
 bulletin-trumpjr
+bulletin-panic
+the-panic-that-wasnt
