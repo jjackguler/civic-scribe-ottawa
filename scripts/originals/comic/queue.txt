@@ -1,12 +1,1 @@
-bulletin-psg
-bulletin-ucl
-bulletin-knicks
-bulletin-applegate
-bulletin-ssa
-bulletin-ohio
-bulletin-burgerking
-bulletin-tenthings
-bulletin-chevron
-bulletin-trumpjr
-bulletin-panic
-the-panic-that-wasnt
+bulletin-netflix

@@ -1,0 +1,115 @@
+{
+ "slug": "bulletin-netflix",
+ "title": "LAYOFFS",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TECH JOBS · STREAMING",
+ "kicker": "LAYOFFS",
+ "date": "21 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "musicFrom": "bulletin-psg",
+ "ambience": "Faint modern office hum, no music.",
+ "images": {
+  "t21-nf-a": "art/bulletins/t21-nf-a.jpg",
+  "t21-nf-b": "art/bulletins/t21-nf-b.jpg",
+  "t21-nf-c": "art/bulletins/t21-nf-c.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed.",
+ "sources": [
+  {
+   "name": "Wall Street Journal, via NBC News",
+   "url": "https://www.nbcnews.com/business/media/netflix-layoffs-rcna603454"
+  },
+  {
+   "name": "Fox Business",
+   "url": "https://www.foxbusiness.com/fox-news-tech/netflix-reportedly-cutting-1000-jobs-largest-round-layoffs-since-2022"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Netflix is cutting about one thousand jobs, roughly six percent of its workforce. It's the company's biggest round of layoffs since twenty twenty-two. Most of the cuts hit product, technology, legal and HR. The co-CEOs told staff in an email.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "t21-nf-a"
+    },
+    {
+     "scene": "t21-nf-b",
+     "w": "biggest"
+    },
+    {
+     "scene": "t21-nf-c",
+     "w": "Most"
+    }
+   ],
+   "cards": [
+    {
+     "w": "thousand",
+     "text": "1,000 JOBS",
+     "sub": "~6% OF STAFF"
+    },
+    {
+     "w": "biggest",
+     "text": "BIGGEST SINCE 2022"
+    },
+    {
+     "w": "product",
+     "text": "PRODUCT · TECH · LEGAL · HR"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "biggest",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "Most",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "biggest",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "product",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}
