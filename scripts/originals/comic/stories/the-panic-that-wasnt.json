@@ -24,30 +24,31 @@
  "halftone": 0,
  "page": "cinema.html",
  "images": {
-  "studio": "art/the-panic-that-wasnt/studio.jpg",
-  "living-room": "art/the-panic-that-wasnt/living-room.jpg",
-  "farm": "art/the-panic-that-wasnt/farm.jpg",
-  "presses": "art/the-panic-that-wasnt/presses.jpg",
-  "newsstand": "art/the-panic-that-wasnt/newsstand.jpg",
-  "switchboard": "art/the-panic-that-wasnt/switchboard.jpg",
-  "road": "art/the-panic-that-wasnt/road.jpg",
-  "presser": "art/the-panic-that-wasnt/presser.jpg",
-  "flashbulb": "art/the-panic-that-wasnt/flashbulb.jpg",
-  "hooper": "art/the-panic-that-wasnt/hooper.jpg",
-  "tally": "art/the-panic-that-wasnt/tally.jpg",
-  "dial": "art/the-panic-that-wasnt/dial.jpg",
-  "dummy": "art/the-panic-that-wasnt/dummy.jpg",
-  "newsroom": "art/the-panic-that-wasnt/newsroom.jpg",
-  "ads": "art/the-panic-that-wasnt/ads.jpg",
-  "typewriter": "art/the-panic-that-wasnt/typewriter.jpg",
-  "princeton": "art/the-panic-that-wasnt/princeton.jpg",
-  "hospital": "art/the-panic-that-wasnt/hospital.jpg",
-  "letters": "art/the-panic-that-wasnt/letters.jpg",
-  "washington": "art/the-panic-that-wasnt/washington.jpg",
-  "quito": "art/the-panic-that-wasnt/quito.jpg",
-  "riot": "art/the-panic-that-wasnt/riot.jpg",
-  "mic-fire": "art/the-panic-that-wasnt/mic-fire.jpg",
-  "dawn-radio": "art/the-panic-that-wasnt/dawn-radio.jpg"
+  "t-studio": "art/the-panic-that-wasnt/t-studio.jpg",
+  "t-family": "art/the-panic-that-wasnt/t-family.jpg",
+  "t-farm": "art/the-panic-that-wasnt/t-farm.jpg",
+  "t-dial": "art/the-panic-that-wasnt/t-dial.jpg",
+  "t-presses": "art/the-panic-that-wasnt/t-presses.jpg",
+  "t-newsboy": "art/the-panic-that-wasnt/t-newsboy.jpg",
+  "t-car": "art/the-panic-that-wasnt/t-car.jpg",
+  "t-switchboard": "art/the-panic-that-wasnt/t-switchboard.jpg",
+  "t-presser": "art/the-panic-that-wasnt/t-presser.jpg",
+  "t-reporter": "art/the-panic-that-wasnt/t-reporter.jpg",
+  "t-flashbulb": "art/the-panic-that-wasnt/t-flashbulb.jpg",
+  "t-hooper": "art/the-panic-that-wasnt/t-hooper.jpg",
+  "t-stamp": "art/the-panic-that-wasnt/t-stamp.jpg",
+  "t-dummy": "art/the-panic-that-wasnt/t-dummy.jpg",
+  "t-newsroom": "art/the-panic-that-wasnt/t-newsroom.jpg",
+  "t-ads": "art/the-panic-that-wasnt/t-ads.jpg",
+  "t-typewriter": "art/the-panic-that-wasnt/t-typewriter.jpg",
+  "t-princeton": "art/the-panic-that-wasnt/t-princeton.jpg",
+  "t-hospital": "art/the-panic-that-wasnt/t-hospital.jpg",
+  "t-letters": "art/the-panic-that-wasnt/t-letters.jpg",
+  "t-washington": "art/the-panic-that-wasnt/t-washington.jpg",
+  "t-quito": "art/the-panic-that-wasnt/t-quito.jpg",
+  "t-riot": "art/the-panic-that-wasnt/t-riot.jpg",
+  "t-micfire": "art/the-panic-that-wasnt/t-micfire.jpg",
+  "t-dawn": "art/the-panic-that-wasnt/t-dawn.jpg"
  },
  "sources": [
   {
@@ -90,7 +91,7 @@
    "lead": 2.2,
    "panels": [
     {
-     "scene": "studio",
+     "scene": "t-studio",
      "full": true,
      "r": [
       0,
@@ -98,19 +99,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -129,7 +118,18 @@
    "say": "It's The War of the Worlds. Martians land on a farm in Grover's Mill, New Jersey. And the story is told as fake news bulletins, breaking into a dance band.",
    "panels": [
     {
-     "scene": "living-room",
+     "scene": "t-family",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "t-farm",
      "full": true,
      "r": [
       0,
@@ -138,45 +138,10 @@
       1080
      ],
      "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "w": "Martians"
     },
     {
-     "scene": "farm",
-     "full": true,
-     "r": [
-      0,
-      0,
-      1920,
-      1080
-     ],
-     "from": "up",
-     "w": "Martians",
-     "cam": {
-      "from": [
-       1.02,
-       0,
-       0
-      ],
-      "to": [
-       1.14,
-       0,
-       0.01
-      ]
-     }
-    },
-    {
-     "scene": "dial",
+     "scene": "t-dial",
      "full": true,
      "r": [
       0,
@@ -213,7 +178,7 @@
    "hold": 4.4,
    "panels": [
     {
-     "scene": "presses",
+     "scene": "t-presses",
      "full": true,
      "r": [
       0,
@@ -221,19 +186,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.02,
-       0,
-       0
-      ],
-      "to": [
-       1.18,
-       0.02,
-       0
-      ]
-     }
+     "from": "up"
     }
    ],
    "ov": [
@@ -271,7 +224,7 @@
    "lead": 0.6,
    "panels": [
     {
-     "scene": "newsstand",
+     "scene": "t-newsboy",
      "full": true,
      "r": [
       0,
@@ -279,19 +232,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "ov": [
@@ -321,7 +262,7 @@
    "say": "The papers told of families fleeing their homes, of switchboards jammed with calls.",
    "panels": [
     {
-     "scene": "road",
+     "scene": "t-car",
      "full": true,
      "r": [
       0,
@@ -329,22 +270,10 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     },
     {
-     "scene": "switchboard",
+     "scene": "t-switchboard",
      "full": true,
      "r": [
       0,
@@ -381,7 +310,7 @@
    "hold": 0.4,
    "panels": [
     {
-     "scene": "presser",
+     "scene": "t-presser",
      "full": true,
      "r": [
       0,
@@ -389,19 +318,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -434,7 +351,7 @@
    ],
    "panels": [
     {
-     "scene": "presser",
+     "scene": "t-reporter",
      "full": true,
      "r": [
       0,
@@ -442,22 +359,10 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.1,
-       0.02,
-       0
-      ],
-      "to": [
-       1.2,
-       0.04,
-       0
-      ]
-     }
+     "from": "up"
     },
     {
-     "scene": "flashbulb",
+     "scene": "t-flashbulb",
      "line": 1,
      "at": -0.2
     }
@@ -493,7 +398,7 @@
    ],
    "panels": [
     {
-     "scene": "flashbulb",
+     "scene": "t-presser-b",
      "full": true,
      "r": [
       0,
@@ -501,24 +406,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
-    },
-    {
-     "scene": "presser",
-     "line": 1,
-     "at": -0.2
+     "from": "up"
     }
    ],
    "sfx": [
@@ -538,7 +426,7 @@
    "lead": 0.6,
    "panels": [
     {
-     "scene": "hooper",
+     "scene": "t-hooper",
      "full": true,
      "r": [
       0,
@@ -546,19 +434,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "ov": [
@@ -599,7 +475,7 @@
    "say": "Two percent named a radio play, or the Welles show. Not one said a news broadcast.",
    "panels": [
     {
-     "scene": "tally",
+     "scene": "t-stamp",
      "full": true,
      "r": [
       0,
@@ -607,19 +483,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.0,
-       0,
-       0
-      ],
-      "to": [
-       1.16,
-       0,
-       0.02
-      ]
-     }
+     "from": "up"
     }
    ],
    "ov": [
@@ -652,7 +516,7 @@
    "say": "Most of America was on NBC, laughing at a ventriloquist and his dummy, Charlie McCarthy. Some CBS stations didn't even carry Welles.",
    "panels": [
     {
-     "scene": "dummy",
+     "scene": "t-dummy",
      "full": true,
      "r": [
       0,
@@ -660,31 +524,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
-    },
-    {
-     "scene": "dial",
-     "full": true,
-     "r": [
-      0,
-      0,
-      1920,
-      1080
-     ],
-     "from": "up",
-     "w": "Some"
+     "from": "up"
     }
    ],
    "sfx": [
@@ -712,7 +552,7 @@
    "lead": 0.6,
    "panels": [
     {
-     "scene": "newsroom",
+     "scene": "t-newsroom",
      "full": true,
      "r": [
       0,
@@ -720,22 +560,10 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     },
     {
-     "scene": "ads",
+     "scene": "t-ads",
      "full": true,
      "r": [
       0,
@@ -774,7 +602,7 @@
    "say": "Here was proof, the papers said, that radio couldn't be trusted with the news. The Times called it terror by radio.",
    "panels": [
     {
-     "scene": "typewriter",
+     "scene": "t-typewriter",
      "full": true,
      "r": [
       0,
@@ -782,19 +610,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.04,
-       0,
-       0
-      ],
-      "to": [
-       1.18,
-       0,
-       0
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -813,7 +629,7 @@
    "say": "Within a day or two, most papers dropped the story. The legend stayed.",
    "panels": [
     {
-     "scene": "presses",
+     "scene": "t-presses-b",
      "full": true,
      "r": [
       0,
@@ -821,19 +637,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.02,
-       0,
-       0
-      ],
-      "to": [
-       1.14,
-       0,
-       0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -853,7 +657,18 @@
    "lead": 0.6,
    "panels": [
     {
-     "scene": "princeton",
+     "scene": "t-princeton",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "t-newsboy-b",
      "full": true,
      "r": [
       0,
@@ -862,18 +677,7 @@
       1080
      ],
      "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "w": "after"
     }
    ],
    "ov": [
@@ -903,7 +707,7 @@
    "say": "Six weeks on, six New York hospitals had no record of a single case. No suicide was ever confirmed.",
    "panels": [
     {
-     "scene": "hospital",
+     "scene": "t-hospital",
      "full": true,
      "r": [
       0,
@@ -911,19 +715,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.02,
-       0,
-       0
-      ],
-      "to": [
-       1.16,
-       0.02,
-       0
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -942,7 +734,7 @@
    "say": "Nearly fourteen hundred listeners wrote to Welles. Decades later, a historian read their letters. His conclusion: relatively few listeners ever believed the attack was real.",
    "panels": [
     {
-     "scene": "letters",
+     "scene": "t-letters",
      "full": true,
      "r": [
       0,
@@ -950,19 +742,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -981,7 +761,7 @@
    "say": "Washington issued no fines, and no rules. The networks simply promised: no more fake news flashes.",
    "panels": [
     {
-     "scene": "washington",
+     "scene": "t-washington",
      "full": true,
      "r": [
       0,
@@ -989,19 +769,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "sfx": [
@@ -1021,7 +789,7 @@
    "lead": 0.6,
    "panels": [
     {
-     "scene": "quito",
+     "scene": "t-quito",
      "full": true,
      "r": [
       0,
@@ -1029,19 +797,7 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     }
    ],
    "ov": [
@@ -1071,7 +827,7 @@
    "say": "When listeners learned it was fiction, a crowd stoned the station and set it on fire. People died. Reports put the toll anywhere from five to twenty.",
    "panels": [
     {
-     "scene": "riot",
+     "scene": "t-riot",
      "full": true,
      "r": [
       0,
@@ -1079,22 +835,10 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     },
     {
-     "scene": "mic-fire",
+     "scene": "t-micfire",
      "full": true,
      "r": [
       0,
@@ -1131,7 +875,7 @@
    "hold": 2.6,
    "panels": [
     {
-     "scene": "dawn-radio",
+     "scene": "t-dawn",
      "full": true,
      "r": [
       0,
@@ -1139,22 +883,10 @@
       1920,
       1080
      ],
-     "from": "up",
-     "cam": {
-      "from": [
-       1.14,
-       0,
-       0.01
-      ],
-      "to": [
-       1.02,
-       0,
-       -0.01
-      ]
-     }
+     "from": "up"
     },
     {
-     "scene": "studio",
+     "scene": "t-studio-b",
      "full": true,
      "r": [
       0,
@@ -1197,14 +929,20 @@
   }
  ],
  "clips": {
-  "dawn-radio": "art/the-panic-that-wasnt/clips/dawn-radio.webm",
-  "farm": "art/the-panic-that-wasnt/clips/farm.webm",
-  "living-room": "art/the-panic-that-wasnt/clips/living-room.webm",
-  "newsstand": "art/the-panic-that-wasnt/clips/newsstand.webm",
-  "presser": "art/the-panic-that-wasnt/clips/presser.webm",
-  "presses": "art/the-panic-that-wasnt/clips/presses.webm",
-  "riot": "art/the-panic-that-wasnt/clips/riot.webm",
-  "studio": "art/the-panic-that-wasnt/clips/studio.webm",
-  "switchboard": "art/the-panic-that-wasnt/clips/switchboard.webm"
+  "t-ads": "art/the-panic-that-wasnt/clips/t-ads.webm",
+  "t-farm": "art/the-panic-that-wasnt/clips/t-farm.webm",
+  "t-flashbulb": "art/the-panic-that-wasnt/clips/t-flashbulb.webm",
+  "t-newsboy": "art/the-panic-that-wasnt/clips/t-newsboy.webm",
+  "t-presser": "art/the-panic-that-wasnt/clips/t-presser.webm",
+  "t-presses": "art/the-panic-that-wasnt/clips/t-presses.webm",
+  "t-riot": "art/the-panic-that-wasnt/clips/t-riot.webm",
+  "t-stamp": "art/the-panic-that-wasnt/clips/t-stamp.webm",
+  "t-studio": "art/the-panic-that-wasnt/clips/t-studio.webm",
+  "t-switchboard": "art/the-panic-that-wasnt/clips/t-switchboard.webm",
+  "t-typewriter": "art/the-panic-that-wasnt/clips/t-typewriter.webm",
+  "t-presser-b": "art/the-panic-that-wasnt/clips/t-presser.webm",
+  "t-presses-b": "art/the-panic-that-wasnt/clips/t-presses.webm",
+  "t-studio-b": "art/the-panic-that-wasnt/clips/t-studio.webm",
+  "t-newsboy-b": "art/the-panic-that-wasnt/clips/t-newsboy.webm"
  }
 }
