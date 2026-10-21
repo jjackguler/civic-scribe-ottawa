@@ -1,0 +1,187 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@700..900&family=Schibsted+Grotesk:wght@500..900&family=Anton&display=block">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head><body><canvas id="c"></canvas>
+<script>
+// 15-second vertical news bulletin, Guy Ritchie grammar: punch-in cuts, whip pans, freeze frames
+// with slammed title cards, a cheeky narrator, word-by-word captions. Painted stills (story.images)
+// move in 2.5D via their depth maps (depth.py). Story: one shot whose panels and cards are cued
+// to words of the narration (build/<slug>/timeline.json from produce.mjs).
+let W = 1080, H = 1920;
+const PAPER = "#F4EFE4", YELLOW = "#FFD23F", RED = "#E63B2E", INK = "#0a0a0c";
+const SANS = '"Schibsted Grotesk", sans-serif', POSTER = '"Anton", sans-serif', SERIF = '"Bodoni Moda", serif';
+const c = document.getElementById("c"), x = c.getContext("2d");
+let story, tl, T, cuts = [], cards = [], words = [], grain = [], gl, prog, glc, tex = {};
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (p) => 0.5 - 0.5 * Math.cos(Math.PI * clamp(p));
+const out3 = (p) => 1 - Math.pow(1 - clamp(p), 3);
+const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+const noise = (t) => { const i = Math.floor(t), f = t - i; return hash(i) * (1 - ease(f)) + hash(i + 1) * ease(f); };
+const norm = (w) => w.toLowerCase().replace(/[^a-z0-9'-]/g, "");
+
+// ── WebGL depth parallax (as cinema.html) ──
+const VS = `#version 300 es
+in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
+const FS = `#version 300 es
+precision highp float;
+uniform sampler2D img, dep; uniform vec2 res, pan, orbit; uniform float zoom, rot, dolly, ia, freeze;
+out vec4 o;
+void main(){
+  vec2 v = vec2(gl_FragCoord.x / res.x, 1. - gl_FragCoord.y / res.y);
+  float sa = res.x / res.y;
+  vec2 p = v - .5; p.x *= sa;
+  float cr = cos(rot), sr = sin(rot); p = mat2(cr, -sr, sr, cr) * p;
+  p /= zoom; p.x /= sa * ia;
+  vec2 base = p + .5 + pan, q = base;
+  for (int i = 0; i < 12; i++) { float d = texture(dep, q).r - .45; q = base - orbit * d - (base - .5) * dolly * d; }
+  vec3 col = texture(img, clamp(q, .001, .999)).rgb;
+  if (freeze > 0.) { float l = dot(col, vec3(.3, .59, .11)); col = mix(col, vec3(l) * vec3(1.15, 1.0, .78), .55 * freeze); col = (col - .5) * (1. + .35 * freeze) + .5; }
+  o = vec4(col, 1.);
+}`;
+function initGL() {
+  glc = document.createElement("canvas"); glc.width = W; glc.height = H;
+  gl = glc.getContext("webgl2", { preserveDrawingBuffer: true, antialias: false });
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+  prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog); gl.useProgram(prog);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "a"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  gl.uniform1i(gl.getUniformLocation(prog, "img"), 0); gl.uniform1i(gl.getUniformLocation(prog, "dep"), 1); gl.viewport(0, 0, W, H);
+}
+function upload(im) {
+  const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, im);
+  for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v);
+  return t;
+}
+const loadImg = (src) => new Promise((ok) => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = src; });
+function shoot(key, cam) {
+  const Tx = tex[key]; if (!Tx) return;
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, Tx.img); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, Tx.dep);
+  const u = (n) => gl.getUniformLocation(prog, n);
+  gl.uniform2f(u("res"), W, H); gl.uniform2f(u("pan"), cam.px, cam.py); gl.uniform2f(u("orbit"), cam.ox, cam.oy);
+  gl.uniform1f(u("zoom"), cam.z); gl.uniform1f(u("rot"), cam.r); gl.uniform1f(u("dolly"), cam.d); gl.uniform1f(u("ia"), Tx.aspect); gl.uniform1f(u("freeze"), cam.f);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+}
+
+window.setup = async () => {
+  const slug = new URLSearchParams(location.search).get("slug");
+  story = await (await fetch(`stories/${slug}.json`)).json();
+  tl = await (await fetch(`build/${slug}/timeline.json`)).json();
+  [W, H] = story.size ?? [1080, 1920]; c.width = W; c.height = H;
+  initGL();
+  await Promise.all(Object.entries(story.images ?? {}).map(async ([k, src]) => {
+    const [im, dp] = await Promise.all([loadImg(src), loadImg(src.replace(/\.jpg$/, ".depth.png"))]);
+    if (im && dp) tex[k] = { img: upload(im), dep: upload(dp), aspect: (im.width / im.height) / (W / H) };
+  }));
+  await Promise.all([`900 80px ${SANS}`, `700 40px ${SANS}`, `80px ${POSTER}`, `800 80px ${SERIF}`].map((f) => document.fonts.load(f)));
+  for (let k = 0; k < 6; k++) {
+    const g = document.createElement("canvas"); g.width = 540; g.height = 960;
+    const gx = g.getContext("2d"), d = gx.createImageData(540, 960);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+    gx.putImageData(d, 0, 0); grain.push(g);
+  }
+  const s = story.shots[0]; T = tl.shots[0];
+  const cue = (w, at = 0) => { const m = T.words.find((x) => norm(x.w).startsWith(w.toLowerCase())); return T.start + (m ? T.voAt + m.start : 0) + at; };
+  cuts = s.panels.map((p, i) => ({ scene: p.scene, start: i === 0 ? 0 : cue(p.w, -0.08), seed: i }));
+  cuts.forEach((k, i) => { k.end = cuts[i + 1]?.start ?? tl.end.start; });
+  cards = (s.cards ?? []).map((k, i) => ({ ...k, T: i === 0 && !k.w ? T.start + T.voAt : cue(k.w, -0.05) }));
+  cards.forEach((k, i) => { k.end = Math.min(cards[i + 1]?.T ?? tl.end.start, k.T + 2.6); });
+  words = T.words.map((w) => ({ w: w.w, s: T.start + T.voAt + w.start, e: T.start + T.voAt + w.end }));
+  return { duration: tl.total, fps: 30 };
+};
+
+// ── drawing helpers ──
+function text(str, px, py, font, color, { align = "left", track = 0, alpha = 1, shadow = 0, base = "alphabetic" } = {}) {
+  x.save(); x.globalAlpha *= alpha; x.font = font; x.textAlign = align; x.textBaseline = base; x.letterSpacing = `${track}px`; x.fillStyle = color;
+  if (shadow) { x.shadowColor = "rgba(0,0,0,0.85)"; x.shadowBlur = shadow; x.shadowOffsetY = shadow / 4; }
+  x.fillText(str, px, py); x.restore();
+}
+function fit(str, font, size, max, track = 0) { x.save(); x.font = `${size}px ${font}`; x.letterSpacing = `${track}px`; const w = x.measureText(str).width; x.restore(); return Math.min(size, size * max / w); }
+function dim(a) { if (a > 0) { x.fillStyle = `rgba(0,0,0,${a})`; x.fillRect(0, 0, W, H); } }
+
+function camera(cut, k, frozenAt) {
+  const kk = frozenAt ?? k, dur = cut.end - cut.start;
+  const ramp = out3(kk / 0.4); // speed ramp: a fast push, then a crawl
+  const z = 1.1 + 0.05 * ramp + 0.06 * ease(kk / Math.max(1, dur));
+  const dir = cut.seed % 2 ? -1 : 1;
+  return { z, r: (noise(kk * 0.4 + cut.seed) - 0.5) * 0.01, px: dir * 0.02 * (ease(kk / dur) - 0.5), py: (noise(kk * 0.5 + 7) - 0.5) * 0.004,
+    ox: dir * 0.03 * (ease(kk / dur) - 0.5) * 2, oy: 0, d: 0.08 * ease(kk / dur), f: 0 };
+}
+function card(k, t) {
+  const a = t - k.T, life = k.end - k.T; if (a < 0 || a > life) return;
+  const fade = clamp((life - a) / 0.2), slam = out3(a / 0.14), s = 1 + 0.9 * (1 - slam);
+  const shake = a < 0.3 ? (hash(Math.floor(a * 60)) - 0.5) * 22 * (1 - a / 0.3) : 0;
+  const size = fit(k.text, POSTER, 150, 920, 2), y = 640;
+  x.save(); x.globalAlpha = fade; x.translate(W / 2 + shake, y); x.rotate(-0.045); x.scale(s, s);
+  // a strip of yellow tape behind the slammed title
+  x.font = `${size}px ${POSTER}`; x.letterSpacing = "2px"; const tw = x.measureText(k.text).width; x.letterSpacing = "0px";
+  x.fillStyle = YELLOW; x.fillRect(-tw / 2 - 34, -size * 0.92, tw + 68, size * 1.14);
+  x.fillStyle = INK; x.font = `${size}px ${POSTER}`; x.letterSpacing = "2px"; x.textAlign = "center"; x.fillText(k.text, 0, 0);
+  if (k.sub) { x.letterSpacing = "6px"; x.font = `800 38px ${SANS}`; const sw = x.measureText(k.sub).width; x.fillStyle = INK; x.fillRect(-sw / 2 - 22, 26, sw + 44, 58); x.fillStyle = PAPER; x.fillText(k.sub, 0, 68); }
+  x.restore();
+}
+function captions(t) {
+  // phrase of up to four words around the current word; the spoken word lights up
+  const i = words.findIndex((w) => t >= w.s - 0.05 && t < w.e + 0.25); if (i < 0) return;
+  const st = Math.floor(i / 4) * 4, line = words.slice(st, st + 4);
+  const font = `900 64px ${SANS}`; x.save(); x.font = font; x.letterSpacing = "1px";
+  const parts = line.map((w) => w.w.toUpperCase()), widths = parts.map((p) => x.measureText(p + " ").width), total = widths.reduce((a, b) => a + b, 0);
+  const sc = Math.min(1, 960 / total); let px = W / 2 - total * sc / 2; const py = H - 430;
+  x.translate(0, py); x.scale(1, 1);
+  parts.forEach((p, j) => { const on = st + j === i; x.save(); x.translate(px, 0); x.scale(sc, sc);
+    x.lineWidth = 12; x.strokeStyle = "rgba(0,0,0,0.85)"; x.lineJoin = "round"; x.strokeText(p, 0, 0);
+    x.fillStyle = on ? YELLOW : PAPER; x.fillText(p, 0, 0); x.restore(); px += widths[j] * sc; });
+  x.restore();
+}
+function chrome(t) {
+  const g = x.createLinearGradient(0, 0, 0, 420); g.addColorStop(0, "rgba(0,0,0,0.75)"); g.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = g; x.fillRect(0, 0, W, 420);
+  const g2 = x.createLinearGradient(0, H - 620, 0, H); g2.addColorStop(0, "rgba(0,0,0,0)"); g2.addColorStop(1, "rgba(0,0,0,0.8)"); x.fillStyle = g2; x.fillRect(0, H - 620, W, 620);
+  const a = clamp(t / 0.4);
+  x.save(); x.globalAlpha = a;
+  x.font = `800 34px ${SANS}`; x.letterSpacing = "5px"; const kw = x.measureText(story.kicker).width;
+  x.fillStyle = RED; x.fillRect(60, 120, kw + 48, 62); text(story.kicker, 84, 164, `800 34px ${SANS}`, PAPER, { track: 5 });
+  const pulse = 0.5 + 0.5 * Math.sin(t * 6); x.fillStyle = `rgba(255,59,46,${0.55 + 0.45 * pulse})`; x.beginPath(); x.arc(76, 228, 11, 0, 7); x.fill();
+  text(story.trend, 100, 240, `700 30px ${SANS}`, PAPER, { track: 3 });
+  text(story.date, W - 60, 164, `700 30px ${SANS}`, "rgba(244,239,228,0.75)", { align: "right", track: 3 });
+  text("AI BROADSHEET", W / 2, H - 120, `800 40px ${SERIF}`, PAPER, { align: "center", track: 8 });
+  x.fillStyle = YELLOW; x.fillRect(0, 0, W * clamp(t / tl.end.start), 10);
+  x.restore();
+}
+function endCard(t) {
+  const k = t - tl.end.start, a = clamp(k / 0.3);
+  x.fillStyle = INK; x.globalAlpha = a; x.fillRect(0, 0, W, H); x.globalAlpha = 1;
+  const p = out3((k - 0.1) / 0.5);
+  text("AI BROADSHEET", W / 2, 760 + (1 - p) * 40, `800 104px ${SERIF}`, PAPER, { align: "center", track: 4, alpha: p });
+  x.fillStyle = YELLOW; x.fillRect(W / 2 - 200 * p, 800, 400 * p, 8);
+  text("FULL STORIES · AIBROADSHEET.COM", W / 2, 900, `800 40px ${SANS}`, YELLOW, { align: "center", track: 3, alpha: clamp((k - 0.4) / 0.4) });
+  const sa = clamp((k - 0.7) / 0.4) * 0.8;
+  text("Sources: " + story.sources.map((s) => s.name).join(" · "), W / 2, 1060, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
+  text("Trend data: Google Trends", W / 2, 1104, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
+  text("AI-generated images and voice.", W / 2, 1148, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
+}
+function finish(t) {
+  const v = x.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.75); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.45)"); x.fillStyle = v; x.fillRect(0, 0, W, H);
+  x.save(); x.globalCompositeOperation = "overlay"; x.globalAlpha = 0.12; x.drawImage(grain[Math.floor(t * 24) % grain.length], 0, 0, W, H); x.restore();
+}
+
+window.frame = (t) => {
+  x.setTransform(1, 0, 0, 1, 0, 0); x.globalAlpha = 1; x.globalCompositeOperation = "source-over"; x.fillStyle = "#000"; x.fillRect(0, 0, W, H);
+  if (t >= tl.end.start) { endCard(t); finish(t); return; }
+  const i = cuts.findIndex((k) => t >= k.start && t < k.end), cut = cuts[i < 0 ? 0 : i], k = t - cut.start;
+  // freeze frame: the picture stops for half a second when a title card slams in
+  const fc = cards.find((q) => t >= q.T && t < q.T + 0.5 && q.T >= cut.start);
+  const cam = camera(cut, k, fc ? fc.T - cut.start : undefined);
+  if (fc) { const fa = t - fc.T; cam.f = 1 - clamp((fa - 0.3) / 0.2); cam.z *= 1 + 0.05 * out3(fa / 0.1); }
+  shoot(cut.scene, cam);
+  // whip pan into each new cut: smeared copies of the frame sliding sideways
+  const wk = i > 0 ? k / 0.18 : 1;
+  if (wk < 1) { const off = (1 - out3(wk)) * W * 0.6; for (let s = 0; s < 6; s++) { x.globalAlpha = s === 0 ? 1 : 0.28; x.drawImage(glc, off - s * 40, 0); } x.globalAlpha = 1; }
+  else x.drawImage(glc, 0, 0);
+  if (fc && t - fc.T < 0.06) { x.fillStyle = "rgba(255,250,235,0.85)"; x.fillRect(0, 0, W, H); }
+  if (i === 0 && k < 0.35) dim(1 - k / 0.35);
+  chrome(t);
+  for (const q of cards) card(q, t);
+  captions(t);
+  finish(t);
+};
+</script></body></html>

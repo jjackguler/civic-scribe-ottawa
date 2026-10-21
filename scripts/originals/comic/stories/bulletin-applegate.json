@@ -1,0 +1,103 @@
+{
+ "slug": "bulletin-applegate",
+ "title": "HEALTH",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · US · CANADA · 200K+",
+ "kicker": "HEALTH",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "apple-a": "art/bulletins/apple-a.jpg",
+  "apple-b": "art/bulletins/apple-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "NBC News",
+   "url": "https://www.nbcnews.com/pop-culture/pop-culture-news/christina-applegate-says-was-misdiagnosed-multiple-sclerosis-rcna604558"
+  },
+  {
+   "name": "ABC News",
+   "url": "https://abcnews.com/GMA/Culture/christina-applegate-misdiagnosed-ms/story?id=137407744"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Five years ago, Christina Applegate told the world she had multiple sclerosis. Now, on her own podcast, she says that diagnosis was wrong. Her symptoms haven't gone anywhere. A neurologist on the show: MS misdiagnosis is common. There's no single test for it.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "apple-a"
+    },
+    {
+     "scene": "apple-b",
+     "w": "podcast"
+    }
+   ],
+   "cards": [
+    {
+     "w": "five",
+     "text": "2021: MS",
+     "sub": "THE DIAGNOSIS"
+    },
+    {
+     "w": "wrong",
+     "text": "“MISDIAGNOSED”",
+     "sub": "HER WORDS"
+    },
+    {
+     "w": "single",
+     "text": "NO SINGLE TEST"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "podcast",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "wrong",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "single",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "slug": "bulletin-ohio",
+ "title": "OHIO GOVERNOR",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · US · 100K+",
+ "kicker": "OHIO GOVERNOR",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "ohio-a": "art/bulletins/ohio-a.jpg",
+  "ohio-b": "art/bulletins/ohio-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "NBC News",
+   "url": "https://www.nbcnews.com/politics/2026-election/amy-acton-attack-ad-ohio-governors-race-rcna604601"
+  },
+  {
+   "name": "Yahoo News / Marist",
+   "url": "https://www.yahoo.com/news/politics/articles/poll-democrat-amy-acton-leads-160648266.html"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Ohio. Two weeks to go. Democrat Amy Acton against Republican Vivek Ramaswamy, for governor. Marist has Acton up seven. Emerson calls it a coin toss. And now, an attack ad featuring Acton's estranged mother, which Ramaswamy's campaign says it made.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "ohio-a"
+    },
+    {
+     "scene": "ohio-b",
+     "w": "and"
+    }
+   ],
+   "cards": [
+    {
+     "w": "two",
+     "text": "NOV 3",
+     "sub": "ELECTION DAY"
+    },
+    {
+     "w": "marist",
+     "text": "MARIST: ACTON +7"
+    },
+    {
+     "w": "emerson",
+     "text": "EMERSON: 46–45"
+    },
+    {
+     "w": "attack",
+     "text": "THE ATTACK AD"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "and",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "marist",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "emerson",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "attack",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,102 @@
+{
+ "slug": "bulletin-burgerking",
+ "title": "FOOD",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · US · 50K+",
+ "kicker": "FOOD",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "bk-a": "art/bulletins/bk-a.jpg",
+  "bk-b": "art/bulletins/bk-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "Burger King",
+   "url": "https://news.bk.com/blog-posts/hello-kitty-r-and-friends-are-coming-to-burger-king-r"
+  },
+  {
+   "name": "Dexerto",
+   "url": "https://www.dexerto.com/food/burger-king-launches-hello-kitty-kids-meals-with-rare-golden-collectible-toys-3420105/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Burger King has hidden gold in a kids' meal. The new Hello Kitty and Friends meal: six blind-box toys, and a limited number of golden Hello Kitties. Friday, a golden claw machine in Downey, California. Collectors: start your engines.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "bk-a"
+    },
+    {
+     "scene": "bk-b",
+     "w": "friday"
+    }
+   ],
+   "cards": [
+    {
+     "w": "gold",
+     "text": "GOLD IN THE BOX"
+    },
+    {
+     "w": "six",
+     "text": "6 BLIND-BOX TOYS"
+    },
+    {
+     "w": "friday",
+     "text": "FRI · DOWNEY, CA",
+     "sub": "GOLDEN CLAW"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "friday",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "six",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "friday",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

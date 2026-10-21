@@ -1,0 +1,102 @@
+{
+ "slug": "bulletin-tenthings",
+ "title": "TV",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · US · 100K+",
+ "kicker": "TV",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "tenthings-a": "art/bulletins/tenthings-a.jpg",
+  "tenthings-b": "art/bulletins/tenthings-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "Variety",
+   "url": "https://variety.com/2026/film/news/julia-stiles-10-things-i-hate-about-you-reunion-heath-ledger-tribute-dwts-1236916762/"
+  },
+  {
+   "name": "Deadline",
+   "url": "https://deadline.com/2026/10/10-things-i-hate-about-you-cast-reunites-dwts-heath-ledger-1237169282/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Twenty-seven years on, a 1999 classic got its reunion, on Dancing with the Stars. Julia Stiles danced for Heath Ledger, and her old castmates walked onto the floor: Joseph Gordon-Levitt, Gabrielle Union and more. Thirty-six out of forty. Nobody went home.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "tenthings-b"
+    },
+    {
+     "scene": "tenthings-a",
+     "w": "julia"
+    }
+   ],
+   "cards": [
+    {
+     "w": "twenty",
+     "text": "1999 → 2026",
+     "sub": "10 THINGS I HATE ABOUT YOU"
+    },
+    {
+     "w": "heath",
+     "text": "FOR HEATH"
+    },
+    {
+     "w": "thirty",
+     "text": "36 / 40"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "julia",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "heath",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "thirty",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

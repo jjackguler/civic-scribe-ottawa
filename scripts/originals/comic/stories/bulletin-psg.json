@@ -1,0 +1,102 @@
+{
+ "slug": "bulletin-psg",
+ "title": "CHAMPIONS LEAGUE",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING IN 4 COUNTRIES · GOOGLE",
+ "kicker": "CHAMPIONS LEAGUE",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "images": {
+  "psg-a": "art/bulletins/psg-a.jpg",
+  "psg-b": "art/bulletins/psg-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "ESPN",
+   "url": "https://www.espn.com/soccer/report/_/gameId/401915399"
+  },
+  {
+   "name": "Sky Sports",
+   "url": "https://www.skysports.com/football/news/13600929/psg-4-2-barcelona-european-giants-turn-out-in-classic-as-hansi-flicks-side-handed-first-defeat-of-the-season"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Paris. Champions League night. The holders, PSG, against a Barcelona side unbeaten all season. Barcelona fought back. Then, late on, Vitinha. And Fabián Ruiz. Four–two, Paris. Barcelona's first defeat of the season, and PSG go top of the table.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "psg-a"
+    },
+    {
+     "scene": "psg-b",
+     "w": "vitinha"
+    }
+   ],
+   "cards": [
+    {
+     "w": "paris",
+     "text": "PARIS",
+     "sub": "LAST NIGHT"
+    },
+    {
+     "w": "four",
+     "text": "PSG 4–2 BARÇA"
+    },
+    {
+     "w": "top",
+     "text": "TOP OF THE TABLE",
+     "sub": "9 POINTS"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "vitinha",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "four",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "top",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

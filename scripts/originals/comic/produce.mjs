@@ -109,7 +109,7 @@ for (const [i, shot] of story.shots.entries()) {
   const res = await xi(`/v1/text-to-speech/${v.voice_id ?? v.id}/with-timestamps?output_format=mp3_44100_128`, {
     text: shot.say, model_id: VO_MODEL,
     previous_text: story.shots[i - 1]?.say, next_text: story.shots[i + 1]?.say,
-    voice_settings: { stability: 0.42, similarity_boost: 0.8, style: 0.3, use_speaker_boost: true, speed: 0.92 },
+    voice_settings: { stability: 0.42, similarity_boost: 0.8, style: story.voiceStyle ?? 0.3, use_speaker_boost: true, speed: story.voiceSpeed ?? 0.92 },
   }, "application/json");
   const body = await res.json();
   await writeFile(mp3, Buffer.from(body.audio_base64, "base64"));

@@ -40,7 +40,8 @@ if (story.clips) {
 }
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
-const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+const [VW, VH] = story.size ?? [1920, 1080];
+const page = await browser.newPage({ viewport: { width: VW, height: VH } });
 page.on("pageerror", (e) => console.error("page error:", e.message));
 await page.goto(`http://127.0.0.1:${server.address().port}/${process.env.COMIC_PAGE ?? story.page ?? "comic.html"}?slug=${slug}`);
 const { duration, fps } = await page.evaluate(() => window.setup());

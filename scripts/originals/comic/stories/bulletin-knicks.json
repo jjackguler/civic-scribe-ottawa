@@ -1,0 +1,115 @@
+{
+ "slug": "bulletin-knicks",
+ "title": "NBA OPENING NIGHT",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "#1 ON GOOGLE · US · 2M+ SEARCHES",
+ "kicker": "NBA OPENING NIGHT",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "nba-a": "art/bulletins/nba-a.jpg",
+  "nba-b": "art/bulletins/nba-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "ESPN",
+   "url": "https://www.espn.com/nba/recap/_/gameId/401909089"
+  },
+  {
+   "name": "NBC Sports",
+   "url": "https://www.nbcsports.com/nba/news/knicks-v-76ers-recap-results-maxey-stars-as-philadelphia-wins-opener-lebron-james-jaylen-brown"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Madison Square Garden. Ring night. The champions collect their jewellery, and then they lose. Tyrese Maxey drops twenty-eight. LeBron James, in his Philadelphia debut: fourteen points, nine rebounds, seven assists. Sixers one-oh-six, Knicks one hundred. Party's over.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "nba-b"
+    },
+    {
+     "scene": "nba-a",
+     "w": "tyrese"
+    }
+   ],
+   "cards": [
+    {
+     "w": "ring",
+     "text": "RING NIGHT",
+     "sub": "MSG"
+    },
+    {
+     "w": "tyrese",
+     "text": "MAXEY · 28"
+    },
+    {
+     "w": "lebron",
+     "text": "LEBRON · 14/9/7",
+     "sub": "PHILLY DEBUT"
+    },
+    {
+     "w": "sixers",
+     "text": "PHI 106–100 NYK"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "tyrese",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "tyrese",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "lebron",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "sixers",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

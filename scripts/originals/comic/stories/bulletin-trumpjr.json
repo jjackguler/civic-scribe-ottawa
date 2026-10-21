@@ -1,0 +1,103 @@
+{
+ "slug": "bulletin-trumpjr",
+ "title": "POLITICS",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · US · 50K+",
+ "kicker": "POLITICS",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "trumpjr-a": "art/bulletins/trumpjr-a.jpg",
+  "trumpjr-b": "art/bulletins/trumpjr-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "The Atlantic, via Mediaite",
+   "url": "https://www.mediaite.com/media/news/don-jr-reportedly-opposed-trumps-iran-war-from-the-start-and-told-him-so/"
+  },
+  {
+   "name": "TMZ",
+   "url": "https://www.tmz.com/2026/10/20/donald-trump-jr-concerned-about-iran-war/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "The Atlantic reports Donald Trump Junior privately opposed his father's war with Iran, from the start, and to his face. That's according to two people who've spoken with him. Publicly: silence. Someone close to him says it'll stay that way.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "trumpjr-a"
+    },
+    {
+     "scene": "trumpjr-b",
+     "w": "two"
+    }
+   ],
+   "cards": [
+    {
+     "w": "atlantic",
+     "text": "THE ATLANTIC REPORTS"
+    },
+    {
+     "w": "privately",
+     "text": "PRIVATELY OPPOSED",
+     "sub": "THE IRAN WAR"
+    },
+    {
+     "w": "two",
+     "text": "2 SOURCES",
+     "sub": "UNNAMED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "two",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "privately",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "two",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

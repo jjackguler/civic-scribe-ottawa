@@ -1,0 +1,117 @@
+{
+ "slug": "bulletin-ssa",
+ "title": "SOCIAL SECURITY",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · US · 100K+",
+ "kicker": "SOCIAL SECURITY",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "ssa-a": "art/bulletins/ssa-a.jpg",
+  "ssa-b": "art/bulletins/ssa-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "NewsNation",
+   "url": "https://www.newsnationnow.com/business/your-money/social-security-records/"
+  },
+  {
+   "name": "VINnews",
+   "url": "https://vinnews.com/2026/10/20/social-security-database-cleanup-focuses-on-record-accuracy-with-no-fraud-cases-cited/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Social Security just ran the biggest clean-up of its records in ninety-one years. Seventeen million missing dates of death, filled in. Nearly fifteen percent of active numbers, corrected. What the agency didn't announce: a single fraud prosecution.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "ssa-a"
+    },
+    {
+     "scene": "ssa-b",
+     "w": "nearly"
+    }
+   ],
+   "cards": [
+    {
+     "w": "ninety",
+     "text": "91 YEARS",
+     "sub": "BIGGEST CLEAN-UP"
+    },
+    {
+     "w": "seventeen",
+     "text": "17,000,000",
+     "sub": "DEATH DATES ADDED"
+    },
+    {
+     "w": "fifteen",
+     "text": "15%",
+     "sub": "OF ACTIVE NUMBERS"
+    },
+    {
+     "w": "single",
+     "text": "0 PROSECUTIONS",
+     "sub": "CITED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "nearly",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "seventeen",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "fifteen",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "single",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}

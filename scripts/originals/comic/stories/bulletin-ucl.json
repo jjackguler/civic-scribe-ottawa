@@ -1,0 +1,115 @@
+{
+ "slug": "bulletin-ucl",
+ "title": "CHAMPIONS LEAGUE",
+ "page": "bulletin.html",
+ "size": [
+  1080,
+  1920
+ ],
+ "kind": "bulletin",
+ "voices": [
+  "George",
+  "Daniel"
+ ],
+ "voiceSpeed": 1.1,
+ "endCard": 2.6,
+ "trend": "TRENDING · UK · INDIA · BRAZIL · GERMANY",
+ "kicker": "CHAMPIONS LEAGUE",
+ "date": "20 OCT 2026",
+ "music": "Guy Ritchie style British crime-caper groove: punchy breakbeat drums, slap bass, brass stabs, cheeky and fast, about 100 bpm, confident swagger, no vocals.",
+ "ambience": "Faint late-night city hum, distant traffic, no music.",
+ "musicFrom": "bulletin-psg",
+ "images": {
+  "cl-a": "art/bulletins/cl-a.jpg",
+  "cl-b": "art/bulletins/cl-b.jpg"
+ },
+ "disclosure": "AI-generated images and voice. Facts from the sources listed; trend data from Google Trends, 20 Oct 2026.",
+ "sources": [
+  {
+   "name": "Sky Sports",
+   "url": "https://www.skysports.com/football/liverpool-vs-villarreal/report/577635"
+  },
+  {
+   "name": "Sky Sports",
+   "url": "https://www.skysports.com/football/man-city-vs-aek-athens/report/577636"
+  }
+ ],
+ "shots": [
+  {
+   "id": "b",
+   "say": "Same night, Anfield. Villarreal go two goals up. Liverpool shrug. Alexis Mac Allister scores twice, Florian Wirtz finishes the job: four–three. Up in Manchester, Phil Foden takes the match ball home. City five, AEK one. Haaland never left the bench.",
+   "lead": 0.25,
+   "hold": 0.35,
+   "panels": [
+    {
+     "scene": "cl-a"
+    },
+    {
+     "scene": "cl-b",
+     "w": "manchester"
+    }
+   ],
+   "cards": [
+    {
+     "w": "villarreal",
+     "text": "0–2 DOWN",
+     "sub": "ANFIELD"
+    },
+    {
+     "w": "four",
+     "text": "LIVERPOOL 4–3"
+    },
+    {
+     "w": "foden",
+     "text": "FODEN ×3",
+     "sub": "HAT-TRICK"
+    },
+    {
+     "w": "city",
+     "text": "CITY 5–1 AEK"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "at": 0,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "whoosh",
+     "w": "manchester",
+     "at": -0.15,
+     "dur": 0.8,
+     "gain": -12,
+     "prompt": "Fast cinematic whoosh, a film whip-pan swish, short"
+    },
+    {
+     "id": "hit",
+     "w": "four",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "foden",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    },
+    {
+     "id": "hit",
+     "w": "city",
+     "at": -0.05,
+     "dur": 1.0,
+     "gain": -10,
+     "prompt": "Punchy cinematic impact hit with a camera shutter click, short"
+    }
+   ]
+  }
+ ]
+}
