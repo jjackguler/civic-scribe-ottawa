@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "id": "1hzujc1",
+  "slug": {
+    "en": "openai-acquires-orchestra-bio-rosalind",
+    "fr": "openai-acquiert-orchestra-bio-rosalind"
+  },
+  "createdAt": "2026-10-21T12:11:06.779Z",
+  "updatedAt": "2026-10-21T12:11:06.779Z",
+  "topic": "health",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "TechCrunch",
+      "title": "OpenAI acquires startup Orchestra Bio⁠ to beef up its biotech business",
+      "url": "https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/",
+      "publishedAt": "2026-10-20T20:35:10.000Z",
+      "storyId": "1r5cm1w",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "The Decoder",
+      "title": "OpenAI acquires Orchestra Bio to build AI agents that speed up drug development",
+      "url": "https://the-decoder.com/openai-acquires-orchestra-bio-to-build-ai-agents-that-speed-up-drug-development/",
+      "publishedAt": "2026-10-21T08:32:54.000Z",
+      "storyId": "1ffrrjh",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "Wired",
+      "title": "OpenAI Invests in Startup That Uses Brain Implants to Detect Cancer",
+      "url": "https://www.wired.com/story/openai-startup-brain-implants-detect-cancer/",
+      "publishedAt": "2026-10-21T10:30:00.000Z",
+      "storyId": "1hzujc1",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b1",
+      "path": "/labs/agents",
+      "title": {
+        "en": "Agents",
+        "fr": "Les agents"
+      }
+    }
+  ],
+  "cover": {
+    "color": "spruce",
+    "motif": "grid",
+    "en": {
+      "kicker": "Life sciences",
+      "big": "ROSALIND",
+      "small": "OpenAI acquires Orchestra Bio for drug development"
+    },
+    "fr": {
+      "kicker": "Sciences de la vie",
+      "big": "ROSALIND",
+      "small": "OpenAI acquiert Orchestra Bio pour la recherche"
+    }
+  },
+  "en": {
+    "headline": "OpenAI acquires Orchestra Bio to expand its life sciences platform Rosalind",
+    "news": "OpenAI is acquiring the startup Orchestra Bio to integrate its team and technology into its life sciences platform, Rosalind.",
+    "thirty": [
+      "OpenAI is acquiring startup Orchestra Bio to expand its biotech efforts.",
+      "Orchestra will merge into Rosalind, an AI life sciences platform.",
+      "The tools aim to help pharmaceutical teams manage drug development."
+    ],
+    "confirmed": [
+      {
+        "text": "OpenAI is acquiring the startup Orchestra Bio to integrate it with its life sciences platform Rosalind.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "OpenAI says it is adding Orchestra Bio's team and technology to Rosalind and its Rosalind Workbench tool to help researchers plan experiments.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI says the goal of merging the platform is to build AI agents that help pharmaceutical teams coordinate drug development.",
+        "by": "OpenAI",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether any regulatory approvals are required to finalize the transaction.",
+      "How much OpenAI paid to acquire Orchestra Bio.",
+      "When the integration between Orchestra Bio and Rosalind will be completed."
+    ],
+    "matters": "For the public, faster drug development could eventually accelerate the arrival of new treatments, though the tools currently focus on pharmaceutical research teams.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "OpenAI has bought a startup company called Orchestra Bio [s1,s2]. The startup will join a project named Rosalind, which is an artificial intelligence system created to help scientists conduct biological research [s1,s2].",
+        "The combined group will work on software tools designed to help laboratory scientists plan tests and organize the steps of drug development [s1,s2]. These automated assistants are meant to help pharmaceutical workers track clinical trials and find potential issues during development [s2]."
+      ],
+      "standard": [
+        "OpenAI is acquiring the startup Orchestra Bio as part of an effort to bolster its work in biotechnology [s1,s2]. The company plans to bring Orchestra Bio's team and technology into Rosalind, its artificial intelligence platform designed for life sciences research [s1,s2].",
+        "According to reporting from TechCrunch and The Decoder, the acquisition focuses on combining resources around Rosalind and related tools [s1,s2]. OpenAI says it will direct the incoming team toward the Rosalind Workbench, a harness intended to assist researchers in planning scientific experiments [s1]. The company also plans to build autonomous software agents within the platform to support pharmaceutical development teams [s2]. These systems are intended to help researchers coordinate the drug creation process, from tracking trials to spotting complications [s2].",
+        "Neither outlet disclosed the financial terms or purchase price of the acquisition [s1,s2]. The exact timeline for integrating Orchestra Bio's systems into Rosalind also remains unstated [s1,s2].",
+        "The immediate changes affect researchers and pharmaceutical companies working on experimental design and clinical studies [s1,s2]. For the broader public, any direct benefits depend on whether such AI tools can tangibly shorten the time needed to develop medications [s2].",
+        "Agents are software systems designed to plan, use external tools, and act on their own [b1]."
+      ],
+      "expert": [
+        "OpenAI is absorbing Orchestra Bio to reinforce its life sciences platform Rosalind and the associated Rosalind Workbench experiment-planning harness [s1,s2]. The initiative aims to develop domain-specific AI agents that coordinate end-to-end drug development workflows, spanning clinical trial tracking and issue detection [s2]."
+      ]
+    },
+    "seoTitle": "OpenAI Acquires Orchestra Bio for Rosalind Platform",
+    "dek": "The acquisition aims to combine teams to develop AI agents that assist pharmaceutical researchers with drug development and clinical trial coordination.",
+    "metaDescription": "OpenAI is acquiring Orchestra Bio to integrate its team and technology into Rosalind, a platform designed to assist pharmaceutical researchers.",
+    "keywords": [
+      "openai",
+      "orchestra bio",
+      "rosalind",
+      "biotechnology",
+      "ai agents"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI is acquiring the startup Orchestra Bio as part of an effort to bolster its work in biotechnology [s1,s2]. The company plans to bring Orchestra Bio's team and technology into Rosalind, its artificial intelligence platform designed for life sciences research [s1,s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "According to reporting from TechCrunch and The Decoder, the acquisition focuses on combining resources around Rosalind and related tools [s1,s2]. OpenAI says it will direct the incoming team toward the Rosalind Workbench, a harness intended to assist researchers in planning scientific experiments [s1]. The company also plans to build autonomous software agents within the platform to support pharmaceutical development teams [s2]. These systems are intended to help researchers coordinate the drug creation process, from tracking trials to spotting complications [s2].",
+          "Neither outlet disclosed the financial terms or purchase price of the acquisition [s1,s2]. The exact timeline for integrating Orchestra Bio's systems into Rosalind also remains unstated [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The immediate changes affect researchers and pharmaceutical companies working on experimental design and clinical studies [s1,s2]. For the broader public, any direct benefits depend on whether such AI tools can tangibly shorten the time needed to develop medications [s2]."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Agents are software systems designed to plan, use external tools, and act on their own [b1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is the goal of OpenAI acquiring Orchestra Bio?",
+        "a": "OpenAI aims to integrate Orchestra Bio's team and technology into its Rosalind platform to support pharmaceutical research and drug development."
+      },
+      {
+        "q": "What are autonomous software agents in this context?",
+        "a": "These are software systems designed to plan, use external tools, and act on their own to assist researchers with tasks like tracking clinical trials."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Agents"
+      },
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "OpenAI fait l'acquisition d'Orchestra Bio pour bonifier sa plateforme Rosalind",
+    "news": "OpenAI acquiert la jeune pousse Orchestra Bio afin d'intégrer son équipe et sa technologie à Rosalind, sa plateforme dédiée aux sciences de la vie [s1,s2].",
+    "thirty": [
+      "OpenAI achète la jeune pousse Orchestra Bio pour renforcer ses activités en biotechnologie [s1,s2].",
+      "Orchestra sera fusionnée à Rosalind, une plateforme d'IA pour les sciences de la vie [s1,s2].",
+      "Les outils visent à aider les équipes pharmaceutiques à gérer le développement de médicaments [s2]."
+    ],
+    "confirmed": [
+      {
+        "text": "OpenAI fait l'acquisition de la jeune pousse Orchestra Bio pour l'intégrer à sa plateforme de sciences de la vie Rosalind [s1,s2].",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "OpenAI affirme qu'elle ajoute l'équipe et la technologie d'Orchestra Bio à Rosalind et à son outil Rosalind Workbench pour aider les chercheurs à planifier des expériences [s1].",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI soutient que l'objectif de cette fusion est de créer des agents IA aidant les équipes pharmaceutiques à coordonner le développement de médicaments [s2].",
+        "by": "OpenAI",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "La nécessité d'obtenir des approbations réglementaires pour finaliser la transaction.",
+      "Le montant versé par OpenAI pour acquérir Orchestra Bio.",
+      "L'échéancier prévu pour l'intégration complète d'Orchestra Bio au sein de Rosalind."
+    ],
+    "matters": "Pour le public, un développement plus rapide des médicaments pourrait accélérer l'arrivée de nouveaux traitements, bien que les outils actuels ciblent les équipes de recherche pharmaceutique.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "OpenAI a acheté une jeune pousse nommée Orchestra Bio [s1,s2]. Cette entreprise rejoindra un projet appelé Rosalind, un système d'intelligence artificielle créé pour aider les scientifiques à mener des recherches biologiques [s1,s2].",
+        "Le groupe combiné travaillera sur des outils logiciels conçus pour aider les scientifiques en laboratoire à planifier des tests et à organiser les étapes du développement de médicaments [s1,s2]. Ces assistants automatisés visent à aider le personnel pharmaceutique à suivre les essais cliniques et à identifier des problèmes potentiels durant le développement [s2]."
+      ],
+      "standard": [
+        "OpenAI acquiert la jeune pousse Orchestra Bio dans le cadre d'un effort visant à renforcer ses travaux en biotechnologie [s1,s2]. L'entreprise prévoit d'intégrer l'équipe et la technologie d'Orchestra Bio à Rosalind, sa plateforme d'intelligence artificielle conçue pour la recherche en sciences de la vie [s1,s2].",
+        "Selon les rapports de TechCrunch et The Decoder, l'acquisition mise sur la combinaison des ressources autour de Rosalind et des outils connexes [s1,s2]. OpenAI précise qu'elle orientera la nouvelle équipe vers le Rosalind Workbench, un outil destiné à aider les chercheurs à planifier des expériences scientifiques [s1]. L'entreprise projette également de bâtir des agents logiciels autonomes au sein de la plateforme pour appuyer les équipes de développement pharmaceutique [s2]. Ces systèmes visent à aider les chercheurs à coordonner le processus de création de médicaments, du suivi des essais à la détection de complications [s2].",
+        "Aucun des deux médias n'a divulgué les modalités financières ou le prix d'achat de la transaction [s1,s2]. Le calendrier exact de l'intégration des systèmes d'Orchestra Bio à Rosalind demeure également inconnu [s1,s2].",
+        "Les changements immédiats touchent les chercheurs et les entreprises pharmaceutiques travaillant sur la conception expérimentale et les études cliniques [s1,s2]. Pour le grand public, les avantages directs dépendent de la capacité de ces outils d'IA à réduire concrètement le temps nécessaire au développement de médicaments [s2].",
+        "Les agents sont des systèmes logiciels conçus pour planifier, utiliser des outils externes et agir de manière autonome [b1]."
+      ],
+      "expert": [
+        "OpenAI absorbe Orchestra Bio pour renforcer sa plateforme de sciences de la vie Rosalind et l'outil de planification d'expériences associé, Rosalind Workbench [s1,s2]. L'initiative vise à développer des agents IA spécialisés qui coordonnent les flux de travail complets du développement de médicaments, incluant le suivi des essais cliniques et la détection de problèmes [s2]."
+      ]
+    },
+    "seoTitle": "OpenAI acquiert Orchestra Bio pour sa plateforme Rosalind",
+    "dek": "Cette transaction vise à regrouper les équipes pour concevoir des agents IA destinés à soutenir la recherche pharmaceutique et les essais cliniques.",
+    "metaDescription": "OpenAI acquiert la jeune pousse Orchestra Bio afin d'intégrer son expertise à Rosalind, sa plateforme dédiée à la recherche en sciences de la vie.",
+    "keywords": [
+      "openai",
+      "orchestra bio",
+      "rosalind",
+      "biotechnologie",
+      "agents ia"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI acquiert la jeune pousse Orchestra Bio dans le cadre d'un effort visant à renforcer ses travaux en biotechnologie [s1,s2]. L'entreprise prévoit d'intégrer l'équipe et la technologie d'Orchestra Bio à Rosalind, sa plateforme d'intelligence artificielle conçue pour la recherche en sciences de la vie [s1,s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Selon les rapports de TechCrunch et The Decoder, l'acquisition mise sur la combinaison des ressources autour de Rosalind et des outils connexes [s1,s2]. OpenAI précise qu'elle orientera la nouvelle équipe vers le Rosalind Workbench, un outil destiné à aider les chercheurs à planifier des expériences scientifiques [s1]. L'entreprise projette également de bâtir des agents logiciels autonomes au sein de la plateforme pour appuyer les équipes de développement pharmaceutique [s2]. Ces systèmes visent à aider les chercheurs à coordonner le processus de création de médicaments, du suivi des essais à la détection de complications [s2].",
+          "Aucun des deux médias n'a divulgué les modalités financières ou le prix d'achat de la transaction [s1,s2]. Le calendrier exact de l'intégration des systèmes d'Orchestra Bio à Rosalind demeure également inconnu [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Les changements immédiats touchent les chercheurs et les entreprises pharmaceutiques travaillant sur la conception expérimentale et les études cliniques [s1,s2]. Pour le grand public, les avantages directs dépendent de la capacité de ces outils d'IA à réduire concrètement le temps nécessaire au développement de médicaments [s2]."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Les agents sont des systèmes logiciels conçus pour planifier, utiliser des outils externes et agir de manière autonome [b1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quel est l'objectif de l'acquisition d'Orchestra Bio par OpenAI ?",
+        "a": "OpenAI souhaite intégrer l'équipe et la technologie d'Orchestra Bio à sa plateforme Rosalind pour appuyer la recherche pharmaceutique."
+      },
+      {
+        "q": "Que sont les agents logiciels autonomes mentionnés ?",
+        "a": "Ce sont des systèmes conçus pour planifier, utiliser des outils externes et agir de manière autonome afin d'aider à la création de médicaments."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Les agents"
+      },
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 192,
+    "fr": 225
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T12:09:31.145Z",
+      "verdict": "done",
+      "notes": [
+        "192 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "mechanical",
+      "at": "2026-10-21T12:09:31.151Z",
+      "verdict": "pass",
+      "notes": [
+        "fact guard: every name and number found in the sources",
+        "house style: clean"
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T12:10:05.711Z",
+      "verdict": "pass",
+      "notes": [
+        "The citation '[b1]' appears in the background section without a corresponding source key in the sources list, though the definition itself is standard."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-21T12:10:54.764Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: missing fields",
+        "225 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-21T12:10:59.505Z",
+      "verdict": "done",
+      "notes": [
+        "en: OpenAI Acquires Orchestra Bio for Rosalind Platform (51)",
+        "fr: OpenAI acquiert Orchestra Bio pour sa plateforme Rosalind (57)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-21T12:11:06.779Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: spruce/grid \"ROSALIND\""
+      ]
+    }
+  ]
+}
