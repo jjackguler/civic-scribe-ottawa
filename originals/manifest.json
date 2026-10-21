@@ -1,6 +1,37 @@
 {
- "updatedAt": "2026-10-20T21:30:00.000Z",
+ "updatedAt": "2026-10-21T16:00:00.000Z",
  "items": [
+  {
+   "id": "202610211600-op-doc-the-good-room",
+   "kind": "explainer",
+   "section": "mind",
+   "aspect": "16:9",
+   "publishedAt": "2026-10-21T16:00:00.000Z",
+   "title": "Op-Doc: The Good Room",
+   "summary": "Millions of people have visited Lascaux. Almost none of them have been to Lascaux. A four-minute opinion film on copies better than the original, AI answers that arrive too complete, and the discipline of letting a gap stay a gap.",
+   "durationSec": 228,
+   "sources": [
+    {
+     "name": "French Ministry of Culture, Lascaux",
+     "url": "https://archeologie.culture.gouv.fr/lascaux/en"
+    },
+    {
+     "name": "Pew Research Center (July 2025)",
+     "url": "https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/"
+    }
+   ],
+   "transcript": "In September nineteen forty, four teenagers climbed down a hole in the ground in south-western France, and found a room with animals on the walls. Horses. Stags. Aurochs. A bear. Painted with charcoal and ochre, around twenty thousand years ago. In nineteen forty-eight the cave opened to the public, and it did what any wonder does. It drew crowds. At its peak, about eighteen hundred people a day. Within a few years, the paintings began to sicken. Not from vandalism. From breath, and heat, and electric light. Green algae. White crystals. Looking at the paintings was destroying the paintings. So in nineteen sixty-three, France closed the cave. And built another one. The newest copy opened in December twenty sixteen, built from millimetre-scale scans. It is better lit than the original ever was. There are no queues that damage anything. You can stand in front of one horse for as long as you like. By almost every measure, the copy is better. And it is honest: nobody is told it is the real cave. Several million people have now been to Lascaux. Almost none of them have been to Lascaux. The original is still there, a short walk away, in the dark. Watched very closely, and hardly ever entered. And that is the right decision. Think about who made those paintings. Someone who had been outside. Who had seen a horse move, in weather, on a day when seeing mattered. They brought that inside, for people who would go back out. The copy reproduces the pigment to a fraction of a millimetre. It cannot reproduce that. Because that was never in the pigment. This is the shape of our lives now. A copy good enough, and available enough, and comfortable enough, that the thing it stands for stops being visited. In classrooms. In clinics. In courtrooms. Nobody decides it. Nobody objects. There is no moment when anyone could be expected to notice. Ask a machine what one famous scene at Lascaux means, a bird-headed figure, a bison, a bird on a stick, and you will get an answer. Fluent. Sourced. Complete. But the honest answer is that nobody knows. The answer isn't a lie. It's just missing the hesitation. And the hesitation was the truth. Studies of search already show it. When an AI summary appears, people click through to the sources far less often. The summary is the good room. The source is the cave. The skill we are most likely to lose is a small one: knowing when a gap should stay a gap. A teacher saying I'm not sure, in front of a class. An editor asking: how do you know that? And underneath, there is a fear. Not that machines will be smarter. That we will be unnecessary. But that fear is not about machines. It is about what we do with people we no longer need. And that is decided by people. In rooms. On Tuesdays. So use the good room. It is a very good room. But the cave is still there. Walk toward it, sometimes.",
+   "voice": "ElevenLabs stock voice (George)",
+   "aiImages": false,
+   "credits": "Opinion. An AI Broadsheet Op-Doc. Photographs of the Lascaux replicas: public domain (HTO) via Wikimedia Commons; other scenes drawn in code. Narration and score generated with ElevenLabs.",
+   "readMore": {
+    "url": "/podcast",
+    "en": "Listen: the podcast episode",
+    "fr": "Écouter l'épisode du balado"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.mp4",
+   "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.jpg"
+  },
   {
    "id": "202610202130-sir-jack-11",
    "kind": "explainer",
