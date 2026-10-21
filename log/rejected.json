@@ -1,5 +1,23 @@
 [
   {
+    "id": "1i6jhkb",
+    "at": "2026-10-21T01:17:13.379Z",
+    "stage": "reporter",
+    "headline": "US bans Deepseek technology across federal civilian agencies",
+    "reasons": [
+      "missing fields"
+    ]
+  },
+  {
+    "id": "14fiyqc",
+    "at": "2026-10-21T01:11:52.320Z",
+    "stage": "reporter",
+    "headline": "Making the internet better for AI agents might make it worse for everyone else",
+    "reasons": [
+      "skip: The provided sources do not share a single event, and the most relevant item contains only about 40 words of factual text, which cannot support the required 120-word minimum without repetition or unsu"
+    ]
+  },
+  {
     "id": "1r4w8kp",
     "at": "2026-10-20T22:53:07.052Z",
     "stage": "reporter",

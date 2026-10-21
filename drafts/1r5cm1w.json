@@ -1,0 +1,318 @@
+{
+  "version": 1,
+  "id": "1r5cm1w",
+  "slug": {
+    "en": "openai-acquires-orchestra-bio-life-sciences",
+    "fr": "openai-acquiert-orchestra-bio-sciences-vie"
+  },
+  "createdAt": "2026-10-21T01:16:51.189Z",
+  "updatedAt": "2026-10-21T01:16:51.189Z",
+  "topic": "health",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "OpenAI",
+      "title": "OpenAI acquires Orchestra Bio",
+      "url": "https://openai.com/index/openai-to-acquire-orchestra-bio",
+      "publishedAt": "2026-10-20T00:00:00.000Z",
+      "storyId": "kz1vtu",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "TechCrunch",
+      "title": "OpenAI acquires startup Orchestra Bio⁠ to beef up its biotech business",
+      "url": "https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/",
+      "publishedAt": "2026-10-20T20:35:10.000Z",
+      "storyId": "1r5cm1w",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "spruce",
+    "motif": "grid",
+    "en": {
+      "kicker": "Biotech acquisition",
+      "big": "Orchestra"
+    },
+    "fr": {
+      "kicker": "Santé",
+      "big": "Orchestra"
+    }
+  },
+  "en": {
+    "headline": "OpenAI acquires Orchestra Bio to expand its life sciences AI tools",
+    "news": "OpenAI is acquiring biotech startup Orchestra Bio to support drug development and life sciences research tools.",
+    "thirty": [
+      "OpenAI is acquiring the startup Orchestra Bio.",
+      "Orchestra's team and technology will join OpenAI's life sciences project Rosalind.",
+      "The acquisition aims to help biopharma researchers plan experiments and discover treatments."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "OpenAI says the deal brings AI-powered operations to life sciences research and development to speed up drug discovery and new medical treatments.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI says Orchestra's team and technology will contribute to its Rosalind AI model and its Rosalind Workbench experimental harness.",
+        "by": "OpenAI",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "OpenAI is acquiring startup Orchestra Bio to build out its biotech and life sciences efforts.",
+        "by": "OpenAI",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "How much OpenAI paid to acquire Orchestra Bio.",
+      "When the integration of Orchestra Bio's team and technology will be finished."
+    ],
+    "matters": "The deal could alter the digital software that life sciences teams use to design lab experiments and create new medications.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "OpenAI is purchasing Orchestra Bio, a young company that builds tools for biological research [s1,s2]. The plan is to combine Orchestra's staff and code with OpenAI's own systems to help pharmaceutical scientists organize laboratory tests and develop medicines more rapidly [s1,s2].",
+        "Orchestra's personnel will help build Rosalind, an artificial intelligence model trained on life sciences data, alongside a program called Rosalind Workbench that helps scientists map out laboratory experiments [s2]."
+      ],
+      "standard": [
+        "OpenAI is acquiring the startup Orchestra Bio in a bid to strengthen its presence in biotechnology and life sciences [s1,s2]. The company stated that the purchase aims to introduce artificial intelligence operations into research and development environments, giving biopharmaceutical teams ways to accelerate drug creation and produce new therapies [s1].",
+        "The acquisition unites the two entities around OpenAI's specialized life sciences systems [s2]. OpenAI says that it is bringing Orchestra's staff and software directly into the development of Rosalind, an AI model designed for biological research [s2]. The incoming team will also work on Rosalind Workbench, a software harness intended to help scientists organize and plan laboratory experiments [s2].",
+        "The reporting leaves key financial and organizational arrangements unstated [s1,s2]. Neither source discloses the price of the purchase, the formal closing timeline, or any planned staffing changes across the combined teams [s1,s2].",
+        "For researchers and biotechnology workers, the acquisition shows leading AI developers moving directly into laboratory workflow infrastructure [s1,s2]. If these tools succeed in streamlining experimental planning, biopharma developers could experience shifts in how computational software assists the early stages of medical discovery [s1,s2]."
+      ],
+      "expert": [
+        "OpenAI confirmed the acquisition of Orchestra Bio as an operational expansion into life sciences R&D and drug discovery workflows [s1,s2]. TechCrunch reports that Orchestra's assets and staff will be integrated into Rosalind, OpenAI's domain-specific foundation model for biology, as well as Rosalind Workbench, an execution harness for experiment planning [s2]."
+      ]
+    },
+    "seoTitle": "OpenAI acquires Orchestra Bio for life sciences AI",
+    "dek": "The company is integrating Orchestra Bio's team and software into its Rosalind research model and experimental planning workbench.",
+    "metaDescription": "OpenAI is acquiring Orchestra Bio to incorporate its team and software into the Rosalind biological research model and experimental workbench.",
+    "keywords": [
+      "openai",
+      "orchestra bio",
+      "rosalind",
+      "rosalind workbench",
+      "biotechnology ai",
+      "drug development"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI is acquiring the startup Orchestra Bio in a bid to strengthen its presence in biotechnology and life sciences [s1,s2]. The company stated that the purchase aims to introduce artificial intelligence operations into research and development environments, giving biopharmaceutical teams ways to accelerate drug creation and produce new therapies [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "The acquisition unites the two entities around OpenAI's specialized life sciences systems [s2]. OpenAI says that it is bringing Orchestra's staff and software directly into the development of Rosalind, an AI model designed for biological research [s2]. The incoming team will also work on Rosalind Workbench, a software harness intended to help scientists organize and plan laboratory experiments [s2].",
+          "The reporting leaves key financial and organizational arrangements unstated [s1,s2]. Neither source discloses the price of the purchase, the formal closing timeline, or any planned staffing changes across the combined teams [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For researchers and biotechnology workers, the acquisition shows leading AI developers moving directly into laboratory workflow infrastructure [s1,s2]. If these tools succeed in streamlining experimental planning, biopharma developers could experience shifts in how computational software assists the early stages of medical discovery [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What will Orchestra Bio's team work on at OpenAI?",
+        "a": "The incoming team and software will be integrated into the development of Rosalind, an AI model for biological research, and Rosalind Workbench, an interface designed to help scientists plan laboratory experiments."
+      },
+      {
+        "q": "Were the financial terms of the acquisition revealed?",
+        "a": "No, neither source disclosed the purchase price, the closing timeline, or planned staffing changes across the teams."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "OpenAI acquiert Orchestra Bio pour étendre ses outils d'IA en sciences de la vie",
+    "news": "OpenAI acquiert la jeune pousse de biotechnologie Orchestra Bio pour soutenir ses outils de recherche en sciences de la vie et le développement de médicaments.",
+    "thirty": [
+      "OpenAI acquiert la jeune pousse Orchestra Bio.",
+      "L'équipe et la technologie d'Orchestra rejoindront Rosalind, le projet de sciences de la vie d'OpenAI.",
+      "L'acquisition vise à aider les chercheurs du secteur biopharmaceutique à planifier des expériences et à concevoir des traitements."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "OpenAI affirme que la transaction apporte des opérations d'IA à la recherche et au développement en sciences de la vie pour accélérer la découverte de médicaments et de nouveaux traitements médicaux.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI indique que l'équipe et la technologie d'Orchestra contribueront à son modèle d'IA Rosalind et à son environnement expérimental Rosalind Workbench.",
+        "by": "OpenAI",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "OpenAI acquiert la jeune pousse Orchestra Bio pour développer ses initiatives en biotechnologie et en sciences de la vie.",
+        "by": "OpenAI",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Le montant payé par OpenAI pour acquérir Orchestra Bio.",
+      "Le moment où l'intégration de l'équipe et de la technologie d'Orchestra Bio sera terminée."
+    ],
+    "matters": "La transaction pourrait modifier les logiciels numériques que les équipes en sciences de la vie emploient pour concevoir des expériences de laboratoire et élaborer de nouveaux médicaments.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "OpenAI achète Orchestra Bio, une jeune entreprise qui conçoit des outils pour la recherche biologique [s1,s2]. Le projet prévoit d'associer le personnel et le code d'Orchestra aux systèmes d'OpenAI pour aider les scientifiques de l'industrie pharmaceutique à organiser les tests de laboratoire et à concevoir des médicaments plus rapidement [s1,s2].",
+        "Le personnel d'Orchestra aidera à bâtir Rosalind, un modèle d'intelligence artificielle entraîné sur des données de sciences de la vie, aux côtés d'un programme nommé Rosalind Workbench qui aide les scientifiques à planifier leurs expériences de laboratoire [s2]."
+      ],
+      "standard": [
+        "OpenAI acquiert la jeune pousse Orchestra Bio afin de renforcer sa présence dans les biotechnologies et les sciences de la vie [s1,s2]. L'entreprise a précisé que cet achat vise à introduire des opérations d'intelligence artificielle dans les environnements de recherche et développement, offrant aux équipes biopharmaceutiques des moyens d'accélérer la création de médicaments et de mettre au point de nouvelles thérapies [s1].",
+        "L'acquisition réunit les deux entités autour des systèmes spécialisés d'OpenAI en sciences de la vie [s2]. OpenAI indique intégrer le personnel et les logiciels d'Orchestra directement au développement de Rosalind, un modèle d'IA conçu pour la recherche biologique [s2]. L'équipe entrante travaillera aussi sur Rosalind Workbench, un environnement logiciel destiné à aider les scientifiques à organiser et planifier leurs expériences de laboratoire [s2].",
+        "Les comptes rendus ne précisent pas les modalités financières et organisationnelles clés [s1,s2]. Aucune des sources ne divulgue le prix de l'achat, l'échéancier officiel de clôture ou d'éventuels changements de personnel au sein des équipes combinées [s1,s2].",
+        "Pour les chercheurs et les travailleurs de la biotechnologie, l'acquisition montre que les grands concepteurs d'IA s'implantent directement dans l'infrastructure de travail des laboratoires [s1,s2]. Si ces outils parviennent à simplifier la planification expérimentale, les équipes biopharmaceutiques pourraient voir évoluer la manière dont les logiciels assistent les premières étapes de la découverte médicale [s1,s2]."
+      ],
+      "expert": [
+        "OpenAI a confirmé l'acquisition d'Orchestra Bio comme une expansion opérationnelle dans la R&D en sciences de la vie et les flux de travail de découverte de médicaments [s1,s2]. TechCrunch rapporte que les actifs et le personnel d'Orchestra seront intégrés à Rosalind, le modèle de fondation d'OpenAI spécialisé pour la biologie, ainsi qu'à Rosalind Workbench, un outil d'exécution pour la planification d'expériences [s2]."
+      ]
+    },
+    "seoTitle": "OpenAI acquiert Orchestra Bio en sciences de la vie",
+    "dek": "L'entreprise intègre l'équipe et les logiciels d'Orchestra Bio à son modèle de recherche Rosalind et à son banc d'essai expérimental.",
+    "metaDescription": "OpenAI acquiert Orchestra Bio pour intégrer ses équipes et logiciels au modèle de recherche Rosalind et soutenir la découverte de médicaments.",
+    "keywords": [
+      "openai",
+      "orchestra bio",
+      "rosalind",
+      "rosalind workbench",
+      "biotechnologie",
+      "sciences de la vie"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI acquiert la jeune pousse Orchestra Bio afin de renforcer sa présence dans les biotechnologies et les sciences de la vie [s1,s2]. L'entreprise a précisé que cet achat vise à introduire des opérations d'intelligence artificielle dans les environnements de recherche et développement, offrant aux équipes biopharmaceutiques des moyens d'accélérer la création de médicaments et de mettre au point de nouvelles thérapies [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "L'acquisition réunit les deux entités autour des systèmes spécialisés d'OpenAI en sciences de la vie [s2]. OpenAI indique intégrer le personnel et les logiciels d'Orchestra directement au développement de Rosalind, un modèle d'IA conçu pour la recherche biologique [s2]. L'équipe entrante travaillera aussi sur Rosalind Workbench, un environnement logiciel destiné à aider les scientifiques à organiser et planifier leurs expériences de laboratoire [s2].",
+          "Les comptes rendus ne précisent pas les modalités financières et organisationnelles clés [s1,s2]. Aucune des sources ne divulgue le prix de l'achat, l'échéancier officiel de clôture ou d'éventuels changements de personnel au sein des équipes combinées [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les chercheurs et les travailleurs de la biotechnologie, l'acquisition montre que les grands concepteurs d'IA s'implantent directement dans l'infrastructure de travail des laboratoires [s1,s2]. Si ces outils parviennent à simplifier la planification expérimentale, les équipes biopharmaceutiques pourraient voir évoluer la manière dont les logiciels assistent les premières étapes de la découverte médicale [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Sur quoi travaillera l'équipe d'Orchestra Bio chez OpenAI ?",
+        "a": "L'équipe et les logiciels rejoindront le développement de Rosalind, un modèle d'IA dédié à la recherche biologique, et de Rosalind Workbench, conçu pour aider les scientifiques à planifier leurs expériences de laboratoire."
+      },
+      {
+        "q": "Les détails financiers de l'acquisition ont-ils été divulgués ?",
+        "a": "Non, les sources ne précisent ni le montant de l'achat, ni le calendrier officiel de clôture, ni d'éventuels changements de personnel."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 175,
+    "fr": 207
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T01:12:36.045Z",
+      "verdict": "done",
+      "notes": [
+        "175 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T01:13:34.684Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): AI-driven, denial not in the sources: \"Neither release provides valuation multiples, transaction structures, or technic\"."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T01:14:07.901Z",
+      "verdict": "pass",
+      "notes": [
+        "The article is well-grounded in the provided sources, maintains an objective tone without hype, and appropriately attributes company claims."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T01:14:57.212Z",
+      "verdict": "pass",
+      "notes": [
+        "207 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-21T01:15:56.238Z",
+      "verdict": "done",
+      "notes": [
+        "en: OpenAI acquires Orchestra Bio for life sciences AI (50)",
+        "fr: OpenAI acquiert Orchestra Bio en sciences de la vie (51)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-21T01:16:51.189Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: spruce/grid \"Orchestra\""
+      ]
+    }
+  ]
+}
