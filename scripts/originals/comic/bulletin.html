@@ -156,8 +156,7 @@ function endCard(t) {
   text("FULL STORIES · AIBROADSHEET.COM", W / 2, 900, `800 40px ${SANS}`, YELLOW, { align: "center", track: 3, alpha: clamp((k - 0.4) / 0.4) });
   const sa = clamp((k - 0.7) / 0.4) * 0.8;
   text("Sources: " + story.sources.map((s) => s.name).join(" · "), W / 2, 1060, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
-  text("Trend data: Google Trends", W / 2, 1104, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
-  text("AI-generated images and voice.", W / 2, 1148, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
+  text("AI-generated images and voice.", W / 2, 1104, `600 28px ${SANS}`, PAPER, { align: "center", alpha: sa });
 }
 function finish(t) {
   const v = x.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.75); v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.45)"); x.fillStyle = v; x.fillRect(0, 0, W, H);
