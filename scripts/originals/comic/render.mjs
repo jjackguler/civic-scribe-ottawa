@@ -5,7 +5,7 @@ import { chromium } from "playwright";
 import { createServer } from "node:http";
 import { spawn, spawnSync } from "node:child_process";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, statSync, rmSync } from "node:fs";
 import { extname, join } from "node:path";
 
 const here = import.meta.dirname;
@@ -33,6 +33,8 @@ if (story.clips) {
   const index = {};
   for (const [k, src] of Object.entries(story.clips)) {
     const d = join(build, "frames", k);
+    // re-unpack when the clip file is newer than its cached frames (a regenerated clip keeps the same name)
+    if (existsSync(join(d, "0001.jpg")) && statSync(join(here, src)).mtimeMs > statSync(join(d, "0001.jpg")).mtimeMs) rmSync(d, { recursive: true, force: true });
     if (!existsSync(join(d, "0001.jpg"))) { await mkdir(d, { recursive: true }); await ffmpeg(["-i", join(here, src), "-vf", "fps=24,scale=1920:-2:flags=lanczos", "-q:v", "3", join(d, "%04d.jpg")]); }
     index[k] = readdirSync(d).filter((f) => f.endsWith(".jpg")).length;
   }
