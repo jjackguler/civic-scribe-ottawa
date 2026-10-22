@@ -96,7 +96,15 @@ export const HOUSE_VOICE = `House voice of AI Broadsheet (applies to everything 
 /** Headlines/excerpts that are sexually explicit or promote adult content. */
 const EXPLICIT = /\b(porn\w*|pornograph\w*|erotic\w*|nsfw|nude\w*|nudity|naked|onlyfans|sexting|hentai|x-rated|adult (content|site|video|film|entertainment|industry)|sex (bot|chatbot|toy|tape|work\w*)|strip ?club|camgirl\w*|fetish\w*|explicit (images?|content|photos?|videos?)|undress\w*|érotique\w*|pornographi\w*|contenu pour adultes|nu(e|es|s)? intégra\w*|sexuellement explicite\w*)\b/i;
 
-export type GateResult = { ok: true } | { ok: false; reason: "explicit" | "sponsored" };
+export type GateResult = { ok: true } | { ok: false; reason: "explicit" | "sponsored" | "partisan" | "promotion" };
+
+/**
+ * House red lines: we cover AI, digital life and work, not party politics or political
+ * personalities, and we never run brand promotions. Neutral AI policy (a law, a regulator,
+ * a government programme) stays in; who said what on the campaign trail does not.
+ */
+const PARTISAN = /\b(trump\w*|biden|kamala harris|jd vance|vance|obama|maga|gop|republicans?|democrats?|democratic party|ballot (?:measure|initiative|question)s?|governor'?s? race|campaign trail|midterms?|presidential (?:race|campaign|candidate)|putin|netanyahu|hamas|hezbollah|républicains?|démocrates?)\b/i;
+const PROMOTION = /\b(burger king|mcdonald'?s|happy meal|kfc|wendy'?s|taco bell|starbucks|promo codes?|coupons?|discount codes?|limited[- ]time (?:offer|deal)s?|black friday deals?|best deals?|deal alert|\d+% off|code promo)\b/i;
 
 /** Paid content from a feed is advertising, not news: it never enters the editorial stream. */
 const SPONSORED = /^\s*(?:sponsored|partner content|paid (?:post|content)|advertorial|promoted|presented by|brought to you by|contenu (?:commandité|sponsorisé|partenaire)|publireportage)\b/i;
@@ -113,6 +121,8 @@ export function editorialGate(s: { title: string; summary?: string }): GateResul
   const text = `${s.title} ${s.summary ?? ""}`;
   if (SPONSORED.test(s.title) || /\bsponsored\b/i.test(s.title.slice(0, 40))) return { ok: false, reason: "sponsored" };
   if (EXPLICIT.test(text) && !HARM_REPORTING.test(text)) return { ok: false, reason: "explicit" };
+  if (PARTISAN.test(text)) return { ok: false, reason: "partisan" };
+  if (PROMOTION.test(text)) return { ok: false, reason: "promotion" };
   return { ok: true };
 }
 

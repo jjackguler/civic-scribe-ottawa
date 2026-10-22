@@ -71,7 +71,7 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
 
   const consider = (id: string, lead: Story, group: Story[], minChars: number) => {
     const gate = editorialGate({ title: lead.title, summary: lead.summary });
-    if (!gate.ok) return skipped.push({ id, title: lead.title, why: "charter gate (explicit)" });
+    if (!gate.ok) return skipped.push({ id, title: lead.title, why: `charter gate (${gate.reason})` });
     const why = covered(id, group);
     if (why) return skipped.push({ id, title: lead.title, why });
     const chars = group.reduce((t, s) => t + (s.summary?.length ?? 0), 0);

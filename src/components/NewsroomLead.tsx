@@ -83,13 +83,14 @@ export function NewsroomLead({ initial, className = "", title = true, exclude }:
   className?: string;
   /** Show the section heading (off when the page has its own). */
   title?: boolean;
-  /** An article id to leave out. */
-  exclude?: string;
+  /** Article ids to leave out (one, or the ones already on the stage). */
+  exclude?: string | string[];
 }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const { data } = useNewsroom(initial);
-  const items = (data?.items ?? []).filter(s => s.id !== exclude).slice(0, 5);
+  const skip = new Set(([] as string[]).concat(exclude ?? []));
+  const items = (data?.items ?? []).filter(s => !skip.has(s.id)).slice(0, 5);
   if (items.length === 0) return null;
   const [lead, ...rest] = items;
   const c = lead[locale];

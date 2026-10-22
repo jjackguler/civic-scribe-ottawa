@@ -7,10 +7,11 @@ import { StoryCard, StoryLink, StoryMeta, CoverageBadge } from "@/components/Sto
 import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
-import { LiveHero, slideKey, type HeroSlide, type StorySlide } from "@/components/LiveHero";
+import { LiveHero, slideKey, ownDate, type HeroSlide, type OwnItem, type StorySlide } from "@/components/LiveHero";
 import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
+import { originalSection } from "@/lib/originals-types";
 import { OriginalCard } from "@/components/Originals";
 import { NextCase } from "@/components/SirJack";
 import { DispatchRail } from "@/components/Dispatch";
@@ -23,7 +24,7 @@ import { QuizCard } from "@/components/Quiz";
 import { getDailyQuizFast } from "@/lib/youth";
 import { YoungLabBand } from "@/components/YoungLab";
 import { NewsroomLead } from "@/components/NewsroomLead";
-import { getNewsroomFast } from "@/lib/newsroom";
+import { getNewsroomFast, useNewsroom } from "@/lib/newsroom";
 import { CardOfTheDay } from "@/components/CardOfTheDay";
 import {
   getFrontPageNews, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
@@ -115,28 +116,46 @@ function Home() {
     .sort((x, y) => y.score - x.score)
     .slice(0, 5)
     .map(x => x.c);
-  const storySlides: StorySlide[] = heroClusters.map(c => {
-    const lead = c.lead.image ? c.lead : c.stories.find(s => s.image) ?? c.lead;
-    return { story: lead, outlets: c.sources, sources: [...new Set(c.stories.map(s => s.source))], developing: isDeveloping(c), breaking: isBreaking(c), trend: trendMatch(lead, pulse) };
-  });
-  heroClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
-  for (const s of take(news.filter(x => x.image), used, 5 - storySlides.length)) {
-    storySlides.push({ story: s, outlets: 1, sources: [s.source], developing: false, breaking: false, trend: trendMatch(s, pulse) });
-  }
-  // Our own productions lead the stage while they are new (titles for three days,
-  // explainers for a day and a half, at most two), then step down into Top stories.
+  const storySlides: StorySlide[] = heroClusters.map(c => (
+    { story: c.lead, outlets: c.sources, sources: [...new Set(c.stories.map(s => s.source))], developing: isDeveloping(c), breaking: isBreaking(c), trend: trendMatch(c.lead, pulse) }
+  ));
+
+  // Our own work holds the stage: our newest videos, with one of our newsroom's articles in
+  // every other slot (two once the newsroom has five or more). No outlet's photo or headline
+  // leads the page; the events most outlets are covering lead Top stories below instead.
+  // The wire stories above only stand in while our own lists are still loading.
   const nowMs = useClock();
+  const { data: nrData } = useNewsroom(newsroom);
+  const articles = nrData?.items ?? [];
   const ownAll = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   const ageH = (iso: string) => (nowMs - new Date(iso).getTime()) / 3600_000;
-  const onStage = (o: { kind?: string; publishedAt: string }) => ageH(o.publishedAt) < (o.kind === "titles" ? 24 : 12);
-  const heroOwn = ownAll.filter(onStage).slice(0, 2);
-  const steppedDown = ownAll.filter(o => !heroOwn.includes(o) && ageH(o.publishedAt) < 7 * 24).slice(0, 1);
-  // The newest top story leads; our own videos take every other slot after it while they are new.
-  const ownSlides: HeroSlide[] = heroOwn.map((o) => ({ kind: "original" as const, original: o }));
-  const slides: HeroSlide[] = storySlides
-    .flatMap((s, i) => (i > 0 && ownSlides[i - 1] ? [ownSlides[i - 1], s] : [s]))
-    .concat(ownSlides.slice(Math.max(0, storySlides.length - 1)))
-    .slice(0, 6);
+  const stageVideos = ownAll.slice(0, 4);
+  const stageArticles = articles.slice(0, articles.length >= 5 ? 2 : 1);
+  const ownStage: HeroSlide[] = stageVideos.flatMap((o, i) => [
+    { kind: "original" as const, original: o },
+    ...(stageArticles[i] ? [{ kind: "article" as const, article: stageArticles[i] }] : []),
+  ]);
+  const ownOnStage = ownStage.length > 0;
+  const stageClusters = ownOnStage ? [] : heroClusters;
+  stageClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
+  const slides: HeroSlide[] = (ownOnStage ? ownStage : storySlides).slice(0, 6);
+  const steppedDown = ownAll.filter(o => !stageVideos.includes(o) && ageH(o.publishedAt) < 7 * 24).slice(0, 1);
+  // Beside the stage: the rest of our own work, newest first, as a mix: up to two articles,
+  // then videos with at most two from any one shelf (so one series never fills the column).
+  const perShelf = new Map<string, number>();
+  const columnVideos = ownAll.filter(o => {
+    if (stageVideos.includes(o) || steppedDown.includes(o)) return false;
+    const shelf = originalSection(o), n = perShelf.get(shelf) ?? 0;
+    if (n >= 2) return false;
+    perShelf.set(shelf, n + 1);
+    return true;
+  });
+  const columnArticles = articles.filter(a => !stageArticles.includes(a)).slice(0, 2);
+  const ownColumn: OwnItem[] = [
+    ...columnArticles.map(a => ({ kind: "article" as const, article: a })),
+    ...columnVideos.slice(0, 6 - columnArticles.length).map(o => ({ kind: "original" as const, original: o })),
+  ].sort((x, y) => ownDate(y).localeCompare(ownDate(x)));
+  const inColumn = new Set(ownColumn.map(x => (x.kind === "original" ? x.original.id : x.article.id)));
   const fromHero = useSteppedDown(slides.map(slideKey));
   const top = heroClusters[0];
   const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));
@@ -144,7 +163,7 @@ function Home() {
   // Top stories under the hero: the next clusters with two or more outlets, then photo stories.
   const photo = news.filter(s => s.image);
   const more = clusters
-    .filter(c => !heroClusters.includes(c) && c.sources >= 2 && !used.has(c.lead.id))
+    .filter(c => !stageClusters.includes(c) && c.sources >= 2 && !used.has(c.lead.id))
     .slice(0, 6);
   more.forEach(c => c.stories.forEach(s => used.add(s.id)));
   const moreFill = take(photo, used, Math.max(0, 6 - more.length));
@@ -194,7 +213,8 @@ function Home() {
     : top && isDeveloping(top)
       ? { kind: "developing" as const, story: top.lead, note: `${top.sources} ${locale === "fr" ? "médias" : "outlets"}` }
       : fresh ? { kind: "just-in" as const, story: fresh, note: fresh.source } : null;
-  const showStrip = alert?.kind === "just-in" && !storySlides.some(sl => sl.story.id === alert.story.id);
+  // With our own work on the stage, Breaking and Developing reach readers through this strip.
+  const showStrip = !!alert && (ownOnStage || (alert.kind === "just-in" && !storySlides.some(sl => sl.story.id === alert.story.id)));
 
   return (
     <PageShell>
@@ -226,13 +246,13 @@ function Home() {
           </div>
         </section>
       ) : (
-        <LiveHero slides={slides} latest={newestFirst} />
+        <LiveHero slides={slides} latest={newestFirst} own={ownColumn} />
       )}
 
       <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
 
       {/* Our own reporting, right under the stage: newsroom articles first, then dispatches */}
-      <NewsroomLead initial={newsroom} className="container-mw pt-12" />
+      <NewsroomLead initial={newsroom} exclude={stageArticles.map(a => a.id)} className="container-mw pt-12" />
       <DispatchRail initial={dispatches} className="container-mw pt-12" />
       <div className="container-mw mt-10 grid gap-6 lg:grid-cols-2">
         <QuizCard initial={quiz} />
@@ -305,7 +325,7 @@ function Home() {
             </div>
             <NextCase variant="strip" />
             <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
-              {ownAll.filter(o => !steppedDown.includes(o)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
+              {ownAll.filter(o => !steppedDown.includes(o) && !stageVideos.includes(o) && !inColumn.has(o.id)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
             </div>
           </div>
         </section>

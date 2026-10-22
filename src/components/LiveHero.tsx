@@ -1,18 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play, Volume2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, Pause, Play, Volume2 } from "lucide-react";
 import type { Story } from "@/lib/news";
 import { display, timeAgo, useNow } from "@/lib/news";
 import type { Original } from "@/lib/originals-types";
+import { FORMAT_LABEL, type NewsroomSummary } from "@/lib/newsroom-types";
 import { useLocale } from "@/lib/locale-context";
 import { StoryLink, storyKicker } from "./StoryCard";
-import { StoryImage } from "./StoryImage";
 import { mmss, originalKind, usePreviewOk } from "./Originals";
+import { NewsroomCover } from "./NewsroomCover";
+import { keepNames, listOutlets } from "./Dispatch";
 import { editorialArtFor } from "@/lib/editorial-art";
 import { HeroMotif } from "./HeroMotif";
 import { motifFor } from "@/lib/hero-motif";
 
 /** One of our own productions (explainer or opening titles) on the stage. */
 export type OriginalSlide = { kind: "original"; original: Original };
+/** One of our newsroom's articles on the stage, with its house cover. */
+export type ArticleSlide = { kind: "article"; article: NewsroomSummary };
+/** An item of our own for the column beside the stage. */
+export type OwnItem = OriginalSlide | ArticleSlide;
 
 export type StorySlide = {
   kind?: "story";
@@ -24,23 +31,25 @@ export type StorySlide = {
   trend: "ca" | "us" | null;
 };
 
-export type HeroSlide = StorySlide | OriginalSlide;
+export type HeroSlide = StorySlide | OriginalSlide | ArticleSlide;
 
-export const slideKey = (sl: HeroSlide) => (sl.kind === "original" ? sl.original.id : sl.story.id);
-const slideTitle = (sl: HeroSlide, locale: "en" | "fr") => (sl.kind === "original" ? sl.original.title : display(sl.story, locale).title);
+export const slideKey = (sl: HeroSlide) => (sl.kind === "original" ? sl.original.id : sl.kind === "article" ? sl.article.id : sl.story.id);
+const slideTitle = (sl: HeroSlide, locale: "en" | "fr") => (sl.kind === "original" ? sl.original.title : sl.kind === "article" ? keepNames(sl.article[locale].headline) : display(sl.story, locale).title);
+export const ownDate = (x: OwnItem) => (x.kind === "original" ? x.original.publishedAt : x.article.createdAt);
 
 const SLIDE_MS = 7000;
 /** Our own videos get longer on stage: the silent preview needs time to land. */
 const ORIGINAL_MS = 12000;
 
 /**
- * The front page's live desk: our own productions first, then the stories the
- * most newsrooms are covering, one at a time on a dark stage, with a live column
- * of the newest headlines beside it. Rotation is opt-in; pauses on hover, on keyboard
- * focus, while a video plays with sound, with the pause button, and never moves
- * for reduced-motion readers.
+ * The front page's stage: our own work, our videos and our newsroom's articles,
+ * one at a time on a dark stage, with a column of more of our own beside it.
+ * (Wire stories only stand in while our own list is still loading, and never with
+ * an outlet's photo.) Rotation is opt-in; pauses on hover, on keyboard focus, while
+ * a video plays with sound, with the pause button, and never moves for
+ * reduced-motion readers.
  */
-export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Story[] }) {
+export function LiveHero({ slides, latest, own = [] }: { slides: HeroSlide[]; latest: Story[]; own?: OwnItem[] }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -73,7 +82,7 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
   }, []);
 
   const cur = n ? slides[idx] : null;
-  const slideMs = cur?.kind === "original" ? ORIGINAL_MS : SLIDE_MS;
+  const slideMs = cur?.kind === "original" || cur?.kind === "article" ? ORIGINAL_MS : SLIDE_MS;
 
   useEffect(() => {
     if (paused || n < 2) return;
@@ -99,7 +108,9 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
         >
           {cur.kind === "original"
             ? <OriginalStage key={cur.original.id} o={cur.original} onPlayingChange={setMediaPlaying} />
-            : <StoryStage key={cur.story.id} s={cur} />}
+            : cur.kind === "article"
+              ? <ArticleStage key={cur.article.id} a={cur.article} />
+              : <StoryStage key={cur.story.id} s={cur} />}
 
           {/* Slide picker with progress */}
           <div className="mt-3 grid gap-2" style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr)) auto` }} role="group" aria-label={fr ? "Choisir une nouvelle" : "Choose a story"}>
@@ -117,7 +128,8 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
                   ) : k < idx ? <span className="block h-full bg-white/40" /> : null}
                 </span>
                 <span className="hidden md:block mt-2 text-[0.8rem] font-semibold leading-snug line-clamp-2">
-                  {sl.kind === "original" && <span className="text-signal">Original · </span>}
+                  {sl.kind === "original" && <span className="text-signal">{fr ? "Vidéo · " : "Video · "}</span>}
+                  {sl.kind === "article" && <span className="text-signal">{fr ? "Rédaction · " : "Newsroom · "}</span>}
                   {slideTitle(sl, locale)}
                 </span>
               </button>
@@ -132,7 +144,7 @@ export function LiveHero({ slides, latest }: { slides: HeroSlide[]; latest: Stor
           </div>
         </div>
 
-        <LiveColumn stories={latest} />
+        {own.length > 0 ? <OwnColumn items={own} /> : <LiveColumn stories={latest} />}
       </div>
     </section>
   );
@@ -158,23 +170,13 @@ function StoryStage({ s }: { s: StorySlide }) {
         {art ? (
           animateArt && art.video ? <video src={art.video} poster={art.image} muted autoPlay loop playsInline className="absolute inset-0 h-full w-full object-contain" aria-label={art.alt[locale]} />
             : <img src={art.image} alt={art.alt[locale]} width={1200} height={900} fetchPriority="high" loading="eager" decoding="async" className="absolute inset-0 h-full w-full object-contain" />
-        ) : s.story.image ? (
-          <>
-            <div className="absolute inset-0 hero-drift">
-              <StoryImage src={s.story.image} alt="" eager plain className="h-full w-full object-contain" />
-            </div>
-            {/* A small living sticker for what the story is about, in the corner, never on the photo's subject */}
-            <div className="absolute left-3 bottom-3 h-[72px] w-[96px] sm:h-[90px] sm:w-[120px] overflow-hidden border-2 border-signal shadow-[0_8px_24px_rgba(0,0,0,0.45)]" aria-hidden="true">
-              <HeroMotif motif={motif} seed={`${s.story.id}-b`} variant="badge" />
-            </div>
-          </>
         ) : (
           <div className="absolute inset-0" aria-hidden="true">
             <HeroMotif motif={motif} seed={s.story.id} />
             <p className="absolute inset-x-0 bottom-0 bg-night/95 px-5 py-3 text-right masthead-serif text-signal text-[2.2rem] sm:text-[3rem] lg:text-[3.4rem] leading-none whitespace-nowrap overflow-hidden">{storyKicker(s.story, locale)}</p>
           </div>
         )}
-        <span className="absolute top-3 right-3 bg-night/90 text-white/85 text-[0.7rem] px-2 py-1">{art ? (fr ? "Illustration IA · AI Broadsheet" : "AI illustration · AI Broadsheet") : s.story.image ? `Photo: ${s.story.source}` : (fr ? "Illustration animée · AI Broadsheet" : "Animated illustration · AI Broadsheet")}</span>
+        <span className="absolute top-3 right-3 bg-night/90 text-white/85 text-[0.7rem] px-2 py-1">{art ? (fr ? "Illustration IA · AI Broadsheet" : "AI illustration · AI Broadsheet") : (fr ? "Illustration animée · AI Broadsheet" : "Animated illustration · AI Broadsheet")}</span>
       </div>
 
       <div className="lead-copy min-w-0 flex">
@@ -229,18 +231,20 @@ function OriginalStage({ o, onPlayingChange }: { o: Original; onPlayingChange: (
     if (v) { v.muted = false; v.currentTime = 0; v.controls = true; v.loop = false; v.play().catch(() => {}); }
   };
 
+  // Landscape films (the cinema specials) sit wide beside a narrower column of text.
+  const wide = o.aspect === "16:9";
   return (
     <div className="relative overflow-hidden min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] bg-night-2">
       {o.posterUrl && <img src={o.posterUrl} alt="" className="absolute inset-0 h-full w-full object-cover scale-125 blur-2xl opacity-40" aria-hidden="true" />}
       <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(6,24,28,0.96)_0%,rgba(6,24,28,0.7)_55%,rgba(6,24,28,0.4)_100%)]" aria-hidden="true" />
-      <div className="relative grid min-h-[inherit] items-center gap-6 p-5 sm:p-8 lg:p-10 sm:grid-cols-[minmax(0,1fr)_auto]">
-        <div className="hero-in order-2 sm:order-1 min-w-0">
+      <div className={`relative grid min-h-[inherit] items-center gap-6 p-5 sm:p-8 lg:p-10 ${wide ? "lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]" : "sm:grid-cols-[minmax(0,1fr)_auto]"}`}>
+        <div className={`hero-in order-2 min-w-0 ${wide ? "lg:order-1" : "sm:order-1"}`}>
           <p className="flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
             <span className="bg-signal text-signal-ink px-2 py-0.5">{fr ? "Original AI Broadsheet" : "AI Broadsheet Original"}</span>
             <span className="text-signal">{originalKind(o, fr)}</span>
             <span className="text-white/75 tabular-nums">{mmss(o.durationSec)}</span>
           </p>
-          <h2 className="hl text-white text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem] leading-[1.02] mt-3 max-w-[20ch] text-balance">{o.title}</h2>
+          <h2 className={`hl text-white leading-[1.02] mt-3 max-w-[20ch] text-balance ${wide ? "text-[1.8rem] sm:text-[2.3rem] lg:text-[2.6rem]" : "text-[2rem] sm:text-[2.6rem] lg:text-[3.2rem]"}`}>{o.title}</h2>
           <p className="font-serif text-white/80 text-[1.08rem] sm:text-[1.2rem] leading-relaxed mt-3 max-w-[56ch] line-clamp-3">{o.summary}</p>
           <button onClick={start} className="press mt-5 inline-flex items-center gap-2 bg-signal text-signal-ink font-bold px-5 py-2.5">
             <Volume2 className="h-5 w-5" aria-hidden="true" />
@@ -251,9 +255,12 @@ function OriginalStage({ o, onPlayingChange }: { o: Original; onPlayingChange: (
               ? (fr ? "Voix d'IA" : "AI voice")
               : (/^no narration/i.test(o.voice) ? (fr ? "Sous-titres, d'après " : "Captions, from ") : (fr ? "Voix d'IA, d'après " : "AI voice, from ")) + o.sources.map(x => x.name).slice(0, 3).join(", ")}
           </p>
+          <Link to="/originals" hash={o.id} className="mt-2 inline-flex items-center gap-1 text-[0.85rem] font-semibold text-white/85 hover:text-signal">
+            {fr ? "Sources, transcription et toutes nos vidéos" : "Sources, transcript and all our videos"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
-        <div className="order-1 sm:order-2 justify-self-center sm:justify-self-end">
-          <div className="hero-in relative aspect-[9/16] h-[300px] sm:h-[400px] lg:h-[460px] bg-black shadow-[0_18px_50px_rgba(0,0,0,0.55)]">
+        <div className={wide ? "order-1 lg:order-2 w-full" : "order-1 sm:order-2 justify-self-center sm:justify-self-end"}>
+          <div className={`hero-in relative bg-black shadow-[0_18px_50px_rgba(0,0,0,0.55)] ${wide ? "aspect-video w-full" : "aspect-[9/16] h-[300px] sm:h-[400px] lg:h-[460px]"}`}>
             {o.fileUrl ? (
               <video
                 ref={vid}
@@ -283,6 +290,96 @@ function OriginalStage({ o, onPlayingChange }: { o: Original; onPlayingChange: (
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * One of our newsroom's articles on the stage: our headline and dek beside its
+ * house cover (typographic, never a publisher's photo).
+ */
+function ArticleStage({ a }: { a: NewsroomSummary }) {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+  const c = a[locale];
+  return (
+    <Link to="/article/$slug" params={{ slug: a.slug[locale] }} className="group lead-spread focus-visible:outline focus-visible:outline-2 focus-visible:outline-brass">
+      <div className="lead-art relative overflow-hidden bg-night grid place-items-center p-4 sm:p-6">
+        <NewsroomCover cover={a.cover} locale={locale} size="hero" className="hero-in w-full shadow-[0_18px_50px_rgba(0,0,0,0.45)]" />
+      </div>
+      <div className="lead-copy min-w-0 flex">
+        <div className="w-full flex flex-col justify-center p-5 sm:p-7 border-l-[4px] border-signal">
+          <p className="flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
+            <span className="bg-signal text-signal-ink px-2 py-0.5">{fr ? "Rédaction AI Broadsheet" : "AI Broadsheet Newsroom"}</span>
+            <span className="text-signal">{FORMAT_LABEL[a.format]?.[locale]}</span>
+          </p>
+          <h2 className="hl lead-headline text-white mt-3 group-hover:underline decoration-signal decoration-2 underline-offset-4">
+            <span>{keepNames(c.headline)}</span>
+          </h2>
+          {c.dek && <p className="font-serif text-white/80 text-[1.05rem] sm:text-[1.1rem] leading-relaxed mt-3 max-w-[56ch] line-clamp-3">{c.dek}</p>}
+          <p className="mt-4 text-[0.85rem] text-white/65 flex flex-wrap gap-x-3 gap-y-1">
+            <span>{fr ? "D'après " : "Reported from "}<span className="font-semibold text-white/85">{listOutlets(a.outlets.slice(0, 3), locale)}</span>{a.outlets.length > 3 ? ` +${a.outlets.length - 3}` : ""}</span>
+            <HeroTime iso={a.createdAt} />
+            <span>{fr ? "Écrit avec l'IA, vérifié contre chaque source" : "Written with AI, checked against every source"}</span>
+          </p>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+/** Beside the stage: more of our own work, articles and videos, newest first. */
+function OwnColumn({ items }: { items: OwnItem[] }) {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+  const now = useNow();
+  const row = "group grid grid-cols-[72px_minmax(0,1fr)] gap-3 py-3 transition-transform duration-200 hover:translate-x-1";
+  return (
+    <aside className="frontpage-live min-w-0" aria-label={fr ? "De notre rédaction" : "From our newsroom"}>
+      <div className="flex items-baseline justify-between gap-3 pb-3 border-b-[3px] border-signal">
+        <p className="font-bold text-[1.15rem]">{fr ? "De notre rédaction" : "From our newsroom"}</p>
+        <Link to="/originals" className="text-[0.85rem] font-semibold text-white/70 hover:text-signal">{fr ? "Tout voir" : "See all"}</Link>
+      </div>
+      <p className="text-[0.8rem] text-white/60 mt-2">{fr ? "Nos articles et nos vidéos, vérifiés contre leurs sources." : "Our own articles and videos, checked against their sources."}</p>
+      <ol className="mt-1">
+        {items.slice(0, 6).map(x => {
+          const art = x.kind === "article";
+          const when = ownDate(x);
+          const body = (
+            <>
+              <span className="relative block overflow-hidden bg-night-2 aspect-square" aria-hidden="true">
+                {art
+                  ? <NewsroomCover cover={x.article.cover} locale={locale} size="thumb" />
+                  : x.original.posterUrl && <img src={x.original.posterUrl} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />}
+                {!art && (
+                  <span className="absolute left-1 bottom-1 grid place-items-center h-5 w-5 rounded-full bg-signal text-signal-ink" aria-hidden="true">
+                    <Play className="h-3 w-3 translate-x-[1px]" fill="currentColor" />
+                  </span>
+                )}
+              </span>
+              <span className="min-w-0">
+                <span className="text-[0.72rem] text-white/55 flex gap-2">
+                  <time dateTime={when} className="text-signal font-semibold shrink-0" suppressHydrationWarning>{timeAgo(when, now, locale)}</time>
+                  <span className="truncate">{art ? FORMAT_LABEL[x.article.format]?.[locale] : `${fr ? "Vidéo" : "Video"} · ${mmss(x.original.durationSec)}`}</span>
+                </span>
+                <span className="block font-semibold leading-snug mt-0.5 text-[0.92rem] line-clamp-3 group-hover:underline">
+                  {art ? keepNames(x.article[locale].headline) : x.original.title}
+                </span>
+              </span>
+            </>
+          );
+          return (
+            <li key={art ? x.article.id : x.original.id} className="border-b border-white/10 last:border-0">
+              {art
+                ? <Link to="/article/$slug" params={{ slug: x.article.slug[locale] }} className={row}>{body}</Link>
+                : <Link to="/originals" hash={x.original.id} className={row}>{body}</Link>}
+            </li>
+          );
+        })}
+      </ol>
+      <Link to="/news" className="mt-3 inline-flex items-center gap-1 text-[0.85rem] font-semibold text-white/70 hover:text-signal">
+        {fr ? "Les manchettes IA des autres médias" : "AI headlines from other outlets"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+      </Link>
+    </aside>
   );
 }
 
