@@ -2,6 +2,61 @@
  "updatedAt": "2026-10-21T16:00:00.000Z",
  "items": [
   {
+   "id": "202610221200-sir-jack-special-the-panic-that-wasnt",
+   "kind": "explainer",
+   "section": "noir",
+   "aspect": "16:9",
+   "publishedAt": "2026-10-22T02:27:25Z",
+   "title": "The Sir Jack Files, special edition: The Panic That Wasn't",
+   "summary": "On October 30, 1938, Orson Welles put Martians on the radio, and by morning America had a legend: mass panic. The evidence says it mostly didn't happen. A three-and-a-half-minute film on how newspapers built the myth, and the real, deadly panic in Quito eleven years later that almost nobody remembers.",
+   "durationSec": 215,
+   "sources": [
+    {
+     "name": "Jefferson Pooley & Michael J. Socolow, “The Myth of the War of the Worlds Panic,” Slate (Oct. 28, 2013)",
+     "url": "https://slate.com/culture/2013/10/orson-welles-war-of-the-worlds-panic-myth-the-infamous-radio-broadcast-did-not-cause-a-nationwide-hysteria.html"
+    },
+    {
+     "name": "NPR (Oct. 30, 2013)",
+     "url": "https://www.npr.org/sections/thetwo-way/2013/10/30/241797346/75-years-ago-war-of-the-worlds-started-a-panic-or-did-it"
+    },
+    {
+     "name": "Radio Guide transcript of Welles's press conference, Oct. 31, 1938 (via Wellesnet)",
+     "url": "https://www.wellesnet.com/the-aftermath-orson-welles-the-war-of-the-worlds-halloween-press-conference-1938/"
+    },
+    {
+     "name": "A. Brad Schwartz, Broadcast Hysteria (Hill and Wang, 2015); letters at the University of Michigan",
+     "url": "https://www.wellesnet.com/?p=11961"
+    },
+    {
+     "name": "W. Joseph Campbell, Getting It Wrong (University of California Press, 2010)",
+     "url": "https://www.ucpress.edu/books/getting-it-wrong/paper"
+    },
+    {
+     "name": "Hadley Cantril, The Invasion from Mars (Princeton University Press, 1940)",
+     "url": "https://archive.org/details/invasionfrommars0000cant"
+    },
+    {
+     "name": "Radiolab, “Could It Happen Again?” (2010), on Quito, 1949",
+     "url": "https://www.radiolab.org/story/91624-could-it-happen-again-and-again/"
+    },
+    {
+     "name": "College of Wooster archive: fire at Radio Quito, 1949",
+     "url": "https://cowlatinamerica.voices.wooster.edu/archive-item/fire-at-radio-station-after-broadcast/"
+    }
+   ],
+   "transcript": "New York. Sunday, October thirtieth, nineteen thirty-eight. Eight o'clock. On CBS radio, a twenty-three-year-old named Orson Welles begins a Halloween play. It's The War of the Worlds. Martians land on a farm in Grover's Mill, New Jersey. And the story is told as fake news bulletins, breaking into a dance band. By the next morning, America had a legend. It has been told ever since. The trouble is, it's mostly not true. Monday's New York Times, front page: radio listeners in panic, taking war drama as fact. The papers told of families fleeing their homes, of switchboards jammed with calls. The next day, unshaven, Welles faced the press. A reporter asks: Reporter: “Were you aware of the terror going on throughout the nation while you were giving the broadcast?” Welles: “Oh no, of course not. I was frankly terribly shocked to learn it did.” Another: Reporter: “Should you have toned down the language of the drama?” Welles: “No. You don't play murder in soft words.” Here's what almost nobody checked. That night, a ratings firm, C. E. Hooper, telephoned five thousand homes and asked what they were listening to. Two percent named a radio play, or the Welles show. Not one said a news broadcast. Most of America was on NBC, laughing at a ventriloquist and his dummy, Charlie McCarthy. Some CBS stations didn't even carry Welles. So why the panic headlines? All through the Depression, radio had been taking newspapers' advertisers. Here was proof, the papers said, that radio couldn't be trusted with the news. The Times called it terror by radio. Within a day or two, most papers dropped the story. The legend stayed. In nineteen forty, a Princeton study put a number on it: roughly a million frightened. But its survey was taken six weeks later, after the headlines. And frightened is not the same as panicked. Six weeks on, six New York hospitals had no record of a single case. No suicide was ever confirmed. Nearly fourteen hundred listeners wrote to Welles. Decades later, a historian read their letters. His conclusion: relatively few listeners ever believed the attack was real. Washington issued no fines, and no rules. The networks simply promised: no more fake news flashes. But it did happen once. Quito, Ecuador. February twelfth, nineteen forty-nine. Radio Quito airs its own version, set in Ecuador. When listeners learned it was fiction, a crowd stoned the station and set it on fire. People died. Reports put the toll anywhere from five to twenty. So the most famous panic in history was mostly made in newsrooms. The one that cost lives, almost nobody remembers. A story about fake news that was, itself, mostly fake news. The Sir Jack Files. Case closed.",
+   "voice": "ElevenLabs stock voices (narration: Brian; dialogue: Roger, Bill)",
+   "aiImages": true,
+   "credits": "Images and motion generated with AI (Google Flow: Nano Banana images, Veo video) and edited by AI Broadsheet. Press-conference dialogue is quoted from the Radio Guide transcript of October 31, 1938, and voiced by synthetic stock voices; no real person's likeness or voice is used. Narration, sound effects and score generated with ElevenLabs.",
+   "readMore": {
+    "url": "https://slate.com/culture/2013/10/orson-welles-war-of-the-worlds-panic-myth-the-infamous-radio-broadcast-did-not-cause-a-nationwide-hysteria.html",
+    "en": "Read the research",
+    "fr": "Lire l'enquête"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/b35322a1813dc95a4f21f5d19cd7696b7d62ef5c/originals/files/202610221200-sir-jack-special-the-panic-that-wasnt.mp4",
+   "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/b35322a1813dc95a4f21f5d19cd7696b7d62ef5c/originals/files/202610221200-sir-jack-special-the-panic-that-wasnt.jpg"
+  },
+  {
    "id": "202610211600-op-doc-the-good-room",
    "kind": "explainer",
    "section": "mind",
