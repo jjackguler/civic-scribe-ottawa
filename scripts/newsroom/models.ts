@@ -133,7 +133,8 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
               systemInstruction:{parts:[{text:system+"\n\nReply with JSON only."}]},contents:[{role:"user",parts:[{text:user}]}],
               generationConfig:{maxOutputTokens:geminiMaxOutput(maxTokens,e),temperature:0.3,responseMimeType:"application/json"}
             } : {model,max_tokens:maxTokens,temperature:0.3,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}]};
-            return transport(url,{method:"POST",headers,body:JSON.stringify(body),signal:AbortSignal.timeout(150000)});
+            // Long articles with thinking can take Gemini over 2.5 minutes; NEWSROOM_TIMEOUT_MS overrides.
+            return transport(url,{method:"POST",headers,body:JSON.stringify(body),signal:AbortSignal.timeout(Number(e.NEWSROOM_TIMEOUT_MS)||280000)});
           },cfg.retries,wait);
           if(res.status===499){failure="Per-run limit reached; remaining work deferred, no further request sent.";report("["+role+"] "+failure);return null;}
           if(!res.ok){
