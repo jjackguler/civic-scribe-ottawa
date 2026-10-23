@@ -1255,6 +1255,28 @@
   }
  ],
  "clips": {
-  "backseat": "art/the-wrong-face/clips/backseat.webm"
+  "bunker": "art/twenty-three-minutes/clips/bunker.webm",
+  "calm": "art/twenty-three-minutes/clips/calm.webm",
+  "checks": "art/twenty-three-minutes/clips/checks.webm",
+  "clock": "art/twenty-three-minutes/clips/clock.webm",
+  "corridor": "art/twenty-three-minutes/clips/corridor.webm",
+  "dawn": "art/twenty-three-minutes/clips/dawn.webm",
+  "glint": "art/twenty-three-minutes/clips/glint.webm",
+  "hand": "art/twenty-three-minutes/clips/hand.webm",
+  "home": "art/twenty-three-minutes/clips/home.webm",
+  "lamps": "art/twenty-three-minutes/clips/lamps.webm",
+  "logbook": "art/twenty-three-minutes/clips/logbook.webm",
+  "phone-up": "art/twenty-three-minutes/clips/phone-up.webm",
+  "radar": "art/twenty-three-minutes/clips/radar.webm",
+  "roar": "art/twenty-three-minutes/clips/roar.webm",
+  "satellite": "art/twenty-three-minutes/clips/satellite.webm",
+  "servers": "art/twenty-three-minutes/clips/servers.webm",
+  "silhouette": "art/twenty-three-minutes/clips/silhouette.webm",
+  "siren": "art/twenty-three-minutes/clips/siren.webm",
+  "start": "art/twenty-three-minutes/clips/start.webm",
+  "strike": "art/twenty-three-minutes/clips/strike.webm",
+  "backseat": "art/the-wrong-face/clips/backseat.webm",
+  "start-b": "art/twenty-three-minutes/clips/start.webm",
+  "satellite-b": "art/twenty-three-minutes/clips/satellite.webm"
  }
 }
