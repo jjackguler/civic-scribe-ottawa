@@ -1,0 +1,706 @@
+{
+ "slug": "deti",
+ "title": "ДЕТИ (Children)",
+ "series": "",
+ "episode": 0,
+ "special": true,
+ "posterAt": 24.0,
+ "music": "Mournful cinematic orchestral score for a true war documentary: solo cello, low sustained strings, sparse piano, a slow build to a heavy, grieving swell, then quiet strings and a single piano line at the end. No drums, no vocals.",
+ "ambience": "Cold winter wind in an empty city, faint distant rumble, no music.",
+ "next": "MARIUPOL · 16 MARCH 2022",
+ "brand": "ДЕТИ",
+ "tagline": "Remember their names.",
+ "editedBy": "Cem Guler",
+ "disclosure": "Illustrations and motion generated with AI from the accounts of survivors and witnesses; they are not photographs. All names have been changed. Witness lines are quoted from Amnesty International's report and voiced by synthetic voices.",
+ "aiImages": true,
+ "cast": {
+  "pavlo": [
+   "George",
+   "Daniel"
+  ],
+  "witness": [
+   "Callum",
+   "Charlie"
+  ],
+  "daryna": [
+   "Lily",
+   "Charlotte"
+  ]
+ },
+ "halftone": 0,
+ "page": "cinema.html",
+ "images": {
+  "city": "art/deti/city.jpg",
+  "theatre": "art/deti/theatre.jpg",
+  "deti": "art/deti/deti.jpg",
+  "basement": "art/deti/basement.jpg",
+  "kitchen": "art/deti/kitchen.jpg",
+  "list": "art/deti/list.jpg",
+  "drawing": "art/deti/drawing.jpg",
+  "cars": "art/deti/cars.jpg",
+  "morning": "art/deti/morning.jpg",
+  "pavlo": "art/deti/pavlo.jpg",
+  "sky": "art/deti/sky.jpg",
+  "roof": "art/deti/roof.jpg",
+  "dust": "art/deti/dust.jpg",
+  "documents": "art/deti/documents.jpg",
+  "hall": "art/deti/hall.jpg",
+  "andriy": "art/deti/andriy.jpg",
+  "hands": "art/deti/hands.jpg",
+  "aftermath": "art/deti/aftermath.jpg",
+  "investigators": "art/deti/investigators.jpg",
+  "satmap": "art/deti/satmap.jpg",
+  "memorial": "art/deti/memorial.jpg",
+  "names": "art/deti/names.jpg",
+  "dawn-square": "art/deti/dawn-square.jpg"
+ },
+ "sources": [
+  {
+   "name": "Amnesty International, “Children”: The Attack on the Donetsk Regional Academic Drama Theatre in Mariupol, Ukraine (June 2022)",
+   "url": "https://www.amnesty.org/en/latest/news/2022/06/ukraine-deadly-mariupol-theatre-strike-a-clear-war-crime-by-russian-forces-new-investigation/"
+  },
+  {
+   "name": "Death toll estimates: Mariupol City Council; Associated Press investigation (2022)",
+   "url": "https://www.kyivpost.com/post/67099"
+  }
+ ],
+ "shots": [
+  {
+   "id": "d01",
+   "say": "Mariupol, Ukraine. March, twenty twenty-two. The city is under siege.",
+   "lead": 7.4,
+   "hold": 0.6,
+   "panels": [
+    {
+     "scene": "city",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "note",
+     "at": 0.2,
+     "until": 6.8,
+     "size": 38,
+     "text": "The events in this film are real.|They were documented by Amnesty International from the accounts of survivors and witnesses.|Some of them may still live under occupation. For their safety, every name has been changed.|No faces are shown."
+    }
+   ],
+   "sfx": [
+    {
+     "id": "wind",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "Cold winter wind through an empty city street, distant muffled rumble far away, no music"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d02",
+   "say": "In the centre of the city stands the Drama Theatre. Its stage has gone dark. Its basement is full.",
+   "panels": [
+    {
+     "scene": "theatre",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "basement",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "basement"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "steps",
+     "at": 0,
+     "dur": 8,
+     "gain": -18,
+     "prompt": "Footsteps on snow, a heavy wooden door, muffled voices in a stone basement"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d03",
+   "say": "Hundreds of people shelter here. It is where food, water and medicine are handed out, and where families wait for a way out of the city.",
+   "panels": [
+    {
+     "scene": "kitchen",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "list",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "families"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "kitchen",
+     "at": 0,
+     "dur": 9,
+     "gain": -18,
+     "prompt": "Outdoor field kitchen in winter: a wood fire crackling, a metal pot lid, quiet murmuring"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d04",
+   "say": "Outside, someone paints one word on the ground, in letters big enough to read from the sky.",
+   "hold": 4.4,
+   "panels": [
+    {
+     "scene": "deti",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.16,
+       0.02,
+       0
+      ]
+     }
+    }
+   ],
+   "ov": [
+    {
+     "t": "title",
+     "w": "sky",
+     "at": 0.6,
+     "kicker": "MARIUPOL · 16 MARCH 2022",
+     "text": "ДЕТИ",
+     "sub": "“Children”"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "swell",
+     "w": "word",
+     "at": 0,
+     "dur": 6,
+     "gain": -14,
+     "prompt": "A single deep low string note swelling slowly, cold wind"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d05",
+   "say": "On the fourteenth and fifteenth of March, many people manage to leave. Most of those who stay sleep in the basement: the safest place they know.",
+   "lead": 0.4,
+   "panels": [
+    {
+     "scene": "cars",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "drawing",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "Most"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "cars",
+     "at": 0,
+     "dur": 6,
+     "gain": -16,
+     "prompt": "Several cars driving slowly away on a snowy road, engines fading"
+    },
+    {
+     "id": "crayon",
+     "w": "Most",
+     "at": 0,
+     "dur": 5,
+     "gain": -16,
+     "prompt": "A child's crayon scratching on paper in a quiet room"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d06",
+   "say": "Sixteenth of March. Just after ten in the morning.",
+   "lead": 0.6,
+   "hold": 1.2,
+   "panels": [
+    {
+     "scene": "morning",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "clock",
+     "at": 0,
+     "dur": 6,
+     "gain": -18,
+     "prompt": "A quiet empty hall in the morning, a faraway clock ticking"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d07",
+   "say": "Pavlo, an architect, is two or three hundred metres away. He hears a plane. Then bombs. He watches the roof lift.",
+   "hold": 0.4,
+   "lines": [
+    {
+     "id": "a",
+     "who": "pavlo",
+     "text": "It all happened in front of our eyes.",
+     "gap": 0.4
+    }
+   ],
+   "panels": [
+    {
+     "scene": "pavlo",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "sky",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "plane"
+    },
+    {
+     "scene": "roof",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "roof"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "jet",
+     "w": "plane",
+     "at": 0,
+     "dur": 4,
+     "gain": -12,
+     "prompt": "A jet aircraft passing high overhead through clouds, rising roar"
+    },
+    {
+     "id": "blast",
+     "w": "roof",
+     "at": -0.3,
+     "dur": 6,
+     "gain": -8,
+     "prompt": "A huge distant double explosion, deep and muffled, then falling debris and silence"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d08",
+   "say": "A man walking toward the building sees it too.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "witness",
+     "text": "I couldn't believe my eyes, because the theatre was a sanctuary.",
+     "gap": 0.4
+    }
+   ],
+   "panels": [
+    {
+     "scene": "roof-b",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "ring",
+     "at": 0,
+     "dur": 7,
+     "gain": -16,
+     "prompt": "High ringing in the ears after an explosion, muffled distant shouting"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d09",
+   "say": "In the basement, Daryna is with her mother and her boyfriend. Dust fills everything. People are screaming. They grab their documents and run.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "daryna",
+     "text": "In a second, everything changed.",
+     "gap": 0.4
+    }
+   ],
+   "panels": [
+    {
+     "scene": "dust",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "documents",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "grab"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "panic",
+     "at": 0,
+     "dur": 10,
+     "gain": -14,
+     "prompt": "Muffled panicked voices in a dusty basement, coughing, footsteps rushing, debris settling"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d10",
+   "say": "Andriy searches for his father. He finds him in the concert hall, under the bricks. All he can think is: my mother must not see this.",
+   "lead": 0.4,
+   "panels": [
+    {
+     "scene": "hall",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "andriy",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "All"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "hall",
+     "at": 0,
+     "dur": 10,
+     "gain": -17,
+     "prompt": "A ruined hall: dust falling, a brick shifting, distant sirens, then quiet"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d11",
+   "say": "A woman we will call Nadiya crawls out of the rubble. She asks the people around her for one thing: to remember her name. She dies soon after.",
+   "hold": 1.6,
+   "panels": [
+    {
+     "scene": "hands",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "breath",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "A slow breath, wind through a broken building, a long quiet"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d12",
+   "say": "Amnesty International spoke to fifty-two survivors and witnesses. It found that two five-hundred-kilogram bombs struck almost at once, most likely dropped by a Russian fighter jet.",
+   "lead": 0.6,
+   "panels": [
+    {
+     "scene": "investigators",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "satmap",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "bombs"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "office",
+     "at": 0,
+     "dur": 10,
+     "gain": -19,
+     "prompt": "A quiet office: computer fans, pages turning, a pen on paper"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d13",
+   "say": "No witness reported any military use of the theatre. It was clearly a civilian building, and the word on the ground could be read from the air. Amnesty called the attack a clear war crime.",
+   "panels": [
+    {
+     "scene": "aftermath",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "wind2",
+     "at": 0,
+     "dur": 10,
+     "gain": -17,
+     "prompt": "Cold wind over ruins, a loose sheet of metal creaking"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d14",
+   "say": "How many people died is still disputed. Amnesty counted at least a dozen, and probably more. The city council said about three hundred. An Associated Press investigation estimated close to six hundred.",
+   "panels": [
+    {
+     "scene": "memorial",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "candles",
+     "at": 0,
+     "dur": 10,
+     "gain": -19,
+     "prompt": "Candles flickering in the cold, soft wind, very quiet"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d15",
+   "say": "International humanitarian law forbids attacks on civilians and on civilian buildings. It was written for days exactly like this one.",
+   "panels": [
+    {
+     "scene": "names",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "hush",
+     "at": 0,
+     "dur": 8,
+     "gain": -19,
+     "prompt": "A deep hush, a single sustained low note"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "d16",
+   "say": "Someone wrote 'children' on the ground, so it could be read from the sky. And a woman, in her last moments, asked only to be remembered. We changed her name to protect the people who survived. Her real name is in the record. Remember her.",
+   "hold": 3.0,
+   "panels": [
+    {
+     "scene": "dawn-square",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "deti",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "Remember",
+     "cam": {
+      "from": [
+       1.16,
+       0.02,
+       0
+      ],
+      "to": [
+       1.02,
+       0,
+       0
+      ]
+     }
+    }
+   ],
+   "sfx": [
+    {
+     "id": "dawn",
+     "at": 0,
+     "dur": 14,
+     "gain": -18,
+     "prompt": "Early morning in an empty snowy city, distant birds, wind dying down"
+    }
+   ],
+   "noCaps": true
+  }
+ ],
+ "clips": {}
+}
