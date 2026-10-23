@@ -1,0 +1,1260 @@
+{
+ "slug": "twenty-three-minutes",
+ "title": "Twenty-Three Minutes",
+ "series": "The Sir Jack Files",
+ "episode": 0,
+ "special": true,
+ "posterAt": 24.0,
+ "music": "Tense Cold War thriller score: low pulsing strings, a ticking rhythmic pulse, a dark analogue synth drone, a lone piano motif, a deep brass swell, then a warm, hopeful, human resolve at the end, no vocals.",
+ "ambience": "Low hum of a 1980s underground bunker: ventilation, electrical buzz, faint relay clicks, no music.",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "next": "THE SIR JACK FILES · SPECIAL EDITION",
+ "disclosure": "Dramatized illustration based on Stanislav Petrov's own interviews and published reporting. Images and motion generated with AI (Google Flow: Nano Banana Pro, Veo). Petrov's lines are quoted from his interviews (The Washington Post, 1999; BBC, 2013) and voiced by a synthetic stock voice; no real person's likeness or voice is used.",
+ "aiImages": true,
+ "cast": {
+  "petrov": [
+   "Bill",
+   "George"
+  ]
+ },
+ "halftone": 0,
+ "page": "cinema.html",
+ "images": {
+  "bunker": "art/twenty-three-minutes/bunker.jpg",
+  "corridor": "art/twenty-three-minutes/corridor.jpg",
+  "chair": "art/twenty-three-minutes/chair.jpg",
+  "start": "art/twenty-three-minutes/start.jpg",
+  "siren": "art/twenty-three-minutes/siren.jpg",
+  "silhouette": "art/twenty-three-minutes/silhouette.jpg",
+  "satellite": "art/twenty-three-minutes/satellite.jpg",
+  "eye": "art/twenty-three-minutes/eye.jpg",
+  "gauge": "art/twenty-three-minutes/gauge.jpg",
+  "lamps": "art/twenty-three-minutes/lamps.jpg",
+  "strike": "art/twenty-three-minutes/strike.jpg",
+  "hotline": "art/twenty-three-minutes/hotline.jpg",
+  "hand": "art/twenty-three-minutes/hand.jpg",
+  "roar": "art/twenty-three-minutes/roar.jpg",
+  "profile": "art/twenty-three-minutes/profile.jpg",
+  "five": "art/twenty-three-minutes/five.jpg",
+  "raw": "art/twenty-three-minutes/raw.jpg",
+  "radar": "art/twenty-three-minutes/radar.jpg",
+  "checks": "art/twenty-three-minutes/checks.jpg",
+  "phone-up": "art/twenty-three-minutes/phone-up.jpg",
+  "clock": "art/twenty-three-minutes/clock.jpg",
+  "calm": "art/twenty-three-minutes/calm.jpg",
+  "glint": "art/twenty-three-minutes/glint.jpg",
+  "interrogation": "art/twenty-three-minutes/interrogation.jpg",
+  "logbook": "art/twenty-three-minutes/logbook.jpg",
+  "home": "art/twenty-three-minutes/home.jpg",
+  "engineer": "art/twenty-three-minutes/engineer.jpg",
+  "servers": "art/twenty-three-minutes/servers.jpg",
+  "empty-chair": "art/twenty-three-minutes/empty-chair.jpg",
+  "humans": "art/twenty-three-minutes/humans.jpg",
+  "dawn": "art/twenty-three-minutes/dawn.jpg",
+  "backseat": "art/the-wrong-face/backseat.jpg"
+ },
+ "sources": [
+  {
+   "name": "Pavel Aksenov, “Stanislav Petrov: The man who may have saved the world,” BBC News (Sept. 26, 2013)",
+   "url": "https://www.bbc.com/news/world-europe-24280831"
+  },
+  {
+   "name": "David Hoffman, “'I Had A Funny Feeling in My Gut',” The Washington Post (Feb. 10, 1999)",
+   "url": "https://www.washingtonpost.com/wp-srv/inatl/longterm/coldwar/shatter021099b.htm"
+  },
+  {
+   "name": "1983 Soviet nuclear false alarm incident (Wikipedia, with its sources)",
+   "url": "https://en.wikipedia.org/wiki/1983_Soviet_nuclear_false_alarm_incident"
+  },
+  {
+   "name": "NPR, “Stanislav Petrov, 'The Man Who Saved The World,' Dies At 77” (Sept. 18, 2017)",
+   "url": "https://www.npr.org/sections/thetwo-way/2017/09/18/551792129/stanislav-p"
+  },
+  {
+   "name": "AI Broadsheet, The Wrong Face (Robert Williams, Detroit, 2020)",
+   "url": "https://aibroadsheet.com/sir-jack"
+  },
+  {
+   "name": "EU Artificial Intelligence Act, Regulation (EU) 2024/1689, Article 14: Human oversight",
+   "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+  }
+ ],
+ "shots": [
+  {
+   "id": "t01",
+   "say": "Near Moscow. September twenty-sixth, nineteen eighty-three. Just past midnight.",
+   "lead": 2.2,
+   "panels": [
+    {
+     "scene": "bunker",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.6,
+     "text": "SERPUKHOV-15 · SEPTEMBER 26, 1983 · JUST PAST MIDNIGHT",
+     "x": 80,
+     "y": 120
+    }
+   ],
+   "sfx": [
+    {
+     "id": "forest",
+     "at": 0,
+     "dur": 8,
+     "gain": -18,
+     "prompt": "Night in an autumn forest, wind in birch trees, a distant generator humming, an owl far away"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t02",
+   "say": "In a secret bunker, a forty-four-year-old lieutenant colonel takes the commander's chair. His job: to watch the satellites that watch America's missile fields.",
+   "panels": [
+    {
+     "scene": "corridor",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "chair",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "takes"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "door",
+     "at": 0.4,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "A heavy steel bunker door closing with a deep echoing clang"
+    },
+    {
+     "id": "steps",
+     "at": 0,
+     "dur": 4,
+     "gain": -18,
+     "prompt": "Footsteps on concrete in a long humming corridor"
+    },
+    {
+     "id": "hum",
+     "at": 0,
+     "dur": 10,
+     "gain": -20,
+     "prompt": "Low hum of an underground bunker control room: ventilation, electrical buzz, faint relay clicks"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t03",
+   "say": "Then, the alarm.",
+   "hold": 0.3,
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "The siren howled, but I just sat there for a few seconds, staring at the big, back-lit, red screen with the word 'launch' on it.",
+     "gap": 0.5
+    }
+   ],
+   "panels": [
+    {
+     "scene": "siren",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "start",
+     "line": 0,
+     "at": -0.4
+    }
+   ],
+   "ov": [
+    {
+     "t": "type",
+     "at": 2.4,
+     "text": "СТАРТ  =  LAUNCH",
+     "x": 80,
+     "y": 980
+    }
+   ],
+   "sfx": [
+    {
+     "id": "klaxon",
+     "at": 0,
+     "dur": 9,
+     "gain": -9,
+     "prompt": "Loud Soviet military alarm siren howling in a concrete bunker, rising and falling"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t04",
+   "say": "His name is Stanislav Petrov. And the machine is telling him the world is about to end.",
+   "hold": 4.6,
+   "panels": [
+    {
+     "scene": "silhouette",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.02,
+       0,
+       0
+      ],
+      "to": [
+       1.18,
+       0.02,
+       0
+      ]
+     }
+    }
+   ],
+   "ov": [
+    {
+     "t": "title",
+     "w": "machine",
+     "at": 0.8,
+     "kicker": "THE SIR JACK FILES · SPECIAL EDITION",
+     "text": "TWENTY-THREE MINUTES",
+     "sub": "A true story, in his own words"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "boom",
+     "w": "machine",
+     "at": 0.5,
+     "dur": 5,
+     "gain": -10,
+     "prompt": "Distant alarm muffled under a deep cinematic boom swelling into a low drone"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t05",
+   "say": "The system is called Oko. Russian for eye. Satellites, high above, watching for the heat of a rocket engine.",
+   "lead": 0.6,
+   "panels": [
+    {
+     "scene": "satellite",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "eye",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "Russian"
+    }
+   ],
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER ONE",
+     "title": "THE MACHINE",
+     "sub": "September 26, 1983",
+     "color": "#D9412B",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "space",
+     "at": 0,
+     "dur": 9,
+     "gain": -16,
+     "prompt": "Deep space ambience, a low cosmic drone and faint radio telemetry beeps"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t06",
+   "say": "One missile. And the computer rates its own confidence: highest.",
+   "panels": [
+    {
+     "scene": "gauge",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "needle",
+     "w": "confidence",
+     "at": 0,
+     "dur": 3,
+     "gain": -12,
+     "prompt": "An analogue meter needle slamming to the end of its scale, an electrical warning buzz"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t07",
+   "say": "And again.",
+   "hold": 0.2,
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "A minute later the siren went off again. The second missile was launched. Then the third, and the fourth, and the fifth.",
+     "gap": 0.3
+    }
+   ],
+   "panels": [
+    {
+     "scene": "lamps",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "again",
+     "from": 1,
+     "to": 5,
+     "x": 1500,
+     "y": 600,
+     "size": 260,
+     "label": "missiles reported · Oko"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "relays",
+     "at": 0.6,
+     "dur": 7,
+     "gain": -11,
+     "prompt": "Five heavy electrical relays clunking on one after another, each with a short alarm tone"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t08",
+   "say": "The alert changes. From launch, to missile strike.",
+   "panels": [
+    {
+     "scene": "strike",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "klaxon2",
+     "at": 0,
+     "dur": 6,
+     "gain": -12,
+     "prompt": "Bunker alarm siren returning, louder, with men's voices rising indistinctly"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t09",
+   "say": "The rules are clear. He reports up the chain of command. And in nineteen eighty-three, the protocol for an attack is an attack in return.",
+   "panels": [
+    {
+     "scene": "hotline",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "five",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "protocol"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "hum",
+     "at": 0,
+     "dur": 10,
+     "gain": -20,
+     "prompt": "Low hum of an underground bunker control room: ventilation, electrical buzz, faint relay clicks"
+    },
+    {
+     "id": "tick",
+     "w": "protocol",
+     "at": 0,
+     "dur": 5,
+     "gain": -16,
+     "prompt": "A slow heavy clock tick in a silent room"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t10",
+   "say": "He freezes.",
+   "hold": 0.4,
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "All I had to do was to reach for the phone; to raise the direct line to our top commanders, but I couldn't move.",
+     "gap": 0.4,
+     "speed": 0.95
+    }
+   ],
+   "panels": [
+    {
+     "scene": "hand",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "heart",
+     "at": 0,
+     "dur": 9,
+     "gain": -11,
+     "prompt": "A slow deep heartbeat under a muffled distant alarm, slow-motion feel"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t11",
+   "say": "The room is roaring. Maps flashing. A phone in one hand, an intercom in the other. Another officer on the line, shouting at him to stay calm and do his job.",
+   "panels": [
+    {
+     "scene": "roar",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "chaos",
+     "at": 0,
+     "dur": 10,
+     "gain": -14,
+     "prompt": "Busy bunker control room in alarm: several men talking urgently in Russian, indistinct, phones ringing, teletype clatter"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t12",
+   "say": "But something doesn't add up.",
+   "lead": 0.6,
+   "hold": 0.6,
+   "panels": [
+    {
+     "scene": "profile",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER TWO",
+     "title": "THE HUMAN",
+     "sub": "Four reasons to doubt",
+     "color": "#2BB3A3",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "hush",
+     "at": 0,
+     "dur": 4,
+     "gain": -16,
+     "prompt": "Sudden hush: all sound drops away to a single high faint ringing tone"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t13",
+   "say": "One. He'd been told many times: a real attack would be massive.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "When people start a war, they don't start it with only five missiles.",
+     "gap": 0.4
+    }
+   ],
+   "panels": [
+    {
+     "scene": "five",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "cam": {
+      "from": [
+       1.04,
+       0,
+       0
+      ],
+      "to": [
+       1.2,
+       0,
+       0.02
+      ]
+     }
+    }
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "One",
+     "at": -0.1,
+     "from": 1,
+     "to": 1,
+     "x": 1600,
+     "y": 520,
+     "size": 300,
+     "label": "reason"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pencil",
+     "at": 0.5,
+     "dur": 4,
+     "gain": -16,
+     "prompt": "A pencil tapping on a map table, paper rustle"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t14",
+   "say": "Two. The system is new. He has worked on it since the start, and he knows it was rushed into service. In his word: raw.",
+   "panels": [
+    {
+     "scene": "raw",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "Two",
+     "at": -0.1,
+     "from": 2,
+     "to": 2,
+     "x": 1600,
+     "y": 520,
+     "size": 300,
+     "label": "reason"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "spark",
+     "at": 0.4,
+     "dur": 4,
+     "gain": -15,
+     "prompt": "Electrical sparks crackling inside an open metal panel, a buzzing fault"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t15",
+   "say": "Three. The ground radars show nothing. They can't see past the horizon yet, so they prove nothing. But they show nothing.",
+   "panels": [
+    {
+     "scene": "radar",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "Three",
+     "at": -0.1,
+     "from": 3,
+     "to": 3,
+     "x": 1600,
+     "y": 520,
+     "size": 300,
+     "label": "reason"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "radar",
+     "at": 0,
+     "dur": 8,
+     "gain": -15,
+     "prompt": "A radar scope pinging slowly in an empty quiet room, wind outside"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t16",
+   "say": "Four. Every alert had to pass twenty-eight or twenty-nine checks. This one passed them all. Too clean.",
+   "panels": [
+    {
+     "scene": "checks",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "Four",
+     "at": -0.1,
+     "from": 4,
+     "to": 4,
+     "x": 1600,
+     "y": 520,
+     "size": 300,
+     "label": "reason"
+    },
+    {
+     "t": "type",
+     "w": "passed",
+     "text": "28 OR 29 CHECKS · ALL PASSED",
+     "x": 80,
+     "y": 980
+    }
+   ],
+   "sfx": [
+    {
+     "id": "checks",
+     "w": "passed",
+     "at": -0.2,
+     "dur": 3,
+     "gain": -13,
+     "prompt": "Rapid sequence of small electronic confirmation beeps, one after another"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t17",
+   "say": "Everything on the screen says yes. Everything in him says no.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "I had a funny feeling in my gut. I didn't want to make a mistake. I made a decision, and that was it.",
+     "gap": 0.5
+    }
+   ],
+   "panels": [
+    {
+     "scene": "start-b",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "profile-b",
+     "line": 0,
+     "at": -0.2
+    }
+   ],
+   "sfx": [
+    {
+     "id": "drone",
+     "at": 0,
+     "dur": 10,
+     "gain": -14,
+     "prompt": "A low tense drone and a muffled siren far away, a slow breath"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t18",
+   "say": "He picks up the phone. Not to report an attack. To report a malfunction.",
+   "panels": [
+    {
+     "scene": "phone-up",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "receiver",
+     "at": 0.2,
+     "dur": 2,
+     "gain": -10,
+     "prompt": "A heavy old telephone receiver lifted off its cradle, a click on the line"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t19",
+   "say": "If he's wrong, the first warheads land within minutes.",
+   "hold": 1.2,
+   "panels": [
+    {
+     "scene": "clock",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "clock",
+     "at": 0,
+     "dur": 9,
+     "gain": -11,
+     "prompt": "A loud wall clock ticking in a silent concrete room, slow and heavy"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t20",
+   "say": "Nothing comes.",
+   "hold": 0.3,
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "Twenty-three minutes later I realised that nothing had happened.",
+     "gap": 0.6,
+     "speed": 0.95
+    }
+   ],
+   "panels": [
+    {
+     "scene": "calm",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "counter",
+     "w": "Nothing",
+     "at": 0.3,
+     "from": 0,
+     "to": 23,
+     "suffix": " MIN",
+     "x": 1500,
+     "y": 560,
+     "size": 220,
+     "label": "Petrov, BBC, 2013"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "exhale",
+     "at": 0.5,
+     "dur": 7,
+     "gain": -15,
+     "prompt": "A quiet bunker room settling: a long exhale, a chair creaking, a lighter clicking"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t21",
+   "say": "The cause was sunlight. The sun lit the tops of high clouds, and the satellite read the glint as a rocket's flame. The software meant to filter that out was rewritten.",
+   "lead": 0.6,
+   "panels": [
+    {
+     "scene": "glint",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "satellite-b",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "software"
+    }
+   ],
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER THREE",
+     "title": "THE TRUTH",
+     "sub": "What the satellite saw",
+     "color": "#E2B33C",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "shimmer",
+     "at": 0.3,
+     "dur": 5,
+     "gain": -14,
+     "prompt": "A bright shimmering whoosh like sunlight flaring, ethereal and high"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t22",
+   "say": "There was no medal. Investigators asked why he hadn't written everything down that night.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "Because I had a phone in one hand and the intercom in the other, and I don't have a third hand.",
+     "gap": 0.4
+    }
+   ],
+   "panels": [
+    {
+     "scene": "interrogation",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "room",
+     "at": 0,
+     "dur": 9,
+     "gain": -17,
+     "prompt": "A bare office: a ticking clock, papers shuffled, a chair scraping"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t23",
+   "say": "He got an official reprimand, over mistakes in the logbook. For years, he kept the story to himself.",
+   "panels": [
+    {
+     "scene": "logbook",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "home",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "years"
+    }
+   ],
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "logbook",
+     "at": -0.1,
+     "text": "REPRIMAND",
+     "x": 1350,
+     "y": 470
+    }
+   ],
+   "sfx": [
+    {
+     "id": "stamp",
+     "w": "logbook",
+     "at": -0.1,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    },
+    {
+     "id": "leaves",
+     "w": "years",
+     "at": 0,
+     "dur": 6,
+     "gain": -17,
+     "prompt": "Autumn wind and dry leaves on an empty town street"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t24",
+   "say": "He was the only officer on his team with a civilian education. The others were career soldiers, trained to give and obey orders. He believed any of them would have raised the alarm.",
+   "lines": [
+    {
+     "id": "a",
+     "who": "petrov",
+     "text": "That was my job. But they were lucky it was me on shift that night.",
+     "gap": 0.5
+    }
+   ],
+   "panels": [
+    {
+     "scene": "engineer",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "drill",
+     "at": 0,
+     "dur": 7,
+     "gain": -18,
+     "prompt": "Distant parade-ground boots stamping in unison, muffled, echoing"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t25",
+   "say": "Machines are faster than we are. They count better, watch longer, and never sleep. That night, the machine was certain. And it was wrong.",
+   "lead": 0.6,
+   "panels": [
+    {
+     "scene": "servers",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "ov": [
+    {
+     "t": "chapter",
+     "at": 0.0,
+     "n": "CHAPTER FOUR",
+     "title": "THE CHAIR",
+     "sub": "Now",
+     "color": "#5BA3E0",
+     "until": 3.0
+    }
+   ],
+   "sfx": [
+    {
+     "id": "servers",
+     "at": 0,
+     "dur": 10,
+     "gain": -16,
+     "prompt": "Modern data centre: dense fan hum and soft electronic chirps"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t26",
+   "say": "In Detroit, in twenty twenty, people believed a computer that said Robert Williams was a thief. He spent thirty hours in a cell for it.",
+   "panels": [
+    {
+     "scene": "backseat",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "rainpolice",
+     "at": 0,
+     "dur": 8,
+     "gain": -16,
+     "prompt": "Rain on a police car window at night, a distant siren whoop"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t27",
+   "say": "Today, people talk about an AI-centred world. We don't want one. We want a human-centred world, where every machine that matters has a person who checks it, and who can say no. Europe's AI law now says high-risk AI must be built so that people can oversee it.",
+   "panels": [
+    {
+     "scene": "empty-chair",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "humans",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "human-centred"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "room2",
+     "w": "human-centred",
+     "at": 0,
+     "dur": 10,
+     "gain": -18,
+     "prompt": "A calm modern office: soft keyboard typing, a quiet murmur of people working"
+    }
+   ],
+   "noCaps": true
+  },
+  {
+   "id": "t28",
+   "say": "Stanislav Petrov died in twenty seventeen, at seventy-seven. In every machine we build, there should be a chair like his. And someone in it. The Sir Jack Files. Case closed.",
+   "hold": 2.6,
+   "panels": [
+    {
+     "scene": "dawn",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up"
+    },
+    {
+     "scene": "chair-b",
+     "full": true,
+     "r": [
+      0,
+      0,
+      1920,
+      1080
+     ],
+     "from": "up",
+     "w": "Sir"
+    }
+   ],
+   "ov": [
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED",
+     "x": 1350,
+     "y": 470
+    }
+   ],
+   "sfx": [
+    {
+     "id": "birds",
+     "at": 0,
+     "dur": 12,
+     "gain": -18,
+     "prompt": "Early morning: birdsong outside, a quiet bunker hum fading"
+    },
+    {
+     "id": "stamp2",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ],
+   "noCaps": true
+  }
+ ],
+ "clips": {
+  "backseat": "art/the-wrong-face/clips/backseat.webm"
+ }
+}
