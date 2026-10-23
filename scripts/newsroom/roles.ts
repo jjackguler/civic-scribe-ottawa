@@ -103,8 +103,15 @@ ${RULES}
 ${HOUSE_VOICE}`;
 
 export async function reporter(m: Models, e: Event): Promise<Outcome<Draft>> {
-  const raw = await m.json<RawDraft>("reporter", "writer", REPORTER, JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens }, sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
-  const d = shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
+  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
+  const shape = (raw: RawDraft | null) => shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
+  let d = shape(await m.json<RawDraft>("reporter", "writer", REPORTER, input, { id: e.id, attempt: 0 }, 6000));
+  // A malformed reply (not a reasoned skip) gets one second try that says what was wrong: the smaller
+  // fallback model usually fixes the envelope when told. Never after an infrastructure failure.
+  if (typeof d === "string" && !d.startsWith("skip") && !m.failure) {
+    const fix = `${input}\n\nYour previous reply could not be used (${d}). Return ONE complete JSON object with every field of the shape at the top level: "headline", "dek", "news", "thirty" (an array of exactly 3 strings), "confirmed", "claimed", "unknown", "matters", "article", "plain", "expert", "timeline". Or {"skip": true, "reason": "..."}.`;
+    d = shape(await m.json<RawDraft>("reporter", "writer", REPORTER, fix, { id: e.id, attempt: 1 }, 6000));
+  }
   if (typeof d === "string") return { ok: false, note: note("reporter", m.model("writer"), "fail", [d]) };
   return { ok: true, value: d, note: note("reporter", m.model("writer"), "done", [`${countWords(d.sections.flatMap(s => s.paras))} words`, `${d.sections.map(s => s.kind).join(" → ")}`]) };
 }
@@ -124,7 +131,7 @@ export function copyProblems(d: Draft, e: Event, lang: "en" | "fr"): { facts: st
   const facts = factGuard(draftFields(d), sourceText(e));
   const style = [...styleProblems(d, lang), ...overlapProblems(d, e.sources.map((s, i) => ({ outlet: s.outlet, text: `${s.title}. ${e.excerpts[i] ?? ""}` })))];
   const gate = editorialGate({ title: d.headline, summary: draftFields(d).join(" ") });
-  if (!gate.ok) style.push("Explicit content: the charter does not allow it.");
+  if (!gate.ok) style.push(`House red line (${gate.reason}): the charter does not allow it.`);
   return { facts, style };
 }
 
@@ -168,7 +175,7 @@ ${HOUSE_VOICE}`;
 
 export async function standardsEditor(m: Models, e: Event, d: Draft): Promise<Outcome<null>> {
   const gate = editorialGate({ title: d.headline, summary: draftFields(d).join(" ") });
-  if (!gate.ok) return { ok: false, note: note("standards", "mechanical", "fail", ["explicit content (editorialGate)"]) };
+  if (!gate.ok) return { ok: false, note: note("standards", "mechanical", "fail", [`${gate.reason} (editorialGate)`]) };
   const r = await m.json<{ pass?: unknown; reasons?: unknown; notes?: unknown }>("standards", "checker", STANDARDS, JSON.stringify({ article: toRaw(d), sources: sourcesFor(e) }), { id: e.id, attempt: 0 }, 1200);
   if (!r || typeof r.pass !== "boolean") return { ok: false, note: note("standards", m.model("checker"), "fail", ["no verdict from the standards desk"]) };
   const list = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string").map(x => x.slice(0, 300)) : []);

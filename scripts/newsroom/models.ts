@@ -38,7 +38,8 @@ export function resolveConfig(e: Record<string, string | undefined>): NewsroomCo
   if (!provider) return { error: "no API key" };
   if (!has[provider]) return { error: "The explicitly selected provider has no API key" };
   const profile = g("NEWSROOM_PROFILE") === "economy" ? "economy" : "standard";
-  const retries = Math.min(2, Math.max(0, Math.floor(Number(g("NEWSROOM_RETRIES") || "1") || 0)));
+  // Two patient retries by default: Google often answers 503 on busy days, and a retry 15-30 s later usually lands.
+  const retries = Math.min(2, Math.max(0, Math.floor(Number(g("NEWSROOM_RETRIES") || "2") || 0)));
   const cheap = g("NEWSROOM_ECONOMY_MODEL") || "gemini-3.1-flash-lite";
   const names: Record<Tier, string> = provider === "claude" ? {
     writer: g("NEWSROOM_CLAUDE_WRITER") || g("CLAUDE_MODEL") || (profile === "economy" ? "claude-haiku-4-5-20251001" : "claude-sonnet-5-5"),

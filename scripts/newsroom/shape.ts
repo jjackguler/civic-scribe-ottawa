@@ -65,7 +65,20 @@ export function sentenceCase(text: string, sourceText: string): string {
   });
 }
 
-export function shapeDraft(r: RawDraft | null | undefined, sources: DispatchSource[], backgroundKeys: string[], sourceText = ""): Draft | string {
+/**
+ * Small models (the busy-day fallback) often get the envelope wrong while the content is fine:
+ * the draft wrapped in one key ({"draft": {…}}, {"article": {…whole draft}}), or "thirty" as one
+ * string. Unwrap those; anything still missing fails as before.
+ */
+export function unwrapDraft(r: RawDraft | null | undefined): RawDraft | null | undefined {
+  if (!r || typeof r !== "object" || Array.isArray(r) || r.headline || r.skip) return r;
+  const inner = Object.values(r).find(v => v && typeof v === "object" && !Array.isArray(v) && "headline" in (v as object));
+  return inner ? { ...(inner as RawDraft) } : r;
+}
+const lines = (v: unknown): unknown[] => (typeof v === "string" ? v.split(/\n+|(?:^|\s)[•\-–]\s+|(?<=[.!?])\s+(?=\p{Lu})/u).map(x => x.trim()).filter(Boolean) : arr<unknown>(v));
+
+export function shapeDraft(raw: RawDraft | null | undefined, sources: DispatchSource[], backgroundKeys: string[], sourceText = ""): Draft | string {
+  const r = unwrapDraft(raw);
   if (!r || typeof r !== "object") return "no reply";
   if (r.skip) return `skip${r.reason ? `: ${str(r.reason, 200)}` : ""}`;
   const srcKeys = new Set(sources.map(s => s.key));
@@ -75,9 +88,12 @@ export function shapeDraft(r: RawDraft | null | undefined, sources: DispatchSour
   const headline = sc(str(r.headline, 140));
   const dek = str(r.dek, 300);
   const news = str(r.news, 300);
-  const thirty = arr<unknown>(r.thirty).map(x => sc(str(x, 160))).filter(Boolean).slice(0, 3);
+  const thirty = lines(r.thirty).map(x => sc(str(x, 160))).filter(Boolean).slice(0, 3);
   const matters = str(r.matters, 480);
-  if (!headline || !news || thirty.length !== 3 || !matters) return "missing fields";
+  if (!headline || !news || thirty.length !== 3 || !matters) {
+    const missing = [!headline && "headline", !news && "news", thirty.length !== 3 && `thirty (${thirty.length} lines)`, !matters && "matters"].filter(Boolean).join(", ");
+    return `missing fields: ${missing} (reply keys: ${Object.keys(r).slice(0, 12).join(",") || "none"})`;
+  }
 
   const sections: ArticleSection[] = [];
   // Models sometimes return a section as one string, or the whole article as text: accept both.
