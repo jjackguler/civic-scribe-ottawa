@@ -1,30 +1,26 @@
 /**
- * One-off: upload the published Sir Jack Files case 1 reel to YouTube Shorts with
- * the owner's approved title and description. Usage: npx tsx noir-youtube.ts <mp4>
+ * Uploads published Sir Jack Files reels to YouTube Shorts. Reads a list of uploads
+ * (id, title, description, tags) from noir-publish/youtube.json, takes each MP4 from
+ * the media branch and prints the YouTube id per reel. Usage: npx tsx noir-youtube.ts <dir>
  */
 import { readFileSync, appendFileSync } from "node:fs";
+import { join } from "node:path";
 import { uploadToYouTube } from "./media-apis";
 
 const env = (k: string) => process.env[k] ?? "";
-const file = readFileSync(process.argv[2]);
-const description = `The Sir Jack Files, case 1: the vanishing radiologist. In 2016, Geoffrey Hinton said we should stop training radiologists. Nine years later, Mayo Clinic's radiology staff has grown 55% to about 400 doctors, working beside 250+ AI models.
-
-Sources: The New York Times (via Radiology Business), The Decoder, CNBC.
-Full case file: https://aibroadsheet.com/originals?utm_source=youtube&utm_medium=social&utm_campaign=sir-jack-01
-
-Narration, sound effects and music generated with ElevenLabs. Noir illustrations drawn in code; figures are anonymous silhouettes.
-
-#Shorts #AI #FutureOfWork`;
-
-const up = await uploadToYouTube(
-  { clientId: env("YOUTUBE_CLIENT_ID"), clientSecret: env("YOUTUBE_CLIENT_SECRET"), refreshToken: env("YOUTUBE_REFRESH_TOKEN") },
-  file,
-  { title: "AI said this job would disappear. It grew 55%. #Shorts", description, tags: ["AI", "future of work", "radiology", "Sir Jack Files", "AI Broadsheet", "Shorts"], privacy: "public" },
-).catch((e: Error) => {
-  // Annotations are readable without the job log.
-  console.log(`::error title=YouTube upload failed::${e.message.replace(/\s+/g, " ").slice(0, 400)}`);
-  process.exit(1);
-});
-const line = `YouTube: https://youtube.com/shorts/${up.id} (${up.privacy})`;
-console.log(line);
-if (env("GITHUB_STEP_SUMMARY")) appendFileSync(env("GITHUB_STEP_SUMMARY"), line + "\n");
+const creds = { clientId: env("YOUTUBE_CLIENT_ID"), clientSecret: env("YOUTUBE_CLIENT_SECRET"), refreshToken: env("YOUTUBE_REFRESH_TOKEN") };
+const jobs = JSON.parse(readFileSync(new URL("./noir-publish/youtube.json", import.meta.url), "utf8")) as { id: string; title: string; description: string; tags: string[] }[];
+let failed = 0;
+for (const j of jobs) {
+  try {
+    const up = await uploadToYouTube(creds, readFileSync(join(process.argv[2], `${j.id}.mp4`)), { title: j.title, description: j.description, tags: j.tags, privacy: "public" });
+    const line = `YouTube ${j.id}: https://youtube.com/shorts/${up.id} (${up.privacy})`;
+    console.log(line);
+    if (env("GITHUB_STEP_SUMMARY")) appendFileSync(env("GITHUB_STEP_SUMMARY"), line + "\n");
+  } catch (e) {
+    failed++;
+    // Annotations are readable without the job log.
+    console.log(`::error title=YouTube upload failed (${j.id})::${(e as Error).message.replace(/\s+/g, " ").slice(0, 400)}`);
+  }
+}
+process.exit(failed ? 1 : 0);

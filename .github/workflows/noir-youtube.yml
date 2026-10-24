@@ -1,11 +1,12 @@
-# One-off: put The Sir Jack Files, case 1 on YouTube Shorts, using the copy the
-# site already serves from the media branch and the existing YOUTUBE_* secrets.
+# Puts published Sir Jack Files reels on YouTube Shorts, using the copies the site
+# already serves from the media branch and the existing YOUTUBE_* secrets. The reels
+# and their titles are listed in scripts/originals/noir-publish/youtube.json.
 name: Noir YouTube
 
 on:
   push:
     branches: [claude/noir-publish]
-    paths: [".github/workflows/noir-youtube.yml", "scripts/originals/noir-youtube.ts"]
+    paths: [".github/workflows/noir-youtube.yml", "scripts/originals/noir-youtube.ts", "scripts/originals/noir-publish/youtube.json"]
 
 permissions:
   contents: read
@@ -23,10 +24,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Fetch the published reel
+      - name: Fetch the published reels
         run: |
-          curl -fsSL -o "$RUNNER_TEMP/reel.mp4" "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/media/originals/files/202610190320-sir-jack-01.mp4"
-          ls -la "$RUNNER_TEMP/reel.mp4"
+          mkdir -p "$RUNNER_TEMP/reels"
+          for id in $(jq -r '.[].id' scripts/originals/noir-publish/youtube.json); do
+            curl -fsSL -o "$RUNNER_TEMP/reels/$id.mp4" "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/media/originals/files/$id.mp4"
+          done
+          ls -la "$RUNNER_TEMP/reels"
       - name: Upload to YouTube
         working-directory: scripts/originals
         env:
@@ -35,4 +39,4 @@ jobs:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         run: |
           npm install --no-audit --no-fund
-          npx tsx noir-youtube.ts "$RUNNER_TEMP/reel.mp4"
+          npx tsx noir-youtube.ts "$RUNNER_TEMP/reels"
