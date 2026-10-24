@@ -122,6 +122,7 @@ jobs:
           ELEVENLABS_MODEL: ${{ vars.ELEVENLABS_MODEL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ORIGINALS_GEMINI_MODEL: ${{ vars.ORIGINALS_GEMINI_MODEL }}
+          ORIGINALS_TIMEOUT_MS: ${{ vars.ORIGINALS_TIMEOUT_MS }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
