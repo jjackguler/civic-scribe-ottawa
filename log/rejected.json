@@ -1,5 +1,14 @@
 [
   {
+    "id": "dbl2wl",
+    "at": "2026-10-24T17:10:52.678Z",
+    "stage": "reporter",
+    "headline": "Block's new AI model Dessa was trained entirely on human speech to catch emotions text-based models miss",
+    "reasons": [
+      "skip: The sources provide only two brief excerpts totaling under 50 words, which cannot support the required 120-word minimum for the article without padding, repetition, or inventing unstated details."
+    ]
+  },
+  {
     "id": "nl9ovb",
     "at": "2026-10-24T01:04:24.524Z",
     "stage": "copy",
