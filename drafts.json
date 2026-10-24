@@ -1,6 +1,14 @@
 {
   "items": [
     {
+      "id": "itjbfh",
+      "headline": "OpenAI cuts internet access during training for its frontier AI models",
+      "reasons": [
+        "conflict or security"
+      ],
+      "createdAt": "2026-10-24T11:07:50.520Z"
+    },
+    {
       "id": "1hzujc1",
       "headline": "OpenAI acquires Orchestra Bio to expand its life sciences platform Rosalind",
       "reasons": [

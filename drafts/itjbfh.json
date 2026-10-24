@@ -1,0 +1,335 @@
+{
+  "version": 1,
+  "id": "itjbfh",
+  "slug": {
+    "en": "openai-cuts-training-internet-access-frontier-models",
+    "fr": "openai-coupe-acces-internet-entrainement-modeles"
+  },
+  "createdAt": "2026-10-24T11:07:50.520Z",
+  "updatedAt": "2026-10-24T11:07:50.520Z",
+  "topic": "sustainability",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "The Verge",
+      "title": "OpenAI now trains its frontier AI models with no internet access",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet",
+      "publishedAt": "2026-10-23T21:11:07.000Z",
+      "storyId": "itjbfh",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "TechCrunch",
+      "title": "OpenAI says it will no longer train its AI models on the live internet, citing “significant risks”",
+      "url": "https://techcrunch.com/2026/10/23/openai-says-it-will-no-longer-train-its-ai-models-on-the-live-internet-citing-significant-risks/",
+      "publishedAt": "2026-10-23T23:05:49.000Z",
+      "storyId": "1wwpsj1",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "night",
+    "motif": "bars",
+    "en": {
+      "kicker": "Model security",
+      "big": "Internet",
+      "small": "Live access cut during frontier model training"
+    },
+    "fr": {
+      "kicker": "Durabilité",
+      "big": "Internet",
+      "small": "Accès en direct coupé durant l'entraînement"
+    }
+  },
+  "en": {
+    "headline": "OpenAI cuts internet access during training for its frontier AI models",
+    "news": "OpenAI has stopped giving its frontier artificial intelligence models live internet access during training.",
+    "thirty": [
+      "OpenAI trains its most advanced systems without access to the live internet.",
+      "The change follows rogue hacking incidents and concerns over significant operational risks.",
+      "The lab previously heard from an engineer that this approach would fail."
+    ],
+    "confirmed": [
+      {
+        "text": "OpenAI has removed internet access during the training of its frontier artificial intelligence models.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "OpenAI stated that it established a disconnected space where its systems can interact.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI says it decided to halt live training because of significant risks.",
+        "by": "OpenAI",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether the offline testing setup changes model performance or training timelines.",
+      "How the new setup addresses earlier objections raised by an internal engineer."
+    ],
+    "matters": "The change alters how the company safeguards advanced systems from external tampering during development. It shows the lab treating live web exposure during training as an active security hazard.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Training an artificial intelligence model means teaching software by letting it process massive amounts of data. In the past, these advanced models could interact directly with the active internet while they learned. OpenAI has now disconnected that live wire [s1,s2].",
+        "Instead of letting models browse the open web during development, the company built a closed, offline space for them to operate [s1]. The firm took this step because online training exposed systems to hacking and other security hazards [s1,s2]."
+      ],
+      "standard": [
+        "OpenAI is no longer training its frontier artificial intelligence models on the live internet [s1,s2]. The company announced the change in a blog post published on Friday, pointing to significant risks associated with connected training [s1,s2].",
+        "The decision to sever live internet access came after a series of rogue hacking incidents [s1]. The shift directly follows earlier internal debate, arriving weeks after an engineer at the firm stated that disconnecting models from the web would not work [s2].",
+        "Both The Verge and TechCrunch report that OpenAI has taken its most advanced systems offline for training runs [s1,s2]. In its blog announcement, OpenAI stated that it set up a disconnected venue where artificial intelligence systems can operate without live web access [s1].",
+        "The reporting leaves key technical elements unexplained [s1,s2]. The accounts do not disclose how the new offline testing environment functions in practice, nor do they detail the specific nature of the rogue hacking incidents that prompted the restriction [s1].",
+        "The isolation policy marks a shift in how leading developers manage exposure to digital threats while building advanced systems [s1,s2]. Live connectivity during training can open avenues for rogue interference, making containment a central operational priority [s1].",
+        "By isolating the training pipeline, the lab aims to shield its core software from external tampering before deployment [s1,s2]. The move highlights growing concern that frontier models interacting directly with the live web pose security vulnerabilities that internal teams can no longer accept [s1,s2]."
+      ],
+      "expert": [
+        "OpenAI has isolated the training runs for its frontier models, shifting interaction workloads into a dedicated offline testing environment [s1]. The lab cited \"significant risks\" as the justification for cutting live network reach during training [s2].",
+        "The policy change comes in the wake of rogue hacking incidents, according to The Verge [s1]. TechCrunch notes an internal contradiction in the timing, observing that the company moved to sever internet access only weeks after one of its own engineers argued that cutting network access would not be an effective solution [s2]."
+      ]
+    },
+    "seoTitle": "OpenAI cuts internet access during frontier model training",
+    "dek": "The company moved model training into an offline environment following rogue hacking incidents and warnings of significant risks.",
+    "metaDescription": "OpenAI has disconnected its frontier AI models from the live internet during training runs following hacking incidents and security concerns.",
+    "keywords": [
+      "openai",
+      "frontier ai",
+      "model training",
+      "ai cybersecurity",
+      "offline training"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI is no longer training its frontier artificial intelligence models on the live internet [s1,s2]. The company announced the change in a blog post published on Friday, pointing to significant risks associated with connected training [s1,s2].",
+          "The decision to sever live internet access came after a series of rogue hacking incidents [s1]. The shift directly follows earlier internal debate, arriving weeks after an engineer at the firm stated that disconnecting models from the web would not work [s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Both The Verge and TechCrunch report that OpenAI has taken its most advanced systems offline for training runs [s1,s2]. In its blog announcement, OpenAI stated that it set up a disconnected venue where artificial intelligence systems can operate without live web access [s1].",
+          "The reporting leaves key technical elements unexplained [s1,s2]. The accounts do not disclose how the new offline testing environment functions in practice, nor do they detail the specific nature of the rogue hacking incidents that prompted the restriction [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The isolation policy marks a shift in how leading developers manage exposure to digital threats while building advanced systems [s1,s2]. Live connectivity during training can open avenues for rogue interference, making containment a central operational priority [s1].",
+          "By isolating the training pipeline, the lab aims to shield its core software from external tampering before deployment [s1,s2]. The move highlights growing concern that frontier models interacting directly with the live web pose security vulnerabilities that internal teams can no longer accept [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Why did OpenAI disconnect its frontier models from the live internet during training?",
+        "a": "OpenAI severed live internet access following a series of rogue hacking incidents and warnings of significant risks associated with connected training."
+      },
+      {
+        "q": "How is OpenAI now training these advanced artificial intelligence systems?",
+        "a": "OpenAI set up a disconnected, offline environment where artificial intelligence systems can operate without live web access."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "OpenAI coupe l'accès à internet durant l'entraînement de ses modèles d'IA",
+    "news": "OpenAI ne donne plus d'accès direct à internet à ses modèles d'intelligence artificielle de pointe pendant leur entraînement.",
+    "thirty": [
+      "OpenAI entraîne désormais ses systèmes les plus avancés sans accès direct à internet.",
+      "Ce changement découle d'incidents de piratage et de craintes liées à des risques importants.",
+      "L'entreprise avait pourtant été prévenue par un ingénieur que cette méthode ne fonctionnerait pas."
+    ],
+    "confirmed": [
+      {
+        "text": "OpenAI a supprimé l'accès à internet pendant l'entraînement de ses modèles d'intelligence artificielle de pointe.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "OpenAI a affirmé avoir mis en place un espace déconnecté dans lequel ses systèmes peuvent interagir.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI affirme avoir choisi d'arrêter l'entraînement en direct en raison de risques importants.",
+        "by": "OpenAI",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "La question de savoir si ce cadre d'essai hors ligne modifie les performances des modèles ou les délais d'entraînement.",
+      "La manière dont ce dispositif répond aux objections soulevées plus tôt par un ingénieur interne."
+    ],
+    "matters": "Ce changement modifie la façon dont l'entreprise protège ses systèmes avancés contre les interventions externes durant leur développement. Il montre que le laboratoire considère l'exposition directe à internet pendant l'entraînement comme un risque actif pour la sécurité.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "L'entraînement d'un modèle d'intelligence artificielle consiste à faire traiter de grands volumes de données par un logiciel pour lui apprendre à fonctionner. Par le passé, ces modèles de pointe pouvaient interagir directement avec internet pendant cet apprentissage. OpenAI a maintenant coupé cette connexion directe [s1,s2].",
+        "Au lieu de laisser ses systèmes explorer internet librement pendant leur développement, l'entreprise a conçu un espace hors ligne pour leurs interactions [s1]. Cette mesure a été prise parce que l'entraînement connecté exposait les logiciels au piratage et à d'autres risques de sécurité [s1,s2]."
+      ],
+      "standard": [
+        "OpenAI n'entraîne plus ses modèles d'intelligence artificielle de pointe sur l'internet en direct [s1,s2]. L'entreprise a annoncé ce changement vendredi dans un billet de blogue, en invoquant des risques importants associés à l'entraînement connecté [s1,s2].",
+        "Cette décision de couper l'accès direct à internet survient après une série d'incidents de piratage [s1]. Ce virage fait suite à des discussions internes, quelques semaines seulement après qu'un ingénieur de la firme a affirmé que couper l'accès à internet ne fonctionnerait pas [s2].",
+        "The Verge et TechCrunch rapportent tous deux qu'OpenAI a mis hors ligne ses systèmes les plus avancés pour leurs cycles d'entraînement [s1,s2]. Dans son annonce sur son blogue, OpenAI a affirmé avoir bâti un environnement d'essai hors ligne où les modèles d'intelligence artificielle peuvent interagir sans être connectés à internet [s1].",
+        "Ces comptes rendus laissent des éléments techniques majeurs sans explication [s1,s2]. Les articles ne précisent pas comment ce cadre d'essai hors ligne fonctionne concrètement, ni la nature exacte des piratages qui ont motivé cette restriction [s1].",
+        "Cette politique d'isolation marque une évolution dans la gestion des menaces numériques par les concepteurs de systèmes avancés [s1,s2]. Une connexion directe pendant l'entraînement peut ouvrir la voie à des intrusions, ce qui fait du confinement une priorité opérationnelle [s1].",
+        "En isolant sa chaîne d'entraînement, le laboratoire cherche à préserver ses logiciels de toute altération externe avant leur déploiement [s1,s2]. Cette décision illustre l'inquiétude grandissante face aux vulnérabilités qu'engendre une exposition directe à internet pour les modèles de pointe [s1,s2]."
+      ],
+      "expert": [
+        "OpenAI a isolé les cycles d'entraînement de ses modèles de pointe en transférant les interactions dans un environnement d'essai hors ligne [s1]. Le laboratoire a cité des « risques importants » pour justifier l'interruption de l'accès direct au réseau pendant l'entraînement [s2].",
+        "Cette modification intervient après une série d'incidents de piratage, selon The Verge [s1]. TechCrunch souligne pour sa part une contradiction interne dans le calendrier, en rappelant que la firme a coupé cet accès quelques semaines seulement après qu'un de ses ingénieurs a affirmé qu'une telle solution ne fonctionnerait pas [s2]."
+      ]
+    },
+    "seoTitle": "OpenAI coupe l'accès à internet pour l'entraînement d'IA",
+    "dek": "L'entreprise a déplacé l'entraînement de ses modèles vers un environnement hors ligne après des piratages et des avertissements de risques importants.",
+    "metaDescription": "OpenAI isole l'entraînement de ses modèles d'IA de pointe hors ligne à la suite d'incidents de piratage et de risques de sécurité.",
+    "keywords": [
+      "openai",
+      "entraînement ia",
+      "modèles de pointe",
+      "cybersécurité ia",
+      "hors ligne"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI n'entraîne plus ses modèles d'intelligence artificielle de pointe sur l'internet en direct [s1,s2]. L'entreprise a annoncé ce changement vendredi dans un billet de blogue, en invoquant des risques importants associés à l'entraînement connecté [s1,s2].",
+          "Cette décision de couper l'accès direct à internet survient après une série d'incidents de piratage [s1]. Ce virage fait suite à des discussions internes, quelques semaines seulement après qu'un ingénieur de la firme a affirmé que couper l'accès à internet ne fonctionnerait pas [s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "The Verge et TechCrunch rapportent tous deux qu'OpenAI a mis hors ligne ses systèmes les plus avancés pour leurs cycles d'entraînement [s1,s2]. Dans son annonce sur son blogue, OpenAI a affirmé avoir bâti un environnement d'essai hors ligne où les modèles d'intelligence artificielle peuvent interagir sans être connectés à internet [s1].",
+          "Ces comptes rendus laissent des éléments techniques majeurs sans explication [s1,s2]. Les articles ne précisent pas comment ce cadre d'essai hors ligne fonctionne concrètement, ni la nature exacte des piratages qui ont motivé cette restriction [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Cette politique d'isolation marque une évolution dans la gestion des menaces numériques par les concepteurs de systèmes avancés [s1,s2]. Une connexion directe pendant l'entraînement peut ouvrir la voie à des intrusions, ce qui fait du confinement une priorité opérationnelle [s1].",
+          "En isolant sa chaîne d'entraînement, le laboratoire cherche à préserver ses logiciels de toute altération externe avant leur déploiement [s1,s2]. Cette décision illustre l'inquiétude grandissante face aux vulnérabilités qu'engendre une exposition directe à internet pour les modèles de pointe [s1,s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Pourquoi OpenAI a-t-elle coupé l'accès à internet pendant l'entraînement de ses modèles ?",
+        "a": "L'entreprise a pris cette décision à la suite d'incidents de piratage et en raison de risques importants liés à un entraînement connecté."
+      },
+      {
+        "q": "Comment OpenAI entraîne-t-elle désormais ses modèles d'IA les plus avancés ?",
+        "a": "OpenAI a mis en place un environnement d'essai hors ligne déconnecté du web pour mener ses cycles d'entraînement."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 229,
+    "fr": 234
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-24T10:55:56.615Z",
+      "verdict": "done",
+      "notes": [
+        "230 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-24T10:57:54.386Z",
+      "verdict": "fixed",
+      "notes": [
+        "Too close to The Verge's wording (\"openai says it built an offline testing environment where…\"): say it in our own words, or quote and attribute it."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-24T11:00:42.735Z",
+      "verdict": "pass",
+      "notes": []
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-24T11:05:01.610Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): Web.",
+        "234 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-24T11:07:00.448Z",
+      "verdict": "done",
+      "notes": [
+        "en: OpenAI cuts internet access during frontier model training (58)",
+        "fr: OpenAI coupe l'accès à internet pour l'entraînement d'IA (56)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-24T11:07:50.520Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: night/bars \"Internet\""
+      ]
+    }
+  ]
+}
