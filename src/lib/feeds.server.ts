@@ -15,6 +15,7 @@ import { TOPICS } from "./news";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
 import type { Dispatch } from "./dispatch-types";
 import type { NewsroomSummary } from "./newsroom-types";
+import { ORIGINALS_MANIFEST_URL, originalPublishable, videoSlug, type OriginalsManifest } from "./originals-types";
 
 // XML 1.0 forbids most control characters; one in a feed item would break the whole file.
 const esc = (s: string) =>
@@ -106,6 +107,9 @@ export async function buildSitemap(): Promise<string> {
   entries.push({ path: "/glossary", changefreq: "weekly", priority: "0.7", lastmod: GLOSSARY_UPDATED });
   for (const t of await loadGlossary()) entries.push({ path: `/glossary/${t.slug}`, changefreq: "monthly", priority: "0.6", lastmod: GLOSSARY_UPDATED });
   for (const h of HUBS) entries.push({ path: `/guides/${h.slug}`, changefreq: "monthly", priority: "0.8", lastmod: h.updated });
+  // Every published Original has a page of its own (transcript, sources, VideoObject).
+  const originals = await withTimeout(fetch(ORIGINALS_MANIFEST_URL).then(r => (r.ok ? (r.json() as Promise<OriginalsManifest>) : null)).catch(() => null), 4000, null);
+  for (const o of (originals?.items ?? []).filter(originalPublishable)) entries.push({ path: `/video/${videoSlug(o)}`, changefreq: "monthly", priority: "0.6", lastmod: o.publishedAt.slice(0, 10) });
   // Young Lab (the passport is personal and noindex, so it stays out).
   for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });

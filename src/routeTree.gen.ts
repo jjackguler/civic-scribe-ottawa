@@ -27,14 +27,14 @@ import { Route as NewsRouteImport } from './routes/news'
 import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as OriginalsRouteImport } from './routes/originals'
+import { Route as PodcastRouteImport } from './routes/podcast'
+import { Route as PodcastDotxmlRouteImport } from './routes/podcast[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
-import { Route as PodcastDotxmlRouteImport } from './routes/podcast[.]xml'
-import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as SirJackRouteImport } from './routes/sir-jack'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StandardsRouteImport } from './routes/standards'
@@ -62,6 +62,7 @@ import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as OgQuizDotpngRouteImport } from './routes/og.quiz[.]png'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
+import { Route as VideoSlugRouteImport } from './routes/video.$slug'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
 import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
 import { Route as LabsYoungActivityRouteImport } from './routes/labs.young.$activity'
@@ -162,6 +163,16 @@ const OriginalsRoute = OriginalsRouteImport.update({
   path: '/originals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PodcastRoute = PodcastRouteImport.update({
+  id: '/podcast',
+  path: '/podcast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastDotxmlRoute = PodcastDotxmlRouteImport.update({
+  id: '/podcast.xml',
+  path: '/podcast.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -190,16 +201,6 @@ const SearchRoute = SearchRouteImport.update({
 const ShowcaseRoute = ShowcaseRouteImport.update({
   id: '/showcase',
   path: '/showcase',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PodcastDotxmlRoute = PodcastDotxmlRouteImport.update({
-  id: '/podcast.xml',
-  path: '/podcast.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PodcastRoute = PodcastRouteImport.update({
-  id: '/podcast',
-  path: '/podcast',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SirJackRoute = SirJackRouteImport.update({
@@ -337,6 +338,11 @@ const StoryIdRoute = StoryIdRouteImport.update({
   path: '/story/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideoSlugRoute = VideoSlugRouteImport.update({
+  id: '/video/$slug',
+  path: '/video/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
   id: '/api/dispatch-audio/$id',
   path: '/api/dispatch-audio/$id',
@@ -402,14 +408,14 @@ export interface FileRoutesByFullPath {
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
   '/originals': typeof OriginalsRoute
+  '/podcast': typeof PodcastRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
-  '/podcast.xml': typeof PodcastDotxmlRoute
-  '/podcast': typeof PodcastRoute
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
@@ -432,6 +438,7 @@ export interface FileRoutesByFullPath {
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
+  '/video/$slug': typeof VideoSlugRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -466,14 +473,14 @@ export interface FileRoutesByTo {
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
   '/originals': typeof OriginalsRoute
+  '/podcast': typeof PodcastRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
-  '/podcast.xml': typeof PodcastDotxmlRoute
-  '/podcast': typeof PodcastRoute
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
@@ -496,6 +503,7 @@ export interface FileRoutesByTo {
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
+  '/video/$slug': typeof VideoSlugRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/glossary': typeof GlossaryIndexRoute
@@ -531,14 +539,14 @@ export interface FileRoutesById {
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
   '/originals': typeof OriginalsRoute
+  '/podcast': typeof PodcastRoute
+  '/podcast.xml': typeof PodcastDotxmlRoute
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/showcase': typeof ShowcaseRoute
-  '/podcast.xml': typeof PodcastDotxmlRoute
-  '/podcast': typeof PodcastRoute
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
@@ -561,6 +569,7 @@ export interface FileRoutesById {
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
+  '/video/$slug': typeof VideoSlugRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -597,14 +606,14 @@ export interface FileRouteTypes {
     | '/news-sitemap.xml'
     | '/newsletter'
     | '/originals'
+    | '/podcast'
+    | '/podcast.xml'
     | '/privacy'
     | '/quiz'
     | '/rss.xml'
     | '/saved'
     | '/search'
     | '/showcase'
-    | '/podcast.xml'
-    | '/podcast'
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
@@ -627,6 +636,7 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/og/quiz.png'
     | '/story/$id'
+    | '/video/$slug'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -661,14 +671,14 @@ export interface FileRouteTypes {
     | '/news-sitemap.xml'
     | '/newsletter'
     | '/originals'
+    | '/podcast'
+    | '/podcast.xml'
     | '/privacy'
     | '/quiz'
     | '/rss.xml'
     | '/saved'
     | '/search'
     | '/showcase'
-    | '/podcast.xml'
-    | '/podcast'
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
@@ -691,6 +701,7 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/og/quiz.png'
     | '/story/$id'
+    | '/video/$slug'
     | '/dispatch'
     | '/editor'
     | '/glossary'
@@ -725,14 +736,14 @@ export interface FileRouteTypes {
     | '/news-sitemap.xml'
     | '/newsletter'
     | '/originals'
+    | '/podcast'
+    | '/podcast.xml'
     | '/privacy'
     | '/quiz'
     | '/rss.xml'
     | '/saved'
     | '/search'
     | '/showcase'
-    | '/podcast.xml'
-    | '/podcast'
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
@@ -755,6 +766,7 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/og/quiz.png'
     | '/story/$id'
+    | '/video/$slug'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -790,14 +802,14 @@ export interface RootRouteChildren {
   NewsSitemapDotxmlRoute: typeof NewsSitemapDotxmlRoute
   NewsletterRoute: typeof NewsletterRoute
   OriginalsRoute: typeof OriginalsRoute
+  PodcastRoute: typeof PodcastRoute
+  PodcastDotxmlRoute: typeof PodcastDotxmlRoute
   PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   ShowcaseRoute: typeof ShowcaseRoute
-  PodcastDotxmlRoute: typeof PodcastDotxmlRoute
-  PodcastRoute: typeof PodcastRoute
   SirJackRoute: typeof SirJackRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
@@ -820,6 +832,7 @@ export interface RootRouteChildren {
   LearnSlugRoute: typeof LearnSlugRoute
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
+  VideoSlugRoute: typeof VideoSlugRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   GlossaryIndexRoute: typeof GlossaryIndexRoute
@@ -964,6 +977,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OriginalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/podcast': {
+      id: '/podcast'
+      path: '/podcast'
+      fullPath: '/podcast'
+      preLoaderRoute: typeof PodcastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/podcast.xml': {
+      id: '/podcast.xml'
+      path: '/podcast.xml'
+      fullPath: '/podcast.xml'
+      preLoaderRoute: typeof PodcastDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -1004,20 +1031,6 @@ declare module '@tanstack/react-router' {
       path: '/showcase'
       fullPath: '/showcase'
       preLoaderRoute: typeof ShowcaseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/podcast.xml': {
-      id: '/podcast.xml'
-      path: '/podcast.xml'
-      fullPath: '/podcast.xml'
-      preLoaderRoute: typeof PodcastDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/podcast': {
-      id: '/podcast'
-      path: '/podcast'
-      fullPath: '/podcast'
-      preLoaderRoute: typeof PodcastRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sir-jack': {
@@ -1209,6 +1222,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/video/$slug': {
+      id: '/video/$slug'
+      path: '/video/$slug'
+      fullPath: '/video/$slug'
+      preLoaderRoute: typeof VideoSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/dispatch-audio/$id': {
       id: '/api/dispatch-audio/$id'
       path: '/api/dispatch-audio/$id'
@@ -1294,14 +1314,14 @@ const rootRouteChildren: RootRouteChildren = {
   NewsSitemapDotxmlRoute: NewsSitemapDotxmlRoute,
   NewsletterRoute: NewsletterRoute,
   OriginalsRoute: OriginalsRoute,
+  PodcastRoute: PodcastRoute,
+  PodcastDotxmlRoute: PodcastDotxmlRoute,
   PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   ShowcaseRoute: ShowcaseRoute,
-  PodcastDotxmlRoute: PodcastDotxmlRoute,
-  PodcastRoute: PodcastRoute,
   SirJackRoute: SirJackRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
@@ -1324,6 +1344,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnSlugRoute: LearnSlugRoute,
   OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
+  VideoSlugRoute: VideoSlugRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   GlossaryIndexRoute: GlossaryIndexRoute,

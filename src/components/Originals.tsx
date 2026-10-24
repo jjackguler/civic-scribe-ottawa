@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
 import type { Original } from "@/lib/originals";
-import { youtubePlayable } from "@/lib/originals-types";
+import { Link } from "@tanstack/react-router";
+import { videoSlug, youtubePlayable } from "@/lib/originals-types";
 import { timeAgo, useNow } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 
@@ -25,8 +26,11 @@ export function usePreviewOk() {
   return ok;
 }
 
-/** One AI Broadsheet Original: vertical video, a silent preview on hover, click to play with sound. */
-export function OriginalCard({ o, justMoved = false }: { o: Original; justMoved?: boolean }) {
+/**
+ * One AI Broadsheet Original: vertical video, a silent preview on hover, click to play with sound.
+ * `own`: shown on the video's own page, which carries the onward links itself.
+ */
+export function OriginalCard({ o, justMoved = false, own = false }: { o: Original; justMoved?: boolean; own?: boolean }) {
   const wide = o.aspect === "16:9";
   const { locale } = useLocale();
   const fr = locale === "fr";
@@ -89,7 +93,10 @@ export function OriginalCard({ o, justMoved = false }: { o: Original; justMoved?
         )}
       </div>
       <p className="text-[0.88rem] opacity-80 mt-2 line-clamp-2">{o.summary}</p>
-      {o.readMore && (
+      {!own && <Link to="/video/$slug" params={{ slug: videoSlug(o) }} className="inline-block text-[0.85rem] font-bold underline underline-offset-4 decoration-2 mt-1.5 mr-3">
+        {fr ? "Texte et sources" : "Transcript & sources"} →
+      </Link>}
+      {o.readMore && !own && (
         <a href={fr && o.readMore.urlFr ? o.readMore.urlFr : o.readMore.url} className="inline-block text-[0.85rem] font-bold underline underline-offset-4 decoration-2 mt-1.5"
           {...(/^https?:/.test(o.readMore.url) ? { target: "_blank", rel: "noopener" } : {})}>
           {fr ? o.readMore.fr : o.readMore.en} →
