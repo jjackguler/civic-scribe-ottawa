@@ -37,8 +37,9 @@ Remove the line to bring it back. Never delete files by hand: the workflow keeps
 
 ## Approve a held article
 
-Articles that touch people's reputations, health, money, elections, children or safety are not
-published automatically. They wait in \`drafts/\` and are listed in \`drafts.json\` with the reasons.
+House rule: stories that could upset or harm people (accusations, crime and courts, deaths,
+abuse, war, elections) are turned down. Other sensitive topics publish automatically; with
+NEWSROOM_REVIEW=hold they wait in \`drafts/\` and are listed in \`drafts.json\` with the reasons.
 Read the draft; to publish it, add its id to \`approved.json\`:
 
 \`\`\`json
