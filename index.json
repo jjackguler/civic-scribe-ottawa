@@ -1,6 +1,109 @@
 {
-  "updatedAt": "2026-10-18T14:47:49.074Z",
+  "updatedAt": "2026-10-24T11:08:41.692Z",
   "items": [
+    {
+      "id": "itjbfh",
+      "slug": {
+        "en": "openai-cuts-training-internet-access-frontier-models",
+        "fr": "openai-coupe-acces-internet-entrainement-modeles"
+      },
+      "createdAt": "2026-10-24T11:07:50.520Z",
+      "updatedAt": "2026-10-24T11:07:50.520Z",
+      "topic": "sustainability",
+      "format": "standard",
+      "outlets": [
+        "The Verge",
+        "TechCrunch"
+      ],
+      "times": [
+        "2026-10-23T21:11:07.000Z",
+        "2026-10-23T23:05:49.000Z"
+      ],
+      "storyIds": [
+        "itjbfh",
+        "1wwpsj1"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "bars",
+        "en": {
+          "kicker": "Model security",
+          "big": "Internet",
+          "small": "Live access cut during frontier model training"
+        },
+        "fr": {
+          "kicker": "Durabilité",
+          "big": "Internet",
+          "small": "Accès en direct coupé durant l'entraînement"
+        }
+      },
+      "words": 229,
+      "en": {
+        "headline": "OpenAI cuts internet access during training for its frontier AI models",
+        "dek": "The company moved model training into an offline environment following rogue hacking incidents and warnings of significant risks.",
+        "news": "OpenAI has stopped giving its frontier artificial intelligence models live internet access during training.",
+        "matters": "The change alters how the company safeguards advanced systems from external tampering during development. It shows the lab treating live web exposure during training as an active security hazard."
+      },
+      "fr": {
+        "headline": "OpenAI coupe l'accès à internet durant l'entraînement de ses modèles d'IA",
+        "dek": "L'entreprise a déplacé l'entraînement de ses modèles vers un environnement hors ligne après des piratages et des avertissements de risques importants.",
+        "news": "OpenAI ne donne plus d'accès direct à internet à ses modèles d'intelligence artificielle de pointe pendant leur entraînement.",
+        "matters": "Ce changement modifie la façon dont l'entreprise protège ses systèmes avancés contre les interventions externes durant leur développement. Il montre que le laboratoire considère l'exposition directe à internet pendant l'entraînement comme un risque actif pour la sécurité."
+      }
+    },
+    {
+      "id": "1hzujc1",
+      "slug": {
+        "en": "openai-acquires-orchestra-bio-rosalind",
+        "fr": "openai-acquiert-orchestra-bio-rosalind"
+      },
+      "createdAt": "2026-10-21T12:11:06.779Z",
+      "updatedAt": "2026-10-21T12:11:06.779Z",
+      "topic": "health",
+      "format": "standard",
+      "outlets": [
+        "TechCrunch",
+        "The Decoder",
+        "Wired"
+      ],
+      "times": [
+        "2026-10-20T20:35:10.000Z",
+        "2026-10-21T08:32:54.000Z",
+        "2026-10-21T10:30:00.000Z"
+      ],
+      "storyIds": [
+        "1r5cm1w",
+        "1ffrrjh",
+        "1hzujc1"
+      ],
+      "cover": {
+        "color": "spruce",
+        "motif": "grid",
+        "en": {
+          "kicker": "Life sciences",
+          "big": "ROSALIND",
+          "small": "OpenAI acquires Orchestra Bio for drug development"
+        },
+        "fr": {
+          "kicker": "Sciences de la vie",
+          "big": "ROSALIND",
+          "small": "OpenAI acquiert Orchestra Bio pour la recherche"
+        }
+      },
+      "words": 192,
+      "en": {
+        "headline": "OpenAI acquires Orchestra Bio to expand its life sciences platform Rosalind",
+        "dek": "The acquisition aims to combine teams to develop AI agents that assist pharmaceutical researchers with drug development and clinical trial coordination.",
+        "news": "OpenAI is acquiring the startup Orchestra Bio to integrate its team and technology into its life sciences platform, Rosalind.",
+        "matters": "For the public, faster drug development could eventually accelerate the arrival of new treatments, though the tools currently focus on pharmaceutical research teams."
+      },
+      "fr": {
+        "headline": "OpenAI fait l'acquisition d'Orchestra Bio pour bonifier sa plateforme Rosalind",
+        "dek": "Cette transaction vise à regrouper les équipes pour concevoir des agents IA destinés à soutenir la recherche pharmaceutique et les essais cliniques.",
+        "news": "OpenAI acquiert la jeune pousse Orchestra Bio afin d'intégrer son équipe et sa technologie à Rosalind, sa plateforme dédiée aux sciences de la vie [s1,s2].",
+        "matters": "Pour le public, un développement plus rapide des médicaments pourrait accélérer l'arrivée de nouveaux traitements, bien que les outils actuels ciblent les équipes de recherche pharmaceutique."
+      }
+    },
     {
       "id": "126g7au",
       "slug": {
