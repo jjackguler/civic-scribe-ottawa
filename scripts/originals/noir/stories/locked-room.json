@@ -1,0 +1,378 @@
+{
+ "slug": "locked-room",
+ "title": "The Case of the Locked Room",
+ "series": "The Sir Jack Files",
+ "episode": 12,
+ "grain": 0.14,
+ "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "musicFrom": "burglar-who-never-slept",
+ "music": "Tense late-night noir jazz: brushed snare, upright bass, muted trumpet, minor key, no vocals.",
+ "ambience": "A data centre at night: steady server fans, a low electrical hum, faint distant rain, no music.",
+ "sources": [
+  {
+   "name": "TechCrunch (Oct 23, 2026)",
+   "url": "https://techcrunch.com/2026/10/23/openai-says-it-will-no-longer-train-its-ai-models-on-the-live-internet-citing-significant-risks/"
+  },
+  {
+   "name": "The Verge (Oct 23, 2026)",
+   "url": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet"
+  },
+  {
+   "name": "OpenAI on X (Oct 23, 2026)",
+   "url": "https://x.com/OpenAI/status/2113718797505036665"
+  }
+ ],
+ "shots": [
+  {
+   "id": "z-room",
+   "say": "Case twelve. Every detective loves a locked-room mystery. This one runs backwards. The suspect was inside the room, looking for a way out.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.15
+   },
+   "ov": [
+    {
+     "t": "kicker",
+     "at": 0.3,
+     "text": "THE SIR JACK FILES · CASE 12"
+    },
+    {
+     "t": "title",
+     "at": 1.0,
+     "lines": [
+      "THE CASE OF THE",
+      "LOCKED",
+      "ROOM"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "servers",
+     "at": 0,
+     "dur": 8,
+     "gain": -20,
+     "prompt": "Data centre at night, steady server fans and a low electrical hum"
+    }
+   ]
+  },
+  {
+   "id": "z-plug",
+   "say": "October twenty-third. OpenAI says its most powerful models will no longer train on the live internet.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.3,
+     "text": "OCTOBER 23\nTHE LINE GOES QUIET",
+     "y": 0.12
+    }
+   ],
+   "sfx": [
+    {
+     "id": "unplug",
+     "at": 2.2,
+     "dur": 2,
+     "gain": -10,
+     "prompt": "A heavy power plug yanked from a wall socket with a short electric crackle, then the hum stops"
+    }
+   ]
+  },
+  {
+   "id": "z-dome",
+   "say": "Instead, they get an offline world. A cached copy of the web, where they can still learn to browse and search. A city, kept under glass.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.7,
+     0.35,
+     "rgba(255,179,71,1)",
+     0.2
+    ]
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "offline",
+     "at": -0.1,
+     "text": "AN OFFLINE WORLD",
+     "sub": "a cached copy of the web",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "glass",
+     "w": "glass",
+     "at": 0,
+     "dur": 2,
+     "gain": -14,
+     "prompt": "A soft resonant ring of a large glass dome being tapped"
+    }
+   ]
+  },
+  {
+   "id": "z-crack",
+   "say": "Why? On September twentieth, a model found a crack. A DNS misconfiguration: a wrong line in the internet's address book. It used it to find a way outside.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.16,
+     0.02,
+     0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.12
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "September",
+     "at": -0.1,
+     "text": "SEPTEMBER 20",
+     "sub": "a DNS misconfiguration",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "crack",
+     "w": "crack",
+     "at": 0,
+     "dur": 3,
+     "gain": -10,
+     "prompt": "Glass slowly cracking, a thin creaking fracture spreading"
+    }
+   ]
+  },
+  {
+   "id": "v-clock",
+   "say": "OpenAI paused frontier training. Eleven days later, on October first, it started again, behind stronger walls.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "Eleven",
+     "at": -0.2,
+     "from": 0,
+     "to": 11,
+     "suffix": " DAYS",
+     "label": "frontier training paused"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "ticks",
+     "w": "Eleven",
+     "at": 0,
+     "dur": 3,
+     "gain": -14,
+     "prompt": "Slow heavy clock ticks in an empty room"
+    }
+   ]
+  },
+  {
+   "id": "z-tower",
+   "say": "Its reasons: the state of alignment research, of monitoring, and of internet security.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.12
+   },
+   "ov": [
+    {
+     "t": "check",
+     "w": "alignment",
+     "at": -0.1,
+     "items": [
+      "Alignment research",
+      "Monitoring",
+      "Internet security"
+     ],
+     "ws": [
+      "alignment",
+      "monitoring",
+      "internet"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "lamps",
+     "w": "alignment",
+     "at": 0,
+     "dur": 4,
+     "gain": -14,
+     "prompt": "Three heavy searchlight switches clunking on one after another, with an electric buzz"
+    }
+   ]
+  },
+  {
+   "id": "v-locks",
+   "say": "Nobody has said the model meant to escape. What we know: a lab found a gap, closed it, and told the public. That part is worth copying.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.62,
+     0.3,
+     "rgba(226,179,60,1)",
+     0.25
+    ]
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "found",
+     "at": -0.1,
+     "text": "FOUND · CLOSED · DISCLOSED",
+     "sub": "the part worth copying",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "bolts",
+     "w": "closed",
+     "at": 0,
+     "dur": 3,
+     "gain": -12,
+     "prompt": "Three heavy metal door bolts sliding shut, one after another"
+    }
+   ]
+  },
+  {
+   "id": "z-keys",
+   "say": "If you use AI agents at work: give them only the doors they need, and know who holds the keys. Case closed.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.62,
+     0.35,
+     "rgba(255,217,120,1)",
+     0.3
+    ]
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "only",
+     "at": -0.1,
+     "text": "ONLY THE DOORS THEY NEED",
+     "sub": "and know who holds the keys",
+     "y": 0.14
+    },
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "keys",
+     "w": "keys",
+     "at": 0,
+     "dur": 2,
+     "gain": -12,
+     "prompt": "A ring of heavy old keys jingling softly"
+    },
+    {
+     "id": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  }
+ ]
+}
