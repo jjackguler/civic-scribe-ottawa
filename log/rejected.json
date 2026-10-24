@@ -1,5 +1,27 @@
 [
   {
+    "id": "nl9ovb",
+    "at": "2026-10-24T01:04:24.524Z",
+    "stage": "copy",
+    "headline": "Canva releases its first image generation model",
+    "reasons": [
+      "Not in the sources (names or numbers): Ordinary.",
+      "The article is too thin (116 words): skip the event rather than pad it.",
+      "Too close to The Decoder's wording (\"canva craft its first in house image generation model…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
+    "id": "11gj97s",
+    "at": "2026-10-24T01:01:17.192Z",
+    "stage": "copy",
+    "headline": "Ottawa ‘not responsible’ for regulating AI data centre power use: minister",
+    "reasons": [
+      "Not in the sources (names or numbers): Activating, Users, People, Artificial.",
+      "rewrite: no reply"
+    ]
+  },
+  {
     "id": "2o02q4",
     "at": "2026-10-23T00:19:47.336Z",
     "stage": "reporter",
