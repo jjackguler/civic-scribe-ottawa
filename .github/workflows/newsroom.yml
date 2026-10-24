@@ -25,7 +25,7 @@ concurrency:
 jobs:
   write:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
@@ -73,6 +73,7 @@ jobs:
           NEWSROOM_GEMINI_FALLBACKS: ${{ vars.NEWSROOM_GEMINI_FALLBACKS }}
           NEWSROOM_ALLOW_PRO: ${{ vars.NEWSROOM_ALLOW_PRO }}
           NEWSROOM_RETRIES: ${{ vars.NEWSROOM_RETRIES }}
+          NEWSROOM_TIMEOUT_MS: ${{ vars.NEWSROOM_TIMEOUT_MS }}
           NEWSROOM_RUN_MAX_CALLS: ${{ vars.NEWSROOM_RUN_MAX_CALLS }}
           NEWSROOM_RUN_MAX_TOKENS: ${{ vars.NEWSROOM_RUN_MAX_TOKENS }}
           NEWSROOM_RUN_MAX_USD: ${{ vars.NEWSROOM_RUN_MAX_USD }}
