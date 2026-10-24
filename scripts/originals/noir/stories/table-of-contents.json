@@ -1,0 +1,388 @@
+{
+ "slug": "table-of-contents",
+ "title": "The Case of the Table of Contents",
+ "series": "The Sir Jack Files",
+ "episode": 13,
+ "grain": 0.14,
+ "slogan": "AI NEWS · HUMAN-CENTRED · HUMANS IN CONTROL",
+ "cta": "FULL STORY + FREE NEWSLETTER → AIBROADSHEET.COM",
+ "musicFrom": "diary-left-open",
+ "music": "Quiet late-night noir jazz: soft piano, brushed snare, upright bass, minor key, no vocals.",
+ "ambience": "A quiet city street at night after rain, distant traffic, a faint neon buzz, no music.",
+ "sources": [
+  {
+   "name": "Claroc, GhostShares (Oct 18, 2026)",
+   "url": "https://blog.claroc.io/ghostshares-muse-passive-dns/"
+  },
+  {
+   "name": "Ars Technica (Oct 20, 2026)",
+   "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+  },
+  {
+   "name": "The Verge (Oct 20, 2026)",
+   "url": "https://www.theverge.com/tech/1014627/meta-muse-ai-sharing-ai-chats"
+  },
+  {
+   "name": "TechCrunch (Oct 20, 2026)",
+   "url": "https://techcrunch.com/2026/10/20/metas-muse-hits-10m-u-s-downloads-in-40-days-a-milestone-reached-by-only-11-other-apps/"
+  }
+ ],
+ "shots": [
+  {
+   "id": "m-phone",
+   "say": "Case thirteen. You share an AI chat with one friend. You don't expect it to turn up in a list anyone can read.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "rain": 0.5,
+    "fog": 0.12
+   },
+   "ov": [
+    {
+     "t": "kicker",
+     "at": 0.3,
+     "text": "THE SIR JACK FILES · CASE 13"
+    },
+    {
+     "t": "title",
+     "at": 1.0,
+     "lines": [
+      "THE CASE OF THE",
+      "TABLE OF",
+      "CONTENTS"
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "street",
+     "at": 0,
+     "dur": 8,
+     "gain": -20,
+     "prompt": "Quiet city street at night after rain, distant traffic, a faint neon buzz"
+    }
+   ]
+  },
+  {
+   "id": "m-apps",
+   "say": "Muse is Meta's new AI assistant. Ten million US downloads in forty days. Like many chatbots, it lets you share a conversation as a link.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "Ten",
+     "at": -0.2,
+     "from": 0,
+     "to": 10,
+     "suffix": "M",
+     "label": "US downloads in 40 days"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pings",
+     "w": "Ten",
+     "at": 0,
+     "dur": 4,
+     "gain": -16,
+     "prompt": "Many soft phone notification pings overlapping, building up"
+    }
+   ]
+  },
+  {
+   "id": "m-sign",
+   "say": "But each link was built from the conversation's title, on a Meta web address.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {
+    "fog": 0.1
+   },
+   "ov": [
+    {
+     "t": "label",
+     "w": "title",
+     "at": -0.1,
+     "text": "THE TITLE WAS IN THE ADDRESS",
+     "sub": "a subdomain of metaaiusercontent.com",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "neon",
+     "w": "title",
+     "at": 0,
+     "dur": 2,
+     "gain": -14,
+     "prompt": "A neon sign flickering on with an electric buzz"
+    }
+   ]
+  },
+  {
+   "id": "m-ledger",
+   "say": "October eighteenth. The security firm Claroc checks passive DNS: public records of the web addresses that computers have looked up.",
+   "cam": {
+    "from": [
+     1.16,
+     0,
+     0.03
+    ],
+    "to": [
+     1.04,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.38,
+     0.3,
+     "rgba(255,179,71,1)",
+     0.25
+    ]
+   },
+   "ov": [
+    {
+     "t": "type",
+     "at": 0.3,
+     "text": "OCTOBER 18\nA FIRM CHECKS THE RECORDS",
+     "y": 0.12
+    }
+   ],
+   "sfx": [
+    {
+     "id": "pages",
+     "at": 0.8,
+     "dur": 3,
+     "gain": -12,
+     "prompt": "Pages of a large heavy ledger book turning"
+    }
+   ]
+  },
+  {
+   "id": "m-index",
+   "say": "It finds more than six thousand eight hundred Muse share links. Listed by name, like a table of contents.",
+   "cam": {
+    "from": [
+     1.05,
+     0,
+     0.0
+    ],
+    "to": [
+     1.12,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "counter",
+     "w": "six",
+     "at": -0.2,
+     "from": 0,
+     "to": 6800,
+     "suffix": "+",
+     "label": "Muse share links in DNS records"
+    },
+    {
+     "t": "quote",
+     "w": "Listed",
+     "at": -0.1,
+     "text": "Listed by name, like a table of contents.",
+     "by": "CLAROC"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "typewriter",
+     "w": "six",
+     "at": 0,
+     "dur": 4,
+     "gain": -14,
+     "prompt": "Fast typewriter keys clacking, a long list being typed"
+    }
+   ]
+  },
+  {
+   "id": "m-files",
+   "say": "Inside some of them: prep for a meeting with a frontier AI lab. A small-business loan application. A bank fraud alert with partial account details.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.15,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "label",
+     "w": "prep",
+     "at": -0.1,
+     "text": "MEETING PREP: A FRONTIER AI LAB",
+     "sub": "",
+     "y": 0.14
+    },
+    {
+     "t": "label",
+     "w": "small",
+     "at": -0.1,
+     "text": "A SMALL-BUSINESS LOAN APPLICATION",
+     "sub": "",
+     "y": 0.14
+    },
+    {
+     "t": "label",
+     "w": "bank",
+     "at": -0.1,
+     "text": "A BANK FRAUD ALERT",
+     "sub": "with partial account details",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "drawer",
+     "at": 0,
+     "dur": 2,
+     "gain": -12,
+     "prompt": "A heavy metal filing cabinet drawer sliding open"
+    }
+   ]
+  },
+  {
+   "id": "m-lever",
+   "say": "On October twentieth, Meta paused sharing while it reviews the report. Claroc says it found no sign of misuse.",
+   "cam": {
+    "from": [
+     1.14,
+     0,
+     0.0
+    ],
+    "to": [
+     1.04,
+     0,
+     0.02
+    ]
+   },
+   "fx": {},
+   "ov": [
+    {
+     "t": "label",
+     "w": "paused",
+     "at": -0.1,
+     "text": "OCT 20 · SHARING PAUSED",
+     "sub": "Claroc: no sign of misuse",
+     "y": 0.14
+    }
+   ],
+   "sfx": [
+    {
+     "id": "lever",
+     "w": "paused",
+     "at": 0,
+     "dur": 2,
+     "gain": -10,
+     "prompt": "A heavy industrial wall lever thrown down with a loud clunk, an electric hum stops"
+    }
+   ]
+  },
+  {
+   "id": "m-desk",
+   "say": "Before you share any AI chat: read the title, strip out names and numbers, and treat every link as public. Case closed.",
+   "cam": {
+    "from": [
+     1.04,
+     0,
+     0.02
+    ],
+    "to": [
+     1.16,
+     0,
+     -0.02
+    ]
+   },
+   "fx": {
+    "glow": [
+     0.5,
+     0.72,
+     0.35,
+     "rgba(255,217,120,1)",
+     0.3
+    ]
+   },
+   "ov": [
+    {
+     "t": "check",
+     "w": "read",
+     "at": -0.1,
+     "items": [
+      "Read the title",
+      "Strip out names and numbers",
+      "Treat every link as public"
+     ],
+     "ws": [
+      "read",
+      "strip",
+      "treat"
+     ]
+    },
+    {
+     "t": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "text": "CASE CLOSED"
+    }
+   ],
+   "sfx": [
+    {
+     "id": "stamp",
+     "w": "closed",
+     "at": -0.05,
+     "dur": 1,
+     "gain": -8,
+     "prompt": "Single heavy rubber stamp thud on paper on a wooden desk"
+    }
+   ]
+  }
+ ]
+}
