@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ENTRY: scripts/originals/noir-publish/sir-jack-12.json
-  SOURCE_RUN: "40110687806"
+  ENTRY: scripts/originals/noir-publish/sir-jack-13.json
+  SOURCE_RUN: "40134721265"
   ARTIFACT: noir-faces-that-werent-there
   LIST: "false"
 
