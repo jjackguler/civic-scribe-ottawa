@@ -9,6 +9,7 @@ import { killedIds, slugify, uniqueSlug, isKilled } from "../../src/lib/newsroom
 import { factGuard, overlapProblems } from "./guard";
 import { shapeDraft, unwrapDraft, type Draft } from "./shape";
 import { editorialGate } from "../../src/lib/editorial";
+import { upsettingReasons } from "./upsetting";
 import { clip } from "./roles";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 
@@ -166,6 +167,12 @@ test("party politics and brand promotions fail the gate; AI policy passes", () =
   assert.equal(editorialGate({ title: "Burger King launches Hello Kitty meal" }).ok, false);
   assert.equal(editorialGate({ title: "Germany and Nvidia sign an industrial AI declaration" }).ok, true);
   assert.equal(editorialGate({ title: "Democratic governance of frontier AI, part II" }).ok, true);
+});
+await test("house rule: stories that could upset people are turned down, useful sensitive ones are not", () => {
+  assert.deepEqual(upsettingReasons("OpenAI engineer faces foreign spy charges over hidden device"), ["accusations, crime or courts"]);
+  assert.ok(upsettingReasons("Chatbot linked to teen's death, family says").includes("death or violence"));
+  assert.deepEqual(upsettingReasons("OpenAI acquires Orchestra Bio to expand its life sciences AI tools"), []);
+  assert.deepEqual(upsettingReasons("Bank of Canada tests AI for loan reviews"), []);
 });
 console.log(`\n${passed} passed, ${failures.length} failed`);
 process.exit(failures.length ? 1 : 0);

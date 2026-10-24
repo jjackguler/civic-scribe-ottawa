@@ -20,6 +20,7 @@
  *         NEWSROOM_CLAUDE_WRITER / CLAUDE_MODEL, NEWSROOM_CLAUDE_CHECKER
  *         GEMINI_IMAGE_MODEL (optional: abstract cover illustrations; needs GEMINI_API_KEY)
  */
+import { upsettingReasons } from "./upsetting";
 import { appendFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { humanLens } from "../../src/lib/editorial";
@@ -34,8 +35,8 @@ import { openStore, type Store } from "./store";
 
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry-run");
-/** NEWSROOM_REVIEW=off publishes everything that passes the desks; the default holds risky stories for a human. */
-const REVIEW = (process.env.NEWSROOM_REVIEW ?? "risky").trim().toLowerCase();
+/** Default: stories that could upset people are turned down and sensitive ones publish. NEWSROOM_REVIEW=hold holds sensitive stories for a human; =off publishes everything that passes the desks. */
+const REVIEW = (process.env.NEWSROOM_REVIEW ?? "auto").trim().toLowerCase();
 
 /**
  * Stories a human editor must approve before they go out: anything that could
@@ -162,8 +163,12 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
     lens: humanLens({ title: copy.value.headline, summary: copy.value.news }),
     roles,
   };
+  // House rule: nothing that could upset or harm people (checked again on the finished article).
+  const upset = upsettingReasons(`${article.en.headline} ${article.en.dek ?? ""} ${article.en.news ?? ""}`);
+  if (upset.length && REVIEW !== "off") return stop("house rule", { role: "standards", model: "rules", at: new Date().toISOString(), verdict: "fail", notes: [`could upset or harm people: ${upset.join(", ")}`] });
+  // Health, money and other sensitive-but-useful topics publish automatically; NEWSROOM_REVIEW=hold restores the human check.
   const risk = riskReasons(article);
-  if (risk.length && REVIEW !== "off") {
+  if (risk.length && REVIEW === "hold") {
     await store.hold(article, risk);
     log(`  ⏸ held for the editor (${risk.join("; ")}): add "${article.id}" to approved.json on the newsroom branch to publish`);
     return "held";
