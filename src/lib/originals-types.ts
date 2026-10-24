@@ -3,6 +3,8 @@
  * scripts/originals and listed in a manifest on the repository's `media`
  * branch. Shared by the pipeline (writer) and the site (reader).
  */
+import { slugify } from "./newsroom-types";
+
 export type OriginalSource = { name: string; url: string };
 
 /** Shelves on the Explainers page, in display order. */
@@ -77,8 +79,11 @@ export type Original = {
 
 export type OriginalsManifest = { updatedAt: string; items: Original[] };
 
-/** schema.org VideoObject for an original, so search engines can list it as a video. */
-export function videoLd(o: Original, pageUrl: string, publisher: unknown) {
+/** Readable address of an original's own page: /video/<slug of its title>. */
+export const videoSlug = (o: { title: string }) => slugify(o.title, { max: 80 });
+
+/** schema.org VideoObject for an original, so search engines can list it as a video. `own`: pageUrl is the video's own page. */
+export function videoLd(o: Original, pageUrl: string, publisher: unknown, own = false) {
   const thumb = o.posterUrl ?? (o.youtubeId ? `https://i.ytimg.com/vi/${o.youtubeId}/hqdefault.jpg` : undefined);
   return {
     "@type": "VideoObject", name: o.title, description: o.summary, uploadDate: o.publishedAt,
@@ -86,7 +91,7 @@ export function videoLd(o: Original, pageUrl: string, publisher: unknown) {
     ...(thumb ? { thumbnailUrl: [thumb] } : {}),
     ...(o.fileUrl ? { contentUrl: o.fileUrl } : {}),
     ...(o.youtubeId ? { embedUrl: `https://www.youtube.com/embed/${o.youtubeId}` } : {}),
-    url: `${pageUrl}#${o.id}`, inLanguage: "en", publisher, transcript: o.transcript,
+    url: own ? pageUrl : `${pageUrl}#${o.id}`, inLanguage: "en", publisher, transcript: o.transcript,
   };
 }
 
