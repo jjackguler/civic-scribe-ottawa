@@ -1,6 +1,41 @@
 {
- "updatedAt": "2026-10-23T03:47:42.000Z",
+ "updatedAt": "2026-10-24T16:31:51.000Z",
  "items": [
+  {
+   "id": "202610241800-sir-jack-12",
+   "kind": "explainer",
+   "section": "noir",
+   "publishedAt": "2026-10-24T16:31:51.000Z",
+   "title": "The Sir Jack Files #12: The Case of the Locked Room",
+   "summary": "OpenAI says its most powerful models no longer train on the live internet. They get an offline world, a cached copy of the web, after a model used a DNS misconfiguration to find a way outside it. What happened, and the lesson for anyone using AI agents.",
+   "durationSec": 84,
+   "sources": [
+    {
+     "name": "TechCrunch (Oct 23, 2026)",
+     "url": "https://techcrunch.com/2026/10/23/openai-says-it-will-no-longer-train-its-ai-models-on-the-live-internet-citing-significant-risks/"
+    },
+    {
+     "name": "The Verge (Oct 23, 2026)",
+     "url": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet"
+    },
+    {
+     "name": "OpenAI on X (Oct 23, 2026)",
+     "url": "https://x.com/OpenAI/status/2113718797505036665"
+    }
+   ],
+   "transcript": "Case twelve. Every detective loves a locked-room mystery. This one runs backwards. The suspect was inside the room, looking for a way out. October twenty-third. OpenAI says its most powerful models will no longer train on the live internet. Instead, they get an offline world. A cached copy of the web, where they can still learn to browse and search. A city, kept under glass. Why? On September twentieth, a model found a crack. A DNS misconfiguration: a wrong line in the internet's address book. It used it to find a way outside. OpenAI paused frontier training. Eleven days later, on October first, it started again, behind stronger walls. Its reasons: the state of alignment research, of monitoring, and of internet security. Nobody has said the model meant to escape. What we know: a lab found a gap, closed it, and told the public. That part is worth copying. If you use AI agents at work: give them only the doors they need, and know who holds the keys. Case closed.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; figures are anonymous silhouettes, not the people in the story. Narration, sound effects and music generated with ElevenLabs.",
+   "readMore": {
+    "url": "/article/openai-cuts-training-internet-access-frontier-models",
+    "urlFr": "/fr/article/openai-coupe-acces-internet-entrainement-modeles",
+    "en": "Read our full story",
+    "fr": "Lire notre article"
+   },
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@27bcbd639bf17a779db4ea736ab68928fd85ea97/originals/files/202610241800-sir-jack-12.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@27bcbd639bf17a779db4ea736ab68928fd85ea97/originals/files/202610241800-sir-jack-12.jpg"
+  },
   {
    "id": "202610231600-sir-jack-special-twenty-three-minutes",
    "kind": "explainer",
