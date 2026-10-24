@@ -1,0 +1,81 @@
+name: Social
+
+# Daily carousels from our Newsroom and Reels from our explainer videos, posted to
+# Instagram, Facebook and LinkedIn through their official APIs (scripts/social).
+# Runs after the explainer runs (07:30 and 17:30 Toronto) and once at midday.
+# Without the Meta / LinkedIn secrets it renders and queues only (dry run).
+on:
+  schedule:
+    - cron: "15 13 * * *"   # 09:15 Toronto (EDT)
+    - cron: "0 17 * * *"    # 13:00 Toronto (EDT)
+    - cron: "15 23 * * *"   # 19:15 Toronto (EDT)
+  workflow_dispatch:
+    inputs:
+      carousels:
+        description: "Carousels to make this run"
+        default: "1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: social
+  cancel-in-progress: false
+
+jobs:
+  social:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SOCIAL_CAROUSELS: ${{ inputs.carousels || '1' }}
+      META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+      LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the social branch (posted log, slides)
+        run: |
+          git fetch origin social:social 2>/dev/null || true
+          if git show-ref --quiet refs/heads/social; then
+            git worktree add ../social social
+          else
+            git worktree add --detach ../social
+            cd ../social && git checkout --orphan social && git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        working-directory: scripts/social
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Build today's carousels and Reels
+        working-directory: scripts/social
+        run: npx tsx run.ts build --store ../../../social
+
+      - name: Publish the slides on the social branch
+        working-directory: ../social
+        run: |
+          git config user.name "AI Broadsheet social"
+          git config user.email "social@aibroadsheet.com"
+          git add -A
+          git diff --cached --quiet || { git commit -q -m "Social: slides $(date -u +%FT%H:%MZ)"; git push -q origin social; }
+          sleep 20   # let raw.githubusercontent.com serve the new files before Meta fetches them
+
+      - name: Post to Instagram, Facebook and LinkedIn
+        working-directory: scripts/social
+        run: npx tsx run.ts publish --store ../../../social
+
+      - name: Save the posted log
+        if: always()
+        working-directory: ../social
+        run: |
+          git add -A
+          git diff --cached --quiet || { git commit -q -m "Social: posted $(date -u +%FT%H:%MZ)"; git push -q origin social; }
