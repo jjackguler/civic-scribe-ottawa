@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:dbl2wl",
+    "at": "2026-10-24T23:39:00.309Z",
+    "reason": "fact guard / layout check failed twice: not in the sources: Heavy, Builds"
+  },
+  {
     "key": "story:1afb9fq",
     "at": "2026-10-22T00:10:49.181Z",
     "reason": "fact guard / layout check failed twice: not in the sources: 70 percent, Stay"
