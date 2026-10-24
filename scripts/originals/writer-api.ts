@@ -19,7 +19,8 @@ export async function requestWriter(system: string, user: string, keys: WriterKe
         contents: [{ role: "user", parts: [{ text: user }] }],
         generationConfig: { maxOutputTokens: maxTokens + 1024, temperature: 0.4, responseMimeType: "application/json" },
       }),
-      signal: AbortSignal.timeout(90_000),
+      // Gemini with thinking can take several minutes on a full storyboard; ORIGINALS_TIMEOUT_MS overrides.
+      signal: AbortSignal.timeout(Number(process.env.ORIGINALS_TIMEOUT_MS) > 0 ? Number(process.env.ORIGINALS_TIMEOUT_MS) : 280_000),
     });
   } catch {
     throw new SkipRun(`${service} unavailable`, "Request failed or timed out; usage may have been billed. No automatic model switch or retry. The story stays queued.");
