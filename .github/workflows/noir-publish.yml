@@ -1,8 +1,8 @@
-# One-off: publish the approved noir reel (The Sir Jack Files, case 1) to the
-# site's explainer list. Takes the MP4 from the Noir reel run the owner watched,
-# re-encodes it under jsDelivr's 20 MB per-file limit, commits it and a poster to
-# the media branch, then lists it in originals/manifest.json pinned to that commit,
-# the same way scripts/originals/publish.ts does.
+# Publishes a rendered noir reel (The Sir Jack Files) from a Noir reel run: re-encodes
+# the MP4 under jsDelivr's 20 MB per-file limit and commits it and a poster to the
+# media branch. With LIST=true it also lists the entry in originals/manifest.json
+# pinned to that commit, the same way scripts/originals/publish.ts does; with
+# LIST=false the files wait on the media branch for review before they are listed.
 name: Noir publish
 
 on:
@@ -19,9 +19,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ENTRY: scripts/originals/noir-publish/sir-jack-01.json
-  SOURCE_RUN: "39191331551"
-  ARTIFACT: noir-vanishing-radiologist
+  ENTRY: scripts/originals/noir-publish/sir-jack-12.json
+  SOURCE_RUN: "40110687806"
+  ARTIFACT: noir-faces-that-werent-there
+  LIST: "false"
 
 jobs:
   publish:
@@ -82,6 +83,7 @@ jobs:
             git add originals/manifest.json
             git commit -m "Originals: list $(jq -r .title /tmp/entry.json)"
           }
+          if [ "$LIST" != "true" ]; then git push origin HEAD:media || { git pull --rebase origin media && git push origin HEAD:media; }; echo "files only: $(git log -1 --format=%H)" >> "$GITHUB_STEP_SUMMARY"; exit 0; fi
           list
           if ! git push origin HEAD:media; then
             # Someone pushed meanwhile: replay on top and re-pin to the files commit's new SHA.
