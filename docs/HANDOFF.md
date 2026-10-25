@@ -25,6 +25,14 @@ Last updated: 25 Oct 2026 (merged with the AI News project's notes of 18–19 Oc
   with a paid plan. No buying followers. Posting or archiving on social needs the owner's explicit yes.
 - Talk to the owner in Turkish; narration and social captions are in English.
 
+## Decided 25 Oct 2026
+- **One working chat:** the Code session on **This computer**, opened in `Desktop\AI NEWS`. It does
+  everything: code, videos, the site, and posting through the owner's logged-in Chrome. No API tokens
+  are needed for posting that way; tokens (PR #24) are only for fully automatic posting and are parked.
+- **Never post or share anything on social media without asking the owner first**, every time.
+- Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
+  same computer.
+
 ## Which session does what
 | Work | Where |
 |---|---|
