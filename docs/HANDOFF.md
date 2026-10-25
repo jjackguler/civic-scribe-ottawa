@@ -2,7 +2,7 @@
 
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
-Last updated: 25 Oct 2026 (merged with the AI News project's notes of 18–19 Oct).
+Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Console read).
 
 ## Ground rules from the owner
 - Post only from AI Broadsheet's own accounts. Never touch other brands the owner is logged
@@ -84,7 +84,8 @@ Bio everywhere: "AI news, with the human stakes left in. One catch a day." Sign-
   followers) shares the long films and tags AI Broadsheet. The "Introducing AI Broadsheet"
   carousel is live there. Posts went to 5 groups; some are waiting for admin approval.
 - All accounts got the Ink & Gold avatar, banner, bio and UTM link on 18 Oct. Exception: the
-  TikTok avatar and bio reverted twice, so check them from the phone. The Instagram highlight
+  TikTok avatar and bio reverted twice (on 25 Oct the avatar was still a cartoon figure, not the
+  Ink & Gold logo), so check them from the phone. The Instagram highlight
   covers (The Catch, Prove It, AI vs Real Life, About) aren't set yet, and there is no Threads
   account yet.
 - Recurring series: The Catch, Prove It, AI vs Real Life, The Sir Jack Files.
@@ -94,6 +95,21 @@ Bio everywhere: "AI news, with the human stakes left in. One catch a day." Sign-
   (LinkedIn org 143990012). PR #23 was folded into #24.
 - After every Facebook or Instagram post, check that the caption is not empty (Business Suite
   sometimes drops it). The Sir Jack Case 03 caption on Facebook is still empty.
+- The Instagram grid still shows an old "NOV 3 ELECTION DAY" post (red line: elections). Archive
+  it only after the owner says yes.
+- Posting the 18 MB videos from the owner's Chrome (worked on 25 Oct):
+  - YouTube Studio: fetch the mp4 from `raw.githubusercontent.com/.../media/originals/files/<id>.mp4`
+    inside the page and put it on `input[name=Filedata]`. Title, description and tags come from
+    `scripts/originals/noir-publish/youtube.json` on `claude/noir-publish`.
+  - Instagram and TikTok block that fetch. Split the mp4 into 9 MB parts inside the session
+    folder, upload each part to a hidden file input (10 MB per call), join them in the page with
+    `new File(parts)` and hand that to the site's video input. Delete the parts afterwards.
+  - Instagram: "Original" crop, the poster jpg as cover, "Add AI label" on. Line breaks in the
+    caption need real Enter presses.
+  - TikTok: type the description with real keystrokes (scripted text insertion crashes the
+    editor), one hashtag at a time. "AI-generated content" is under "Show more". A new post
+    shows "Only me" while it is under review, then turns to Everyone.
+  - Every caption carries the AI disclosure and the source names.
 
 ## Podcast
 "After the Headline": 2 episodes, feed at `aibroadsheet.com/podcast.xml`. It has not been submitted to
@@ -104,14 +120,21 @@ Spotify or Apple Podcasts yet; the owner does that.
   150 s timeouts and drafts waiting for an approver. All four are fixed (#19, #20, #22, #30, #32).
   Output watch went red on 19–23 Oct and nobody acted on it.
 - Latest videos: Sir Jack #12 *The Locked Room* (OpenAI takes frontier training offline) and
-  #13 *The Table of Contents* (Meta Muse share links in public DNS). Both are on the site.
-  They are not yet on YouTube, Instagram or TikTok.
+  #13 *The Table of Contents* (Meta Muse share links in public DNS). Both are on the site and,
+  since 25 Oct, public on YouTube (shorts/YUONbChX5ZQ, shorts/hEo1XyKYRes), Instagram
+  (reel/De5sjz0xWc1, reel/De5s2yqxm1f) and TikTok (video/7700437192111426824,
+  video/7700437675630759176). Not posted to LinkedIn, Facebook or X.
 - Captions for every video, per platform: `docs/social-kit.md`.
 - AdSense: publisher `ca-pub-2619122418823802` is in `src/lib/ads.ts`, and `ads.txt` is generated.
-  Serving is **off** in code (`ADSENSE_SERVING_ENABLED = false`). Approval status is unknown and
-  must be checked in AdSense → Sites.
-- Search Console: we don't know which Google account holds it. There is no verification tag
-  in the code, so it is likely DNS-verified.
+  Serving is **off** in code (`ADSENSE_SERVING_ENABLED = false`). The account lives on
+  **aibroadsheet@gmail.com**. On 25 Oct it said "Your account wasn't approved" (program
+  policies, no more detail). Resubmitting means ticking the policy box, so that is the owner's call.
+- Search Console: domain property `aibroadsheet.com` on **jjackguler@gmail.com** (not on
+  aibroadsheet@gmail.com). Last 28 days to 22 Oct: 3 clicks, about 3,000 impressions, average
+  position 55; top queries "ai news" and "what is an algorithm in ai". 264 pages indexed. 707
+  pages are excluded by noindex: the `/story` and `/fr/story` summaries, noindex on purpose.
+  84 more are "discovered, not indexed". Search Console's 3 clicks against Lovable's 366
+  "Google" visits backs the automated-traffic suspicion.
 - Traffic (Lovable, 10–24 Oct): about 2,000 visitors, but most look automated
   (`/news`, desktop, direct, 1 page). Google brought 366 visits. Social referrals were tiny.
 - Held newsroom draft: Meta Muse (`drafts/1hxzldk.json`), left unpublished on purpose.
@@ -121,6 +144,8 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Submit the podcast feed to Spotify and Apple.
 - TikTok: delete the Trump Jr. and Burger King videos for good, and make the Ohio video private (red lines).
 - Answer the open LinkedIn Premium (1 month) question.
+- Decide whether to resubmit AdSense (aibroadsheet@gmail.com → Home → policy box → Resubmit).
+- Say yes or no to archiving the "NOV 3 ELECTION DAY" Instagram post.
 
 ## Ideas waiting
 - Sir Jack candidates: France's CNAF risk-scoring algorithm ("The Second Suspicion Machine",
@@ -133,8 +158,8 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Answer the unanswered YouTube comment under the Titanic video.
 
 ## Next
-1. From this computer: post #12 and #13 to Instagram, TikTok and YouTube. Find the Search
-   Console account and read its numbers. Read the AdSense status.
+1. Post #12 and #13 on LinkedIn (owner's profile, tag AI Broadsheet, links in the first
+   comment), Facebook and X, with the captions in `docs/social-kit.md`. Ask the owner first.
 2. Add UTM links to the bios (`?utm_source=instagram`, `tiktok`).
 3. One Sir Jack case per day from the newsroom's best story. Post it on every platform the
    same day.
