@@ -1,5 +1,46 @@
 [
   {
+    "id": "bp8gry",
+    "at": "2026-10-26T23:18:32.473Z",
+    "stage": "copy",
+    "headline": "Anthropic officially files for its public debut",
+    "reasons": [
+      "Not in the sources (names or numbers): Investors, Observers.",
+      "Too close to TechCrunch's wording (\"designed to preserve founder control and its ai safety…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: missing fields: news, thirty (0 lines), matters (reply keys: headline,dek,news,known,matters,background)"
+    ]
+  },
+  {
+    "id": "1s672od",
+    "at": "2026-10-26T23:18:05.059Z",
+    "stage": "copy",
+    "headline": "Introducing GPT-6.1 Terra",
+    "reasons": [
+      "Not in the sources (names or numbers): Users, 2026, 10, 26, 2026-10-26, AI-powered, Building, 50 percent, 50.",
+      "rewrite: missing fields: news, thirty (0 lines), matters (reply keys: headline,dek,news,known,matters,background,plain,expert,timeline)"
+    ]
+  },
+  {
+    "id": "c47479",
+    "at": "2026-10-26T23:17:43.256Z",
+    "stage": "translator",
+    "headline": "Intelligence artificielle | Anthropic rend public son dossier d’entrée en Bourse",
+    "reasons": [
+      "attempt 1: Too close to Radio-Canada's wording (\"introduction en bourse apres des semaines d attente le…\"): say it in our own words, or quote and attribute it.",
+      "attempt 2: Too close to Radio-Canada's wording (\"anthropic a rendu public son dossier d introduction en…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1dx6fia",
+    "at": "2026-10-26T23:16:29.590Z",
+    "stage": "translator",
+    "headline": "Anthropic’s IPO Prospectus Reveals What’s Under the Hood",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): Lundi.",
+      "attempt 2: Not in the sources (names or numbers): Lundi."
+    ]
+  },
+  {
     "id": "lt12y9",
     "at": "2026-10-26T12:06:14.260Z",
     "stage": "reporter",
