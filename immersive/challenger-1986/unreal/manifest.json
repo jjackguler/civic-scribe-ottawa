@@ -1,0 +1,666 @@
+{
+  "title": "Challenger, Pad 39B, 28 January 1986: launch-morning reconstruction (Unreal Engine renders)",
+  "scene": "Launch morning before liftoff; sun for 11:38 EST (elevation 41.1 deg, azimuth 161.5 deg). No launch, no breakup and nothing after T+73 s; no after-the-inquiry views.",
+  "engine": "Unreal Engine 5.8, real-time scene rendered offline frame by frame; no AI image generation",
+  "coordinates": "north_m / east_m from the stack (flame-trench axis); heights as stated in each caption",
+  "files": [
+    {
+      "stop": "perimeter_fence",
+      "title": "Perimeter fence, south",
+      "position": {
+        "north_m": -306,
+        "east_m": -40,
+        "distance_m": 309,
+        "direction_from_stack": "south"
+      },
+      "estimated": [
+        "fence line and camera spot are estimated from NASA photographs",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_perimeter_fence.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Perimeter fence, south: outside the south perimeter fence looking north to the stack; 309 m south of the stack, eye height 1.7 m above the ground.",
+      "bytes": 1112167
+    },
+    {
+      "stop": "perimeter_fence",
+      "title": "Perimeter fence, south",
+      "position": {
+        "north_m": -306,
+        "east_m": -40,
+        "distance_m": 309,
+        "direction_from_stack": "south"
+      },
+      "estimated": [
+        "fence line and camera spot are estimated from NASA photographs",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_perimeter_fence.mp4",
+      "type": "video",
+      "caption": "Perimeter fence, south: outside the south perimeter fence looking north to the stack; 309 m south of the stack, eye height 1.7 m above the ground (slow dolly east along the fence.)",
+      "poster": "clip_perimeter_fence.jpg",
+      "bytes": 9345590,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "perimeter_fence",
+      "title": "Perimeter fence, south",
+      "position": {
+        "north_m": -306,
+        "east_m": -40,
+        "distance_m": 309,
+        "direction_from_stack": "south"
+      },
+      "estimated": [
+        "fence line and camera spot are estimated from NASA photographs",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_perimeter_fence.jpg",
+      "type": "poster",
+      "caption": "Perimeter fence, south: outside the south perimeter fence looking north to the stack; 309 m south of the stack, eye height 1.7 m above the ground.",
+      "bytes": 240728
+    },
+    {
+      "stop": "pad_apron",
+      "title": "Pad apron",
+      "position": {
+        "north_m": -45,
+        "east_m": -25,
+        "distance_m": 51,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_pad_apron.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Pad apron: on the concrete pad apron, south-west of the stack, looking up at it; 51 m south-west of the stack, eye height 1.7 m on the hardstand, about 17 m above sea level.",
+      "bytes": 928457
+    },
+    {
+      "stop": "pad_apron",
+      "title": "Pad apron",
+      "position": {
+        "north_m": -45,
+        "east_m": -25,
+        "distance_m": 51,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_pad_apron.mp4",
+      "type": "video",
+      "caption": "Pad apron: on the concrete pad apron, south-west of the stack, looking up at it; 51 m south-west of the stack, eye height 1.7 m on the hardstand, about 17 m above sea level (slow walk toward the stack, tilting up.)",
+      "poster": "clip_pad_apron.jpg",
+      "bytes": 2232044,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "pad_apron",
+      "title": "Pad apron",
+      "position": {
+        "north_m": -45,
+        "east_m": -25,
+        "distance_m": 51,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_pad_apron.jpg",
+      "type": "poster",
+      "caption": "Pad apron: on the concrete pad apron, south-west of the stack, looking up at it; 51 m south-west of the stack, eye height 1.7 m on the hardstand, about 17 m above sea level.",
+      "bytes": 126752
+    },
+    {
+      "stop": "launch_platform_deck",
+      "title": "Launch platform deck",
+      "position": {
+        "north_m": -15,
+        "east_m": -14,
+        "distance_m": 21,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "MLP deck height and layout are estimated",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_launch_platform_deck.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Launch platform deck: on the Mobile Launcher Platform deck beside the boosters; 21 m south-west of the stack, eye height 1.7 m on the Mobile Launcher Platform deck, about 15 m above the pad.",
+      "bytes": 756091
+    },
+    {
+      "stop": "launch_platform_deck",
+      "title": "Launch platform deck",
+      "position": {
+        "north_m": -15,
+        "east_m": -14,
+        "distance_m": 21,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "MLP deck height and layout are estimated",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_launch_platform_deck.mp4",
+      "type": "video",
+      "caption": "Launch platform deck: on the Mobile Launcher Platform deck beside the boosters; 21 m south-west of the stack, eye height 1.7 m on the Mobile Launcher Platform deck, about 15 m above the pad (filmed from the south end of the deck, 22 m south of the stack: slow pan between the tail service masts.)",
+      "poster": "clip_launch_platform_deck.jpg",
+      "bytes": 2587112,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 13.0
+      }
+    },
+    {
+      "stop": "launch_platform_deck",
+      "title": "Launch platform deck",
+      "position": {
+        "north_m": -15,
+        "east_m": -14,
+        "distance_m": 21,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "MLP deck height and layout are estimated",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_launch_platform_deck.jpg",
+      "type": "poster",
+      "caption": "Launch platform deck: on the Mobile Launcher Platform deck beside the boosters; 21 m south-west of the stack, eye height 1.7 m on the Mobile Launcher Platform deck, about 15 m above the pad.",
+      "bytes": 170111
+    },
+    {
+      "stop": "access_arm_white_room",
+      "title": "Crew access arm and white room (147 ft)",
+      "position": {
+        "north_m": -7,
+        "east_m": -8.5,
+        "distance_m": 11,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "arm route and white room size are estimated so the arm meets the orbiter model's hatch",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_access_arm_white_room.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Crew access arm and white room (147 ft): on the orbiter crew access arm, facing east into the white room and the orbiter's hatch; 11 m south-west of the stack, eye height 1.7 m on the arm, 147 ft (44.8 m) above the pad.",
+      "bytes": 680297
+    },
+    {
+      "stop": "access_arm_white_room",
+      "title": "Crew access arm and white room (147 ft)",
+      "position": {
+        "north_m": -7,
+        "east_m": -8.5,
+        "distance_m": 11,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "arm route and white room size are estimated so the arm meets the orbiter model's hatch",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_access_arm_white_room.mp4",
+      "type": "video",
+      "caption": "Crew access arm and white room (147 ft): on the orbiter crew access arm, facing east into the white room and the orbiter's hatch; 11 m south-west of the stack, eye height 1.7 m on the arm, 147 ft (44.8 m) above the pad (slow walk out along the arm to the white room.)",
+      "poster": "clip_access_arm_white_room.jpg",
+      "bytes": 2747305,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 13.0
+      }
+    },
+    {
+      "stop": "access_arm_white_room",
+      "title": "Crew access arm and white room (147 ft)",
+      "position": {
+        "north_m": -7,
+        "east_m": -8.5,
+        "distance_m": 11,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "arm route and white room size are estimated so the arm meets the orbiter model's hatch",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_access_arm_white_room.jpg",
+      "type": "poster",
+      "caption": "Crew access arm and white room (147 ft): on the orbiter crew access arm, facing east into the white room and the orbiter's hatch; 11 m south-west of the stack, eye height 1.7 m on the arm, 147 ft (44.8 m) above the pad.",
+      "bytes": 116572
+    },
+    {
+      "stop": "east_of_stack",
+      "title": "East of the stack",
+      "position": {
+        "north_m": 0,
+        "east_m": 90,
+        "distance_m": 90,
+        "direction_from_stack": "east"
+      },
+      "estimated": [
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_east_of_stack.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "East of the stack: below the pad on the east side, looking west at the stack; 90 m east of the stack, eye height 1.7 m on the ground below the east slope of the hardstand.",
+      "bytes": 1084735
+    },
+    {
+      "stop": "east_of_stack",
+      "title": "East of the stack",
+      "position": {
+        "north_m": 0,
+        "east_m": 90,
+        "distance_m": 90,
+        "direction_from_stack": "east"
+      },
+      "estimated": [
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_east_of_stack.mp4",
+      "type": "video",
+      "caption": "East of the stack: below the pad on the east side, looking west at the stack; 90 m east of the stack, eye height 1.7 m on the ground below the east slope of the hardstand (slow dolly south along the east side.)",
+      "poster": "clip_east_of_stack.jpg",
+      "bytes": 2328886,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "east_of_stack",
+      "title": "East of the stack",
+      "position": {
+        "north_m": 0,
+        "east_m": 90,
+        "distance_m": 90,
+        "direction_from_stack": "east"
+      },
+      "estimated": [
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_east_of_stack.jpg",
+      "type": "poster",
+      "caption": "East of the stack: below the pad on the east side, looking west at the stack; 90 m east of the stack, eye height 1.7 m on the ground below the east slope of the hardstand.",
+      "bytes": 152502
+    },
+    {
+      "stop": "right_booster_aft_joint",
+      "title": "Right booster aft field joint",
+      "position": {
+        "north_m": -2,
+        "east_m": 15,
+        "distance_m": 15,
+        "direction_from_stack": "east"
+      },
+      "estimated": [
+        "joint height on the booster (10.8 m above the deck) is estimated",
+        "the ring marker shows an approximate position",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_right_booster_aft_joint.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Right booster aft field joint: on the MLP deck east of the stack, looking up at the right booster's aft field joint (bright ring = approximate joint position, a guide marker, not a physical object); 15 m east of the stack, eye height 1.7 m on the MLP deck, about 15 m above the pad.",
+      "bytes": 662769
+    },
+    {
+      "stop": "right_booster_aft_joint",
+      "title": "Right booster aft field joint",
+      "position": {
+        "north_m": -2,
+        "east_m": 15,
+        "distance_m": 15,
+        "direction_from_stack": "east"
+      },
+      "estimated": [
+        "joint height on the booster (10.8 m above the deck) is estimated",
+        "the ring marker shows an approximate position",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_right_booster_aft_joint.mp4",
+      "type": "video",
+      "caption": "Right booster aft field joint: on the MLP deck east of the stack, looking up at the right booster's aft field joint (bright ring = approximate joint position, a guide marker, not a physical object); 15 m east of the stack, eye height 1.7 m on the MLP deck, about 15 m above the pad (slow tilt up the booster to the joint.)",
+      "poster": "clip_right_booster_aft_joint.jpg",
+      "bytes": 1481840,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "right_booster_aft_joint",
+      "title": "Right booster aft field joint",
+      "position": {
+        "north_m": -2,
+        "east_m": 15,
+        "distance_m": 15,
+        "direction_from_stack": "east"
+      },
+      "estimated": [
+        "joint height on the booster (10.8 m above the deck) is estimated",
+        "the ring marker shows an approximate position",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_right_booster_aft_joint.jpg",
+      "type": "poster",
+      "caption": "Right booster aft field joint: on the MLP deck east of the stack, looking up at the right booster's aft field joint (bright ring = approximate joint position, a guide marker, not a physical object); 15 m east of the stack, eye height 1.7 m on the MLP deck, about 15 m above the pad.",
+      "bytes": 73942
+    },
+    {
+      "stop": "flame_trench_edge",
+      "title": "Flame trench edge",
+      "position": {
+        "north_m": 52,
+        "east_m": 13,
+        "distance_m": 54,
+        "direction_from_stack": "north"
+      },
+      "estimated": [
+        "trench shape is from 2018 lidar of the pad, not a 1986 survey",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_flame_trench_edge.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Flame trench edge: on the hardstand at the east rim of the north-south flame trench, north of the launch platform, looking south at the stack; 54 m north of the stack, eye height 1.7 m on the hardstand at the trench's east rim.",
+      "bytes": 983734
+    },
+    {
+      "stop": "flame_trench_edge",
+      "title": "Flame trench edge",
+      "position": {
+        "north_m": 52,
+        "east_m": 13,
+        "distance_m": 54,
+        "direction_from_stack": "north"
+      },
+      "estimated": [
+        "trench shape is from 2018 lidar of the pad, not a 1986 survey",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_flame_trench_edge.mp4",
+      "type": "video",
+      "caption": "Flame trench edge: on the hardstand at the east rim of the north-south flame trench, north of the launch platform, looking south at the stack; 54 m north of the stack, eye height 1.7 m on the hardstand at the trench's east rim (slow walk south along the trench rim.)",
+      "poster": "clip_flame_trench_edge.jpg",
+      "bytes": 1611287,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "flame_trench_edge",
+      "title": "Flame trench edge",
+      "position": {
+        "north_m": 52,
+        "east_m": 13,
+        "distance_m": 54,
+        "direction_from_stack": "north"
+      },
+      "estimated": [
+        "trench shape is from 2018 lidar of the pad, not a 1986 survey",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_flame_trench_edge.jpg",
+      "type": "poster",
+      "caption": "Flame trench edge: on the hardstand at the east rim of the north-south flame trench, north of the launch platform, looking south at the stack; 54 m north of the stack, eye height 1.7 m on the hardstand at the trench's east rim.",
+      "bytes": 102731
+    },
+    {
+      "stop": "crawlerway_south",
+      "title": "Crawlerway approach, south",
+      "position": {
+        "north_m": -240,
+        "east_m": -3,
+        "distance_m": 240,
+        "direction_from_stack": "south"
+      },
+      "estimated": [
+        "crawlerway surface is from 2018 lidar, not a 1986 survey",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_crawlerway_south.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Crawlerway approach, south: on the crawlerway incline south of the pad, looking north up the slope to the stack; 240 m south of the stack, eye height 1.7 m on the crawlerway incline.",
+      "bytes": 1006297
+    },
+    {
+      "stop": "crawlerway_south",
+      "title": "Crawlerway approach, south",
+      "position": {
+        "north_m": -240,
+        "east_m": -3,
+        "distance_m": 240,
+        "direction_from_stack": "south"
+      },
+      "estimated": [
+        "crawlerway surface is from 2018 lidar, not a 1986 survey",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_crawlerway_south.mp4",
+      "type": "video",
+      "caption": "Crawlerway approach, south: on the crawlerway incline south of the pad, looking north up the slope to the stack; 240 m south of the stack, eye height 1.7 m on the crawlerway incline (slow walk up the crawlerway.)",
+      "poster": "clip_crawlerway_south.jpg",
+      "bytes": 2768543,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "crawlerway_south",
+      "title": "Crawlerway approach, south",
+      "position": {
+        "north_m": -240,
+        "east_m": -3,
+        "distance_m": 240,
+        "direction_from_stack": "south"
+      },
+      "estimated": [
+        "crawlerway surface is from 2018 lidar, not a 1986 survey",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_crawlerway_south.jpg",
+      "type": "poster",
+      "caption": "Crawlerway approach, south: on the crawlerway incline south of the pad, looking north up the slope to the stack; 240 m south of the stack, eye height 1.7 m on the crawlerway incline.",
+      "bytes": 171403
+    },
+    {
+      "stop": "press_site_distance",
+      "title": "Press site distance",
+      "position": {
+        "north_m": -3818,
+        "east_m": 3818,
+        "distance_m": 5399,
+        "direction_from_stack": "south-east"
+      },
+      "estimated": [
+        "NOT the press site: the real press site is about 5.6 km south-west, which is lagoon and marsh in this terrain, so this is a similar distance (5.4 km) on the nearest broad dry ground, south-east of the pad",
+        "at this range the stack is only a few pixels wide in the 360 view; the clip uses a telephoto view",
+        "the bare raised mound left of the pad in the clip is most likely the Pad 39A hardstand from the 2018 lidar; no 39A structures are modelled",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_press_site_distance.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Press site distance: at press-site distance on the coastal strip, looking north-west along the coast to the pad; 5.4 km south-east of the stack, eye height 1.7 m above the ground on the barrier island.",
+      "bytes": 996385
+    },
+    {
+      "stop": "press_site_distance",
+      "title": "Press site distance",
+      "position": {
+        "north_m": -3818,
+        "east_m": 3818,
+        "distance_m": 5399,
+        "direction_from_stack": "south-east"
+      },
+      "estimated": [
+        "NOT the press site: the real press site is about 5.6 km south-west, which is lagoon and marsh in this terrain, so this is a similar distance (5.4 km) on the nearest broad dry ground, south-east of the pad",
+        "at this range the stack is only a few pixels wide in the 360 view; the clip uses a telephoto view",
+        "the bare raised mound left of the pad in the clip is most likely the Pad 39A hardstand from the 2018 lidar; no 39A structures are modelled",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_press_site_distance.mp4",
+      "type": "video",
+      "caption": "Press site distance: at press-site distance on the coastal strip, looking north-west along the coast to the pad; 5.4 km south-east of the stack, eye height 1.7 m above the ground on the barrier island (slow telephoto pan across the pad.)",
+      "poster": "clip_press_site_distance.jpg",
+      "bytes": 1189463,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 12.0
+      }
+    },
+    {
+      "stop": "press_site_distance",
+      "title": "Press site distance",
+      "position": {
+        "north_m": -3818,
+        "east_m": 3818,
+        "distance_m": 5399,
+        "direction_from_stack": "south-east"
+      },
+      "estimated": [
+        "NOT the press site: the real press site is about 5.6 km south-west, which is lagoon and marsh in this terrain, so this is a similar distance (5.4 km) on the nearest broad dry ground, south-east of the pad",
+        "at this range the stack is only a few pixels wide in the 360 view; the clip uses a telephoto view",
+        "the bare raised mound left of the pad in the clip is most likely the Pad 39A hardstand from the 2018 lidar; no 39A structures are modelled",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_press_site_distance.jpg",
+      "type": "poster",
+      "caption": "Press site distance: at press-site distance on the coastal strip, looking north-west along the coast to the pad; 5.4 km south-east of the stack, eye height 1.7 m above the ground on the barrier island.",
+      "bytes": 145354
+    },
+    {
+      "stop": "aerial_120m",
+      "title": "Aerial, 120 m",
+      "position": {
+        "north_m": -40,
+        "east_m": -30,
+        "distance_m": 50,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "camera position is a chosen viewpoint",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "pano2_aerial_120m.jpg",
+      "type": "panorama",
+      "format": "equirectangular 4096x2048 JPEG",
+      "caption": "Aerial, 120 m: high above the pad's south-west corner, looking down on the stack, towers and trench; 50 m south-west of the stack, 120 m above the pad's hardstand (about 135 m above sea level).",
+      "bytes": 727004
+    },
+    {
+      "stop": "aerial_120m",
+      "title": "Aerial, 120 m",
+      "position": {
+        "north_m": -40,
+        "east_m": -30,
+        "distance_m": 50,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "camera position is a chosen viewpoint",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_aerial_120m.mp4",
+      "type": "video",
+      "caption": "Aerial, 120 m: high above the pad's south-west corner, looking down on the stack, towers and trench; 50 m south-west of the stack, 120 m above the pad's hardstand (about 135 m above sea level) (slow orbit, 110 m from the stack, from south-west to west-south-west.)",
+      "poster": "clip_aerial_120m.jpg",
+      "bytes": 5482198,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 14.0
+      }
+    },
+    {
+      "stop": "aerial_120m",
+      "title": "Aerial, 120 m",
+      "position": {
+        "north_m": -40,
+        "east_m": -30,
+        "distance_m": 50,
+        "direction_from_stack": "south-west"
+      },
+      "estimated": [
+        "camera position is a chosen viewpoint",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "clip_aerial_120m.jpg",
+      "type": "poster",
+      "caption": "Aerial, 120 m: high above the pad's south-west corner, looking down on the stack, towers and trench; 50 m south-west of the stack, 120 m above the pad's hardstand (about 135 m above sea level).",
+      "bytes": 327744
+    },
+    {
+      "stop": "walkthrough",
+      "title": "Walkthrough: fence to white room",
+      "caption": "On foot from the south gate in the perimeter fence (about 310 m south of the stack, eye height 1.7 m) up the crawlerway and across the pad apron to the foot of the Fixed Service Structure, then at the 147 ft level out along the crew access arm to the white room beside the orbiter hatch.",
+      "estimated": [
+        "the lift ride up the tower is not shown: a slow dissolve takes the camera from the foot of the tower to the arm",
+        "slow dissolves also shorten the walk (fence gate to crawlerway top, crawlerway top to the apron)",
+        "on the arm the camera keeps to its south side, where the estimated cross braces are at knee height",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "walkthrough.mp4",
+      "type": "video",
+      "poster": "walkthrough.jpg",
+      "bytes": 17008172,
+      "video": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "duration_s": 70.43
+      }
+    },
+    {
+      "stop": "walkthrough",
+      "title": "Walkthrough: fence to white room",
+      "caption": "On foot from the south gate in the perimeter fence (about 310 m south of the stack, eye height 1.7 m) up the crawlerway and across the pad apron to the foot of the Fixed Service Structure, then at the 147 ft level out along the crew access arm to the white room beside the orbiter hatch.",
+      "estimated": [
+        "the lift ride up the tower is not shown: a slow dissolve takes the camera from the foot of the tower to the arm",
+        "slow dissolves also shorten the walk (fence gate to crawlerway top, crawlerway top to the apron)",
+        "on the arm the camera keeps to its south side, where the estimated cross braces are at knee height",
+        "structure positions and sizes are proportioned from NASA photographs (estimates)"
+      ],
+      "file": "walkthrough.jpg",
+      "type": "poster",
+      "bytes": 173353
+    }
+  ]
+}
