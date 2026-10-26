@@ -33,6 +33,20 @@ Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Conso
 - Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
   same computer.
 
+## Immersive Journalism (added 26 Oct 2026)
+- `/immersive` (hub) and `/immersive/<slug>` (case page) read from `src/lib/immersive.ts`.
+  First case: `/immersive/challenger-1986`. The Dallas 1963 case is **not** published; the owner
+  wants to review it first.
+- The 3D web experience is a separate Vite build copied into `public/experiences/challenger-1986/`
+  (hash routes: `#/case/challenger-1986`, `#/play/challenger-1986`). Source is in the project files
+  (`ai-broadsheet-challenger/ai-broadsheet-source.zip`), built with three changes: Dallas removed from
+  `src/cases/registry.ts`, Challenger numbered `01`, and an "AI Broadsheet" link back to `/immersive`
+  in the series nav.
+- Films, stills and 360° views live on branch `immersive-media` and load through jsDelivr pinned to
+  its commit (`MEDIA_SHA` in `src/lib/immersive.ts`). To add media, commit there and bump the SHA.
+- The Windows (Unreal) edition is on the owner's PC (`D:\Unreal Projects\AIB_Challenger1986\Build\Windows`,
+  about 1.14 GB) and is not offered for download yet.
+
 ## Which session does what
 | Work | Where |
 |---|---|

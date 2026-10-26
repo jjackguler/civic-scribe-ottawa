@@ -146,7 +146,7 @@ function guidesFor(locale: Locale) {
   return GUIDES.map(g => ({ slug: g.slug, title: g.title[locale], dek: g.dek[locale] }));
 }
 
-const SITE_MAP = `Site sections: Latest (/news, live AI news from named sources), Explainers (/originals, our own explainer films), The Sir Jack Files (/sir-jack, our film-noir AI detective series), After the Headline (/podcast, our podcast), Labs (/labs, hands-on AI experiments, being built), Made with AI (/showcase), Learn AI (/learn, plain-language guides), Tools worth trying (/tools), Funding in Canada (/funding), Standards (/standards, how we work and use AI), Corrections (/corrections).`;
+const SITE_MAP = `Site sections: Latest (/news, live AI news from named sources), Explainers (/originals, our own explainer films), The Sir Jack Files (/sir-jack, our film-noir AI detective series), Immersive Journalism (/immersive, historic cases you can walk through in 3D; first case: Challenger 1986), After the Headline (/podcast, our podcast), Labs (/labs, hands-on AI experiments, being built), Made with AI (/showcase), Learn AI (/learn, plain-language guides), Tools worth trying (/tools), Funding in Canada (/funding), Standards (/standards, how we work and use AI), Corrections (/corrections).`;
 
 function systemPrompt(locale: Locale, today: string) {
   const lang = locale === "fr" ? "Canadian French (fr-CA)" : "English";

@@ -19,6 +19,7 @@ const MAIN: Item[] = [
   { label: { en: "Explained", fr: "Expliqué" }, to: "/dispatch" },
   { label: { en: "Videos", fr: "Vidéos" }, to: "/originals" },
   { label: { en: "Sir Jack", fr: "Sir Jack" }, to: "/sir-jack" },
+  { label: { en: "Immersive", fr: "Immersif" }, to: "/immersive" },
   { label: { en: "Learn AI", fr: "Apprendre l'IA" }, to: "/labs" },
   { label: { en: "Glossary", fr: "Glossaire" }, to: "/glossary" },
   { label: { en: "Watch & listen", fr: "Voir et écouter" }, to: "/watch" },

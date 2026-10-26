@@ -56,6 +56,8 @@ import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as GlossaryIndexRouteImport } from './routes/glossary.index'
 import { Route as GlossaryTermRouteImport } from './routes/glossary.$term'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
+import { Route as ImmersiveIndexRouteImport } from './routes/immersive.index'
+import { Route as ImmersiveSlugRouteImport } from './routes/immersive.$slug'
 import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
@@ -308,6 +310,16 @@ const GuidesSlugRoute = GuidesSlugRouteImport.update({
   path: '/guides/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImmersiveIndexRoute = ImmersiveIndexRouteImport.update({
+  id: '/immersive/',
+  path: '/immersive/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImmersiveSlugRoute = ImmersiveSlugRouteImport.update({
+  id: '/immersive/$slug',
+  path: '/immersive/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LabsIndexRoute = LabsIndexRouteImport.update({
   id: '/labs/',
   path: '/labs/',
@@ -434,6 +446,7 @@ export interface FileRoutesByFullPath {
   '/editor/tools': typeof EditorToolsRoute
   '/glossary/$term': typeof GlossaryTermRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -442,6 +455,7 @@ export interface FileRoutesByFullPath {
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
+  '/immersive/': typeof ImmersiveIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
@@ -499,6 +513,7 @@ export interface FileRoutesByTo {
   '/editor/tools': typeof EditorToolsRoute
   '/glossary/$term': typeof GlossaryTermRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -507,6 +522,7 @@ export interface FileRoutesByTo {
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/glossary': typeof GlossaryIndexRoute
+  '/immersive': typeof ImmersiveIndexRoute
   '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
@@ -565,6 +581,7 @@ export interface FileRoutesById {
   '/editor/tools': typeof EditorToolsRoute
   '/glossary/$term': typeof GlossaryTermRoute
   '/guides/$slug': typeof GuidesSlugRoute
+  '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -573,6 +590,7 @@ export interface FileRoutesById {
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
+  '/immersive/': typeof ImmersiveIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
@@ -632,6 +650,7 @@ export interface FileRouteTypes {
     | '/editor/tools'
     | '/glossary/$term'
     | '/guides/$slug'
+    | '/immersive/$slug'
     | '/labs/$path'
     | '/learn/$slug'
     | '/og/quiz.png'
@@ -640,6 +659,7 @@ export interface FileRouteTypes {
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
+    | '/immersive/'
     | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
@@ -697,6 +717,7 @@ export interface FileRouteTypes {
     | '/editor/tools'
     | '/glossary/$term'
     | '/guides/$slug'
+    | '/immersive/$slug'
     | '/labs/$path'
     | '/learn/$slug'
     | '/og/quiz.png'
@@ -705,6 +726,7 @@ export interface FileRouteTypes {
     | '/dispatch'
     | '/editor'
     | '/glossary'
+    | '/immersive'
     | '/labs'
     | '/learn'
     | '/api/dispatch-audio/$id'
@@ -762,6 +784,7 @@ export interface FileRouteTypes {
     | '/editor/tools'
     | '/glossary/$term'
     | '/guides/$slug'
+    | '/immersive/$slug'
     | '/labs/$path'
     | '/learn/$slug'
     | '/og/quiz.png'
@@ -770,6 +793,7 @@ export interface FileRouteTypes {
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
+    | '/immersive/'
     | '/labs/'
     | '/learn/'
     | '/api/dispatch-audio/$id'
@@ -828,6 +852,7 @@ export interface RootRouteChildren {
   EditorToolsRoute: typeof EditorToolsRoute
   GlossaryTermRoute: typeof GlossaryTermRoute
   GuidesSlugRoute: typeof GuidesSlugRoute
+  ImmersiveSlugRoute: typeof ImmersiveSlugRoute
   LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
@@ -836,6 +861,7 @@ export interface RootRouteChildren {
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   GlossaryIndexRoute: typeof GlossaryIndexRoute
+  ImmersiveIndexRoute: typeof ImmersiveIndexRoute
   LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
@@ -1180,6 +1206,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/immersive/': {
+      id: '/immersive/'
+      path: '/immersive'
+      fullPath: '/immersive/'
+      preLoaderRoute: typeof ImmersiveIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/immersive/$slug': {
+      id: '/immersive/$slug'
+      path: '/immersive/$slug'
+      fullPath: '/immersive/$slug'
+      preLoaderRoute: typeof ImmersiveSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/labs/': {
       id: '/labs/'
       path: '/labs'
@@ -1340,6 +1380,7 @@ const rootRouteChildren: RootRouteChildren = {
   EditorToolsRoute: EditorToolsRoute,
   GlossaryTermRoute: GlossaryTermRoute,
   GuidesSlugRoute: GuidesSlugRoute,
+  ImmersiveSlugRoute: ImmersiveSlugRoute,
   LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
   OgQuizDotpngRoute: OgQuizDotpngRoute,
@@ -1348,6 +1389,7 @@ const rootRouteChildren: RootRouteChildren = {
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   GlossaryIndexRoute: GlossaryIndexRoute,
+  ImmersiveIndexRoute: ImmersiveIndexRoute,
   LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
