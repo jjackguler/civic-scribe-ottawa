@@ -48,6 +48,7 @@ export function SiteFooter() {
             <li><Link to="/watch" className={link}>{fr ? "Vidéos" : "Watch"}</Link></li>
             <li><Link to="/originals" className={link}>{fr ? "Explicatifs" : "Explainers"}</Link></li>
             <li><Link to="/showcase" className={link}>{fr ? "Fait avec l'IA" : "Made with AI"}</Link></li>
+            <li><Link to="/immersive" className={link}>{fr ? "Journalisme immersif" : "Immersive Journalism"}</Link></li>
             <li><Link to="/interviews" className={link}>{fr ? "Entrevues" : "Interviews"}</Link></li>
             <li><Link to="/listen" className={link}>{fr ? "Balados" : "Podcasts"}</Link></li>
             <li><Link to="/ministry" className={link}>{t("trackerTitle", locale)}</Link></li>
