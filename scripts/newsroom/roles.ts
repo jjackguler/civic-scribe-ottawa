@@ -16,7 +16,7 @@ import {
   type ArticleFormat, type Cover, type CoverText, type Faq, type RoleName, type RoleNote,
 } from "../../src/lib/newsroom-types";
 import type { Models } from "./models";
-import { alignFrench, shapeDraft, toRaw, type Draft, type RawDraft } from "./shape";
+import { alignFrench, mergeRewrite, shapeDraft, toRaw, type Draft, type RawDraft } from "./shape";
 import { draftFields, factGuard, overlapProblems, styleProblems } from "./guard";
 import type { LinkOption, Passage } from "./library";
 
@@ -49,8 +49,21 @@ const now = () => new Date().toISOString();
 const note = (role: RoleName, model: string, verdict: RoleNote["verdict"], notes: string[]): RoleNote => ({ role, model, at: now(), verdict, notes: notes.slice(0, 20) });
 
 /** Everything the fact guard accepts for this event: the reporting plus our own background text. */
+/**
+ * Each source's publication date, as the reporter sees it ("published") and as it would write it:
+ * "2026-10-26", "Monday, October 26, 2026", "lundi 26 octobre 2026". The date is in the material we
+ * hand the model, so writing it is not an invented fact. Toronto time, like the rest of the site.
+ */
+export function publishedWords(iso: string | undefined): string {
+  const d = iso ? new Date(iso) : null;
+  if (!d || Number.isNaN(d.getTime())) return "";
+  const o = { weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "America/Toronto" } as const;
+  const day = d.toLocaleDateString("en-CA", { timeZone: "America/Toronto" });
+  return `(${day}; ${d.toLocaleDateString("en-US", o)}; ${d.toLocaleDateString("fr-CA", o)})`;
+}
+
 export function sourceText(e: Event, lang: "en" | "fr" | "both" = "both"): string {
-  const reporting = e.sources.map((s, i) => `${s.outlet}: ${s.title}. ${e.excerpts[i] ?? ""}`).join("\n");
+  const reporting = e.sources.map((s, i) => `${s.outlet}: ${s.title}. ${e.excerpts[i] ?? ""} ${publishedWords(s.publishedAt)}`).join("\n");
   const bg = e.background.map(b => [lang !== "fr" ? b.text.en : "", lang !== "en" ? b.text.fr : "", b.title.en, b.title.fr].join(" ")).join("\n");
   return `${reporting}\n${bg}`;
 }
@@ -145,7 +158,7 @@ export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome
   if (!first.facts.length && !first.style.length) return { ok: true, value: d, note: note("copy", "mechanical", "pass", ["fact guard: every name and number found in the sources", "house style: clean"]) };
   const problems = describe(first);
   const raw = await m.json<RawDraft>("copy", "writer", COPY, JSON.stringify({ problems, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
-  const fixed = shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
+  const fixed = shapeDraft(mergeRewrite(raw, toRaw(d)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
   if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
   const again = copyProblems(fixed, e, "en");
   if (again.facts.length || again.style.length) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...describe(again)]) };

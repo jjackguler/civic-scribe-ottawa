@@ -75,6 +75,31 @@ export function unwrapDraft(r: RawDraft | null | undefined): RawDraft | null | u
   const inner = Object.values(r).find(v => v && typeof v === "object" && !Array.isArray(v) && "headline" in (v as object));
   return inner ? { ...(inner as RawDraft) } : r;
 }
+/**
+ * The copy editor's rewrite, onto the draft it was given. Small models often return the
+ * article's sections at the top level ("news": [paragraphs], "known", "matters", "background")
+ * and leave out fields they didn't touch ("thirty"). Put the sections back under "article" and
+ * keep the draft's own value for anything left out. The fact guard and house style run again on
+ * the result, so nothing kept from the draft escapes a check.
+ */
+export function mergeRewrite(raw: RawDraft | null | undefined, before: RawDraft): RawDraft | null | undefined {
+  const r = unwrapDraft(raw);
+  if (!r || typeof r !== "object" || Array.isArray(r) || r.skip) return r;
+  const out: Record<string, unknown> = { ...r };
+  if (!out.article || typeof out.article !== "object") {
+    const article: Partial<Record<SectionKind, unknown[]>> = {};
+    for (const kind of KINDS) {
+      if (Array.isArray(out[kind])) { article[kind] = out[kind] as unknown[]; delete out[kind]; }
+    }
+    if (Object.keys(article).length) out.article = article;
+  }
+  for (const [k, v] of Object.entries(before)) {
+    const got = out[k];
+    if (got === undefined || got === null || got === "" || (Array.isArray(got) && !got.length)) out[k] = v;
+  }
+  return out as RawDraft;
+}
+
 const lines = (v: unknown): unknown[] => (typeof v === "string" ? v.split(/\n+|(?:^|\s)[•\-–]\s+|(?<=[.!?])\s+(?=\p{Lu})/u).map(x => x.trim()).filter(Boolean) : arr<unknown>(v));
 
 export function shapeDraft(raw: RawDraft | null | undefined, sources: DispatchSource[], backgroundKeys: string[], sourceText = ""): Draft | string {
