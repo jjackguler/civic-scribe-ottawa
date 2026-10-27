@@ -1,5 +1,51 @@
 [
   {
+    "id": "qxgtc9",
+    "at": "2026-10-27T22:57:33.042Z",
+    "stage": "copy",
+    "headline": "Anthropic’s IPO Prospectus Reveals What’s Under the Hood",
+    "reasons": [
+      "Not in the sources (names or numbers): Investors, Users, 50.",
+      "Too close to TechCrunch's wording (\"use both the claude platform and a first party…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Users."
+    ]
+  },
+  {
+    "id": "nvgal3",
+    "at": "2026-10-27T22:57:22.053Z",
+    "stage": "copy",
+    "headline": "Anthropic opens its books for Wall Street, showing record revenue and mounting obligations",
+    "reasons": [
+      "Not in the sources (names or numbers): Securities, Exchange, Commission, Alongside, Investors.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Reporting."
+    ]
+  },
+  {
+    "id": "1eyfwon",
+    "at": "2026-10-27T22:56:21.833Z",
+    "stage": "reporter",
+    "headline": "The RealReal won’t let AI agents hog designer clothing",
+    "reasons": [
+      "skip: The provided sources cover two entirely distinct topics, and each contains only a single brief or truncated sentence, providing insufficient factual detail to support a 120-word news article without s"
+    ]
+  },
+  {
+    "id": "d87kg6",
+    "at": "2026-10-27T22:52:39.118Z",
+    "stage": "copy",
+    "headline": "Google’s next Genie AI model generates more realistic experiences",
+    "reasons": [
+      "Not in the sources (names or numbers): Access, Regular, Inside, 120, Architecturally.",
+      "Remove the hype word \"unprecedented\".",
+      "Too close to TechCrunch's wording (\"can maintain a consistent scene for up to two…\"): say it in our own words, or quote and attribute it.",
+      "Too close to The Decoder's wording (\"google deepmind has introduced genie 4 a real time…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Ars Technica's wording (\"genie 4 will roll out to developers and google…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1izs3ym",
     "at": "2026-10-27T07:20:13.567Z",
     "stage": "copy",
