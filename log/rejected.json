@@ -1,5 +1,47 @@
 [
   {
+    "id": "1izs3ym",
+    "at": "2026-10-27T07:20:13.567Z",
+    "stage": "copy",
+    "headline": "Meta Confirms Lower Quest Sales, Says New VR Headsets Must Deliver “major breakthroughs”",
+    "reasons": [
+      "Not in the sources (names or numbers): Future, Consumers, Users, Financial.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Hardware, Disclosures."
+    ]
+  },
+  {
+    "id": "1j073am",
+    "at": "2026-10-27T07:19:02.489Z",
+    "stage": "copy",
+    "headline": "Toyota is betting $6.4 billion a year on humanoid robots and factory automation",
+    "reasons": [
+      "Not in the sources (names or numbers): Italian, Ordinary, AI-driven.",
+      "rewrite: no news section"
+    ]
+  },
+  {
+    "id": "1cavhyy",
+    "at": "2026-10-27T07:18:37.214Z",
+    "stage": "copy",
+    "headline": "Intelligence artificielle | Anthropic rend public son dossier d’entrée en Bourse",
+    "reasons": [
+      "Not in the sources (names or numbers): IPO, Investors, Alongside, Furthermore.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Investors."
+    ]
+  },
+  {
+    "id": "1qxnui8",
+    "at": "2026-10-27T07:18:06.416Z",
+    "stage": "translator",
+    "headline": "Anthropic officially files for its public debut",
+    "reasons": [
+      "attempt 1: points don't line up with the English",
+      "attempt 2: no points"
+    ]
+  },
+  {
     "id": "bp8gry",
     "at": "2026-10-26T23:18:32.473Z",
     "stage": "copy",
