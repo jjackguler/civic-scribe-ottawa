@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Box, Clock, FileSearch, Footprints } from "lucide-react";
+import { ArrowRight, Compass, Film, Footprints, Ruler } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
@@ -26,24 +26,24 @@ export const Route = createFileRoute("/immersive/")({
 
 const PILLARS = [
   {
+    icon: Compass,
+    title: "Stand where people stood",
+    body: "360° views from real vantage points, with the light as it fell that day.",
+  },
+  {
     icon: Footprints,
-    title: "Walk the place",
-    body: "Reconstructed sites you can move through, with every size marked as sourced or estimated.",
+    title: "Walk the site",
+    body: "Short films and a walkthrough, rendered in Unreal Engine from the place's own plans, models and survey data.",
   },
   {
-    icon: Box,
-    title: "Take the mechanism apart",
-    body: "Explanatory models that show how something worked, labelled as models, not footage.",
+    icon: Ruler,
+    title: "See what is estimated",
+    body: "Every stop says where the camera stands, how far and how high, and which sizes and positions are estimates.",
   },
   {
-    icon: FileSearch,
-    title: "Check the record",
-    body: "Each claim links to the document behind it, with who could see it and when.",
-  },
-  {
-    icon: Clock,
-    title: "Turn the clock",
-    body: "Switch between what was public that day, what was known inside, and what came out later.",
+    icon: Film,
+    title: "Know what is real footage",
+    body: "Reconstructions are labelled as reconstructions and never passed off as archival film.",
   },
 ];
 
@@ -65,8 +65,8 @@ function ImmersiveHub() {
           <div className="h-[3px] w-24 bg-[#D9412B] mt-5" aria-hidden="true" />
           <p className="font-serif text-[1.2rem] sm:text-[1.35rem] leading-relaxed text-white/85 mt-5 max-w-[52ch]">
             Explore the scene. Examine the evidence. Our immersive cases rebuild a place and a
-            moment in 3D, then hand you the documents, so you can see what was known, by whom, and
-            when.
+            moment in Unreal Engine, so you can stand where people stood and see it in the light of
+            that day.
           </p>
           {fr && <p className="text-white/60 text-[0.9rem] mt-3">Contenu en anglais.</p>}
           <p className="text-white/55 text-[0.9rem] mt-5 italic">A new face of journalism.</p>

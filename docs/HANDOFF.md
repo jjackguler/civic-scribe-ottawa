@@ -37,11 +37,11 @@ Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Conso
 - `/immersive` (hub) and `/immersive/<slug>` (case page) read from `src/lib/immersive.ts`.
   First case: `/immersive/challenger-1986`. The Dallas 1963 case is **not** published; the owner
   wants to review it first.
-- The 3D web experience is a separate Vite build copied into `public/experiences/challenger-1986/`
-  (hash routes: `#/case/challenger-1986`, `#/play/challenger-1986`). Source is in the project files
-  (`ai-broadsheet-challenger/ai-broadsheet-source.zip`), built with three changes: Dallas removed from
-  `src/cases/registry.ts`, Challenger numbered `01`, and an "AI Broadsheet" link back to `/immersive`
-  in the series nav.
+- The case page shows Unreal Engine output only: 10 stops (360° view and short film each), a
+  walkthrough, the launch film and the teaser. Stop media is under `immersive/challenger-1986/unreal/`
+  on `immersive-media`, with `manifest.json` (camera positions and what is estimated). The earlier
+  browser (Three.js) build was taken off the site on 26 Oct at the owner's request. Render scripts are
+  on the owner's PC: `Scripts\75_web_export.py`, `75_web_export.ps1`, `76_web_manifest.py`.
 - Films, stills and 360° views live on branch `immersive-media` and load through jsDelivr pinned to
   its commit (`MEDIA_SHA` in `src/lib/immersive.ts`). To add media, commit there and bump the SHA.
 - The Windows (Unreal) edition is on the owner's PC (`D:\Unreal Projects\AIB_Challenger1986\Build\Windows`,

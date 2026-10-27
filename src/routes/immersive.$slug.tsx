@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight, Footprints, Monitor, Play } from "lucide-react";
+import { ArrowLeft, Compass, Monitor, Play } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PanoViewer } from "@/components/PanoViewer";
 import { ShareBar } from "@/components/ShareBar";
@@ -8,6 +8,7 @@ import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, publisherRef } from "@/lib/seo";
 import { caseBySlug, type Film, type ImmersiveCase, type Still } from "@/lib/immersive";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/immersive/$slug")({
   loader: ({ params }) => {
@@ -40,7 +41,7 @@ export const Route = createFileRoute("/immersive/$slug")({
           publisher: publisherRef,
           about: c.question,
           isAccessibleForFree: true,
-          video: [c.launch, c.teaser].map((f) => ({
+          video: [c.walkthrough, c.launch, c.teaser].map((f) => ({
             "@type": "VideoObject",
             name: f.title,
             description: f.body,
@@ -99,16 +100,18 @@ function CasePage() {
         </aside>
       </section>
 
-      <Chapters c={c} />
+      <section id="walk" className="container-mw mt-16 scroll-mt-24">
+        <FilmBlock f={c.walkthrough} eyebrow="Walkthrough" />
+      </section>
+
+      <Stops c={c} />
 
       <section className="bg-night text-white mt-16">
         <div className="container-mw py-12 sm:py-16">
-          <FilmBlock f={c.launch} eyebrow="The film" dark />
+          <FilmBlock f={c.launch} eyebrow="The launch film" dark />
           <StillGrid items={c.launchStills} dark />
         </div>
       </section>
-
-      <Panos c={c} />
 
       <section className="container-mw mt-16">
         <SectionTitle
@@ -166,7 +169,7 @@ function CasePage() {
             ))}
           </ul>
           <p className="mt-4 text-[0.9rem] text-muted-ink">
-            Every claim inside the experience links to its record. Found an error?{" "}
+            Found an error?{" "}
             <Link to="/corrections" className="text-lake font-semibold hover:underline">
               Corrections
             </Link>{" "}
@@ -226,27 +229,18 @@ function Hero({ c, fr }: { c: ImmersiveCase; fr: boolean }) {
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href={c.appUrl}
+              href="#walk"
               className="inline-flex items-center gap-2 bg-signal text-signal-ink font-bold px-5 py-3 hover:brightness-95"
             >
-              Enter the case <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              <Play className="h-4 w-4" aria-hidden="true" /> Watch the walkthrough
             </a>
             <a
-              href={c.playUrl}
+              href="#stops"
               className="inline-flex items-center gap-2 border border-white/40 text-white font-bold px-5 py-3 hover:bg-white/10"
             >
-              <Footprints className="h-4 w-4" aria-hidden="true" /> Walk the pad
-            </a>
-            <a
-              href="#film"
-              className="inline-flex items-center gap-2 text-white/85 font-bold px-2 py-3 hover:text-white"
-            >
-              <Play className="h-4 w-4" aria-hidden="true" /> Watch the launch film
+              <Compass className="h-4 w-4" aria-hidden="true" /> Look around in 360°
             </a>
           </div>
-          <p className="text-white/50 text-[0.8rem] mt-3">
-            Best on a desktop browser with a graphics card. Reading mode is available inside.
-          </p>
         </div>
       </div>
     </section>
@@ -284,48 +278,6 @@ function SectionTitle({
         </p>
       )}
     </div>
-  );
-}
-
-function Chapters({ c }: { c: ImmersiveCase }) {
-  const base = c.appUrl.split("#")[0];
-  return (
-    <section className="container-mw mt-16">
-      <SectionTitle
-        eyebrow="Inside the case"
-        title="Four ways into the same morning"
-        dek="Move between chapters in any order. The time dial and knowledge view travel with you."
-      />
-      <div className="grid gap-6 sm:grid-cols-2">
-        {c.chapters.map((ch, i) => (
-          <a
-            key={ch.name}
-            href={`${base}${ch.hash}`}
-            className="group block bg-surface border border-line overflow-hidden hover:border-lake"
-          >
-            <div className="aspect-[16/10] overflow-hidden bg-black">
-              <img
-                src={ch.image}
-                alt={ch.alt}
-                loading="lazy"
-                className="h-full w-full object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.02]"
-              />
-            </div>
-            <div className="p-5">
-              <p className="text-[0.72rem] font-bold tracking-[0.14em] uppercase text-muted-ink">
-                Chapter {String.fromCharCode(66 + i)} · {ch.label}
-              </p>
-              <h3 className="masthead-serif text-[1.5rem] text-ink mt-1 group-hover:text-lake">
-                {ch.name}
-              </h3>
-              <p className="font-serif text-[1.02rem] leading-relaxed text-muted-ink mt-1">
-                {ch.body}
-              </p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -392,31 +344,115 @@ function StillGrid({ items, dark }: { items: Still[]; dark?: boolean }) {
   );
 }
 
-function Panos({ c }: { c: ImmersiveCase }) {
+function Stops({ c }: { c: ImmersiveCase }) {
   const [i, setI] = useState(0);
-  const p = c.panos[i];
+  const [mode, setMode] = useState<"360" | "film">("360");
+  const st = c.stops[i];
   return (
-    <section className="container-mw mt-16">
-      <SectionTitle
-        eyebrow="360° views"
-        title="Stand where people stood"
-        dek="Drag to look around, or use the arrow keys. The sun is where it was that morning. In the two launch views the clock is frozen at the stated second."
-      />
-      <div role="tablist" aria-label="Viewpoints" className="flex flex-wrap gap-2 mb-4">
-        {c.panos.map((x, j) => (
-          <button
-            key={x.label}
-            role="tab"
-            aria-selected={i === j}
-            onClick={() => setI(j)}
-            className={`px-3.5 py-1.5 rounded-full border text-[0.88rem] font-semibold transition-colors ${i === j ? "bg-night text-white border-night" : "border-line text-ink hover:border-lake"}`}
+    <section id="stops" className="bg-night text-white mt-16 scroll-mt-24">
+      <div className="container-mw py-12 sm:py-16">
+        <SectionTitle
+          eyebrow={`${c.stops.length} stops · 360° and film`}
+          title="Stand where people stood"
+          dek="Pick a stop, then drag the view to look around or switch to its short film. The sun is where it was at 11:38 that morning. Nothing here shows the launch."
+          dark
+        />
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] items-start">
+          <div className="min-w-0">
+            <div role="group" aria-label="View" className="inline-flex mb-3 border border-white/25">
+              {(["360", "film"] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  aria-pressed={mode === m}
+                  onClick={() => setMode(m)}
+                  className={cn(
+                    "px-4 py-1.5 text-[0.88rem] font-bold",
+                    mode === m ? "bg-signal text-signal-ink" : "text-white/80 hover:text-white",
+                  )}
+                >
+                  {m === "360" ? "360° view" : "Film"}
+                </button>
+              ))}
+            </div>
+            {mode === "360" ? (
+              <PanoViewer src={st.pano} label={st.name} />
+            ) : (
+              <video
+                key={st.clip}
+                controls
+                autoPlay
+                muted
+                playsInline
+                loop
+                poster={st.poster}
+                className="w-full aspect-[4/3] sm:aspect-video bg-black rounded-sm object-cover"
+              >
+                <source src={st.clip} type="video/mp4" />
+              </video>
+            )}
+            <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+              <div>
+                <p className="text-brass font-bold text-[0.78rem] tracking-[0.16em] uppercase">
+                  Stop {i + 1} · {st.where}
+                </p>
+                <h3 className="masthead-serif text-[1.6rem] leading-tight mt-1">{st.name}</h3>
+                <p className="font-serif text-[1.04rem] leading-relaxed text-white/80 mt-1.5">
+                  {st.caption}
+                </p>
+              </div>
+              <div className="text-[0.88rem] text-white/70">
+                <p className="font-bold text-[0.72rem] tracking-[0.14em] uppercase text-white/55">
+                  Estimated
+                </p>
+                <ul className="mt-1.5 grid gap-1.5">
+                  {[
+                    ...st.estimated,
+                    "Structure positions and sizes proportioned from NASA photographs",
+                  ].map((x) => (
+                    <li key={x} className="border-l-2 border-white/25 pl-2.5">
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <ol
+            aria-label="Stops"
+            className="order-first lg:order-none flex lg:grid gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 lg:max-h-[640px] lg:overflow-y-auto"
           >
-            {x.label}
-          </button>
-        ))}
+            {c.stops.map((x, j) => (
+              <li key={x.id} className="shrink-0 w-[11rem] lg:w-auto">
+                <button
+                  type="button"
+                  aria-current={i === j ? "true" : undefined}
+                  onClick={() => setI(j)}
+                  className={cn(
+                    "w-full text-left grid lg:grid-cols-[96px_minmax(0,1fr)] gap-2 lg:gap-3 p-1.5 border transition-colors",
+                    i === j ? "border-signal bg-white/10" : "border-white/10 hover:border-white/35",
+                  )}
+                >
+                  <img
+                    src={x.poster}
+                    alt=""
+                    loading="lazy"
+                    className="w-full aspect-video object-cover bg-black"
+                  />
+                  <span className="min-w-0 self-center">
+                    <span className="block text-[0.7rem] font-bold tracking-[0.12em] uppercase text-white/55">
+                      {j + 1} · {x.where}
+                    </span>
+                    <span className="block text-[0.92rem] font-semibold leading-snug">
+                      {x.name}
+                    </span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
-      <PanoViewer src={p.src} label={p.label} />
-      <p className="mt-2 text-[0.9rem] text-muted-ink">{p.caption}</p>
     </section>
   );
 }

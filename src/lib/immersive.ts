@@ -1,23 +1,24 @@
 // Immersive Journalism: case files readers can walk through.
-// Each case has a web experience under /public/experiences/<slug>/ (its own Vite build)
-// and media pinned on the `immersive-media` branch, served through jsDelivr.
+// Every case is rendered in Unreal Engine: 360° stops, short films and a walkthrough.
+// Media is pinned on the `immersive-media` branch and served through jsDelivr.
 
-const MEDIA_SHA = "2997286d56ab307f7461f4ddba8bf8240620ee19";
+// Bump MEDIA_SHA after adding files to that branch; earlier files stay valid at the newer commit.
+const MEDIA_SHA = "34500f0a55e85c79ae212fa32f7774530f13be95";
 const media = (slug: string) => (file: string) =>
   `https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@${MEDIA_SHA}/immersive/${slug}/${file}`;
 
 export type Still = { src: string; alt: string; title: string; caption: string };
-export type Pano = { src: string; label: string; caption: string };
-export type Film = { src: string; poster: string; title: string; specs: string[]; body: string };
-export type Chapter = {
+export type Stop = {
+  id: string;
   name: string;
-  label: string;
-  body: string;
-  image: string;
-  alt: string;
-  hash: string;
+  where: string;
+  caption: string;
+  estimated: string[];
+  pano: string;
+  clip: string;
+  poster: string;
 };
-
+export type Film = { src: string; poster: string; title: string; specs: string[]; body: string };
 export type ImmersiveCase = {
   slug: string;
   title: string;
@@ -28,15 +29,12 @@ export type ImmersiveCase = {
   hero: string;
   heroAlt: string;
   og: string;
-  /** The web experience, served from /public. */
-  appUrl: string;
-  playUrl: string;
   contentNote: string;
   status: string;
   launch: Film;
   launchStills: Still[];
-  panos: Pano[];
-  chapters: Chapter[];
+  walkthrough: Film;
+  stops: Stop[];
   terrain: Still[];
   teaser: Film;
   windows: { body: string; walk: string[]; time: string[] };
@@ -48,26 +46,47 @@ export type ImmersiveCase = {
 };
 
 const ch = media("challenger-1986");
-const APP = "/experiences/challenger-1986/index.html";
+const ue = (file: string) => ch(`unreal/${file}`);
+const stop = (
+  id: string,
+  name: string,
+  where: string,
+  caption: string,
+  estimated: string[],
+): Stop => ({
+  id,
+  name,
+  where,
+  caption,
+  estimated,
+  pano: ue(`pano2_${id}.jpg`),
+  clip: ue(`clip_${id}.mp4`),
+  poster: ue(`clip_${id}.jpg`),
+});
 
 export const CHALLENGER: ImmersiveCase = {
   slug: "challenger-1986",
   title: "Challenger, 28 January 1986",
   kicker: "Case file · Launch Complex 39B",
-  dek: "Walk Pad 39B as it stood that cold morning, then step through the records: what was known before launch, who knew it, and what the inquiry found later.",
+  dek: "Walk Pad 39B as it stood that cold morning. Ten stops in 360°, from the perimeter fence to the crew access arm, rebuilt in Unreal Engine from NASA's models and photographs.",
   dateline: "Kennedy Space Center, Florida · 11:38 a.m. EST",
   question:
     "What was known before launch, who had access to that information, and what did the later investigation establish?",
-  hero: ch("hd_fence_s.jpg"),
+  hero: ue("clip_perimeter_fence.jpg"),
   heroAlt:
-    "The launch pad and the shuttle stack seen through a chain-link fence, in a 3D reconstruction",
+    "The launch pad and the shuttle stack seen across the perimeter fence, in an Unreal Engine reconstruction",
   og: ch("og.jpg"),
-  appUrl: `${APP}#/case/challenger-1986`,
-  playUrl: `${APP}#/play/challenger-1986`,
   contentNote:
     "This case is about the loss of Challenger and its seven crew members: Francis R. Scobee, Michael J. Smith, Ellison S. Onizuka, Judith A. Resnik, Ronald E. McNair, Gregory B. Jarvis and Christa McAuliffe. The reconstruction stops at 73 seconds. The breakup is not shown, and no one's final moments are recreated.",
   status:
     "Prototype. Built with AI and shared while editorial, subject-matter and accessibility review continues. Corrections are welcome.",
+  walkthrough: {
+    src: ue("walkthrough.mp4"),
+    poster: ue("walkthrough.jpg"),
+    title: "From the fence to the white room",
+    specs: ["1920×1080", "70 s", "On foot", "Light at 11:38 EST"],
+    body: "On foot from the south gate in the perimeter fence, up the crawlerway and across the pad apron to the foot of the service tower, then out along the crew access arm, 147 ft up, to the white room beside the orbiter hatch. Slow dissolves shorten the walk, and the lift ride up the tower is not shown.",
+  },
   launch: {
     src: ch("launch_web.mp4"),
     poster: ch("launch_poster.jpg"),
@@ -101,76 +120,79 @@ export const CHALLENGER: ImmersiveCase = {
       alt: "A smoke trail curving into the sky, seen from the press site",
     },
   ],
-  panos: [
-    {
-      src: ch("pano_fence_south.jpg"),
-      label: "South fence",
-      caption: "312 m south of the pad at eye level, facing north toward the stack.",
-    },
-    {
-      src: ch("pano_pad_apron.jpg"),
-      label: "Pad apron",
-      caption: "South-east corner of the concrete pad, 65 m from the stack.",
-    },
-    {
-      src: ch("pano_mlp_deck_east.jpg"),
-      label: "Platform deck",
-      caption: "East edge of the launch platform, at the foot of the right booster.",
-    },
-    {
-      src: ch("pano_access_arm_147ft.jpg"),
-      label: "Crew access arm",
-      caption: "The crew access arm, 147 ft up (NASA figure). The arm's route is estimated.",
-    },
-    {
-      src: ch("pano_beach_northeast.jpg"),
-      label: "Beach",
-      caption: "836 m north-east of the pad, on the real shoreline.",
-    },
-    {
-      src: ch("pano_fence_south_launch_T6.jpg"),
-      label: "Launch, T+6 s",
-      caption: "South fence, six seconds after liftoff. The clock is frozen.",
-    },
-    {
-      src: ch("pano_beach_launch_T30.jpg"),
-      label: "Launch, T+30 s",
-      caption: "From the beach at T+30 s. The trail is approximate.",
-    },
-  ],
-  chapters: [
-    {
-      name: "The Place",
-      label: "Historical reconstruction",
-      body: "Launch Complex 39B as it stood that morning, with the sun where it was at 11:38. Every object says whether its size is sourced or estimated.",
-      image: ch("app_place.jpg"),
-      alt: "The pad in the web experience, with labelled objects",
-      hash: "#/case/challenger-1986/place",
-    },
-    {
-      name: "The Mechanism",
-      label: "Explanatory model",
-      body: "A booster field joint taken apart step by step: tang, clevis, and the two O-rings that had to seal it in the cold.",
-      image: ch("app_mechanism.jpg"),
-      alt: "Cutaway of a booster field joint showing the two O-rings",
-      hash: "#/case/challenger-1986/mechanism",
-    },
-    {
-      name: "The Record",
-      label: "Archival record",
-      body: "47 sourced claims you can pin, compare and filter by what was public, what was internal, and what only the inquiry established.",
-      image: ch("app_record.jpg"),
-      alt: "The records workspace with pinned evidence cards",
-      hash: "#/case/challenger-1986/record",
-    },
-    {
-      name: "The Timeline",
-      label: "Four kinds of time",
-      body: "From 1977 to the launch day, with each event's audience. Move the clock and the knowledge view changes with it.",
-      image: ch("app_timeline.jpg"),
-      alt: "The chronology, with internal records marked as not public at the selected time",
-      hash: "#/case/challenger-1986/timeline",
-    },
+  stops: [
+    stop(
+      "perimeter_fence",
+      "Perimeter fence",
+      "309 m south of the stack",
+      "Outside the south perimeter fence, looking north to the stack. Eye height 1.7 m. The clip dollies east along the fence.",
+      ["Fence line and camera spot estimated from NASA photographs"],
+    ),
+    stop(
+      "crawlerway_south",
+      "Crawlerway approach",
+      "240 m south of the stack",
+      "On the crawlerway incline, looking north up the slope to the stack. The clip walks up the crawlerway.",
+      ["Crawlerway surface from 2018 lidar, not a 1986 survey"],
+    ),
+    stop(
+      "pad_apron",
+      "Pad apron",
+      "51 m south-west of the stack",
+      "On the concrete apron about 17 m above sea level, looking up at the stack. The clip walks toward it, tilting up.",
+      [],
+    ),
+    stop(
+      "launch_platform_deck",
+      "Launch platform deck",
+      "21 m south-west of the stack",
+      "On the Mobile Launcher Platform deck beside the boosters, about 15 m above the pad. The clip is filmed from the south end of the deck, panning between the tail service masts.",
+      ["Deck height and layout estimated"],
+    ),
+    stop(
+      "access_arm_white_room",
+      "Crew access arm, 147 ft",
+      "11 m south-west of the stack",
+      "On the crew access arm, 147 ft (44.8 m) above the pad, facing east into the white room and the orbiter's hatch. The clip walks out along the arm.",
+      ["Arm route and white room size estimated so the arm meets the orbiter model's hatch"],
+    ),
+    stop(
+      "right_booster_aft_joint",
+      "Right booster aft field joint",
+      "15 m east of the stack",
+      "On the platform deck east of the stack, looking up at the right booster's aft field joint. The orange ring is a guide marker for the joint's approximate position, not a physical part.",
+      ["Joint height on the booster (10.8 m above the deck) estimated"],
+    ),
+    stop(
+      "east_of_stack",
+      "East of the stack",
+      "90 m east of the stack",
+      "On the ground below the east slope of the pad, looking west at the stack. The clip dollies south.",
+      [],
+    ),
+    stop(
+      "flame_trench_edge",
+      "Flame trench rim",
+      "54 m north of the stack",
+      "At the east rim of the flame trench, north of the launch platform, looking south into the late-morning sun.",
+      ["Trench shape from 2018 lidar, not a 1986 survey"],
+    ),
+    stop(
+      "aerial_120m",
+      "Aerial, 120 m",
+      "120 m above the pad",
+      "Above the south-west corner of the pad, looking down on the stack, towers and trench. The clip orbits slowly from south-west to west-south-west.",
+      ["A chosen viewpoint: no one stood here"],
+    ),
+    stop(
+      "press_site_distance",
+      "At press-site distance",
+      "5.4 km south-east of the stack",
+      "This is not the press site. The real one is about 5.6 km south-west, which is lagoon and marsh in this terrain, so the view is taken from the same distance on the barrier island. The clip uses a telephoto lens; in the 360° view the stack is only a few pixels wide.",
+      [
+        "The bare mound left of the pad is most likely the Pad 39A hardstand from the 2018 lidar; no 39A structures are modelled",
+      ],
+    ),
   ],
   terrain: [
     {
@@ -220,23 +242,23 @@ export const CHALLENGER: ImmersiveCase = {
     ],
   },
   facts: [
-    { k: "Format", v: "3D web experience, playable sketch, films, 360° views" },
-    { k: "Claims", v: "47, each with a source and locator" },
-    { k: "Guided time", v: "6 to 8 minutes guided, or explore freely" },
-    { k: "Works on", v: "Recent desktop browsers; a reading mode carries the same content" },
+    { k: "Format", v: "Unreal Engine 5 reconstruction: 10 stops in 360°, films" },
+    { k: "Stops", v: "From the perimeter fence to the crew access arm, 147 ft up" },
+    { k: "Light", v: "The sun as it stood at 11:38 a.m. EST" },
+    { k: "Works on", v: "Any modern browser, phone or desktop" },
   ],
   howMade: [
-    "Code, scenes, narration script and source research were produced with AI (Claude, made by Anthropic) from a written brief, and are labelled as such. No AI-generated imagery is used.",
-    "Every claim cites an online record with a locator. Short quotes only; records are linked, not copied.",
-    "Five labels keep things apart: archival record, historical reconstruction, explanatory model, editorial interpretation, unverified detail.",
-    "Three knowledge views: the public record at a chosen moment, documented internal information, and the later investigation. Nothing found later leaks into the launch-day view.",
+    "The scene is built in Unreal Engine 5 from NASA's own 3D models, NASA photographs and USGS lidar terrain, and rendered frame by frame. No AI-generated imagery is used.",
+    "Scene assembly, render scripts and source research were done with AI (Claude, made by Anthropic) from a written brief, and are disclosed here.",
+    "Every stop says where the camera stands, how far from the stack and how high, and which positions are estimated.",
+    "The launch film marks what launch-day viewers saw apart from what the inquiry found later on film.",
     "Named people appear only as authors or subjects of records. The case does not infer motives or assign blame.",
   ],
   limits: [
     "The scenes are reconstructions, not documentation. Many sizes and positions are estimates and are marked as such.",
     "Terrain comes from a 2018 survey, 32 years after 1986; the pad was modified in between.",
     "Weather, haze and the ice recorded on the pad that morning are not fully depicted. Plants are not Florida species.",
-    "Quoted passages still need a word-for-word editorial re-check, and no Shuttle historian has reviewed the case yet.",
+    "No Shuttle historian has reviewed the reconstruction yet; the walkthrough shortens the walk and skips the lift ride up the tower.",
     "Not affiliated with or endorsed by NASA, the National Archives or any archive cited.",
   ],
   sources: [
