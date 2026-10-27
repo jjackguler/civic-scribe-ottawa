@@ -73,7 +73,7 @@ export function SiteHeader() {
       : loc.pathname === n.to || loc.pathname.startsWith(n.to + "/");
 
   const dateLine = new Date().toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", {
-    weekday: "long", month: "long", day: "numeric", year: "numeric",
+    weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "America/Toronto",
   });
 
   const L = ({ n, className, children }: { n: Item; className: string; children: ReactNode }) => (

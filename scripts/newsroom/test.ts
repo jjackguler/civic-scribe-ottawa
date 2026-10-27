@@ -7,10 +7,10 @@
 import assert from "node:assert/strict";
 import { killedIds, slugify, uniqueSlug, isKilled } from "../../src/lib/newsroom-types";
 import { factGuard, overlapProblems } from "./guard";
-import { shapeDraft, unwrapDraft, type Draft } from "./shape";
+import { mergeRewrite, shapeDraft, unwrapDraft, type Draft } from "./shape";
 import { editorialGate } from "../../src/lib/editorial";
 import { upsettingReasons } from "./upsetting";
-import { clip } from "./roles";
+import { clip, publishedWords } from "./roles";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 
 let passed = 0;
@@ -160,6 +160,26 @@ test("a skip is never unwrapped", () => {
 test("missing fields are named", () => {
   const r = shapeDraft({ headline: "Northwind releases Aurora-2", news: "Northwind released a model." } as never, [], []);
   assert.ok(typeof r === "string" && r.startsWith("missing fields:") && r.includes("thirty") && r.includes("matters"), String(r));
+});
+test("a rewrite with the sections at the top level and no thirty keeps the draft's other fields", () => {
+  const before = { headline: "Northwind releases Aurora-2 for English and French", news: "Northwind released a model.", thirty: ["a", "b", "c"], matters: "It runs on a laptop.", article: { news: ["Old paragraph [s1]"] } };
+  const m = mergeRewrite({ headline: "Northwind releases Aurora-2", news: ["New paragraph [s1]"], known: ["Known [s2]"], matters: ["Why [s1]"] } as never, before as never) as Record<string, unknown>;
+  assert.deepEqual(m.article, { news: ["New paragraph [s1]"], known: ["Known [s2]"], matters: ["Why [s1]"] });
+  assert.equal(m.headline, "Northwind releases Aurora-2");
+  assert.equal(m.news, "Northwind released a model.");
+  assert.deepEqual(m.thirty, ["a", "b", "c"]);
+  assert.equal(m.matters, "It runs on a laptop.");
+});
+test("a rewrite that skips stays a skip", () => {
+  assert.equal(mergeRewrite({ skip: true }, { headline: "x" })?.skip, true);
+});
+test("the sources' publication dates may be written, in English and French", () => {
+  const when = publishedWords("2026-10-26T15:00:00Z");
+  const src = `${SRC}\n${when}`;
+  assert.deepEqual(factGuard(["On Monday, October 26, 2026, Northwind released Aurora-2 (2026-10-26)."], src), []);
+  assert.deepEqual(factGuard(["Lundi, Northwind a publié Aurora-2."], src), []);
+  assert.deepEqual(factGuard(["On Tuesday, Northwind released Aurora-2."], src), ["Tuesday"]);
+  assert.equal(publishedWords("not a date"), "");
 });
 test("party politics and brand promotions fail the gate; AI policy passes", () => {
   assert.equal(editorialGate({ title: "Judge rejects Trump's bid to block AI rule" }).ok, false);

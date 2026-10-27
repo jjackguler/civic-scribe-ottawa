@@ -70,7 +70,7 @@ export function StoryCover({ s, size }: { s: Story; size: "hero" | "card" }) {
 
 function timeAgoLabel(s: Story, locale: "en" | "fr") {
   const d = new Date(s.publishedAt);
-  return d.toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", { weekday: "long", month: "long", day: "numeric" });
+  return d.toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", { weekday: "long", month: "long", day: "numeric", timeZone: "America/Toronto" });
 }
 
 /** Link to our story page. */
