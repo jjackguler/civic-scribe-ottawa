@@ -1,0 +1,239 @@
+{
+  "id": "approved-raii-20261027",
+  "slug": {
+    "en": "canada-regional-ai-funding-prairies-ontario-eligibility",
+    "fr": "canada-financement-regional-ia-prairies-ontario-admissibilite"
+  },
+  "topic": "business",
+  "format": "explainer",
+  "cover": {
+    "color": "brass",
+    "motif": "rules",
+    "en": {
+      "kicker": "Regional AI support",
+      "big": "RAII",
+      "small": "Check the region and the conditions"
+    },
+    "fr": {
+      "kicker": "Soutien régional",
+      "big": "RAII",
+      "small": "Vérifier la région et les conditions"
+    }
+  },
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "PrairiesCan",
+      "title": "Regional Artificial Intelligence Initiative in the Prairie provinces",
+      "url": "https://www.canada.ca/en/prairies-economic-development/services/funding/regional-artificial-intelligence-initiative.html",
+      "publishedAt": "2026-10-26T00:00:00Z",
+      "storyId": "approved-s1-regional-artificial-intelligence-initiative.html",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "FedDev Ontario",
+      "title": "Regional Artificial Intelligence Initiative for businesses: Who can apply",
+      "url": "https://feddev-ontario.canada.ca/en/funding-southern-ontario/regional-artificial-intelligence-initiative-businesses-who-can-apply",
+      "publishedAt": "2026-10-13T00:00:00Z",
+      "storyId": "approved-s2-regional-artificial-intelligence-initiative-businesses-who-can-apply",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "FedDev Ontario",
+      "title": "Regional Artificial Intelligence Initiative for businesses: When to apply",
+      "url": "https://feddev-ontario.canada.ca/en/funding-southern-ontario/regional-artificial-intelligence-initiative-businesses-when-apply",
+      "publishedAt": "2026-10-13T00:00:00Z",
+      "storyId": "approved-s3-regional-artificial-intelligence-initiative-businesses-when-apply",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "en": {
+    "headline": "Canada's regional AI support has different routes for Prairie and Ontario businesses",
+    "dek": "Applications are open, but geography, operating history and staffing determine which route may fit.",
+    "news": "Canada's expanded Regional Artificial Intelligence Initiative is accepting applications through regional agencies with distinct eligibility rules.",
+    "thirty": [
+      "Prairie applications are open, subject to available funding.",
+      "Ontario has separate adoption and commercialization streams.",
+      "Ontario business support is repayable and covers up to half of eligible costs."
+    ],
+    "claimed": [
+      {
+        "text": "The expanded federal initiative totals $700 million; this is a national total, not a Prairie-only allocation.",
+        "by": "PrairiesCan",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Ontario business contributions range from $125,000 to $5 million and are repayable.",
+        "by": "FedDev Ontario",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether any particular business or project will be approved.",
+      "The final eligible costs and contribution for an individual project."
+    ],
+    "matters": "A business needs to check its own region, staffing, project readiness and financing before preparing an application.",
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "PrairiesCan is accepting applications under the expanded Regional Artificial Intelligence Initiative for AI adoption and commercialization. Its program page states that intake remains open until December 31, 2030, unless funding is committed sooner or another change is announced. The federal initiative's $700-million total is national, not an allocation solely for the Prairie provinces. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Businesses operating in Ottawa should examine FedDev Ontario's rules. Its AI commercialization stream requires an incorporated business with at least one year of operations and at least one full-time-equivalent employee in southern Ontario. The adoption stream requires at least three years of operations and five full-time-equivalent employees. Both have additional eligibility conditions. [s2]",
+          "Ontario business contributions are repayable, range from $125,000 to $5 million, and cover up to 50% of eligible costs. Adoption projects must go beyond buying commonly available AI tools. Commercialization projects must concern sufficiently developed Canadian-made solutions. [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For Ontario projects starting eligible costs before March 31, 2027, FedDev Ontario gives a November 24, 2026 application date. The final deadline is January 19, 2027, at 4:59 p.m. Eastern Standard Time. A useful first step is to check operating history, staffing, intellectual-property rights and the ability to finance the remaining project costs. Meeting the listed conditions does not guarantee an award. [s2,s3]"
+        ]
+      }
+    ],
+    "faq": [],
+    "confirmed": [],
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Canada's expanded Regional Artificial Intelligence Initiative is accepting applications through regional agencies with distinct eligibility rules.",
+        "A business needs to check its own region, staffing, project readiness and financing before preparing an application."
+      ],
+      "standard": [
+        "PrairiesCan is accepting applications under the expanded Regional Artificial Intelligence Initiative for AI adoption and commercialization. Its program page states that intake remains open until December 31, 2030, unless funding is committed sooner or another change is announced. The federal initiative's $700-million total is national, not an allocation solely for the Prairie provinces. [s1]",
+        "Businesses operating in Ottawa should examine FedDev Ontario's rules. Its AI commercialization stream requires an incorporated business with at least one year of operations and at least one full-time-equivalent employee in southern Ontario. The adoption stream requires at least three years of operations and five full-time-equivalent employees. Both have additional eligibility conditions. [s2]",
+        "Ontario business contributions are repayable, range from $125,000 to $5 million, and cover up to 50% of eligible costs. Adoption projects must go beyond buying commonly available AI tools. Commercialization projects must concern sufficiently developed Canadian-made solutions. [s2]",
+        "For Ontario projects starting eligible costs before March 31, 2027, FedDev Ontario gives a November 24, 2026 application date. The final deadline is January 19, 2027, at 4:59 p.m. Eastern Standard Time. A useful first step is to check operating history, staffing, intellectual-property rights and the ability to finance the remaining project costs. Meeting the listed conditions does not guarantee an award. [s2,s3]"
+      ],
+      "expert": [
+        "PrairiesCan is accepting applications under the expanded Regional Artificial Intelligence Initiative for AI adoption and commercialization. Its program page states that intake remains open until December 31, 2030, unless funding is committed sooner or another change is announced. The federal initiative's $700-million total is national, not an allocation solely for the Prairie provinces. [s1]",
+        "Businesses operating in Ottawa should examine FedDev Ontario's rules. Its AI commercialization stream requires an incorporated business with at least one year of operations and at least one full-time-equivalent employee in southern Ontario. The adoption stream requires at least three years of operations and five full-time-equivalent employees. Both have additional eligibility conditions. [s2]",
+        "Ontario business contributions are repayable, range from $125,000 to $5 million, and cover up to 50% of eligible costs. Adoption projects must go beyond buying commonly available AI tools. Commercialization projects must concern sufficiently developed Canadian-made solutions. [s2]",
+        "For Ontario projects starting eligible costs before March 31, 2027, FedDev Ontario gives a November 24, 2026 application date. The final deadline is January 19, 2027, at 4:59 p.m. Eastern Standard Time. A useful first step is to check operating history, staffing, intellectual-property rights and the ability to finance the remaining project costs. Meeting the listed conditions does not guarantee an award. [s2,s3]"
+      ]
+    },
+    "seoTitle": "Canada's regional AI support has different routes for Prairi",
+    "metaDescription": "Applications are open, but geography, operating history and staffing determine which route may fit.",
+    "keywords": [],
+    "links": []
+  },
+  "fr": {
+    "headline": "Le soutien régional à l'IA diffère pour les Prairies et l'Ontario",
+    "dek": "Les demandes sont ouvertes, mais la région, l'ancienneté et les effectifs déterminent la voie possible.",
+    "news": "L'Initiative régionale en matière d'intelligence artificielle accepte des demandes selon des critères régionaux distincts.",
+    "thirty": [
+      "Les demandes dans les Prairies restent soumises aux fonds disponibles.",
+      "L'Ontario distingue adoption et commercialisation.",
+      "Le soutien aux entreprises ontariennes est remboursable et couvre au plus la moitié des coûts admissibles."
+    ],
+    "claimed": [
+      {
+        "text": "Les 700 millions de dollars correspondent au total fédéral, et non à une allocation réservée aux Prairies.",
+        "by": "PrairiesCan",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Les contributions ontariennes aux entreprises vont de 125 000 à 5 millions de dollars et sont remboursables.",
+        "by": "FedDev Ontario",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "L'approbation éventuelle d'une entreprise ou d'un projet particulier.",
+      "Les coûts et la contribution finalement reconnus pour un projet."
+    ],
+    "matters": "Une entreprise doit vérifier sa région, ses effectifs, la maturité du projet et son financement avant de préparer sa demande.",
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "PrairiesCan accepte des demandes dans le cadre de l'Initiative régionale en matière d'intelligence artificielle élargie. Sa page indique une réception continue jusqu'au 31 décembre 2030, sauf engagement anticipé de tous les fonds ou nouvel avis. Les 700 millions de dollars correspondent au total fédéral, et non à une enveloppe réservée aux Prairies. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Les entreprises d'Ottawa doivent consulter les règles de FedDev Ontario. Le volet commercialisation demande notamment une entreprise constituée en société, une année d'activités et un équivalent temps plein dans le sud de l'Ontario. Le volet adoption exige au moins trois années d'activités et cinq équivalents temps plein. D'autres conditions s'appliquent. [s2]",
+          "Les contributions ontariennes aux entreprises sont remboursables, vont de 125 000 à 5 millions de dollars et couvrent jusqu'à 50 % des coûts admissibles. L'adoption doit aller au-delà de l'achat d'outils courants. La commercialisation vise des solutions canadiennes suffisamment développées. [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "FedDev Ontario indique le 24 novembre 2026 pour les projets dont les coûts admissibles commencent avant le 31 mars 2027. La date finale est le 19 janvier 2027 à 16 h 59, heure normale de l'Est. Il faut vérifier l'ancienneté, les effectifs, les droits de propriété intellectuelle et le financement complémentaire. Le respect des critères ne garantit pas une contribution. [s2,s3]"
+        ]
+      }
+    ],
+    "faq": [],
+    "confirmed": [],
+    "timeline": [],
+    "body": {
+      "plain": [
+        "L'Initiative régionale en matière d'intelligence artificielle accepte des demandes selon des critères régionaux distincts.",
+        "Une entreprise doit vérifier sa région, ses effectifs, la maturité du projet et son financement avant de préparer sa demande."
+      ],
+      "standard": [
+        "PrairiesCan accepte des demandes dans le cadre de l'Initiative régionale en matière d'intelligence artificielle élargie. Sa page indique une réception continue jusqu'au 31 décembre 2030, sauf engagement anticipé de tous les fonds ou nouvel avis. Les 700 millions de dollars correspondent au total fédéral, et non à une enveloppe réservée aux Prairies. [s1]",
+        "Les entreprises d'Ottawa doivent consulter les règles de FedDev Ontario. Le volet commercialisation demande notamment une entreprise constituée en société, une année d'activités et un équivalent temps plein dans le sud de l'Ontario. Le volet adoption exige au moins trois années d'activités et cinq équivalents temps plein. D'autres conditions s'appliquent. [s2]",
+        "Les contributions ontariennes aux entreprises sont remboursables, vont de 125 000 à 5 millions de dollars et couvrent jusqu'à 50 % des coûts admissibles. L'adoption doit aller au-delà de l'achat d'outils courants. La commercialisation vise des solutions canadiennes suffisamment développées. [s2]",
+        "FedDev Ontario indique le 24 novembre 2026 pour les projets dont les coûts admissibles commencent avant le 31 mars 2027. La date finale est le 19 janvier 2027 à 16 h 59, heure normale de l'Est. Il faut vérifier l'ancienneté, les effectifs, les droits de propriété intellectuelle et le financement complémentaire. Le respect des critères ne garantit pas une contribution. [s2,s3]"
+      ],
+      "expert": [
+        "PrairiesCan accepte des demandes dans le cadre de l'Initiative régionale en matière d'intelligence artificielle élargie. Sa page indique une réception continue jusqu'au 31 décembre 2030, sauf engagement anticipé de tous les fonds ou nouvel avis. Les 700 millions de dollars correspondent au total fédéral, et non à une enveloppe réservée aux Prairies. [s1]",
+        "Les entreprises d'Ottawa doivent consulter les règles de FedDev Ontario. Le volet commercialisation demande notamment une entreprise constituée en société, une année d'activités et un équivalent temps plein dans le sud de l'Ontario. Le volet adoption exige au moins trois années d'activités et cinq équivalents temps plein. D'autres conditions s'appliquent. [s2]",
+        "Les contributions ontariennes aux entreprises sont remboursables, vont de 125 000 à 5 millions de dollars et couvrent jusqu'à 50 % des coûts admissibles. L'adoption doit aller au-delà de l'achat d'outils courants. La commercialisation vise des solutions canadiennes suffisamment développées. [s2]",
+        "FedDev Ontario indique le 24 novembre 2026 pour les projets dont les coûts admissibles commencent avant le 31 mars 2027. La date finale est le 19 janvier 2027 à 16 h 59, heure normale de l'Est. Il faut vérifier l'ancienneté, les effectifs, les droits de propriété intellectuelle et le financement complémentaire. Le respect des critères ne garantit pas une contribution. [s2,s3]"
+      ]
+    },
+    "seoTitle": "Le soutien régional à l'IA diffère pour les Prairies et l'On",
+    "metaDescription": "Les demandes sont ouvertes, mais la région, l'ancienneté et les effectifs déterminent la voie possible.",
+    "keywords": [],
+    "links": []
+  },
+  "version": 1,
+  "createdAt": "2026-10-28T03:45:59.053Z",
+  "updatedAt": "2026-10-28T03:45:59.053Z",
+  "model": "openai",
+  "background": [],
+  "lens": [],
+  "words": {
+    "en": 204,
+    "fr": 202
+  },
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "OpenAI Codex",
+      "at": "2026-10-28T03:45:59.053Z",
+      "verdict": "done",
+      "notes": [
+        "Written from linked primary sources; publication approved by the owner in this chat."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "OpenAI Codex source review",
+      "at": "2026-10-28T03:45:59.053Z",
+      "verdict": "pass",
+      "notes": [
+        "Company and agency claims attributed; survey population and source limitations stated. No independent field test claimed."
+      ]
+    }
+  ]
+}

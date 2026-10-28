@@ -1,0 +1,203 @@
+{
+  "id": "approved-quebec-work-20261027",
+  "slug": {
+    "en": "quebec-workers-ai-survey-training-working-conditions",
+    "fr": "travailleurs-quebec-ia-sondage-formation-conditions"
+  },
+  "topic": "people",
+  "format": "numbers",
+  "cover": {
+    "color": "paper",
+    "motif": "bars",
+    "en": {
+      "kicker": "AI at work",
+      "big": "43%",
+      "small": "A survey snapshot, not a forecast"
+    },
+    "fr": {
+      "kicker": "IA au travail",
+      "big": "43 %",
+      "small": "Un portrait, pas une prédiction"
+    }
+  },
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "IVADO / CRIMT",
+      "title": "AI at Work: Mass Job Displacement Is Not Imminent",
+      "url": "https://ivado.ca/en/2026/10/15/ai-at-work-mass-job-displacement-is-not-imminent/",
+      "publishedAt": "2026-10-15T00:00:00Z",
+      "storyId": "approved-s1-ai-at-work-mass-job-displacement-is-not-imminent",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "en": {
+    "headline": "Quebec worker survey puts AI use alongside questions about working conditions",
+    "dek": "An IVADO–CRIMT study describes workers' experiences and concerns. It does not predict the future of every job.",
+    "news": "A study released by IVADO and CRIMT reports that 43% of surveyed Quebec workers used AI at work.",
+    "thirty": [
+      "The survey included 1,015 Quebec workers.",
+      "43% reported using AI at work.",
+      "Its findings describe respondents, not the future of every job."
+    ],
+    "claimed": [
+      {
+        "text": "Among AI users surveyed, 64% used it for less than a quarter of their tasks.",
+        "by": "IVADO / CRIMT",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "How these responses would translate to other regions or future employment outcomes."
+    ],
+    "matters": "The study points to training, privacy and workers' influence over how tools are introduced.",
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "A study released on October 15 by IVADO and CRIMT reports that 43% of surveyed Quebec workers used AI at work. Among those users, 64% relied on it for less than a quarter of their tasks. The findings describe how respondents experienced the technology at the time of the survey. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "The research combined an analysis of 94 Canadian Reddit posts with a survey of 1,015 Quebec workers in the Léger Opinion panel. Survey responses were collected from June 26 to July 2, 2026. That method matters: perceptions and self-reported use are different from measured job creation or losses. [s1]",
+          "The researchers describe concerns extending beyond employment security to privacy, inequality and working conditions. They also highlight support and guidance as factors in how people adapt to AI. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Our editorial takeaway is to make workplace AI discussions specific: which tasks change, what training is offered, and who decides how the tools are used? Those questions give workers and employers something practical to examine. This study does not establish that every role is safe or that replacement is inevitable. Its scope is the surveyed workers and the evidence collected. [s1]"
+        ]
+      }
+    ],
+    "faq": [],
+    "confirmed": [],
+    "timeline": [],
+    "body": {
+      "plain": [
+        "A study released by IVADO and CRIMT reports that 43% of surveyed Quebec workers used AI at work.",
+        "The study points to training, privacy and workers' influence over how tools are introduced."
+      ],
+      "standard": [
+        "A study released on October 15 by IVADO and CRIMT reports that 43% of surveyed Quebec workers used AI at work. Among those users, 64% relied on it for less than a quarter of their tasks. The findings describe how respondents experienced the technology at the time of the survey. [s1]",
+        "The research combined an analysis of 94 Canadian Reddit posts with a survey of 1,015 Quebec workers in the Léger Opinion panel. Survey responses were collected from June 26 to July 2, 2026. That method matters: perceptions and self-reported use are different from measured job creation or losses. [s1]",
+        "The researchers describe concerns extending beyond employment security to privacy, inequality and working conditions. They also highlight support and guidance as factors in how people adapt to AI. [s1]",
+        "Our editorial takeaway is to make workplace AI discussions specific: which tasks change, what training is offered, and who decides how the tools are used? Those questions give workers and employers something practical to examine. This study does not establish that every role is safe or that replacement is inevitable. Its scope is the surveyed workers and the evidence collected. [s1]"
+      ],
+      "expert": [
+        "A study released on October 15 by IVADO and CRIMT reports that 43% of surveyed Quebec workers used AI at work. Among those users, 64% relied on it for less than a quarter of their tasks. The findings describe how respondents experienced the technology at the time of the survey. [s1]",
+        "The research combined an analysis of 94 Canadian Reddit posts with a survey of 1,015 Quebec workers in the Léger Opinion panel. Survey responses were collected from June 26 to July 2, 2026. That method matters: perceptions and self-reported use are different from measured job creation or losses. [s1]",
+        "The researchers describe concerns extending beyond employment security to privacy, inequality and working conditions. They also highlight support and guidance as factors in how people adapt to AI. [s1]",
+        "Our editorial takeaway is to make workplace AI discussions specific: which tasks change, what training is offered, and who decides how the tools are used? Those questions give workers and employers something practical to examine. This study does not establish that every role is safe or that replacement is inevitable. Its scope is the surveyed workers and the evidence collected. [s1]"
+      ]
+    },
+    "seoTitle": "Quebec worker survey puts AI use alongside questions about w",
+    "metaDescription": "An IVADO–CRIMT study describes workers' experiences and concerns. It does not predict the future of every job.",
+    "keywords": [],
+    "links": []
+  },
+  "fr": {
+    "headline": "Au Québec, un sondage relie l'usage de l'IA aux conditions de travail",
+    "dek": "Une étude d'IVADO et du CRIMT décrit des expériences et des préoccupations, sans prédire l'avenir de chaque emploi.",
+    "news": "Une étude d'IVADO et du CRIMT indique que 43 % des travailleurs québécois sondés utilisaient l'IA au travail.",
+    "thirty": [
+      "Le sondage compte 1 015 travailleurs québécois.",
+      "43 % déclarent utiliser l'IA au travail.",
+      "Les réponses décrivent les participants, pas l'avenir de chaque emploi."
+    ],
+    "claimed": [
+      {
+        "text": "Parmi les utilisateurs d'IA interrogés, 64 % y recouraient pour moins du quart de leurs tâches.",
+        "by": "IVADO / CRIMT",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La portée de ces réponses dans d'autres régions ou pour l'emploi futur."
+    ],
+    "matters": "L'étude invite à examiner la formation, la vie privée et la place des travailleurs dans les décisions.",
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Publiée le 15 octobre, une étude d'IVADO et du CRIMT indique que 43 % des travailleurs québécois sondés utilisaient l'IA au travail. Parmi ces utilisateurs, 64 % y recouraient pour moins du quart de leurs tâches. Ces données décrivent les expériences déclarées pendant la période d'enquête. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "L'étude combine l'analyse de 94 publications Reddit canadiennes et un sondage auprès de 1 015 travailleurs québécois du panel Léger Opinion. Le sondage a eu lieu du 26 juin au 2 juillet 2026. Les perceptions et les usages déclarés ne mesurent pas directement les créations ou les suppressions d'emplois. [s1]",
+          "Les chercheurs décrivent des préoccupations qui dépassent la sécurité de l'emploi, notamment la vie privée, les inégalités et les conditions de travail. Le soutien et l'accompagnement contribuent aussi à l'adaptation à l'IA. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Notre conclusion éditoriale est de poser des questions concrètes: quelles tâches changent, quelle formation est offerte et qui participe aux décisions? Ce sont des points que travailleurs et employeurs peuvent examiner ensemble. L'étude ne prouve ni que chaque poste est protégé, ni que le remplacement est inévitable. Ses conclusions restent liées aux participants et aux données recueillies. [s1]"
+        ]
+      }
+    ],
+    "faq": [],
+    "confirmed": [],
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Une étude d'IVADO et du CRIMT indique que 43 % des travailleurs québécois sondés utilisaient l'IA au travail.",
+        "L'étude invite à examiner la formation, la vie privée et la place des travailleurs dans les décisions."
+      ],
+      "standard": [
+        "Publiée le 15 octobre, une étude d'IVADO et du CRIMT indique que 43 % des travailleurs québécois sondés utilisaient l'IA au travail. Parmi ces utilisateurs, 64 % y recouraient pour moins du quart de leurs tâches. Ces données décrivent les expériences déclarées pendant la période d'enquête. [s1]",
+        "L'étude combine l'analyse de 94 publications Reddit canadiennes et un sondage auprès de 1 015 travailleurs québécois du panel Léger Opinion. Le sondage a eu lieu du 26 juin au 2 juillet 2026. Les perceptions et les usages déclarés ne mesurent pas directement les créations ou les suppressions d'emplois. [s1]",
+        "Les chercheurs décrivent des préoccupations qui dépassent la sécurité de l'emploi, notamment la vie privée, les inégalités et les conditions de travail. Le soutien et l'accompagnement contribuent aussi à l'adaptation à l'IA. [s1]",
+        "Notre conclusion éditoriale est de poser des questions concrètes: quelles tâches changent, quelle formation est offerte et qui participe aux décisions? Ce sont des points que travailleurs et employeurs peuvent examiner ensemble. L'étude ne prouve ni que chaque poste est protégé, ni que le remplacement est inévitable. Ses conclusions restent liées aux participants et aux données recueillies. [s1]"
+      ],
+      "expert": [
+        "Publiée le 15 octobre, une étude d'IVADO et du CRIMT indique que 43 % des travailleurs québécois sondés utilisaient l'IA au travail. Parmi ces utilisateurs, 64 % y recouraient pour moins du quart de leurs tâches. Ces données décrivent les expériences déclarées pendant la période d'enquête. [s1]",
+        "L'étude combine l'analyse de 94 publications Reddit canadiennes et un sondage auprès de 1 015 travailleurs québécois du panel Léger Opinion. Le sondage a eu lieu du 26 juin au 2 juillet 2026. Les perceptions et les usages déclarés ne mesurent pas directement les créations ou les suppressions d'emplois. [s1]",
+        "Les chercheurs décrivent des préoccupations qui dépassent la sécurité de l'emploi, notamment la vie privée, les inégalités et les conditions de travail. Le soutien et l'accompagnement contribuent aussi à l'adaptation à l'IA. [s1]",
+        "Notre conclusion éditoriale est de poser des questions concrètes: quelles tâches changent, quelle formation est offerte et qui participe aux décisions? Ce sont des points que travailleurs et employeurs peuvent examiner ensemble. L'étude ne prouve ni que chaque poste est protégé, ni que le remplacement est inévitable. Ses conclusions restent liées aux participants et aux données recueillies. [s1]"
+      ]
+    },
+    "seoTitle": "Au Québec, un sondage relie l'usage de l'IA aux conditions d",
+    "metaDescription": "Une étude d'IVADO et du CRIMT décrit des expériences et des préoccupations, sans prédire l'avenir de chaque emploi.",
+    "keywords": [],
+    "links": []
+  },
+  "version": 1,
+  "createdAt": "2026-10-28T03:45:59.053Z",
+  "updatedAt": "2026-10-28T03:45:59.053Z",
+  "model": "openai",
+  "background": [],
+  "lens": [],
+  "words": {
+    "en": 186,
+    "fr": 184
+  },
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "OpenAI Codex",
+      "at": "2026-10-28T03:45:59.053Z",
+      "verdict": "done",
+      "notes": [
+        "Written from linked primary sources; publication approved by the owner in this chat."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "OpenAI Codex source review",
+      "at": "2026-10-28T03:45:59.053Z",
+      "verdict": "pass",
+      "notes": [
+        "Company and agency claims attributed; survey population and source limitations stated. No independent field test claimed."
+      ]
+    }
+  ]
+}

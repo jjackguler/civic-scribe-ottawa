@@ -1,6 +1,157 @@
 {
-  "updatedAt": "2026-10-24T11:08:41.692Z",
+  "updatedAt": "2026-10-28T03:45:59.053Z",
   "items": [
+    {
+      "id": "approved-genie4-20261027",
+      "slug": {
+        "en": "genie-4-interactive-worlds-preview-limits",
+        "fr": "genie-4-mondes-interactifs-apercu-limites"
+      },
+      "createdAt": "2026-10-28T03:45:59.053Z",
+      "updatedAt": "2026-10-28T03:45:59.053Z",
+      "topic": "immersive",
+      "format": "explainer",
+      "outlets": [
+        "Google DeepMind",
+        "TechCrunch"
+      ],
+      "times": [
+        "2026-10-27T00:00:00Z",
+        "2026-10-27T00:00:00Z",
+        "2026-10-27T16:30:00Z"
+      ],
+      "storyIds": [
+        "approved-s1-genie-4-a-new-generation-of-world-simulation",
+        "approved-s2-genie",
+        "approved-s3-googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "grid",
+        "en": {
+          "kicker": "World models",
+          "big": "Genie 4",
+          "small": "A research preview, with limits"
+        },
+        "fr": {
+          "kicker": "Mondes simulés",
+          "big": "Genie 4",
+          "small": "Un aperçu de recherche, avec des limites"
+        }
+      },
+      "words": 173,
+      "en": {
+        "headline": "Genie 4 puts interactive worlds in research preview, with limits on accuracy",
+        "dek": "Google DeepMind describes scenes that respond to instructions. Its own limitations matter as much as the demonstration.",
+        "news": "Google DeepMind has announced Genie 4 as an early research preview for selected testers.",
+        "matters": "Creators and educators may explore interactive scenes, but a plausible simulation should not be treated as a verified reconstruction."
+      },
+      "fr": {
+        "headline": "Genie 4 arrive en aperçu de recherche, avec des limites de précision",
+        "dek": "Google DeepMind décrit des scènes qui répondent aux instructions. Les limites déclarées comptent autant que la démonstration.",
+        "news": "Google DeepMind a annoncé Genie 4 sous forme d'aperçu de recherche pour des testeurs sélectionnés.",
+        "matters": "Les créateurs et les enseignants peuvent explorer ces scènes, mais une simulation plausible ne constitue pas une reconstitution vérifiée."
+      }
+    },
+    {
+      "id": "approved-quebec-work-20261027",
+      "slug": {
+        "en": "quebec-workers-ai-survey-training-working-conditions",
+        "fr": "travailleurs-quebec-ia-sondage-formation-conditions"
+      },
+      "createdAt": "2026-10-28T03:45:59.053Z",
+      "updatedAt": "2026-10-28T03:45:59.053Z",
+      "topic": "people",
+      "format": "numbers",
+      "outlets": [
+        "IVADO / CRIMT"
+      ],
+      "times": [
+        "2026-10-15T00:00:00Z"
+      ],
+      "storyIds": [
+        "approved-s1-ai-at-work-mass-job-displacement-is-not-imminent"
+      ],
+      "cover": {
+        "color": "paper",
+        "motif": "bars",
+        "en": {
+          "kicker": "AI at work",
+          "big": "43%",
+          "small": "A survey snapshot, not a forecast"
+        },
+        "fr": {
+          "kicker": "IA au travail",
+          "big": "43 %",
+          "small": "Un portrait, pas une prédiction"
+        }
+      },
+      "words": 186,
+      "en": {
+        "headline": "Quebec worker survey puts AI use alongside questions about working conditions",
+        "dek": "An IVADO–CRIMT study describes workers' experiences and concerns. It does not predict the future of every job.",
+        "news": "A study released by IVADO and CRIMT reports that 43% of surveyed Quebec workers used AI at work.",
+        "matters": "The study points to training, privacy and workers' influence over how tools are introduced."
+      },
+      "fr": {
+        "headline": "Au Québec, un sondage relie l'usage de l'IA aux conditions de travail",
+        "dek": "Une étude d'IVADO et du CRIMT décrit des expériences et des préoccupations, sans prédire l'avenir de chaque emploi.",
+        "news": "Une étude d'IVADO et du CRIMT indique que 43 % des travailleurs québécois sondés utilisaient l'IA au travail.",
+        "matters": "L'étude invite à examiner la formation, la vie privée et la place des travailleurs dans les décisions."
+      }
+    },
+    {
+      "id": "approved-raii-20261027",
+      "slug": {
+        "en": "canada-regional-ai-funding-prairies-ontario-eligibility",
+        "fr": "canada-financement-regional-ia-prairies-ontario-admissibilite"
+      },
+      "createdAt": "2026-10-28T03:45:59.053Z",
+      "updatedAt": "2026-10-28T03:45:59.053Z",
+      "topic": "business",
+      "format": "explainer",
+      "outlets": [
+        "PrairiesCan",
+        "FedDev Ontario"
+      ],
+      "times": [
+        "2026-10-13T00:00:00Z",
+        "2026-10-13T00:00:00Z",
+        "2026-10-26T00:00:00Z"
+      ],
+      "storyIds": [
+        "approved-s1-regional-artificial-intelligence-initiative.html",
+        "approved-s2-regional-artificial-intelligence-initiative-businesses-who-can-apply",
+        "approved-s3-regional-artificial-intelligence-initiative-businesses-when-apply"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "rules",
+        "en": {
+          "kicker": "Regional AI support",
+          "big": "RAII",
+          "small": "Check the region and the conditions"
+        },
+        "fr": {
+          "kicker": "Soutien régional",
+          "big": "RAII",
+          "small": "Vérifier la région et les conditions"
+        }
+      },
+      "words": 204,
+      "en": {
+        "headline": "Canada's regional AI support has different routes for Prairie and Ontario businesses",
+        "dek": "Applications are open, but geography, operating history and staffing determine which route may fit.",
+        "news": "Canada's expanded Regional Artificial Intelligence Initiative is accepting applications through regional agencies with distinct eligibility rules.",
+        "matters": "A business needs to check its own region, staffing, project readiness and financing before preparing an application."
+      },
+      "fr": {
+        "headline": "Le soutien régional à l'IA diffère pour les Prairies et l'Ontario",
+        "dek": "Les demandes sont ouvertes, mais la région, l'ancienneté et les effectifs déterminent la voie possible.",
+        "news": "L'Initiative régionale en matière d'intelligence artificielle accepte des demandes selon des critères régionaux distincts.",
+        "matters": "Une entreprise doit vérifier sa région, ses effectifs, la maturité du projet et son financement avant de préparer sa demande."
+      }
+    },
     {
       "id": "itjbfh",
       "slug": {

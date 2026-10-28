@@ -1,0 +1,227 @@
+{
+  "id": "approved-genie4-20261027",
+  "slug": {
+    "en": "genie-4-interactive-worlds-preview-limits",
+    "fr": "genie-4-mondes-interactifs-apercu-limites"
+  },
+  "topic": "immersive",
+  "format": "explainer",
+  "cover": {
+    "color": "night",
+    "motif": "grid",
+    "en": {
+      "kicker": "World models",
+      "big": "Genie 4",
+      "small": "A research preview, with limits"
+    },
+    "fr": {
+      "kicker": "Mondes simulés",
+      "big": "Genie 4",
+      "small": "Un aperçu de recherche, avec des limites"
+    }
+  },
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Google DeepMind",
+      "title": "Genie 4: A new generation of world simulation",
+      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "publishedAt": "2026-10-27T00:00:00Z",
+      "storyId": "approved-s1-genie-4-a-new-generation-of-world-simulation",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "Google DeepMind",
+      "title": "Genie 4 — capabilities and limitations",
+      "url": "https://deepmind.google/models/genie/",
+      "publishedAt": "2026-10-27T00:00:00Z",
+      "storyId": "approved-s2-genie",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "TechCrunch",
+      "title": "Google’s Genie 4 world model adds audio, more realistic worlds, and real-time steering",
+      "url": "https://techcrunch.com/2026/10/27/googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering/",
+      "publishedAt": "2026-10-27T16:30:00Z",
+      "storyId": "approved-s3-googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "en": {
+    "headline": "Genie 4 puts interactive worlds in research preview, with limits on accuracy",
+    "dek": "Google DeepMind describes scenes that respond to instructions. Its own limitations matter as much as the demonstration.",
+    "news": "Google DeepMind has announced Genie 4 as an early research preview for selected testers.",
+    "thirty": [
+      "Google says people can change simulated scenes using text.",
+      "Initial access is restricted; broader access is planned.",
+      "The company warns that visual details and objects can drift."
+    ],
+    "claimed": [
+      {
+        "text": "Genie 4 can generate interactive environments and accompanying sound, according to Google DeepMind.",
+        "by": "Google DeepMind",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "When an individual waiting-list applicant will receive access.",
+      "How reliably these demonstrations will generalize to independent production workflows."
+    ],
+    "matters": "Creators and educators may explore interactive scenes, but a plausible simulation should not be treated as a verified reconstruction.",
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Google DeepMind has introduced Genie 4, a world model the company says can generate scenes that respond to instructions while they run. The announcement describes accompanying audio and ways to steer an evolving environment. The model is being introduced through a research preview rather than general access. [s1,s2]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Google says the initial preview is for trusted testers, with access planned for Google AI Ultra subscribers through Project Genie and early-access developer partners. A waiting list is available; joining it is not the same as receiving access. [s1,s2]",
+          "The company also lists limits: visual details and object permanence can drift, real-world locations are not reproduced perfectly, and long-term consistency remains a research problem. These are the developer's disclosures, not results of an independent test by AI Broadsheet. [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For a creator considering an interactive lesson or story, the useful distinction is between an exploratory illustration and a record of an actual place. Our editorial takeaway is to label generated scenes clearly and check a reconstruction against external evidence. The company's stated limits make that distinction especially relevant. [s2]"
+        ]
+      }
+    ],
+    "faq": [],
+    "confirmed": [],
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Google DeepMind has announced Genie 4 as an early research preview for selected testers.",
+        "Creators and educators may explore interactive scenes, but a plausible simulation should not be treated as a verified reconstruction."
+      ],
+      "standard": [
+        "Google DeepMind has introduced Genie 4, a world model the company says can generate scenes that respond to instructions while they run. The announcement describes accompanying audio and ways to steer an evolving environment. The model is being introduced through a research preview rather than general access. [s1,s2]",
+        "Google says the initial preview is for trusted testers, with access planned for Google AI Ultra subscribers through Project Genie and early-access developer partners. A waiting list is available; joining it is not the same as receiving access. [s1,s2]",
+        "The company also lists limits: visual details and object permanence can drift, real-world locations are not reproduced perfectly, and long-term consistency remains a research problem. These are the developer's disclosures, not results of an independent test by AI Broadsheet. [s2]",
+        "For a creator considering an interactive lesson or story, the useful distinction is between an exploratory illustration and a record of an actual place. Our editorial takeaway is to label generated scenes clearly and check a reconstruction against external evidence. The company's stated limits make that distinction especially relevant. [s2]"
+      ],
+      "expert": [
+        "Google DeepMind has introduced Genie 4, a world model the company says can generate scenes that respond to instructions while they run. The announcement describes accompanying audio and ways to steer an evolving environment. The model is being introduced through a research preview rather than general access. [s1,s2]",
+        "Google says the initial preview is for trusted testers, with access planned for Google AI Ultra subscribers through Project Genie and early-access developer partners. A waiting list is available; joining it is not the same as receiving access. [s1,s2]",
+        "The company also lists limits: visual details and object permanence can drift, real-world locations are not reproduced perfectly, and long-term consistency remains a research problem. These are the developer's disclosures, not results of an independent test by AI Broadsheet. [s2]",
+        "For a creator considering an interactive lesson or story, the useful distinction is between an exploratory illustration and a record of an actual place. Our editorial takeaway is to label generated scenes clearly and check a reconstruction against external evidence. The company's stated limits make that distinction especially relevant. [s2]"
+      ]
+    },
+    "seoTitle": "Genie 4 puts interactive worlds in research preview, with li",
+    "metaDescription": "Google DeepMind describes scenes that respond to instructions. Its own limitations matter as much as the demonstration.",
+    "keywords": [],
+    "links": []
+  },
+  "fr": {
+    "headline": "Genie 4 arrive en aperçu de recherche, avec des limites de précision",
+    "dek": "Google DeepMind décrit des scènes qui répondent aux instructions. Les limites déclarées comptent autant que la démonstration.",
+    "news": "Google DeepMind a annoncé Genie 4 sous forme d'aperçu de recherche pour des testeurs sélectionnés.",
+    "thirty": [
+      "Google annonce des scènes simulées modifiables par texte.",
+      "L'accès initial est restreint; un élargissement est prévu.",
+      "L'entreprise prévient que les objets et détails visuels peuvent dériver."
+    ],
+    "claimed": [
+      {
+        "text": "Selon Google DeepMind, Genie 4 produit des environnements interactifs et du son.",
+        "by": "Google DeepMind",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "La date d'accès pour chaque personne inscrite sur la liste d'attente.",
+      "La fiabilité des démonstrations dans des usages de production indépendants."
+    ],
+    "matters": "Les créateurs et les enseignants peuvent explorer ces scènes, mais une simulation plausible ne constitue pas une reconstitution vérifiée.",
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Google DeepMind a présenté Genie 4, un modèle de monde capable, selon l'entreprise, de générer des scènes réagissant aux instructions pendant leur déroulement. L'annonce décrit aussi du son et la possibilité d'orienter un environnement en cours. Il s'agit d'un aperçu de recherche plutôt que d'un accès généralisé. [s1,s2]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Google réserve d'abord cet aperçu à des testeurs de confiance. Un accès est prévu pour les abonnés Google AI Ultra dans Project Genie et pour des partenaires développeurs. L'inscription à la liste d'attente ne garantit pas l'accès. [s1,s2]",
+          "L'entreprise reconnaît que les détails visuels et la permanence des objets peuvent dériver. La précision géographique et la cohérence à long terme restent limitées. Ce sont les déclarations du développeur, et non les conclusions d'un test indépendant d'AI Broadsheet. [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour préparer une leçon ou un récit interactif, il faut distinguer une illustration exploratoire d'un document sur un lieu réel. Notre recommandation éditoriale est d'indiquer clairement l'origine synthétique des scènes et de comparer toute reconstitution aux sources. Les limites reconnues par Google justifient cette précaution. [s2]"
+        ]
+      }
+    ],
+    "faq": [],
+    "confirmed": [],
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Google DeepMind a annoncé Genie 4 sous forme d'aperçu de recherche pour des testeurs sélectionnés.",
+        "Les créateurs et les enseignants peuvent explorer ces scènes, mais une simulation plausible ne constitue pas une reconstitution vérifiée."
+      ],
+      "standard": [
+        "Google DeepMind a présenté Genie 4, un modèle de monde capable, selon l'entreprise, de générer des scènes réagissant aux instructions pendant leur déroulement. L'annonce décrit aussi du son et la possibilité d'orienter un environnement en cours. Il s'agit d'un aperçu de recherche plutôt que d'un accès généralisé. [s1,s2]",
+        "Google réserve d'abord cet aperçu à des testeurs de confiance. Un accès est prévu pour les abonnés Google AI Ultra dans Project Genie et pour des partenaires développeurs. L'inscription à la liste d'attente ne garantit pas l'accès. [s1,s2]",
+        "L'entreprise reconnaît que les détails visuels et la permanence des objets peuvent dériver. La précision géographique et la cohérence à long terme restent limitées. Ce sont les déclarations du développeur, et non les conclusions d'un test indépendant d'AI Broadsheet. [s2]",
+        "Pour préparer une leçon ou un récit interactif, il faut distinguer une illustration exploratoire d'un document sur un lieu réel. Notre recommandation éditoriale est d'indiquer clairement l'origine synthétique des scènes et de comparer toute reconstitution aux sources. Les limites reconnues par Google justifient cette précaution. [s2]"
+      ],
+      "expert": [
+        "Google DeepMind a présenté Genie 4, un modèle de monde capable, selon l'entreprise, de générer des scènes réagissant aux instructions pendant leur déroulement. L'annonce décrit aussi du son et la possibilité d'orienter un environnement en cours. Il s'agit d'un aperçu de recherche plutôt que d'un accès généralisé. [s1,s2]",
+        "Google réserve d'abord cet aperçu à des testeurs de confiance. Un accès est prévu pour les abonnés Google AI Ultra dans Project Genie et pour des partenaires développeurs. L'inscription à la liste d'attente ne garantit pas l'accès. [s1,s2]",
+        "L'entreprise reconnaît que les détails visuels et la permanence des objets peuvent dériver. La précision géographique et la cohérence à long terme restent limitées. Ce sont les déclarations du développeur, et non les conclusions d'un test indépendant d'AI Broadsheet. [s2]",
+        "Pour préparer une leçon ou un récit interactif, il faut distinguer une illustration exploratoire d'un document sur un lieu réel. Notre recommandation éditoriale est d'indiquer clairement l'origine synthétique des scènes et de comparer toute reconstitution aux sources. Les limites reconnues par Google justifient cette précaution. [s2]"
+      ]
+    },
+    "seoTitle": "Genie 4 arrive en aperçu de recherche, avec des limites de p",
+    "metaDescription": "Google DeepMind décrit des scènes qui répondent aux instructions. Les limites déclarées comptent autant que la démonstration.",
+    "keywords": [],
+    "links": []
+  },
+  "version": 1,
+  "createdAt": "2026-10-28T03:45:59.053Z",
+  "updatedAt": "2026-10-28T03:45:59.053Z",
+  "model": "openai",
+  "background": [],
+  "lens": [],
+  "words": {
+    "en": 173,
+    "fr": 168
+  },
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "OpenAI Codex",
+      "at": "2026-10-28T03:45:59.053Z",
+      "verdict": "done",
+      "notes": [
+        "Written from linked primary sources; publication approved by the owner in this chat."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "OpenAI Codex source review",
+      "at": "2026-10-28T03:45:59.053Z",
+      "verdict": "pass",
+      "notes": [
+        "Company and agency claims attributed; survey population and source limitations stated. No independent field test claimed."
+      ]
+    }
+  ]
+}
