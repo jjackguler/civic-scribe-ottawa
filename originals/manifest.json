@@ -1,6 +1,64 @@
 {
- "updatedAt": "2026-10-24T21:46:00.000Z",
+ "updatedAt": "2026-10-28T03:55:12.664Z",
  "items": [
+  {
+   "id": "202610272351-sir-jack-15",
+   "kind": "explainer",
+   "section": "noir",
+   "publishedAt": "2026-10-28T03:55:12.664Z",
+   "title": "The Sir Jack Files #15: The Work That Remains",
+   "summary": "IVADO and CRIMT surveyed 1,015 Quebec workers; 43% said they used AI at work. An illustrated explainer about training, privacy, working conditions and the limits of a survey snapshot.",
+   "durationSec": 69,
+   "sources": [
+    {
+     "name": "IVADO / CRIMT · 15 Oct 2026",
+     "url": "https://ivado.ca/en/2026/10/15/ai-at-work-mass-job-displacement-is-not-imminent/"
+    }
+   ],
+   "transcript": "If AI enters the workplace, what happens to the person doing the work? Researchers at IVADO and CRIMT asked 1,015 workers in Quebec. Forty-three percent of those surveyed said they used AI at work. Among people who used AI, nearly two-thirds said they relied on it for less than a quarter of their tasks. The researchers found concerns beyond job loss: privacy, working conditions, inequality, and who gets a say in how the tools are used. There is a limit to this evidence. The survey describes the workers who took part; it cannot tell us exactly what will happen to every job. The next step is human: ask what a tool changes, what training people need, and who remains accountable for the decision. Source: IVADO and CRIMT. AI-assisted illustration and narration. AI news. Humans in charge.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Illustrations drawn in code with AI assistance for AI Broadsheet. Synthetic narration: ElevenLabs stock voice. No generated scene is presented as Genie output. No music or sound effects.",
+   "readMore": {
+    "url": "/article/quebec-workers-ai-survey-training-working-conditions",
+    "urlFr": "/fr/article/travailleurs-quebec-ia-sondage-formation-conditions",
+    "en": "Read our full story",
+    "fr": "Lire notre article"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/00297dccfc103f1a86a4db42d500540b57e8282b/originals/files/202610272351-sir-jack-15.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@00297dccfc103f1a86a4db42d500540b57e8282b/originals/files/202610272351-sir-jack-15.jpg"
+  },
+  {
+   "id": "202610272350-sir-jack-14",
+   "kind": "explainer",
+   "section": "noir",
+   "publishedAt": "2026-10-28T03:55:12.663Z",
+   "title": "The Sir Jack Files #14: The Room You Can Rewrite",
+   "summary": "Google DeepMind says Genie 4 creates interactive worlds guided by words. The catch: it is an early research preview, and objects and details can drift. Our illustrated explainer separates the company claim from what a human needs to check.",
+   "durationSec": 66,
+   "sources": [
+    {
+     "name": "Google DeepMind · Genie 4",
+     "url": "https://deepmind.google/models/genie/"
+    },
+    {
+     "name": "TechCrunch · 27 Oct 2026",
+     "url": "https://techcrunch.com/2026/10/27/googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering/"
+    }
+   ],
+   "transcript": "A room appears. A door opens. Then a few words change the scene. Google DeepMind says its new world model, Genie 4, can build interactive environments and respond to instructions while a scene is running. For storytellers and educators, the idea is compelling: a place you can explore instead of a video you can only watch. But here is the catch. Genie 4 is an early research preview. Google says details and objects can drift as a simulation continues. A convincing scene is not evidence of a real place, a reliable memory, or a faithful reconstruction. The useful question is not only what a model can show. It is what a human needs to check before trusting it. Sources: Google DeepMind and TechCrunch. AI-assisted illustration and narration. AI news. Humans in charge.",
+   "voice": "ElevenLabs stock voice (Brian)",
+   "aiImages": false,
+   "credits": "Illustrations drawn in code with AI assistance for AI Broadsheet. Synthetic narration: ElevenLabs stock voice. No generated scene is presented as Genie output. No music or sound effects.",
+   "readMore": {
+    "url": "/article/genie-4-interactive-worlds-preview-limits",
+    "urlFr": "/fr/article/genie-4-mondes-interactifs-apercu-limites",
+    "en": "Read our full story",
+    "fr": "Lire notre article"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/00297dccfc103f1a86a4db42d500540b57e8282b/originals/files/202610272350-sir-jack-14.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@00297dccfc103f1a86a4db42d500540b57e8282b/originals/files/202610272350-sir-jack-14.jpg"
+  },
   {
    "id": "202610241900-sir-jack-13",
    "kind": "explainer",
