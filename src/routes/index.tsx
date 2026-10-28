@@ -251,6 +251,16 @@ function Home() {
 
       <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
 
+      <section className="container-mw pt-6" aria-labelledby="open-desk-intro">
+        <div className="border-b border-line pb-6">
+          <h2 id="open-desk-intro" className="masthead-serif text-[1.4rem]">Open Desk Journalism</h2>
+          <p className="mt-2 max-w-3xl text-[0.95rem] leading-relaxed text-muted-ink">{locale === "fr"
+            ? "Des récits centrés sur les personnes, des sources visibles et une responsabilité éditoriale humaine. Nous expliquons le rôle de l'IA, la fabrication des reconstitutions et ce qui reste incertain."
+            : "Human-centred stories, visible sources and human editorial responsibility. We explain where AI helps, how reconstructions are made and what remains uncertain."}</p>
+          <Link to="/about" hash="how-we-work" className="inline-block mt-2 text-lake font-semibold hover:underline">{locale === "fr" ? "Comment nous travaillons →" : "How we work →"}</Link>
+        </div>
+      </section>
+
       {/* Our own reporting, right under the stage: newsroom articles first, then dispatches */}
       <NewsroomLead initial={newsroom} exclude={stageArticles.map(a => a.id)} className="container-mw pt-12" />
       <DispatchRail initial={dispatches} className="container-mw pt-12" />

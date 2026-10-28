@@ -33,6 +33,20 @@ Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Conso
 - Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
   same computer.
 
+## Open Desk Journalism (28 Oct 2026)
+- Owner approved a /about "How we work" section and a short home-page introduction linking
+  to /about#how-we-work, using the existing typography, colours and layout components.
+- Open Desk Journalism is the name of the approach being developed: visible sources, AI
+  involvement, verification, corrections and human editorial responsibility. Do not claim
+  worldwide first use or a new invention of these principles; related approaches exist.
+- Jack leads editorial direction and is building a small team with volunteer university
+  students, beginning with interviews and reporting projects. No institutional affiliation,
+  team size or paid staffing is claimed.
+- Explain immersive work as developing realistic 3D/360 journalism experiences with Unreal
+  Engine, Blender and AI-assisted workflows, clearly identifying reconstructions and uncertainty.
+- Distinguish automated routine coverage and source checks from human editorial responsibility;
+  do not claim every automated item receives individual human review before publication.
+
 ## Immersive Journalism (added 26 Oct 2026)
 - `/immersive` (hub) and `/immersive/<slug>` (case page) read from `src/lib/immersive.ts`.
   First case: `/immersive/challenger-1986`. The Dallas 1963 case is **not** published; the owner
