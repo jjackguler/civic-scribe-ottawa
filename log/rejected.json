@@ -1,5 +1,16 @@
 [
   {
+    "id": "1d5e4ow",
+    "at": "2026-10-28T01:59:20.622Z",
+    "stage": "copy",
+    "headline": "Data center backlash is uniting America",
+    "reasons": [
+      "Not in the sources (names or numbers): American, United, States, Residents.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): United, States, Residents, High."
+    ]
+  },
+  {
     "id": "qxgtc9",
     "at": "2026-10-27T22:57:33.042Z",
     "stage": "copy",
