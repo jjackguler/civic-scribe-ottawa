@@ -38,6 +38,12 @@ const STARTERS = (
 /** Our own name may appear in our copy. */
 const HOUSE = ["broadsheet"];
 
+// These are connective adverbs, not names. Exempt them only at the start of a
+// sentence; a capitalised word elsewhere may still be a person or place.
+const CONNECTIVES = new Set(["alongside", "architecturally", "inside", "instead", "meanwhile", "nevertheless", "therefore"]);
+const lowerConnectives = (s: string) => s.replace(/(^|[.!?]\s+)([A-Z][a-z]+)(?=\b)/g,
+  (match, prefix: string, word: string) => CONNECTIVES.has(word.toLowerCase()) ? prefix + word.toLowerCase() : match);
+
 /** French elisions ("l'", "d'", "qu'") hide the word after them; take them off so that word is checked. */
 const unElide = (s: string) => s.replace(/(^|[\s«“"(])(?:[LDJMNSTC]|Qu|Jusqu|Lorsqu|Puisqu)['’](?=\p{L})/giu, "$1");
 
@@ -50,7 +56,7 @@ export function factGuard(fields: string[], sourceText: string): string[] {
   const bad = new Set<string>();
   for (const f of fields) {
     if (!f) continue;
-    for (const w of unsupported(unOrdinal(unElide(stripAllMarkers(f))), src, [...STARTERS, ...HOUSE])) bad.add(w);
+    for (const w of unsupported(lowerConnectives(unOrdinal(unElide(stripAllMarkers(f)))), src, [...STARTERS, ...HOUSE])) bad.add(w);
   }
   for (const p of negationProblems(fields, sourceText)) bad.add(p);
   return [...bad];
