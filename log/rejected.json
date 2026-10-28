@@ -1,5 +1,49 @@
 [
   {
+    "id": "mbofo5",
+    "at": "2026-10-28T20:04:35.457Z",
+    "stage": "copy",
+    "headline": "Google opens Android development to third-party AI agents and unveils new Gemini APIs",
+    "reasons": [
+      "Not in the sources (names or numbers): Developers, AI-driven, Software, Additionally.",
+      "Too close to The Decoder's wording (\"coding agents including anthropic s claude agent and openai…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Developers, People, Additionally, AI-driven."
+    ]
+  },
+  {
+    "id": "a9cnlo",
+    "at": "2026-10-28T20:04:28.133Z",
+    "stage": "copy",
+    "headline": "Chrome’s enhanced autofill can now pull info from Gmail to help you fill out forms",
+    "reasons": [
+      "Not in the sources (names or numbers): Users, Previously, PII.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "rewrite: missing fields: news, matters (reply keys: headline,dek,news,known,matters,article,timeline,thirty,confirmed,claimed,unknown,plain)"
+    ]
+  },
+  {
+    "id": "1ouue7",
+    "at": "2026-10-28T20:04:07.553Z",
+    "stage": "copy",
+    "headline": "Voice AI in vogue: Nvidia releases new open transcription model",
+    "reasons": [
+      "Not in the sources (names or numbers): Users, Reporting.",
+      "rewrite: no news section"
+    ]
+  },
+  {
+    "id": "to5w1m",
+    "at": "2026-10-28T20:03:42.444Z",
+    "stage": "copy",
+    "headline": "Google announces Gemini 4 Carbon, its latest frontier AI model that you can't use",
+    "reasons": [
+      "Not in the sources (names or numbers): Ordinary.",
+      "Too close to The Decoder's wording (\"tops the artificial analysis intelligence index v5 with 59…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no news section"
+    ]
+  },
+  {
     "id": "1d5e4ow",
     "at": "2026-10-28T01:59:20.622Z",
     "stage": "copy",
