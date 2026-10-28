@@ -107,7 +107,7 @@ function HowWeWork() {
   const { locale } = useLocale();
   const fr = locale === "fr";
   return (
-    <section id="how-we-work" className="container-mw mt-10 scroll-mt-8" aria-labelledby="how-we-work-title">
+    <section id="how-we-work" className="container-mw mt-10 scroll-mt-28" aria-labelledby="how-we-work-title">
       <h2 id="how-we-work-title" className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{fr ? "Comment nous travaillons" : "How we work"}</h2>
       <div className="prose-mw max-w-3xl">
         <p>{fr
