@@ -58,6 +58,7 @@ function About() {
     <PageShell>
       <PageIntro title={locale === "fr" ? `À propos de ${SITE.name}` : `About ${SITE.name}`} dek={pick(SITE.description)} />
       <WhoRunsThis />
+      <HowWeWork />
       <div className="container-mw mt-10 grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         <section>
           <h2 className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{locale === "fr" ? "Nos règles" : "Our standards"}</h2>
@@ -99,6 +100,40 @@ function About() {
       </div>
       <DeskStatus />
     </PageShell>
+  );
+}
+
+function HowWeWork() {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+  return (
+    <section id="how-we-work" className="container-mw mt-10 scroll-mt-28" aria-labelledby="how-we-work-title">
+      <h2 id="how-we-work-title" className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{fr ? "Comment nous travaillons" : "How we work"}</h2>
+      <div className="prose-mw max-w-3xl">
+        <p>{fr
+          ? "Nous développons une démarche appelée Open Desk Journalism : rendre visibles les sources, le rôle de l'IA, les méthodes de vérification et les corrections, tout en gardant la responsabilité éditoriale humaine. Notre point de départ est ce que l'IA change pour les personnes : leur travail, leurs droits et leur vie quotidienne."
+          : "We are developing an approach we call Open Desk Journalism: making sources, AI involvement, verification methods and corrections visible, with human editorial responsibility. We start with what AI changes for people: their work, rights and everyday lives."}</p>
+        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Des sources au récit" : "From sources to stories"}</h3>
+        <p>{fr
+          ? "Notre fil rassemble des titres et de courts extraits de médias, de laboratoires et d'institutions publiques identifiés, avec des liens vers les originaux. Nos articles et vidéos sont présentés séparément et indiquent leurs sources. Une déclaration d'entreprise reste une déclaration attribuée; ce que les sources ne permettent pas d'établir reste une incertitude."
+          : "Our news feed brings together headlines and short excerpts from named newsrooms, labs and public institutions, with links to the originals. Our own articles and videos are presented separately and identify their sources. A company's statement remains an attributed claim; what the sources cannot establish remains uncertain."}</p>
+        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Le rôle de l'IA et de l'éditeur" : "The roles of AI and the editor"}</h3>
+        <p>{fr
+          ? "Le logiciel recueille et classe les nouvelles. L'IA aide à rédiger et traduire certains contenus, ainsi qu'à produire des images, du son et des vidéos dont l'usage est signalé. Certains contenus réguliers suivent des processus automatisés, avec des vérifications par rapport aux sources. Ces vérifications ne garantissent pas l'absence d'erreurs. Jack Guler définit la ligne éditoriale et répond du travail publié et des corrections."
+          : "Software gathers and organises news. AI helps draft and translate some coverage and produce disclosed visual, audio and video work. Some routine coverage follows automated workflows with checks against source material. Those checks do not guarantee that every error is caught. Jack Guler sets the editorial direction and answers for the published work and corrections."}</p>
+        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Journalisme immersif" : "Immersive journalism"}</h3>
+        <p>{fr
+          ? "Nous développons aussi des expériences de journalisme immersif : des événements et lieux historiques reconstruits en environnements 3D réalistes et en récits à 360 degrés, avec Unreal Engine, Blender et des méthodes de production assistées par l'IA. L'objectif est de permettre au public d'explorer les lieux et le contexte d'un récit. Les reconstitutions sont identifiées comme telles, avec leurs sources, leurs éléments estimés et leurs incertitudes; elles ne sont pas présentées comme des images d'archives."
+          : "We are also developing immersive journalism experiences: historical events and locations reconstructed as realistic 3D environments and 360-degree narratives using Unreal Engine, Blender and AI-assisted workflows. The aim is to let audiences explore the spaces and context behind a story. Reconstructions are identified as such, with their sources, estimated elements and uncertainties explained; they are not presented as archive footage."}</p>
+        <p className="font-sans">
+          <Link to="/standards" className="text-lake font-semibold hover:underline">{fr ? "Nos normes éditoriales" : "Our editorial standards"}</Link>
+          {" · "}
+          <Link to="/corrections" className="text-lake font-semibold hover:underline">{fr ? "Corrections et signalement d'une erreur" : "Corrections and reporting an error"}</Link>
+          {" · "}
+          <Link to="/immersive" className="text-lake font-semibold hover:underline">{fr ? "Explorer le journalisme immersif" : "Explore immersive journalism"}</Link>
+        </p>
+      </div>
+    </section>
   );
 }
 

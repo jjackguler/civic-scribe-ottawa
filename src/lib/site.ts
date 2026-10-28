@@ -31,7 +31,10 @@ export const SITE = {
   editor: {
     name: "Jack Guler",
     role: { en: "Editor", fr: "Responsable éditorial" },
-    bio: { en: "", fr: "" }, // TODO [BIO]
+    bio: {
+      en: "Jack Guler is a journalist, filmmaker and the founder of AI Broadsheet. He leads editorial direction and is building a small team with volunteer university students, beginning with interviews and reporting projects.",
+      fr: "Jack Guler est journaliste, cinéaste et fondateur d'AI Broadsheet. Il dirige la rédaction et constitue une petite équipe avec des étudiants universitaires bénévoles, en commençant par des entretiens et des projets journalistiques.",
+    },
   },
   email: {
     /** Cloudflare Email Routing, enabled 2026-10-10. */
