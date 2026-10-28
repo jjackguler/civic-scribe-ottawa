@@ -12,6 +12,8 @@ import { editorialGate } from "../../src/lib/editorial";
 import { upsettingReasons } from "./upsetting";
 import { clip, publishedWords } from "./roles";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
+import { splitForReporting } from "./pick";
+import type { Story } from "../../src/lib/news-engine";
 
 let passed = 0;
 const failures: string[] = [];
@@ -46,6 +48,24 @@ test("an invented name is caught", () => {
 test("plain sentence starters pass; invented authorities do not", () => {
   assert.deepEqual(factGuard(["However, the model is open. Whether it is free is unclear."], SRC), []);
   assert.deepEqual(factGuard(["Experts say Aurora-2 is open."], SRC), ["Experts"]);
+});
+test("sentence-initial connective adverbs pass, but new names and numbers still fail", () => {
+  assert.deepEqual(factGuard(["Alongside the model, Northwind published details. Inside, the announcement describes Aurora-2."], SRC), []);
+  assert.deepEqual(factGuard(["Alongside Toronto, Northwind cited 99 people."], SRC), ["99", "Toronto"]);
+  assert.deepEqual(factGuard(["Northwind met Alongside."], SRC), ["Alongside"]);
+  assert.deepEqual(factGuard(["Residents say Aurora-2 is open."], SRC), ["Residents"]);
+});
+
+test("transitively linked unrelated stories are separated for reporting", () => {
+  const at = new Date().toISOString();
+  const mk = (id: string, source: string, title: string) => ({ id, source, title, publishedAt: at }) as Story;
+  const lead = mk("1", "A", "Northwind Aurora model improves robot navigation");
+  const related = mk("2", "B", "Northwind Aurora model improves robot safety");
+  // A headline sharing just the company's name and model is not enough.
+  const unrelated = mk("3", "C", "Northwind Aurora model changes developer pricing");
+  const result = splitForReporting([{ id: "1", lead, stories: [lead, related, unrelated], sources: 3, latest: at }]);
+  assert.deepEqual(result.map(c => c.stories.map(s => s.id)), [["1", "2"], ["3"]]);
+  assert.deepEqual(result.map(c => c.sources), [2, 1]);
 });
 test("a French elision does not hide a name (l'Ontario)", () => {
   assert.deepEqual(factGuard(["Le modèle vient de l'Ontario."], SRC), ["Ontario"]);

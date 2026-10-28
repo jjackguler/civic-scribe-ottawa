@@ -27,7 +27,32 @@ const HOURS = 36;
 const STOP = new Set("about after against their there these those which while with from into over than that this what when will would could should says said new news ai".split(" "));
 const words = (t: string) => new Set(t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/[^a-z0-9-]+/).filter(w => w.length >= 4 && !STOP.has(w)));
 const sharedWords = (a: string, b: string) => { const A = words(a); return [...words(b)].filter(w => A.has(w)).length; };
+const titleWords = (t: string) => new Set([...words(t)].filter(w => !["model", "models", "company", "companies"].includes(w)));
+const sharedTitleWords = (a: string, b: string) => { const A = titleWords(a); return [...titleWords(b)].filter(w => A.has(w)).length; };
 const REJECT_COOLDOWN_MS = 72 * 3600_000;
+
+/** Split transitive desk clusters before using them as evidence for one article.
+ * Every included report must match the lead directly, not merely another
+ * cluster member. Rich excerpts can corroborate differently worded headlines.
+ * Singletons remain eligible for the existing one-source rules; we never
+ * discard a story here.
+ */
+export function splitForReporting(clusters: Cluster[]): Cluster[] {
+  return clusters.flatMap(cluster => {
+    const remaining = [...cluster.stories];
+    const parts: Cluster[] = [];
+    while (remaining.length) {
+      const lead = remaining.shift()!;
+      const related = remaining.filter(s => sharedTitleWords(lead.title, s.title) >= 3 ||
+        (sharedTitleWords(lead.title, s.title) >= 1 && sharedWords(`${lead.title} ${lead.summary ?? ""}`, `${s.title} ${s.summary ?? ""}`) >= 5));
+      for (const s of related) remaining.splice(remaining.indexOf(s), 1);
+      const stories = [lead, ...related];
+      parts.push({ id: lead.id, lead, stories, sources: new Set(stories.map(s => s.source)).size,
+        latest: stories.reduce((latest, s) => s.publishedAt > latest ? s.publishedAt : latest, lead.publishedAt) });
+    }
+    return parts;
+  });
+}
 
 function toSources(stories: Story[]): { sources: DispatchSource[]; excerpts: string[] } {
   // One report per outlet (its newest), richest excerpts first, at most six, then in publishing order.
@@ -82,7 +107,7 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
     events.push(toEvent(id, lead, group));
   };
 
-  const clusters: Cluster[] = clusterStories(stories, HOURS);
+  const clusters: Cluster[] = splitForReporting(clusterStories(stories, HOURS));
   // Government releases stay out of the front-page clusters; a release about an event outlets are
   // reporting joins that event as its official source instead of becoming a second article.
   const govFresh = stories.filter(s => s.gov && s.kind !== "trending" && fresh(s.publishedAt));
