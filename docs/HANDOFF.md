@@ -2,7 +2,7 @@
 
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
-Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Console read).
+Last updated: 28 Oct 2026, Toronto (three bilingual articles, cases #14/#15, AdSense review requested).
 
 ## Ground rules from the owner
 - Post only from AI Broadsheet's own accounts. Never touch other brands the owner is logged
@@ -111,17 +111,16 @@ Bio everywhere: "AI news, with the human stakes left in. One catch a day." Sign-
   sometimes drops it). The Sir Jack Case 03 caption on Facebook is still empty.
 - The Instagram grid still shows an old "NOV 3 ELECTION DAY" post (red line: elections). Archive
   it only after the owner says yes.
-- Posting the 18 MB videos from the owner's Chrome (worked on 25 Oct):
-  - YouTube Studio: fetch the mp4 from `raw.githubusercontent.com/.../media/originals/files/<id>.mp4`
-    inside the page and put it on `input[name=Filedata]`. Title, description and tags come from
-    `scripts/originals/noir-publish/youtube.json` on `claude/noir-publish`.
-  - Instagram and TikTok block that fetch. Split the mp4 into 9 MB parts inside the session
-    folder, upload each part to a hidden file input (10 MB per call), join them in the page with
-    `new File(parts)` and hand that to the site's video input. Delete the parts afterwards.
+- Posting from the owner's Chrome (verified on 27–28 Oct with 40 MB local MP4s):
+  - Use the documented file chooser: start `tab.playwright.waitForEvent('filechooser')`,
+    click the site's visible upload/select control, then `chooser.setFiles(absolutePath)`.
+    No page fetches, hidden input injection or file splitting is needed.
+  - YouTube: source descriptions and truthful AI disclosure, not made for kids, no paid promotion;
+    wait for copyright checks, choose Public, publish, verify the success dialog and save proof.
   - Instagram: "Original" crop, the poster jpg as cover, "Add AI label" on. Line breaks in the
     caption need real Enter presses.
-  - TikTok: type the description with real keystrokes (scripted text insertion crashes the
-    editor), one hashtag at a time. "AI-generated content" is under "Show more". A new post
+  - TikTok: native clipboard paste through the supported tab API reliably preserves the whole
+    caption; verify the final text before posting. "AI-generated content" is under "Show more". A new post
     shows "Only me" while it is under review, then turns to Everyone.
   - Every caption carries the AI disclosure and the source names.
 
@@ -129,7 +128,70 @@ Bio everywhere: "AI news, with the human stakes left in. One catch a day." Sign-
 "After the Headline": 2 episodes, feed at `aibroadsheet.com/podcast.xml`. It has not been submitted to
 Spotify or Apple Podcasts yet; the owner does that.
 
-## State on 25 Oct 2026
+## State on 28 Oct 2026 (supersedes the older snapshot below)
+- The owner approved the three proposed news topics, both video scripts, the Ink & Gold
+  illustrated treatment and the platform captions on 27 Oct, then asked for personally useful
+  AI funding and Genie information. This approval covers this release; it is not standing
+  permission for future social posts. The local review is `Desktop\AI NEWS\haber-video-inceleme-27-ekim.md`.
+- Newsroom recovery: PR #41 merged (`5f3fcf8`) fixes sentence-initial connective false positives
+  in the copy guard and splits transitive source clusters into related reporting events.
+  Mechanical tests: 35; provider/cost tests: 30; canned dry run: two published, two rejected.
+  PR #42 merged (`666576c`) adds honest OpenAI attribution for the Codex-edited articles.
+  Lovable synced `666576ce0262617ad6478df74ff72bcdacab99fd`; production article HTML now shows OpenAI.
+- Three source-reviewed EN/FR articles were published to `newsroom` in `3d1795e`:
+  `/article/genie-4-interactive-worlds-preview-limits`,
+  `/article/quebec-workers-ai-survey-training-working-conditions`, and
+  `/article/canada-regional-ai-funding-prairies-ontario-eligibility`.
+  Each returns HTTP 200. They are manually source-reviewed releases, not evidence that
+  the next unattended Gemini run will succeed. Provider 503/timeouts can still recur.
+- Output watch is green: run `40629434736`, three articles in the last 24 h, eight articles
+  total, 46 video manifest entries. The earlier stale-video alert is cleared.
+- The actual held queue (`drafts.json`) still has three old entries: Orchestra Bio
+  (`1r5cm1w`), Meta Muse (`1hxzldk`), and the spy-charge article (`1hyhi9i`). They were not
+  approved/published in this release. Do not infer the active queue from leftover draft files.
+  `originals/scheduled.json` is empty; #14/#15 were published immediately.
+- New cases: #14 **The Room You Can Rewrite** (66 s) and #15 **The Work That Remains** (69 s).
+  Production branch `codex/approved-reels`, commit `495fec5`, successful render run
+  `40628361962`. `scenes10.js` draws code illustrations; narration uses ElevenLabs's stock
+  voice. No Gemini images, new music or sound effects were generated. Captions are burned in.
+  Media files are pinned to `00297dccfc103f1a86a4db42d500540b57e8282b`; manifest lists public
+  YouTube copies. Site pages: `/video/the-sir-jack-files-14-the-room-you-can-rewrite` and
+  `/video/the-sir-jack-files-15-the-work-that-remains` (HTTP 200).
+- Both cases are live on YouTube, Instagram and TikTok, with AI disclosure and named sources.
+  TikTok initially held each for review, then both rows showed **Everyone**.
+  LinkedIn and X have article/video-link posts. Exact URLs and captions:
+  `docs/releases/2026-10-28.md`. Facebook is unfinished: Cem Guler's current login only exposes
+  another managed page; AI Broadsheet is absent from its profile/page switcher. Business Suite
+  returns `ERR_TOO_MANY_REDIRECTS`. No other brand was used; Facebook captions remain prepared.
+- AdSense: owner-authorized resubmission completed on `aibroadsheet@gmail.com`. The site's UI
+  now shows **Getting ready**, **Verify site ownership** checked and **Review requested**
+  checked. This is a pending review, not approval. `ADSENSE_SERVING_ENABLED` remains false.
+  Live `ads.txt`, publisher meta and robots were checked. Do not request another review now.
+- Search Console checked after midnight Toronto: 28-day selection shows 3 clicks, 3.59K
+  impressions, 0.1% CTR, position 56; available chart data is 9–25 Oct, last updated 3 h ago.
+  Index report (last update 22 Oct): 275 indexed, 1,506 excluded: 1,417 noindex, 83 discovered,
+  two crawled/not indexed, three redirects, one robots block (`https://app.aibroadsheet.com/`,
+  last crawled 18 Oct; not a newsroom article). Do not call all excluded pages
+  errors: `/story` summaries are intentionally noindex. These figures do not yet reflect
+  this release's new articles or videos.
+- User-fit funding: Ontario RAII Adoption requires >=3 years operating and >=5 FTE; AI
+  Commercialization/Scale-Up requires >=1 year and >=1 FTE in southern Ontario, Canadian-made
+  AI at TRL6+. Both require an incorporated eligible business/IP rights/responsible AI.
+  $125K–$5M is fully repayable, interest-free, up to 50% eligible costs. Common AI subscriptions
+  alone do not qualify. Company age/FTE/project budget remain unknown; no application submitted.
+  Official deadlines: 24 Nov 2026 for projects/costs starting before 31 Mar 2027; final
+  19 Jan 2027 at 4:59 p.m. EST. See release notes for official links.
+- Genie: useful for fictional scene prototyping and interactive explainers. Do not present it
+  as evidence or an accurate historical reconstruction; retain controlled Unreal scenes for
+  sourced historical details. Project Genie lists Canada/18+/Google AI Ultra; Genie 4 itself
+  is an early restricted preview. The owner's account access/plan has not been verified and
+  no upgrade was purchased.
+- Local deliverables and proof screenshots: `Desktop\AI NEWS\approved-videos-27-oct\`.
+  Active checkouts: `C:\sj\newsroom-recovery` (main changes/docs), `C:\sj\approved-articles`
+  (newsroom release), `C:\sj\approved-reels` (production), `C:\sj\approved-media` (media release).
+  Do not remove untracked test/release output or merge the old production branch into main.
+
+## Archived snapshot: 25 Oct 2026
 - Newsroom is publishing again after the 11–24 Oct outage: Gemini 503s, a two-source rule,
   150 s timeouts and drafts waiting for an approver. All four are fixed (#19, #20, #22, #30, #32).
   Output watch went red on 19–23 Oct and nobody acted on it.
@@ -158,7 +220,7 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Submit the podcast feed to Spotify and Apple.
 - TikTok: delete the Trump Jr. and Burger King videos for good, and make the Ohio video private (red lines).
 - Answer the open LinkedIn Premium (1 month) question.
-- Decide whether to resubmit AdSense (aibroadsheet@gmail.com → Home → policy box → Resubmit).
+- AdSense resubmission completed on 27 Oct; wait for Google's review decision.
 - Say yes or no to archiving the "NOV 3 ELECTION DAY" Instagram post.
 
 ## Ideas waiting
@@ -172,6 +234,10 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Answer the unanswered YouTube comment under the Titanic video.
 
 ## Next
+0. Verify the next unattended newsroom run after #41 actually publishes suitable new reporting;
+   green Output watch currently reflects the manually reviewed release. Restore AI Broadsheet
+   Facebook admin access before posting the prepared captions. Check the pending AdSense review
+   only when there is a decision or a useful reason to inspect it again.
 1. Post #12 and #13 on LinkedIn (owner's profile, tag AI Broadsheet, links in the first
    comment), Facebook and X, with the captions in `docs/social-kit.md`. Ask the owner first.
 2. Add UTM links to the bios (`?utm_source=instagram`, `tiktok`).
