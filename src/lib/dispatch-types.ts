@@ -51,7 +51,7 @@ export type Dispatch = {
   en: DispatchCopy;
   fr: DispatchCopy;
   /** Which model family wrote it ("claude" or "gemini"), for the label. */
-  model: "claude" | "gemini";
+  model: "claude" | "gemini" | "openai";
 };
 
 /** What lists and rails need. */

@@ -78,7 +78,7 @@ const COPY = {
   },
 } as const;
 
-const MODEL = { claude: "Claude", gemini: "Gemini" } as const;
+const MODEL = { claude: "Claude", gemini: "Gemini", openai: "OpenAI" } as const;
 
 function longDate(iso: string, locale: Locale) {
   return new Date(iso).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", { timeZone: "America/Toronto", year: "numeric", month: "long", day: "numeric" });

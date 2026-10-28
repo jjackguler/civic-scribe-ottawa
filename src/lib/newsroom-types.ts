@@ -118,7 +118,7 @@ export type NewsroomArticle = {
   en: NewsroomCopy;
   fr: NewsroomCopy;
   /** Model family that wrote it, for the label. */
-  model: "claude" | "gemini";
+  model: "claude" | "gemini" | "openai";
   /** Words in the article sections, per language (honest length: never padded). */
   words: { en: number; fr: number };
   /** The people-side of the story (editorial.ts humanLens). */
