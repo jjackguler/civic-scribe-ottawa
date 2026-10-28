@@ -170,7 +170,8 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Search Console checked after midnight Toronto: 28-day selection shows 3 clicks, 3.59K
   impressions, 0.1% CTR, position 56; available chart data is 9–25 Oct, last updated 3 h ago.
   Index report (last update 22 Oct): 275 indexed, 1,506 excluded: 1,417 noindex, 83 discovered,
-  two crawled/not indexed, three redirects, one robots block. Do not call all excluded pages
+  two crawled/not indexed, three redirects, one robots block (`https://app.aibroadsheet.com/`,
+  last crawled 18 Oct; not a newsroom article). Do not call all excluded pages
   errors: `/story` summaries are intentionally noindex. These figures do not yet reflect
   this release's new articles or videos.
 - User-fit funding: Ontario RAII Adoption requires >=3 years operating and >=5 FTE; AI
