@@ -70,7 +70,7 @@ if (flag === "--stills") {
   });
   const amb = add(join(build, "sfx", "_ambience.mp3"), true), mus = add(join(build, "music.mp3"), true), D = tl.total.toFixed(3);
   chains.push(`${vo.join("")}amix=inputs=${vo.length}:normalize=0,asplit=2[vo][key]`);
-  chains.push(`${fx.join("")}amix=inputs=${fx.length}:normalize=0[fx]`);
+  chains.push(fx.length ? `${fx.join("")}amix=inputs=${fx.length}:normalize=0[fx]` : `anullsrc=r=48000:cl=stereo,atrim=0:${D}[fx]`);
   chains.push(`[${amb}]atrim=0:${D},volume=-24dB,afade=t=in:d=1.2,afade=t=out:st=${(tl.total - 2).toFixed(2)}:d=2[amb]`);
   chains.push(`[${mus}]atrim=0:${D},volume=-11dB,afade=t=in:d=2,afade=t=out:st=${(tl.total - 3).toFixed(2)}:d=3[mus0]`);
   chains.push(`[mus0][key]sidechaincompress=threshold=0.02:ratio=6:attack=30:release=600[mus]`);

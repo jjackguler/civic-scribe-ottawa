@@ -1,0 +1,204 @@
+{
+  "slug": "work-that-remains",
+  "title": "The Work That Remains",
+  "episode": 15,
+  "sources": [
+    {
+      "name": "IVADO / CRIMT · 15 Oct 2026",
+      "url": "https://ivado.ca/en/2026/10/15/ai-at-work-mass-job-displacement-is-not-imminent/"
+    }
+  ],
+  "shots": [
+    {
+      "id": "w-desk",
+      "say": "If AI enters the workplace, what happens to the person doing the work?",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 15"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "THE WORK\nTHAT REMAINS",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "w-count",
+      "say": "Researchers at IVADO and CRIMT asked 1,015 workers in Quebec. Forty-three percent of those surveyed said they used AI at work.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 15"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "1,015 WORKERS\nQUEBEC SURVEY",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "w-tasks",
+      "say": "Among people who used AI, nearly two-thirds said they relied on it for less than a quarter of their tasks.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 15"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "64% OF AI USERS\nUNDER A QUARTER OF TASKS",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "w-voice",
+      "say": "The researchers found concerns beyond job loss: privacy, working conditions, inequality, and who gets a say in how the tools are used.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 15"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "PRIVACY · CONDITIONS\nWHO HAS A SAY?",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "w-limit",
+      "say": "There is a limit to this evidence. The survey describes the workers who took part; it cannot tell us exactly what will happen to every job.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 15"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "A SNAPSHOT\nNOT A FORECAST",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "w-close",
+      "say": "The next step is human: ask what a tool changes, what training people need, and who remains accountable for the decision. Source: IVADO and CRIMT. AI-assisted illustration and narration. AI news. Humans in charge.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 15"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "TRAINING · ACCOUNTABILITY\nHUMANS IN CHARGE",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    }
+  ],
+  "series": "The Sir Jack Files",
+  "grain": 0.045,
+  "narrationOnly": true,
+  "slogan": "AI NEWS. HUMANS IN CHARGE.",
+  "cta": "SOURCES + FULL STORY → AIBROADSHEET.COM"
+}

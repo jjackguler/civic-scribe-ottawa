@@ -1,0 +1,208 @@
+{
+  "slug": "room-you-can-rewrite",
+  "title": "The Room You Can Rewrite",
+  "episode": 14,
+  "sources": [
+    {
+      "name": "Google DeepMind · Genie 4",
+      "url": "https://deepmind.google/models/genie/"
+    },
+    {
+      "name": "TechCrunch · 27 Oct 2026",
+      "url": "https://techcrunch.com/2026/10/27/googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering/"
+    }
+  ],
+  "shots": [
+    {
+      "id": "g-door",
+      "say": "A room appears. A door opens. Then a few words change the scene.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 14"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "THE ROOM\nYOU CAN REWRITE",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "g-world",
+      "say": "Google DeepMind says its new world model, Genie 4, can build interactive environments and respond to instructions while a scene is running.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 14"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "GENIE 4\nCOMPANY CLAIM",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "g-editor",
+      "say": "For storytellers and educators, the idea is compelling: a place you can explore instead of a video you can only watch.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 14"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "EXPLORE\nA NEW SCENE",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "g-drift",
+      "say": "But here is the catch. Genie 4 is an early research preview. Google says details and objects can drift as a simulation continues.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 14"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "THE CATCH\nDETAILS CAN DRIFT",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "g-check",
+      "say": "A convincing scene is not evidence of a real place, a reliable memory, or a faithful reconstruction. The useful question is not only what a model can show. It is what a human needs to check before trusting it.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 14"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "A SCENE\nIS NOT PROOF",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    },
+    {
+      "id": "g-close",
+      "say": "Sources: Google DeepMind and TechCrunch. AI-assisted illustration and narration. AI news. Humans in charge.",
+      "cam": {
+        "from": [
+          1.03,
+          0,
+          0
+        ],
+        "to": [
+          1.08,
+          0.01,
+          0
+        ]
+      },
+      "fx": {},
+      "ov": [
+        {
+          "t": "kicker",
+          "at": 0.2,
+          "text": "THE SIR JACK FILES · CASE 14"
+        },
+        {
+          "t": "type",
+          "at": 0.5,
+          "text": "CHECK THE SOURCE\nHUMANS IN CHARGE",
+          "y": 0.13
+        }
+      ],
+      "sfx": []
+    }
+  ],
+  "series": "The Sir Jack Files",
+  "grain": 0.045,
+  "narrationOnly": true,
+  "slogan": "AI NEWS. HUMANS IN CHARGE.",
+  "cta": "SOURCES + FULL STORY → AIBROADSHEET.COM"
+}

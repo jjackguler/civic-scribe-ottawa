@@ -8,7 +8,7 @@ name: Noir reel
 
 on:
   push:
-    branches: [noir-run]
+    branches: [codex/approved-reels]
   workflow_dispatch:
     inputs:
       slug:
