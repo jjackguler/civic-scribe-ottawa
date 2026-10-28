@@ -66,7 +66,7 @@ export function SiteFooter() {
             <li><Link to="/newsletter" className={link}>{fr ? "Infolettre" : "Newsletter"}</Link></li>
             <li><Link to="/values" className={link}>{fr ? "Nos valeurs" : "What we stand for"}</Link></li>
             <li><Link to="/standards" className={link}>{fr ? "Normes éditoriales" : "Editorial standards"}</Link></li>
-            <li><Link to="/about" className={link}>{fr ? "À propos et sources" : "About and sources"}</Link></li>
+            <li><Link to="/about" className={link}>{fr ? "À propos" : "About"}</Link></li>
             <li><Link to="/corrections" className={link}>{fr ? "Corrections" : "Corrections"}</Link></li>
             <li><Link to="/privacy" className={link}>{fr ? "Confidentialité" : "Privacy"}</Link></li>
             <li><Link to="/terms" className={link}>{fr ? "Conditions d'utilisation" : "Terms of use"}</Link></li>

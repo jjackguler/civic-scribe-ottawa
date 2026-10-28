@@ -1,104 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageIntro } from "@/components/PageShell";
-import { Link } from "@tanstack/react-router";
-import { NEWS_SOURCES, NO_FEED_SOURCES, type Kind } from "@/lib/news-sources";
-import { MEDIA_SOURCES } from "@/lib/media-sources";
-import { useAiNews } from "@/lib/news";
-import { useMedia } from "@/lib/media";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { editorMailto } from "@/lib/contact";
-import { t } from "@/lib/i18n";
 import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: ({ match }) =>
     seoHead(match, {
-      title: { en: `About and standards — ${SITE.name}`, fr: `À propos et normes — ${SITE.name}` },
-      description: { en: `How ${SITE.name} finds, checks and credits AI news, video and podcasts — who runs it, and every source we follow.`, fr: `Comment ${SITE.name} trouve, vérifie et crédite l'actualité, les vidéos et les balados sur l'IA — qui le dirige, et toutes nos sources.` },
+      title: { en: `About — ${SITE.name}`, fr: `À propos — ${SITE.name}` },
+      description: { en: `Meet the editor and the team behind ${SITE.name}, and discover our human-centred approach to AI and immersive journalism.`, fr: `Découvrez l'éditeur et l'équipe d'${SITE.name}, ainsi que notre approche humaine de l'IA et du journalisme immersif.` },
     }),
   component: About,
 });
 
-const RULES = [
-  {
-    en: "We never invent news. Every story comes from a named publisher's public feed and links to the original. AI desk headlines are labelled and checked against the publisher's own text.",
-    fr: "Nous n'inventons jamais de nouvelles. Chaque nouvelle provient du fil public d'un éditeur nommé et renvoie à l'original. Les titres du pupitre IA sont identifiés et vérifiés dans le texte de l'éditeur.",
-  },
-  {
-    en: "We show short excerpts only, and credit the publisher on every story and every photo. Photos are the publisher's own. Where we have no photo we may use, we show a designed cover with the headline, never an AI picture made to look like a news photo.",
-    fr: "Nous n'affichons que de courts extraits et citons l'éditeur sur chaque article et chaque photo. Les photos sont celles de l'éditeur. Sans photo utilisable, nous affichons une couverture graphique avec le titre, jamais une image d'IA imitant une photo de presse.",
-  },
-  {
-    en: "Funding listings are checked against the official program page, with the date we checked. If we're not sure a program is open, we say so.",
-    fr: "Les fiches de financement sont vérifiées sur la page officielle du programme, avec la date de vérification. Si nous ne sommes pas sûrs qu'un programme est ouvert, nous le disons.",
-  },
-  {
-    en: "Opinion lives on the Editor's desk and is labelled as opinion. It is never mixed into the news feed.",
-    fr: "L'opinion se trouve dans le Mot de la rédaction et est identifiée comme telle. Elle n'est jamais mêlée au fil de nouvelles.",
-  },
-  {
-    en: "Tool recommendations are independent. We don't take payment for listings and we don't quote prices, because they change too often.",
-    fr: "Nos recommandations d'outils sont indépendantes. Nous n'acceptons aucun paiement pour y figurer et n'indiquons pas de prix, car ils changent trop souvent.",
-  },
-];
-
-const KINDS: { id: Kind; label: { en: string; fr: string } }[] = [
-  { id: "gov", label: { en: "Governments", fr: "Gouvernements" } },
-  { id: "news", label: { en: "Newsrooms", fr: "Salles de nouvelles" } },
-  { id: "lab", label: { en: "AI labs", fr: "Laboratoires d'IA" } },
-  { id: "beat", label: { en: "Specialist newsrooms (VR, robotics, data centres)", fr: "Médias spécialisés (RV, robotique, centres de données)" } },
-  { id: "analysis", label: { en: "Analysis and newsletters", fr: "Analyses et infolettres" } },
-  { id: "trending", label: { en: "Community signals", fr: "Signaux de la communauté" } },
-];
-
 function About() {
-  const { locale, pick } = useLocale();
+  const { locale } = useLocale();
   return (
     <PageShell>
-      <PageIntro title={locale === "fr" ? `À propos de ${SITE.name}` : `About ${SITE.name}`} dek={pick(SITE.description)} />
+      <PageIntro
+        title={locale === "fr" ? `À propos d'${SITE.name}` : `About ${SITE.name}`}
+        dek={locale === "fr"
+          ? "Une publication indépendante consacrée à l'IA et à ses effets sur les personnes, portée par le journalisme, le cinéma et de nouvelles formes de récit."
+          : "An independent publication exploring AI and its impact on people through journalism, filmmaking and new forms of storytelling."}
+      />
       <WhoRunsThis />
       <HowWeWork />
-      <div className="container-mw mt-10 grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-        <section>
-          <h2 className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{locale === "fr" ? "Nos règles" : "Our standards"}</h2>
-          <ul className="prose-mw">
-            {RULES.map((r, i) => <li key={i}>{pick(r)}</li>)}
-          </ul>
-        </section>
-        <section>
-          <h2 className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{locale === "fr" ? "Nos sources" : "Where the news comes from"}</h2>
-          {KINDS.map(k => {
-            const list = NEWS_SOURCES.filter(s => s.kind === k.id);
-            const seen = new Set<string>();
-            return (
-              <div key={k.id} className="mb-6">
-                <h3 className="font-bold mb-1">{pick(k.label)}</h3>
-                <ul className="text-[0.95rem] leading-relaxed">
-                  {list.filter(s => !seen.has(s.name) && seen.add(s.name)).map(s => (
-                    <li key={s.id}><a href={s.home} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a></li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-          <div className="mb-6">
-            <h3 className="font-bold mb-1">{locale === "fr" ? "Vidéos et balados" : "Video and podcasts"}</h3>
-            <ul className="text-[0.95rem] leading-relaxed">
-              {MEDIA_SOURCES.map(s => <li key={s.id}><a href={s.home} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a></li>)}
-            </ul>
-          </div>
-          <h3 className="font-bold mb-1">{locale === "fr" ? "Suivis sans fil RSS public" : "Followed, no public feed"}</h3>
-          <ul className="text-[0.95rem] leading-relaxed">
-            {NO_FEED_SOURCES.map(s => <li key={s.name}><a href={s.home} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a></li>)}
-          </ul>
-          <p className="mt-6">
-            <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="text-lake font-semibold hover:underline">{t("builtWithClaude", locale)}</a>
-          </p>
-          <p className="mt-2"><Link to="/standards" className="text-lake font-semibold hover:underline">{locale === "fr" ? "Lire nos normes éditoriales" : "Read our editorial standards"}</Link></p>
-        </section>
-      </div>
-      <DeskStatus />
     </PageShell>
   );
 }
@@ -111,63 +38,28 @@ function HowWeWork() {
       <h2 id="how-we-work-title" className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{fr ? "Comment nous travaillons" : "How we work"}</h2>
       <div className="prose-mw max-w-3xl">
         <p>{fr
-          ? "Nous développons une démarche appelée Open Desk Journalism : rendre visibles les sources, le rôle de l'IA, les méthodes de vérification et les corrections, tout en gardant la responsabilité éditoriale humaine. Notre point de départ est ce que l'IA change pour les personnes : leur travail, leurs droits et leur vie quotidienne."
-          : "We are developing an approach we call Open Desk Journalism: making sources, AI involvement, verification methods and corrections visible, with human editorial responsibility. We start with what AI changes for people: their work, rights and everyday lives."}</p>
-        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Des sources au récit" : "From sources to stories"}</h3>
+          ? "Nous développons Open Desk Journalism, une démarche centrée sur les personnes qui associe jugement éditorial, collaboration et nouvelles formes de récit. Nous nous intéressons à ce que l'IA change dans le travail, les droits et la vie quotidienne."
+          : "We are developing Open Desk Journalism, a human-centred approach combining editorial judgment, collaboration and new forms of storytelling. Our focus is what AI changes in people's work, rights and everyday lives."}</p>
+        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Une rédaction dirigée par l'éditeur" : "An editor-led newsroom"}</h3>
         <p>{fr
-          ? "Notre fil rassemble des titres et de courts extraits de médias, de laboratoires et d'institutions publiques identifiés, avec des liens vers les originaux. Nos articles et vidéos sont présentés séparément et indiquent leurs sources. Une déclaration d'entreprise reste une déclaration attribuée; ce que les sources ne permettent pas d'établir reste une incertitude."
-          : "Our news feed brings together headlines and short excerpts from named newsrooms, labs and public institutions, with links to the originals. Our own articles and videos are presented separately and identify their sources. A company's statement remains an attributed claim; what the sources cannot establish remains uncertain."}</p>
-        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Le rôle de l'IA et de l'éditeur" : "The roles of AI and the editor"}</h3>
+          ? "Le fondateur et responsable éditorial, Jack Guler, définit la ligne éditoriale et les priorités de la publication. Il apporte son expérience du journalisme et du cinéma et répond du travail publié et des corrections. Une petite équipe se constitue progressivement avec des étudiants universitaires bénévoles, autour d'entretiens et de projets journalistiques."
+          : "Founder and editor Jack Guler sets the editorial direction and the publication's priorities. He brings together his journalism and filmmaking experience and is responsible for published work and corrections. A small team is taking shape with volunteer university students, beginning with interviews and reporting projects."}</p>
+        <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Journalisme et création" : "Journalism and creative production"}</h3>
         <p>{fr
-          ? "Le logiciel recueille et classe les nouvelles. L'IA aide à rédiger et traduire certains contenus, ainsi qu'à produire des images, du son et des vidéos dont l'usage est signalé. Certains contenus réguliers suivent des processus automatisés, avec des vérifications par rapport aux sources. Ces vérifications ne garantissent pas l'absence d'erreurs. Jack Guler définit la ligne éditoriale et répond du travail publié et des corrections."
-          : "Software gathers and organises news. AI helps draft and translate some coverage and produce disclosed visual, audio and video work. Some routine coverage follows automated workflows with checks against source material. Those checks do not guarantee that every error is caught. Jack Guler sets the editorial direction and answers for the published work and corrections."}</p>
+          ? "Nous associons articles, entretiens, courts documentaires et explications visuelles. L'IA soutient certaines étapes de recherche et de création; la direction éditoriale et la responsabilité restent humaines."
+          : "We bring together articles, interviews, short documentaries and visual explainers. AI supports parts of our research and creative work, while editorial direction and responsibility remain human."}</p>
         <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Journalisme immersif" : "Immersive journalism"}</h3>
         <p>{fr
-          ? "Nous développons aussi des expériences de journalisme immersif : des événements et lieux historiques reconstruits en environnements 3D réalistes et en récits à 360 degrés, avec Unreal Engine, Blender et des méthodes de production assistées par l'IA. L'objectif est de permettre au public d'explorer les lieux et le contexte d'un récit. Les reconstitutions sont identifiées comme telles, avec leurs sources, leurs éléments estimés et leurs incertitudes; elles ne sont pas présentées comme des images d'archives."
-          : "We are also developing immersive journalism experiences: historical events and locations reconstructed as realistic 3D environments and 360-degree narratives using Unreal Engine, Blender and AI-assisted workflows. The aim is to let audiences explore the spaces and context behind a story. Reconstructions are identified as such, with their sources, estimated elements and uncertainties explained; they are not presented as archive footage."}</p>
+          ? "Nous développons aussi des expériences de journalisme immersif avec Unreal Engine, Blender et des méthodes de création assistées par l'IA. Des événements et des lieux historiques prennent forme en environnements 3D réalistes et en récits à 360 degrés, pour permettre au public d'explorer le contexte d'une histoire. Les reconstitutions sont clairement identifiées."
+          : "We are also developing immersive journalism experiences with Unreal Engine, Blender and AI-assisted creative workflows. Historical events and locations take shape as realistic 3D environments and 360-degree narratives, inviting audiences to explore a story's context. Reconstructions are clearly identified."}</p>
         <p className="font-sans">
           <Link to="/standards" className="text-lake font-semibold hover:underline">{fr ? "Nos normes éditoriales" : "Our editorial standards"}</Link>
           {" · "}
-          <Link to="/corrections" className="text-lake font-semibold hover:underline">{fr ? "Corrections et signalement d'une erreur" : "Corrections and reporting an error"}</Link>
+          <Link to="/corrections" className="text-lake font-semibold hover:underline">{fr ? "Corrections" : "Corrections"}</Link>
           {" · "}
           <Link to="/immersive" className="text-lake font-semibold hover:underline">{fr ? "Explorer le journalisme immersif" : "Explore immersive journalism"}</Link>
         </p>
       </div>
-    </section>
-  );
-}
-
-/** Live health of every feed: which ones answered on the last check. */
-function DeskStatus() {
-  const { locale } = useLocale();
-  const { data: news } = useAiNews(undefined);
-  const { data: media } = useMedia();
-  const rows = [
-    ...(news?.sources ?? []).map(s => ({ id: s.id, name: s.name, ok: s.ok, count: s.count, note: s.error, waiting: !s.checkedAt })),
-    ...(media?.sources ?? []).map(s => ({ id: s.id, name: s.name, ok: s.ok, count: s.count, note: s.ok ? s.feedTitle : s.error, waiting: !s.ok && !s.error })),
-  ];
-  if (rows.length === 0) return null;
-  return (
-    <section id="status" className="container-mw mt-14">
-      <h2 className="masthead-serif text-[1.8rem] pb-2 mb-4 border-b-[3px] border-night">{locale === "fr" ? "État des sources" : "Desk status"}</h2>
-      <p className="meta mb-4">{locale === "fr" ? "Chaque source est vérifiée toutes les quelques minutes. Une source en panne n'empêche jamais les autres." : "Every source is checked every few minutes. One failing source never blocks the rest."}</p>
-      {news && (
-        <p className="meta mb-4">
-          {locale === "fr" ? "Fil construit" : "Desk built"} {new Date(news.fetchedAt).toLocaleTimeString(locale === "fr" ? "fr-CA" : "en-CA", { hour: "2-digit", minute: "2-digit" })}
-          {" — "}{news.origin ?? "built"}{news.sharedCache ? (locale === "fr" ? ", cache partagé actif" : ", shared cache on") : (locale === "fr" ? ", cache partagé indisponible" : ", shared cache unavailable")}
-          {news.background === false ? (locale === "fr" ? ", mise à jour pendant la requête" : ", refreshed in-request") : ""}
-        </p>
-      )}
-      <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3 text-[0.9rem]">
-        {rows.map(r => (
-          <li key={r.id} className="py-1.5 border-b border-line flex gap-2 items-baseline">
-            <span className={`h-2 w-2 shrink-0 rounded-full ${r.ok ? "bg-spruce" : r.waiting ? "bg-line" : "bg-live"}`} aria-hidden="true" />
-            <span className="font-semibold">{r.name}</span>
-            <span className="text-muted-ink">{r.ok ? `${r.count}` : r.waiting ? (locale === "fr" ? "en file d'attente" : "queued") : (locale === "fr" ? "hors ligne" : "offline")}</span>
-            {r.note && <span className="text-muted-ink truncate" title={r.note}>· {r.note}</span>}
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
@@ -200,8 +92,8 @@ function WhoRunsThis() {
           ) : (
             <p className="text-white/80">
               {fr
-                ? "Une seule personne choisit les sources, écrit les éditoriaux et les guides, et répond des corrections. Le logiciel recueille et classe les nouvelles, et l'IA écrit les titres du pupitre, les dépêches et les articles identifiés, vérifiés par rapport aux sources; l'éditeur répond de tout."
-                : "One editor chooses the sources, writes the editorials and guides, and answers for corrections. Software gathers and files the news, and AI writes the labelled desk headlines, dispatches and articles, checked against the sources; the editor answers for all of it."}
+                ? "La direction éditoriale définit les priorités de la publication et répond du travail publié et des corrections."
+                : "Editorial leadership sets the publication’s priorities and is responsible for published work and corrections."}
             </p>
           )}
           {mail && (

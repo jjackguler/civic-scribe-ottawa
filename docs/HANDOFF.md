@@ -2,7 +2,7 @@
 
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
-Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Console read).
+Last updated: 28 Oct 2026 (editorial About and standards copy simplified at owner request).
 
 ## Ground rules from the owner
 - Post only from AI Broadsheet's own accounts. Never touch other brands the owner is logged
@@ -36,9 +36,13 @@ Last updated: 25 Oct 2026, evening (#12 and #13 posted, AdSense and Search Conso
 ## Open Desk Journalism (28 Oct 2026)
 - Owner approved a /about "How we work" section and a short home-page introduction linking
   to /about#how-we-work, using the existing typography, colours and layout components.
-- Open Desk Journalism is the name of the approach being developed: visible sources, AI
-  involvement, verification, corrections and human editorial responsibility. Do not claim
-  worldwide first use or a new invention of these principles; related approaches exist.
+- Owner revised the public positioning: explain editorial leadership, the developing team,
+  human-centred journalism and creative/immersive work. Open Desk Journalism combines editorial
+  judgment, collaboration and new storytelling; do not promise to reveal the whole operation.
+- Remove the public source directory and feed diagnostics/counts from About. Keep the working
+  source configuration in code. Simplify standards to editorial principles without sourcing
+  inventories, collection methods, model/vendor pipelines or numeric workflow thresholds.
+  Keep article-level credits, AI labels and corrections. Do not claim worldwide first use.
 - Jack leads editorial direction and is building a small team with volunteer university
   students, beginning with interviews and reporting projects. No institutional affiliation,
   team size or paid staffing is claimed.
