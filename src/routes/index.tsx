@@ -1,55 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Landmark, BookOpen, Wrench, Coins } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { ArrowRight, Landmark, BookOpen, Wrench, Coins, Baby } from "lucide-react";
+import { useMemo, type ReactNode } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
-import { LatestRail } from "@/components/LatestRail";
 import { StoryCard, StoryLink, StoryMeta, CoverageBadge } from "@/components/StoryCard";
-import { AdSlot } from "@/components/AdSlot";
-import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
-import { NewsletterBox } from "@/components/NewsletterBox";
-import { LiveHero, slideKey, ownDate, type HeroSlide, type OwnItem, type StorySlide } from "@/components/LiveHero";
-import { Showcase, TrendsPanel, Thumb } from "@/components/Showcase";
-import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
+import { LiveHero, ownDate, type HeroSlide, type OwnItem, type StorySlide } from "@/components/LiveHero";
+import { usePulse, getPulseFast, trendMatch } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { originalSection } from "@/lib/originals-types";
 import { OriginalCard } from "@/components/Originals";
 import { NextCase } from "@/components/SirJack";
-import { DispatchRail } from "@/components/Dispatch";
-import { getDispatchesFast } from "@/lib/dispatch";
-import { LabsBand } from "@/components/Labs";
-import { AskKeeperBand } from "@/components/Keeper";
 import { humanLens, LENS_LABEL } from "@/lib/editorial";
-import { TodayLauncher } from "@/components/Today";
-import { QuizCard } from "@/components/Quiz";
-import { getDailyQuizFast } from "@/lib/youth";
-import { YoungLabBand } from "@/components/YoungLab";
-import { NewsroomLead } from "@/components/NewsroomLead";
 import { getNewsroomFast, useNewsroom } from "@/lib/newsroom";
-import { CardOfTheDay } from "@/components/CardOfTheDay";
 import {
   getFrontPageNews, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
-  TOPICS, LEVEL_LABEL, inSection, type Story, type SectionId,
+  DESKS, inSection, type Story, type SectionId,
 } from "@/lib/news";
-import { useMedia, type MediaItem } from "@/lib/media";
-import { GUIDES } from "@/lib/guides";
-import { TOOLS } from "@/lib/tools";
 import { PROGRAMS } from "@/lib/funding";
-import { EDITORIALS } from "@/lib/editorials";
-import { SOCIAL_PICKS } from "@/lib/social";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
-import type { Topic } from "@/lib/news-sources";
 import { seoHead, organizationLd, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Secondary desks hydrate through their own hooks; none can delay first paint.
-    const [news, pulse, originals, dispatches, quiz, newsroom] = await Promise.all([
-      getFrontPageNews().catch(() => null), getPulseFast(150), getOriginalsFast(150),
-      getDispatchesFast(150), getDailyQuizFast(150), getNewsroomFast(150),
+    const [news, pulse, originals, newsroom] = await Promise.all([
+      getFrontPageNews().catch(() => null), getPulseFast(150), getOriginalsFast(150), getNewsroomFast(150),
     ]);
-    return { news, pulse, originals, dispatches, quiz, newsroom };
+    return { news, pulse, originals, newsroom };
   },
   head: ({ match }) =>
     seoHead(match, {
@@ -86,15 +64,11 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
   return out;
 }
 
-/** The desks shown as a grid on the front page, in order. */
-const FRONT_DESKS: Topic[] = ["agents", "infrastructure", "immersive", "responsible", "business", "research", "robotics", "people"];
-
 function Home() {
-  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches, quiz, newsroom } = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse, originals: initialOriginals, newsroom } = Route.useLoaderData();
   const { data: originals } = useOriginals(initialOriginals);
   const { data, isError } = useAiNews(initial);
   const { data: pulse } = usePulse(initialPulse);
-  const { data: media } = useMedia();
   const { locale, pick } = useLocale();
 
   const all = byLocale(data?.stories ?? [], locale);
@@ -124,11 +98,9 @@ function Home() {
   // every other slot (two once the newsroom has five or more). No outlet's photo or headline
   // leads the page; the events most outlets are covering lead Top stories below instead.
   // The wire stories above only stand in while our own lists are still loading.
-  const nowMs = useClock();
   const { data: nrData } = useNewsroom(newsroom);
   const articles = nrData?.items ?? [];
   const ownAll = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
-  const ageH = (iso: string) => (nowMs - new Date(iso).getTime()) / 3600_000;
   const stageVideos = ownAll.slice(0, 4);
   const stageArticles = articles.slice(0, articles.length >= 5 ? 2 : 1);
   const ownStage: HeroSlide[] = stageVideos.flatMap((o, i) => [
@@ -139,12 +111,11 @@ function Home() {
   const stageClusters = ownOnStage ? [] : heroClusters;
   stageClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
   const slides: HeroSlide[] = (ownOnStage ? ownStage : storySlides).slice(0, 6);
-  const steppedDown = ownAll.filter(o => !stageVideos.includes(o) && ageH(o.publishedAt) < 7 * 24).slice(0, 1);
   // Beside the stage: the rest of our own work, newest first, as a mix: up to two articles,
   // then videos with at most two from any one shelf (so one series never fills the column).
   const perShelf = new Map<string, number>();
   const columnVideos = ownAll.filter(o => {
-    if (stageVideos.includes(o) || steppedDown.includes(o)) return false;
+    if (stageVideos.includes(o)) return false;
     const shelf = originalSection(o), n = perShelf.get(shelf) ?? 0;
     if (n >= 2) return false;
     perShelf.set(shelf, n + 1);
@@ -156,54 +127,25 @@ function Home() {
     ...columnVideos.slice(0, 6 - columnArticles.length).map(o => ({ kind: "original" as const, original: o })),
   ].sort((x, y) => ownDate(y).localeCompare(ownDate(x)));
   const inColumn = new Set(ownColumn.map(x => (x.kind === "original" ? x.original.id : x.article.id)));
-  const fromHero = useSteppedDown(slides.map(slideKey));
   const top = heroClusters[0];
   const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));
 
-  // Top stories under the hero: the next clusters with two or more outlets, then photo stories.
-  const photo = news.filter(s => s.image);
-  const more = clusters
+  // The front page has six parts (owner's brief, 29 Oct 2026): our own work on the stage, then
+  // Canada, Rights & power, Work & culture beside Research, the Sir Jack Files, and the world in brief.
+  // Canadian stories come first in every desk; the full feed stays on /news.
+  const canadaFirst = (xs: Story[]) => [...xs.filter(s => s.region === "canada"), ...xs.filter(s => s.region !== "canada")];
+  const official = take(all, used, 2, s => s.minister && s.gov);
+  const canada = take(news, used, 5, s => inSection(s, "canada"));
+  const rights = take(canadaFirst(news), used, 6, s => inSection(s, "rights"));
+  const work = take(canadaFirst(news), used, 4, s => inSection(s, "work"));
+  const science = take(canadaFirst(news), used, 4, s => inSection(s, "science"));
+  // The world, briefly: the events the most outlets are covering, one line each.
+  const world = clusters
     .filter(c => !stageClusters.includes(c) && c.sources >= 2 && !used.has(c.lead.id))
-    .slice(0, 6);
-  more.forEach(c => c.stories.forEach(s => used.add(s.id)));
-  const moreFill = take(photo, used, Math.max(0, 6 - more.length));
-
-  // People first: what the news changes for people (rights, work, children, democracy…), before the desks take their pick.
-  const peopleFirst = take(news, used, 6, s => humanLens(s).length > 0 && s.kind !== "trending");
-
-  const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 6);
-  const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
-
-  const desks = FRONT_DESKS.map(id => {
-    const pool = all.filter(s => inSection(s, id));
-    const items = take(diversify(pool, 1, 8), used, 4, s => s.kind !== "trending");
-    return { id, items };
-  }).filter(d => d.items.length > 0);
-
-  const official = take(all, used, 3, s => s.minister && s.gov);
-  const ministerNews = take(all, used, 3, s => s.minister && !s.gov);
-  const govCols = (["federal", "provincial", "municipal"] as const).map(level => ({ level, items: all.filter(s => s.level === level).slice(0, 4) }));
-  const canada = take(news, used, 5, s => s.region === "canada");
-  const labs = take(news, used, 4, s => s.kind === "lab");
-  const analysis = take(news, used, 4, s => s.kind === "analysis");
-
-  const deskCounts = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const tp of TOPICS) m.set(tp.id, all.filter(s => inSection(s, tp.id)).length);
-    return m;
-  }, [data, locale]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Media desk
-  const items = media?.items ?? [];
-  const videos = items.filter(m => m.type === "video");
-  const newsroomVideos = videos.filter(v => v.newsroom && !v.interview);
-  const watchList = [...newsroomVideos.slice(0, 3), ...videos.filter(v => !v.newsroom && !v.interview).slice(0, 2)]
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
-  const interviews = items.filter(m => m.interview).slice(0, 3);
-  const episodes = items.filter(m => m.type === "audio" && !interviews.includes(m)).slice(0, 4);
+    .slice(0, 5);
+  world.forEach(c => c.stories.forEach(s => used.add(s.id)));
 
   const loading = !data && !isError;
-  const editorial = EDITORIALS[0];
   const openPrograms = PROGRAMS.filter(p => p.status === "open" || p.status === "ongoing").length;
   // Top strip: breaking (3+ outlets in 2 h), developing (3+ in 6 h), or the newest story if under 45 minutes old.
   const newest = news.reduce<typeof news[number] | undefined>((a, b) => (!a || b.publishedAt > a.publishedAt ? b : a), undefined);
@@ -215,13 +157,11 @@ function Home() {
       : fresh ? { kind: "just-in" as const, story: fresh, note: fresh.source } : null;
   // With our own work on the stage, Breaking and Developing reach readers through this strip.
   const showStrip = !!alert && (ownOnStage || (alert.kind === "just-in" && !storySlides.some(sl => sl.story.id === alert.story.id)));
+  const desk = (id: SectionId) => DESKS.find(d => d.id === id)!;
 
   return (
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.tagline[locale]}</h1>
-
-      {/* Today in 60 seconds: tap a bubble to start the story stack */}
-      <div className="bg-night"><TodayLauncher initialNews={initial} initialDispatches={dispatches} dark className="container-mw pt-4 pb-1" /></div>
 
       {/* The hero already carries Breaking/Developing for its lead; the strip only adds a different, newer story. */}
       {alert && showStrip && (
@@ -238,6 +178,7 @@ function Home() {
         </div>
       )}
 
+      {/* 1. Our own work on the stage */}
       {news.length === 0 && slides.length === 0 ? (
         <section className="container-mw pt-10">
           <div className="border-t-[3px] border-night pt-10 pb-16 text-center">
@@ -249,382 +190,118 @@ function Home() {
         <LiveHero slides={slides} latest={newestFirst} own={ownColumn} />
       )}
 
-      <AdSlot size="leaderboard" placement="home-top" className="container-mw pt-6" />
-
-      <section className="container-mw pt-6" aria-labelledby="open-desk-intro">
-        <div className="border-b border-line pb-6">
-          <h2 id="open-desk-intro" className="masthead-serif text-[1.4rem]">Open Desk Journalism</h2>
-          <p className="mt-2 max-w-3xl text-[0.95rem] leading-relaxed text-muted-ink">{locale === "fr"
-            ? "Sous la direction de Jack Guler, nous associons journalisme, cinéma et création assistée par l'IA pour raconter les enjeux humains de l'intelligence artificielle."
-            : "Led by editor Jack Guler, we combine journalism, filmmaking and AI-assisted creativity to tell the human stories behind artificial intelligence."}</p>
-          <Link to="/about" hash="how-we-work" className="inline-block mt-2 text-lake font-semibold hover:underline">{locale === "fr" ? "Comment nous travaillons →" : "How we work →"}</Link>
-        </div>
-      </section>
-
-      {/* Our own reporting, right under the stage: newsroom articles first, then dispatches */}
-      <NewsroomLead initial={newsroom} exclude={stageArticles.map(a => a.id)} className="container-mw pt-12" />
-      <DispatchRail initial={dispatches} className="container-mw pt-12" />
-      <div className="container-mw mt-10 grid gap-6 lg:grid-cols-2">
-        <QuizCard initial={quiz} />
-        <CardOfTheDay initialDispatches={dispatches} initialQuiz={quiz} />
-      </div>
-
-      {(more.length > 0 || moreFill.length > 0 || steppedDown.length > 0) && (
-        <section className="container-mw mt-10">
-          <ZoneHead title={locale === "fr" ? "À la une" : "Top stories"} action={<MoreLink to="/news" />} />
-          <div className="grid gap-x-7 gap-y-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3 content-start">
-              {steppedDown.map(o => (
-                <div key={o.id} className={`w-full max-w-[260px] sm:max-w-none sm:row-span-2 ${fromHero.has(o.id) ? "stepped-down" : ""}`}><OriginalCard o={o} /></div>
-              ))}
-              {more.map(c => (
-                <div key={c.id} className={c.stories.some(x => fromHero.has(x.id)) ? "stepped-down" : ""}>
-                  <StoryCard s={c.lead} variant="card" badge={<><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></>} showTopic={false} />
-                </div>
-              ))}
-              {moreFill.map(s => <div key={s.id} className={fromHero.has(s.id) ? "stepped-down" : ""}><StoryCard s={s} badge={<TrendBadge s={s} pulse={pulse} />} /></div>)}
+      {/* 2. Canada */}
+      {(official.length > 0 || canada.length > 0) && (
+        <section className="container-mw mt-12">
+          <ZoneHead title={pick(desk("canada").label)} sub={pick(desk("canada").dek)} action={<MoreLink to="/news" section="canada" />} />
+          <div className="grid gap-x-8 gap-y-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+            <div>
+              {official[0] ? (
+                <StoryLink s={official[0]} className="group block pb-4 border-b border-line">
+                  <p className="topic mb-1 inline-flex items-center gap-1.5"><Landmark className="h-4 w-4" aria-hidden="true" />{t("officialReleases", locale)} · Evan Solomon</p>
+                  <h3 className="hl text-[1.5rem] sm:text-[1.8rem] group-hover:underline decoration-2">{official[0].title}</h3>
+                  {official[0].summary && <p className="dek mt-2 line-clamp-2">{official[0].summary}</p>}
+                  <StoryMeta s={official[0]} className="mt-1.5" />
+                </StoryLink>
+              ) : canada[0] && <StoryCard s={canada[0]} variant={canada[0].image ? "card" : "text"} showTopic={false} />}
+              {official.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}
             </div>
-            <div className="grid gap-6 content-start">
-              <AdSlot size="mpu" placement="home-right" />
-              {pulse && <TrendsPanel pulse={pulse} />}
-            </div>
+            <div>{(official[0] ? canada : canada.slice(1)).map(s => <StoryCard key={s.id} s={s} variant="list" />)}</div>
           </div>
         </section>
       )}
 
-      {peopleFirst.length > 0 && (
+      {/* 3. Rights & power */}
+      {rights.length > 0 && (
         <section className="container-mw mt-14">
           <ZoneHead
-            title={locale === "fr" ? "L'humain d'abord" : "People first"}
-            sub={locale === "fr" ? "Ce que l'IA change cette semaine pour les droits, le travail, les enfants et la démocratie." : "What AI is changing this week for people's rights, work, children and democracy."}
-            action={<Link to="/values" className="inline-flex items-center gap-1 font-semibold text-[0.9rem] text-lake hover:underline">{locale === "fr" ? "Nos valeurs" : "Our values"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>}
+            title={pick(desk("rights").label)}
+            sub={pick(desk("rights").dek)}
+            action={<MoreLink to="/news" section="rights" />}
           />
           <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {peopleFirst.map(s => (
+            {rights.map(s => (
               <StoryCard
                 key={s.id}
                 s={s}
                 variant={s.image ? "card" : "text"}
-                badge={<span className="inline-flex flex-wrap gap-1.5">{humanLens(s).map(l => <span key={l} className="text-[0.75rem] font-bold bg-lake/10 text-lake px-1.5 py-0.5">{pick(LENS_LABEL[l])}</span>)}</span>}
+                badge={humanLens(s).length > 0 ? <span className="inline-flex flex-wrap gap-1.5">{humanLens(s).map(l => <span key={l} className="text-[0.75rem] font-bold bg-lake/10 text-lake px-1.5 py-0.5">{pick(LENS_LABEL[l])}</span>)}</span> : undefined}
               />
             ))}
           </div>
         </section>
       )}
 
-      {pulse && (pulse.built.length > 0 || pulse.repos.length > 0 || (pulse.tools?.length ?? 0) > 0) && (
+      {/* 4. Work & culture, beside Research */}
+      {(work.length > 0 || science.length > 0) && (
         <section className="container-mw mt-14">
-          <ZoneHead
-            title={locale === "fr" ? "Fait avec l'IA" : "Made with AI"}
-            sub={locale === "fr" ? "Ce que les gens construisent avec Claude, ChatGPT, Gemini et les modèles ouverts cette semaine. Chaque projet renvoie à son créateur." : "What people are building with Claude, ChatGPT, Gemini and open models this week. Every project links to its maker."}
-            action={<MoreLink to="/showcase" />}
-          />
-          <Showcase pulse={pulse} />
+          <div className="grid gap-x-8 gap-y-12 lg:grid-cols-2">
+            {(["work", "science"] as const).map(id => {
+              const items = id === "work" ? work : science;
+              if (items.length === 0) return null;
+              return (
+                <div key={id}>
+                  <ZoneHead title={pick(desk(id).label)} sub={pick(desk(id).dek)} action={<MoreLink to="/news" section={id} />} />
+                  {items[0] && <StoryCard s={items[0]} variant={items[0].image ? "card" : "text"} showTopic={false} />}
+                  <div className="mt-3">{items.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}</div>
+                </div>
+              );
+            })}
+          </div>
         </section>
       )}
 
+      {/* 5. The Sir Jack Files and our explainers */}
       {(originals?.items.length ?? 0) > 0 && (
         <section className="mt-14 bg-signal text-signal-ink">
           <div className="container-mw py-10">
             <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
               <div>
-                <h2 className="masthead-serif text-[2.2rem] sm:text-[2.8rem] leading-none">{locale === "fr" ? "Explicatifs" : "Explainers"}</h2>
-                <p className="font-semibold mt-2">{locale === "fr" ? "Les sujets choisis par notre rédaction, expliqués en une minute." : "Stories selected by our newsroom, explained in about a minute."}</p>
+                <h2 className="masthead-serif text-[2.2rem] sm:text-[2.8rem] leading-none">{locale === "fr" ? "Les dossiers Sir Jack" : "The Sir Jack Files"}</h2>
+                <p className="font-semibold mt-2">{locale === "fr" ? "Des cas réels d'IA, racontés avec des scènes dessinées à la main en code." : "Real AI cases, told with scenes drawn by hand in code."}</p>
               </div>
               <Link to="/originals" className="inline-flex items-center gap-1 font-bold underline underline-offset-4 decoration-2">{locale === "fr" ? "Tous les explicatifs" : "All explainers"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
             <NextCase variant="strip" />
             <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
-              {ownAll.filter(o => !steppedDown.includes(o) && !stageVideos.includes(o) && !inColumn.has(o.id)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
+              {ownAll.filter(o => !stageVideos.includes(o) && !inColumn.has(o.id)).slice(0, 4).map(o => <OriginalCard key={o.id} o={o} />)}
             </div>
           </div>
         </section>
       )}
 
-      <LabsBand />
-      <YoungLabBand />
-
-      {watchList.length > 0 && <WatchBand videos={watchList} />}
-
-      <section className="container-mw mt-12">
-        <ZoneHead title={locale === "fr" ? "Les sections" : "The desks"} sub={locale === "fr" ? "Chaque nouvelle est classée par sujet, comme dans une vraie salle de rédaction." : "Every story is filed to a desk, the way a newsroom works."} />
-        <ul className="flex flex-wrap gap-2">
-          {TOPICS.map(tp => (
-            <li key={tp.id}>
-              <Link to="/news" search={{ section: tp.id }} className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-[0.92rem] font-semibold hover:border-night">
-                {pick(tp.label)}
-                <span className="text-muted-ink font-normal tabular-nums">{deskCounts.get(tp.id) ?? 0}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {interviews.length > 0 && (
+      {/* 6. The world, briefly */}
+      {world.length > 0 && (
         <section className="container-mw mt-14">
-          <ZoneHead title={locale === "fr" ? "Entrevues" : "Featured interviews"} action={<MoreLink to="/interviews" />} />
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="md:col-span-2"><InterviewCard m={interviews[0]} large /></div>
-              {interviews.slice(1).map(m => <InterviewCard key={m.id} m={m} />)}
-            </div>
-            <AdSlot size="halfpage" placement="home-interviews" className="hidden lg:flex" />
-          </div>
-        </section>
-      )}
-
-      {(hn.length > 0 || papers.length > 0 || SOCIAL_PICKS.length > 0) && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={t("trending", locale)} action={<MoreLink to="/news" section="trending" />} />
-          <div className="grid gap-x-8 gap-y-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-            {hn.length > 0 && (
-              <div>
-                <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{t("mostDiscussed", locale)}</h3>
-                <ol>
-                  {hn.map((s, i) => (
-                    <li key={s.id} className="flex gap-4 py-3 border-b border-line last:border-0">
-                      <span className="masthead-serif text-[1.8rem] text-brass-ink w-7 shrink-0 leading-none" aria-hidden="true">{i + 1}</span>
-                      <Thumb src={s.image} label={s.title} />
-                      <div className="min-w-0 flex-1">
-                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="font-semibold leading-snug hover:underline">{s.title}</a>
-                        <p className="meta mt-1 flex flex-wrap gap-x-2.5">
-                          <span>{s.summary}</span>
-                          <a href={s.popularity?.discussUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                            {s.popularity?.score} {t("points", locale)} · {s.popularity?.comments ?? 0} {t("comments", locale)}
-                          </a>
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-                <p className="meta mt-2">{locale === "fr" ? "Classement selon les votes sur Hacker News, 3 derniers jours." : "Ranked by Hacker News votes over the last 3 days."}</p>
-              </div>
-            )}
-            <div className="grid gap-10 content-start">
-              {papers.length > 0 && (
-                <div>
-                  <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{t("trendingPapers", locale)}</h3>
-                  <ul>
-                    {papers.map(s => (
-                      <li key={s.id} className="py-3 border-b border-line last:border-0">
-                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="group flex gap-3">
-                          <Thumb src={s.image} label={s.title} />
-                          <span className="min-w-0">
-                            <span className="block font-semibold leading-snug group-hover:underline">{s.title}</span>
-                            <span className="meta mt-1 block">arXiv · {s.popularity?.score} {t("upvotes", locale)} {locale === "fr" ? "sur Hugging Face" : "on Hugging Face"}</span>
-                          </span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {SOCIAL_PICKS.length > 0 && (
-                <div>
-                  <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{t("socialPicks", locale)}</h3>
-                  <ul>
-                    {SOCIAL_PICKS.slice(0, 5).map(p => (
-                      <li key={p.url} className="py-3 border-b border-line last:border-0">
-                        <a href={p.url} target="_blank" rel="noopener noreferrer" className="group block">
-                          <p className="meta"><span className="font-semibold text-ink/80">{p.author}</span> · {p.platform === "x" ? "X" : p.platform === "linkedin" ? "LinkedIn" : p.platform === "youtube" ? "YouTube" : ""}</p>
-                          <p className="font-semibold leading-snug mt-0.5 group-hover:underline">{pick(p.why)}</p>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {desks.length > 0 && (
-        <section className="container-mw mt-14">
-          <div className="grid gap-x-7 gap-y-12 md:grid-cols-2 xl:grid-cols-4">
-            {desks.map(d => (
-              <div key={d.id}>
-                <ZoneHead title={<span className="block text-[1.35rem] sm:text-[1.5rem] leading-tight">{pick(TOPICS.find(x => x.id === d.id)!.label)}</span>} action={<MoreLink to="/news" section={d.id} compact />} />
-                {d.items[0] && <StoryCard s={d.items[0]} variant={d.items[0].image ? "card" : "text"} showTopic={false} />}
-                <div className="mt-3">
-                  {d.items.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}
-                </div>
-              </div>
+          <ZoneHead title={pick(desk("world").label)} sub={pick(desk("world").dek)} action={<MoreLink to="/news" section="world" />} />
+          <ol className="grid gap-x-8 md:grid-cols-2">
+            {world.map(c => (
+              <li key={c.id}>
+                <StoryCard s={c.lead} variant="list" badge={<CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} />} />
+              </li>
             ))}
-          </div>
-        </section>
-      )}
-
-      <AdSlot size="billboard" placement="home-mid" className="container-mw mt-14" />
-
-      {episodes.length > 0 && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={locale === "fr" ? "À écouter" : "Listen"} action={<MoreLink to="/listen" />} />
-          <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
-            {episodes.map(a => <AudioEpisode key={a.id} a={a} compact />)}
-          </div>
-        </section>
-      )}
-
-      <div className="mt-14"><AskKeeperBand /></div>
-
-      <section className="bg-night text-white">
-        <div className="container-mw py-12">
-          <NewsletterBox />
-        </div>
-      </section>
-
-      {(official.length > 0 || ministerNews.length > 0 || canada.length > 0) && (
-        <section className="container-mw mt-14">
-          <div className="grid gap-x-8 gap-y-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-            <div>
-              <ZoneHead
-                title={<span className="flex items-center gap-2.5"><Landmark className="h-6 w-6 text-brass-ink" aria-hidden="true" />{t("trackerTitle", locale)}</span>}
-                action={<MoreLink to="/ministry" />}
-                sub={`${t("minister", locale)} · Evan Solomon`}
-              />
-              {official[0] && (
-                <StoryLink s={official[0]} className="group block pb-4 border-b border-line">
-                  <p className="topic mb-1">{t("officialReleases", locale)}</p>
-                  <h3 className="hl text-[1.5rem] sm:text-[1.8rem] group-hover:underline decoration-2">{official[0].title}</h3>
-                  {official[0].summary && <p className="dek mt-2 line-clamp-2">{official[0].summary}</p>}
-                  <StoryMeta s={official[0]} className="mt-1.5" />
-                </StoryLink>
-              )}
-              {[...official.slice(1), ...ministerNews].map(s => <StoryCard key={s.id} s={s} variant="list" />)}
-            </div>
-            <div>
-              <ZoneHead title={t("canadaDesk", locale)} action={<MoreLink to="/news" section="canada" />} />
-              {canada[0] && <StoryCard s={canada[0]} variant={canada[0].image ? "card" : "text"} showTopic={false} />}
-              <div className="mt-3">{canada.slice(1).map(s => <StoryCard key={s.id} s={s} variant="list" />)}</div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {govCols.some(c => c.items.length > 0) && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={t("government", locale)} action={<MoreLink to="/government" />} />
-          <div className="grid gap-x-7 gap-y-8 md:grid-cols-3">
-            {govCols.map(col => (
-              <div key={col.level}>
-                <h3 className="font-bold text-[1.02rem] pb-1 mb-1 border-b-2 border-night">{pick(LEVEL_LABEL[col.level])}</h3>
-                {col.items.length === 0
-                  ? <p className="meta py-3">{t("noItems", locale)}</p>
-                  : col.items.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {(labs.length > 0 || analysis.length > 0) && (
-        <section className="container-mw mt-14">
-          <div className="grid gap-x-8 gap-y-12 lg:grid-cols-2">
-            {labs.length > 0 && (
-              <div>
-                <ZoneHead title={t("researchLabs", locale)} action={<MoreLink to="/news" section="labs" />} />
-                <div className="grid gap-6 sm:grid-cols-2">
-                  {labs.map(s => <StoryCard key={s.id} s={s} variant={s.image ? "card" : "text"} showTopic={false} />)}
-                </div>
-              </div>
-            )}
-            {analysis.length > 0 && (
-              <div>
-                <ZoneHead title={t("analysis", locale)} action={<MoreLink to="/news" section="analysis" />} />
-                <div className="grid gap-6 sm:grid-cols-2">
-                  {analysis.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {editorial && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={t("editorsDesk", locale)} action={<MoreLink to="/editor" />} />
-          <Link to="/editor/$slug" params={{ slug: editorial.slug }} className="group grid gap-2 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:gap-8 items-end">
-            <h3 className="masthead-serif text-[2rem] sm:text-[2.6rem] leading-[1.08] group-hover:underline decoration-2">{pick(editorial.title)}</h3>
-            <p className="dek">{pick(editorial.dek)}</p>
-          </Link>
+          </ol>
         </section>
       )}
 
       <section className="container-mw mt-14">
         <ZoneHead title={t("resources", locale)} />
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Resource to="/learn" icon={<BookOpen className="h-5 w-5" />} title={t("startHere", locale)}
-            text={locale === "fr" ? `${GUIDES.length} guides simples pour bien commencer avec l'IA.` : `${GUIDES.length} plain-language guides to get started with AI.`} />
-          <Resource to="/tools" icon={<Wrench className="h-5 w-5" />} title={t("bestTools", locale)}
-            text={locale === "fr" ? `${TOOLS.length} outils classés selon ce que vous voulez faire.` : `${TOOLS.length} tools, grouped by what you want to get done.`} />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Resource to="/labs" icon={<BookOpen className="h-5 w-5" />} title={locale === "fr" ? "Apprendre l'IA" : "Learn AI"}
+            text={locale === "fr" ? "Des parcours gratuits, du débutant à l'expert." : "Free learning paths, from beginner to builder."} />
+          <Resource to="/labs/young" icon={<Baby className="h-5 w-5" />} title="Young Lab"
+            text={locale === "fr" ? "Des jeux pour les 8 à 17 ans, sans collecte de données." : "Games for ages 8 to 17. Nothing a child types is collected."} />
           <Resource to="/funding" icon={<Coins className="h-5 w-5" />} title={t("moneyForAi", locale)}
             text={locale === "fr" ? `${openPrograms} programmes canadiens ouverts ou continus, vérifiés sur les pages officielles.` : `${openPrograms} open or ongoing Canadian programs, checked against official pages.`} />
+          <Resource to="/about" icon={<Wrench className="h-5 w-5" />} title="Open Desk Journalism"
+            text={locale === "fr" ? "Qui nous sommes et comment nous travaillons." : "Who we are and how we work."} />
         </div>
       </section>
     </PageShell>
   );
 }
 
-/** Current time, ticking each minute, so hero items age off the stage without a reload. */
-function useClock() {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 60_000); return () => clearInterval(t); }, []);
-  return now;
-}
-
-/**
- * Keys that were on the hero stage on an earlier render and have since left it.
- * Those items get a short "stepped down from the top" animation where they land.
- */
-function useSteppedDown(heroKeys: string[]) {
-  const prev = useRef<string[] | null>(null);
-  const [left, setLeft] = useState<Set<string>>(new Set());
-  const sig = heroKeys.join("|");
-  useEffect(() => {
-    if (prev.current) {
-      const gone = prev.current.filter(k => !heroKeys.includes(k));
-      if (gone.length) setLeft(new Set(gone));
-    }
-    prev.current = heroKeys;
-  }, [sig]); // eslint-disable-line react-hooks/exhaustive-deps
-  return left;
-}
-
-/** Dark broadcast band: one player, a running list beside it. */
-function WatchBand({ videos }: { videos: MediaItem[] }) {
-  const { locale } = useLocale();
-  const [current, setCurrent] = useState(0);
-  const v = videos[Math.min(current, videos.length - 1)];
-  return (
-    <section className="mt-14 bg-night text-white">
-      <div className="container-mw py-10">
-        <ZoneHead
-          dark
-          title={<span className="flex items-center gap-3"><span className="live-dot" aria-hidden="true" />{locale === "fr" ? "Vidéos" : "Watch"}</span>}
-          action={<MoreLink to="/watch" dark />}
-          sub={locale === "fr" ? "Les reportages IA des grandes chaînes, des laboratoires et des créateurs, dans le lecteur de l'éditeur." : "AI reports from broadcasters, labs and explainers, in each publisher's own player."}
-        />
-        <div className="grid gap-7 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
-          <div>
-            <VideoPlayer key={v.id} v={v} />
-            <h3 className="hl text-[1.5rem] sm:text-[1.9rem] mt-4">{v.title}</h3>
-            <MediaMeta m={v} dark className="mt-2" />
-          </div>
-          <ul className="grid gap-4 content-start">
-            {videos.map((x, i) => (
-              <li key={x.id}>
-                <VideoTile v={x} dark active={i === current} onSelect={() => setCurrent(i)} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Resource({ to, icon, title, text }: { to: "/learn" | "/tools" | "/funding"; icon: ReactNode; title: string; text: string }) {
+function Resource({ to, icon, title, text }: { to: "/labs" | "/labs/young" | "/funding" | "/about"; icon: ReactNode; title: string; text: string }) {
   return (
     <Link to={to} className="group flex gap-3 items-start border border-line bg-surface rounded-[4px] p-4 hover:border-night">
       <span className="mt-0.5 text-lake" aria-hidden="true">{icon}</span>
@@ -648,13 +325,4 @@ export function MoreLink({ to, section, dark = false, compact = false }: { to: "
       {compact ? null : t("seeAll", locale)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
     </Link>
   );
-}
-
-/** "Trending on Google" when a trending search term appears in the headline. */
-function TrendBadge({ s, pulse }: { s: Story; pulse: PulsePayload | undefined }) {
-  const { locale } = useLocale();
-  const region = trendMatch(s, pulse);
-  if (!region) return null;
-  const where = region === "ca" ? "Canada" : locale === "fr" ? "É.-U." : "U.S.";
-  return <span className="text-[0.78rem] font-bold bg-brass/20 text-brass-ink px-1.5 py-0.5">{locale === "fr" ? `Tendance Google ${where}` : `Trending on Google ${where}`}</span>;
 }
