@@ -9,7 +9,7 @@ import { SITE } from "@/lib/site";
 import { seoHead } from "@/lib/seo";
 
 /**
- * Our own articles. Once the Newsroom (scripts/newsroom) has published, this
+ * Newsroom summaries of other outlets' reporting. Once the Newsroom (scripts/newsroom) has published, this
  * page lists its articles; until then, the Worker-side Dispatch desk's.
  */
 export const Route = createFileRoute("/dispatch/")({
@@ -19,10 +19,10 @@ export const Route = createFileRoute("/dispatch/")({
   },
   head: ({ match }) =>
     seoHead(match, {
-      title: { en: `Our articles: the Newsroom — ${SITE.name}`, fr: `Nos articles : la salle de rédaction — ${SITE.name}` },
+      title: { en: `Newsroom summaries: what other outlets reported — ${SITE.name}`, fr: `Résumés de la rédaction : ce que d'autres médias ont rapporté — ${SITE.name}` },
       description: {
-        en: "Our own articles on the AI stories several outlets are reporting: what's confirmed, what's claimed, what's still unknown, and why it matters to people, with every source linked.",
-        fr: "Nos propres articles sur les nouvelles en IA que plusieurs médias rapportent : ce qui est confirmé, ce qui est affirmé, ce qu'on ignore encore et pourquoi c'est important, avec chaque source en lien.",
+        en: "AI-assisted summaries of AI stories that other outlets reported first: what's confirmed, what's claimed, what's still unknown, and why it matters to people. The reporting is theirs, and every source is linked.",
+        fr: "Des résumés, rédigés avec l'IA, de nouvelles en IA que d'autres médias ont rapportées en premier : ce qui est confirmé, ce qui est affirmé, ce qu'on ignore encore et pourquoi c'est important. Le reportage est le leur, et chaque source est en lien.",
       },
     }),
   component: DispatchIndex,
@@ -39,10 +39,10 @@ function DispatchIndex() {
   return (
     <PageShell>
       <PageIntro
-        title={fr ? "Nos articles" : "Our articles"}
+        title={fr ? "Résumés de la rédaction" : "Newsroom summaries"}
         dek={fr
-          ? "Quand plusieurs médias rapportent le même événement, ou qu'une entreprise, un laboratoire ou un gouvernement annonce sa propre nouvelle, notre salle de rédaction écrit l'article, avec l'IA, à partir de leurs reportages : ce qui est confirmé, ce qui est affirmé, ce qu'on ignore encore. Chaque source est en lien."
-          : "When several outlets report the same event, or a company, lab or government announces its own news, our newsroom writes the article, with AI, from their reporting: what's confirmed, what's claimed, what's still unknown. Every source is linked."}
+          ? "Quand plusieurs médias rapportent le même événement, ou qu'une entreprise, un laboratoire ou un gouvernement annonce sa propre nouvelle, notre salle de rédaction en fait un résumé, avec l'IA, à partir de leurs reportages. Le reportage est le leur : ce qui est confirmé, ce qui est affirmé, ce qu'on ignore encore. Chaque source est en lien."
+          : "When several outlets report the same event, or a company, lab or government announces its own news, our newsroom summarizes it, with AI, from their reporting. The reporting is theirs; we lay out what's confirmed, what's claimed, what's still unknown. Every source is linked."}
       >
         <p className="mt-4"><Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment travaille notre rédaction" : "How our newsroom works"}</Link></p>
       </PageIntro>

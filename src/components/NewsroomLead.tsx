@@ -99,10 +99,10 @@ export function NewsroomLead({ initial, className = "", title = true, exclude }:
       {title && (
         <ZoneHead
           title={<span id="nr-lead-h">{fr ? "De notre salle de rédaction" : "From our newsroom"}</span>}
-          sub={<>{fr ? "Nos propres articles, écrits avec l'IA et vérifiés contre chaque reportage cité." : "Our own articles, written with AI and checked against every report they cite."} <Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
+          sub={<>{fr ? "Des résumés, rédigés avec l'IA, de ce que d'autres médias ont rapporté, vérifiés contre chaque reportage cité." : "AI-assisted summaries of what other outlets reported, checked against every report they cite."} <Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
           action={
             <Link to="/dispatch" search={fixtureSearch()} className="shrink-0 inline-flex items-center gap-1 text-[0.92rem] font-semibold text-lake hover:underline">
-              {fr ? "Tous les articles" : "All articles"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              {fr ? "Tous les résumés" : "All summaries"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           }
         />

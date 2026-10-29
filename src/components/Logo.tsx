@@ -17,7 +17,8 @@ export function Logo({ compact = false, inverse = false }: { compact?: boolean; 
     <span className="inline-flex items-center gap-2.5">
       <LogoMark size={compact ? 30 : 38} inverse={inverse} />
       <span className={`brand-wordmark leading-none whitespace-nowrap ${inverse ? "text-brand-paper" : "text-brand-ink"} ${compact ? "text-[1.5rem]" : "text-[1.9rem]"}`}>
-        {SITE.name}
+        {/* Title case with "AI" in gold: in Bodoni capitals "BROADSHEET" split into "BRO ADSHEET". */}
+        <span className={inverse ? "text-brand-gold" : undefined}>AI</span>{"\u00a0"}Broadsheet
       </span>
     </span>
   );
