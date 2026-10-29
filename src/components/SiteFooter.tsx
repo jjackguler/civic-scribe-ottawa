@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { useLocale } from "@/lib/locale-context";
-import { TOPICS } from "@/lib/news";
+import { DESKS } from "@/lib/news";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { editorMailto } from "@/lib/contact";
@@ -36,7 +36,7 @@ export function SiteFooter() {
         <nav aria-label={fr ? "Thèmes" : "Topics"}>
           <p className={head}>{fr ? "Thèmes" : "Topics"}</p>
           <ul className="grid gap-1.5 text-[0.92rem]">
-            {TOPICS.slice(0, 9).map(tp => (
+            {DESKS.map(tp => (
               <li key={tp.id}><Link to="/news" search={{ section: tp.id }} className={link}>{pick(tp.label)}</Link></li>
             ))}
           </ul>
@@ -47,7 +47,6 @@ export function SiteFooter() {
             <li><Link to="/news" className={link}>{fr ? "En continu" : "Latest"}</Link></li>
             <li><Link to="/watch" className={link}>{fr ? "Vidéos" : "Watch"}</Link></li>
             <li><Link to="/originals" className={link}>{fr ? "Explicatifs" : "Explainers"}</Link></li>
-            <li><Link to="/showcase" className={link}>{fr ? "Fait avec l'IA" : "Made with AI"}</Link></li>
             <li><Link to="/immersive" className={link}>{fr ? "Journalisme immersif" : "Immersive Journalism"}</Link></li>
             <li><Link to="/interviews" className={link}>{fr ? "Entrevues" : "Interviews"}</Link></li>
             <li><Link to="/listen" className={link}>{fr ? "Balados" : "Podcasts"}</Link></li>

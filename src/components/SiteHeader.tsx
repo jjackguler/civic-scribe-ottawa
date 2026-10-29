@@ -5,7 +5,7 @@ import { Logo } from "./Logo";
 import { LiveTicker } from "./LiveTicker";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
-import { TOPICS, type SectionId } from "@/lib/news";
+import { DESKS, type SectionId } from "@/lib/news";
 import { SITE } from "@/lib/site";
 import { localePath } from "@/lib/seo";
 import type { Bi } from "@/lib/i18n";
@@ -21,20 +21,15 @@ const MAIN: Item[] = [
   { label: { en: "Sir Jack", fr: "Sir Jack" }, to: "/sir-jack" },
   { label: { en: "Immersive", fr: "Immersif" }, to: "/immersive" },
   { label: { en: "Learn AI", fr: "Apprendre l'IA" }, to: "/labs" },
-  { label: { en: "Glossary", fr: "Glossaire" }, to: "/glossary" },
-  { label: { en: "Watch & listen", fr: "Voir et écouter" }, to: "/watch" },
 ];
 
 const MORE: Item[] = [
   { label: { en: "Get the app", fr: "Installer l'application" }, to: "/more" },
   { label: { en: "Saved stories", fr: "Articles enregistrés" }, to: "/saved" },
   { label: { en: "Ask the Keeper", fr: "Demandez au Gardien" }, to: "/ask" },
-  { label: { en: "Made with AI", fr: "Fait avec l'IA" }, to: "/showcase" },
-  { label: { en: "Podcasts", fr: "Balados" }, to: "/listen" },
-  { label: { en: "World", fr: "Monde" }, to: "/news", section: "world" },
-  { label: { en: "Canada", fr: "Canada" }, to: "/news", section: "canada" },
+  { label: { en: "Watch & listen", fr: "Voir et écouter" }, to: "/watch" },
+  { label: { en: "Glossary", fr: "Glossaire" }, to: "/glossary" },
   { label: { en: "Interviews", fr: "Entrevues" }, to: "/interviews" },
-  { label: { en: "Policy", fr: "Politiques" }, to: "/news", section: "policy" },
   { label: { en: "Analysis", fr: "Analyses" }, to: "/news", section: "analysis" },
   { label: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" }, to: "/ministry" },
   { label: { en: "Government", fr: "Gouvernement" }, to: "/government" },
@@ -145,10 +140,11 @@ export function SiteHeader() {
           {menu === "topics" && (
             <div className="absolute right-4 md:right-7 top-full w-[min(760px,calc(100vw-32px))] bg-night-2 border-t-[3px] border-brass shadow-xl">
               <ul className="grid sm:grid-cols-2 lg:grid-cols-3">
-                {TOPICS.map(tp => (
+                {DESKS.map(tp => (
                   <li key={tp.id}>
-                    <Link to="/news" search={{ section: tp.id }} className="block px-5 py-3 border-b border-r border-white/10 font-semibold hover:bg-white/10 hover:text-brass">
-                      {pick(tp.label)}
+                    <Link to="/news" search={{ section: tp.id }} className="block px-5 py-3 border-b border-r border-white/10 hover:bg-white/10 hover:text-brass">
+                      <span className="block font-semibold">{pick(tp.label)}</span>
+                      <span className="block text-[0.82rem] text-white/65 mt-0.5">{pick(tp.dek)}</span>
                     </Link>
                   </li>
                 ))}
@@ -178,7 +174,7 @@ export function SiteHeader() {
               <div>
                 <p className="masthead-serif text-brass text-lg mb-1">{locale === "fr" ? "Thèmes" : "Topics"}</p>
                 <div className="flex flex-col">
-                  {TOPICS.map(tp => (
+                  {DESKS.map(tp => (
                     <Link key={tp.id} to="/news" search={{ section: tp.id }} className="py-2 border-b border-white/10 text-white/85">{pick(tp.label)}</Link>
                   ))}
                 </div>

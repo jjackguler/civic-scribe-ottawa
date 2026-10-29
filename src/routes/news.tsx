@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageIntro } from "@/components/PageShell";
 import { StoryCard } from "@/components/StoryCard";
-import { getAiNewsFast, useAiNews, byLocale, diversify, SECTIONS, inSection, isFrontPool, timeAgo, useNow, type SectionId } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, SECTIONS, DESKS, inSection, isFrontPool, timeAgo, useNow, type SectionId } from "@/lib/news";
 import { AdSlot } from "@/components/AdSlot";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
@@ -59,7 +59,8 @@ function NewsPage() {
       >
         <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Sections">
           <Link to="/news" search={{}} className={chip(!section)}>{t("all", locale)}</Link>
-          {SECTIONS.map(x => (
+          {/* The five desks; an older topic link still gets its own chip while it is open. */}
+          {[...DESKS, ...(current && !DESKS.some(d => d.id === current.id) ? [current] : [])].map(x => (
             <Link key={x.id} to="/news" search={{ section: x.id }} className={chip(section === x.id)}>{pick(x.label)}</Link>
           ))}
         </div>
