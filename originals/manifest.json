@@ -137,55 +137,6 @@
    "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@27bcbd639bf17a779db4ea736ab68928fd85ea97/originals/files/202610241800-sir-jack-12.jpg"
   },
   {
-   "id": "202610231600-sir-jack-special-twenty-three-minutes",
-   "kind": "explainer",
-   "section": "noir",
-   "aspect": "16:9",
-   "publishedAt": "2026-10-23T13:35:09Z",
-   "title": "The Sir Jack Files, special edition: Twenty-Three Minutes",
-   "summary": "On September 26, 1983, a Soviet early-warning computer told duty officer Stanislav Petrov that America had launched five nuclear missiles. Every reading said yes. He decided it was a false alarm, and he was right: the satellite had mistaken sunlight on clouds for rocket flames. A film about the man who did not believe the machine, and why every machine that matters needs a person who can say no.",
-   "durationSec": 286,
-   "sources": [
-    {
-     "name": "Pavel Aksenov, “Stanislav Petrov: The man who may have saved the world,” BBC News (Sept. 26, 2013)",
-     "url": "https://www.bbc.com/news/world-europe-24280831"
-    },
-    {
-     "name": "David Hoffman, “'I Had A Funny Feeling in My Gut',” The Washington Post (Feb. 10, 1999)",
-     "url": "https://www.washingtonpost.com/wp-srv/inatl/longterm/coldwar/shatter021099b.htm"
-    },
-    {
-     "name": "1983 Soviet nuclear false alarm incident (Wikipedia, with its sources)",
-     "url": "https://en.wikipedia.org/wiki/1983_Soviet_nuclear_false_alarm_incident"
-    },
-    {
-     "name": "NPR, “Stanislav Petrov, 'The Man Who Saved The World,' Dies At 77” (Sept. 18, 2017)",
-     "url": "https://www.npr.org/sections/thetwo-way/2017/09/18/551792129/stanislav-p"
-    },
-    {
-     "name": "AI Broadsheet, The Wrong Face (Robert Williams, Detroit, 2020)",
-     "url": "https://aibroadsheet.com/sir-jack"
-    },
-    {
-     "name": "EU Artificial Intelligence Act, Regulation (EU) 2024/1689, Article 14: Human oversight",
-     "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
-    }
-   ],
-   "transcript": "Near Moscow. September twenty-sixth, nineteen eighty-three. Just past midnight. In a secret bunker, a forty-four-year-old lieutenant colonel takes the commander's chair. His job: to watch the satellites that watch America's missile fields. Then, the alarm. Petrov: “The siren howled, but I just sat there for a few seconds, staring at the big, back-lit, red screen with the word 'launch' on it.” His name is Stanislav Petrov. And the machine is telling him the world is about to end. The system is called Oko. Russian for eye. Satellites, high above, watching for the heat of a rocket engine. One missile. And the computer rates its own confidence: highest. And again. Petrov: “A minute later the siren went off again. The second missile was launched. Then the third, and the fourth, and the fifth.” The alert changes. From launch, to missile strike. The rules are clear. He reports up the chain of command. And in nineteen eighty-three, the protocol for an attack is an attack in return. He freezes. Petrov: “All I had to do was to reach for the phone; to raise the direct line to our top commanders, but I couldn't move.” The room is roaring. Maps flashing. A phone in one hand, an intercom in the other. Another officer on the line, shouting at him to stay calm and do his job. But something doesn't add up. One. He'd been told many times: a real attack would be massive. Petrov: “When people start a war, they don't start it with only five missiles.” Two. The system is new. He has worked on it since the start, and he knows it was rushed into service. In his word: raw. Three. The ground radars show nothing. They can't see past the horizon yet, so they prove nothing. But they show nothing. Four. Every alert had to pass twenty-eight or twenty-nine checks. This one passed them all. Too clean. Everything on the screen says yes. Everything in him says no. Petrov: “I had a funny feeling in my gut. I didn't want to make a mistake. I made a decision, and that was it.” He picks up the phone. Not to report an attack. To report a malfunction. If he's wrong, the first warheads land within minutes. Nothing comes. Petrov: “Twenty-three minutes later I realised that nothing had happened.” The cause was sunlight. The sun lit the tops of high clouds, and the satellite read the glint as a rocket's flame. The software meant to filter that out was rewritten. There was no medal. Investigators asked why he hadn't written everything down that night. Petrov: “Because I had a phone in one hand and the intercom in the other, and I don't have a third hand.” He got an official reprimand, over mistakes in the logbook. For years, he kept the story to himself. He was the only officer on his team with a civilian education. The others were career soldiers, trained to give and obey orders. He believed any of them would have raised the alarm. Petrov: “That was my job. But they were lucky it was me on shift that night.” Machines are faster than we are. They count better, watch longer, and never sleep. That night, the machine was certain. And it was wrong. In Detroit, in twenty twenty, people believed a computer that said Robert Williams was a thief. He spent thirty hours in a cell for it. Today, people talk about an AI-centred world. We don't want one. We want a human-centred world, where every machine that matters has a person who checks it, and who can say no. Europe's AI law now says high-risk AI must be built so that people can oversee it. Stanislav Petrov died in twenty seventeen, at seventy-seven. In every machine we build, there should be a chair like his. And someone in it. The Sir Jack Files. Case closed.",
-   "voice": "ElevenLabs stock voices (narration: Brian; Petrov's words: Bill)",
-   "aiImages": true,
-   "credits": "Images and motion generated with AI (Google Flow: Nano Banana Pro images, Veo video) and edited by AI Broadsheet. Petrov's lines are quoted from his interviews with The Washington Post (1999) and the BBC (2013), voiced by a synthetic stock voice; no real person's likeness or voice is used. Narration, sound effects and score generated with ElevenLabs.",
-   "readMore": {
-    "url": "https://www.bbc.com/news/world-europe-24280831",
-    "en": "Read his interview",
-    "fr": "Lire son entretien"
-   },
-   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/aaba4afadcb83eb354f1ccc38e31a9516968f93d/originals/files/202610231600-sir-jack-special-twenty-three-minutes.mp4",
-   "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/aaba4afadcb83eb354f1ccc38e31a9516968f93d/originals/files/202610231600-sir-jack-special-twenty-three-minutes.jpg",
-   "youtubeId": "sbcVlqi3aBw",
-   "youtubePrivacy": "public"
-  },
-  {
    "id": "202610231300-mind-society-03",
    "kind": "explainer",
    "publishedAt": "2026-10-23T03:47:42Z",
@@ -216,63 +167,6 @@
    "voice": "No narration: captions on screen",
    "aiImages": false,
    "credits": "Noir illustrations drawn in code by AI Broadsheet; the worker is not shown or named. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
-  },
-  {
-   "id": "202610221200-sir-jack-special-the-panic-that-wasnt",
-   "kind": "explainer",
-   "section": "noir",
-   "aspect": "16:9",
-   "publishedAt": "2026-10-22T02:27:25Z",
-   "title": "The Sir Jack Files, special edition: The Panic That Wasn't",
-   "summary": "On October 30, 1938, Orson Welles put Martians on the radio, and by morning America had a legend: mass panic. The evidence says it mostly didn't happen. A three-and-a-half-minute film on how newspapers built the myth, and the real, deadly panic in Quito eleven years later that almost nobody remembers.",
-   "durationSec": 215,
-   "sources": [
-    {
-     "name": "Jefferson Pooley & Michael J. Socolow, “The Myth of the War of the Worlds Panic,” Slate (Oct. 28, 2013)",
-     "url": "https://slate.com/culture/2013/10/orson-welles-war-of-the-worlds-panic-myth-the-infamous-radio-broadcast-did-not-cause-a-nationwide-hysteria.html"
-    },
-    {
-     "name": "NPR (Oct. 30, 2013)",
-     "url": "https://www.npr.org/sections/thetwo-way/2013/10/30/241797346/75-years-ago-war-of-the-worlds-started-a-panic-or-did-it"
-    },
-    {
-     "name": "Radio Guide transcript of Welles's press conference, Oct. 31, 1938 (via Wellesnet)",
-     "url": "https://www.wellesnet.com/the-aftermath-orson-welles-the-war-of-the-worlds-halloween-press-conference-1938/"
-    },
-    {
-     "name": "A. Brad Schwartz, Broadcast Hysteria (Hill and Wang, 2015); letters at the University of Michigan",
-     "url": "https://www.wellesnet.com/?p=11961"
-    },
-    {
-     "name": "W. Joseph Campbell, Getting It Wrong (University of California Press, 2010)",
-     "url": "https://www.ucpress.edu/books/getting-it-wrong/paper"
-    },
-    {
-     "name": "Hadley Cantril, The Invasion from Mars (Princeton University Press, 1940)",
-     "url": "https://archive.org/details/invasionfrommars0000cant"
-    },
-    {
-     "name": "Radiolab, “Could It Happen Again?” (2010), on Quito, 1949",
-     "url": "https://www.radiolab.org/story/91624-could-it-happen-again-and-again/"
-    },
-    {
-     "name": "College of Wooster archive: fire at Radio Quito, 1949",
-     "url": "https://cowlatinamerica.voices.wooster.edu/archive-item/fire-at-radio-station-after-broadcast/"
-    }
-   ],
-   "transcript": "New York. Sunday, October thirtieth, nineteen thirty-eight. Eight o'clock. On CBS radio, a twenty-three-year-old named Orson Welles begins a Halloween play. It's The War of the Worlds. Martians land on a farm in Grover's Mill, New Jersey. And the story is told as fake news bulletins, breaking into a dance band. By the next morning, America had a legend. It has been told ever since. The trouble is, it's mostly not true. Monday's New York Times, front page: radio listeners in panic, taking war drama as fact. The papers told of families fleeing their homes, of switchboards jammed with calls. The next day, unshaven, Welles faced the press. A reporter asks: Reporter: “Were you aware of the terror going on throughout the nation while you were giving the broadcast?” Welles: “Oh no, of course not. I was frankly terribly shocked to learn it did.” Another: Reporter: “Should you have toned down the language of the drama?” Welles: “No. You don't play murder in soft words.” Here's what almost nobody checked. That night, a ratings firm, C. E. Hooper, telephoned five thousand homes and asked what they were listening to. Two percent named a radio play, or the Welles show. Not one said a news broadcast. Most of America was on NBC, laughing at a ventriloquist and his dummy, Charlie McCarthy. Some CBS stations didn't even carry Welles. So why the panic headlines? All through the Depression, radio had been taking newspapers' advertisers. Here was proof, the papers said, that radio couldn't be trusted with the news. The Times called it terror by radio. Within a day or two, most papers dropped the story. The legend stayed. In nineteen forty, a Princeton study put a number on it: roughly a million frightened. But its survey was taken six weeks later, after the headlines. And frightened is not the same as panicked. Six weeks on, six New York hospitals had no record of a single case. No suicide was ever confirmed. Nearly fourteen hundred listeners wrote to Welles. Decades later, a historian read their letters. His conclusion: relatively few listeners ever believed the attack was real. Washington issued no fines, and no rules. The networks simply promised: no more fake news flashes. But it did happen once. Quito, Ecuador. February twelfth, nineteen forty-nine. Radio Quito airs its own version, set in Ecuador. When listeners learned it was fiction, a crowd stoned the station and set it on fire. People died. Reports put the toll anywhere from five to twenty. So the most famous panic in history was mostly made in newsrooms. The one that cost lives, almost nobody remembers. A story about fake news that was, itself, mostly fake news. The Sir Jack Files. Case closed.",
-   "voice": "ElevenLabs stock voices (narration: Brian; dialogue: Roger, Bill)",
-   "aiImages": true,
-   "credits": "Images and motion generated with AI (Google Flow: Nano Banana images, Veo video) and edited by AI Broadsheet. Press-conference dialogue is quoted from the Radio Guide transcript of October 31, 1938, and voiced by synthetic stock voices; no real person's likeness or voice is used. Narration, sound effects and score generated with ElevenLabs.",
-   "readMore": {
-    "url": "https://slate.com/culture/2013/10/orson-welles-war-of-the-worlds-panic-myth-the-infamous-radio-broadcast-did-not-cause-a-nationwide-hysteria.html",
-    "en": "Read the research",
-    "fr": "Lire l'enquête"
-   },
-   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/b35322a1813dc95a4f21f5d19cd7696b7d62ef5c/originals/files/202610221200-sir-jack-special-the-panic-that-wasnt.mp4",
-   "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/b35322a1813dc95a4f21f5d19cd7696b7d62ef5c/originals/files/202610221200-sir-jack-special-the-panic-that-wasnt.jpg",
-   "youtubeId": "kaCP8LbY4oQ",
-   "youtubePrivacy": "public"
   },
   {
    "id": "202610211600-op-doc-the-good-room",
@@ -334,63 +228,6 @@
    },
    "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.mp4",
    "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/eba99b3655fba04c0ed8e30918eec855be4159f0/originals/files/202610202130-sir-jack-11.jpg"
-  },
-  {
-   "id": "202610201600-sir-jack-special-the-wrong-face",
-   "kind": "explainer",
-   "section": "noir",
-   "aspect": "16:9",
-   "publishedAt": "2026-10-20T16:00:00Z",
-   "title": "The Sir Jack Files, special edition: The Wrong Face",
-   "summary": "In 2020 a Detroit father was arrested on his driveway, in front of his daughters, because facial recognition matched his old licence photo to a blurry shoplifting video. A four-minute motion comic from court records: the arrest, the lineup, thirty hours in a cell, and the rules that changed in 2024.",
-   "durationSec": 286,
-   "sources": [
-    {
-     "name": "Williams v. City of Detroit, First Amended Complaint (E.D. Mich., 2023)",
-     "url": "https://assets.aclu.org/live/uploads/2024/01/54.-First-Amended-Complaint.pdf"
-    },
-    {
-     "name": "NPR (June 24, 2020)",
-     "url": "https://www.hawaiipublicradio.org/2020-06-24/the-computer-got-it-wrong-how-facial-recognition-led-to-a-false-arrest-in-michigan"
-    },
-    {
-     "name": "ACLU",
-     "url": "https://www.aclu.org/cases/williams-v-city-of-detroit-face-recognition-false-arrest"
-    },
-    {
-     "name": "AP (June 2020; June 2024)",
-     "url": "https://www.news4jax.com/tech/2020/06/26/detroit-says-shoddy-work-led-to-arrest-tied-to-technology/"
-    },
-    {
-     "name": "Michigan Public (June 28, 2024)",
-     "url": "https://www.michiganpublic.org/criminal-justice-legal-system/2024-06-28/it-didnt-make-sense-at-all-wrongful-facial-recognition-arrest-leads-to-landmark-settlement"
-    },
-    {
-     "name": "NBC News (Porcha Woodruff, 2023)",
-     "url": "https://www.nbcnews.com/news/us-news/detroit-woman-sues-city-falsely-arrested-8-months-pregnant-due-facial-rcna98447"
-    },
-    {
-     "name": "NIST, NISTIR 8280 (2019)",
-     "url": "https://nvlpubs.nist.gov/nistpubs/ir/2019/NIST.IR.8280.pdf"
-    },
-    {
-     "name": "Georgetown Law, The Perpetual Line-Up (2016)",
-     "url": "https://www.perpetuallineup.org/"
-    }
-   ],
-   "transcript": "Detroit. January ninth, twenty twenty. Twenty-two minutes past five. A man pulls into his own driveway after a day at work. His wife is at the door. His two little girls are watching. Seconds later, a police car pulls in behind him. Handcuffs. He asks what for. The warrant says: larceny. His wife asks for a card, some way to reach him. An officer tells her: Officer: “Google it.” His name is Robert Williams. And the witness against him was a machine. Rewind. October second, twenty eighteen. A man walks into a Shinola store in downtown Detroit, and walks out with five watches. About thirty-eight hundred dollars. The cameras catch him, barely. Head down. A red St. Louis Cardinals cap hiding his face. March twenty nineteen. A detective takes one blurry frame from that video and sends it for a facial recognition search. Michigan State Police run it. The software, from a company called DataWorks Plus, offers a name: Robert Williams. It had matched an old, expired photo from his driver's licence. The report came back with a warning, in capital letters. This document is not a positive identification. It is an investigative lead only, and is not probable cause to arrest. Here is where a lead became an accusation. In July, detectives showed six photos to a loss-prevention contractor working for Shinola. She had not been in the store. She had only seen the same grainy video. She picked Robert. His lawyers would later call it a rigged lineup, built by a computer. On that, a warrant was signed. Back to the driveway. He tells his five-year-old he'll see her soon. Then a crowded cell in the Detroit Detention Center. Not enough mats, his lawsuit says, so he slept on concrete. Nobody tells him why he's there. The next day, two detectives slide a picture across the table: the man from the store. Robert picks it up and holds it next to his own face. Robert: “That's not me at all. Y'all can't tell that?” One detective, he recalls, answers: Detective: “So I guess the computer got it wrong, too.” Still, it's hours more before he walks out on bond, into a rainy January night. Thirty hours, in all. At home, the family portrait in the living room has been turned to face the wall. His older daughter did it, his lawsuit says, because the girls cried every time they saw it. Two weeks later, prosecutors drop the charges. The county prosecutor apologizes. Detroit's police chief calls it shoddy investigative work, not a failure of the technology. But it happened again. February twenty twenty-three. Porcha Woodruff, eight months pregnant, is arrested for a carjacking she didn't commit. Another facial recognition lead. Another lineup. In twenty twenty, Detroit's own police chief put it plainly: used by itself, he said, the technology would misidentify ninety-six percent of the time. A federal study by NIST found many algorithms more likely to falsely match Black and Asian faces. June twenty-eighth, twenty twenty-four. After three years in federal court, Detroit settles. Three hundred thousand dollars, and new rules the ACLU calls the strongest in the nation. No arrest on a face match alone. No photo lineup built straight from a match. Training. And an audit of cases going back to twenty seventeen. Robert Williams got the rules. He didn't get what he wanted most: for the police to stop using it. Researchers at Georgetown estimated that one in two American adults is in a police face recognition network. Which means somewhere, right now, a machine has a picture of you. A match is not a witness. It's a question. The rules decide who has to answer it. The Sir Jack Files. Case closed.",
-   "voice": "ElevenLabs stock voices (narration: Brian; dialogue: Roger, Chris, Bill)",
-   "aiImages": true,
-   "credits": "Images and motion generated with AI (Google Flow: Nano Banana Pro images, Veo video) and edited by AI Broadsheet. Dialogue is quoted from the lawsuit and interviews and voiced by synthetic stock voices; every person is an anonymous figure, not a likeness of anyone involved. Dramatized from court records and published reporting. Narration, sound effects and score generated with ElevenLabs.",
-   "readMore": {
-    "url": "https://www.aclu.org/cases/williams-v-city-of-detroit-face-recognition-false-arrest",
-    "en": "Read the case file",
-    "fr": "Lire le dossier"
-   },
-   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/439fe7504dd3539491c04add6dce6fdcb250bccc/originals/files/202610201600-sir-jack-special-the-wrong-face.mp4",
-   "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/439fe7504dd3539491c04add6dce6fdcb250bccc/originals/files/202610201600-sir-jack-special-the-wrong-face.jpg",
-   "youtubeId": "cW1sWLj_-v4",
-   "youtubePrivacy": "public"
   },
   {
    "id": "202610201130-sir-jack-10",
