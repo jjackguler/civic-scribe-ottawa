@@ -1,5 +1,29 @@
 [
   {
+    "id": "d353sr",
+    "at": "2026-10-29T23:39:32.477Z",
+    "stage": "copy",
+    "headline": "Paris-based Mistral releases \"Le Chonk,\" a strong coding model that still trails China overall",
+    "reasons": [
+      "Not in the sources (names or numbers): Organisations, Programmers, Chinese.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Organisations, Programmers, Chinese."
+    ]
+  },
+  {
+    "id": "11saxda",
+    "at": "2026-10-29T23:31:33.030Z",
+    "stage": "copy",
+    "headline": "Ottawa buys $1.6-billion stake in Cohere as AI firm’s valuation soars to $35.7-billion",
+    "reasons": [
+      "Not in the sources (names or numbers): 35.7B, Canada.",
+      "Too close to The Globe and Mail's wording (\"financing is the largest ever by a canadian startup…\"): say it in our own words, or quote and attribute it.",
+      "Too close to Global News's wording (\"his government will invest up to 1 6 billion…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to The Globe and Mail's wording (\"the country s most valuable privately held tech company…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "rd18du",
     "at": "2026-10-29T13:36:14.927Z",
     "stage": "copy",
