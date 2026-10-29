@@ -1,5 +1,29 @@
 [
   {
+    "id": "rd18du",
+    "at": "2026-10-29T13:36:14.927Z",
+    "stage": "copy",
+    "headline": "NVIDIA Nemotron 3.5 Transcribe and Granary v2: Intelligent Multilingual Transcription You Can Prompt and Adapt",
+    "reasons": [
+      "Not in the sources (names or numbers): Developers, People.",
+      "Too close to The Decoder's wording (\"nvidia has released nemotron 3 5 transcribe an open…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "The article is too thin (115 words): skip the event rather than pad it."
+    ]
+  },
+  {
+    "id": "12e96nx",
+    "at": "2026-10-29T13:33:47.062Z",
+    "stage": "copy",
+    "headline": "Google announces Gemini 4 Carbon, its latest frontier AI model that you can't use",
+    "reasons": [
+      "Too close to Ars Technica's wording (\"gemini 4 carbon is essentially a slightly better version…\"): say it in our own words, or quote and attribute it.",
+      "Too close to The Decoder's wording (\"the artificial analysis intelligence index v5 with 59 points…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to The Decoder's wording (\"google says the model is built for extended agent…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "mbofo5",
     "at": "2026-10-28T20:04:35.457Z",
     "stage": "copy",
