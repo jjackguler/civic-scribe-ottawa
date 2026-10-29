@@ -12,6 +12,10 @@ import { isFrPath, stripFr } from "./seo";
 import { SITE } from "./site";
 
 export const GONE: string[] = [
+  // Sir Jack special editions made with generated images and video (Flow, Veo), withdrawn 29 Oct 2026.
+  "/video/the-sir-jack-files-special-edition-twenty-three-minutes",
+  "/video/the-sir-jack-files-special-edition-the-panic-that-wasn-t",
+  "/video/the-sir-jack-files-special-edition-the-wrong-face",
   // "/old-section/*",
   // "/learn/retired-guide",
 ];

@@ -109,7 +109,7 @@ export function DispatchRail({ initial, variant = "rail", limit = 8, title = tru
       {title && (
         <ZoneHead
           title={<span id="dispatch-rail-h">{fr ? "Dépêches" : "Dispatches"}</span>}
-          sub={<>{fr ? "Nos propres articles, écrits avec l'IA à partir de ce que plusieurs médias rapportent." : "Our own articles, written with AI from what several outlets are reporting."} <Link to="/standards" hash="dispatches" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
+          sub={<>{fr ? "Des résumés, rédigés avec l'IA, de ce que plusieurs médias rapportent." : "AI-assisted summaries of what several outlets are reporting."} <Link to="/standards" hash="dispatches" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
           action={variant === "rail" ? (
             <Link to="/dispatch" className="shrink-0 inline-flex items-center gap-1 text-[0.92rem] font-semibold text-lake hover:underline">
               {fr ? "Toutes" : "All dispatches"} <ArrowRight className="h-4 w-4" aria-hidden="true" />

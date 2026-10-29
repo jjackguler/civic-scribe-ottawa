@@ -154,7 +154,7 @@ function ArticleRoute() {
               : (fr ? "Réessayez dans quelques minutes." : "Please try again in a few minutes.")}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/dispatch" className="inline-flex bg-night text-white px-5 py-2.5 rounded-[4px] font-semibold hover:bg-lake">{fr ? "Tous nos articles" : "All our articles"}</Link>
+            <Link to="/dispatch" className="inline-flex bg-night text-white px-5 py-2.5 rounded-[4px] font-semibold hover:bg-lake">{fr ? "Tous les résumés de la rédaction" : "All newsroom summaries"}</Link>
             {killed && <Link to="/corrections" className="inline-flex border border-night px-5 py-2.5 rounded-[4px] font-semibold hover:bg-ice">{fr ? "Corrections" : "Corrections"}</Link>}
           </div>
         </div>

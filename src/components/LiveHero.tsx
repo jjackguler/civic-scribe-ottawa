@@ -339,7 +339,7 @@ function OwnColumn({ items }: { items: OwnItem[] }) {
         <p className="font-bold text-[1.15rem]">{fr ? "De notre rédaction" : "From our newsroom"}</p>
         <Link to="/originals" className="text-[0.85rem] font-semibold text-white/70 hover:text-signal">{fr ? "Tout voir" : "See all"}</Link>
       </div>
-      <p className="text-[0.8rem] text-white/60 mt-2">{fr ? "Nos articles et nos vidéos, vérifiés contre leurs sources." : "Our own articles and videos, checked against their sources."}</p>
+      <p className="text-[0.8rem] text-white/60 mt-2">{fr ? "Nos vidéos et nos résumés de reportages d'autres médias, vérifiés contre leurs sources." : "Our videos, and summaries of other outlets' reporting, checked against their sources."}</p>
       <ol className="mt-1">
         {items.slice(0, 6).map(x => {
           const art = x.kind === "article";
