@@ -86,28 +86,19 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "deepmind", name: "Google DeepMind", url: "https://deepmind.google/blog/feed", home: "https://deepmind.google/discover/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "google-ai", name: "Google AI", url: "https://blog.google/technology/ai/rss/", home: "https://blog.google/technology/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   // Labs and model makers without (or in addition to) the big newsrooms: their own announcements, first-hand.
-  { id: "xai", name: "xAI", url: "https://x.ai/news", home: "https://x.ai/news", region: "world", lang: "en", kind: "lab", aiOnly: true, format: "links-html", links: { origin: "https://x.ai", path: "/news/[a-z0-9-]+", date: "text" } },
-  { id: "deepseek", name: "DeepSeek", url: "https://api-docs.deepseek.com/news/news250120", home: "https://api-docs.deepseek.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true, format: "links-html", links: { origin: "https://api-docs.deepseek.com", path: "/news/news\\d{6}", date: "id-yymmdd" } },
   { id: "microsoft-ai", name: "Microsoft AI", url: "https://blogs.microsoft.com/ai/feed/", home: "https://blogs.microsoft.com/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "msr", name: "Microsoft Research", url: "https://www.microsoft.com/en-us/research/feed/", home: "https://www.microsoft.com/en-us/research/blog/", region: "world", lang: "en", kind: "lab", aiOnly: false, slow: true },
   { id: "apple-ml", name: "Apple Machine Learning Research", url: "https://machinelearning.apple.com/rss.xml", home: "https://machinelearning.apple.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
-  { id: "midjourney", name: "Midjourney", url: "https://updates.midjourney.com/rss/", home: "https://updates.midjourney.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
-  { id: "stability", name: "Stability AI", url: "https://stability.ai/news?format=rss", home: "https://stability.ai/news", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
-  { id: "qwen", name: "Qwen (Alibaba)", url: "https://qwenlm.github.io/blog/index.xml", home: "https://qwenlm.github.io/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "huggingface", name: "Hugging Face", url: "https://huggingface.co/blog/feed.xml", home: "https://huggingface.co/blog", region: "world", lang: "en", kind: "lab", aiOnly: true },
 
   // ── Specialist beats: immersive tech, robotics, data centres ───────────
-  { id: "uploadvr", name: "UploadVR", url: "https://www.uploadvr.com/rss/", home: "https://www.uploadvr.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "immersive", slow: true },
-  { id: "roadtovr", name: "Road to VR", url: "https://www.roadtovr.com/feed/", home: "https://www.roadtovr.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "immersive", slow: true },
   { id: "robotreport", name: "The Robot Report", url: "https://www.therobotreport.com/feed/", home: "https://www.therobotreport.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "robotics", slow: true },
   { id: "dcd", name: "DatacenterDynamics", url: "https://www.datacenterdynamics.com/en/rss/", home: "https://www.datacenterdynamics.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "infrastructure", slow: true },
   { id: "vector", name: "Vector Institute", url: "https://vectorinstitute.ai/feed/", home: "https://vectorinstitute.ai", region: "canada", lang: "en", kind: "lab", aiOnly: true, slow: true },
-  { id: "aws-ml", name: "AWS Machine Learning", url: "https://aws.amazon.com/blogs/machine-learning/feed/", home: "https://aws.amazon.com/blogs/machine-learning/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
 
   // Added 2026-10-17 (owner's request): technology beyond AI, and psychology and society.
   { id: "verge-all", name: "The Verge", url: "https://www.theverge.com/rss/index.xml", home: "https://www.theverge.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
   { id: "ars-all", name: "Ars Technica", url: "https://feeds.arstechnica.com/arstechnica/index", home: "https://arstechnica.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
-  { id: "electrek", name: "Electrek", url: "https://electrek.co/feed/", home: "https://electrek.co", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
   { id: "psypost", name: "PsyPost", url: "https://www.psypost.org/feed/", home: "https://www.psypost.org", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "society", slow: true },
   { id: "conversation", name: "The Conversation", url: "https://theconversation.com/global/articles.atom", home: "https://theconversation.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "society", slow: true },
   { id: "pew", name: "Pew Research Center", url: "https://www.pewresearch.org/feed/", home: "https://www.pewresearch.org", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "society", slow: true },
@@ -122,6 +113,9 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "quebec", name: "Gouvernement du Québec", url: "https://www.quebec.ca/fil-de-presse.rss", home: "https://www.quebec.ca/nouvelles", region: "canada", lang: "fr", kind: "gov", aiOnly: false, level: "provincial", slow: true },
   { id: "ottawa", name: "City of Ottawa", url: "https://ottawa.ca/en/news.rss", home: "https://ottawa.ca/en/news", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "municipal", slow: true },
   { id: "opc", name: "Office of the Privacy Commissioner of Canada", url: "https://www.priv.gc.ca/en/rss/news/", home: "https://www.priv.gc.ca/en/", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "federal", slow: true },
+  // Added 29 Oct 2026 for the Rights & power desk; not yet checked from the newsroom's network.
+  { id: "ploughshares", name: "Project Ploughshares", url: "https://ploughshares.ca/feed/", home: "https://ploughshares.ca", region: "canada", lang: "en", kind: "analysis", aiOnly: false, slow: true },
+  { id: "citizenlab", name: "Citizen Lab", url: "https://citizenlab.ca/feed/", home: "https://citizenlab.ca", region: "canada", lang: "en", kind: "analysis", aiOnly: false, slow: true },
   { id: "canadabuys-ai", name: "CanadaBuys — AI tenders", url: "https://canadabuys.canada.ca/en/search-feed?words=%22artificial%20intelligence%22&status%5B87%5D=87", home: "https://canadabuys.canada.ca/en/tender-opportunities", region: "canada", lang: "en", kind: "gov", aiOnly: true, level: "federal", slow: true },
 
   // ── Local newsrooms (AI stories about cities and provinces) ─────────────
@@ -136,7 +130,6 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "oneuseful", name: "One Useful Thing", url: "https://www.oneusefulthing.org/feed", home: "https://www.oneusefulthing.org", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true },
   { id: "lastweekin", name: "Last Week in AI", url: "https://lastweekin.ai/feed", home: "https://lastweekin.ai", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true },
   { id: "gradient", name: "The Gradient", url: "https://thegradient.pub/rss/", home: "https://thegradient.pub", region: "world", lang: "en", kind: "analysis", aiOnly: true, slow: true },
-  { id: "nvidia", name: "NVIDIA Developer", url: "https://developer.nvidia.com/blog/feed", home: "https://developer.nvidia.com/blog", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "allbusiness", name: "AllBusiness", url: "https://www.allbusiness.com/feeds/feed.rss", home: "https://www.allbusiness.com", region: "world", lang: "en", kind: "analysis", aiOnly: false, slow: true },
 ];
 
@@ -145,7 +138,7 @@ export const NO_FEED_SOURCES = [
   { name: "Stanford HAI", home: "https://hai.stanford.edu/news" },
   { name: "TIME — AI", home: "https://time.com/section/tech/" },
   { name: "The Wall Street Journal — Tech", home: "https://www.wsj.com/tech" },
-  // Checked 2026-10-07: no working news feed.
+  // Checked 2026-10-07: no working news feed. Their news reaches us through BetaKit, The Globe and Mail and CBC.
   { name: "Mila", home: "https://mila.quebec/en/news" },
   { name: "Amii", home: "https://www.amii.ca/updates-insights" },
   { name: "Cohere", home: "https://cohere.com/blog" },

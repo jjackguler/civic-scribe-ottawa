@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { NewsPayload, Story } from "./news-engine";
 import type { Topic, Level } from "./news-sources";
 import { deskFor } from "./desk";
+import { humanLens } from "./editorial";
 import type { Bi, Locale } from "./i18n";
 import { getTranslation } from "./translations";
 import { refineClusters } from "./claude.functions";
@@ -79,12 +80,27 @@ export const TOPICS: { id: Topic; label: Bi }[] = [
   { id: "society", label: { en: "Mind & society", fr: "Esprit et société" } },
 ];
 
-export type SectionId = "canada" | "world" | "government" | "ministry" | "labs" | "analysis" | "trending" | Topic;
+export type SectionId = "canada" | "world" | "rights" | "work" | "science" | "government" | "ministry" | "labs" | "analysis" | "trending" | Topic;
+
+/**
+ * The five public desks: what the header, footer and front page show. The older topic desks
+ * stay reachable at /news?section=… so existing links keep working.
+ */
+export const DESKS: { id: SectionId; label: Bi; dek: Bi }[] = [
+  { id: "canada", label: { en: "Canada", fr: "Canada" }, dek: { en: "Ottawa, the provinces, Canadian labs and companies.", fr: "Ottawa, les provinces, les laboratoires et entreprises d'ici." } },
+  { id: "rights", label: { en: "Rights & power", fr: "Droits et pouvoir" }, dek: { en: "Data sovereignty, privacy, military AI, democracy and regulation.", fr: "Souveraineté des données, vie privée, IA militaire, démocratie et réglementation." } },
+  { id: "work", label: { en: "Work & culture", fr: "Travail et culture" }, dek: { en: "Jobs, artists' rights, schools, families and everyday life.", fr: "Emploi, droits des artistes, écoles, familles et vie quotidienne." } },
+  { id: "science", label: { en: "Research", fr: "Recherche" }, dek: { en: "What labs and scientists found, and what it does not prove.", fr: "Ce que les laboratoires et les chercheurs ont trouvé, et ce que ça ne prouve pas." } },
+  { id: "world", label: { en: "World", fr: "Monde" }, dek: { en: "The rest of the world, briefly.", fr: "Le reste du monde, en bref." } },
+];
+
+/** Power over people: who holds data, weapons and the rules. Read with the human lens. */
+const POWER = /\b(military|militar\w*|defen[cs]e|armed forces|weapons?|autonomous weapons?|drones?|surveillance|sovereign\w*|souverainet\w*|cloud act|data residency|facial recognition|reconnaissance faciale|copyright|droit d'auteur|regulat\w*|réglement\w*|bill c-\d+|privacy commissioner)\b/i;
+const CULTURE = /\b(artists?|artistes?|musicians?|writers?|authors?|actors?|creators?|culture|cultural|journalis\w*|newsrooms?)\b/i;
 
 /** Sections of the news page, in navigation order. */
 export const SECTIONS: { id: SectionId; label: Bi }[] = [
-  { id: "world", label: { en: "World", fr: "Monde" } },
-  { id: "canada", label: { en: "Canada", fr: "Canada" } },
+  ...DESKS.map(({ id, label }) => ({ id, label })),
   ...TOPICS,
   { id: "government", label: { en: "Government", fr: "Gouvernement" } },
   { id: "ministry", label: { en: "AI Ministry", fr: "Ministère de l'IA" } },
@@ -102,6 +118,23 @@ export function inSection(s: Story, id: SectionId): boolean {
     case "labs": return s.kind === "lab";
     case "analysis": return s.kind === "analysis";
     case "trending": return s.kind === "trending";
+    case "rights": {
+      if (s.gov || s.kind === "trending") return false;
+      const tags = s.tags ?? [s.topic];
+      return tags.includes("responsible") || tags.includes("policy") || POWER.test(`${s.title} ${s.summary ?? ""}`)
+        || humanLens(s).some(l => l === "rights" || l === "privacy" || l === "democracy" || l === "safety");
+    }
+    case "work": {
+      if (s.gov || s.kind === "trending") return false;
+      const tags = s.tags ?? [s.topic];
+      return tags.includes("people") || tags.includes("society") || CULTURE.test(`${s.title} ${s.summary ?? ""}`)
+        || humanLens(s).some(l => l === "work" || l === "children");
+    }
+    case "science": {
+      if (s.gov || s.kind === "trending") return false;
+      const tags = s.tags ?? [s.topic];
+      return s.kind === "lab" || tags.includes("research") || tags.includes("health") || tags.includes("robotics");
+    }
     default: return (s.tags ?? [s.topic]).includes(id) && !s.gov && s.kind !== "trending";
   }
 }
