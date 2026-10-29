@@ -85,6 +85,7 @@ function toEvent(id: string, lead: Story, stories: Story[]): Event {
 export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { events: Event[]; skipped: Skip[] } {
   const events: Event[] = [];
   const skipped: Skip[] = [];
+  const canadian = new Set<string>();
   const fresh = (iso: string) => now - new Date(iso).getTime() < HOURS * 3600_000;
 
   const covered = (id: string, group: Story[]) => {
@@ -104,6 +105,7 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
     if (why) return skipped.push({ id, title: lead.title, why });
     const chars = group.reduce((t, s) => t + (s.summary?.length ?? 0), 0);
     if (chars < minChars) return skipped.push({ id, title: lead.title, why: `too little reporting to write from (${chars} characters of excerpts)` });
+    if (group.some(s => s.region === "canada")) canadian.add(id);
     events.push(toEvent(id, lead, group));
   };
 
@@ -133,5 +135,6 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
     else if (RUMOUR.test(`${c.lead.title} ${c.lead.summary ?? ""}`)) skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, rumour or leak" });
     else consider(c.id, c.lead, c.stories, 450);
   }
-  return { events, skipped };
+  // Canada first (owner's brief, 2026-10-29): Canadian events are written before the rest, in their own order.
+  return { events: [...events.filter(e => canadian.has(e.id)), ...events.filter(e => !canadian.has(e.id))], skipped };
 }
