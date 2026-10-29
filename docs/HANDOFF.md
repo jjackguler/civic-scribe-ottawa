@@ -33,6 +33,14 @@ Last updated: 28 Oct 2026 (editorial About and standards copy simplified at owne
 - Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
   same computer.
 
+## Generative imagery withdrawn (29 Oct 2026)
+- Owner decision: the three Sir Jack special editions made with Google Flow / Veo (Twenty-Three
+  Minutes, The Panic That Wasn't, The Wrong Face) are off the site: removed from
+  `originals/manifest.json` on `media`, and their `/video/...` pages answer 410 (`src/lib/gone.ts`).
+  Social copies were not touched. New work uses code-drawn scenes only, no generated images or video.
+- The `/dispatch` page is "Newsroom summaries", not "Our articles": its pieces are AI-assisted
+  summaries of other outlets' reporting. Reserve "our articles" for our own reporting.
+
 ## Open Desk Journalism (28 Oct 2026)
 - Owner approved a /about "How we work" section and a short home-page introduction linking
   to /about#how-we-work, using the existing typography, colours and layout components.
@@ -183,7 +191,6 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Sir Jack candidates: France's CNAF risk-scoring algorithm ("The Second Suspicion Machine",
   follow-up to Rotterdam), the Mechanical Turk and Amazon, AlphaGo, ELIZA, and current human-rights
   and AI stories. Series idea: "They Said It Would Ruin Us".
-- Vertical trailers for the specials The Panic That Wasn't and Twenty-Three Minutes.
 - Three new bulletins in the style of the Netflix sample (waiting for the owner's approval).
 - Topic sub-shelves on /originals (work, crime, privacy, philosophy, children, algorithms and
   justice). Character explainers (Pip & Quill sample) 2–3 a day if the budget allows.
