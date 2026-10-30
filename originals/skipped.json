@@ -1,5 +1,10 @@
 [
   {
+    "key": "article:approved-raii-20261027",
+    "at": "2026-10-30T01:22:16.591Z",
+    "reason": "fact guard / layout check failed twice: scene 3 (clippings): needs 1-3 clips; not in the sources: 3, 5,000,000, 700M, FTE, Dollars, Minimum, Maximum, Deadlines"
+  },
+  {
     "key": "story:tsc6bl",
     "at": "2026-10-28T00:44:29.243Z",
     "reason": "fact guard / layout check failed twice: 7 to 10 scenes (got 5); narration must be 115-175 words in total (got 87); scene 4 (figure): \"quote\" must be 4-at most 70 characters (got \"Genie 4 will roll out to developers and Google AI Ultra subscribers soon.\"); not in the sources: Access, ARRIVES"
