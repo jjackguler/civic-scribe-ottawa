@@ -15,6 +15,7 @@ import { Route as AdsDottxtRouteImport } from './routes/ads[.]txt'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AskRouteImport } from './routes/ask'
+import { Route as CanadaRouteImport } from './routes/canada'
 import { Route as CorrectionsRouteImport } from './routes/corrections'
 import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
 import { Route as FundingRouteImport } from './routes/funding'
@@ -109,6 +110,11 @@ const AppRoute = AppRouteImport.update({
 const AskRoute = AskRouteImport.update({
   id: '/ask',
   path: '/ask',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CanadaRoute = CanadaRouteImport.update({
+  id: '/canada',
+  path: '/canada',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CorrectionsRoute = CorrectionsRouteImport.update({
@@ -444,6 +450,7 @@ export interface FileRoutesByFullPath {
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
+  '/canada': typeof CanadaRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -517,6 +524,7 @@ export interface FileRoutesByTo {
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
+  '/canada': typeof CanadaRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -591,6 +599,7 @@ export interface FileRoutesById {
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
+  '/canada': typeof CanadaRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
@@ -666,6 +675,7 @@ export interface FileRouteTypes {
     | '/advertise'
     | '/app'
     | '/ask'
+    | '/canada'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -739,6 +749,7 @@ export interface FileRouteTypes {
     | '/advertise'
     | '/app'
     | '/ask'
+    | '/canada'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -812,6 +823,7 @@ export interface FileRouteTypes {
     | '/advertise'
     | '/app'
     | '/ask'
+    | '/canada'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
@@ -886,6 +898,7 @@ export interface RootRouteChildren {
   AdvertiseRoute: typeof AdvertiseRoute
   AppRoute: typeof AppRoute
   AskRoute: typeof AskRoute
+  CanadaRoute: typeof CanadaRoute
   CorrectionsRoute: typeof CorrectionsRoute
   DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
   FundingRoute: typeof FundingRoute
@@ -995,6 +1008,13 @@ declare module '@tanstack/react-router' {
       path: '/ask'
       fullPath: '/ask'
       preLoaderRoute: typeof AskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/canada': {
+      id: '/canada'
+      path: '/canada'
+      fullPath: '/canada'
+      preLoaderRoute: typeof CanadaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/corrections': {
@@ -1462,6 +1482,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdvertiseRoute: AdvertiseRoute,
   AppRoute: AppRoute,
   AskRoute: AskRoute,
+  CanadaRoute: CanadaRoute,
   CorrectionsRoute: CorrectionsRoute,
   DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
   FundingRoute: FundingRoute,

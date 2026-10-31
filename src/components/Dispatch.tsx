@@ -7,6 +7,7 @@
  *
  * Renders nothing when the desk is off or has written nothing yet.
  */
+import { AiBadge } from "./Trust";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
@@ -69,7 +70,7 @@ export function DispatchCard({ d, size = "rail" }: { d: DispatchSummary; size?: 
     <article className="group relative h-full">
       {wrap(<>
         <span className="flex items-center gap-2 text-[0.78rem] font-bold">
-          <span className="bg-signal text-signal-ink px-1.5 py-0.5">{d.article ? (fr ? "Rédaction" : "Newsroom") : DISPATCH_WORD[locale]}</span>
+          <AiBadge kind="summary" />
           <span className="text-brass-ink">{fr ? `${d.outlets.length} médias` : `${d.outlets.length} outlets`}</span>
         </span>
         <h3 className={`hl mt-2.5 text-ink ${size === "grid" ? "text-[1.35rem]" : "text-[1.2rem] sm:text-[1.28rem]"}`}>
