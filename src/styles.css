@@ -55,6 +55,7 @@
   --color-lake: var(--lake);
   --color-live: var(--live);
   --color-spruce: var(--spruce);
+  --color-rule: var(--rule);
   --color-night: var(--night);
   --color-night-2: var(--night-2);
   --color-brass: var(--brass);
@@ -89,20 +90,22 @@
   --brand-gold: #D7B54A;
   --brand-red: #D9412B;
   --radius: 5px;
-  --ink: #10191b;
+  /* Broadsheet v2 (31 Oct 2026): warm newsprint paper, calmer rules. All text pairs pass WCAG AA. */
+  --ink: #14181a;
   --night: #0b2a2f;
   --night-2: #123a40;
-  --paper: #f4f5f2;
+  --paper: #f7f5f0;
   --surface: #ffffff;
-  --ice: #e5ebe9;
-  --line: #d6ddda;
-  --muted-ink: #56635f;
-  --lake: #0e6a70;
+  --ice: #ece8df;
+  --line: #dcd7cc;
+  --rule: #14181a;
+  --muted-ink: #545b5f;
+  --lake: #0b6168;
   --brass: #c9a24d;
   --signal: #f5c400;
   --signal-ink: #111111;
-  --brass-ink: #85641a;
-  --live: #d7372f;
+  --brass-ink: #7a5b12;
+  --live: #c8302a;
   --spruce: #2b6a4e;
 
   --background: var(--paper);
@@ -147,15 +150,38 @@
     font-weight: 700;
     letter-spacing: 0;
   }
-  /* News headlines: semi-condensed, heavy, tight — built to scan fast. */
-  /* News headlines: a heavy grotesk built for newsprint, set tight to scan fast. */
+  /* Headlines: Newsreader at display optical size. Calm, serious, readable at every size. */
   .hl {
-    font-family: var(--font-display);
-    font-weight: 750;
-    letter-spacing: -0.018em;
-    line-height: 1.08;
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    line-height: 1.12;
     text-wrap: balance;
   }
+  /* Small headlines in dense lists stay serif but a touch heavier for scanning. */
+  .hl-sm { font-family: var(--font-serif); font-weight: 600; line-height: 1.22; letter-spacing: -0.005em; text-wrap: pretty; }
+  /* Kicker above a headline: desk or format, in the grotesk, small capitals feel. */
+  .kicker { font-family: var(--font-sans); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lake); }
+  /* Body copy of our own articles (Studio, guides). */
+  .article-body { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.7; color: var(--ink); }
+  .article-body > * + * { margin-top: 1.1em; }
+  .article-body p, .article-body li { max-width: 68ch; text-wrap: pretty; }
+  .article-body h2 { font-family: var(--font-serif); font-weight: 650; font-size: 1.6rem; line-height: 1.2; margin-top: 1.8em; letter-spacing: -0.01em; }
+  .article-body h3 { font-family: var(--font-sans); font-weight: 700; font-size: 1.12rem; line-height: 1.3; margin-top: 1.6em; }
+  .article-body ul { list-style: disc; padding-left: 1.25em; }
+  .article-body ol { list-style: decimal; padding-left: 1.4em; }
+  .article-body li + li { margin-top: 0.4em; }
+  .article-body blockquote { border-left: 3px solid var(--brass); padding-left: 1.1em; font-style: italic; color: color-mix(in oklab, var(--ink) 85%, var(--paper)); }
+  .article-body hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+  .article-body strong { font-weight: 650; }
+  /* AI label: a quiet, consistent mark on every AI-assisted item. */
+  .ai-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--font-sans); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); border: 1px solid currentColor; padding: 0.1rem 0.4rem 0.1rem 0.15rem; border-radius: 3px; line-height: 1.3; white-space: nowrap; }
+  .ai-badge > i { font-style: normal; background: var(--ink); color: var(--paper); font-size: 0.62rem; padding: 0 0.25rem; border-radius: 2px; letter-spacing: 0.02em; }
+  .ai-badge--dark { color: #fff; }
+  .ai-badge--dark > i { background: #fff; color: var(--night); }
+  /* Editorial stamps (Ink & Gold kit): CHECKED, COMPANY CLAIM, NOT YET PROVEN. */
+  .stamp { display: inline-block; font-family: var(--font-sans); font-weight: 800; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.18rem 0.45rem; border: 2px solid currentColor; border-radius: 2px; transform: rotate(-1.5deg); }
   /* Section names and the wordmark: the serif voice of the paper. */
   .masthead-serif {
     font-family: var(--font-serif);
@@ -173,10 +199,11 @@
   .prose-mw h2 { font-family: var(--font-display); font-weight: 750; font-size: 1.5rem; line-height: 1.2; margin: 2em 0 .6em; }
   .prose-mw ul { font-family: var(--font-serif); font-size: 1.125rem; line-height: 1.6; margin: 0 0 1.3em; padding-left: 1.2em; list-style: disc; max-width: 66ch; }
   .prose-mw li { margin: .45em 0; }
-  .topic { font-weight: 650; font-size: 0.8125rem; color: var(--lake); }
+  .topic { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--lake); }
   .meta { font-size: 0.8125rem; color: var(--muted-ink); }
-  .container-mw { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: 16px; }
+  .container-mw { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 16px; }
   @media (min-width: 768px) { .container-mw { padding-inline: 28px; } }
+  @media (min-width: 1280px) { .container-mw { padding-inline: 40px; } }
 }
 
 @layer utilities {
