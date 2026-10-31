@@ -13,16 +13,22 @@ export const Route = createFileRoute("/api/subscribe")({
       POST: async ({ request }) => {
         const { allow, clientKey, forward, json } = await import("@/lib/forms.server");
         const { parseSubscribe, subscribePayload } = await import("@/lib/forms");
-        if (!(request.headers.get("content-type") ?? "").includes("application/json")) return json(415, { ok: false, error: "bad" });
+        if (!(request.headers.get("content-type") ?? "").includes("application/json"))
+          return json(415, { ok: false, error: "bad" });
         const raw = await request.text();
         if (raw.length > 4000) return json(413, { ok: false, error: "bad" });
         let body: unknown;
-        try { body = JSON.parse(raw); } catch { return json(400, { ok: false, error: "bad" }); }
+        try {
+          body = JSON.parse(raw);
+        } catch {
+          return json(400, { ok: false, error: "bad" });
+        }
         const parsed = parseSubscribe(body);
         // A bot that filled the hidden field gets a quiet "ok" and nothing is sent.
         if (!parsed.ok && parsed.error === "bot") return json(200, { ok: true });
         if (!parsed.ok) return json(400, { ok: false, error: parsed.error });
-        if (!allow(await clientKey(request, "subscribe"), 5, 10 * 60_000)) return json(429, { ok: false, error: "rate" });
+        if (!allow(await clientKey(request, "subscribe"), 5, 10 * 60_000))
+          return json(429, { ok: false, error: "rate" });
         const result = await forward("SUBSCRIBE_WEBHOOK_URL", subscribePayload(parsed.value));
         if (result === "unconfigured") return json(503, { ok: false, error: "closed" });
         if (result === "failed") return json(502, { ok: false, error: "upstream" });

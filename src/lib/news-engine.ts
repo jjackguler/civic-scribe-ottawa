@@ -525,7 +525,7 @@ const EMPTY = (): NewsPayload => ({ stories: [], sources: [], fetchedAt: new Dat
 
 /** A bounded first edition. Full aggregation continues under Workers waitUntil. */
 export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
-  if (import.meta.env.DEV && process.env["AIB_NEWS_FIXTURE"] === "1") return devFixture();
+  if (process.env["AIB_NEWS_FIXTURE"] === "1" && import.meta.env?.DEV) return devFixture();
   const full = loadNews();
   keepAlive(full);
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -539,7 +539,7 @@ export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
 }
 
 export async function loadNews(): Promise<NewsPayload> {
-  if (import.meta.env.DEV && process.env["AIB_NEWS_FIXTURE"] === "1") return devFixture();
+  if (process.env["AIB_NEWS_FIXTURE"] === "1" && import.meta.env?.DEV) return devFixture();
   if (!g.__mwNews) await hydrate().catch(() => {});
   const cached = g.__mwNews;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;

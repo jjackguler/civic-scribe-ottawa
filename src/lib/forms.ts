@@ -51,7 +51,9 @@ export function validEmail(v: unknown): v is string {
 export type SubscribeInput = { email: string; consent: true; locale: Locale; page: string };
 
 /** Validate a sign-up body. Returns the clean input or the reason it was refused. */
-export function parseSubscribe(body: unknown): { ok: true; value: SubscribeInput } | { ok: false; error: "email" | "consent" | "bot" | "bad" } {
+export function parseSubscribe(
+  body: unknown,
+): { ok: true; value: SubscribeInput } | { ok: false; error: "email" | "consent" | "bot" | "bad" } {
   if (!body || typeof body !== "object") return { ok: false, error: "bad" };
   const b = body as Record<string, unknown>;
   // Honeypot: a field people never see. Bots fill it.
@@ -59,8 +61,14 @@ export function parseSubscribe(body: unknown): { ok: true; value: SubscribeInput
   if (!validEmail(b.email)) return { ok: false, error: "email" };
   if (b.consent !== true) return { ok: false, error: "consent" };
   const locale: Locale = b.locale === "fr" ? "fr" : "en";
-  const page = typeof b.page === "string" && /^\/[\w\-/.%]*$/.test(b.page) && b.page.length <= 200 ? b.page : "/";
-  return { ok: true, value: { email: (b.email as string).trim().toLowerCase(), consent: true, locale, page } };
+  const page =
+    typeof b.page === "string" && /^\/[\w\-/.%]*$/.test(b.page) && b.page.length <= 200
+      ? b.page
+      : "/";
+  return {
+    ok: true,
+    value: { email: (b.email as string).trim().toLowerCase(), consent: true, locale, page },
+  };
 }
 
 /** The JSON the webhook receives: everything needed to prove consent, nothing more. */
@@ -84,24 +92,45 @@ export function subscribePayload(v: SubscribeInput, now = new Date()) {
   };
 }
 
-export type TipInput = { message: string; name: string; contact: string; locale: Locale; page: string };
+export type TipInput = {
+  message: string;
+  name: string;
+  contact: string;
+  locale: Locale;
+  page: string;
+};
 
 export const TIP_MAX = 5000;
 
-export function parseTip(body: unknown): { ok: true; value: TipInput } | { ok: false; error: "message" | "contact" | "bot" | "bad" } {
+export function parseTip(
+  body: unknown,
+): { ok: true; value: TipInput } | { ok: false; error: "message" | "contact" | "bot" | "bad" } {
   if (!body || typeof body !== "object") return { ok: false, error: "bad" };
   const b = body as Record<string, unknown>;
   if (typeof b.website === "string" && b.website.trim() !== "") return { ok: false, error: "bot" };
   const message = typeof b.message === "string" ? b.message.trim() : "";
   if (message.length < 20 || message.length > TIP_MAX) return { ok: false, error: "message" };
   const contact = typeof b.contact === "string" ? b.contact.trim() : "";
-  if (contact && (contact.length > 254 || (contact.includes("@") && !validEmail(contact)))) return { ok: false, error: "contact" };
+  if (contact && (contact.length > 254 || (contact.includes("@") && !validEmail(contact))))
+    return { ok: false, error: "contact" };
   const name = typeof b.name === "string" ? b.name.trim().slice(0, 120) : "";
   const locale: Locale = b.locale === "fr" ? "fr" : "en";
-  const page = typeof b.page === "string" && /^\/[\w\-/.%]*$/.test(b.page) && b.page.length <= 200 ? b.page : "/tips";
+  const page =
+    typeof b.page === "string" && /^\/[\w\-/.%]*$/.test(b.page) && b.page.length <= 200
+      ? b.page
+      : "/tips";
   return { ok: true, value: { message, name, contact: contact.slice(0, 254), locale, page } };
 }
 
 export function tipPayload(v: TipInput, now = new Date()) {
-  return { type: "newsroom.tip", at: now.toISOString(), locale: v.locale, page: v.page, name: v.name || null, contact: v.contact || null, message: v.message, site: SITE.domain };
+  return {
+    type: "newsroom.tip",
+    at: now.toISOString(),
+    locale: v.locale,
+    page: v.page,
+    name: v.name || null,
+    contact: v.contact || null,
+    message: v.message,
+    site: SITE.domain,
+  };
 }
