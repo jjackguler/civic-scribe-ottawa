@@ -109,8 +109,8 @@ function AdSense({ slot, w, h }: { slot: string; w: number; h: number }) {
 
 const HOUSE = {
   advertise: {
-    head: { en: "Put your brand in front of the people building AI.", fr: "Présentez votre marque à ceux qui bâtissent l'IA." },
-    cta: { en: "See the media kit", fr: "Voir la trousse média" },
+    head: { en: "Sponsor issue #1 of The Canadian AI Brief, our weekly newsletter.", fr: "Commanditez le numéro 1 du Brief canadien de l'IA, notre infolettre hebdomadaire." },
+    cta: { en: "Founding sponsors", fr: "Commanditaires fondateurs" },
     to: "/advertise",
   },
   newsletter: {

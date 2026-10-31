@@ -8,7 +8,7 @@ const g = globalThis as unknown as { __formHits?: Map<string, number[]> };
 
 /** Per-isolate rate limit by client address (the address itself is never stored beyond the window). */
 export function allow(key: string, max: number, windowMs: number, now = Date.now()): boolean {
-  const hits = (g.__formHits ??= new Map());
+  const hits = (g.__formHits ??= new Map<string, number[]>());
   if (hits.size > 5000) hits.clear();
   const recent = (hits.get(key) ?? []).filter(t => now - t < windowMs);
   if (recent.length >= max) { hits.set(key, recent); return false; }

@@ -5,6 +5,7 @@ import { Breadcrumbs, PublishedBy } from "@/components/Trust";
 import { useLocale } from "@/lib/locale-context";
 import type { Bi } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
+import { FOUNDING_SPONSORS } from "@/lib/ads";
 import { seoHead, faqLd } from "@/lib/seo";
 
 const FAQ: { q: Bi; a: Bi }[] = [
@@ -71,6 +72,14 @@ function Newsletter() {
               </li>
             ))}
           </ol>
+          {FOUNDING_SPONSORS.length > 0 && (
+            <div className="mt-6">
+              <h2 className="kicker">{fr ? "Commanditaires fondateurs" : "Founding sponsors"}</h2>
+              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-semibold">
+                {FOUNDING_SPONSORS.map(s => <li key={s.name}><a href={s.url} rel="noopener sponsored" className="underline hover:text-lake">{s.name}</a></li>)}
+              </ul>
+            </div>
+          )}
           <p className="mt-4 text-[0.9rem] text-muted-ink"><PublishedBy />. {fr ? "Aucun numéro n'a encore été envoyé : le numéro 1 est en préparation." : "No issue has been sent yet: issue #1 is in preparation."}</p>
         </aside>
       </section>
