@@ -18,10 +18,10 @@ export const Route = createFileRoute("/privacy")({
 function Privacy() {
   const { locale, pick } = useLocale();
   const provider = SITE.newsletter.provider;
-  const items: { h: Bi; p: Bi }[] = [
+  const items: { id?: string; h: Bi; p: Bi }[] = [
     {
-      h: { en: "No accounts, no profile", fr: "Aucun compte, aucun profil" },
-      p: { en: "You can read everything without signing up. We don't ask for your name and we don't build a profile of you.", fr: "Vous pouvez tout lire sans inscription. Nous ne demandons pas votre nom et ne créons aucun profil." },
+      h: { en: "Who is responsible", fr: "Qui est responsable" },
+      p: { en: `${SITE.name} is published by ${SITE.publisher.name} in ${SITE.publisher.city}, ${SITE.publisher.region}, ${SITE.publisher.country}. You can read everything without an account. We don't ask for your name and we don't build a profile of you.`, fr: `${SITE.name} est publié par ${SITE.publisher.name} à ${SITE.publisher.city} (${SITE.publisher.region}, ${SITE.publisher.country}). Vous pouvez tout lire sans compte. Nous ne demandons pas votre nom et ne créons aucun profil.` },
     },
     {
       h: { en: "Storage on your device", fr: "Stockage sur votre appareil" },
@@ -48,10 +48,19 @@ function Privacy() {
         : { en: "Google advertising is disabled while our AdSense application and consent integration are reviewed. On eligible newspaper pages we load Google's certified consent-management service through its AdSense tag, with ad requests paused. Google receives the connection information needed to deliver this service and may store your consent choices. Where the service applies, use Privacy choices to manage or withdraw consent. Giving consent does not enable ads during this review. Our own promotions and direct image campaigns do not track you.", fr: "La publicité Google est désactivée pendant l'examen de notre demande AdSense et de l'intégration du consentement. Sur les pages admissibles du journal, nous chargeons le service certifié de gestion du consentement de Google via sa balise AdSense, avec les demandes publicitaires suspendues. Google reçoit les informations de connexion nécessaires et peut conserver vos choix. Lorsque le service s'applique, utilisez Choix de confidentialité pour gérer ou retirer votre consentement. Donner son consentement n'active pas les annonces pendant cet examen. Nos propres promotions et campagnes directes en image ne vous suivent pas." },
     },
     {
+      id: "newsletter",
       h: { en: "Newsletter and consent", fr: "Infolettre et consentement" },
       p: {
-        en: `${provider ? `Our newsletter is sent by ${provider}.` : "Our newsletter is sent by a newsletter provider."} You sign up on the provider's own page, under its privacy policy; we never store email addresses ourselves. In line with Canada's Anti-Spam Legislation (CASL), we send it only to people who have given express consent by subscribing and confirming, every issue says who sent it, and every issue has a one-click unsubscribe link.`,
-        fr: `${provider ? `Notre infolettre est envoyée par ${provider}.` : "Notre infolettre est envoyée par un fournisseur spécialisé."} L'inscription se fait sur la page du fournisseur, selon sa politique de confidentialité; nous ne conservons jamais nous-mêmes d'adresses courriel. Conformément à la Loi canadienne anti-pourriel (LCAP), nous l'envoyons seulement aux personnes qui ont donné leur consentement exprès en s'abonnant et en confirmant; chaque envoi indique qui l'expédie et comporte un lien de désabonnement en un clic.`,
+        en: `When you sign up for ${SITE.newsletter.name.en}, we ask for your email address and your express consent: a box you tick yourself, next to the exact wording you agree to. The form sends your address, that wording, its version, the time and the page you signed up on to our mailing list${provider ? `, run with ${provider}` : ""}, operated for ${SITE.publisher.name}. The website itself keeps no copy: your address is not stored in your browser, in a database of ours or in our logs. We use it only to send the newsletter and never sell or share it. In line with Canada's Anti-Spam Legislation (CASL), every issue names the sender and how to reach us, and has a one-click unsubscribe link; we act on unsubscribe requests right away, and in any case within 10 business days. You can also withdraw consent by writing to ${SITE.email.general}.`,
+        fr: `Lorsque vous vous inscrivez au ${SITE.newsletter.name.fr}, nous demandons votre adresse courriel et votre consentement exprès : une case que vous cochez vous-même, à côté du texte exact auquel vous consentez. Le formulaire transmet votre adresse, ce texte, sa version, l'heure et la page d'inscription à notre liste d'envoi${provider ? `, gérée avec ${provider}` : ""}, exploitée pour ${SITE.publisher.name}. Le site lui-même n'en garde aucune copie : votre adresse n'est conservée ni dans votre navigateur, ni dans une base de données à nous, ni dans nos journaux. Nous l'utilisons seulement pour envoyer l'infolettre et ne la vendons ni ne la partageons jamais. Conformément à la Loi canadienne anti-pourriel (LCAP), chaque envoi indique l'expéditeur et comment le joindre, et comporte un lien de désabonnement en un clic; nous donnons suite aux demandes de désabonnement immédiatement, et dans tous les cas en moins de 10 jours ouvrables. Vous pouvez aussi retirer votre consentement en écrivant à ${SITE.email.general}.`,
+      },
+    },
+    {
+      id: "tips",
+      h: { en: "Tips and pitches", fr: "Tuyaux et propositions" },
+      p: {
+        en: `Messages sent with the tip form go to the newsroom's inbox at ${SITE.publisher.name}; the website keeps no copy and does not log them. Your name and contact details are optional. We use them only to follow up on your message, and never publish them without your permission. The form is not anonymous or end-to-end encrypted, so don't send anything that could put you or others at risk.`,
+        fr: `Les messages envoyés avec le formulaire de tuyaux arrivent dans la boîte de la rédaction de ${SITE.publisher.name}; le site n'en garde aucune copie et ne les journalise pas. Votre nom et vos coordonnées sont facultatifs. Nous les utilisons seulement pour donner suite à votre message, et ne les publions jamais sans votre accord. Le formulaire n'est ni anonyme ni chiffré de bout en bout : n'envoyez rien qui pourrait vous mettre, ou mettre d'autres personnes, en danger.`,
       },
     },
     {
@@ -66,7 +75,7 @@ function Privacy() {
       <PageIntro title={locale === "fr" ? "Confidentialité" : "Privacy"} dek={locale === "fr" ? "Nous recueillons très peu, et nous le disons clairement." : "We collect very little, and we say so plainly."} />
       <div className="container-mw mt-10 max-w-3xl">
         {items.map(i => (
-          <section key={i.h.en} className="mb-8">
+          <section key={i.h.en} id={i.id} className="mb-8 scroll-mt-28">
             <h2 className="masthead-serif text-[1.5rem] leading-tight mb-2">{pick(i.h)}</h2>
             <p className="font-serif text-[1.12rem] leading-relaxed">{pick(i.p)}</p>
           </section>

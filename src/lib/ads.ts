@@ -97,6 +97,14 @@ export type DirectCampaign = {
 
 export const DIRECT_CAMPAIGNS: DirectCampaign[] = [];
 
+/**
+ * Founding sponsors of The Canadian AI Brief (see /advertise). Listed by name on
+ * /newsletter once an agreement is signed. Add { name, url } here; keep it empty
+ * until then. Sponsors never appear in the news feed.
+ */
+export type FoundingSponsor = { name: string; url: string };
+export const FOUNDING_SPONSORS: FoundingSponsor[] = [];
+
 export function directFor(size: AdSize, placement: Placement, now = Date.now()) {
   return DIRECT_CAMPAIGNS.find(c =>
     c.sizes.includes(size) &&

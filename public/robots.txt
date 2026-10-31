@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /editor/tools
 Disallow: /fr/editor/tools
+# Form endpoints (POST only) and JSON for our own tools.
+Disallow: /api/
 
 Sitemap: https://aibroadsheet.com/sitemap.xml
 Sitemap: https://aibroadsheet.com/news-sitemap.xml

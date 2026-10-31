@@ -139,7 +139,7 @@ export const newsletterDraft = createServerFn({ method: "POST" })
     const res = await c.claudeJson<{ en?: string; fr?: string }>({
       task: "newsletter",
       model: c.SONNET,
-      system: `You draft "The Morning Broadsheet", a daily AI news email, for a human editor to review. Write it in English ("en") and in French ("fr"), plain text. Structure: one short neutral intro line; then each story as: the publisher's headline exactly as given (in "fr", keep the original headline and add a French translation in parentheses), "— Source", the link on its own line, and one neutral line of context taken ONLY from the supplied summary (no outside facts, no opinion; omit the line if the summary is empty); then a short closing line. Never invent facts, quotes or links. Return {"en":"...","fr":"..."}.`,
+      system: `You draft "The Canadian AI Brief", a weekly AI news email, for a human editor to review. Write it in English ("en") and in French ("fr"), plain text. Structure: one short neutral intro line; then each story as: the publisher's headline exactly as given (in "fr", keep the original headline and add a French translation in parentheses), "— Source", the link on its own line, and one neutral line of context taken ONLY from the supplied summary (no outside facts, no opinion; omit the line if the summary is empty); then a short closing line. Never invent facts, quotes or links. Return {"en":"...","fr":"..."}.`,
       user: JSON.stringify({ stories: top }),
       maxTokens: 5000,
       ttlMs: 30 * 60_000,

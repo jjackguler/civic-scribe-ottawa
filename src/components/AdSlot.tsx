@@ -109,13 +109,13 @@ function AdSense({ slot, w, h }: { slot: string; w: number; h: number }) {
 
 const HOUSE = {
   advertise: {
-    head: { en: "Put your brand in front of the people building AI.", fr: "Présentez votre marque à ceux qui bâtissent l'IA." },
-    cta: { en: "See the media kit", fr: "Voir la trousse média" },
+    head: { en: "Sponsor issue #1 of The Canadian AI Brief, our weekly newsletter.", fr: "Commanditez le numéro 1 du Brief canadien de l'IA, notre infolettre hebdomadaire." },
+    cta: { en: "Founding sponsors", fr: "Commanditaires fondateurs" },
     to: "/advertise",
   },
   newsletter: {
-    head: { en: "The Morning Broadsheet: the AI news that matters, before your first coffee.", fr: "Le Broadsheet du matin : l'essentiel de l'IA avant votre premier café." },
-    cta: { en: "Get the briefing", fr: "Recevoir l'infolettre" },
+    head: { en: "The Canadian AI Brief: what changed in AI this week, and what it means for Canada.", fr: "Le Brief canadien de l'IA : ce qui a changé cette semaine en IA, et ce que cela signifie pour le Canada." },
+    cta: { en: "Get the weekly brief", fr: "Recevoir le brief" },
     to: "/newsletter",
   },
   watch: {

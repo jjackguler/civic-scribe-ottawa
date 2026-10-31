@@ -17,7 +17,7 @@ export const Route = createFileRoute("/standards")({
 const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
   {
     h: { en: "Editorial leadership", fr: "Direction éditoriale" },
-    p: [{ en: "Founder and editor Jack Guler sets the editorial direction and is responsible for the publication's work and corrections. AI Broadsheet brings together journalism, filmmaking and new forms of storytelling, with a focus on how AI affects people.", fr: "Le fondateur et responsable éditorial Jack Guler définit la ligne éditoriale et répond du travail de la publication et des corrections. AI Broadsheet associe journalisme, cinéma et nouvelles formes de récit pour explorer les effets de l'IA sur les personnes." }],
+    p: [{ en: `Founder and editor ${SITE.editor.name} sets the editorial direction and is responsible for the publication's work and corrections. AI Broadsheet is published by ${SITE.publisher.name} in ${SITE.publisher.city} and brings together journalism, filmmaking and new forms of storytelling, with a focus on how AI affects people.`, fr: `Le fondateur et responsable éditorial ${SITE.editor.name} définit la ligne éditoriale et répond du travail de la publication et des corrections. Publié par ${SITE.publisher.name} à ${SITE.publisher.city}, AI Broadsheet associe journalisme, cinéma et nouvelles formes de récit pour explorer les effets de l'IA sur les personnes.` }],
   },
   {
     h: { en: "Accuracy and attribution", fr: "Exactitude et attribution" },
@@ -26,7 +26,7 @@ const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
   {
     id: "ai-desk",
     h: { en: "AI and editorial responsibility", fr: "IA et responsabilité éditoriale" },
-    p: [{ en: "AI supports parts of our research, writing, translation and creative production. AI-assisted work is identified. Editorial direction and accountability remain human; AI output can contain errors, which readers can report for correction.", fr: "L'IA soutient certaines étapes de recherche, de rédaction, de traduction et de création. Les contenus réalisés avec son aide sont identifiés. La direction et la responsabilité éditoriales restent humaines; les productions de l'IA peuvent contenir des erreurs, que les lecteurs peuvent signaler pour correction." }],
+    p: [{ en: "AI supports parts of our research, writing, translation and creative production. AI-assisted work is identified with a label that links to our How we use AI page, which explains each label and the human role behind it. Editorial direction and accountability remain human; AI output can contain errors, which readers can report for correction.", fr: "L'IA soutient certaines étapes de recherche, de rédaction, de traduction et de création. Les contenus réalisés avec son aide portent une étiquette, expliquée sur notre page Comment nous utilisons l'IA avec le rôle humain qui l'accompagne. La direction et la responsabilité éditoriales restent humaines; les productions de l'IA peuvent contenir des erreurs, que les lecteurs peuvent signaler pour correction." }],
   },
   {
     id: "dispatches",
@@ -71,6 +71,10 @@ function Standards() {
           </section>
         ))}
         <p className="font-semibold">
+          <Link to="/how-we-use-ai" className="text-lake hover:underline">{locale === "fr" ? "Comment nous utilisons l'IA" : "How we use AI"}</Link>
+          <span className="mx-3 text-line">|</span>
+          <Link to="/about" hash="ownership" className="text-lake hover:underline">{locale === "fr" ? "Propriété et financement" : "Ownership and funding"}</Link>
+          <span className="mx-3 text-line">|</span>
           <Link to="/about" className="text-lake hover:underline">{locale === "fr" ? "Notre équipe et notre démarche" : "Our team and approach"}</Link>
           <span className="mx-3 text-line">|</span>
           <Link to="/privacy" className="text-lake hover:underline">{locale === "fr" ? "Confidentialité" : "Privacy"}</Link>

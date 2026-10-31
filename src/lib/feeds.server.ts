@@ -16,6 +16,7 @@ import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engi
 import type { Dispatch } from "./dispatch-types";
 import type { NewsroomSummary } from "./newsroom-types";
 import { ORIGINALS_MANIFEST_URL, originalPublishable, videoSlug, type OriginalsManifest } from "./originals-types";
+import { STUDIO, studioRecent, type StudioDispatch } from "./studio";
 
 // XML 1.0 forbids most control characters; one in a feed item would break the whole file.
 const esc = (s: string) =>
@@ -57,6 +58,7 @@ const STATIC: Entry[] = [
   { path: "/immersive/challenger-1986", changefreq: "monthly", priority: "0.7" },
   { path: "/podcast", changefreq: "weekly", priority: "0.7" },
   { path: "/dispatch", changefreq: "hourly", priority: "0.8" },
+  { path: "/canada", changefreq: "daily", priority: "0.9" },
   { path: "/today", changefreq: "hourly", priority: "0.8" },
   { path: "/quiz", changefreq: "daily", priority: "0.7" },
   { path: "/listen", changefreq: "daily", priority: "0.6" },
@@ -72,7 +74,9 @@ const STATIC: Entry[] = [
   { path: "/newsletter", changefreq: "monthly", priority: "0.4" },
   { path: "/about", changefreq: "monthly", priority: "0.4" },
   { path: "/values", changefreq: "monthly", priority: "0.5" },
-  { path: "/standards", changefreq: "monthly", priority: "0.3" },
+  { path: "/standards", changefreq: "monthly", priority: "0.4" },
+  { path: "/how-we-use-ai", changefreq: "monthly", priority: "0.5" },
+  { path: "/tips", changefreq: "monthly", priority: "0.3" },
   { path: "/corrections", changefreq: "weekly", priority: "0.3" },
   { path: "/privacy", changefreq: "monthly", priority: "0.2" },
   { path: "/terms", changefreq: "monthly", priority: "0.2" },
@@ -86,6 +90,11 @@ function articleEntry(a: NewsroomSummary) {
   return (["en", "fr"] as Locale[])
     .map(l => `<url><loc>${esc(href(l))}</loc><lastmod>${a.updatedAt}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>${alt}</url>`)
     .join("\n");
+}
+
+/** A Studio piece exists in one language only: one URL, no hreflang pair. */
+function studioEntry(p: StudioDispatch) {
+  return `<url><loc>${esc(absUrl(`/desk/${p.id}`, p.lang))}</loc><lastmod>${p.approvedAt}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`;
 }
 
 function urlEntry(e: Entry) {
@@ -117,6 +126,9 @@ export async function buildSitemap(): Promise<string> {
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
+  // Buildgena Studio pieces (our own, editor-approved): the list page once there is something on it.
+  if (STUDIO.length) entries.push({ path: "/desk", changefreq: "daily", priority: "0.8", lastmod: STUDIO[0].approvedAt.slice(0, 10) });
+
   const articles = await currentArticles();
   const dispatches = await currentDispatches(articles);
   for (const d of dispatches.slice(0, 200)) entries.push({ path: `/dispatch/${d.id}`, changefreq: "weekly", priority: "0.7", lastmod: d.createdAt.slice(0, 10) });
@@ -125,7 +137,7 @@ export async function buildSitemap(): Promise<string> {
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${[...articles.slice(0, 1000).map(articleEntry), ...entries.map(urlEntry)].join("\n")}
+${[...STUDIO.map(studioEntry), ...articles.slice(0, 1000).map(articleEntry), ...entries.map(urlEntry)].join("\n")}
 </urlset>
 `;
 }
@@ -139,26 +151,35 @@ function excerpt(s: string, max = 240) {
 /** null when the desk has no stories yet (cold start): the route answers 503 so readers keep their last copy. */
 export async function buildRss(locale: Locale): Promise<string | null> {
   const fr = locale === "fr";
-  const news = await currentNews();
+  const [news, articles] = await Promise.all([currentNews(), currentArticles()]);
   const all = (news?.stories ?? []).filter(isPublic);
-  if (all.length === 0) return null;
+  // Our own work leads the feed: Studio pieces in this language, then newsroom summaries.
+  const own = [
+    ...STUDIO.filter(p => p.lang === locale).slice(0, 20).map(p => ({
+      title: p.title, link: absUrl(`/desk/${p.id}`, locale), date: p.approvedAt,
+      body: `${p.dek} ${fr ? "Rédigé avec l'aide de l'IA; approuvé par" : "Drafted with AI assistance; approved by"} ${p.approvedBy}.`, source: null as null | { url: string; name: string },
+    })),
+    ...articles.slice(0, 20).map(a => ({
+      title: a[locale].headline, link: absUrl(`/article/${a.slug[locale]}`, locale), date: a.createdAt,
+      body: `${a[locale].dek ?? ""} ${fr ? "Résumé assisté par l'IA." : "AI-assisted summary."}`.trim(), source: null as null | { url: string; name: string },
+    })),
+  ];
+  if (all.length === 0 && own.length === 0) return null;
   // French readers get French-language sources first, as on the site.
   const ordered = fr ? [...all.filter(s => s.lang === "fr"), ...all.filter(s => s.lang !== "fr")] : all;
-  const items = ordered
-    .slice(0, 60)
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .map(s => {
-      const link = absUrl(`/story/${s.id}`, locale);
-      const body = `${s.summary ? `${excerpt(s.summary)} ` : ""}${fr ? `Source : ${s.source}.` : `Source: ${s.source}.`}`;
-      return `<item>
-  <title>${esc(s.title)}</title>
-  <link>${esc(link)}</link>
-  <guid isPermaLink="true">${esc(link)}</guid>
-  <pubDate>${new Date(s.publishedAt).toUTCString()}</pubDate>
-  <source url="${esc(s.link)}">${esc(s.source)}</source>
-  <description>${esc(body)}</description>
-</item>`;
-    })
+  const wire = ordered.slice(0, Math.max(0, 60 - own.length)).map(s => ({
+    title: s.title, link: absUrl(`/story/${s.id}`, locale), date: s.publishedAt,
+    body: `${s.summary ? `${excerpt(s.summary)} ` : ""}${fr ? `Source : ${s.source}.` : `Source: ${s.source}.`}`, source: { url: s.link, name: s.source } as null | { url: string; name: string },
+  }));
+  const items = [...own, ...wire]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .map(i => `<item>
+  <title>${esc(i.title)}</title>
+  <link>${esc(i.link)}</link>
+  <guid isPermaLink="true">${esc(i.link)}</guid>
+  <pubDate>${new Date(i.date).toUTCString()}</pubDate>
+${i.source ? `  <source url="${esc(i.source.url)}">${esc(i.source.name)}</source>\n` : ""}  <description>${esc(i.body)}</description>
+</item>`)
     .join("\n");
 
   const self = absUrl("/rss.xml", locale);
@@ -170,6 +191,7 @@ export async function buildRss(locale: Locale): Promise<string | null> {
   <atom:link href="${esc(self)}" rel="self" type="application/rss+xml"/>
   <description>${esc(SITE.description[locale])}</description>
   <language>${fr ? "fr-ca" : "en-ca"}</language>
+  <copyright>${esc(`© ${new Date().getFullYear()} ${SITE.publisher.name}. ${fr ? "Les titres de tiers appartiennent à leurs éditeurs." : "Third-party headlines belong to their publishers."}`)}</copyright>
   <lastBuildDate>${new Date(news?.fetchedAt ?? Date.now()).toUTCString()}</lastBuildDate>
   <ttl>10</ttl>
   <image><url>${ORIGIN}/logo-512.png</url><title>${esc(SITE.name)}</title><link>${esc(absUrl("/", locale))}</link></image>
@@ -195,9 +217,11 @@ export async function buildNewsSitemap(): Promise<string> {
   // Until the Newsroom publishes, the Worker desk's dispatches are our articles.
   const fallback = dispatches.filter(d => new Date(d.createdAt).getTime() >= cutoff).slice(0, 50)
     .flatMap(d => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/dispatch/${d.id}`, l), l, d.createdAt, d[l].headline)));
+  // Buildgena Studio pieces approved in the last 48 hours, each in its own language.
+  const studio = studioRecent(48).map(p => news(absUrl(`/desk/${p.id}`, p.lang), p.lang, p.approvedAt, p.title));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${[...ours, ...fallback].join("\n")}
+${[...studio, ...ours, ...fallback].join("\n")}
 </urlset>
 `;
 }

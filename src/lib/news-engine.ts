@@ -5,7 +5,7 @@
 import { editorialGate } from "./editorial";
 import { NEWS_SOURCES, type NewsSource, type Region, type Topic, type Kind, type Level } from "./news-sources";
 import { AI_RE, tagsOf } from "./classify";
-import { displayFor } from "./rights";
+import { applyDisplay, displayFor } from "./rights";
 import { canKeepAlive, keepAlive, sharedCacheAvailable, sharedRead, sharedWrite } from "./shared-cache";
 import type { AiDeskEntry } from "./ai-desk.server";
 
@@ -75,7 +75,8 @@ const g = globalThis as unknown as {
 };
 
 // ── shared snapshot (see shared-cache.ts) ───────────────────────────────────
-const SNAPSHOT_KEY = "desk:v1";
+// v2 (31 Oct 2026): headline-and-link by default; older snapshots still carry excerpts and photos.
+const SNAPSHOT_KEY = "desk:v2";
 const SNAPSHOT_MAX_AGE_S = 3 * 24 * 3600;
 type Snapshot = { ts: number; payload: NewsPayload; sources: [string, SourceCache][]; og: [string, string | null][] };
 
@@ -455,7 +456,9 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
   all.filter(s => s.kind === "trending").forEach(s => keep.add(s));
   all.filter(s => s.kind === "beat").slice(0, 40).forEach(s => keep.add(s));
   all.filter(s => !s.gov && s.kind !== "trending" && s.kind !== "beat").slice(0, 160).forEach(s => keep.add(s));
-  const stories = all.filter(s => keep.has(s));
+  // Per-source display rights (rights.ts) are applied again here, so a source cache filled
+  // before a rights change can never show an excerpt or photo the source no longer allows.
+  const stories = all.filter(s => keep.has(s)).map(applyDisplay);
 
   // Fill missing photos from the publisher's own og:image, newest first.
   const og = (g.__ogCache ??= new Map());
@@ -512,10 +515,17 @@ function rebuild(): Promise<NewsPayload> {
   return g.__mwNewsInflight;
 }
 
+/** DEV ONLY (`AIB_NEWS_FIXTURE=1 vite dev`): fictional stories, since feeds are unreachable from sandboxes. */
+async function devFixture(): Promise<NewsPayload> {
+  const { newsFixture } = await import("./news-fixture");
+  return newsFixture();
+}
+
 const EMPTY = (): NewsPayload => ({ stories: [], sources: [], fetchedAt: new Date().toISOString() });
 
 /** A bounded first edition. Full aggregation continues under Workers waitUntil. */
 export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
+  if (process.env["AIB_NEWS_FIXTURE"] === "1" && import.meta.env?.DEV) return devFixture();
   const full = loadNews();
   keepAlive(full);
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -529,6 +539,7 @@ export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
 }
 
 export async function loadNews(): Promise<NewsPayload> {
+  if (process.env["AIB_NEWS_FIXTURE"] === "1" && import.meta.env?.DEV) return devFixture();
   if (!g.__mwNews) await hydrate().catch(() => {});
   const cached = g.__mwNews;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;

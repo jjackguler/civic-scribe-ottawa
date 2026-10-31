@@ -10,6 +10,7 @@
  * whose reporting it was written from. Renders nothing until the newsroom
  * has published.
  */
+import { AiBadge } from "./Trust";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { ZoneHead } from "./PageShell";
@@ -20,7 +21,6 @@ import { timeAgo, useNow } from "@/lib/news";
 import { FORMAT_LABEL, useNewsroom, newsroomFixtureRequested, type NewsroomList, type NewsroomSummary } from "@/lib/newsroom";
 import type { Locale } from "@/lib/i18n";
 
-const WORD = { en: "Newsroom", fr: "Rédaction" } as const;
 
 /** Keeps ?fixture=1 on links while previewing the dev fixture. */
 const fixtureSearch = () => (newsroomFixtureRequested() ? ({ fixture: "1" } as never) : undefined);
@@ -51,7 +51,7 @@ export function NewsroomCard({ s, size = "card" }: { s: NewsroomSummary; size?: 
         <NewsroomCover cover={s.cover} locale={locale} size="card" />
         <div className="flex flex-1 flex-col p-4 sm:p-5">
           <p className="flex items-center gap-2 text-[0.78rem] font-bold">
-            <span className="bg-signal text-signal-ink px-1.5 py-0.5">{WORD[locale]}</span>
+            <AiBadge kind="summary" />
             <span className="text-brass-ink">{FORMAT_LABEL[s.format]?.[locale]}</span>
           </p>
           <h3 className={`hl mt-2.5 text-ink ${size === "compact" ? "text-[1.15rem]" : "text-[1.3rem]"}`}>
@@ -112,7 +112,7 @@ export function NewsroomLead({ initial, className = "", title = true, exclude }:
           <Link to="/article/$slug" params={{ slug: lead.slug[locale] }} search={fixtureSearch()} className="block focus-visible:outline-offset-4">
             <NewsroomCover cover={lead.cover} locale={locale} size="hero" />
             <p className="mt-4 flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
-              <span className="bg-signal text-signal-ink px-1.5 py-0.5">{WORD[locale]}</span>
+              <AiBadge kind="summary" />
               <span className="text-brass-ink">{FORMAT_LABEL[lead.format]?.[locale]}</span>
             </p>
             <h3 className="hl mt-2 text-ink text-[1.9rem] sm:text-[2.35rem] lg:text-[2.7rem] leading-[1.03] max-w-[24ch]">

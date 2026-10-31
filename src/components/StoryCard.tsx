@@ -5,6 +5,7 @@ import type { Story } from "@/lib/news";
 import { timeAgo, topicLabel, useNow, LEVEL_LABEL, display } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { StoryImage } from "./StoryImage";
+import { AiBadge } from "./Trust";
 
 /**
  * hero  – large photo, very large headline, summary (front-page lead)
@@ -44,26 +45,27 @@ export function storyKicker(s: Story, locale: "en" | "fr") {
 }
 
 /**
- * Designed cover for a story we have no photo for (or may not show one):
- * the desk name set large on the house night-and-brass ground. It is a
- * graphic, never an AI picture made to look like a news photo.
+ * Designed cover for a story we have no photo for (or may not show one, see
+ * rights.ts): the desk and the publisher on quiet newsprint. It is a graphic,
+ * never an AI picture made to look like a news photo, and it tells the reader
+ * where the reporting lives.
  */
 export function StoryCover({ s, size }: { s: Story; size: "hero" | "card" }) {
   const { locale } = useLocale();
+  const hero = size === "hero";
   return (
-    <figure aria-hidden="true" className="aspect-[16/9] relative overflow-hidden bg-signal text-signal-ink">
-      <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "repeating-linear-gradient(135deg, var(--signal-ink) 0 2px, transparent 2px 20px)" }} />
-      <div className="absolute inset-x-0 bottom-0 h-[38%] bg-signal-ink" />
-      <p className={`absolute left-5 right-5 top-4 flex justify-between gap-4 font-bold ${size === "hero" ? "text-[0.9rem]" : "text-[0.75rem]"}`}>
-        <span className="masthead-serif">AI Broadsheet</span>
-        <span className="truncate">{s.source}</span>
+    <figure aria-hidden="true" className="aspect-[16/9] relative overflow-hidden bg-ice text-ink border-t-[3px] border-ink">
+      <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: "repeating-linear-gradient(180deg, transparent 0 13px, color-mix(in oklab, var(--ink) 9%, transparent) 13px 14px)" }} />
+      <div className="absolute inset-y-0 left-[38%] w-px bg-ink/15" />
+      <p className={`absolute left-4 right-4 top-3 flex items-center justify-between gap-3 ${hero ? "text-[0.8rem]" : "text-[0.68rem]"}`}>
+        <span className="font-bold uppercase tracking-[0.08em] text-lake truncate">{storyKicker(s, locale)}</span>
+        <span className="font-serif italic text-muted-ink shrink-0">AI Broadsheet</span>
       </p>
-      <p className={`absolute left-5 right-5 bottom-[calc(38%+0.5rem)] masthead-serif leading-[0.92] text-balance ${size === "hero" ? "text-[2.8rem] sm:text-[4.2rem]" : "text-[1.9rem]"}`}>
-        {storyKicker(s, locale)}
-      </p>
-      <p suppressHydrationWarning className={`absolute left-5 right-5 bottom-3 text-signal font-semibold line-clamp-2 ${size === "hero" ? "text-[1rem]" : "text-[0.8rem]"}`}>
-        {timeAgoLabel(s, locale)}
-      </p>
+      <div className="absolute left-4 right-4 bottom-3 bg-ice/90 pt-2">
+        <p className={`text-muted-ink ${hero ? "text-[0.85rem]" : "text-[0.7rem]"}`}>{locale === "fr" ? "Reportage de" : "Reporting by"}</p>
+        <p className={`font-serif font-semibold leading-tight text-balance ${hero ? "text-[2rem] sm:text-[2.6rem]" : "text-[1.35rem]"}`}>{s.source}</p>
+        <p suppressHydrationWarning className={`text-muted-ink mt-0.5 ${hero ? "text-[0.85rem]" : "text-[0.7rem]"}`}>{timeAgoLabel(s, locale)}</p>
+      </div>
     </figure>
   );
 }
@@ -95,7 +97,7 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
     return (
       <article className="group py-2.5 border-b border-line last:border-0">
         <StoryLink s={s} className="block">
-          <h3 className="font-semibold leading-snug text-[0.98rem] text-ink group-hover:underline decoration-1" title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
+          <h3 className="hl-sm text-[1.04rem] text-ink group-hover:underline decoration-1 underline-offset-2" title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
           {(d.translated || d.ai) && <TranslatedNote ai={!!d.ai} original={d.original} compact />}
           <StoryMeta s={s} className="mt-1" />
         </StoryLink>
@@ -104,9 +106,9 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
   }
 
   const titleSize =
-    v === "hero" ? "text-[1.9rem] sm:text-[2.5rem] lg:text-[2.9rem] leading-[1.03]" :
-    v === "row" ? "text-[1.02rem]" :
-    v === "text" ? "text-[1.15rem]" : "text-[1.2rem]";
+    v === "hero" ? "text-[1.9rem] sm:text-[2.5rem] lg:text-[2.9rem] leading-[1.06]" :
+    v === "row" ? "text-[1.08rem]" :
+    v === "text" ? "text-[1.22rem]" : "text-[1.28rem]";
 
   const image = hasImg ? (
     <figure className={
@@ -135,7 +137,7 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
               {showTopic && <span className="topic">{storyKicker(s, locale)}</span>}
             </p>
           )}
-          <h3 className={`hl ${titleSize} text-ink group-hover:underline decoration-2 underline-offset-4`} title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
+          <h3 className={`hl ${titleSize} text-ink group-hover:underline decoration-1 underline-offset-4`} title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
           {(d.translated || d.ai) && <TranslatedNote ai={!!d.ai} original={d.original} />}
           {(v === "hero" || v === "text") && d.summary && (
             <p className={`dek mt-2 ${v === "hero" ? "text-[1.15rem] line-clamp-3" : "line-clamp-2 text-[0.98rem]"}`}>{d.summary}</p>
@@ -177,9 +179,9 @@ export function CoverageBadge({ outlets, developing, breaking }: { outlets: numb
 export function TranslatedNote({ original, compact = false, ai = false }: { original: string; compact?: boolean; ai?: boolean }) {
   const { locale } = useLocale();
   return (
-    <p className="meta mt-1 text-[0.75rem]" title={original}>
-      <span className="font-semibold">{t(ai ? "aiDeskHeadline" : "translatedWithClaude", locale)}</span>
-      {!compact && <span className="block italic line-clamp-1">{t("original", locale)}: {original}</span>}
+    <p className="meta mt-1.5 text-[0.75rem]" title={original}>
+      <AiBadge kind={ai ? "headline" : "translated"} />
+      {!compact && <span className="block italic line-clamp-1 mt-1">{t("original", locale)}: {original}</span>}
     </p>
   );
 }

@@ -12,11 +12,11 @@ export function LogoMark({ size = 32, className = "" }: { size?: number; classNa
   );
 }
 
-export function Logo({ compact = false, inverse = false }: { compact?: boolean; inverse?: boolean }) {
+export function Logo({ compact = false, inverse = false, masthead = false }: { compact?: boolean; inverse?: boolean; masthead?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2.5">
-      <LogoMark size={compact ? 30 : 38} inverse={inverse} />
-      <span className={`brand-wordmark leading-none whitespace-nowrap ${inverse ? "text-brand-paper" : "text-brand-ink"} ${compact ? "text-[1.5rem]" : "text-[1.9rem]"}`}>
+    <span className={`inline-flex items-center ${masthead ? "gap-3" : "gap-2.5"}`}>
+      <LogoMark size={masthead ? 46 : compact ? 30 : 38} inverse={inverse} />
+      <span className={`brand-wordmark leading-none whitespace-nowrap ${inverse ? "text-brand-paper" : "text-brand-ink"} ${masthead ? "text-[2.1rem] lg:text-[2.7rem]" : compact ? "text-[1.5rem]" : "text-[1.9rem]"}`}>
         {/* Title case with "AI" in gold: in Bodoni capitals "BROADSHEET" split into "BRO ADSHEET". */}
         <span className={inverse ? "text-brand-gold" : undefined}>AI</span>{"\u00a0"}Broadsheet
       </span>

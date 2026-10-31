@@ -8,6 +8,7 @@
  * cover, section headings, our own background pages, FAQ, further reading
  * and related articles.
  */
+import { AiBadge } from "./Trust";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, BookOpen, ExternalLink } from "lucide-react";
 import { useMemo, type ReactNode } from "react";
@@ -208,6 +209,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
           <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.85rem] font-bold">
             <Link to="/dispatch" className="bg-signal text-signal-ink px-2 py-0.5 hover:bg-white">{L.word}</Link>
             <span className="text-brass">{FORMAT_LABEL[a.format][locale]}</span>
+            <Link to="/how-we-use-ai"><AiBadge kind="summary" dark /></Link>
             {TOPIC_KICKER[a.topic] && <span className="text-white/70">{TOPIC_KICKER[a.topic][locale]}</span>}
             <time dateTime={a.createdAt} className="font-semibold text-white/70" suppressHydrationWarning>{timeAgo(a.createdAt, now, locale)}</time>
           </p>
