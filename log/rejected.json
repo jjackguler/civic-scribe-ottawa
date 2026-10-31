@@ -1,5 +1,40 @@
 [
   {
+    "id": "1gx7a6n",
+    "at": "2026-10-31T00:32:18.344Z",
+    "stage": "copy",
+    "headline": "Mistral Says Its AI Model ‘Le Chonk’ Has Leapfrogged China in the Open-Weight Race",
+    "reasons": [
+      "Not in the sources (names or numbers): Chinese, European, Furthermore, Users.",
+      "Too close to Wired's wording (\"models from deepseek and z ai in coding and…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Chinese, Reports, Companies.",
+      "Too close to Wired's wording (\"models from deepseek and z ai in coding and…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "tdhcbv",
+    "at": "2026-10-31T00:32:05.948Z",
+    "stage": "copy",
+    "headline": "Google’s first data center satellite is online and writing poetry",
+    "reasons": [
+      "Not in the sources (names or numbers): Currently, denial not in the sources: \"It is not yet clear if the system will be used for more complex computational ta\".",
+      "Too close to The Verge's wording (\"google says it successfully booted up the satellite s…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Currently."
+    ]
+  },
+  {
+    "id": "u7a9n5",
+    "at": "2026-10-31T00:31:55.503Z",
+    "stage": "translator",
+    "headline": "Malicious Claude Code extension in Cursor's marketplace attempted remote access and data theft",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): Durant.",
+      "attempt 2: Not in the sources (names or numbers): Durant."
+    ]
+  },
+  {
     "id": "dv6b7k",
     "at": "2026-10-30T09:30:12.054Z",
     "stage": "copy",
