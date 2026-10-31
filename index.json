@@ -1,6 +1,56 @@
 {
-  "updatedAt": "2026-10-28T03:45:59.053Z",
+  "updatedAt": "2026-10-31T13:03:26.081Z",
   "items": [
+    {
+      "id": "198ywhw",
+      "slug": {
+        "en": "ai-agent-performs-mouse-brain-surgery",
+        "fr": "agent-ia-operation-cerveau-souris"
+      },
+      "createdAt": "2026-10-31T13:03:26.078Z",
+      "updatedAt": "2026-10-31T13:03:26.078Z",
+      "topic": "health",
+      "format": "standard",
+      "outlets": [
+        "The Decoder",
+        "Wired"
+      ],
+      "times": [
+        "2026-10-30T19:42:59.000Z",
+        "2026-10-31T10:00:00.000Z"
+      ],
+      "storyIds": [
+        "2tn50t",
+        "198ywhw"
+      ],
+      "cover": {
+        "color": "spruce",
+        "motif": "dots",
+        "en": {
+          "kicker": "Autonomous research",
+          "big": "AUTONOMOUS",
+          "small": "AI agent performs brain gene therapy injection"
+        },
+        "fr": {
+          "kicker": "Recherche autonome",
+          "big": "Un",
+          "small": "Une IA injecte une thérapie génique cérébrale"
+        }
+      },
+      "words": 140,
+      "en": {
+        "headline": "AI agent selects gene therapy and injects live mouse brain autonomously",
+        "dek": "A Claude model selected the drug and injection coordinates to treat an epileptic mouse without human input, according to researchers.",
+        "news": "An artificial intelligence agent autonomously selected a gene therapy and injected it into a live mouse brain.",
+        "matters": "The trial demonstrates that automated software can now conduct physical laboratory procedures on living animals without human direction. This could shift the pace and workflow of preclinical pharmaceutical testing."
+      },
+      "fr": {
+        "headline": "Un agent IA choisit une thérapie génique et injecte un cerveau de souris vivant",
+        "dek": "Un modèle Claude a sélectionné le médicament et les coordonnées d'injection pour traiter une souris épileptique sans intervention humaine, selon des chercheurs.",
+        "news": "Un agent d'intelligence artificielle a sélectionné de manière autonome une thérapie génique et l'a injectée dans le cerveau d'une souris vivante.",
+        "matters": "L'essai démontre que des logiciels automatisés peuvent désormais mener des procédures de laboratoire physiques sur des animaux vivants sans direction humaine. Cette avancée pourrait modifier le rythme et le flux de travail des tests pharmaceutiques précliniques."
+      }
+    },
     {
       "id": "approved-genie4-20261027",
       "slug": {

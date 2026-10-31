@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "id": "198ywhw",
+  "slug": {
+    "en": "ai-agent-performs-mouse-brain-surgery",
+    "fr": "agent-ia-operation-cerveau-souris"
+  },
+  "createdAt": "2026-10-31T13:03:26.078Z",
+  "updatedAt": "2026-10-31T13:03:26.078Z",
+  "topic": "health",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "The Decoder",
+      "title": "A Claude model autonomously chose a gene therapy and operated on a mouse brain with no human decision-making",
+      "url": "https://the-decoder.com/a-claude-model-autonomously-chose-a-gene-therapy-and-operated-on-a-mouse-brain-with-no-human-decision-making/",
+      "publishedAt": "2026-10-30T19:42:59.000Z",
+      "storyId": "2tn50t",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "Wired",
+      "title": "An AI Agent Injected Drugs Into a Live Mouse’s Brain",
+      "url": "https://www.wired.com/story/an-ai-agent-did-brain-surgery-on-live-mouse/",
+      "publishedAt": "2026-10-31T10:00:00.000Z",
+      "storyId": "198ywhw",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "spruce",
+    "motif": "dots",
+    "en": {
+      "kicker": "Autonomous research",
+      "big": "AUTONOMOUS",
+      "small": "AI agent performs brain gene therapy injection"
+    },
+    "fr": {
+      "kicker": "Recherche autonome",
+      "big": "Un",
+      "small": "Une IA injecte une thérapie génique cérébrale"
+    }
+  },
+  "en": {
+    "headline": "AI agent selects gene therapy and injects live mouse brain autonomously",
+    "news": "An artificial intelligence agent autonomously selected a gene therapy and injected it into a live mouse brain.",
+    "thirty": [
+      "An AI agent chose a gene therapy without human intervention.",
+      "The model determined the target coordinates and performed the injection.",
+      "The experiment targeted an epileptic mouse at a biotech startup."
+    ],
+    "confirmed": [
+      {
+        "text": "An AI agent autonomously selected a gene therapy and injected the treatment into a live mouse brain.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Ocana-Santero says this is the first time an AI agent has autonomously carried out such an operation.",
+        "by": "Ocana-Santero",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether the gene therapy successfully treated the mouse's epilepsy.",
+      "Which biotech startup conducted the experiment."
+    ],
+    "matters": "The trial demonstrates that automated software can now conduct physical laboratory procedures on living animals without human direction. This could shift the pace and workflow of preclinical pharmaceutical testing.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "A biotech startup connected an artificial intelligence program, called an agent, to laboratory tools to operate on a sick mouse [s1,s2]. Instead of waiting for a person to give directions, the computer decided which medicine to use, located the spot in the brain, and delivered the injection [s1,s2].",
+        "The procedure was performed on a mouse suffering from epilepsy [s1]. The team reported that the software handled all the operational steps without human intervention [s1]."
+      ],
+      "standard": [
+        "A biotech startup has deployed an artificial intelligence agent to conduct surgery on a live mouse brain without human intervention [s1,s2]. The Claude model independently selected a gene therapy drug, pinpointed the brain target, and calculated the injection coordinates before administering the treatment [s1,s2].",
+        "The operation was performed on an epileptic mouse [s1]. According to lead researcher Ocana-Santero, the trial represents the first time an autonomous software agent has executed this kind of procedure on its own [s1].",
+        "Both outlets confirm that the agent completed the physical injection and the therapeutic selection [s1,s2]. The reports leave open which startup hosted the research, as well as whether the injected therapy succeeded in halting seizures [s1,s2].",
+        "The experiment highlights a transition toward automated laboratory workflows where software directs physical medical interventions rather than only processing data [s2]. This capability could alter the way research facilities conduct preclinical biomedical studies [s2]."
+      ],
+      "expert": [
+        "The demonstration paired a Claude model with laboratory hardware to execute an intracerebral gene therapy protocol autonomously [s1,s2]. The system managed the full operational pipeline, selecting the drug candidate, the anatomical brain site, and stereotaxic injection coordinates [s1].",
+        "The Decoder reported the subject was an epileptic mouse and cited lead researcher Ocana-Santero, while Wired framed the achievement as an indicator of automated workflows across biotech startups [s1,s2]."
+      ]
+    },
+    "seoTitle": "AI agent performs autonomous brain surgery on mouse",
+    "dek": "A Claude model selected the drug and injection coordinates to treat an epileptic mouse without human input, according to researchers.",
+    "metaDescription": "An autonomous AI agent has performed surgery on a live mouse brain, selecting and injecting gene therapy without human intervention.",
+    "keywords": [
+      "ai agent",
+      "gene therapy",
+      "autonomous surgery",
+      "claude model",
+      "biomedical research"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "A biotech startup has deployed an artificial intelligence agent to conduct surgery on a live mouse brain without human intervention [s1,s2]. The Claude model independently selected a gene therapy drug, pinpointed the brain target, and calculated the injection coordinates before administering the treatment [s1,s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "The operation was performed on an epileptic mouse [s1]. According to lead researcher Ocana-Santero, the trial represents the first time an autonomous software agent has executed this kind of procedure on its own [s1].",
+          "Both outlets confirm that the agent completed the physical injection and the therapeutic selection [s1,s2]. The reports leave open which startup hosted the research, as well as whether the injected therapy succeeded in halting seizures [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The experiment highlights a transition toward automated laboratory workflows where software directs physical medical interventions rather than only processing data [s2]. This capability could alter the way research facilities conduct preclinical biomedical studies [s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What did the AI agent do?",
+        "a": "The agent independently selected a gene therapy, identified the target in the brain, calculated injection coordinates, and performed the physical injection."
+      }
+    ],
+    "links": []
+  },
+  "fr": {
+    "headline": "Un agent IA choisit une thérapie génique et injecte un cerveau de souris vivant",
+    "news": "Un agent d'intelligence artificielle a sélectionné de manière autonome une thérapie génique et l'a injectée dans le cerveau d'une souris vivante.",
+    "thirty": [
+      "Un agent IA a choisi une thérapie génique sans intervention humaine.",
+      "Le modèle a déterminé les coordonnées cibles et a effectué l'injection.",
+      "L'expérience visait une souris épileptique au sein d'une jeune pousse en biotechnologie."
+    ],
+    "confirmed": [
+      {
+        "text": "Un agent IA a sélectionné de manière autonome une thérapie génique et a injecté le traitement dans le cerveau d'une souris vivante [s1, s2].",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Ocana-Santero affirme qu'il s'agit de la première fois qu'un agent IA réalise une telle opération de façon autonome [s1].",
+        "by": "Ocana-Santero",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La réussite du traitement de l'épilepsie de la souris par la thérapie génique.",
+      "L'identité de la jeune pousse en biotechnologie ayant mené l'expérience."
+    ],
+    "matters": "L'essai démontre que des logiciels automatisés peuvent désormais mener des procédures de laboratoire physiques sur des animaux vivants sans direction humaine. Cette avancée pourrait modifier le rythme et le flux de travail des tests pharmaceutiques précliniques.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Une jeune pousse en biotechnologie a connecté un programme d'intelligence artificielle, appelé agent, à des outils de laboratoire pour opérer une souris malade [s1,s2]. Le système a décidé du médicament à utiliser, a localisé l'endroit dans le cerveau et a effectué l'injection sans attendre de directives humaines [s1,s2].",
+        "La procédure a été réalisée sur une souris souffrant d'épilepsie [s1]. L'équipe a rapporté que le logiciel a géré toutes les étapes opérationnelles sans intervention humaine [s1]."
+      ],
+      "standard": [
+        "Une jeune pousse en biotechnologie a déployé un agent d'intelligence artificielle pour opérer le cerveau d'une souris vivante sans intervention humaine [s1,s2]. Le modèle Claude a choisi indépendamment un médicament de thérapie génique, a identifié la cible cérébrale et a calculé les coordonnées d'injection avant d'administrer le traitement [s1,s2].",
+        "L'opération a été effectuée sur une souris épileptique [s1]. Selon le chercheur principal Ocana-Santero, l'essai représente la première fois qu'un agent logiciel autonome exécute ce type de procédure par lui-même [s1].",
+        "Les deux sources confirment que l'agent a complété l'injection physique et la sélection thérapeutique [s1,s2]. Les rapports ne précisent pas quelle entreprise a hébergé la recherche, ni si la thérapie injectée a réussi à stopper les crises [s1,s2].",
+        "L'expérience souligne une transition vers des flux de travail de laboratoire automatisés où le logiciel dirige des interventions médicales physiques plutôt que de traiter uniquement des données [s2]. Cette capacité pourrait transformer la manière dont les centres de recherche mènent des études biomédicales précliniques [s2]."
+      ],
+      "expert": [
+        "La démonstration a jumelé un modèle Claude avec du matériel de laboratoire pour exécuter un protocole de thérapie génique intracérébrale de manière autonome [s1,s2]. Le système a géré l'ensemble du pipeline opérationnel, sélectionnant le candidat médicament, le site anatomique cérébral et les coordonnées d'injection stéréotaxique [s1].",
+        "The Decoder a rapporté que le sujet était une souris épileptique et a cité le chercheur principal Ocana-Santero, tandis que Wired a présenté la réalisation comme un indicateur de l'automatisation des flux de travail dans les jeunes pousses en biotechnologie [s1,s2]."
+      ]
+    },
+    "seoTitle": "Un agent IA opère le cerveau d'une souris de façon autonome",
+    "dek": "Un modèle Claude a sélectionné le médicament et les coordonnées d'injection pour traiter une souris épileptique sans intervention humaine, selon des chercheurs.",
+    "metaDescription": "Un agent d'intelligence artificielle a réalisé une opération sur une souris vivante…",
+    "keywords": [
+      "agent ia",
+      "thérapie génique",
+      "chirurgie autonome",
+      "modèle claude",
+      "recherche biomédicale"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Une jeune pousse en biotechnologie a déployé un agent d'intelligence artificielle pour opérer le cerveau d'une souris vivante sans intervention humaine [s1,s2]. Le modèle Claude a choisi indépendamment un médicament de thérapie génique, a identifié la cible cérébrale et a calculé les coordonnées d'injection avant d'administrer le traitement [s1,s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "L'opération a été effectuée sur une souris épileptique [s1]. Selon le chercheur principal Ocana-Santero, l'essai représente la première fois qu'un agent logiciel autonome exécute ce type de procédure par lui-même [s1].",
+          "Les deux sources confirment que l'agent a complété l'injection physique et la sélection thérapeutique [s1,s2]. Les rapports ne précisent pas quelle entreprise a hébergé la recherche, ni si la thérapie injectée a réussi à stopper les crises [s1,s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "L'expérience souligne une transition vers des flux de travail de laboratoire automatisés où le logiciel dirige des interventions médicales physiques plutôt que de traiter uniquement des données [s2]. Cette capacité pourrait transformer la manière dont les centres de recherche mènent des études biomédicales précliniques [s2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qu'a fait l'agent d'intelligence artificielle ?",
+        "a": "L'agent a sélectionné indépendamment une thérapie génique, identifié la cible cérébrale, calculé les coordonnées d'injection et effectué l'injection physique."
+      },
+      {
+        "q": "La souris était-elle vivante pendant l'opération ?",
+        "a": "Oui, l'intervention a été pratiquée sur une souris vivante atteinte d'épilepsie."
+      }
+    ],
+    "links": []
+  },
+  "model": "gemini",
+  "words": {
+    "en": 140,
+    "fr": 155
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-31T12:58:05.087Z",
+      "verdict": "done",
+      "notes": [
+        "144 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.8-flash",
+      "at": "2026-10-31T13:01:22.476Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Powered, Scientists."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-31T13:02:23.939Z",
+      "verdict": "pass",
+      "notes": [
+        "The article is well-structured and adheres to the charter by distinguishing between confirmed actions and unknown outcomes.",
+        "Ensure that future reporting on this topic continues to emphasize the distinction between the software's operational success and the clinical efficacy of the therapy to avoid potential hype."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-31T13:03:18.686Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): Cela, Plutôt.",
+        "155 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-31T13:03:23.277Z",
+      "verdict": "done",
+      "notes": [
+        "en: AI agent performs autonomous brain surgery on mouse (51)",
+        "fr: Un agent IA opère le cerveau d'une souris de façon autonome (59)",
+        "en faq dropped (not in the sources: Yes)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-10-31T13:03:26.078Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: spruce/dots \"AUTONOMOUS\"",
+        "fr big word not from the reporting: used \"Un\""
+      ]
+    }
+  ]
+}
