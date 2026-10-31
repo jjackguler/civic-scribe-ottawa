@@ -26,7 +26,7 @@ export const Route = createFileRoute("/canada")({
     seoHead(match, {
       title: { en: `AI in Canada: policy, funding and news — ${SITE.name}`, fr: `L'IA au Canada : politiques, financement, nouvelles — ${SITE.name}` },
       description: {
-        en: "Canada's AI news in one place: federal and provincial announcements, the AI Ministry record, funding programs checked against official pages, and plain-language guides.",
+        en: "Canada's AI news in one place: federal and provincial announcements, the AI Ministry, funding programs checked against official pages, and plain guides.",
         fr: "L'actualité canadienne de l'IA en un seul endroit : annonces fédérales et provinciales, ministère de l'IA, programmes de financement vérifiés et guides clairs.",
       },
       breadcrumbs: [{ name: { en: "AI in Canada", fr: "L'IA au Canada" }, path: "/canada" }],

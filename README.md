@@ -17,13 +17,28 @@ The world's AI newspaper, live, in English and French: news from public publishe
 | Your own headline for a big story (shown with the original underneath) | `src/lib/desk.ts` |
 | Ads: direct campaigns, Google AdSense IDs | `src/lib/ads.ts` (+ `public/ads.txt` once AdSense approves you) |
 | Owner details, newsletter, contact emails, analytics token, social links (TODO values) | `src/lib/site.ts` |
-| Full story or headline-only per publisher | `src/lib/rights.ts` (see `docs/feed-terms.md`) |
+| Full story or headline-only per publisher (default: headline-only) | `src/lib/rights.ts` (see `docs/feed-terms.md`) |
+| Buildgena Studio pieces (editor-approved, AI-assisted) | `src/content/studio/<id>.json` → `/desk/<id>` (schema in `src/lib/studio-schema.ts`) |
+| Founding sponsors of the newsletter | `FOUNDING_SPONSORS` in `src/lib/ads.ts` |
 | Corrections log | `src/lib/corrections.ts` |
 | Interface text (EN/FR) | `src/lib/i18n.ts` |
 
 ## Languages and SEO
 
 English pages live at `/path`, French at `/fr/path` (router rewrite in `src/router.tsx`). Every page sets its title, canonical URL, hreflang alternates, share card and JSON-LD through `seoHead()` in `src/lib/seo.ts`. `/sitemap.xml`, `/rss.xml` and `/fr/rss.xml` are built live from the news desk.
+
+## Reader forms (newsletter, tips)
+
+The Canadian AI Brief sign-up posts to `/api/subscribe`, the tip form to `/api/tip`. Both validate,
+forward JSON to a webhook and store nothing (no database, no address or message in logs, nothing in the browser).
+
+| Secret (Project Settings → Secrets) | What it does |
+| --- | --- |
+| `SUBSCRIBE_WEBHOOK_URL` | https URL that receives each sign-up with its CASL consent record (wording, version, time, page). Without it the form says sign-ups open with issue #1 and offers an email. |
+| `SUBSCRIBE_WEBHOOK_SECRET` (optional) | Sent as `Authorization: Bearer …` so the receiver can reject anything else. |
+| `TIP_WEBHOOK_URL` / `TIP_WEBHOOK_SECRET` (optional) | Same for tips and pitches. |
+
+If `SITE.newsletter.url` is set in `site.ts`, the sign-up box sends readers to the provider's own page instead (after the consent box is ticked).
 
 ## Docs
 
