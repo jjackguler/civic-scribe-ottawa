@@ -19,6 +19,7 @@ import { Route as CorrectionsRouteImport } from './routes/corrections'
 import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
 import { Route as FundingRouteImport } from './routes/funding'
 import { Route as GovernmentRouteImport } from './routes/government'
+import { Route as HowWeUseAiRouteImport } from './routes/how-we-use-ai'
 import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as ListenRouteImport } from './routes/listen'
 import { Route as MinistryRouteImport } from './routes/ministry'
@@ -50,6 +51,8 @@ import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
 import { Route as ApiSubscribeRouteImport } from './routes/api.subscribe'
 import { Route as ApiTipRouteImport } from './routes/api.tip'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as DeskIndexRouteImport } from './routes/desk.index'
+import { Route as DeskIdRouteImport } from './routes/desk.$id'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
@@ -126,6 +129,11 @@ const FundingRoute = FundingRouteImport.update({
 const GovernmentRoute = GovernmentRouteImport.update({
   id: '/government',
   path: '/government',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowWeUseAiRoute = HowWeUseAiRouteImport.update({
+  id: '/how-we-use-ai',
+  path: '/how-we-use-ai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InterviewsRoute = InterviewsRouteImport.update({
@@ -283,6 +291,16 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
   path: '/article/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeskIndexRoute = DeskIndexRouteImport.update({
+  id: '/desk/',
+  path: '/desk/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeskIdRoute = DeskIdRouteImport.update({
+  id: '/desk/$id',
+  path: '/desk/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevSocialRoute = DevSocialRouteImport.update({
   id: '/dev/social',
   path: '/dev/social',
@@ -430,6 +448,7 @@ export interface FileRoutesByFullPath {
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/how-we-use-ai': typeof HowWeUseAiRoute
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
@@ -461,6 +480,7 @@ export interface FileRoutesByFullPath {
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -473,6 +493,7 @@ export interface FileRoutesByFullPath {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/desk/': typeof DeskIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -500,6 +521,7 @@ export interface FileRoutesByTo {
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/how-we-use-ai': typeof HowWeUseAiRoute
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
@@ -531,6 +553,7 @@ export interface FileRoutesByTo {
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -543,6 +566,7 @@ export interface FileRoutesByTo {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/desk': typeof DeskIndexRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/glossary': typeof GlossaryIndexRoute
@@ -571,6 +595,7 @@ export interface FileRoutesById {
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/how-we-use-ai': typeof HowWeUseAiRoute
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
@@ -602,6 +627,7 @@ export interface FileRoutesById {
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -614,6 +640,7 @@ export interface FileRoutesById {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/desk/': typeof DeskIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -643,6 +670,7 @@ export interface FileRouteTypes {
     | '/desk-health.json'
     | '/funding'
     | '/government'
+    | '/how-we-use-ai'
     | '/interviews'
     | '/listen'
     | '/ministry'
@@ -674,6 +702,7 @@ export interface FileRouteTypes {
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
+    | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -686,6 +715,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/desk/'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -713,6 +743,7 @@ export interface FileRouteTypes {
     | '/desk-health.json'
     | '/funding'
     | '/government'
+    | '/how-we-use-ai'
     | '/interviews'
     | '/listen'
     | '/ministry'
@@ -744,6 +775,7 @@ export interface FileRouteTypes {
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
+    | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -756,6 +788,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/desk'
     | '/dispatch'
     | '/editor'
     | '/glossary'
@@ -783,6 +816,7 @@ export interface FileRouteTypes {
     | '/desk-health.json'
     | '/funding'
     | '/government'
+    | '/how-we-use-ai'
     | '/interviews'
     | '/listen'
     | '/ministry'
@@ -814,6 +848,7 @@ export interface FileRouteTypes {
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
+    | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -826,6 +861,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/desk/'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -854,6 +890,7 @@ export interface RootRouteChildren {
   DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
   FundingRoute: typeof FundingRoute
   GovernmentRoute: typeof GovernmentRoute
+  HowWeUseAiRoute: typeof HowWeUseAiRoute
   InterviewsRoute: typeof InterviewsRoute
   ListenRoute: typeof ListenRoute
   MinistryRoute: typeof MinistryRoute
@@ -885,6 +922,7 @@ export interface RootRouteChildren {
   ApiSubscribeRoute: typeof ApiSubscribeRoute
   ApiTipRoute: typeof ApiTipRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
+  DeskIdRoute: typeof DeskIdRoute
   DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
@@ -897,6 +935,7 @@ export interface RootRouteChildren {
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
   VideoSlugRoute: typeof VideoSlugRoute
+  DeskIndexRoute: typeof DeskIndexRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   GlossaryIndexRoute: typeof GlossaryIndexRoute
@@ -984,6 +1023,13 @@ declare module '@tanstack/react-router' {
       path: '/government'
       fullPath: '/government'
       preLoaderRoute: typeof GovernmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-we-use-ai': {
+      id: '/how-we-use-ai'
+      path: '/how-we-use-ai'
+      fullPath: '/how-we-use-ai'
+      preLoaderRoute: typeof HowWeUseAiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/interviews': {
@@ -1203,6 +1249,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/desk/': {
+      id: '/desk/'
+      path: '/desk'
+      fullPath: '/desk/'
+      preLoaderRoute: typeof DeskIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desk/$id': {
+      id: '/desk/$id'
+      path: '/desk/$id'
+      fullPath: '/desk/$id'
+      preLoaderRoute: typeof DeskIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dev/social': {
       id: '/dev/social'
       path: '/dev/social'
@@ -1406,6 +1466,7 @@ const rootRouteChildren: RootRouteChildren = {
   DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
   FundingRoute: FundingRoute,
   GovernmentRoute: GovernmentRoute,
+  HowWeUseAiRoute: HowWeUseAiRoute,
   InterviewsRoute: InterviewsRoute,
   ListenRoute: ListenRoute,
   MinistryRoute: MinistryRoute,
@@ -1437,6 +1498,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSubscribeRoute: ApiSubscribeRoute,
   ApiTipRoute: ApiTipRoute,
   ArticleSlugRoute: ArticleSlugRoute,
+  DeskIdRoute: DeskIdRoute,
   DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
@@ -1449,6 +1511,7 @@ const rootRouteChildren: RootRouteChildren = {
   OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
   VideoSlugRoute: VideoSlugRoute,
+  DeskIndexRoute: DeskIndexRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   GlossaryIndexRoute: GlossaryIndexRoute,

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "example-northwind-aurora-2",
+  "lang": "en",
+  "title": "Example: Northwind Labs releases Aurora-2, an open model built for English and French",
+  "dek": "TEST FIXTURE, not a real story: a fictional Montreal company, fictional outlets and example.com sources, used only to test how Studio pieces render.",
+  "body": "This is a **test fixture** for the Buildgena Studio import. Northwind Labs, Aurora-2 and every outlet below are invented, in the same way as the newsroom's dry-run fixtures. It is kept in `scripts/fixtures/studio/` and is never published.\n\n## What happened\n\nNorthwind Labs, a fictional company in Montreal, says it has published the files for Aurora-2, a language model trained for English and French, so anyone can download it and run it on their own computer. [The company's announcement](https://example.com/northwind/aurora-2) says the model runs on a single laptop graphics chip.\n\nAn independent review by the fictional *Maple Tech Review* reports strong French scores, and notes that the licence limits commercial use.\n\n## What we don't know yet\n\n- Whether the licence allows use inside a paid product.\n- What data the model was trained on.\n- Whether the laptop claim holds on ordinary hardware.\n\n> A capable model that runs on your own machine means your text never has to leave it. The licence decides whether businesses can build on it.\n\n## Why it matters in Canada\n\nFrench-language services in Canada depend on tools that work as well in French as in English. An open model makes that easier to test, but only independent checks can show whether the company's claims hold up.",
+  "sources": [
+    { "title": "Introducing Aurora-2: an open-weight model for English and French", "url": "https://example.com/northwind/aurora-2", "publisher": "Northwind Labs (fictional)" },
+    { "title": "Aurora-2 benchmarks: strong French scores, licence limits commercial use", "url": "https://example.com/maple/aurora-bench", "publisher": "Maple Tech Review (fictional)" },
+    { "title": "Northwind Labs lance Aurora-2, un modèle ouvert bilingue", "url": "https://example.com/signal/aurora", "publisher": "Signal Quotidien (fictional)" }
+  ],
+  "stamps": ["COMPANY CLAIM", "NOT YET PROVEN"],
+  "approvedBy": "Example Editor",
+  "approvedAt": "2026-10-31T13:30:00-04:00",
+  "producedWith": "Buildgena Studio 0.1.0",
+  "aiDisclosure": "Drafted with AI assistance; edited and approved by a human editor."
+}
