@@ -33,6 +33,8 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
   const dark = variant === "band" || variant === "card";
   const name = SITE.newsletter.name[locale];
   const provider = SITE.newsletter.url;
+  // On /newsletter the brief's name is the page title.
+  const Heading = variant === "page" ? "h1" : "h2";
 
   const mailto = `mailto:${SITE.email.general}?subject=${encodeURIComponent(fr ? `Abonnement : ${name}` : `Subscribe: ${name}`)}&body=${encodeURIComponent(`${consentText(locale)}\n\n${fr ? "Adresse" : "Address"}: ${email}`)}`;
 
@@ -69,7 +71,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
   const intro = (
     <div>
       <p className={`kicker ${dark ? "text-brass" : ""}`}>{fr ? "Infolettre hebdomadaire · gratuite" : "Weekly newsletter · free"}</p>
-      <h2 className={`hl mt-1.5 ${variant === "band" || variant === "page" ? "text-[1.9rem] sm:text-[2.3rem]" : "text-[1.45rem]"}`}>{name}</h2>
+      <Heading className={`hl mt-1.5 ${variant === "page" ? "text-[2.4rem] sm:text-[3rem]" : variant === "band" ? "text-[1.9rem] sm:text-[2.3rem]" : "text-[1.45rem]"}`}>{name}</Heading>
       <p className={`font-serif leading-relaxed mt-2 max-w-[54ch] ${tone.body} ${variant === "card" ? "text-[0.98rem]" : "text-[1.08rem]"}`}>
         {fr
           ? "Une fois par semaine : ce qui a changé en IA, ce que cela signifie pour le Canada, et d'où viennent les faits. Sources nommées, travail assisté par l'IA signalé."

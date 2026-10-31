@@ -230,3 +230,53 @@ export function applyRefinement(clusters: Cluster[], splits: Record<string, stri
   }
   return out.sort((a, b) => clusterScore(b, now) - clusterScore(a, now));
 }
+
+/** What each desk covers: its page description and meta description (unique per desk, for search). */
+export const SECTION_ABOUT: Record<SectionId, Bi> = {
+  world: { en: "Artificial intelligence news from around the world: the developments newsrooms everywhere are reporting, each linked to the original.", fr: "L'actualité de l'intelligence artificielle dans le monde : ce que rapportent les salles de rédaction, chaque titre lié à l'original." },
+  canada: { en: "AI news from and about Canada: companies, research, public services and people, from Canadian and international outlets.", fr: "L'actualité de l'IA au Canada : entreprises, recherche, services publics et gens, selon les médias canadiens et internationaux." },
+  agents: { en: "AI assistants and agents: chatbots, copilots and software that acts on your behalf, what they can do and where they fail.", fr: "Assistants et agents IA : robots conversationnels, copilotes et logiciels qui agissent pour vous, leurs capacités et leurs limites." },
+  applications: { en: "How AI is being put to work: new products, services and uses in schools, offices, cities and homes.", fr: "Comment l'IA est mise en œuvre : nouveaux produits, services et usages à l'école, au bureau, en ville et à la maison." },
+  immersive: { en: "AR, VR and immersive media: headsets, 3D worlds and the AI that powers them, including immersive journalism.", fr: "RA, RV et médias immersifs : casques, mondes 3D et l'IA qui les anime, y compris le journalisme immersif." },
+  data: { en: "Data and analytics: the data behind AI systems, how it is collected and governed, and the tools that analyse it.", fr: "Données et analytique : les données derrière l'IA, leur collecte et leur gouvernance, et les outils qui les analysent." },
+  infrastructure: { en: "Infrastructure and chips: data centres, energy, compute and the semiconductors that AI runs on.", fr: "Infrastructures et puces : centres de données, énergie, calcul et semi-conducteurs sur lesquels tourne l'IA." },
+  research: { en: "Machine learning and research: new models, papers, benchmarks and what the results actually show.", fr: "Apprentissage automatique et recherche : nouveaux modèles, articles, bancs d'essai et ce que montrent vraiment les résultats." },
+  people: { en: "People and skills: AI at work, jobs, training and hiring, and what changes for workers and learners.", fr: "Personnes et compétences : l'IA au travail, l'emploi, la formation et l'embauche, et ce qui change pour les travailleurs." },
+  responsible: { en: "Responsible AI: safety, bias, privacy, transparency and accountability, and the people holding AI to account.", fr: "IA responsable : sécurité, biais, vie privée, transparence et responsabilité, et ceux qui demandent des comptes à l'IA." },
+  policy: { en: "AI policy and regulation in Canada and abroad: laws, consultations, standards and what governments are deciding.", fr: "Politiques et réglementation de l'IA au Canada et ailleurs : lois, consultations, normes et décisions des gouvernements." },
+  business: { en: "AI business and funding: investments, deals, earnings and the companies building and buying AI.", fr: "Affaires et financement de l'IA : investissements, transactions, résultats et entreprises qui bâtissent et achètent l'IA." },
+  sustainability: { en: "AI and sustainability: energy and water use, climate applications and the environmental cost of computing.", fr: "IA et durabilité : énergie et eau, applications climatiques et coût environnemental du calcul." },
+  robotics: { en: "Robotics: robots in factories, farms, hospitals and homes, and the AI that lets them learn new tasks.", fr: "Robotique : robots en usine, à la ferme, à l'hôpital et à la maison, et l'IA qui leur apprend de nouvelles tâches." },
+  health: { en: "AI in health and science: diagnosis, drug discovery, clinical tools and the evidence behind them.", fr: "L'IA en santé et en sciences : diagnostic, découverte de médicaments, outils cliniques et données probantes." },
+  tech: { en: "Technology news where AI meets phones, platforms, the web and the devices people use every day.", fr: "L'actualité techno où l'IA rencontre les téléphones, les plateformes, le Web et les appareils du quotidien." },
+  society: { en: "Mind and society: how AI shapes culture, relationships, learning and the way people think and trust.", fr: "Esprit et société : comment l'IA façonne la culture, les relations, l'apprentissage et la confiance." },
+  government: { en: "Official AI announcements from the federal, provincial and municipal governments in Canada, headline and link.", fr: "Annonces officielles sur l'IA des gouvernements fédéral, provinciaux et municipaux du Canada, titre et lien." },
+  ministry: { en: "Releases from Canada's Minister of Artificial Intelligence and Digital Innovation, and news coverage of the ministry.", fr: "Communiqués du ministre de l'Intelligence artificielle et de l'Innovation numérique du Canada, et couverture du ministère." },
+  labs: { en: "Announcements straight from AI labs and research institutes, shown as company statements, not independent findings.", fr: "Annonces des laboratoires et instituts de recherche en IA, présentées comme des déclarations d'entreprise." },
+  analysis: { en: "Analysis and explainers on AI from newsrooms and researchers: context on what the headlines mean.", fr: "Analyses et explications sur l'IA de médias et de chercheurs : le contexte derrière les manchettes." },
+  trending: { en: "What developers and researchers are discussing: the most-voted AI links and papers of the last few days.", fr: "Ce dont discutent développeurs et chercheurs : les liens et articles sur l'IA les plus populaires des derniers jours." },
+};
+
+/** Neighbouring desks, for internal links between desk pages. */
+export const RELATED_SECTIONS: Partial<Record<SectionId, SectionId[]>> = {
+  policy: ["government", "ministry", "responsible", "canada"],
+  responsible: ["policy", "society", "people", "health"],
+  business: ["infrastructure", "applications", "canada", "agents"],
+  research: ["labs", "analysis", "trending", "robotics"],
+  agents: ["applications", "responsible", "research", "tech"],
+  infrastructure: ["sustainability", "business", "research"],
+  people: ["society", "responsible", "applications", "canada"],
+  health: ["research", "responsible", "applications"],
+  canada: ["government", "ministry", "policy", "business"],
+  world: ["policy", "business", "research"],
+  sustainability: ["infrastructure", "policy"],
+  robotics: ["research", "applications", "infrastructure"],
+  immersive: ["applications", "tech", "society"],
+  data: ["responsible", "infrastructure", "research"],
+  tech: ["applications", "agents", "society"],
+  society: ["people", "responsible", "health"],
+  applications: ["agents", "business", "people"],
+  labs: ["research", "analysis"],
+  analysis: ["research", "policy", "responsible"],
+  trending: ["research", "labs"],
+};

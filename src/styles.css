@@ -201,9 +201,12 @@
   .prose-mw li { margin: .45em 0; }
   .topic { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--lake); }
   .meta { font-size: 0.8125rem; color: var(--muted-ink); }
-  .container-mw { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 16px; }
-  @media (min-width: 768px) { .container-mw { padding-inline: 28px; } }
-  @media (min-width: 1280px) { .container-mw { padding-inline: 40px; } }
+  .container-mw { --cpad: 16px; width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: var(--cpad); }
+  @media (min-width: 768px) { .container-mw { --cpad: 28px; } }
+  @media (min-width: 1280px) { .container-mw { --cpad: 40px; } }
+  /* A hairline under a container's content (a plain border would run into its side padding). */
+  .rule-under { position: relative; }
+  .rule-under::after { content: ""; position: absolute; left: var(--cpad, 0); right: var(--cpad, 0); bottom: 0; height: 1px; background: var(--line); }
 }
 
 @layer utilities {

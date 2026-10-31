@@ -49,7 +49,7 @@ function Advertise() {
   return (
     <PageShell>
       <div className="container-mw pt-6"><Breadcrumbs items={[{ label: fr ? "Commanditaires fondateurs" : "Founding sponsors" }]} /></div>
-      <header className="container-mw pt-6 pb-10 border-b border-line grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-end">
+      <header className="container-mw pt-6 pb-10 rule-under grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-end">
         <div>
           <p className="kicker">{fr ? "Commandites" : "Sponsorship"}</p>
           <h1 className="hl text-[2.5rem] sm:text-[3.4rem] mt-2">{fr ? `Commanditaires fondateurs du ${SITE.newsletter.name.fr}` : `Founding sponsors of ${SITE.newsletter.name.en}`}</h1>

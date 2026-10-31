@@ -19,7 +19,7 @@ export function PageShell({ children }: { children: ReactNode }) {
 
 export function PageIntro({ title, dek, kicker, children }: { title: string; dek?: string; kicker?: string; children?: ReactNode }) {
   return (
-    <div className="container-mw pt-8 sm:pt-10 pb-8 border-b border-line">
+    <div className="container-mw pt-8 sm:pt-10 pb-8 rule-under">
       {kicker && <p className="kicker mb-2">{kicker}</p>}
       <h1 className="hl text-[2.4rem] sm:text-[3.3rem] leading-[1.05] text-ink max-w-4xl">{title}</h1>
       {dek && <p className="font-serif text-[1.2rem] leading-relaxed text-ink/75 mt-3 max-w-3xl">{dek}</p>}

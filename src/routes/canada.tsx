@@ -63,7 +63,7 @@ function CanadaHub() {
   return (
     <PageShell>
       <div className="container-mw pt-6"><Breadcrumbs items={[{ label: fr ? "L'IA au Canada" : "AI in Canada" }]} /></div>
-      <header className="container-mw pt-6 pb-8 border-b border-line grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-end">
+      <header className="container-mw pt-6 pb-8 rule-under grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-end">
         <div>
           <p className="kicker">{fr ? "Dossier permanent" : "Hub"}</p>
           <h1 className="hl text-[2.6rem] sm:text-[3.6rem] mt-2">{fr ? "L'IA au Canada" : "AI in Canada"}</h1>

@@ -84,7 +84,7 @@ function HowWeUseAi() {
   return (
     <PageShell>
       <div className="container-mw pt-6"><Breadcrumbs items={[{ label: fr ? "Comment nous utilisons l'IA" : "How we use AI" }]} /></div>
-      <header className="container-mw pt-6 pb-10 border-b border-line">
+      <header className="container-mw pt-6 pb-10 rule-under">
         <p className="kicker">{fr ? "Normes" : "Standards"}</p>
         <h1 className="hl text-[2.5rem] sm:text-[3.4rem] mt-2 max-w-4xl">{fr ? "Comment nous utilisons l'IA" : "How we use AI"}</h1>
         <p className="font-serif text-[1.25rem] leading-relaxed text-ink/80 mt-4 max-w-[62ch]">
