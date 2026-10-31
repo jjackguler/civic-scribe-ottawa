@@ -132,7 +132,7 @@ export function SiteHeader() {
       {/* Utility line: date, place, the pages that build trust, language. */}
       <div className="border-b border-line text-[0.8rem] text-muted-ink">
         <div className="container-mw flex items-center gap-4 h-9">
-          <p className="truncate"><span className="capitalize" suppressHydrationWarning>{dateLine}</span><span className="hidden sm:inline"> · Ottawa</span></p>
+          <p className="truncate"><span className="inline-block first-letter:uppercase" suppressHydrationWarning>{dateLine}</span><span className="hidden sm:inline"> · Ottawa</span></p>
           <nav aria-label={fr ? "Liens utiles" : "Utility"} className="ml-auto flex items-center gap-4 shrink-0">
             <Link to="/how-we-use-ai" className="hidden lg:inline hover:text-ink hover:underline">{fr ? "Comment nous utilisons l'IA" : "How we use AI"}</Link>
             <Link to="/tips" className="hidden md:inline hover:text-ink hover:underline">{fr ? "Envoyer un tuyau" : "Send a tip"}</Link>

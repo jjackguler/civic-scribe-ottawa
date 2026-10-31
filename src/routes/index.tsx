@@ -213,7 +213,7 @@ function Home() {
         </div>
       </section>
 
-      <FromOurDesk className="container-mw mt-12" />
+      <FromOurDesk className="container-mw mt-12" exclude={studioLead?.id} />
 
       {/* Our newsroom's summaries (the lead above is left out) and dispatches. */}
       <NewsroomLead initial={newsroom} exclude={articleLead ? [articleLead.id] : []} className="container-mw mt-12" />
