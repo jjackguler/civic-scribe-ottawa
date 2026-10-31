@@ -39,6 +39,7 @@ import { Route as SirJackRouteImport } from './routes/sir-jack'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TipsRouteImport } from './routes/tips'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ValuesRouteImport } from './routes/values'
@@ -46,6 +47,8 @@ import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ApiBriefDotjsonRouteImport } from './routes/api.brief[.]json'
 import { Route as ApiDispatchesDotjsonRouteImport } from './routes/api.dispatches[.]json'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
+import { Route as ApiSubscribeRouteImport } from './routes/api.subscribe'
+import { Route as ApiTipRouteImport } from './routes/api.tip'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
@@ -225,6 +228,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TipsRoute = TipsRouteImport.update({
+  id: '/tips',
+  path: '/tips',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
@@ -258,6 +266,16 @@ const ApiDispatchesDotjsonRoute = ApiDispatchesDotjsonRouteImport.update({
 const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   id: '/api/keeper-tts',
   path: '/api/keeper-tts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSubscribeRoute = ApiSubscribeRouteImport.update({
+  id: '/api/subscribe',
+  path: '/api/subscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTipRoute = ApiTipRouteImport.update({
+  id: '/api/tip',
+  path: '/api/tip',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
@@ -432,6 +450,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
@@ -439,6 +458,8 @@ export interface FileRoutesByFullPath {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
+  '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -499,6 +520,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
@@ -506,6 +528,8 @@ export interface FileRoutesByTo {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
+  '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -567,6 +591,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
@@ -574,6 +599,8 @@ export interface FileRoutesById {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
+  '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -636,6 +663,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/tips'
     | '/today'
     | '/tools'
     | '/values'
@@ -643,6 +671,8 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/subscribe'
+    | '/api/tip'
     | '/article/$slug'
     | '/dev/social'
     | '/dispatch/$id'
@@ -703,6 +733,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/tips'
     | '/today'
     | '/tools'
     | '/values'
@@ -710,6 +741,8 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/subscribe'
+    | '/api/tip'
     | '/article/$slug'
     | '/dev/social'
     | '/dispatch/$id'
@@ -770,6 +803,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/tips'
     | '/today'
     | '/tools'
     | '/values'
@@ -777,6 +811,8 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/subscribe'
+    | '/api/tip'
     | '/article/$slug'
     | '/dev/social'
     | '/dispatch/$id'
@@ -838,6 +874,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   TermsRoute: typeof TermsRoute
+  TipsRoute: typeof TipsRoute
   TodayRoute: typeof TodayRoute
   ToolsRoute: typeof ToolsRoute
   ValuesRoute: typeof ValuesRoute
@@ -845,6 +882,8 @@ export interface RootRouteChildren {
   ApiBriefDotjsonRoute: typeof ApiBriefDotjsonRoute
   ApiDispatchesDotjsonRoute: typeof ApiDispatchesDotjsonRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
+  ApiSubscribeRoute: typeof ApiSubscribeRoute
+  ApiTipRoute: typeof ApiTipRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
   DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
@@ -1087,6 +1126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tips': {
+      id: '/tips'
+      path: '/tips'
+      fullPath: '/tips'
+      preLoaderRoute: typeof TipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/today': {
       id: '/today'
       path: '/today'
@@ -1134,6 +1180,20 @@ declare module '@tanstack/react-router' {
       path: '/api/keeper-tts'
       fullPath: '/api/keeper-tts'
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/subscribe': {
+      id: '/api/subscribe'
+      path: '/api/subscribe'
+      fullPath: '/api/subscribe'
+      preLoaderRoute: typeof ApiSubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/tip': {
+      id: '/api/tip'
+      path: '/api/tip'
+      fullPath: '/api/tip'
+      preLoaderRoute: typeof ApiTipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/article/$slug': {
@@ -1366,6 +1426,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   TermsRoute: TermsRoute,
+  TipsRoute: TipsRoute,
   TodayRoute: TodayRoute,
   ToolsRoute: ToolsRoute,
   ValuesRoute: ValuesRoute,
@@ -1373,6 +1434,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBriefDotjsonRoute: ApiBriefDotjsonRoute,
   ApiDispatchesDotjsonRoute: ApiDispatchesDotjsonRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
+  ApiSubscribeRoute: ApiSubscribeRoute,
+  ApiTipRoute: ApiTipRoute,
   ArticleSlugRoute: ArticleSlugRoute,
   DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
