@@ -255,8 +255,8 @@ function Home() {
         <div className="border-b border-line pb-6">
           <h2 id="open-desk-intro" className="masthead-serif text-[1.4rem]">Open Desk Journalism</h2>
           <p className="mt-2 max-w-3xl text-[0.95rem] leading-relaxed text-muted-ink">{locale === "fr"
-            ? "Sous la direction de Jack Guler, nous associons journalisme, cinéma et création assistée par l'IA pour raconter les enjeux humains de l'intelligence artificielle."
-            : "Led by editor Jack Guler, we combine journalism, filmmaking and AI-assisted creativity to tell the human stories behind artificial intelligence."}</p>
+            ? `Sous la direction de ${SITE.editor.name}, nous associons journalisme, cinéma et création assistée par l'IA pour raconter les enjeux humains de l'intelligence artificielle.`
+            : `Led by editor ${SITE.editor.name}, we combine journalism, filmmaking and AI-assisted creativity to tell the human stories behind artificial intelligence.`}</p>
           <Link to="/about" hash="how-we-work" className="inline-block mt-2 text-lake font-semibold hover:underline">{locale === "fr" ? "Comment nous travaillons →" : "How we work →"}</Link>
         </div>
       </section>

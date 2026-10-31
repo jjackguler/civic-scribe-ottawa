@@ -17,7 +17,7 @@ export const Route = createFileRoute("/standards")({
 const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
   {
     h: { en: "Editorial leadership", fr: "Direction éditoriale" },
-    p: [{ en: "Founder and editor Jack Guler sets the editorial direction and is responsible for the publication's work and corrections. AI Broadsheet brings together journalism, filmmaking and new forms of storytelling, with a focus on how AI affects people.", fr: "Le fondateur et responsable éditorial Jack Guler définit la ligne éditoriale et répond du travail de la publication et des corrections. AI Broadsheet associe journalisme, cinéma et nouvelles formes de récit pour explorer les effets de l'IA sur les personnes." }],
+    p: [{ en: `Founder and editor ${SITE.editor.name} sets the editorial direction and is responsible for the publication's work and corrections. AI Broadsheet is published by ${SITE.publisher.name} in ${SITE.publisher.city} and brings together journalism, filmmaking and new forms of storytelling, with a focus on how AI affects people.`, fr: `Le fondateur et responsable éditorial ${SITE.editor.name} définit la ligne éditoriale et répond du travail de la publication et des corrections. Publié par ${SITE.publisher.name} à ${SITE.publisher.city}, AI Broadsheet associe journalisme, cinéma et nouvelles formes de récit pour explorer les effets de l'IA sur les personnes.` }],
   },
   {
     h: { en: "Accuracy and attribution", fr: "Exactitude et attribution" },
