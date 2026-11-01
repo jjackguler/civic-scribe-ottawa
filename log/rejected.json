@@ -1,5 +1,15 @@
 [
   {
+    "id": "1m79jja",
+    "at": "2026-11-01T03:41:38.897Z",
+    "stage": "standards",
+    "headline": "OpenAI raises just $11 billion of its $30 billion target as big investors lose their AI appetite",
+    "reasons": [
+      "The article presents speculation as fact by stating the funding shortfall 'signifies a potential shift in market enthusiasm' and 'a cooling trend', which are interpretations not explicitly stated as fact by the sources.",
+      "The article claims an impact on people—specifically that it could mean 'a slower rollout of new features or a greater focus on monetization'—which is not supported by the provided sources."
+    ]
+  },
+  {
     "id": "7j4yxh",
     "at": "2026-10-31T12:57:05.661Z",
     "stage": "reporter",
