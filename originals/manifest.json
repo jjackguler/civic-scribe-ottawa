@@ -1,6 +1,45 @@
 {
- "updatedAt": "2026-10-28T03:55:12.664Z",
+ "updatedAt": "2026-11-01T20:30:00Z",
  "items": [
+  {
+   "id": "202611011600-sir-jack-special-the-wrong-voice",
+   "kind": "explainer",
+   "section": "noir",
+   "aspect": "16:9",
+   "publishedAt": "2026-11-01T20:30:00Z",
+   "title": "The Sir Jack Files: The Wrong Voice",
+   "summary": "An Ontario grandmother heard her grandson's voice ask for $9,000 to get out of jail. Her family believes it was cloned. A three-minute Op-Doc on why a familiar voice is no longer proof, and the family habit that beats the scam.",
+   "durationSec": 214,
+   "sources": [
+    {
+     "name": "CBC Marketplace · 20 Mar 2025",
+     "url": "https://www.cbc.ca/news/marketplace/marketplace-ai-voice-scam-1.7486437"
+    },
+    {
+     "name": "CBC News Calgary (Lethbridge Police)",
+     "url": "https://www.cbc.ca/news/canada/calgary/ai-fraud-calls-grandparent-scam-lethbridge-1.7317638"
+    },
+    {
+     "name": "Competition Bureau / Canadian Anti-Fraud Centre · Feb 2025",
+     "url": "https://www.canada.ca/en/competition-bureau/news/2025/02/fraud-prevention-month-to-focus-on-impersonation-fraud-one-of-the-fastest-growing-forms-of-fraud.html"
+    },
+    {
+     "name": "Canadian Anti-Fraud Centre: grandparent fraud",
+     "url": "https://antifraudcentre-centreantifraude.ca/news-nouvelles/2024/2024-04-18-eng.htm"
+    }
+   ],
+   "transcript": "It is late. The phone rings. And the voice on the line belongs to someone you love. [Caller, dramatized: \"Hi Grandma. Yeah, I got in trouble here.\"] That is how one call began for a grandmother in Ontario, as CBC Marketplace reported. A caller said her grandson had been arrested. Then a voice that sounded like him came on the line. It said he needed nine thousand dollars to get out. A taxi was sent to take her to the bank. Her family believes the voice may have been cloned with artificial intelligence. Police call it the emergency scam. Or the grandparent scam. It is not new. A stranger pretends to be family in trouble. Bail. A lawyer. A crash. And always the same rule. Don't tell anyone. What is new is the voice. Voice cloning software can now copy how a person sounds from a few seconds of audio. Experts interviewed by CBC put it at three to five seconds. A birthday video. A voicemail greeting. A clip on social media. Police in Lethbridge, Alberta, say victims are now convinced faster. They don't stop to check, because it sounds just like their grandchild. In twenty twenty-four, Canadians reported more than six hundred and thirty-seven million dollars lost to fraud. The Canadian Anti-Fraud Centre estimates that only five to ten percent of fraud is ever reported. So here is my argument. For as long as we have had telephones, we learned one rule. If you know the voice, you know the person. That rule is over. A voice is no longer proof. It is just sound. We should stop asking our grandparents to be detectives at midnight. They are being asked to beat software, alone, in a few frightened minutes. The answer is not more fear. It is a family habit. Agree on a code word. Something only your family knows. Never posted. Never said online. If a call is urgent, hang up. Call the person back on the number you already have. A real emergency survives a two minute call back. A scam does not. And if money moves, report it. Even if you are embarrassed. Especially then. That grandmother kept her money. Her bank noticed something was wrong, and called her son in time. That is the part I keep thinking about. Not the machine. The person who paused. One more thing. The voice you have been listening to is not a person. It was made by software, from text, on one computer in Ottawa. You believed it. Didn't you? So. What is your family's word?",
+   "voice": "Synthetic narration (Chatterbox, open model) generated on one computer in Ottawa; dramatized caller line: ElevenLabs voice",
+   "aiImages": false,
+   "credits": "Opinion. An AI Broadsheet Op-Doc in The Sir Jack Files. Every illustration is drawn in code in Buildgena Studio; no photographs or AI images. Narration is a synthetic voice made locally with Chatterbox; the caller's line is a dramatization using the words CBC Marketplace reported, voiced with ElevenLabs. Music and sound effects generated locally with Stable Audio.",
+   "readMore": {
+    "url": "/sir-jack",
+    "en": "More from The Sir Jack Files",
+    "fr": "Plus de Sir Jack"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/d44b04e8db71a86533cf61ca62b44dab9628c670/originals/files/202611011600-sir-jack-special-the-wrong-voice.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@d44b04e8db71a86533cf61ca62b44dab9628c670/originals/files/202611011600-sir-jack-special-the-wrong-voice.jpg"
+  },
   {
    "id": "202610272351-sir-jack-15",
    "kind": "explainer",
