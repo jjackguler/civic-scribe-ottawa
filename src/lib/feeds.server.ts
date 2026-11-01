@@ -185,19 +185,11 @@ ${items}
  * noindex and stay out: Google News is for the news we write.
  */
 export async function buildNewsSitemap(): Promise<string> {
-  const articles = await currentArticles();
-  const dispatches = await currentDispatches(articles);
-  const cutoff = Date.now() - 48 * 3600_000;
-  const news = (loc: string, l: Locale, date: string, title: string) =>
-    `<url><loc>${esc(loc)}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${date}</news:publication_date><news:title>${esc(title)}</news:title></news:news></url>`;
-  const ours = articles.filter(a => new Date(a.createdAt).getTime() >= cutoff).slice(0, 500)
-    .flatMap(a => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/article/${a.slug[l]}`, l), l, a.createdAt, a[l].headline)));
-  // Until the Newsroom publishes, the Worker desk's dispatches are our articles.
-  const fallback = dispatches.filter(d => new Date(d.createdAt).getTime() >= cutoff).slice(0, 50)
-    .flatMap(d => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/dispatch/${d.id}`, l), l, d.createdAt, d[l].headline)));
+  // Empty on purpose (owner's brief, 29 Oct 2026): our newsroom pieces are AI-assisted summaries
+  // of other outlets' reporting, not reporting of our own, so they are not offered to Google News.
+  // List our own reporting here again once we publish it.
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${[...ours, ...fallback].join("\n")}
 </urlset>
 `;
 }
