@@ -31,7 +31,7 @@ const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
   {
     id: "dispatches",
     h: { en: "Articles and dispatches", fr: "Articles et dépêches" },
-    p: [{ en: "Our articles and dispatches aim to explain developments in AI and their human consequences. AI-assisted coverage is labelled and remains the publication's responsibility.", fr: "Nos articles et dépêches visent à expliquer les évolutions de l'IA et leurs conséquences humaines. Les contenus réalisés avec l'aide de l'IA sont identifiés et restent sous la responsabilité de la publication." }],
+    p: [{ en: "Our newsroom summaries and videos aim to explain developments in AI and their human consequences. AI-assisted coverage is labelled and remains the publication's responsibility.", fr: "Nos résumés et nos vidéos visent à expliquer les évolutions de l'IA et leurs conséquences humaines. Les contenus réalisés avec l'aide de l'IA sont identifiés et restent sous la responsabilité de la publication." }],
   },
   {
     h: { en: "Visual and immersive storytelling", fr: "Récits visuels et immersifs" },
