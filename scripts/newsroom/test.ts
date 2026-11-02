@@ -55,6 +55,15 @@ test("sentence-initial connective adverbs pass, but new names and numbers still 
   assert.deepEqual(factGuard(["Northwind met Alongside."], SRC), ["Alongside"]);
   assert.deepEqual(factGuard(["Residents say Aurora-2 is open."], SRC), ["Residents"]);
 });
+test("ordinary openers, AI- compounds and country adjectives pass; spoken attributions still fail", () => {
+  assert.deepEqual(factGuard(["Additionally, Aurora-2 runs on a laptop [s1]. Currently, the model is open [s1]. Developers can run it on one GPU [s1]."], SRC), []);
+  assert.deepEqual(factGuard(["Users need a commercial licence above 50 employees [s1]. AI-driven tutoring is offered by KestrelStudy [s3]."], SRC), []);
+  assert.deepEqual(factGuard(["Users say Aurora-2 is slow."], SRC), ["Users"]);
+  assert.deepEqual(factGuard(["Developers told Northwind it is slow."], SRC), ["Developers"]);
+  assert.deepEqual(factGuard(["Aurora-2 handles France's language well [s1]."], SRC), []);
+  assert.deepEqual(factGuard(["Aurora-2 is a Chinese model."], SRC), ["Chinese"]);
+  assert.deepEqual(factGuard(["Ottawa bought a stake in Cohere."], "The Canadian government bought a stake in Cohere."), []);
+});
 
 test("transitively linked unrelated stories are separated for reporting", () => {
   const at = new Date().toISOString();

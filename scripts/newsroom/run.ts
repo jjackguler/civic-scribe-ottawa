@@ -195,7 +195,8 @@ async function main() {
       throw new Error("Newsroom configuration is incomplete. Check the provider, API key and model prices in the log. No content was generated.");
     }
     models = live;
-    const { loadNews } = await import("../../src/lib/news-engine");
+    const { loadNews, useNewsroomExcerpts } = await import("../../src/lib/news-engine");
+    useNewsroomExcerpts();
     const desk = await loadNews();
     stories = desk.stories;
     log(`Newsroom: ${desk.stories.length} stories on the desk; writer ${models.model("writer")}, checks ${models.model("checker")}`);
