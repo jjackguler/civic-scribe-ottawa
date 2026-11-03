@@ -87,17 +87,17 @@ export function clock(iso: string, locale: Locale) {
   return new Date(iso).toLocaleString(locale === "fr" ? "fr-CA" : "en-CA", { timeZone: "America/Toronto", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
 
-/** "Written by the AI Broadsheet desk with AI, from reporting by …" — on every dispatch. */
+/** "A newsroom summary, written with AI, of reporting by …" — on every dispatch. */
 export function DispatchLabel({ d, dark = false, className = "" }: { d: Dispatch; dark?: boolean; className?: string }) {
   const { locale } = useLocale();
   const outlets = [...new Set(d.sources.map(s => s.outlet))];
   const fr = locale === "fr";
   return (
     <p className={`text-[0.92rem] leading-snug ${dark ? "text-white/80" : "text-muted-ink"} ${className}`}>
-      {fr ? "Écrit par le pupitre d'AI Broadsheet avec l'IA, d'après les reportages de " : "Written by the AI Broadsheet desk with AI, from reporting by "}
+      {fr ? "Résumé de la rédaction, rédigé avec l'IA, des reportages de " : "A newsroom summary, written with AI, of reporting by "}
       <span className={`font-semibold ${dark ? "text-white" : "text-ink"}`}>{listOutlets(outlets, locale)}</span>.{" "}
-      <Link to="/standards" hash="dispatches" className={`font-semibold underline underline-offset-2 ${dark ? "text-signal" : "text-lake"} hover:no-underline`}>
-        {fr ? "Comment nous écrivons les dépêches" : "How we write dispatches"}
+      <Link to="/standards" hash="newsroom" className={`font-semibold underline underline-offset-2 ${dark ? "text-signal" : "text-lake"} hover:no-underline`}>
+        {fr ? "Comment sont faits les résumés" : "How summaries are made"}
       </Link>
     </p>
   );

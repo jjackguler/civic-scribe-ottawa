@@ -46,8 +46,8 @@ function HowWeWork() {
           : "Founder and editor Jack Guler sets the editorial direction and the publication's priorities. He brings together his journalism and filmmaking experience and is responsible for published work and corrections. A small team is taking shape with volunteer university students, beginning with interviews and reporting projects."}</p>
         <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Journalisme et création" : "Journalism and creative production"}</h3>
         <p>{fr
-          ? "Nous associons articles, entretiens, courts documentaires et explications visuelles. L'IA soutient certaines étapes de recherche et de création; la direction éditoriale et la responsabilité restent humaines."
-          : "We bring together articles, interviews, short documentaries and visual explainers. AI supports parts of our research and creative work, while editorial direction and responsibility remain human."}</p>
+          ? "Nous associons entretiens, courts documentaires, explications visuelles, chroniques de l'éditeur et résumés de la rédaction, qui résument avec l'IA les reportages d'autres médias et les nomment. L'IA soutient certaines étapes de recherche et de création; la direction éditoriale et la responsabilité restent humaines."
+          : "We bring together interviews, short documentaries, visual explainers, the editor's columns and newsroom summaries, which summarize other outlets' reporting with AI and name them. AI supports parts of our research and creative work, while editorial direction and responsibility remain human."}</p>
         <h3 className="font-sans font-bold text-[1.1rem] mt-6 mb-2">{fr ? "Journalisme immersif" : "Immersive journalism"}</h3>
         <p>{fr
           ? "Nous développons aussi des expériences de journalisme immersif avec Unreal Engine, Blender et des méthodes de création assistées par l'IA. Des événements et des lieux historiques prennent forme en environnements 3D réalistes et en récits à 360 degrés, pour permettre au public d'explorer le contexte d'une histoire. Les reconstitutions sont clairement identifiées."
@@ -88,6 +88,9 @@ function WhoRunsThis() {
               <p className="font-sans font-bold text-[1.25rem]">{ed.name}</p>
               {pick(ed.role) && <p className="text-brass font-sans font-semibold">{pick(ed.role)}</p>}
               {pick(ed.bio) && <p className="text-white/80 mt-2">{pick(ed.bio)}</p>}
+              <p className="mt-2 font-sans text-[0.95rem]">
+                <Link to="/editor" hash="books" className="text-white/85 underline hover:text-white">{fr ? "Ses livres" : "His books"}</Link>
+              </p>
             </>
           ) : (
             <p className="text-white/80">

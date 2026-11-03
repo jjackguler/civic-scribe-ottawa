@@ -178,6 +178,12 @@ export function overlapProblems(d: Draft, sources: { outlet: string; text: strin
 
 export const HYPE = /\b(breaking|shock\w*|stunning|game[- ]?chang\w*|revolution\w*|unprecedented|bombshell|mind[- ]?blowing|insane|terrifying|apocalyp\w*|doom\w*|jaw[- ]?dropping|explosive|choc|boulevers\w*|révolution\w*|incroyable\w*|stupéfiant\w*|terrifiant\w*|sans précédent)\b/i;
 
+/**
+ * A summary claiming the reporting as ours ("we learned", "our reporting" [label-ok: names the ban], "AI Broadsheet has
+ * confirmed"): the outlets did the reporting, so the copy editor must attribute it to them.
+ */
+export const OWN_REPORTING = /\b(we (?:have )?(?:reported|learned|confirmed|obtained|revealed|uncovered)|our (?:own )?(?:reporting|investigation|reporters?|sources)|AI Broadsheet (?:has )?(?:reported|learned|confirmed|obtained|revealed)|notre (?:reportage|enquête)|nos (?:reportages|journalistes|sources)|nous avons (?:appris|confirmé|obtenu|révélé)|AI Broadsheet a (?:appris|confirmé|obtenu|révélé))\b/i;
+
 /** House-style problems a copy editor fixes. Empty = clean. */
 export function styleProblems(d: Draft, lang: "en" | "fr"): string[] {
   const out: string[] = [];
@@ -185,6 +191,8 @@ export function styleProblems(d: Draft, lang: "en" | "fr"): string[] {
   if (/!/.test(all)) out.push("Remove every exclamation mark.");
   const hype = all.match(HYPE);
   if (hype) out.push(`Remove the hype word "${hype[0]}".`);
+  const own = all.match(OWN_REPORTING);
+  if (own) out.push(`"${own[0]}" claims the reporting as ours: this is a summary of the outlets' reporting, so attribute it to them.`);
   if (/[?]/.test(d.headline)) out.push("The headline must be a statement, not a question.");
   if (d.headline.length < 40 || d.headline.length > 110) out.push(`The headline must be 40 to 110 characters (it is ${d.headline.length}).`);
   if (/\b[A-Z]{5,}\b/.test(d.headline.replace(/\b(OpenAI|NVIDIA|UNESCO|NATO|OECD|CIFAR)\b/g, ""))) out.push("No words in ALL CAPS in the headline.");

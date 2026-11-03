@@ -44,7 +44,9 @@ export const Route = createFileRoute("/dispatch/$id")({
       publishedTime: d.createdAt,
       jsonLd: (l, url) => [{
         "@context": "https://schema.org",
-        "@type": "NewsArticle",
+        // A summary of other outlets' reporting: an Article with no author of its own.
+        "@type": "Article",
+        genre: l === "fr" ? "Résumé de la rédaction" : "Newsroom summary",
         headline: d[l].headline.slice(0, 110),
         description: d[l].news,
         abstract: d[l].thirty.join(" "),
@@ -54,13 +56,11 @@ export const Route = createFileRoute("/dispatch/$id")({
         dateModified: d.createdAt,
         inLanguage: l === "fr" ? "fr-CA" : "en-CA",
         image: [DEFAULT_OG_IMAGE],
-        // Our desk wrote it, with AI, from these outlets' reporting (each one cited and linked).
-        author: { "@type": "Organization", name: l === "fr" ? `Pupitre d'${SITE.name}` : `${SITE.name} desk`, url: absUrl("/standards", l) },
         publisher: publisherRef,
         isBasedOn: d.sources.map(s => s.url),
         citation: d.sources.map(s => ({ "@type": "NewsArticle", headline: s.title, url: s.url, datePublished: s.publishedAt, publisher: { "@type": "Organization", name: s.outlet } })),
         publishingPrinciples: absUrl("/standards", l),
-        creditText: l === "fr" ? `Écrit avec l'IA d'après les reportages de ${outlets}` : `Written with AI from reporting by ${outlets}`,
+        creditText: l === "fr" ? `Résumé de la rédaction, rédigé avec l'IA, des reportages de ${outlets}` : `Newsroom summary, written with AI, of reporting by ${outlets}`,
       }],
     });
   },
@@ -75,9 +75,9 @@ function DispatchRoute() {
     return (
       <PageShell>
         <div className="container-mw py-20 max-w-2xl">
-          <h1 className="masthead-serif text-[2.4rem] leading-tight">{fr ? "Cette dépêche n'est pas disponible" : "This dispatch isn't available"}</h1>
-          <p className="dek mt-3">{fr ? "Elle a peut-être été retirée, ou notre pupitre la rédige encore." : "It may have been withdrawn, or our desk may still be writing it."}</p>
-          <Link to="/dispatch" className="inline-flex mt-6 bg-night text-white px-5 py-2.5 rounded-[4px] font-semibold hover:bg-lake">{fr ? "Toutes les dépêches" : "All dispatches"}</Link>
+          <h1 className="masthead-serif text-[2.4rem] leading-tight">{fr ? "Ce résumé n'est pas disponible" : "This newsroom summary isn't available"}</h1>
+          <p className="dek mt-3">{fr ? "Il a peut-être été retiré, ou il est encore en préparation." : "It may have been withdrawn, or it may still be in preparation."}</p>
+          <Link to="/dispatch" className="inline-flex mt-6 bg-night text-white px-5 py-2.5 rounded-[4px] font-semibold hover:bg-lake">{fr ? "Tous les résumés de la rédaction" : "All newsroom summaries"}</Link>
         </div>
       </PageShell>
     );

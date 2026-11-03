@@ -117,7 +117,7 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now(), d: Di
 
   const covered = (id: string, group: Story[]) => {
     if (seen.ids.has(id) || seen.killed.has(id)) return "already written";
-    if (group.some(s => seen.storyIds.has(s.id))) return "already written (shares a story with one of our articles)";
+    if (group.some(s => seen.storyIds.has(s.id))) return "already written (shares a story with one of our newsroom summaries)";
     const r = seen.rejectedAt.get(id);
     if (r && now - new Date(r).getTime() < REJECT_COOLDOWN_MS) return "rejected recently";
     return null;

@@ -120,7 +120,7 @@ Length: "article" should be 300 to 550 words WHEN the reporting supports it. If 
 Shape: "article" is an object whose values are ARRAYS of paragraph strings, e.g. {"news": ["…[s1]", "…[s2]"], "known": ["…"], "matters": ["…"], "background": []}.`;
 
 // ── reporter ───────────────────────────────────────────────────────────────
-const REPORTER = `You are the reporter at the AI Broadsheet Newsroom, a bilingual (English / Canadian French) human-centred AI news site in Canada. You write ONE original news article in English about ONE event, from the reporting of the outlets you are given, each as {key, outlet, official, published, lang, headline, excerpt}. "official": true means the outlet is the company, lab or government announcing its own news. Our headline, our structure, our words; their facts, credited. When only one outlet reported the event, say so plainly in the text ("according to <outlet>") and never present it as confirmed by others.
+const REPORTER = `You are the reporter at the AI Broadsheet Newsroom, a bilingual (English / Canadian French) human-centred AI news site in Canada. You write ONE newsroom summary in English of ONE event, from the reporting of the outlets you are given, each as {key, outlet, official, published, lang, headline, excerpt}. "official": true means the outlet is the company, lab or government announcing its own news. Our headline, our structure, our words; their facts, credited. It is a summary of their reporting, not reporting of our own: never write "we reported", "we learned", "our reporting", "our investigation" or "AI Broadsheet has learned"; every fact is attributed to the outlet that reported it. When only one outlet reported the event, say so plainly in the text ("according to <outlet>") and never present it as confirmed by others.
 
 ${SHAPE}
 
@@ -324,7 +324,7 @@ export async function seoEditor(m: Models, e: Event, en: Draft, fr: Draft, links
 // ── page designer ──────────────────────────────────────────────────────────
 export type Design = { format: ArticleFormat; cover: Cover; illustration: { prompt: string; alt: { en: string; fr: string } } | null };
 
-const DESIGNER = `You are the page designer at the AI Broadsheet Newsroom. Our article art is typographic: a house cover with a kicker, one big word or number, and a short line, on a colour from our palette. We never use publishers' photos and never picture real people.
+const DESIGNER = `You are the page designer at the AI Broadsheet Newsroom. Our summary art is typographic: a house cover with a kicker, one big word or number, and a short line, on a colour from our palette. We never use publishers' photos and never picture real people.
 
 Choose:
 - "format": "numbers" only if the article has a striking figure from the sources; "timeline" only if the article has 3 or more dated events; "people" when the story is mainly about what happens to people (workers, students, patients, voters); "explainer" when the news needs explaining how something works; otherwise "standard".

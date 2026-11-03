@@ -2,7 +2,7 @@
  * The Dispatch desk: original articles AI Broadsheet writes, with AI, about
  * one event that two or more outlets are reporting.
  *
- * House rules (see /standards#dispatches):
+ * House rules (see /standards#newsroom):
  * - Written only from the headlines and excerpts those outlets published for
  *   the event (one cluster from cluster.ts). Nothing else goes in.
  * - The same mechanical fact guard as the AI desk (ai-desk.server.ts): every
@@ -382,7 +382,7 @@ export async function runDispatches(payload: NewsPayload): Promise<number> {
   try {
     const c = await import("./claude.server");
     if (!c.claudeAvailable()) return 0;
-    // The Newsroom writes our articles now; this desk is the fallback while it has published nothing.
+    // The Newsroom writes the summaries now; this desk is the fallback while it has published nothing.
     const { newsroomHasItems } = await import("./newsroom.server");
     if (await newsroomHasItems()) return 0;
     await loadShared();

@@ -77,7 +77,7 @@ async function newsroomFile<T>(path: string): Promise<T | null> {
   } catch { return null; }
 }
 
-/** All the strings in a value (our article's text, for the fact guard). */
+/** All the strings in a value (a newsroom summary's text, for the fact guard). */
 function strings(v: unknown, out: string[] = []): string[] {
   if (typeof v === "string") out.push(v);
   else if (Array.isArray(v)) v.forEach(x => strings(x, out));

@@ -47,6 +47,8 @@ import { Route as ApiBriefDotjsonRouteImport } from './routes/api.brief[.]json'
 import { Route as ApiDispatchesDotjsonRouteImport } from './routes/api.dispatches[.]json'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as BooksIndexRouteImport } from './routes/books.index'
+import { Route as BooksSlugRouteImport } from './routes/books.$slug'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
@@ -265,6 +267,16 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
   path: '/article/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksIndexRoute = BooksIndexRouteImport.update({
+  id: '/books/',
+  path: '/books/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BooksSlugRoute = BooksSlugRouteImport.update({
+  id: '/books/$slug',
+  path: '/books/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevSocialRoute = DevSocialRouteImport.update({
   id: '/dev/social',
   path: '/dev/social',
@@ -440,6 +452,7 @@ export interface FileRoutesByFullPath {
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/books/$slug': typeof BooksSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -452,6 +465,7 @@ export interface FileRoutesByFullPath {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/books/': typeof BooksIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -507,6 +521,7 @@ export interface FileRoutesByTo {
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/books/$slug': typeof BooksSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -519,6 +534,7 @@ export interface FileRoutesByTo {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/books': typeof BooksIndexRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/glossary': typeof GlossaryIndexRoute
@@ -575,6 +591,7 @@ export interface FileRoutesById {
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/books/$slug': typeof BooksSlugRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -587,6 +604,7 @@ export interface FileRoutesById {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/books/': typeof BooksIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -644,6 +662,7 @@ export interface FileRouteTypes {
     | '/api/dispatches.json'
     | '/api/keeper-tts'
     | '/article/$slug'
+    | '/books/$slug'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -656,6 +675,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/books/'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -711,6 +731,7 @@ export interface FileRouteTypes {
     | '/api/dispatches.json'
     | '/api/keeper-tts'
     | '/article/$slug'
+    | '/books/$slug'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -723,6 +744,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/books'
     | '/dispatch'
     | '/editor'
     | '/glossary'
@@ -778,6 +800,7 @@ export interface FileRouteTypes {
     | '/api/dispatches.json'
     | '/api/keeper-tts'
     | '/article/$slug'
+    | '/books/$slug'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -790,6 +813,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/books/'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -846,6 +870,7 @@ export interface RootRouteChildren {
   ApiDispatchesDotjsonRoute: typeof ApiDispatchesDotjsonRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
+  BooksSlugRoute: typeof BooksSlugRoute
   DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
@@ -858,6 +883,7 @@ export interface RootRouteChildren {
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
   VideoSlugRoute: typeof VideoSlugRoute
+  BooksIndexRoute: typeof BooksIndexRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   GlossaryIndexRoute: typeof GlossaryIndexRoute
@@ -1143,6 +1169,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books/': {
+      id: '/books/'
+      path: '/books'
+      fullPath: '/books/'
+      preLoaderRoute: typeof BooksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/books/$slug': {
+      id: '/books/$slug'
+      path: '/books/$slug'
+      fullPath: '/books/$slug'
+      preLoaderRoute: typeof BooksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dev/social': {
       id: '/dev/social'
       path: '/dev/social'
@@ -1374,6 +1414,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiDispatchesDotjsonRoute: ApiDispatchesDotjsonRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
   ArticleSlugRoute: ArticleSlugRoute,
+  BooksSlugRoute: BooksSlugRoute,
   DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
@@ -1386,6 +1427,7 @@ const rootRouteChildren: RootRouteChildren = {
   OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
   VideoSlugRoute: VideoSlugRoute,
+  BooksIndexRoute: BooksIndexRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   GlossaryIndexRoute: GlossaryIndexRoute,

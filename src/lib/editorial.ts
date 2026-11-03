@@ -33,8 +33,8 @@ export const VALUES: { id: string; h: Bi; p: Bi }[] = [
     id: "democracy",
     h: { en: "Democracy and civil liberties", fr: "Démocratie et libertés civiles" },
     p: {
-      en: "We stand for democracy, freedom of expression and people's right to have a say in how they are governed. We scrutinize power and hold institutions accountable, without serving any political party. Our reporting follows evidence, not political allegiance.",
-      fr: "Nous défendons la démocratie, la liberté d'expression et le droit de chacun de participer aux décisions qui le concernent. Nous examinons l'exercice du pouvoir et demandons des comptes aux institutions, sans servir aucun parti politique. Nos reportages suivent les faits, pas les allégeances politiques.",
+      en: "We stand for democracy, freedom of expression and people's right to have a say in how they are governed. We scrutinize power and hold institutions accountable, without serving any political party. Our work follows evidence, not political allegiance.",
+      fr: "Nous défendons la démocratie, la liberté d'expression et le droit de chacun de participer aux décisions qui le concernent. Nous examinons l'exercice du pouvoir et demandons des comptes aux institutions, sans servir aucun parti politique. Notre travail suit les faits, pas les allégeances politiques.",
     },
   },
   {
@@ -42,7 +42,7 @@ export const VALUES: { id: string; h: Bi; p: Bi }[] = [
     h: { en: "Freedom of belief and conscience", fr: "Liberté de croyance et de conscience" },
     p: {
       en: "We respect every person's freedom to practise a religion, hold a belief, change it, or hold no religious belief. We report on religious and non-religious people with the same fairness. We do not mock, demean or discriminate against anyone because of faith, conscience or worldview.",
-      fr: "Nous respectons la liberté de chaque personne de pratiquer une religion, d'avoir une croyance, d'en changer ou de n'avoir aucune croyance religieuse. Nous traitons les personnes religieuses et non religieuses avec la même équité dans nos reportages. Nous ne ridiculisons, ne rabaissons ni ne discriminons personne en raison de sa foi, de sa conscience ou de sa vision du monde.",
+      fr: "Nous respectons la liberté de chaque personne de pratiquer une religion, d'avoir une croyance, d'en changer ou de n'avoir aucune croyance religieuse. Nous traitons les personnes religieuses et non religieuses avec la même équité dans notre couverture. Nous ne ridiculisons, ne rabaissons ni ne discriminons personne en raison de sa foi, de sa conscience ou de sa vision du monde.",
     },
   },
   {

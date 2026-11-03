@@ -18,7 +18,8 @@ import type { Locale } from "@/lib/i18n";
 /** Keep product names like Aurora-2 on one line (non-breaking hyphen; same text). */
 export const keepNames = (t: string) => t.replace(/([A-Za-z])-(\d)/g, "$1\u2011$2");
 
-export const DISPATCH_WORD = { en: "Dispatch", fr: "Dépêche" } as const;
+/** Dispatches are summaries of other outlets' reporting, so they are called that. */
+export const DISPATCH_WORD = { en: "Summary", fr: "Résumé" } as const;
 
 /** "A, B and C" / "A, B et C". */
 export function listOutlets(names: string[], locale: Locale) {
@@ -69,7 +70,7 @@ export function DispatchCard({ d, size = "rail" }: { d: DispatchSummary; size?: 
     <article className="group relative h-full">
       {wrap(<>
         <span className="flex items-center gap-2 text-[0.78rem] font-bold">
-          <span className="bg-signal text-signal-ink px-1.5 py-0.5">{d.article ? (fr ? "Rédaction" : "Newsroom") : DISPATCH_WORD[locale]}</span>
+          <span className="bg-signal text-signal-ink px-1.5 py-0.5">{d.article ? (fr ? "Résumé" : "Summary") : DISPATCH_WORD[locale]}</span>
           <span className="text-brass-ink">{fr ? `${d.outlets.length} médias` : `${d.outlets.length} outlets`}</span>
         </span>
         <h3 className={`hl mt-2.5 text-ink ${size === "grid" ? "text-[1.35rem]" : "text-[1.2rem] sm:text-[1.28rem]"}`}>
@@ -105,11 +106,11 @@ export function DispatchRail({ initial, variant = "rail", limit = 8, title = tru
   const items = (data?.items ?? []).filter(d => d.id !== exclude).slice(0, limit);
   if (items.length === 0) return null;
   return (
-    <section className={className} aria-labelledby={title ? "dispatch-rail-h" : undefined} aria-label={title ? undefined : (fr ? "Dépêches" : "Dispatches")}>
+    <section className={className} aria-labelledby={title ? "dispatch-rail-h" : undefined} aria-label={title ? undefined : (fr ? "Résumés de la rédaction" : "Newsroom summaries")}>
       {title && (
         <ZoneHead
-          title={<span id="dispatch-rail-h">{fr ? "Dépêches" : "Dispatches"}</span>}
-          sub={<>{fr ? "Des résumés, rédigés avec l'IA, de ce que plusieurs médias rapportent." : "AI-assisted summaries of what several outlets are reporting."} <Link to="/standards" hash="dispatches" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
+          title={<span id="dispatch-rail-h">{fr ? "Résumés de la rédaction" : "Newsroom summaries"}</span>}
+          sub={<>{fr ? "Des résumés, rédigés avec l'IA, de ce que plusieurs médias rapportent." : "AI-assisted summaries of what several outlets are reporting."} <Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
           action={variant === "rail" ? (
             <Link to="/dispatch" className="shrink-0 inline-flex items-center gap-1 text-[0.92rem] font-semibold text-lake hover:underline">
               {fr ? "Toutes" : "All dispatches"} <ArrowRight className="h-4 w-4" aria-hidden="true" />

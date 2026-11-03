@@ -26,7 +26,14 @@ const BANNED: [RegExp, string][] = [
   [/\b(our|the)\s+editors?\s+(checked|reviewed|approved|verified|vetted)\b/i, "claims a human editor checked it"],
   [/\b(vérifi|révis|approuv)\w*\s+par\s+(nos|notre|la|les)\s+(rédacteurs?|rédactrices?|éditeurs?|éditrices?|journalistes?|rédaction)\b/i, "dit qu'un rédacteur humain a vérifié"],
   [/\bbuilt from court records\b|\btirées? des dossiers judiciaires\b/i, "not every special edition comes from court records"],
+  // Newsroom summaries are other outlets' reporting, summarized with AI: "Newsroom summaries" /
+  // "Résumés de la rédaction". Only work we made ourselves may be called ours.
+  [/\bour (?:own )?(?:articles?|reporting|stories)\b/i, "presents summaries of others' reporting as ours"],
+  [/\bnos (?:propres )?articles\b|\bnotre reportage\b|\bnos reportages\b/i, "présente des résumés comme nos propres reportages"],
+  [/\b(?:written|reported) by (?:our|the AI Broadsheet) (?:newsroom|desk)\b|\bécrit(?:e|s)? (?:avec l'IA )?par (?:notre|la) (?:salle de )?rédaction\b/i, "byline on a summary"],
 ];
+/** Lines that name a banned phrase in order to forbid it (the newsroom's prompt and guard). */
+const QUOTES_A_BAN = /never write "we reported"|OWN_REPORTING|label-ok/;
 
 function* files(dir: string): Generator<string> {
   let names: string[] = [];
@@ -43,9 +50,9 @@ function* files(dir: string): Generator<string> {
 const hits: string[] = [];
 for (const d of DIRS) {
   for (const f of files(join(ROOT, d))) {
-    if (f.endsWith("labels-test.ts")) continue;
+    if (f.endsWith("labels-test.ts") || f.endsWith("newsroom/test.ts")) continue;
     readFileSync(f, "utf8").split("\n").forEach((line, i) => {
-      if (REAL_APPROVAL.test(line)) return;
+      if (REAL_APPROVAL.test(line) || QUOTES_A_BAN.test(line)) return;
       for (const [re, why] of BANNED) if (re.test(line)) hits.push(`${relative(ROOT, f)}:${i + 1}: ${why}: ${line.trim().slice(0, 140)}`);
     });
   }
@@ -54,4 +61,4 @@ if (hits.length) {
   console.error(`Untruthful labels (${hits.length}):\n${hits.join("\n")}`);
   process.exit(1);
 }
-console.log("Label checks passed: no unapproved human-review claims.");
+console.log("Label checks passed: no unapproved human-review claims, no summaries passed off as our reporting.");

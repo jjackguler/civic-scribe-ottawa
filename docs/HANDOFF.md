@@ -2,7 +2,8 @@
 
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
-Last updated: 3 Nov 2026 (newsroom directives file, morning Canadian AI Brief, Output watch issue).
+Last updated: 3 Nov 2026 (fixed five desks, truthful summary labels, editor's book page; before that: newsroom
+directives file, morning Canadian AI Brief, Output watch issue).
 
 ## Ground rules from the owner
 - Post only from AI Broadsheet's own accounts. Never touch other brands the owner is logged
@@ -32,6 +33,19 @@ Last updated: 3 Nov 2026 (newsroom directives file, morning Canadian AI Brief, O
 - **Never post or share anything on social media without asking the owner first**, every time.
 - Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
   same computer.
+
+## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)
+- The site has exactly five sections: Canada, Rights & power, Work & culture, Research, World
+  (`src/lib/desks.ts`). Every feed story, newsroom summary and video maps to one of them
+  (`deskOf`, `deskOfSummary`, `deskOfOriginal`; World is the fallback). A new feed beat or topic
+  never adds a menu entry, chip, sitemap URL or page. Old `/news?section=<topic>` links answer 301
+  to their desk. Explainer shelves are fixed too (`originalSection` clamps unknown values).
+- Newsroom pieces are "Newsroom summaries" / "Résumés de la rédaction": no byline, no "our
+  articles", no "by AI Broadsheet"; the outlets are named and linked. `scripts/labels-test.ts`
+  fails CI on those phrasings and the newsroom copy desk rejects drafts that claim the reporting
+  (`OWN_REPORTING` in `scripts/newsroom/guard.ts`). "Our" is only for what we made.
+- The editor's book: `/books/the-new-cave` (EN/FR), listed under "Books by the editor" on `/editor`,
+  linked from the footer and /about only, never from news pages. Data in `src/lib/books.ts`.
 
 ## Newsroom directives (3 Nov 2026)
 - The owner steers the newsroom with one plain file: **`newsroom/DIRECTIVES.md`** on `main`. Every

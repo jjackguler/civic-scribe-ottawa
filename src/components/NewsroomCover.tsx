@@ -1,5 +1,5 @@
 /**
- * The house cover: our article art is typographic. A kicker, one big word or
+ * The house cover: newsroom summary art is typographic. A kicker, one big word or
  * number from the reporting, a short line, on a colour from our palette,
  * with a quiet motif. Never a publisher's photo, never a picture of a person.
  * An optional AI illustration (abstract, from the design desk) sits behind
@@ -101,7 +101,7 @@ export function NewsroomCover({ cover, locale, size = "card", className = "", an
             )}
           </div>
           <p className="flex items-center justify-between gap-2 font-semibold leading-none" style={{ color: t.soft, fontSize: "clamp(0.6rem, 2.2cqw, 0.78rem)" }}>
-            <span>AI Broadsheet · {fr ? "Salle de rédaction" : "Newsroom"}</span>
+            <span>AI Broadsheet · {fr ? "Résumé de la rédaction" : "Newsroom summary"}</span>
             {illustration && <span className="rounded-full border px-[1.2cqw] py-[0.4cqw]" style={{ borderColor: t.soft }}>{fr ? "Illustration IA" : "AI illustration"}</span>}
           </p>
         </div>

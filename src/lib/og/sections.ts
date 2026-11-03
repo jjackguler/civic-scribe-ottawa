@@ -1,9 +1,11 @@
 /**
- * Names and one-line descriptions for section share cards (/og/section/:name.png):
- * every news section from SECTIONS, plus the site's own formats. Server only.
+ * Names and one-line descriptions for share cards (/og/section/:name.png): the five desks,
+ * the site's own formats, and the retired topic sections (kept so old share links still
+ * render; they are no longer sections of the site). Server only.
  */
 import type { Bi } from "../i18n";
 import { TOPICS } from "../news";
+import { DESKS } from "../desks";
 import { WHY_DESK } from "../youth-core";
 
 export type SectionCard = { label: Bi; dek: Bi };
@@ -11,15 +13,15 @@ export type SectionCard = { label: Bi; dek: Bi };
 export const OG_SECTIONS: Record<string, SectionCard> = {
   // Topic desks: the desk's name and why stories on it matter to people.
   ...Object.fromEntries(TOPICS.map(t => [t.id, { label: t.label, dek: WHY_DESK[t.id] }])),
-  world: { label: { en: "World", fr: "Monde" }, dek: { en: "AI news from the world's newsrooms, every story credited and linked.", fr: "L'actualité de l'IA des salles de nouvelles du monde, chaque nouvelle créditée et liée." } },
-  canada: { label: { en: "Canada", fr: "Canada" }, dek: { en: "AI in Canada: the people, the places and the rules, from coast to coast.", fr: "L'IA au Canada : les gens, les lieux et les règles, d'un océan à l'autre." } },
+  // The five desks (desks.ts).
+  ...Object.fromEntries(DESKS.map(d => [d.id, { label: d.label, dek: d.dek }])),
   government: { label: { en: "Government", fr: "Gouvernement" }, dek: { en: "What governments announce about AI, from the official source.", fr: "Ce que les gouvernements annoncent sur l'IA, à la source officielle." } },
   ministry: { label: { en: "AI Ministry", fr: "Ministère de l'IA" }, dek: { en: "Following Canada's Minister of Artificial Intelligence, one announcement at a time.", fr: "Le suivi du ministre canadien de l'Intelligence artificielle, annonce par annonce." } },
   labs: { label: { en: "AI labs", fr: "Laboratoires" }, dek: { en: "What the labs say about their own work, labelled as theirs.", fr: "Ce que les laboratoires disent de leur travail, identifié comme tel." } },
   analysis: { label: { en: "Analysis", fr: "Analyses" }, dek: { en: "Longer reads that explain what the week's AI news means.", fr: "Des lectures plus longues qui expliquent ce que veut dire l'actualité de la semaine." } },
   trending: { label: { en: "Trending", fr: "Tendances" }, dek: { en: "What developers and researchers are talking about today.", fr: "Ce dont parlent les développeurs et les chercheurs aujourd'hui." } },
   news: { label: { en: "AI news, live", fr: "L'IA en direct" }, dek: { en: "The world's AI news, live. Every story credited and linked to its source.", fr: "L'actualité mondiale de l'IA, en direct. Chaque nouvelle créditée et liée à sa source." } },
-  dispatch: { label: { en: "Dispatches", fr: "Dépêches" }, dek: { en: "Summaries of other outlets' reporting: what's confirmed, what's claimed and what's still unknown.", fr: "Résumés de reportages d'autres médias : ce qui est confirmé, ce qui est affirmé et ce qu'on ignore encore." } },
+  dispatch: { label: { en: "Newsroom summaries", fr: "Résumés de la rédaction" }, dek: { en: "Summaries of other outlets' reporting: what's confirmed, what's claimed and what's still unknown.", fr: "Résumés de reportages d'autres médias : ce qui est confirmé, ce qui est affirmé et ce qu'on ignore encore." } },
   today: { label: { en: "Today in 60 seconds", fr: "L'actualité en 60 secondes" }, dek: { en: "The day's biggest AI stories, and why they matter to you. One minute.", fr: "Les grandes nouvelles de l'IA du jour, et pourquoi elles comptent. Une minute." } },
   quiz: { label: { en: "The Broadsheet 5", fr: "Les 5 du Broadsheet" }, dek: { en: "Five questions from today's AI headlines. Can you get 5/5?", fr: "Cinq questions sur les manchettes IA du jour. Pouvez-vous faire 5/5?" } },
   learn: { label: { en: "Learn", fr: "Apprendre" }, dek: { en: "Plain-language guides for people who want AI to make life and work easier.", fr: "Des guides simples pour que l'IA facilite la vie et le travail." } },

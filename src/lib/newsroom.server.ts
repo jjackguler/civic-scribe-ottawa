@@ -14,6 +14,7 @@
 import { sharedRead, sharedWrite } from "./shared-cache";
 import { NEWSROOM_RAW, isKilled, killedIds, type NewsroomArticle, type NewsroomIndex, type NewsroomSummary } from "./newsroom-types";
 import type { Locale } from "./i18n";
+import { deskOfSummary } from "./desks";
 
 const INDEX_TTL = 5 * 60_000;
 const ARTICLE_TTL = 60 * 60_000;
@@ -131,10 +132,12 @@ export async function articleHttpStatus(slug: string): Promise<200 | 404 | 410 |
   }
 }
 
-/** Up to `n` related articles: same topic first, then the newest. */
-export function related(items: NewsroomSummary[], to: { id: string; topic: string; storyIds?: string[] }, n = 4): NewsroomSummary[] {
+/** Up to `n` related summaries: same desk first (desks.ts), then the newest. */
+export function related(items: NewsroomSummary[], to: { id: string; topic: string; storyIds?: string[]; en: { headline: string; dek?: string } }, n = 4): NewsroomSummary[] {
   const others = items.filter(i => i.id !== to.id);
-  return [...others.filter(i => i.topic === to.topic), ...others.filter(i => i.topic !== to.topic)].slice(0, n);
+  const desk = deskOfSummary(to);
+  const same = others.filter(i => deskOfSummary(i) === desk);
+  return [...same, ...others.filter(i => !same.includes(i))].slice(0, n);
 }
 
 /** The newest `n` full articles (for the quiz and other desk features that need the text). */
