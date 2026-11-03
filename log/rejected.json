@@ -1,5 +1,52 @@
 [
   {
+    "id": "x7zvya",
+    "at": "2026-11-03T20:12:01.172Z",
+    "stage": "copy",
+    "headline": "Google will let schools skip AI tools, but they have to give up search, too",
+    "reasons": [
+      "Not in the sources (names or numbers): Workspace.",
+      "Too close to Ars Technica's wording (\"gemini gemini notebook gemini in classroom and google search…\"): say it in our own words, or quote and attribute it.",
+      "Too close to The Verge's wording (\"the volume of search queries run through chatgpt now…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Ars Technica's wording (\"gemini gemini notebook gemini in classroom and google search…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1qxascr",
+    "at": "2026-11-03T20:11:53.503Z",
+    "stage": "copy",
+    "headline": "Shopify posts $462-million USD net income, but stock falls on narrow Q3 revenue miss",
+    "reasons": [
+      "Not in the sources (names or numbers): Investors, 29 percent.",
+      "rewrite: missing fields: news (reply keys: headline,dek,news,thirty,confirmed,claimed,unknown,matters,article,plain,expert,timeline)"
+    ]
+  },
+  {
+    "id": "192ib80",
+    "at": "2026-11-03T20:11:45.244Z",
+    "stage": "copy",
+    "headline": "Finance Minister calls Cohere the “poster child” for government investment",
+    "reasons": [
+      "Not in the sources (names or numbers): 1.6 billion, denial not in the sources: \"The minister has stated that the upcoming federal budget will focus on entrepren\".",
+      "Too close to BetaKit's wording (\"1 6 billion investment in toronto based frontier ai…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): 1.6 billion.",
+      "Too close to BetaKit's wording (\"1 6 billion investment in toronto based frontier ai…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1nblmly",
+    "at": "2026-11-03T20:11:37.449Z",
+    "stage": "copy",
+    "headline": "BDC launches two entrepreneur-led AI programs to make small businesses, and itself, more productive",
+    "reasons": [
+      "Too close to BetaKit's wording (\"that 30 percent of canadian small to medium enterprises…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to BetaKit's wording (\"that 30 percent of canadian small to medium enterprises…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1okz2k8",
     "at": "2026-11-03T12:49:26.616Z",
     "stage": "copy",
