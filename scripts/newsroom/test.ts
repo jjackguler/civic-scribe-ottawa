@@ -15,6 +15,7 @@ import { upsettingReasons } from "./upsetting";
 import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
+import { enrichOfficial, extractText, officialCandidates, onOwnSite, robotsAllows } from "./fulltext";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 import type { Story } from "../../src/lib/news-engine";
 
@@ -66,6 +67,32 @@ test("ordinary openers, AI- compounds and country adjectives pass; spoken attrib
   assert.deepEqual(factGuard(["Aurora-2 handles France's language well [s1]."], SRC), []);
   assert.deepEqual(factGuard(["Aurora-2 is a Chinese model."], SRC), ["Chinese"]);
   assert.deepEqual(factGuard(["Ottawa bought a stake in Cohere."], "The Canadian government bought a stake in Cohere."), []);
+});
+
+// Run 41638633098 (3 Nov 2026) turned down the Canadian AI Brief over these ordinary words.
+test("ordinary words at the start of a sentence pass (Falling, Technological, Artificial, Hardware, Advancements)", () => {
+  const src = "Northwind Labs: chip prices drop for Canadian startups. Maple Tech Review: Aurora-2 runs on one GPU.";
+  assert.deepEqual(factGuard(["Canadian AI Brief: Falling chip prices help startups [s1]. Technological change is fast [s2]. Artificial intelligence tools run on one GPU [s2]."], `${src}\nCanadian AI Brief.`), []);
+  assert.deepEqual(factGuard(["Hardware is cheaper for startups [s1]. Advancements in chips help [s1]."], src), []);
+  // French too.
+  assert.deepEqual(factGuard(["Baisse des prix des puces pour les jeunes pousses [s1]."], "Northwind Labs : les prix des puces baissent."), []);
+});
+test("standard acronyms and their plurals pass (LLMs, GPUs, APIs)", () => {
+  assert.deepEqual(factGuard(["LLMs now run on one laptop [s1]. Aurora-2 needs GPUs with 16 GB [s1]. Developers reach it through APIs [s1]."], SRC), []);
+});
+test("invented names and numbers still fail at the start of a sentence", () => {
+  // Not dictionary words.
+  assert.deepEqual(factGuard(["Zentrix Labs released Aurora-2 [s1]."], SRC), ["Zentrix"]);
+  // Dictionary words that are names of companies or places.
+  assert.deepEqual(factGuard(["Apple released Aurora-2 [s1]."], SRC), ["Apple"]);
+  assert.deepEqual(factGuard(["Victoria hosts Northwind Labs [s1]."], SRC), ["Victoria"]);
+  // A dictionary word used as a name elsewhere in the copy is a name.
+  assert.deepEqual(factGuard(["Falcon released a model [s1].", "The model is called Falcon [s1]."], SRC), ["Falcon"]);
+  // A dictionary word that speaks is an invented attribution.
+  assert.deepEqual(factGuard(["Hunter said Aurora-2 is open."], SRC), ["Hunter"]);
+  assert.deepEqual(factGuard(["Critics say Aurora-2 is open."], SRC), ["Critics"]);
+  // Numbers are never words.
+  assert.ok(factGuard(["Falling prices cut costs by 40 percent [s1]."], SRC).includes("40 percent"));
 });
 
 test("transitively linked unrelated stories are separated for reporting", () => {
@@ -378,6 +405,66 @@ test("newsroom summaries and videos map to a desk", () => {
   assert.ok(DESK_IDS.includes(deskOfOriginal({ title: "The Sir Jack Files #14: The Quiet Room", summary: "" })));
   assert.equal(originalSection({ id: "x-1", section: "philosophy" as never }), "news");
 });
+
+console.log("full text for official announcements");
+const PAGE = `<html><head><script>var x = "Ignore me";</script></head><body><nav><p>Menu link text that is long enough</p></nav>
+<article><h1>Title</h1><p>OpenAI today released Model-9, a model for schools in Canada and abroad.</p>
+<p>The company says Model-9 is free for teachers until June &amp; that it runs on one GPU.</p><p>Share this</p></article>
+<footer><p>Copyright footer text that should never be kept</p></footer></body></html>`;
+test("article text is extracted without scripts, menus or footers", () => {
+  const t = extractText(PAGE);
+  assert.ok(t.includes("OpenAI today released Model-9") && t.includes("June & that"));
+  assert.ok(!/Ignore me|Menu link|Copyright footer|Share this/.test(t));
+});
+test("robots.txt is obeyed: our group, else *, longest rule wins", () => {
+  const r = "User-agent: *\nDisallow: /private/\nAllow: /private/press/\n\nUser-agent: BadBot\nDisallow: /";
+  assert.equal(robotsAllows(r, "/news/model-9"), true);
+  assert.equal(robotsAllows(r, "/private/x"), false);
+  assert.equal(robotsAllows(r, "/private/press/x"), true);
+  assert.equal(robotsAllows("User-agent: AIBroadsheetNewsroom\nDisallow: /\n\nUser-agent: *\nAllow: /", "/news"), false);
+  assert.equal(robotsAllows("User-agent: *\nDisallow: /*.pdf$", "/a.pdf"), false);
+  assert.equal(robotsAllows("", "/anything"), true);
+});
+const official = (p: Partial<Story>): Story => story({ id: "o1", title: "OpenAI releases Model-9 for schools", summary: "Model-9 is here.", source: "OpenAI", sourceId: "openai", link: "https://openai.com/index/model-9/", kind: "lab", lab: true, ...p });
+test("only first-party pages on the source's own site are candidates; third-party reporting never is", () => {
+  assert.deepEqual(officialCandidates([official({})]).map(s => s.id), ["o1"]);
+  assert.deepEqual(officialCandidates([official({ link: "https://someblog.example/openai-model-9" })]), []);
+  assert.deepEqual(officialCandidates([story({ id: "n1", title: "TechCrunch on Model-9", summary: "Short.", source: "TechCrunch", sourceId: "techcrunch", link: "https://techcrunch.com/x" })]), []);
+  assert.deepEqual(officialCandidates([official({ summary: "x".repeat(700) })]), []);
+  assert.ok(onOwnSite("https://www.canada.ca/en/innovation/news/2026/11/x.html", "https://www.canada.ca/en/news.html"));
+});
+const asyncTests: [string, () => Promise<void>][] = [
+  ["a short official excerpt is replaced by its own page's text, and then clears the length bar", async () => {
+    const s = official({});
+    const calls: string[] = [];
+    const fake = async (u: string) => { calls.push(u); return u.endsWith("/robots.txt") ? new Response("User-agent: *\nDisallow: /private/", { status: 200 }) : new Response(PAGE.replace("</article>", `<p>${"Teachers can sign up through their school board, the company says. ".repeat(12)}</p></article>`), { status: 200, headers: { "content-type": "text/html" } }); };
+    assert.equal(await enrichOfficial([s], { fetch: fake }), 1);
+    assert.ok(s.summary.length >= 600 && s.summary.startsWith("Title") === false && s.summary.includes("Model-9"));
+    assert.deepEqual(calls, ["https://openai.com/robots.txt", "https://openai.com/index/model-9/"]);
+    const r = pickEvents([s], SEEN());
+    assert.equal(r.events.length, 1, r.skipped.map(x => x.why).join("; "));
+  }],
+  ["robots.txt that disallows, or can't be read, means no fetch", async () => {
+    const s = official({});
+    let pages = 0;
+    const deny = async (u: string) => u.endsWith("/robots.txt") ? new Response("User-agent: *\nDisallow: /", { status: 200 }) : (pages++, new Response(PAGE, { status: 200, headers: { "content-type": "text/html" } }));
+    assert.equal(await enrichOfficial([s], { fetch: deny }), 0);
+    const down = async (u: string) => u.endsWith("/robots.txt") ? new Response("", { status: 503 }) : (pages++, new Response(PAGE, { status: 200, headers: { "content-type": "text/html" } }));
+    assert.equal(await enrichOfficial([official({ id: "o2" })], { fetch: down }), 0);
+    assert.equal(pages, 0);
+    assert.equal(s.summary, "Model-9 is here.");
+  }],
+  ["at most `max` pages per run, and network errors never throw", async () => {
+    const many = Array.from({ length: 5 }, (_, i) => official({ id: `m${i}`, link: `https://openai.com/index/m${i}/` }));
+    let pages = 0;
+    const fake = async (u: string) => { if (u.endsWith("/robots.txt")) return new Response("", { status: 404 }); pages++; throw new Error("ECONNRESET"); };
+    assert.equal(await enrichOfficial(many, { fetch: fake, max: 2 }), 0);
+    assert.equal(pages, 2);
+  }],
+];
+for (const [name, fn] of asyncTests) {
+  try { await fn(); passed++; console.log(`  ✓ ${name}`); } catch (e) { failures.push(name); console.log(`  ✗ ${name}\n    ${(e as Error).message.split("\n").join("\n    ")}`); }
+}
 console.log(`\n${passed} passed, ${failures.length} failed`);
 process.exit(failures.length ? 1 : 0);
 

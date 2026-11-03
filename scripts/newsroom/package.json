@@ -9,6 +9,8 @@
     "test": "tsx test.ts"
   },
   "dependencies": {
-    "tsx": "^4.20.0"
+    "an-array-of-french-words": "2.0.0",
+    "tsx": "^4.20.0",
+    "word-list": "4.1.0"
   }
 }

@@ -61,6 +61,11 @@ export function splitForReporting(clusters: Cluster[]): Cluster[] {
   });
 }
 
+/** How much of a report the writer sees. An official page fetched in full (fulltext.ts) is the source itself, so it may give more. */
+export const EXCERPT = 900;
+export const OFFICIAL_EXCERPT = 2500;
+const excerptOf = (s: Story) => (s.summary ?? "").slice(0, s.lab || s.gov ? OFFICIAL_EXCERPT : EXCERPT);
+
 function toSources(stories: Story[]): { sources: DispatchSource[]; excerpts: string[] } {
   // One report per outlet (its newest), richest excerpts first, at most six, then in publishing order.
   const byOutlet = new Map<string, Story>();
@@ -71,7 +76,7 @@ function toSources(stories: Story[]): { sources: DispatchSource[]; excerpts: str
     .sort((a, b) => a.publishedAt.localeCompare(b.publishedAt));
   return {
     sources: chosen.map((s, i) => ({ key: `s${i + 1}`, outlet: s.source, title: s.title, url: s.link, publishedAt: s.publishedAt, storyId: s.id, official: s.lab || s.gov, lang: s.lang })),
-    excerpts: chosen.map(s => (s.summary ?? "").slice(0, 900)),
+    excerpts: chosen.map(excerptOf),
   };
 }
 

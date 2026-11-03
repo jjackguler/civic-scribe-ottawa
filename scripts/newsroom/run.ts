@@ -201,6 +201,11 @@ async function main() {
     const desk = await loadNews();
     stories = desk.stories;
     log(`Newsroom: ${desk.stories.length} stories on the desk; writer ${models.model("writer")}, checks ${models.model("checker")}`);
+    // Official announcements with a feed excerpt too short to write from: read the announcing party's own page
+    // (robots.txt obeyed, capped, no paid calls) before the length bar in pick.ts applies. Third-party reporting is never fetched.
+    const { enrichOfficial } = await import("./fulltext");
+    const filled = await enrichOfficial(stories, { log });
+    log(`Full text: ${filled} official announcement(s) read from their own pages.`);
   }
   await loadGlossary();
   const directives = await loadDirectives();
