@@ -44,6 +44,59 @@ const CONNECTIVES = new Set(["alongside", "architecturally", "inside", "instead"
 const lowerConnectives = (s: string) => s.replace(/(^|[.!?]\s+)([A-Z][a-z]+)(?=\b)/g,
   (match, prefix: string, word: string) => CONNECTIVES.has(word.toLowerCase()) ? prefix + word.toLowerCase() : match);
 
+/**
+ * Ordinary sentence openers that carry no fact of their own: "-ly" adverbs
+ * ("Additionally", "Currently") and generic groups of people or things
+ * ("Users", "Developers"). Exempt only at the start of a sentence. Words that
+ * would invent an attribution ("Experts", "Critics", "Officials",
+ * "Researchers") stay out on purpose.
+ */
+const GENERIC = new Set((
+  "users people developers programmers residents consumers customers businesses companies organisations organizations " +
+  "workers employees parents children students teachers families readers creators artists citizens governments " +
+  "software tools models systems products services platforms ordinary everyday reporting further furthermore moreover " +
+  "overall elsewhere together"
+).split(" "));
+/**
+ * Sentence-opening adverbs, by name. Not every capitalised "-ly" word: surnames
+ * end that way too ("Connolly says…", "Reilly told…") and must be in the sources.
+ */
+const ADVERBS = new Set((
+  "additionally currently previously crucially notably importantly initially finally similarly separately specifically " +
+  "ultimately consequently accordingly alternatively essentially generally typically historically technically effectively " +
+  "eventually increasingly publicly officially originally practically primarily mainly largely partly fundamentally " +
+  "subsequently simultaneously conversely likewise secondly thirdly firstly lastly overall"
+).split(" "));
+// "Residents say…", "Users told…" would put words in people's mouths: those keep the capital and must be in the sources.
+const SPEAKS = /^\s+(?:\w+\s+)?(?:say|says|said|told|tell|claim\w*|warn\w*|argue\w*|believe\w*|complain\w*|fear\w*|worr\w*|report\w*|describe\w*|think|thinks|feel|feels|want|wants|demand\w*|criticis\w*|criticiz\w*|prais\w*|welcom\w*|object\w*|agree\w*|disagree\w*)\b/i;
+const lowerGenericStarts = (s: string) => s.replace(/(^|[.!?:;]\s+|\s[—–-]\s)([A-Z][a-z]+)(?=\b)/g,
+  (match, prefix: string, word: string, at: number, all: string) => {
+    const w = word.toLowerCase();
+    const adverb = ADVERBS.has(w);
+    if (!adverb && !(GENERIC.has(w) && !SPEAKS.test(all.slice(at + match.length, at + match.length + 40)))) return match;
+    return prefix + w;
+  });
+
+/** "AI-driven", "AI-assisted": an ordinary compound, not a name. */
+const lowerAiCompounds = (s: string) => s.replace(/\bAI-([a-z]+)\b/g, "ai-$1");
+
+/**
+ * A country and its adjective are the same fact: "Chinese" is supported by
+ * "China", "American" by "U.S.", "Canada" by "Ottawa" or "Canadian".
+ */
+const PLACES: string[][] = [
+  ["China", "Chinese"], ["America", "American", "Americans", "United States", "U.S.", "US"],
+  ["Canada", "Canadian", "Canadians", "Ottawa"], ["Europe", "European", "Europeans", "EU", "European Union"],
+  ["Britain", "British", "UK", "U.K.", "United Kingdom"], ["France", "French", "Paris"], ["Germany", "German"],
+  ["Japan", "Japanese"], ["India", "Indian"], ["Korea", "Korean", "South Korea", "South Korean"],
+  ["Australia", "Australian"], ["Taiwan", "Taiwanese"], ["Italy", "Italian"], ["Spain", "Spanish"],
+  ["Mexico", "Mexican"], ["Brazil", "Brazilian"], ["Quebec", "Québec", "Quebecer", "Québécois"],
+];
+const withPlaces = (src: string) => {
+  const extra = PLACES.filter(group => group.some(n => new RegExp(`(^|[^\\p{L}])${n.replace(/\./g, "\\.")}(?![\\p{L}])`, "u").test(src)));
+  return extra.length ? `${src}\n${extra.flat().join(". ")}.` : src;
+};
+
 /** French elisions ("l'", "d'", "qu'") hide the word after them; take them off so that word is checked. */
 const unElide = (s: string) => s.replace(/(^|[\s«“"(])(?:[LDJMNSTC]|Qu|Jusqu|Lorsqu|Puisqu)['’](?=\p{L})/giu, "$1");
 
@@ -52,11 +105,11 @@ const unOrdinal = (s: string) => s.replace(/(\d)(?:er|re|ère|e|es|ème|eme|nde?
 
 /** Names and numbers in `fields` that `sourceText` doesn't contain, plus any denial the sources don't make. Empty = passes. */
 export function factGuard(fields: string[], sourceText: string): string[] {
-  const src = unElide(sourceText);
+  const src = withPlaces(unElide(sourceText));
   const bad = new Set<string>();
   for (const f of fields) {
     if (!f) continue;
-    for (const w of unsupported(lowerConnectives(unOrdinal(unElide(stripAllMarkers(f)))), src, [...STARTERS, ...HOUSE])) bad.add(w);
+    for (const w of unsupported(lowerAiCompounds(lowerGenericStarts(lowerConnectives(unOrdinal(unElide(stripAllMarkers(f)))))), src, [...STARTERS, ...HOUSE])) bad.add(w);
   }
   for (const p of negationProblems(fields, sourceText)) bad.add(p);
   return [...bad];

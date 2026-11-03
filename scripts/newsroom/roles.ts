@@ -19,6 +19,11 @@ import type { Models } from "./models";
 import { alignFrench, mergeRewrite, shapeDraft, toRaw, type Draft, type RawDraft } from "./shape";
 import { draftFields, factGuard, overlapProblems, styleProblems } from "./guard";
 import type { LinkOption, Passage } from "./library";
+import { DEFAULT_DIRECTIVES, directivesPrompt, type Directives } from "./directives";
+
+/** The owner's directives for this run (newsroom/DIRECTIVES.md); run.ts sets them once. */
+let DIRECTIVES: Directives = DEFAULT_DIRECTIVES;
+export function useDirectives(d: Directives) { DIRECTIVES = d; }
 
 /**
  * Same house voice as src/lib/editorial.ts (HOUSE_VOICE), copied by hand
@@ -41,6 +46,12 @@ export type Event = {
   /** Each outlet's excerpt, aligned with `sources`. */
   excerpts: string[];
   background: (Passage & { key: string })[];
+  /** "canada" when any of its reports is about Canada (the owner's focus ranks these first). */
+  region?: "canada" | "world";
+  /** How many other outlets' reports were gathered because the first ones were too thin. */
+  gathered?: number;
+  /** Set for the morning roundup slot (several separate Canadian stories, one article). */
+  brief?: { title: { en: string; fr: string } };
 };
 
 export type Outcome<T> = { ok: true; value: T; note: RoleNote } | { ok: false; note: RoleNote };
@@ -65,7 +76,9 @@ export function publishedWords(iso: string | undefined): string {
 export function sourceText(e: Event, lang: "en" | "fr" | "both" = "both"): string {
   const reporting = e.sources.map((s, i) => `${s.outlet}: ${s.title}. ${e.excerpts[i] ?? ""} ${publishedWords(s.publishedAt)}`).join("\n");
   const bg = e.background.map(b => [lang !== "fr" ? b.text.en : "", lang !== "en" ? b.text.fr : "", b.title.en, b.title.fr].join(" ")).join("\n");
-  return `${reporting}\n${bg}`;
+  // The brief's own name ("Canadian AI Brief") is our label, not a fact from the reporting.
+  const label = e.brief ? `\n${e.brief.title.en}. ${e.brief.title.fr}.` : "";
+  return `${reporting}\n${bg}${label}`;
 }
 
 const sourcesFor = (e: Event) => e.sources.map((s, i) => ({
@@ -115,15 +128,27 @@ ${RULES}
 
 ${HOUSE_VOICE}`;
 
+/** The morning roundup: several separate Canadian stories in one article, each credited on its own. */
+export const briefPrompt = (t: { en: string }) => `
+
+This run is the morning "${t.en}" slot. The sources are SEVERAL SEPARATE Canadian AI stories, not one event. Write ONE roundup article in the shape above:
+- "headline": starts with "${t.en}: " and then names the most useful item for readers in Canada.
+- "article.news": one paragraph per item, most useful for readers in Canada first, 2-3 sentences each, each with its own [sN] marker. Credit each item to its outlet or the party announcing it.
+- "article.known": what each item confirms, claims (in the party's name) or leaves open. "article.matters": what the items mean for people in Canada, only as far as the sources say.
+- Never link the items to each other or suggest one caused another unless a source says so. One outlet alone never confirms a fact: use "claimed".
+- "thirty": one line each for the three most useful items.
+Return {"skip": true, "reason": "..."} only if fewer than three items have enough reporting for two sentences each.`;
+
 export async function reporter(m: Models, e: Event): Promise<Outcome<Draft>> {
-  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
+  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens, ...(e.brief ? { slot: e.brief.title.en } : {}) }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
   const shape = (raw: RawDraft | null) => shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
-  let d = shape(await m.json<RawDraft>("reporter", "writer", REPORTER, input, { id: e.id, attempt: 0 }, 6000));
+  const system = `${REPORTER}${e.brief ? briefPrompt(e.brief.title) : ""}${directivesPrompt(DIRECTIVES, "reporter")}`;
+  let d = shape(await m.json<RawDraft>("reporter", "writer", system, input, { id: e.id, attempt: 0 }, 6000));
   // A malformed reply (not a reasoned skip) gets one second try that says what was wrong: the smaller
   // fallback model usually fixes the envelope when told. Never after an infrastructure failure.
   if (typeof d === "string" && !d.startsWith("skip") && !m.failure) {
     const fix = `${input}\n\nYour previous reply could not be used (${d}). Return ONE complete JSON object with every field of the shape at the top level: "headline", "dek", "news", "thirty" (an array of exactly 3 strings), "confirmed", "claimed", "unknown", "matters", "article", "plain", "expert", "timeline". Or {"skip": true, "reason": "..."}.`;
-    d = shape(await m.json<RawDraft>("reporter", "writer", REPORTER, fix, { id: e.id, attempt: 1 }, 6000));
+    d = shape(await m.json<RawDraft>("reporter", "writer", system, fix, { id: e.id, attempt: 1 }, 6000));
   }
   if (typeof d === "string") return { ok: false, note: note("reporter", m.model("writer"), "fail", [d]) };
   return { ok: true, value: d, note: note("reporter", m.model("writer"), "done", [`${countWords(d.sections.flatMap(s => s.paras))} words`, `${d.sections.map(s => s.kind).join(" → ")}`]) };
@@ -157,7 +182,7 @@ export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome
   const first = copyProblems(d, e, "en");
   if (!first.facts.length && !first.style.length) return { ok: true, value: d, note: note("copy", "mechanical", "pass", ["fact guard: every name and number found in the sources", "house style: clean"]) };
   const problems = describe(first);
-  const raw = await m.json<RawDraft>("copy", "writer", COPY, JSON.stringify({ problems, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
+  const raw = await m.json<RawDraft>("copy", "writer", COPY + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
   const fixed = shapeDraft(mergeRewrite(raw, toRaw(d)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
   if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
   const again = copyProblems(fixed, e, "en");
@@ -189,7 +214,7 @@ ${HOUSE_VOICE}`;
 export async function standardsEditor(m: Models, e: Event, d: Draft): Promise<Outcome<null>> {
   const gate = editorialGate({ title: d.headline, summary: draftFields(d).join(" ") });
   if (!gate.ok) return { ok: false, note: note("standards", "mechanical", "fail", [`${gate.reason} (editorialGate)`]) };
-  const r = await m.json<{ pass?: unknown; reasons?: unknown; notes?: unknown }>("standards", "checker", STANDARDS, JSON.stringify({ article: toRaw(d), sources: sourcesFor(e) }), { id: e.id, attempt: 0 }, 1200);
+  const r = await m.json<{ pass?: unknown; reasons?: unknown; notes?: unknown }>("standards", "checker", STANDARDS + directivesPrompt(DIRECTIVES, "standards"), JSON.stringify({ article: toRaw(d), sources: sourcesFor(e) }), { id: e.id, attempt: 0 }, 1200);
   if (!r || typeof r.pass !== "boolean") return { ok: false, note: note("standards", m.model("checker"), "fail", ["no verdict from the standards desk"]) };
   const list = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string").map(x => x.slice(0, 300)) : []);
   if (!r.pass) return { ok: false, note: note("standards", m.model("checker"), "fail", list(r.reasons).length ? list(r.reasons) : ["failed without a reason"]) };
@@ -211,7 +236,8 @@ export async function translator(m: Models, e: Event, en: Draft): Promise<Outcom
   const notes: string[] = [];
   for (let attempt = 0; attempt < 2; attempt++) {
     const retry = bad.length ? `\n\nA previous French version was rejected: ${bad.slice(0, 14).join("; ")}. Fix exactly that.` : "";
-    const raw = await m.json<RawDraft>("translator", "writer", TRANSLATOR, JSON.stringify({ english: toRaw(en), sources: sourcesFor(e), background: backgroundFor(e, "fr") }) + retry, { id: e.id, attempt }, 7000);
+    const brief = e.brief ? `\n- This is the morning roundup: the French headline starts with "${e.brief.title.fr} : ".` : "";
+    const raw = await m.json<RawDraft>("translator", "writer", TRANSLATOR + brief + directivesPrompt(DIRECTIVES, "translator"), JSON.stringify({ english: toRaw(en), sources: sourcesFor(e), background: backgroundFor(e, "fr") }) + retry, { id: e.id, attempt }, 7000);
     const fr = shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
     if (typeof fr === "string") { bad = [`shape: ${fr}`]; notes.push(`attempt ${attempt + 1}: ${fr}`); continue; }
     const misaligned = alignFrench(fr, en);

@@ -72,7 +72,18 @@ const g = globalThis as unknown as {
   __mwDiag?: { startedAt?: string; finishedAt?: string; result?: string; error?: string; saved?: string };
   __ogCache?: Map<string, string | null>;
   __mwSrc?: Map<string, SourceCache>;
+  __mwExcerptMax?: number;
 };
+
+/**
+ * The newsroom (a GitHub Action, never the public site) reads each feed's
+ * fullest text so the reporter has enough reporting to write from. Nothing
+ * from this mode is displayed: it skips the shared snapshot and the site's
+ * display rules only decide what readers see, not what our reporter reads.
+ */
+export function useNewsroomExcerpts(max = 1500) {
+  g.__mwExcerptMax = max;
+}
 
 // ── shared snapshot (see shared-cache.ts) ───────────────────────────────────
 const SNAPSHOT_KEY = "desk:v1";
@@ -96,6 +107,7 @@ async function hydrate(): Promise<void> {
 }
 
 function saveSnapshot(payload: NewsPayload) {
+  if (g.__mwExcerptMax) return; // newsroom-only reading never reaches the site's shared desk
   const og = [...(g.__ogCache ?? new Map()).entries()].slice(-600);
   sharedWrite(SNAPSHOT_KEY, { ts: Date.now(), payload, sources: [...(g.__mwSrc ?? new Map()).entries()], og } satisfies Snapshot, SNAPSHOT_MAX_AGE_S);
 }
@@ -176,7 +188,10 @@ export function parseFeed(xml: string, src: NewsSource): Story[] {
     if (!/^https?:\/\//.test(link)) continue;
     if (src.linkRewrite && link.startsWith(src.linkRewrite[0])) link = src.linkRewrite[1] + link.slice(src.linkRewrite[0].length);
 
-    const summary = truncate(stripTags(raw(b, "description") || raw(b, "summary") || raw(b, "content")));
+    const excerptMax = g.__mwExcerptMax;
+    const summary = excerptMax
+      ? truncate(["content:encoded", "content", "description", "summary"].map(n => stripTags(raw(b, n))).reduce((a, x) => x.length > a.length ? x : a, ""), excerptMax)
+      : truncate(stripTags(raw(b, "description") || raw(b, "summary") || raw(b, "content")));
     const text = `${title} ${summary}`;
     const aboutAi = src.aiOnly || AI_RE.test(text);
     if (!aboutAi && !src.beat) continue;
@@ -192,7 +207,7 @@ export function parseFeed(xml: string, src: NewsSource): Story[] {
     out.push({
       id: hash(link),
       title,
-      summary: !full || summary === title ? "" : summary,
+      summary: summary === title || (!full && !excerptMax) ? "" : summary,
       link,
       source: src.name,
       sourceId: src.id,
@@ -529,7 +544,7 @@ export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
 }
 
 export async function loadNews(): Promise<NewsPayload> {
-  if (!g.__mwNews) await hydrate().catch(() => {});
+  if (!g.__mwNews && !g.__mwExcerptMax) await hydrate().catch(() => {});
   const cached = g.__mwNews;
   if (cached && Date.now() - cached.ts < CACHE_MS) return cached.payload;
   // Stale but present: answer now and refresh in the background — when the

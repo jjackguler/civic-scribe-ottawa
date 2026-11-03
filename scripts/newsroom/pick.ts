@@ -18,6 +18,7 @@ import { editorialGate, humanLens } from "../../src/lib/editorial";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 import { pickBackground } from "./library";
 import type { Event } from "./roles";
+import { DEFAULT_DIRECTIVES, bannedBy, focusHits, torontoClock, type Directives } from "./directives";
 
 export type Seen = { ids: Set<string>; storyIds: Set<string>; killed: Set<string>; rejectedAt: Map<string, string> };
 export type Skip = { id: string; title: string; why: string };
@@ -30,6 +31,12 @@ const sharedWords = (a: string, b: string) => { const A = words(a); return [...w
 const titleWords = (t: string) => new Set([...words(t)].filter(w => !["model", "models", "company", "companies"].includes(w)));
 const sharedTitleWords = (a: string, b: string) => { const A = titleWords(a); return [...titleWords(b)].filter(w => A.has(w)).length; };
 const REJECT_COOLDOWN_MS = 72 * 3600_000;
+const RUMOUR = /\b(reportedly|rumou?rs?|leak(ed|s)?|sources say|could be|might be|rumeur|selon des sources)\b/i;
+/** Same event, by the rule splitForReporting uses: three title words, or one title word and five words of headline plus excerpt. */
+const sameEvent = (a: Story, b: Story) => sharedTitleWords(a.title, b.title) >= 3 ||
+  (sharedTitleWords(a.title, b.title) >= 1 && sharedWords(`${a.title} ${a.summary ?? ""}`, `${b.title} ${b.summary ?? ""}`) >= 5);
+/** Two or more outlets: one sentence each can't carry an article (the reporter skipped those, at a paid call each). */
+const MULTI_MIN = 400;
 
 /** Split transitive desk clusters before using them as evidence for one article.
  * Every included report must match the lead directly, not merely another
@@ -78,14 +85,35 @@ function toEvent(id: string, lead: Story, stories: Story[]): Event {
     sources,
     excerpts,
     background: pickBackground(text).map((p, i) => ({ ...p, key: `b${i + 1}` })),
+    region: stories.some(s => s.region === "canada") ? "canada" : "world",
   };
 }
 
-/** Events worth writing now, best first, plus why the others were passed over. */
-export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { events: Event[]; skipped: Skip[] } {
+/**
+ * Events worth writing now, best first, plus why the others were passed over.
+ * The owner's directives (newsroom/DIRECTIVES.md) add banned topics, skipped
+ * here before any paid call, and focus topics: Canadian stories first, then
+ * stories on a focus topic, then the usual order.
+ */
+export function pickEvents(stories: Story[], seen: Seen, now = Date.now(), d: Directives = DEFAULT_DIRECTIVES): { events: Event[]; skipped: Skip[] } {
   const events: Event[] = [];
   const skipped: Skip[] = [];
   const fresh = (iso: string) => now - new Date(iso).getTime() < HOURS * 3600_000;
+  const used = new Set<string>();
+  const textOf = (group: Story[]) => group.map(s => `${s.title} ${s.summary ?? ""}`).join(" ");
+  const fitForGroup = (s: Story) => fresh(s.publishedAt) && s.kind !== "trending" && !seen.storyIds.has(s.id) && !used.has(s.id) &&
+    editorialGate({ title: s.title, summary: s.summary }).ok && !upsettingReasons(`${s.title} ${s.summary ?? ""}`).length && !bannedBy(`${s.title} ${s.summary ?? ""}`, d) && !RUMOUR.test(`${s.title} ${s.summary ?? ""}`);
+  /** Before giving up on thin reporting: other outlets' reports of the same event, from the whole desk (government releases too). */
+  const gather = (lead: Story, group: Story[]) => {
+    const outlets = new Set(group.map(s => s.source));
+    const more: Story[] = [];
+    for (const s of stories) {
+      if (outlets.size >= 6) break;
+      if (outlets.has(s.source) || group.includes(s) || !fitForGroup(s) || !sameEvent(lead, s)) continue;
+      more.push(s); outlets.add(s.source);
+    }
+    return more;
+  };
 
   const covered = (id: string, group: Story[]) => {
     if (seen.ids.has(id) || seen.killed.has(id)) return "already written";
@@ -98,13 +126,28 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
   const consider = (id: string, lead: Story, group: Story[], minChars: number) => {
     const gate = editorialGate({ title: lead.title, summary: lead.summary });
     if (!gate.ok) return skipped.push({ id, title: lead.title, why: `charter gate (${gate.reason})` });
-    const upset = upsettingReasons(group.map(s => `${s.title} ${s.summary ?? ""}`).join(" "));
+    const upset = upsettingReasons(textOf(group));
     if (upset.length) return skipped.push({ id, title: lead.title, why: `house rule, could upset or harm people (${upset.join(", ")})` });
+    const banned = bannedBy(textOf(group), d);
+    if (banned) return skipped.push({ id, title: lead.title, why: `owner's directives, banned topic (${banned})` });
     const why = covered(id, group);
     if (why) return skipped.push({ id, title: lead.title, why });
-    const chars = group.reduce((t, s) => t + (s.summary?.length ?? 0), 0);
-    if (chars < minChars) return skipped.push({ id, title: lead.title, why: `too little reporting to write from (${chars} characters of excerpts)` });
-    events.push(toEvent(id, lead, group));
+    if (group.some(s => used.has(s.id))) return skipped.push({ id, title: lead.title, why: "already part of another event in this run" });
+    const chars = (g: Story[]) => g.reduce((t, s) => t + (s.summary?.length ?? 0), 0);
+    let all = group;
+    // Once two or more outlets carry the event, the multi-outlet bar applies; a lone report must carry the article alone.
+    const need = (g: Story[]) => new Set(g.map(s => s.source)).size >= 2 ? Math.min(minChars, MULTI_MIN) : minChars;
+    let gathered = 0;
+    if (chars(all) < need(all)) {
+      const more = gather(lead, all);
+      gathered = more.length;
+      all = [...all, ...more];
+    }
+    if (chars(all) < need(all)) return skipped.push({ id, title: lead.title, why: `too little reporting to write from (${chars(all)} characters of excerpts from ${new Set(all.map(s => s.source)).size} outlet(s)${gathered ? `, after gathering ${gathered} more` : ", no other outlet found"}; needs ${need(all)})` });
+    for (const s of all) used.add(s.id);
+    const e = toEvent(id, lead, all);
+    if (gathered) e.gathered = gathered;
+    events.push(e);
   };
 
   const clusters: Cluster[] = splitForReporting(clusterStories(stories, HOURS));
@@ -117,7 +160,7 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
     if (c) { c.stories.push(s); joined.add(s.id); }
   }
   // 1. Events two or more outlets report, most-covered first (cluster order).
-  for (const c of clusters) if (c.sources >= 2) consider(c.id, c.lead, c.stories, 240);
+  for (const c of clusters) if (c.sources >= 2) consider(c.id, c.lead, c.stories, MULTI_MIN);
   // 2. Official announcements: a lab announcing its own news (in the clusters) or a government release. Newest first.
   const official = [
     ...clusters.filter(c => c.sources === 1 && c.lead.lab).map(c => ({ id: c.id, lead: c.lead, group: c.stories })),
@@ -127,11 +170,59 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now()): { ev
   for (const o of official) consider(o.id, o.lead, o.group, 600);
   // 3. One newsroom's own detailed report (owner's decision, 2026-10-17): written with that outlet named as the source.
   //    Never trending links, and never rumours, leaks or "reportedly" stories; thin excerpts can't carry an article.
-  const RUMOUR = /\b(reportedly|rumou?rs?|leak(ed|s)?|sources say|could be|might be|rumeur|selon des sources)\b/i;
   for (const c of clusters) if (c.sources === 1 && !c.lead.lab) {
     if (c.lead.kind === "trending") skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, a trending link" });
     else if (RUMOUR.test(`${c.lead.title} ${c.lead.summary ?? ""}`)) skipped.push({ id: c.id, title: c.lead.title, why: "single outlet, rumour or leak" });
     else consider(c.id, c.lead, c.stories, 450);
   }
-  return { events, skipped };
+  // The owner's focus: Canadian stories first, then a focus topic; ties keep the order above (most-covered first).
+  const score = (e: Event) => (e.region === "canada" ? 2 : 0) + (focusHits(e.sources.map((s, i) => `${s.title} ${e.excerpts[i] ?? ""}`).join(" "), d).length ? 1 : 0);
+  const ranked = events.map((e, i) => ({ e, i, s: score(e) })).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.e);
+  return { events: ranked, skipped };
+}
+
+export const briefId = (torontoDate: string) => `brief-${torontoDate}`;
+
+/**
+ * The morning Canadian AI Brief (owner's directives): once a day, in the first
+ * run inside the window (Toronto time), a roundup of separate Canadian AI
+ * stories, one per event, each with enough reporting for two sentences. The
+ * same desks write and check it. Never a story the house rules, the charter
+ * gate or the owner's banned topics keep off the site, never a rumour.
+ */
+export function pickBrief(stories: Story[], seen: Seen, now = Date.now(), d: Directives = DEFAULT_DIRECTIVES): { event: Event | null; why: string } {
+  if (!d.brief.on) return { event: null, why: "switched off in the directives" };
+  const { hour, date } = torontoClock(now);
+  const window = `${d.brief.fromHour}:00-${d.brief.toHour}:00 Toronto`;
+  if (hour < d.brief.fromHour || hour >= d.brief.toHour) return { event: null, why: `outside its window (${window})` };
+  const id = briefId(date);
+  if (seen.ids.has(id) || seen.killed.has(id)) return { event: null, why: "already published today" };
+  if (seen.rejectedAt.has(id)) return { event: null, why: "turned down earlier today (see log/rejected.json)" };
+  const text = (s: Story) => `${s.title} ${s.summary ?? ""}`;
+  const pool = stories
+    .filter(s => s.region === "canada" && s.kind !== "trending" && now - new Date(s.publishedAt).getTime() < HOURS * 3600_000)
+    .filter(s => !seen.storyIds.has(s.id) && (s.summary?.length ?? 0) >= 120)
+    .filter(s => editorialGate({ title: s.title, summary: s.summary }).ok && !upsettingReasons(text(s)).length && !bannedBy(text(s), d) && !RUMOUR.test(text(s)))
+    // Focus topics first, then the richest reporting, then the newest.
+    .sort((a, b) => focusHits(text(b), d).length - focusHits(text(a), d).length || (b.summary?.length ?? 0) - (a.summary?.length ?? 0) || b.publishedAt.localeCompare(a.publishedAt));
+  const chosen: Story[] = [];
+  for (const s of pool) {
+    if (chosen.length >= d.brief.maxStories) break;
+    if (!chosen.some(c => c.link === s.link || sameEvent(c, s))) chosen.push(s);
+  }
+  if (chosen.length < d.brief.minStories) return { event: null, why: `only ${chosen.length} separate Canadian stor${chosen.length === 1 ? "y" : "ies"} with enough reporting (needs ${d.brief.minStories})` };
+  chosen.sort((a, b) => a.publishedAt.localeCompare(b.publishedAt));
+  const sources: DispatchSource[] = chosen.map((s, i) => ({ key: `s${i + 1}`, outlet: s.source, title: s.title, url: s.link, publishedAt: s.publishedAt, storyId: s.id, official: s.lab || s.gov, lang: s.lang }));
+  const excerpts = chosen.map(s => (s.summary ?? "").slice(0, 900));
+  const all = chosen.map(text).join("\n");
+  const topics = chosen.map(s => s.topic);
+  const topic = topics.sort((a, b) => topics.filter(t => t === b).length - topics.filter(t => t === a).length)[0] ?? "policy";
+  return {
+    event: {
+      id, topic, lens: humanLens({ title: chosen[0].title, summary: all }), sources, excerpts,
+      background: pickBackground(all).map((p, i) => ({ ...p, key: `b${i + 1}` })),
+      region: "canada", brief: { title: d.brief.title },
+    },
+    why: `${chosen.length} Canadian stories`,
+  };
 }
