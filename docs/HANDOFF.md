@@ -66,6 +66,12 @@ directives file, morning Canadian AI Brief, Output watch issue).
   skipped; Output watch also opens one issue, "Output watch: nothing published", when it fails, and
   closes it when output is back. Newsroom cron moved to :11 and :41 (GitHub was dropping most
   :00/:30 runs).
+- Unblocked 3 Nov (after run 41638633098 published nothing): the fact guard lets ordinary dictionary
+  words start a sentence ("Falling", "Hardware") and standard acronyms ("LLMs", "GPUs") through, but
+  still rejects invented names and numbers. Official announcements (labs, companies, governments)
+  whose feed excerpt is under 600 characters are read from their own page (`scripts/newsroom/fulltext.ts`:
+  own site only, robots.txt obeyed, 8 pages and 60 s per run, no paid calls). Third-party reporting is
+  never fetched; its bar is unchanged.
 
 ## Generative imagery withdrawn (29 Oct 2026)
 - Owner decision: the three Sir Jack special editions made with Google Flow / Veo (Twenty-Three
