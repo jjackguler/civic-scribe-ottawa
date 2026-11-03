@@ -6,6 +6,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { getOriginalsFast } from "@/lib/originals";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
+import { deskLabel, deskOfOriginal } from "@/lib/desks";
 import { caseName, isSirJack, originalPublishable, originalSection, videoLd, videoSlug, type Original } from "@/lib/originals-types";
 import { seoHead, publisherRef } from "@/lib/seo";
 
@@ -59,6 +60,8 @@ function VideoPage() {
           {jack
             ? <Link to="/sir-jack" className="text-lake hover:underline">{fr ? "Les dossiers Sir Jack" : "The Sir Jack Files"}</Link>
             : <Link to="/originals" className="text-lake hover:underline">{fr ? "Explicatifs" : "Explainers"}</Link>}
+          {/* Its desk: one of the five, never a new one (desks.ts). */}
+          {" · "}<Link to="/news" search={{ section: deskOfOriginal(o) }} className="text-lake hover:underline">{deskLabel(deskOfOriginal(o), locale)}</Link>
           {" · "}<time dateTime={o.publishedAt}>{date}</time>{" · "}{mmss(o.durationSec)}
         </p>
         <h1 className="masthead-serif text-[2.2rem] sm:text-[3rem] leading-[1.05] mt-2">{o.title}</h1>

@@ -6,7 +6,9 @@
  */
 import assert from "node:assert/strict";
 import { killedIds, slugify, uniqueSlug, isKilled } from "../../src/lib/newsroom-types";
-import { factGuard, overlapProblems } from "./guard";
+import { factGuard, overlapProblems, OWN_REPORTING } from "./guard";
+import { DESK_IDS, deskOf, deskOfOriginal, deskOfSummary, deskOfTopic, legacySectionDesk } from "../../src/lib/desks";
+import { originalSection } from "../../src/lib/originals-types";
 import { mergeRewrite, shapeDraft, unwrapDraft, type Draft } from "./shape";
 import { editorialGate } from "../../src/lib/editorial";
 import { upsettingReasons } from "./upsetting";
@@ -345,6 +347,36 @@ test("the brief never includes a story the house rules turn down", () => {
   const extra = ca("b5", "Police charge man over AI deepfake scheme in Toronto", "Police charged a man over a deepfake scheme.");
   const r = pickBrief([...CANADA, extra], SEEN(), MORNING, DIR);
   assert.ok(r.event && !r.event.sources.some(s => s.storyId === "b5"));
+});
+test("a summary never claims the outlets' reporting as ours", () => {
+  for (const bad of ["We learned that the model ships in May.", "According to our reporting, the lab hired 40 people.", "AI Broadsheet has confirmed the deal.", "Notre reportage montre que le projet avance.", "Nous avons appris que le laboratoire ferme."])
+    assert.ok(OWN_REPORTING.test(bad), bad);
+  for (const ok of ["TechCrunch reported that the model ships in May [s1].", "Our guide explains how to change the setting [b1].", "La Presse rapporte que le projet avance [s1]."])
+    assert.ok(!OWN_REPORTING.test(ok), ok);
+});
+const deskStory = (p: Partial<Story>): Story => ({ id: "x", title: "", summary: "", link: "", source: "S", sourceId: "s", region: "world", topic: "applications", tags: ["applications"], lang: "en", publishedAt: "2026-11-01T00:00:00Z", image: null, kind: "news", gov: false, lab: false, level: null, minister: false, ...p });
+test("every story maps to one of the five desks, Canada first, World as the fallback", () => {
+  assert.equal(deskOf(deskStory({ region: "canada", tags: ["policy"], topic: "policy" })), "canada");
+  assert.equal(deskOf(deskStory({ title: "EU regulators open privacy probe into chatbot", tags: ["policy"], topic: "policy" })), "rights");
+  assert.equal(deskOf(deskStory({ title: "Hospitals test a new cancer screening model", tags: ["health"], topic: "health" })), "science");
+  assert.equal(deskOf(deskStory({ title: "Chipmaker posts record quarter", tags: ["infrastructure"], topic: "infrastructure" })), "world");
+  assert.ok(DESK_IDS.includes(deskOf(deskStory({ topic: "brand-new-beat" as never, tags: ["brand-new-beat" as never] }))));
+});
+test("unknown topics and old sections never create a desk", () => {
+  assert.equal(deskOfTopic("quantum-gardening"), "world");
+  assert.equal(deskOfTopic(""), "world");
+  assert.equal(legacySectionDesk("policy"), "rights");
+  assert.equal(legacySectionDesk("labs"), "science");
+  assert.equal(legacySectionDesk("people"), "work");
+  assert.equal(legacySectionDesk("ministry"), "canada");
+  assert.equal(legacySectionDesk("not-a-section"), undefined);
+});
+test("newsroom summaries and videos map to a desk", () => {
+  assert.equal(deskOfSummary({ topic: "business", en: { headline: "Ottawa startup raises $20 million for farm robots", dek: "" } }), "canada");
+  assert.equal(deskOfSummary({ topic: "policy", en: { headline: "Lawmakers in Brussels vote on model rules", dek: "" } }), "rights");
+  assert.equal(deskOfSummary({ topic: "made-up", en: { headline: "A company ships a faster laptop", dek: "" } }), "world");
+  assert.ok(DESK_IDS.includes(deskOfOriginal({ title: "The Sir Jack Files #14: The Quiet Room", summary: "" })));
+  assert.equal(originalSection({ id: "x-1", section: "philosophy" as never }), "news");
 });
 console.log(`\n${passed} passed, ${failures.length} failed`);
 process.exit(failures.length ? 1 : 0);

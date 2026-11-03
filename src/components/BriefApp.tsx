@@ -41,6 +41,7 @@ import {
 } from "@/lib/brief-feed";
 import { localePath } from "@/lib/seo";
 import { SITE } from "@/lib/site";
+import { DESKS } from "@/lib/desks";
 
 import {
   BRIEF_PREFS_KEY,
@@ -812,10 +813,8 @@ export function BriefApp({ initial, initialStory }: Props) {
                 <div className="brief-topic-grid">
                   {[
                     t("AI literacy", "Culture IA"),
-                    "agents",
-                    "research",
-                    "business",
-                    "responsible",
+                    // The five desks: the only topics there are (desks.ts).
+                    ...DESKS.map((d) => d.label[locale]),
                     "Originals",
                   ].map((topic) => (
                     <button

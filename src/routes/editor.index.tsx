@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageIntro } from "@/components/PageShell";
 import { EDITORIALS, formatDate } from "@/lib/editorials";
+import { BOOKS } from "@/lib/books";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -37,6 +38,28 @@ function EditorIndex() {
             </li>
           ))}
         </ul>
+
+        {/* The editor's own books: disclosed as his, kept off the news pages. */}
+        <section id="books" aria-labelledby="books-h" className="mt-14 max-w-4xl scroll-mt-24">
+          <h2 id="books-h" className="masthead-serif text-[1.9rem] leading-tight">{locale === "fr" ? "Livres de l'éditeur" : "Books by the editor"}</h2>
+          <p className="dek mt-1">{locale === "fr"
+            ? `Écrits par ${SITE.editor.name}, l'éditeur d'AI Broadsheet. Nous les présentons parce qu'ils sont de lui, pas comme une publicité.`
+            : `Written by ${SITE.editor.name}, AI Broadsheet's editor. Listed here because they are his, not as advertising.`}</p>
+          <ul className="mt-5 grid gap-5">
+            {BOOKS.map(b => (
+              <li key={b.slug}>
+                <Link to="/books/$slug" params={{ slug: b.slug }} className="group grid grid-cols-[96px_minmax(0,1fr)] sm:grid-cols-[120px_minmax(0,1fr)] gap-5 items-start bg-surface border border-line p-4 sm:p-5 hover:border-night">
+                  <img src={b.cover.src} width={b.cover.width} height={b.cover.height} alt="" loading="lazy" decoding="async" className="w-full h-auto ring-1 ring-line" />
+                  <span className="min-w-0">
+                    <span className="block hl text-[1.5rem] group-hover:text-lake">{b.title}</span>
+                    <span className="block font-serif italic text-[1.08rem] text-ink/85 mt-0.5">{b.subtitle}</span>
+                    <span className="block meta mt-2">{b.author} · {pick(b.format)}, {b.pages} pages · {b.published.slice(0, 4)}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </PageShell>
   );

@@ -17,30 +17,13 @@
  */
 import type { Story } from "./news-engine";
 import type { Dispatch } from "./dispatch-types";
-import type { Topic } from "./news-sources";
+import { DESKS, deskOf, inDesk, type DeskId } from "./desks";
 import { clusterStories, isFrontPool, type Cluster } from "./cluster";
 import { keepAlive, sharedRead, sharedWrite } from "./shared-cache";
 import { QUIZ_LENGTH, SENSITIVE, quizDay, rng, seedOf, shuffle, type DailyQuiz, type QuizQ } from "./youth-core";
 
 type Pair = { en: QuizQ; fr: QuizQ; storyIds: string[] };
 
-const DESK: Record<Topic, { en: string; fr: string }> = {
-  agents: { en: "AI assistants & agents", fr: "Assistants et agents IA" },
-  applications: { en: "Applications", fr: "Applications" },
-  immersive: { en: "AR, VR & immersive", fr: "RA, RV et immersif" },
-  data: { en: "Data & analytics", fr: "Données et analytique" },
-  infrastructure: { en: "Infrastructure & chips", fr: "Infrastructures et puces" },
-  research: { en: "Machine learning & research", fr: "Apprentissage automatique et recherche" },
-  people: { en: "People & skills", fr: "Personnes et compétences" },
-  responsible: { en: "Responsible AI", fr: "IA responsable" },
-  policy: { en: "Policy & regulation", fr: "Politiques et réglementation" },
-  business: { en: "Business & funding", fr: "Affaires et financement" },
-  sustainability: { en: "Sustainability", fr: "Durabilité" },
-  robotics: { en: "Robotics", fr: "Robotique" },
-  health: { en: "Health & science", fr: "Santé et sciences" },
-  tech: { en: "Technology", fr: "Technologie" },
-  society: { en: "Mind & society", fr: "Esprit et société" },
-};
 
 const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’‘]/g, "'").replace(/[“”«»]/g, '"').replace(/\s+/g, " ").trim();
 const listOf = (xs: string[], fr: boolean) => xs.length <= 1 ? xs.join("") : `${xs.slice(0, -1).join(", ")} ${fr ? "et" : "and"} ${xs[xs.length - 1]}`;
@@ -175,17 +158,19 @@ function ledgerQ(ctx: Ctx, d: Dispatch): Pair | null {
 }
 
 function deskQ(ctx: Ctx, s: Story): Pair | null {
-  const right = s.topic;
-  const wrong = shuffle((Object.keys(DESK) as Topic[]).filter(t => !(s.tags ?? [s.topic]).includes(t)), ctx.rand).slice(0, 3);
+  // The five desks (desks.ts): the story's home desk, and three it is not on.
+  const right = deskOf(s);
+  const wrong = shuffle(DESKS.map(d => d.id).filter(id => id !== right && !inDesk(s, id)), ctx.rand).slice(0, 3);
   if (wrong.length < 3) return null;
-  const order = shuffle([right, ...wrong], ctx.rand);
+  const order: DeskId[] = shuffle([right, ...wrong], ctx.rand);
+  const label = (id: DeskId) => DESKS.find(d => d.id === id)!.label;
   const base = { kind: "desk" as const, quote: s.title, quoteLang: s.lang, answer: order.indexOf(right), link: storyLink(s) };
   return {
     storyIds: [s.id],
-    en: { ...base, id: `d-${s.id}`, options: order.map(t => DESK[t].en), prompt: "Which desk is this story filed under on AI Broadsheet?", linkLabel: "Read the story",
-      explain: `It's on the ${DESK[right].en} desk. We file every story by its subject, the way a newsroom does.` },
-    fr: { ...base, id: `d-${s.id}`, options: order.map(t => DESK[t].fr), prompt: "Dans quelle section d'AI Broadsheet cette nouvelle est-elle classée?", linkLabel: "Lire la nouvelle",
-      explain: `Elle est dans la section ${DESK[right].fr}. Chaque nouvelle est classée par sujet, comme dans une salle de rédaction.` },
+    en: { ...base, id: `d-${s.id}`, options: order.map(t => label(t).en), prompt: "Which desk is this story filed under on AI Broadsheet?", linkLabel: "Read the story",
+      explain: `It's on the ${label(right).en} desk. Every story is filed to one of five desks, Canada first.` },
+    fr: { ...base, id: `d-${s.id}`, options: order.map(t => label(t).fr), prompt: "Dans quelle section d'AI Broadsheet cette nouvelle est-elle classée?", linkLabel: "Lire la nouvelle",
+      explain: `Elle est dans la section ${label(right).fr}. Chaque nouvelle est classée dans l'une de cinq sections, le Canada d'abord.` },
   };
 }
 

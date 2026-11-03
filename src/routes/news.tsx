@@ -1,20 +1,30 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageShell, PageIntro } from "@/components/PageShell";
 import { StoryCard } from "@/components/StoryCard";
-import { getAiNewsFast, useAiNews, byLocale, diversify, SECTIONS, DESKS, inSection, isFrontPool, timeAgo, useNow, type SectionId } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, SECTIONS, DESKS, inSection, isFrontPool, timeAgo, useNow, isDeskId, legacySectionDesk, type SectionId } from "@/lib/news";
 import { AdSlot } from "@/components/AdSlot";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { seoHead } from "@/lib/seo";
 
+/** `section` is one of the five desks; anything else is redirected in beforeLoad. */
 type Search = { section?: SectionId };
 
 export const Route = createFileRoute("/news")({
   validateSearch: (s: Record<string, unknown>): Search => {
     const v = s.section ?? s.topic;
-    return { section: typeof v === "string" && SECTIONS.some(x => x.id === v) ? (v as SectionId) : undefined };
+    // Old topic and section ids (policy, labs, analysis, …) are kept as given here and moved to their desk below.
+    return { section: typeof v === "string" && v ? (v as SectionId) : undefined };
+  },
+  // The site has five desks and no other sections: an old section link answers 301 with its parent desk,
+  // and an id that was never a section lands on the full feed.
+  beforeLoad: ({ search }) => {
+    const v = search.section;
+    if (v === undefined || isDeskId(v)) return;
+    const desk = legacySectionDesk(v);
+    throw redirect({ to: "/news", search: desk ? { section: desk } : {}, statusCode: 301 });
   },
   loader: () => getAiNewsFast(),
   head: ({ match }) => {
@@ -59,8 +69,8 @@ function NewsPage() {
       >
         <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Sections">
           <Link to="/news" search={{}} className={chip(!section)}>{t("all", locale)}</Link>
-          {/* The five desks; an older topic link still gets its own chip while it is open. */}
-          {[...DESKS, ...(current && !DESKS.some(d => d.id === current.id) ? [current] : [])].map(x => (
+          {/* The five desks, always the same five. */}
+          {DESKS.map(x => (
             <Link key={x.id} to="/news" search={{ section: x.id }} className={chip(section === x.id)}>{pick(x.label)}</Link>
           ))}
         </div>

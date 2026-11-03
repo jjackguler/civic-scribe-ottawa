@@ -7,7 +7,8 @@
 import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { NewsroomArticleView } from "@/components/NewsroomArticle";
-import { getArticlePage, fixtureArticlePage, articleOgImage, BYLINE, FORMAT_LABEL, TOPIC_KICKER, stripAllMarkers, type ArticlePage, type NewsroomArticle } from "@/lib/newsroom";
+import { getArticlePage, fixtureArticlePage, articleOgImage, stripAllMarkers, type ArticlePage, type NewsroomArticle } from "@/lib/newsroom";
+import { deskLabel, deskOfSummary } from "@/lib/desks";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, publisherRef, absUrl, localeOf } from "@/lib/seo";
@@ -26,8 +27,11 @@ function articleLd(a: NewsroomArticle, l: Locale, url: string): unknown[] {
   const body = c.sections.flatMap(s => s.paras).map(stripAllMarkers).join("\n\n");
   const out: unknown[] = [{
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
+    // A summary of other outlets' reporting, so an Article (not a NewsArticle: the reporting is not ours),
+    // with no author: the outlets in isBasedOn and citation did the reporting.
+    "@type": "Article",
     "@id": `${url}#article`,
+    genre: l === "fr" ? "Résumé de la rédaction" : "Newsroom summary",
     headline: c.headline.slice(0, 110),
     alternativeHeadline: c.seoTitle,
     description: c.metaDescription,
@@ -35,21 +39,19 @@ function articleLd(a: NewsroomArticle, l: Locale, url: string): unknown[] {
     articleBody: body,
     wordCount: a.words[l],
     keywords: c.keywords.join(", "),
-    articleSection: TOPIC_KICKER[a.topic]?.[l] ?? FORMAT_LABEL[a.format][l],
+    articleSection: deskLabel(deskOfSummary(a), l),
     url,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     datePublished: a.createdAt,
     dateModified: a.updatedAt,
     inLanguage: l === "fr" ? "fr-CA" : "en-CA",
     image: [articleOgImage(a)],
-    // Our newsroom wrote it, with AI, from these outlets' reporting (each one cited and linked).
-    author: { "@type": "Organization", name: BYLINE[l], url: absUrl("/standards", l) + "#newsroom" },
     publisher: publisherRef,
     isAccessibleForFree: true,
     isBasedOn: a.sources.map(s => s.url),
     citation: a.sources.map(s => ({ "@type": "NewsArticle", headline: s.title, url: s.url, datePublished: s.publishedAt, publisher: { "@type": "Organization", name: s.outlet } })),
     publishingPrinciples: absUrl("/standards", l),
-    creditText: l === "fr" ? `Écrit avec l'IA par notre salle de rédaction, d'après les reportages de ${outlets}` : `Written with AI by our newsroom, from reporting by ${outlets}`,
+    creditText: l === "fr" ? `Résumé de la rédaction, rédigé avec l'IA, des reportages de ${outlets}` : `Newsroom summary, written with AI, of reporting by ${outlets}`,
   }];
   if (c.faq.length) {
     out.push({
@@ -65,7 +67,7 @@ function articleLd(a: NewsroomArticle, l: Locale, url: string): unknown[] {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: SITE.name, item: absUrl("/", l) },
-      { "@type": "ListItem", position: 2, name: l === "fr" ? "Salle de rédaction" : "Newsroom", item: absUrl("/dispatch", l) },
+      { "@type": "ListItem", position: 2, name: l === "fr" ? "Résumés de la rédaction" : "Newsroom summaries", item: absUrl("/dispatch", l) },
       { "@type": "ListItem", position: 3, name: c.headline.slice(0, 110), item: url },
     ],
   });
@@ -122,9 +124,8 @@ export const Route = createFileRoute("/article/$slug")({
     head.meta = head.meta.map(m => (m.property === "og:url" ? { ...m, content: articleUrl(a, l) } : m));
     head.meta.push(
       { property: "article:modified_time", content: a.updatedAt },
-      { property: "article:section", content: TOPIC_KICKER[a.topic]?.[l] ?? FORMAT_LABEL[a.format][l] },
+      { property: "article:section", content: deskLabel(deskOfSummary(a), l) },
       ...c.keywords.map(k => ({ property: "article:tag", content: k })),
-      { property: "article:author", content: BYLINE[l] },
       { name: "robots", content: "index, follow, max-image-preview:large" },
       { name: "twitter:label1", content: l === "fr" ? "D'après" : "Reported by" },
       { name: "twitter:data1", content: [...new Set(a.sources.map(s => s.outlet))].slice(0, 3).join(", ") },

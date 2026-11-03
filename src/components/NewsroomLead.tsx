@@ -1,5 +1,5 @@
 /**
- * Our newsroom's articles on lists and the front page.
+ * Newsroom summaries (AI-assisted summaries of other outlets' reporting) on lists and the front page.
  *
  *   <NewsroomLead />                       a strong lead and four more, fetched by itself
  *   <NewsroomLead initial={loaderData} />  same, from a loader's copy (getNewsroomFast())
@@ -20,7 +20,8 @@ import { timeAgo, useNow } from "@/lib/news";
 import { FORMAT_LABEL, useNewsroom, newsroomFixtureRequested, type NewsroomList, type NewsroomSummary } from "@/lib/newsroom";
 import type { Locale } from "@/lib/i18n";
 
-const WORD = { en: "Newsroom", fr: "Rédaction" } as const;
+/** The chip on every card: what the piece is. Never claimed as ours: the reporting is the outlets'. */
+const WORD = { en: "Summary", fr: "Résumé" } as const;
 
 /** Keeps ?fixture=1 on links while previewing the dev fixture. */
 const fixtureSearch = () => (newsroomFixtureRequested() ? ({ fixture: "1" } as never) : undefined);
@@ -95,10 +96,10 @@ export function NewsroomLead({ initial, className = "", title = true, exclude }:
   const [lead, ...rest] = items;
   const c = lead[locale];
   return (
-    <section className={`nr-lead ${className}`} aria-labelledby={title ? "nr-lead-h" : undefined} aria-label={title ? undefined : (fr ? "De notre salle de rédaction" : "From our newsroom")}>
+    <section className={`nr-lead ${className}`} aria-labelledby={title ? "nr-lead-h" : undefined} aria-label={title ? undefined : (fr ? "Résumés de la rédaction" : "Newsroom summaries")}>
       {title && (
         <ZoneHead
-          title={<span id="nr-lead-h">{fr ? "De notre salle de rédaction" : "From our newsroom"}</span>}
+          title={<span id="nr-lead-h">{fr ? "Résumés de la rédaction" : "Newsroom summaries"}</span>}
           sub={<>{fr ? "Des résumés, rédigés avec l'IA, de ce que d'autres médias ont rapporté, vérifiés contre chaque reportage cité." : "AI-assisted summaries of what other outlets reported, checked against every report they cite."} <Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment" : "How"}</Link></>}
           action={
             <Link to="/dispatch" search={fixtureSearch()} className="shrink-0 inline-flex items-center gap-1 text-[0.92rem] font-semibold text-lake hover:underline">

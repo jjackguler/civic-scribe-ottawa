@@ -84,13 +84,13 @@ export function ExplainLike12({ storyId, storyIds, dispatchId, children, classNa
       <div id={panelId} aria-live="polite">
         {on ? (
           <div className="eli-in mt-3 border-l-[4px] border-signal bg-surface p-4 sm:p-5">
-            <p className="text-[0.8rem] font-bold text-muted-ink">{fr ? "Version simple, tirée de notre dépêche" : "Plain version, from our dispatch"}</p>
+            <p className="text-[0.8rem] font-bold text-muted-ink">{fr ? "Version simple, tirée du résumé de la rédaction" : "Plain version, from the newsroom summary"}</p>
             {plain.length > 0
               ? plain.map((p, i) => <p key={i} className="mt-2 font-serif text-[1.15rem] leading-relaxed">{stripMarkers(p)}</p>)
               : <p className="mt-2 font-serif text-[1.1rem] text-muted-ink">{full.isError || full.data === null ? (fr ? "La version simple n'est pas disponible pour le moment." : "The plain version isn't available right now.") : "…"}</p>}
             {match.article ? (
               <Link to="/article/$slug" params={{ slug: match.article[locale] }} className="mt-2 inline-flex min-h-11 items-center gap-1 font-semibold text-lake hover:underline">
-                {fr ? "Lire notre résumé, avec chaque source" : "Read our summary, with every source"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                {fr ? "Lire le résumé de la rédaction, avec chaque source" : "Read the newsroom summary, with every source"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             ) : (
               <Link to="/dispatch/$id" params={{ id: match.id }} className="mt-2 inline-flex min-h-11 items-center gap-1 font-semibold text-lake hover:underline">

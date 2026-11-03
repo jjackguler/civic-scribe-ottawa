@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { NewsPayload, Story } from "./news-engine";
 import type { Topic, Level } from "./news-sources";
 import { deskFor } from "./desk";
-import { humanLens } from "./editorial";
+import { DESKS, DESK_IDS, deskOf, deskOfTopic, deskOfSummary, deskOfOriginal, deskLabel, inDesk, isDeskId, legacySectionDesk, type DeskId } from "./desks";
 import type { Bi, Locale } from "./i18n";
 import { getTranslation } from "./translations";
 import { refineClusters } from "./claude.functions";
@@ -61,7 +61,10 @@ export function useAiNews(initial: NewsPayload | null | undefined) {
   });
 }
 
-/** Topic desks, in menu order. */
+/**
+ * Classification topics (news-sources.ts Topic). Internal: they file stories for the desk
+ * rules and label share cards, but never appear as sections. See desks.ts.
+ */
 export const TOPICS: { id: Topic; label: Bi }[] = [
   { id: "agents", label: { en: "AI assistants & agents", fr: "Assistants et agents IA" } },
   { id: "applications", label: { en: "Applications", fr: "Applications" } },
@@ -80,65 +83,17 @@ export const TOPICS: { id: Topic; label: Bi }[] = [
   { id: "society", label: { en: "Mind & society", fr: "Esprit et société" } },
 ];
 
-export type SectionId = "canada" | "world" | "rights" | "work" | "science" | "government" | "ministry" | "labs" | "analysis" | "trending" | Topic;
+/** A section is a desk: the five in desks.ts, and nothing else. */
+export type SectionId = DeskId;
+export { DESKS, DESK_IDS, deskOf, deskOfTopic, deskOfSummary, deskOfOriginal, deskLabel, isDeskId, legacySectionDesk, type DeskId };
 
-/**
- * The five public desks: what the header, footer and front page show. The older topic desks
- * stay reachable at /news?section=… so existing links keep working.
- */
-export const DESKS: { id: SectionId; label: Bi; dek: Bi }[] = [
-  { id: "canada", label: { en: "Canada", fr: "Canada" }, dek: { en: "Ottawa, the provinces, Canadian labs and companies.", fr: "Ottawa, les provinces, les laboratoires et entreprises d'ici." } },
-  { id: "rights", label: { en: "Rights & power", fr: "Droits et pouvoir" }, dek: { en: "Data sovereignty, privacy, military AI, democracy and regulation.", fr: "Souveraineté des données, vie privée, IA militaire, démocratie et réglementation." } },
-  { id: "work", label: { en: "Work & culture", fr: "Travail et culture" }, dek: { en: "Jobs, artists' rights, schools, families and everyday life.", fr: "Emploi, droits des artistes, écoles, familles et vie quotidienne." } },
-  { id: "science", label: { en: "Research", fr: "Recherche" }, dek: { en: "What labs and scientists found, and what it does not prove.", fr: "Ce que les laboratoires et les chercheurs ont trouvé, et ce que ça ne prouve pas." } },
-  { id: "world", label: { en: "World", fr: "Monde" }, dek: { en: "The rest of the world, briefly.", fr: "Le reste du monde, en bref." } },
-];
+/** Sections of the news page, in navigation order: the five desks. */
+export const SECTIONS: { id: SectionId; label: Bi }[] = DESKS.map(({ id, label }) => ({ id, label }));
 
-/** Power over people: who holds data, weapons and the rules. Read with the human lens. */
-const POWER = /\b(military|militar\w*|defen[cs]e|armed forces|weapons?|autonomous weapons?|drones?|surveillance|sovereign\w*|souverainet\w*|cloud act|data residency|facial recognition|reconnaissance faciale|copyright|droit d'auteur|regulat\w*|réglement\w*|bill c-\d+|privacy commissioner)\b/i;
-const CULTURE = /\b(artists?|artistes?|musicians?|writers?|authors?|actors?|creators?|culture|cultural|journalis\w*|newsrooms?)\b/i;
-
-/** Sections of the news page, in navigation order. */
-export const SECTIONS: { id: SectionId; label: Bi }[] = [
-  ...DESKS.map(({ id, label }) => ({ id, label })),
-  ...TOPICS,
-  { id: "government", label: { en: "Government", fr: "Gouvernement" } },
-  { id: "ministry", label: { en: "AI Ministry", fr: "Ministère de l'IA" } },
-  { id: "labs", label: { en: "AI labs", fr: "Laboratoires" } },
-  { id: "analysis", label: { en: "Analysis", fr: "Analyses" } },
-  { id: "trending", label: { en: "Trending", fr: "Tendances" } },
-];
-
+/** Whether a story belongs on a desk's page (desks.ts inDesk). */
 export function inSection(s: Story, id: SectionId): boolean {
-  switch (id) {
-    case "canada": return s.region === "canada" && !s.gov && s.kind !== "trending" && s.kind !== "beat";
-    case "world": return s.region === "world" && s.kind === "news";
-    case "government": return s.gov || s.level != null;
-    case "ministry": return s.minister;
-    case "labs": return s.kind === "lab";
-    case "analysis": return s.kind === "analysis";
-    case "trending": return s.kind === "trending";
-    case "rights": {
-      if (s.gov || s.kind === "trending") return false;
-      const tags = s.tags ?? [s.topic];
-      return tags.includes("responsible") || tags.includes("policy") || POWER.test(`${s.title} ${s.summary ?? ""}`)
-        || humanLens(s).some(l => l === "rights" || l === "privacy" || l === "democracy" || l === "safety");
-    }
-    case "work": {
-      if (s.gov || s.kind === "trending") return false;
-      const tags = s.tags ?? [s.topic];
-      return tags.includes("people") || tags.includes("society") || CULTURE.test(`${s.title} ${s.summary ?? ""}`)
-        || humanLens(s).some(l => l === "work" || l === "children");
-    }
-    case "science": {
-      if (s.gov || s.kind === "trending") return false;
-      const tags = s.tags ?? [s.topic];
-      return s.kind === "lab" || tags.includes("research") || tags.includes("health") || tags.includes("robotics");
-    }
-    default: return (s.tags ?? [s.topic]).includes(id) && !s.gov && s.kind !== "trending";
-  }
+  return inDesk(s, id);
 }
-
 
 export const LEVEL_LABEL: Record<Level, Bi> = {
   federal: { en: "Federal", fr: "Fédéral" },

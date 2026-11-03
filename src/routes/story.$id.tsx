@@ -9,7 +9,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { LatestRail } from "@/components/LatestRail";
 import { NewsletterBox } from "@/components/NewsletterBox";
 import { ExplainLike12 } from "@/components/YouthKit";
-import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isBreaking, isFrontPool, display, inSection } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isBreaking, isFrontPool, display, inSection, deskOf } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/story/$id")({
       title: `${headline} — ${SITE.name}`,
       description,
       // A publisher's headline, excerpt and link: useful to readers, not our journalism.
-      // Search engines are pointed at our own articles, guides and glossary instead.
+      // Search engines are pointed at newsroom summaries, guides and glossary instead.
       noindex: true,
       image: s.image,
       type: "article",
@@ -87,7 +87,7 @@ function StoryPage() {
   const d = display(s, locale);
   const cluster = clusters.find(c => c.stories.some(x => x.id === s.id));
   const coverage = cluster ? cluster.stories.filter(x => x.id !== s.id) : [];
-  const deskId = s.tags?.[0] ?? s.topic;
+  const deskId = deskOf(s);
   const more = diversify(all.filter(x => x.id !== s.id && !coverage.includes(x) && inSection(x, deskId)), 1, 8).slice(0, 4);
   const latest = diversify(all.filter(isFrontPool));
   const fr = locale === "fr";
@@ -109,7 +109,7 @@ function StoryPage() {
             )}
             {d.ai && (
               <p className="meta mt-3">
-                <span className="font-semibold">{fr ? "Titre et résumé du pupitre IA" : "Headline and brief by our AI desk"}</span>{" "}
+                <span className="font-semibold">{fr ? "Titre et résumé rédigés par l'IA" : "Headline and brief written by AI"}</span>{" "}
                 {fr ? `(Claude, à partir du seul texte des éditeurs, vérifié automatiquement). Titre original de ${s.source} :` : `(Claude, working only from the publishers' text, checked automatically). Original headline from ${s.source}:`}{" "}
                 <span className="italic">“{s.title}”</span>{" "}
                 <Link to="/standards" hash="ai-desk" className="text-lake font-semibold hover:underline">{fr ? "Comment ça marche" : "How this works"}</Link>

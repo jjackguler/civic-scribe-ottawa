@@ -23,6 +23,7 @@ const MAIN: Item[] = [
   { label: { en: "Learn AI", fr: "Apprendre l'IA" }, to: "/labs" },
 ];
 
+// Pages and tools, never news sections: the only sections are the five desks (desks.ts), under Topics.
 const MORE: Item[] = [
   { label: { en: "Get the app", fr: "Installer l'application" }, to: "/more" },
   { label: { en: "Saved stories", fr: "Articles enregistrés" }, to: "/saved" },
@@ -30,11 +31,8 @@ const MORE: Item[] = [
   { label: { en: "Watch & listen", fr: "Voir et écouter" }, to: "/watch" },
   { label: { en: "Glossary", fr: "Glossaire" }, to: "/glossary" },
   { label: { en: "Interviews", fr: "Entrevues" }, to: "/interviews" },
-  { label: { en: "Analysis", fr: "Analyses" }, to: "/news", section: "analysis" },
   { label: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" }, to: "/ministry" },
   { label: { en: "Government", fr: "Gouvernement" }, to: "/government" },
-  { label: { en: "From the labs", fr: "Des laboratoires" }, to: "/news", section: "labs" },
-  { label: { en: "Trending", fr: "Tendances" }, to: "/news", section: "trending" },
   { label: { en: "Tools worth trying", fr: "Outils à essayer" }, to: "/tools" },
   { label: { en: "Beginner guides", fr: "Guides pour débuter" }, to: "/learn" },
   { label: { en: "Funding", fr: "Financement" }, to: "/funding" },

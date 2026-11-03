@@ -1,6 +1,7 @@
 /**
- * The Newsroom article page: our headline, our text, our cover, our voice,
- * with every fact tied to the outlet that reported it.
+ * A newsroom summary's page: our headline, summary text and cover, written with AI from
+ * other outlets' reporting, with every fact tied to the outlet that reported it. The
+ * reporting is theirs, so the page has no byline: it says what it is and who reported.
  *
  * Built from the Dispatch page's parts (DispatchArticle.tsx): "In 30
  * seconds", the reading-depth switch, "Who reported what", Listen, Report an
@@ -15,7 +16,8 @@ import { useLocale } from "@/lib/locale-context";
 import { timeAgo, useNow } from "@/lib/news";
 import { localePath } from "@/lib/seo";
 import { splitMarkers, stripMarkers, type DispatchSource } from "@/lib/dispatch";
-import { BYLINE, FORMAT_LABEL, SECTION_HEADING, TOPIC_KICKER, type NewsroomArticle, type NewsroomSummary } from "@/lib/newsroom";
+import { BYLINE, FORMAT_LABEL, SECTION_HEADING, type NewsroomArticle, type NewsroomSummary } from "@/lib/newsroom";
+import { deskLabel, deskOfSummary } from "@/lib/desks";
 import type { Locale } from "@/lib/i18n";
 import { NewsroomCover } from "./NewsroomCover";
 import { NewsroomGrid } from "./NewsroomLead";
@@ -27,18 +29,17 @@ import { ArticleTools } from "./MobileApp";
 
 const COPY = {
   en: {
-    word: "Newsroom",
-    by: "By",
+    word: "Newsroom summary",
     reportedBy: "Reported by",
-    label: (o: string, m: string) => `Written with AI (${m}) by our newsroom, checked against the reporting of ${o}.`,
-    how: "How our newsroom works",
+    label: (o: string, m: string) => `A newsroom summary of reporting by ${o}, written with AI (${m}) and checked automatically against that reporting. The reporting is theirs.`,
+    how: "How newsroom summaries are made",
     story: "The story",
     expert: "For specialists",
     plainNote: "The plain version: the same news in everyday words.",
     unfolded: "How it unfolded",
     unfoldedSub: "Times as the sources state them.",
     sources: "Sources",
-    sourcesSub: "Every fact in this article comes from these reports. Read them in full.",
+    sourcesSub: "Every fact in this summary comes from these reports. Read them in full.",
     readAt: "Read at",
     reported: "Published",
     official: "Own announcement",
@@ -46,24 +47,23 @@ const COPY = {
     further: "On AI Broadsheet",
     furtherSub: "Our own guides for the background.",
     background: "Background from our guide",
-    related: "More from our newsroom",
+    related: "More newsroom summaries",
     words: (n: number) => `${Math.max(1, Math.round(n / 220))} min read`,
     published: "Published",
     updated: "Updated",
   },
   fr: {
-    word: "Rédaction",
-    by: "Par la",
+    word: "Résumé de la rédaction",
     reportedBy: "D'après les reportages de",
-    label: (o: string, m: string) => `Écrit avec l'IA (${m}) par notre salle de rédaction, vérifié contre les reportages de ${o}.`,
-    how: "Comment travaille notre rédaction",
-    story: "L'article",
+    label: (o: string, m: string) => `Résumé de la rédaction des reportages de ${o}, rédigé avec l'IA (${m}) et vérifié automatiquement contre ces reportages. Le reportage est le leur.`,
+    how: "Comment sont faits les résumés de la rédaction",
+    story: "Le résumé",
     expert: "Pour les spécialistes",
     plainNote: "La version simple : la même nouvelle, en mots de tous les jours.",
     unfolded: "Le déroulement",
     unfoldedSub: "Les moments tels que les sources les donnent.",
     sources: "Sources",
-    sourcesSub: "Chaque fait de cet article vient de ces reportages. Lisez-les en entier.",
+    sourcesSub: "Chaque fait de ce résumé vient de ces reportages. Lisez-les en entier.",
     readAt: "Lire sur",
     reported: "Publié",
     official: "Annonce officielle",
@@ -71,7 +71,7 @@ const COPY = {
     further: "Sur AI Broadsheet",
     furtherSub: "Nos propres guides, pour le contexte.",
     background: "Contexte tiré de notre guide",
-    related: "Autres articles de la rédaction",
+    related: "Autres résumés de la rédaction",
     words: (n: number) => `${Math.max(1, Math.round(n / 220))} min de lecture`,
     published: "Publié",
     updated: "Mis à jour",
@@ -153,7 +153,7 @@ function Block({ id, title, sub, children, className = "" }: { id: string; title
   );
 }
 
-/** "Written with AI by our newsroom, checked against the reporting of …" — on every article. */
+/** "A newsroom summary of reporting by …, written with AI" — on every summary. */
 export function NewsroomLabel({ a, dark = false, className = "" }: { a: NewsroomArticle; dark?: boolean; className?: string }) {
   const { locale } = useLocale();
   const outlets = listOutlets([...new Set(a.sources.map(s => s.outlet))], locale);
@@ -179,7 +179,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
   // The depth switch measures each depth's length; "expert" is the article plus the specialists' notes.
   const depthBody = { plain: c.body.plain, standard: words, expert: [...words, ...c.body.expert] };
   const spoken = useMemo(() => [
-    locale === "fr" ? "Un article de la salle de rédaction d'AI Broadsheet, écrit avec l'IA." : "An AI Broadsheet Newsroom article, written with AI.",
+    locale === "fr" ? "Un résumé de la rédaction d'AI Broadsheet, rédigé avec l'IA, de reportages d'autres médias." : "An AI Broadsheet newsroom summary of other outlets' reporting, written with AI.",
     `${c.headline}.`, c.dek, ...words.map(stripMarkers),
     `${L.reportedBy} ${listOutlets(outlets, locale)}.`,
   ].join("\n\n").slice(0, 4000), [c, words, outlets, locale, L]);
@@ -208,7 +208,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
           <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.85rem] font-bold">
             <Link to="/dispatch" className="bg-signal text-signal-ink px-2 py-0.5 hover:bg-white">{L.word}</Link>
             <span className="text-brass">{FORMAT_LABEL[a.format][locale]}</span>
-            {TOPIC_KICKER[a.topic] && <span className="text-white/70">{TOPIC_KICKER[a.topic][locale]}</span>}
+            <Link to="/news" search={{ section: deskOfSummary(a) }} className="text-white/70 hover:text-white hover:underline">{deskLabel(deskOfSummary(a), locale)}</Link>
             <time dateTime={a.createdAt} className="font-semibold text-white/70" suppressHydrationWarning>{timeAgo(a.createdAt, now, locale)}</time>
           </p>
           <div className="mt-5 grid gap-x-12 gap-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
@@ -217,7 +217,6 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
               {c.dek && <p className="mt-5 max-w-[60ch] font-serif text-[1.2rem] sm:text-[1.35rem] leading-snug text-white/90">{c.dek}</p>}
               <div className="mt-6 border-l-[4px] border-signal pl-4 text-[0.92rem] leading-relaxed">
                 <p>
-                  <span className="text-white/70">{L.by} </span>
                   <Link to="/standards" hash="newsroom" className="font-bold text-white hover:underline">{BYLINE[locale]}</Link>
                   <span className="text-white/50"> · </span>
                   <span className="text-white/70">{L.words(a.words[locale])}</span>
@@ -242,7 +241,7 @@ export function NewsroomArticleView({ a, related }: { a: NewsroomArticle; relate
       </header>
 
       <div className="container-mw pt-9 sm:pt-12">
-        <ArticleTools title={c.headline} summary={c.dek} source="AI Broadsheet Newsroom" publishedAt={a.createdAt} />
+        <ArticleTools title={c.headline} summary={c.dek} source={locale === "fr" ? "Résumé de la rédaction d'AI Broadsheet" : "AI Broadsheet newsroom summary"} publishedAt={a.createdAt} />
         <ThirtySeconds lines={c.thirty} />
       </div>
 
