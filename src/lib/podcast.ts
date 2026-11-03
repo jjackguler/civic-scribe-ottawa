@@ -68,7 +68,7 @@ export async function buildPodcastRss(): Promise<string> {
   const items = m.episodes.map(e => `
     <item>
       <title>${esc(e.title)}</title>
-      <description><![CDATA[<p>${esc(e.summary)}</p>${e.opinion ? "<p><strong>Opinion.</strong></p>" : ""}<p>Voices: ${esc(e.voices)}. Written and checked by the AI Broadsheet newsroom.</p><p>Sources:</p><ul>${e.sources.map(s => `<li><a href="${esc(s.url)}">${esc(s.name)}</a></li>`).join("")}</ul>]]></description>
+      <description><![CDATA[<p>${esc(e.summary)}</p>${e.opinion ? "<p><strong>Opinion.</strong></p>" : ""}<p>Voices: ${esc(e.voices)}. Written with AI assistance by the AI Broadsheet newsroom, from the sources below.</p><p>Sources:</p><ul>${e.sources.map(s => `<li><a href="${esc(s.url)}">${esc(s.name)}</a></li>`).join("")}</ul>]]></description>
       <link>${origin}/podcast#${esc(e.id)}</link>
       <guid isPermaLink="false">${esc(e.id)}</guid>
       <pubDate>${new Date(e.publishedAt).toUTCString()}</pubDate>
