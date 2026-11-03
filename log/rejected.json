@@ -1,5 +1,50 @@
 [
   {
+    "id": "1okz2k8",
+    "at": "2026-11-03T12:49:26.616Z",
+    "stage": "copy",
+    "headline": "Opinion: AI is getting cheaper. It’s also risking becoming a walled garden",
+    "reasons": [
+      "Not in the sources (names or numbers): Falling, Technological, Artificial, LLMs.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Hardware, Advancements, Artificial, LLMs."
+    ]
+  },
+  {
+    "id": "rpve99",
+    "at": "2026-11-03T12:49:20.184Z",
+    "stage": "translator",
+    "headline": "Why Canada’s Cohere stake has struck a nerve",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): Canadiens, Industrie, Fonds.",
+      "attempt 2: Not in the sources (names or numbers): Industrie."
+    ]
+  },
+  {
+    "id": "1slnz11",
+    "at": "2026-11-03T12:48:57.728Z",
+    "stage": "copy",
+    "headline": "BDC launches two entrepreneur-led AI programs to make small businesses, and itself, more productive",
+    "reasons": [
+      "Too close to BetaKit's wording (\"mission ai spearheaded by connect go founder dominic gagnon…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to BetaKit's wording (\"that 30 percent of canadian small to medium enterprises…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "brief-2026-11-03",
+    "at": "2026-11-03T12:48:52.494Z",
+    "stage": "copy",
+    "headline": "Canadian AI Brief",
+    "reasons": [
+      "Not in the sources (names or numbers): Increased.",
+      "Too close to BetaKit's wording (\"that 30 percent of canadian small to medium enterprises…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Productivity.",
+      "Too close to BetaKit's wording (\"are 24 percent more productive than those that do…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1m79jja",
     "at": "2026-11-01T03:41:38.897Z",
     "stage": "standards",
