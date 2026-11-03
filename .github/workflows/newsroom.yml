@@ -1,13 +1,16 @@
-# AI Broadsheet Newsroom: our own articles, written with AI by a staged
+# AI Broadsheet Newsroom: newsroom summaries, written with AI by a staged
 # editorial team (reporter, copy, standards, translator, SEO, design), every
-# 30 minutes. Setup and how to unpublish: docs/newsroom.md.
+# 30 minutes. The owner steers it with newsroom/DIRECTIVES.md (focus, banned
+# topics, tone, daily target, the morning Canadian AI Brief).
 # Needs repository secret GEMINI_API_KEY and/or ANTHROPIC_API_KEY (Claude is used when both are set).
 # Setup/quota failures are visible failures; counters are persisted even then.
 name: Newsroom
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # Off the hour on purpose: GitHub drops many :00/:30 scheduled runs under load
+    # (late Oct to early Nov: about 4-6 runs a day instead of 48). The caps are unchanged.
+    - cron: "11,41 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:

@@ -2,7 +2,7 @@
 
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
-Last updated: 28 Oct 2026 (editorial About and standards copy simplified at owner request).
+Last updated: 3 Nov 2026 (newsroom directives file, morning Canadian AI Brief, Output watch issue).
 
 ## Ground rules from the owner
 - Post only from AI Broadsheet's own accounts. Never touch other brands the owner is logged
@@ -32,6 +32,26 @@ Last updated: 28 Oct 2026 (editorial About and standards copy simplified at owne
 - **Never post or share anything on social media without asking the owner first**, every time.
 - Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
   same computer.
+
+## Newsroom directives (3 Nov 2026)
+- The owner steers the newsroom with one plain file: **`newsroom/DIRECTIVES.md`** on `main`. Every
+  Newsroom run reads it. To change it: open the file on GitHub, click the pencil, edit, "Commit
+  changes". No code, no keys, no Lovable credits; the next run (about 30 minutes) uses it.
+- Sections (keep the `##` headings; one item per line starting with `- `):
+  - **Focus topics**: `label | keywords: a, b, c`. Canadian stories come first, then these.
+  - **Banned topics**: same format; matching stories are skipped before any paid call. They add to
+    the house rules, which stay in code and can't be switched off from this file.
+  - **Tone**: one line each; told to the reporter, copy editor and translator.
+  - **Daily target**: `min` (Output watch warns below it) and `max` (the desks stop for the day once
+    reached). It never raises `NEWSROOM_DAILY_CAP` or the per-run guard.
+  - **Morning brief**: the "Canadian AI Brief", a roundup of 3-6 separate Canadian stories in the
+    first run between 06:00 and 11:00 Toronto time; skipped (with the reason in the log) when there
+    are not enough. `on: no` turns it off.
+- A line that can't be read keeps its default and shows as a yellow warning in the run.
+- Since the same change: thin reports gather other outlets' reports of the same event before being
+  skipped; Output watch also opens one issue, "Output watch: nothing published", when it fails, and
+  closes it when output is back. Newsroom cron moved to :11 and :41 (GitHub was dropping most
+  :00/:30 runs).
 
 ## Generative imagery withdrawn (29 Oct 2026)
 - Owner decision: the three Sir Jack special editions made with Google Flow / Veo (Twenty-Three
@@ -101,7 +121,7 @@ Bio everywhere: "AI news, with the human stakes left in. One catch a day." Sign-
 - Social profiles are in `src/lib/site.ts` (`social`).
 
 ## Pipelines
-- **Newsroom** (`.github/workflows/newsroom.yml`, every 30 min). Gemini writes; writer timeout
+- **Newsroom** (`.github/workflows/newsroom.yml`, every 30 min, steered by `newsroom/DIRECTIVES.md`). Gemini writes; writer timeout
   280 s (`NEWSROOM_TIMEOUT_MS`). `NEWSROOM_REVIEW`: `auto` (default), `hold`, `off`.
 - **Output watch** (`.github/workflows/output-watch.yml`, daily). Goes red when no article for
   24 h or no new video for 72 h. **When it is red, that is the first job of the day.**

@@ -57,12 +57,22 @@ const GENERIC = new Set((
   "software tools models systems products services platforms ordinary everyday reporting further furthermore moreover " +
   "overall elsewhere together"
 ).split(" "));
+/**
+ * Sentence-opening adverbs, by name. Not every capitalised "-ly" word: surnames
+ * end that way too ("Connolly says…", "Reilly told…") and must be in the sources.
+ */
+const ADVERBS = new Set((
+  "additionally currently previously crucially notably importantly initially finally similarly separately specifically " +
+  "ultimately consequently accordingly alternatively essentially generally typically historically technically effectively " +
+  "eventually increasingly publicly officially originally practically primarily mainly largely partly fundamentally " +
+  "subsequently simultaneously conversely likewise secondly thirdly firstly lastly overall"
+).split(" "));
 // "Residents say…", "Users told…" would put words in people's mouths: those keep the capital and must be in the sources.
 const SPEAKS = /^\s+(?:\w+\s+)?(?:say|says|said|told|tell|claim\w*|warn\w*|argue\w*|believe\w*|complain\w*|fear\w*|worr\w*|report\w*|describe\w*|think|thinks|feel|feels|want|wants|demand\w*|criticis\w*|criticiz\w*|prais\w*|welcom\w*|object\w*|agree\w*|disagree\w*)\b/i;
 const lowerGenericStarts = (s: string) => s.replace(/(^|[.!?:;]\s+|\s[—–-]\s)([A-Z][a-z]+)(?=\b)/g,
   (match, prefix: string, word: string, at: number, all: string) => {
     const w = word.toLowerCase();
-    const adverb = w.length > 5 && w.endsWith("ly");
+    const adverb = ADVERBS.has(w);
     if (!adverb && !(GENERIC.has(w) && !SPEAKS.test(all.slice(at + match.length, at + match.length + 40)))) return match;
     return prefix + w;
   });

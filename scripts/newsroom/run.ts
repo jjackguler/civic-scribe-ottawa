@@ -28,8 +28,9 @@ import { countWords, uniqueSlug, type NewsroomArticle, type NewsroomCopy, type R
 import { loadAttempts, recordAttempt, releaseAttempt } from "./attempts";
 import { cannedModels, illustrate, liveModels, type Models } from "./models";
 import { LINKS, loadGlossary } from "./library";
-import { pickEvents } from "./pick";
-import { copyEditor, pageDesigner, reporter, seoEditor, standardsEditor, translator, type Event, type Seo, type SeoCopy } from "./roles";
+import { pickBrief, pickEvents } from "./pick";
+import { copyEditor, pageDesigner, reporter, seoEditor, standardsEditor, translator, useDirectives, type Event, type Seo, type SeoCopy } from "./roles";
+import { loadDirectives, targetRoom } from "./directives";
 import type { Draft } from "./shape";
 import { openStore, type Store } from "./store";
 
@@ -92,7 +93,7 @@ function finalCopy(d: Draft, s: SeoCopy, links: string[], lang: "en" | "fr"): Ne
 
 async function writeOne(m: Models, store: Store, e: Event): Promise<"published" | "held" | "rejected"> {
   const roles: RoleNote[] = [];
-  const headline = e.sources[0]?.title ?? e.id;
+  const headline = e.brief ? e.brief.title.en : e.sources[0]?.title ?? e.id;
   const stop = async (stage: string, n: RoleNote) => {
     roles.push(n);
     // A model that didn't answer is our failure, not the story's: don't put the story on cooldown.
@@ -202,6 +203,10 @@ async function main() {
     log(`Newsroom: ${desk.stories.length} stories on the desk; writer ${models.model("writer")}, checks ${models.model("checker")}`);
   }
   await loadGlossary();
+  const directives = await loadDirectives();
+  useDirectives(directives);
+  log(`Directives (${directives.from}): target ${directives.target.min}-${directives.target.max} a day; focus ${directives.focus.map(t => t.label).join("; ") || "none"}; ${directives.banned.length} banned topic(s) on top of the house rules; morning brief ${directives.brief.on ? `${directives.brief.fromHour}:00-${directives.brief.toHour}:00 Toronto` : "off"}`);
+  for (const w of directives.warnings) log(`::warning title=Newsroom directives::${w}`);
   const store = await openStore(STORE);
 
   // Human approvals need no paid calls and must still work after the daily cap.
@@ -215,23 +220,39 @@ async function main() {
   attempts.count = attemptedToday; // Seed migration from existing outcomes before the first persistent increment.
   const budget = Math.min(MAX, Math.max(0, DAILY - attemptedToday));
   if (budget === 0) { log(`Caps reached (${attemptedToday} attempted today, cap ${DAILY}; ${MAX} per run). Nothing to do.`); return finish(models); }
+  // The owner's daily target: once `max` pieces are out today, stop (no more paid calls). It never raises the caps above.
+  const publishedToday = store.index.items.filter(i => i.createdAt.startsWith(today)).length;
+  const room = targetRoom(publishedToday, directives);
+  log(`Today (UTC ${today}): ${publishedToday} published, target ${directives.target.min}-${directives.target.max}.`);
+  if (room === 0) { log(`Daily target reached (${publishedToday} of ${directives.target.max}). Nothing more today.`); return finish(models); }
 
   const seen = {
     ids: new Set(store.index.items.map(i => i.id)),
-    storyIds: new Set(store.index.items.flatMap(i => i.storyIds)),
+    // A morning brief only mentions its stories: they may still get their own article.
+    storyIds: new Set(store.index.items.filter(i => !i.id.startsWith("brief-")).flatMap(i => i.storyIds)),
     killed: store.killed,
     rejectedAt: new Map(store.rejected.map(r => [r.id, r.at] as const)),
   };
-  const { events, skipped } = pickEvents(stories, seen);
+  const { events, skipped } = pickEvents(stories, seen, Date.now(), directives);
   log(`store: ${STORE} (${store.index.items.length} published, ${store.rejected.length} on record as turned down)`);
+  if (!DRY) {
+    const brief = pickBrief(stories, seen, Date.now(), directives);
+    log(`${directives.brief.title.en}: ${brief.event ? `picked (${brief.why})` : `not this run, ${brief.why}`}`);
+    if (brief.event && !store.has(brief.event.id)) events.unshift(brief.event);
+  }
   for (const s of skipped.slice(0, 12)) log(`skip ${s.id}: ${s.why} — ${s.title}`);
-  if (events.length === 0) { log("No new events to write."); return finish(models); }
+  if (events.length === 0) {
+    const thin = skipped.filter(s => s.why.startsWith("too little reporting")).length;
+    log(`No new events to write.${thin ? ` ${thin} event(s) had too little reporting even after gathering other outlets.` : ""}`);
+    return finish(models);
+  }
 
   let published = 0, rejected = 0, held = 0, paused = 0;
   for (const e of events.slice(0, budget)) {
     if (models.failure || models.usage.capped) break;
+    if (published >= room) { log(`Daily target reached (${publishedToday + published} of ${directives.target.max}): the rest wait.`); break; }
     if (store.has(e.id)) continue;
-    log(`\n▸ ${e.id}: ${e.sources[0]?.title} (${new Set(e.sources.map(s => s.outlet)).size} outlet(s)${e.sources.some(s => s.official) ? ", official" : ""})`);
+    log(`\n▸ ${e.id}: ${e.brief ? `${e.brief.title.en} (${e.sources.length} stories)` : e.sources[0]?.title} (${new Set(e.sources.map(s => s.outlet)).size} outlet(s)${e.sources.some(s => s.official) ? ", official" : ""}${e.gathered ? `, ${e.gathered} gathered` : ""}${e.region === "canada" ? ", Canada" : ""})`);
     const tokensBefore = models.usage.inTokens + models.usage.outTokens;
     await recordAttempt(STORE, attempts, e.id);
     try {
