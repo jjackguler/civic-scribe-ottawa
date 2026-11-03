@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:4da0m2",
+    "at": "2026-11-03T18:33:27.198Z",
+    "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; not in the sources: STOP, Preventing, Recreation"
+  },
+  {
     "key": "story:1ana9o1",
     "at": "2026-11-02T20:51:38.723Z",
     "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; scene 3 (figure): \"quote\" must be 4-at most 70 characters (got \"The tsunami of imitators is way bigger than any one model maker can stem.\"); not in the sources: BLOCKED, Experts"
