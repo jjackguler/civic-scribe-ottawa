@@ -76,7 +76,7 @@ function SirJackPage() {
       {specials.length > 0 && (
         <section className="container-mw mt-10">
           <h2 className="masthead-serif text-[1.9rem]">{fr ? "Éditions spéciales" : "Special editions"}</h2>
-          <p className="font-serif text-[1.05rem] text-muted-foreground mb-5 max-w-3xl">{fr ? "Des enquêtes de quatre minutes en bande dessinée animée, tirées des dossiers judiciaires." : "Four-minute motion-comic investigations, built from court records."}</p>
+          <p className="font-serif text-[1.05rem] text-muted-foreground mb-5 max-w-3xl">{fr ? "Des enquêtes de quatre minutes en bande dessinée animée, tirées de reportages et de documents publics; chacune nomme ses sources à la fin." : "Four-minute motion-comic investigations, built from news reports and public records; each one names its sources at the end."}</p>
           <div className="grid gap-x-6 gap-y-10 grid-cols-2 lg:grid-cols-4">
             {specials.map(o => <OriginalCard key={o.id} o={o} />)}
           </div>

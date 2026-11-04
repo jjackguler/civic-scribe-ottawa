@@ -11,6 +11,9 @@
  * House style: no exclamation marks, no hype words, a headline that is a
  * statement, every reporting paragraph tied to a source, honest length.
  */
+import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import wordListPath from "word-list";
 import { unsupported } from "../../src/lib/ai-desk.server";
 import { countWords, stripAllMarkers } from "../../src/lib/newsroom-types";
 import { markerKeys, type Draft } from "./shape";
@@ -44,6 +47,130 @@ const CONNECTIVES = new Set(["alongside", "architecturally", "inside", "instead"
 const lowerConnectives = (s: string) => s.replace(/(^|[.!?]\s+)([A-Z][a-z]+)(?=\b)/g,
   (match, prefix: string, word: string) => CONNECTIVES.has(word.toLowerCase()) ? prefix + word.toLowerCase() : match);
 
+/**
+ * Ordinary sentence openers that carry no fact of their own: "-ly" adverbs
+ * ("Additionally", "Currently") and generic groups of people or things
+ * ("Users", "Developers"). Exempt only at the start of a sentence. Words that
+ * would invent an attribution ("Experts", "Critics", "Officials",
+ * "Researchers") stay out on purpose.
+ */
+const GENERIC = new Set((
+  "users people developers programmers residents consumers customers businesses companies organisations organizations " +
+  "workers employees parents children students teachers families readers creators artists citizens governments " +
+  "software tools models systems products services platforms ordinary everyday reporting further furthermore moreover " +
+  "overall elsewhere together"
+).split(" "));
+/**
+ * Sentence-opening adverbs, by name. Not every capitalised "-ly" word: surnames
+ * end that way too ("Connolly says…", "Reilly told…") and must be in the sources.
+ */
+const ADVERBS = new Set((
+  "additionally currently previously crucially notably importantly initially finally similarly separately specifically " +
+  "ultimately consequently accordingly alternatively essentially generally typically historically technically effectively " +
+  "eventually increasingly publicly officially originally practically primarily mainly largely partly fundamentally " +
+  "subsequently simultaneously conversely likewise secondly thirdly firstly lastly overall"
+).split(" "));
+// "Residents say…", "Users told…" would put words in people's mouths: those keep the capital and must be in the sources.
+const SPEAKS = /^\s+(?:\w+\s+)?(?:say|says|said|told|tell|claim\w*|warn\w*|argue\w*|believe\w*|complain\w*|fear\w*|worr\w*|report\w*|describe\w*|think|thinks|feel|feels|want|wants|demand\w*|criticis\w*|criticiz\w*|prais\w*|welcom\w*|object\w*|agree\w*|disagree\w*)\b/i;
+const lowerGenericStarts = (s: string) => s.replace(/(^|[.!?:;]\s+|\s[—–-]\s)([A-Z][a-z]+)(?=\b)/g,
+  (match, prefix: string, word: string, at: number, all: string) => {
+    const w = word.toLowerCase();
+    const adverb = ADVERBS.has(w);
+    if (!adverb && !(GENERIC.has(w) && !SPEAKS.test(all.slice(at + match.length, at + match.length + 40)))) return match;
+    return prefix + w;
+  });
+
+/**
+ * Standard acronyms and their plurals: ordinary vocabulary, not names. "LLMs", "GPUs" and
+ * "APIs" are no more a fact than "models" or "chips". Product and company names never go here.
+ */
+const ACRONYMS = (
+  "ai ia agi ml nlp llm llms gpu gpus cpu cpus tpu tpus npu npus api apis ui ux os pc pcs it iot vr ar xr ceo ceos cto cfo coo " +
+  "ipo ipos saas faq faqs pdf pdfs url urls sms gps cloud rd pme pmes ong ia-g"
+).split(" ");
+
+/**
+ * English and French dictionary words (MIT word lists), lowercase. Loaded once, on first use.
+ * Sentence-initial ordinary words ("Falling", "Hardware", "Advancements", "Technological") are
+ * no fact of their own; names are checked as before.
+ */
+let DICT: Set<string> | null = null;
+function dictionary(): Set<string> {
+  if (DICT) return DICT;
+  const en = readFileSync(wordListPath, "utf8").split("\n");
+  const fr = createRequire(import.meta.url)("an-array-of-french-words") as string[];
+  DICT = new Set([...en, ...fr].map(w => w.trim().toLowerCase()).filter(Boolean));
+  return DICT;
+}
+
+/**
+ * Dictionary words that are also names of companies, products, places or people the news is
+ * about. At the start of a sentence they still have to be in the sources.
+ */
+const NAMES_IN_DICTIONARY = new Set((
+  "apple meta amazon oracle shell visa intel tesla llama cohere anthropic grok perplexity mistral gemini claude copilot " +
+  "alexa falcon sage slack zoom square stripe notion figure palantir telegram discord bard pi phi jasper midjourney " +
+  "runway suno pika cursor replit hugging mila vector databricks snowflake adobe sony samsung " +
+  "paris china turkey jordan chad georgia victoria regina hamilton windsor kingston nice bath florence york " +
+  "washington lincoln jackson ottawa montreal toronto quebec canada america europe africa asia india japan korea france germany " +
+  "britain ireland israel iran iraq russia ukraine poland brazil mexico chile peru cuba egypt kenya nigeria " +
+  "jack mark bill grace rose june april august " +
+  "parliament senate congress commons supreme crown"
+).split(" "));
+
+/** Generic nouns that would invent an attribution ("Experts", "Critics"): never exempt. */
+const ATTRIBUTORS = new Set((
+  "experts expert critics critic officials official researchers researcher analysts analyst scientists scientist sources source " +
+  "insiders insider regulators regulator lawmakers lawmaker observers observer executives executive spokesperson spokespeople " +
+  "authorities investors investor economists economist doctors doctor lawyers lawyer studies study reports report polls poll surveys survey " +
+  "experts experte expertes critiques responsables chercheurs chercheuses analystes scientifiques sources autorites investisseurs"
+).split(" "));
+
+/** Capitalised words used mid-sentence anywhere in the copy: those are names, wherever else they appear. */
+function midSentenceNames(fields: string[]): Set<string> {
+  const out = new Set<string>();
+  for (const f of fields) {
+    for (const sentence of stripAllMarkers(f).split(/(?<=[.!?:;])\s+|\s[—–-]\s/)) {
+      const words = sentence.match(/[\p{L}\p{N}][\p{L}\p{N}'’.-]*/gu) ?? [];
+      words.forEach((w, i) => { if (i > 0 && /^\p{Lu}/u.test(w)) out.add(w.replace(/['’]s$/i, "").replace(/[.'’-]+$/, "").toLowerCase()); });
+    }
+  }
+  return out;
+}
+
+/**
+ * Sentence-initial ordinary words: lower-cased (so the guard skips them) when the word is in the
+ * English or French dictionary, is not a known name, is not used as a name elsewhere in the
+ * copy, is not an attribution noun, and is not followed by a speaking verb ("Mark said…").
+ */
+const lowerDictionaryStarts = (s: string, names: Set<string>) => s.replace(/(^|[.!?:;]\s+|\s[—–-]\s)(\p{Lu}[\p{Ll}'’-]+)(?=[^\p{L}]|$)/gu,
+  (match, prefix: string, word: string, at: number, all: string) => {
+    const w = word.toLowerCase();
+    if (!dictionary().has(w) || NAMES_IN_DICTIONARY.has(w) || ATTRIBUTORS.has(w) || names.has(w)) return match;
+    if (SPEAKS.test(all.slice(at + match.length, at + match.length + 40))) return match;
+    return prefix + w;
+  });
+
+/** "AI-driven", "AI-assisted": an ordinary compound, not a name. */
+const lowerAiCompounds = (s: string) => s.replace(/\bAI-([a-z]+)\b/g, "ai-$1");
+
+/**
+ * A country and its adjective are the same fact: "Chinese" is supported by
+ * "China", "American" by "U.S.", "Canada" by "Ottawa" or "Canadian".
+ */
+const PLACES: string[][] = [
+  ["China", "Chinese"], ["America", "American", "Americans", "United States", "U.S.", "US"],
+  ["Canada", "Canadian", "Canadians", "Ottawa"], ["Europe", "European", "Europeans", "EU", "European Union"],
+  ["Britain", "British", "UK", "U.K.", "United Kingdom"], ["France", "French", "Paris"], ["Germany", "German"],
+  ["Japan", "Japanese"], ["India", "Indian"], ["Korea", "Korean", "South Korea", "South Korean"],
+  ["Australia", "Australian"], ["Taiwan", "Taiwanese"], ["Italy", "Italian"], ["Spain", "Spanish"],
+  ["Mexico", "Mexican"], ["Brazil", "Brazilian"], ["Quebec", "Québec", "Quebecer", "Québécois"],
+];
+const withPlaces = (src: string) => {
+  const extra = PLACES.filter(group => group.some(n => new RegExp(`(^|[^\\p{L}])${n.replace(/\./g, "\\.")}(?![\\p{L}])`, "u").test(src)));
+  return extra.length ? `${src}\n${extra.flat().join(". ")}.` : src;
+};
+
 /** French elisions ("l'", "d'", "qu'") hide the word after them; take them off so that word is checked. */
 const unElide = (s: string) => s.replace(/(^|[\s«“"(])(?:[LDJMNSTC]|Qu|Jusqu|Lorsqu|Puisqu)['’](?=\p{L})/giu, "$1");
 
@@ -52,11 +179,13 @@ const unOrdinal = (s: string) => s.replace(/(\d)(?:er|re|ère|e|es|ème|eme|nde?
 
 /** Names and numbers in `fields` that `sourceText` doesn't contain, plus any denial the sources don't make. Empty = passes. */
 export function factGuard(fields: string[], sourceText: string): string[] {
-  const src = unElide(sourceText);
+  const src = withPlaces(unElide(sourceText));
   const bad = new Set<string>();
+  const names = midSentenceNames(fields);
   for (const f of fields) {
     if (!f) continue;
-    for (const w of unsupported(lowerConnectives(unOrdinal(unElide(stripAllMarkers(f)))), src, [...STARTERS, ...HOUSE])) bad.add(w);
+    const text = lowerDictionaryStarts(lowerAiCompounds(lowerGenericStarts(lowerConnectives(unOrdinal(unElide(stripAllMarkers(f)))))), names);
+    for (const w of unsupported(text, src, [...STARTERS, ...HOUSE, ...ACRONYMS])) bad.add(w);
   }
   for (const p of negationProblems(fields, sourceText)) bad.add(p);
   return [...bad];
@@ -125,6 +254,12 @@ export function overlapProblems(d: Draft, sources: { outlet: string; text: strin
 
 export const HYPE = /\b(breaking|shock\w*|stunning|game[- ]?chang\w*|revolution\w*|unprecedented|bombshell|mind[- ]?blowing|insane|terrifying|apocalyp\w*|doom\w*|jaw[- ]?dropping|explosive|choc|boulevers\w*|révolution\w*|incroyable\w*|stupéfiant\w*|terrifiant\w*|sans précédent)\b/i;
 
+/**
+ * A summary claiming the reporting as ours ("we learned", "our reporting" [label-ok: names the ban], "AI Broadsheet has
+ * confirmed"): the outlets did the reporting, so the copy editor must attribute it to them.
+ */
+export const OWN_REPORTING = /\b(we (?:have )?(?:reported|learned|confirmed|obtained|revealed|uncovered)|our (?:own )?(?:reporting|investigation|reporters?|sources)|AI Broadsheet (?:has )?(?:reported|learned|confirmed|obtained|revealed)|notre (?:reportage|enquête)|nos (?:reportages|journalistes|sources)|nous avons (?:appris|confirmé|obtenu|révélé)|AI Broadsheet a (?:appris|confirmé|obtenu|révélé))\b/i;
+
 /** House-style problems a copy editor fixes. Empty = clean. */
 export function styleProblems(d: Draft, lang: "en" | "fr"): string[] {
   const out: string[] = [];
@@ -132,6 +267,8 @@ export function styleProblems(d: Draft, lang: "en" | "fr"): string[] {
   if (/!/.test(all)) out.push("Remove every exclamation mark.");
   const hype = all.match(HYPE);
   if (hype) out.push(`Remove the hype word "${hype[0]}".`);
+  const own = all.match(OWN_REPORTING);
+  if (own) out.push(`"${own[0]}" claims the reporting as ours: this is a summary of the outlets' reporting, so attribute it to them.`);
   if (/[?]/.test(d.headline)) out.push("The headline must be a statement, not a question.");
   if (d.headline.length < 40 || d.headline.length > 110) out.push(`The headline must be 40 to 110 characters (it is ${d.headline.length}).`);
   if (/\b[A-Z]{5,}\b/.test(d.headline.replace(/\b(OpenAI|NVIDIA|UNESCO|NATO|OECD|CIFAR)\b/g, ""))) out.push("No words in ALL CAPS in the headline.");

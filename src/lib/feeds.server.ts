@@ -11,7 +11,7 @@ import { GUIDES } from "./guides";
 import { PATHS } from "./labs";
 import { ACTIVITIES as YOUNG_ACTIVITIES } from "./young-lab";
 import { EDITORIALS } from "./editorials";
-import { TOPICS } from "./news";
+import { DESK_IDS } from "./desks";
 import { loadNews, withTimeout, type NewsPayload, type Story } from "./news-engine";
 import type { Dispatch } from "./dispatch-types";
 import type { NewsroomSummary } from "./newsroom-types";
@@ -70,6 +70,7 @@ const STATIC: Entry[] = [
   { path: "/learn", changefreq: "weekly", priority: "0.6" },
   { path: "/labs", changefreq: "weekly", priority: "0.7" },
   { path: "/editor", changefreq: "weekly", priority: "0.6" },
+  { path: "/books/the-new-cave", changefreq: "monthly", priority: "0.4" },
   { path: "/advertise", changefreq: "monthly", priority: "0.4" },
   { path: "/newsletter", changefreq: "monthly", priority: "0.4" },
   { path: "/about", changefreq: "monthly", priority: "0.4" },
@@ -110,8 +111,8 @@ function urlEntry(e: Entry) {
 
 export async function buildSitemap(): Promise<string> {
   const entries: Entry[] = [...STATIC];
-  for (const tp of TOPICS) entries.push({ path: `/news?section=${tp.id}`, changefreq: "hourly", priority: "0.6" });
-  for (const id of ["world", "canada", "labs", "analysis"]) entries.push({ path: `/news?section=${id}`, changefreq: "hourly", priority: "0.6" });
+  // The five desks are the only sections; old topic sections redirect to them (routes/news.tsx).
+  for (const id of DESK_IDS) entries.push({ path: `/news?section=${id}`, changefreq: "hourly", priority: "0.6" });
   for (const g of GUIDES) entries.push({ path: `/learn/${g.slug}`, changefreq: "monthly", priority: "0.5" });
   for (const p of PATHS) entries.push({ path: `/labs/${p.id}`, changefreq: "monthly", priority: "0.6" });
   // Evergreen: the glossary and the long-form guides.
@@ -132,7 +133,7 @@ export async function buildSitemap(): Promise<string> {
   const articles = await currentArticles();
   const dispatches = await currentDispatches(articles);
   for (const d of dispatches.slice(0, 200)) entries.push({ path: `/dispatch/${d.id}`, changefreq: "weekly", priority: "0.7", lastmod: d.createdAt.slice(0, 10) });
-  // /story pages are noindex or redirect to our articles. Only their canonical
+  // /story pages are noindex or redirect to newsroom summaries. Only their canonical
   // /article destinations belong here; building a sitemap needs no RSS refresh.
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -202,26 +203,21 @@ ${items}
 }
 
 /**
- * Google News sitemap: our own articles from the last 48 hours, in both
+ * Google News sitemap: news of our own from the last 48 hours, in both
  * languages. Aggregator story pages (a publisher's excerpt and link) are
  * noindex and stay out: Google News is for the news we write.
  */
 export async function buildNewsSitemap(): Promise<string> {
-  const articles = await currentArticles();
-  const dispatches = await currentDispatches(articles);
-  const cutoff = Date.now() - 48 * 3600_000;
+  // Empty on purpose (owner's brief, 29 Oct 2026): our newsroom pieces are AI-assisted summaries
+  // of other outlets' reporting, not reporting of our own, so they are not offered to Google News.
+  // List original journalism of our own here once we publish it.
+  // Buildgena Studio pieces approved in the last 48 hours are our own work, each in its own language.
   const news = (loc: string, l: Locale, date: string, title: string) =>
     `<url><loc>${esc(loc)}</loc><news:news><news:publication><news:name>${esc(SITE.name)}</news:name><news:language>${l}</news:language></news:publication><news:publication_date>${date}</news:publication_date><news:title>${esc(title)}</news:title></news:news></url>`;
-  const ours = articles.filter(a => new Date(a.createdAt).getTime() >= cutoff).slice(0, 500)
-    .flatMap(a => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/article/${a.slug[l]}`, l), l, a.createdAt, a[l].headline)));
-  // Until the Newsroom publishes, the Worker desk's dispatches are our articles.
-  const fallback = dispatches.filter(d => new Date(d.createdAt).getTime() >= cutoff).slice(0, 50)
-    .flatMap(d => (["en", "fr"] as Locale[]).map(l => news(absUrl(`/dispatch/${d.id}`, l), l, d.createdAt, d[l].headline)));
-  // Buildgena Studio pieces approved in the last 48 hours, each in its own language.
   const studio = studioRecent(48).map(p => news(absUrl(`/desk/${p.id}`, p.lang), p.lang, p.approvedAt, p.title));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${[...studio, ...ours, ...fallback].join("\n")}
+${studio.join("\n")}
 </urlset>
 `;
 }

@@ -26,7 +26,7 @@ import { getNewsroomFast, useNewsroom, FORMAT_LABEL, newsroomFixtureRequested, t
 import { humanLens, LENS_LABEL } from "@/lib/editorial";
 import {
   getFrontPageNews, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
-  TOPICS, inSection, timeAgo, useNow, type Story, type SectionId, type Cluster,
+  SECTIONS, inSection, timeAgo, useNow, type Story, type SectionId, type Cluster,
 } from "@/lib/news";
 import { useMedia, type MediaItem } from "@/lib/media";
 import { GUIDES } from "@/lib/guides";
@@ -75,7 +75,7 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 }
 
 /** The desks shown as a grid on the front page, in order. */
-const FRONT_DESKS: Topic[] = ["policy", "business", "research", "responsible", "agents", "infrastructure", "people", "health"];
+const FRONT_DESKS: SectionId[] = ["rights", "work", "science", "world"];
 
 const CANADA_HUBS = ["ai-and-jobs-in-canada", "ai-and-privacy"];
 
@@ -284,7 +284,7 @@ function Home() {
             {desks.map(d => (
               <div key={d.id}>
                 <h3 className="flex items-center justify-between gap-2 pb-1 border-b border-ink">
-                  <Link to="/news" search={{ section: d.id }} className="kicker text-ink hover:text-lake">{pick(TOPICS.find(x => x.id === d.id)!.label)}</Link>
+                  <Link to="/news" search={{ section: d.id }} className="kicker text-ink hover:text-lake">{pick(SECTIONS.find(x => x.id === d.id)!.label)}</Link>
                   <MoreLink to="/news" section={d.id} compact />
                 </h3>
                 {d.items.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
@@ -292,7 +292,7 @@ function Home() {
             ))}
           </div>
           <ul className="mt-8 flex flex-wrap gap-2" aria-label={fr ? "Tous les thèmes" : "All desks"}>
-            {TOPICS.filter(tp => !FRONT_DESKS.includes(tp.id)).map(tp => (
+            {SECTIONS.filter(tp => !FRONT_DESKS.includes(tp.id)).map(tp => (
               <li key={tp.id}><Link to="/news" search={{ section: tp.id }} className="inline-flex rounded-full border border-line bg-surface px-3.5 py-1.5 text-[0.9rem] font-semibold hover:border-ink">{pick(tp.label)}</Link></li>
             ))}
           </ul>
@@ -318,13 +318,13 @@ function Home() {
         <section className="container-mw mt-14 grid gap-x-10 gap-y-12 lg:grid-cols-2">
           {analysis.length > 0 && (
             <div>
-              <ZoneHead title={t("analysis", locale)} action={<MoreLink to="/news" section="analysis" />} />
+              <ZoneHead title={t("analysis", locale)} action={<MoreLink to="/news" />} />
               <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">{analysis.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}</div>
             </div>
           )}
           {labs.length > 0 && (
             <div>
-              <ZoneHead title={t("researchLabs", locale)} action={<MoreLink to="/news" section="labs" />} />
+              <ZoneHead title={t("researchLabs", locale)} action={<MoreLink to="/news" section="science" />} />
               <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">{labs.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}</div>
             </div>
           )}
@@ -333,7 +333,7 @@ function Home() {
 
       {(hn.length > 0 || papers.length > 0) && (
         <section className="container-mw mt-14" aria-labelledby="trending">
-          <ZoneHead id="trending" title={t("trending", locale)} action={<MoreLink to="/news" section="trending" />} />
+          <ZoneHead id="trending" title={t("trending", locale)} action={<MoreLink to="/news" />} />
           <div className="grid gap-x-10 gap-y-10 lg:grid-cols-2">
             {hn.length > 0 && (
               <div>

@@ -52,6 +52,8 @@ import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
 import { Route as ApiSubscribeRouteImport } from './routes/api.subscribe'
 import { Route as ApiTipRouteImport } from './routes/api.tip'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as BooksIndexRouteImport } from './routes/books.index'
+import { Route as BooksSlugRouteImport } from './routes/books.$slug'
 import { Route as DeskIndexRouteImport } from './routes/desk.index'
 import { Route as DeskIdRouteImport } from './routes/desk.$id'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
@@ -297,6 +299,16 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
   path: '/article/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksIndexRoute = BooksIndexRouteImport.update({
+  id: '/books/',
+  path: '/books/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BooksSlugRoute = BooksSlugRouteImport.update({
+  id: '/books/$slug',
+  path: '/books/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DeskIndexRoute = DeskIndexRouteImport.update({
   id: '/desk/',
   path: '/desk/',
@@ -487,6 +499,7 @@ export interface FileRoutesByFullPath {
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/books/$slug': typeof BooksSlugRoute
   '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -500,6 +513,7 @@ export interface FileRoutesByFullPath {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/books/': typeof BooksIndexRoute
   '/desk/': typeof DeskIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
@@ -561,6 +575,7 @@ export interface FileRoutesByTo {
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/books/$slug': typeof BooksSlugRoute
   '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -574,6 +589,7 @@ export interface FileRoutesByTo {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/books': typeof BooksIndexRoute
   '/desk': typeof DeskIndexRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
@@ -636,6 +652,7 @@ export interface FileRoutesById {
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/books/$slug': typeof BooksSlugRoute
   '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
@@ -649,6 +666,7 @@ export interface FileRoutesById {
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
+  '/books/': typeof BooksIndexRoute
   '/desk/': typeof DeskIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
@@ -712,6 +730,7 @@ export interface FileRouteTypes {
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
+    | '/books/$slug'
     | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
@@ -725,6 +744,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/books/'
     | '/desk/'
     | '/dispatch/'
     | '/editor/'
@@ -786,6 +806,7 @@ export interface FileRouteTypes {
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
+    | '/books/$slug'
     | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
@@ -799,6 +820,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/books'
     | '/desk'
     | '/dispatch'
     | '/editor'
@@ -860,6 +882,7 @@ export interface FileRouteTypes {
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
+    | '/books/$slug'
     | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
@@ -873,6 +896,7 @@ export interface FileRouteTypes {
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
+    | '/books/'
     | '/desk/'
     | '/dispatch/'
     | '/editor/'
@@ -935,6 +959,7 @@ export interface RootRouteChildren {
   ApiSubscribeRoute: typeof ApiSubscribeRoute
   ApiTipRoute: typeof ApiTipRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
+  BooksSlugRoute: typeof BooksSlugRoute
   DeskIdRoute: typeof DeskIdRoute
   DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
@@ -948,6 +973,7 @@ export interface RootRouteChildren {
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
   VideoSlugRoute: typeof VideoSlugRoute
+  BooksIndexRoute: typeof BooksIndexRoute
   DeskIndexRoute: typeof DeskIndexRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
@@ -1269,6 +1295,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books/': {
+      id: '/books/'
+      path: '/books'
+      fullPath: '/books/'
+      preLoaderRoute: typeof BooksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/books/$slug': {
+      id: '/books/$slug'
+      path: '/books/$slug'
+      fullPath: '/books/$slug'
+      preLoaderRoute: typeof BooksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/desk/': {
       id: '/desk/'
       path: '/desk'
@@ -1519,6 +1559,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSubscribeRoute: ApiSubscribeRoute,
   ApiTipRoute: ApiTipRoute,
   ArticleSlugRoute: ArticleSlugRoute,
+  BooksSlugRoute: BooksSlugRoute,
   DeskIdRoute: DeskIdRoute,
   DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
@@ -1532,6 +1573,7 @@ const rootRouteChildren: RootRouteChildren = {
   OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
   VideoSlugRoute: VideoSlugRoute,
+  BooksIndexRoute: BooksIndexRoute,
   DeskIndexRoute: DeskIndexRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,

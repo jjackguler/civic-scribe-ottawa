@@ -1,3 +1,4 @@
+import { DESKS } from "@/lib/news";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
@@ -42,10 +43,9 @@ export function SiteFooter() {
           <Col title={fr ? "Actualités" : "News"}>
             <li><Link to="/news" className={link}>{fr ? "En continu" : "Latest"}</Link></li>
             <li><Link to="/canada" className={link}>{fr ? "L'IA au Canada" : "AI in Canada"}</Link></li>
-            <li><Link to="/news" search={{ section: "policy" }} className={link}>{fr ? "Politiques" : "Policy"}</Link></li>
-            <li><Link to="/news" search={{ section: "business" }} className={link}>{fr ? "Affaires" : "Business"}</Link></li>
-            <li><Link to="/news" search={{ section: "research" }} className={link}>{fr ? "Recherche" : "Research"}</Link></li>
-            <li><Link to="/news" search={{ section: "responsible" }} className={link}>{fr ? "IA responsable" : "Responsible AI"}</Link></li>
+            {DESKS.filter(d => d.id !== "canada").map(d => (
+              <li key={d.id}><Link to="/news" search={{ section: d.id }} className={link}>{d.label[locale]}</Link></li>
+            ))}
             <li><Link to="/ministry" className={link}>{t("trackerTitle", locale)}</Link></li>
             <li><Link to="/government" className={link}>{t("government", locale)}</Link></li>
           </Col>
@@ -73,6 +73,7 @@ export function SiteFooter() {
             <li><Link to="/corrections" className={link}>Corrections</Link></li>
             <li><Link to="/values" className={link}>{fr ? "Nos valeurs" : "What we stand for"}</Link></li>
             <li><Link to="/about" hash="ownership" className={link}>{fr ? "Propriété et financement" : "Ownership and funding"}</Link></li>
+            <li><Link to="/books/$slug" params={{ slug: "the-new-cave" }} className={link}>{fr ? "Le livre de l'éditeur" : "The editor's book"}</Link></li>
             <li><Link to="/privacy" className={link}>{fr ? "Confidentialité" : "Privacy"}</Link></li>
             <li><Link to="/terms" className={link}>{fr ? "Conditions d'utilisation" : "Terms of use"}</Link></li>
           </Col>

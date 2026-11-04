@@ -15,9 +15,14 @@ export const ORIGINAL_SECTIONS: { id: OriginalSection; en: string; fr: string; d
   { id: "mind", en: "Mind & Society", fr: "Esprit et société", dekEn: "Psychology, behaviour and how AI changes everyday life.", dekFr: "Psychologie, comportements et la façon dont l'IA change le quotidien." },
   { id: "news", en: "News explainers", fr: "Explicatifs d'actualité", dekEn: "The day's AI stories in about a minute.", dekFr: "L'actualité de l'IA en une minute environ." },
 ];
-export function originalSection(o: { id: string; title?: string; section?: OriginalSection }): OriginalSection {
+/**
+ * The video's shelf: always one of the four above. A `section` in the manifest that is not one
+ * of them (a new series, a typo) never adds a shelf: the video goes to its inferred shelf, and
+ * News explainers is the fallback.
+ */
+export function originalSection(o: { id: string; title?: string; section?: OriginalSection | string }): OriginalSection {
   if (isSirJack(o)) return "noir"; // every case of the series sits on its own shelf, whatever its subject
-  if (o.section) return o.section;
+  if (o.section && ORIGINAL_SECTIONS.some(s => s.id === o.section)) return o.section as OriginalSection;
   if (o.id.includes("sir-jack")) return "noir";
   if (o.id.includes("mind-society")) return "mind";
   return "news";
@@ -73,7 +78,7 @@ export type Original = {
   credits?: string;
   /** Frame shape; vertical (9:16) unless set. Motion-comic specials are 16:9. */
   aspect?: "16:9" | "9:16";
-  /** Where the video sends the reader next: our article, or the reporting it was built from. */
+  /** Where the video sends the reader next: the newsroom summary, or the reporting it was built from. */
   readMore?: { url: string; urlFr?: string; en: string; fr: string };
 };
 

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/standards")({
   component: Standards,
 });
 
-const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
+const SECTIONS: { id?: string; alias?: string; h: Bi; p: Bi[] }[] = [
   {
     h: { en: "Editorial leadership", fr: "Direction éditoriale" },
     p: [{ en: `Founder and editor ${SITE.editor.name} sets the editorial direction and is responsible for the publication's work and corrections. AI Broadsheet is published by ${SITE.publisher.name} in ${SITE.publisher.city} and brings together journalism, filmmaking and new forms of storytelling, with a focus on how AI affects people.`, fr: `Le fondateur et responsable éditorial ${SITE.editor.name} définit la ligne éditoriale et répond du travail de la publication et des corrections. Publié par ${SITE.publisher.name} à ${SITE.publisher.city}, AI Broadsheet associe journalisme, cinéma et nouvelles formes de récit pour explorer les effets de l'IA sur les personnes.` }],
@@ -29,9 +29,13 @@ const SECTIONS: { id?: string; h: Bi; p: Bi[] }[] = [
     p: [{ en: "AI supports parts of our research, writing, translation and creative production. AI-assisted work is identified with a label that links to our How we use AI page, which explains each label and the human role behind it. Editorial direction and accountability remain human; AI output can contain errors, which readers can report for correction.", fr: "L'IA soutient certaines étapes de recherche, de rédaction, de traduction et de création. Les contenus réalisés avec son aide portent une étiquette, expliquée sur notre page Comment nous utilisons l'IA avec le rôle humain qui l'accompagne. La direction et la responsabilité éditoriales restent humaines; les productions de l'IA peuvent contenir des erreurs, que les lecteurs peuvent signaler pour correction." }],
   },
   {
-    id: "dispatches",
-    h: { en: "Articles and dispatches", fr: "Articles et dépêches" },
-    p: [{ en: "Our articles and dispatches aim to explain developments in AI and their human consequences. AI-assisted coverage is labelled and remains the publication's responsibility.", fr: "Nos articles et dépêches visent à expliquer les évolutions de l'IA et leurs conséquences humaines. Les contenus réalisés avec l'aide de l'IA sont identifiés et restent sous la responsabilité de la publication." }],
+    id: "newsroom",
+    alias: "dispatches",
+    h: { en: "Newsroom summaries", fr: "Résumés de la rédaction" },
+    p: [
+      { en: "Newsroom summaries are AI-assisted summaries of reporting by other outlets, or of an organization's own announcement. The reporting belongs to those outlets: every summary names them, links to their originals and is labelled as a summary written with AI. Automated checks compare names, numbers and quotations with the sources; they do not replace human verification.", fr: "Les résumés de la rédaction sont des résumés, rédigés avec l'aide de l'IA, de reportages d'autres médias ou de l'annonce d'une organisation. Le reportage appartient à ces médias : chaque résumé les nomme, renvoie à leurs originaux et est identifié comme un résumé rédigé avec l'IA. Des contrôles automatiques comparent les noms, les chiffres et les citations aux sources; ils ne remplacent pas la vérification humaine." },
+      { en: "We call something our own only when we made it: the editor's columns, interviews, videos and immersive projects. Summaries remain the publication's responsibility, and errors in them are corrected like any other.", fr: "Nous ne disons « notre » que pour ce que nous avons fait nous-mêmes : les chroniques de l'éditeur, les entretiens, les vidéos et les projets immersifs. Les résumés restent sous la responsabilité de la publication, et leurs erreurs sont corrigées comme les autres." },
+    ],
   },
   {
     h: { en: "Visual and immersive storytelling", fr: "Récits visuels et immersifs" },
@@ -66,6 +70,8 @@ function Standards() {
         </p>
         {SECTIONS.map(s => (
           <section key={s.h.en} id={s.id} className="mb-10 scroll-mt-24">
+            {/* Older links point here by a previous name (#dispatches). */}
+            {s.alias && <span id={s.alias} className="block scroll-mt-24" aria-hidden="true" />}
             <h2 className="masthead-serif text-[1.7rem] leading-tight mb-3">{pick(s.h)}</h2>
             <div className="prose-mw">{s.p.map(p => <p key={p.en}>{pick(p)}</p>)}</div>
           </section>

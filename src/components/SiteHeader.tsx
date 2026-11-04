@@ -4,7 +4,7 @@ import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
-import { TOPICS, type SectionId } from "@/lib/news";
+import { DESKS, type SectionId } from "@/lib/news";
 import { SITE } from "@/lib/site";
 import { STUDIO } from "@/lib/studio";
 import { localePath } from "@/lib/seo";
@@ -19,11 +19,7 @@ type Item = { label: Bi; to: string; section?: SectionId; hash?: string };
 const BAR: Item[] = [
   { label: { en: "Latest", fr: "En continu" }, to: "/news" },
   { label: { en: "Canada", fr: "Canada" }, to: "/canada" },
-  { label: { en: "Policy", fr: "Politiques" }, to: "/news", section: "policy" },
-  { label: { en: "Business", fr: "Affaires" }, to: "/news", section: "business" },
-  { label: { en: "Research", fr: "Recherche" }, to: "/news", section: "research" },
-  { label: { en: "Responsible AI", fr: "IA responsable" }, to: "/news", section: "responsible" },
-  { label: { en: "Agents", fr: "Agents" }, to: "/news", section: "agents" },
+  ...DESKS.filter(d => d.id !== "canada").map(d => ({ label: d.label, to: "/news" as const, section: d.id })),
   ...(STUDIO.length ? [{ label: { en: "From our desk", fr: "Notre pupitre" }, to: "/desk" }] : []),
   { label: { en: "Explained", fr: "Expliqué" }, to: "/dispatch" },
   { label: { en: "Video", fr: "Vidéo" }, to: "/originals" },
@@ -39,10 +35,7 @@ const GROUPS: { title: Bi; items: Item[] }[] = [
       { label: { en: "AI in Canada", fr: "L'IA au Canada" }, to: "/canada" },
       { label: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" }, to: "/ministry" },
       { label: { en: "Government", fr: "Gouvernement" }, to: "/government" },
-      { label: { en: "World", fr: "Monde" }, to: "/news", section: "world" },
-      { label: { en: "Analysis", fr: "Analyses" }, to: "/news", section: "analysis" },
-      { label: { en: "From the labs", fr: "Des laboratoires" }, to: "/news", section: "labs" },
-      { label: { en: "Trending", fr: "Tendances" }, to: "/news", section: "trending" },
+      ...DESKS.filter(d => d.id !== "canada").map(d => ({ label: d.label, to: "/news" as const, section: d.id })),
     ],
   },
   {
@@ -190,7 +183,7 @@ export function SiteHeader() {
           {desks && (
             <div id="all-desks" className="absolute right-0 top-full w-[min(760px,calc(100vw-32px))] bg-surface text-ink border border-line border-t-[3px] border-t-brass shadow-xl">
               <ul className="grid sm:grid-cols-2 lg:grid-cols-3 p-2">
-                {TOPICS.map(tp => (
+                {DESKS.map(tp => (
                   <li key={tp.id}>
                     <Link to="/news" search={{ section: tp.id }} className="block px-4 py-2.5 rounded-[3px] font-semibold hover:bg-ice">{pick(tp.label)}</Link>
                   </li>
@@ -227,7 +220,7 @@ export function SiteHeader() {
             <div className="border-t-2 border-ink pt-4 pb-10">
               <p className="kicker text-ink">{fr ? "Tous les thèmes" : "All desks"}</p>
               <ul className="mt-3 flex flex-wrap gap-2">
-                {TOPICS.map(tp => (
+                {DESKS.map(tp => (
                   <li key={tp.id}><Link to="/news" search={{ section: tp.id }} className="inline-flex items-center rounded-full border border-line bg-surface px-3.5 py-1.5 text-[0.9rem] font-semibold hover:border-ink">{pick(tp.label)}</Link></li>
                 ))}
               </ul>

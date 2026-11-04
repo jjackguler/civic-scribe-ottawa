@@ -44,11 +44,11 @@ function DispatchIndex() {
           ? "Quand plusieurs médias rapportent le même événement, ou qu'une entreprise, un laboratoire ou un gouvernement annonce sa propre nouvelle, notre salle de rédaction en fait un résumé, avec l'IA, à partir de leurs reportages. Le reportage est le leur : ce qui est confirmé, ce qui est affirmé, ce qu'on ignore encore. Chaque source est en lien."
           : "When several outlets report the same event, or a company, lab or government announces its own news, our newsroom summarizes it, with AI, from their reporting. The reporting is theirs; we lay out what's confirmed, what's claimed, what's still unknown. Every source is linked."}
       >
-        <p className="mt-4"><Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment travaille notre rédaction" : "How our newsroom works"}</Link></p>
+        <p className="mt-4"><Link to="/standards" hash="newsroom" className="text-lake font-semibold hover:underline">{fr ? "Comment sont faits les résumés de la rédaction" : "How newsroom summaries are made"}</Link></p>
       </PageIntro>
       <div className="container-mw mt-10">
         {empty ? (
-          <p className="font-serif text-[1.15rem] max-w-xl">{fr ? "Les premiers articles arrivent bientôt." : "The first articles are on their way."}</p>
+          <p className="font-serif text-[1.15rem] max-w-xl">{fr ? "Les premiers résumés arrivent bientôt." : "The first summaries are on their way."}</p>
         ) : articles.length > 0 ? (
           <NewsroomGrid items={articles} />
         ) : (

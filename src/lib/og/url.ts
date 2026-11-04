@@ -14,7 +14,7 @@ import { quizDay } from "../youth-core";
 import type { Locale } from "../i18n";
 
 /** Bump when the card designs change: every OG URL changes with it, so CDNs and social caches refetch. */
-export const OG_REV = "1";
+export const OG_REV = "2";
 
 export type OgKind = "article" | "quiz" | "section";
 

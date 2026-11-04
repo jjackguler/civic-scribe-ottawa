@@ -39,8 +39,8 @@ export default function ConsentBanner() {
               ? "Votre navigateur envoie un signal Global Privacy Control : les annonces restent non personnalisées."
               : "Your browser sends a Global Privacy Control signal, so ads stay non-personalised.")
             : (fr
-              ? "Les annonces nous financent. Elles sont non personnalisées, sauf si vous acceptez que Google utilise des témoins pour les adapter à vos intérêts. Vous pouvez changer d'avis en tout temps."
-              : "Ads pay for our journalism. They are non-personalised unless you let Google use cookies to tailor them to your interests. You can change your mind at any time.")}{" "}
+              ? "Les annonces aident à financer AI Broadsheet. Elles sont non personnalisées, sauf si vous acceptez que Google utilise des témoins pour les adapter à vos intérêts. Vous pouvez changer d'avis en tout temps."
+              : "Ads help pay for AI Broadsheet. They are non-personalised unless you let Google use cookies to tailor them to your interests. You can change your mind at any time.")}{" "}
           <Link to="/privacy" hash="choices" className="underline underline-offset-2 text-white/85 hover:text-white">{fr ? "En savoir plus" : "Learn more"}</Link>
         </p>
         <div className="flex shrink-0 flex-wrap gap-2">

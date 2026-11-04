@@ -137,8 +137,8 @@ export const STAMP_LABEL: Record<Stamp, Bi> = {
 
 export const STAMP_HELP: Record<Stamp, Bi> = {
   CHECKED: {
-    en: "The editor checked the central facts against the sources listed below.",
-    fr: "Le responsable éditorial a vérifié les faits essentiels auprès des sources citées ci-dessous.",
+    en: "The central facts were checked against the sources listed below.",
+    fr: "Les faits essentiels ont été vérifiés auprès des sources citées ci-dessous.",
   },
   "COMPANY CLAIM": {
     en: "Some statements come from a company about itself and have not been independently confirmed.",

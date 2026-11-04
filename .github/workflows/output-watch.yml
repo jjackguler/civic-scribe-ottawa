@@ -2,7 +2,10 @@
 # articles, Original videos), not whether the workflows went green. Fails,
 # and so emails once a day, only when nothing new was published for too long.
 # No credentials, no paid calls. Limits: vars OUTPUT_WATCH_STALE_HOURS (24),
-# OUTPUT_WATCH_ORIGINALS_STALE_HOURS (72).
+# OUTPUT_WATCH_ORIGINALS_STALE_HOURS (72); the daily minimum comes from
+# newsroom/DIRECTIVES.md (fewer is a warning). A failure also opens (or adds to)
+# one GitHub issue, "Output watch: nothing published", which closes itself when
+# output is back, so a red day can't go unnoticed in the inbox.
 name: Output watch
 
 on:
@@ -12,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   watch:
@@ -28,4 +32,25 @@ jobs:
         env:
           OUTPUT_WATCH_STALE_HOURS: ${{ vars.OUTPUT_WATCH_STALE_HOURS }}
           OUTPUT_WATCH_ORIGINALS_STALE_HOURS: ${{ vars.OUTPUT_WATCH_ORIGINALS_STALE_HOURS }}
+          OUTPUT_WATCH_REPORT: ${{ runner.temp }}/output-watch.md
         run: npx --yes tsx@4 scripts/output-watch.ts
+      - name: Raise the alert issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT: ${{ runner.temp }}/output-watch.md
+        run: |
+          title="Output watch: nothing published"
+          run="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          body="$(cat "$REPORT" 2>/dev/null || echo '- The check itself failed; see the run log.')
+
+          Run: $run. First job of the day: read the latest Newsroom run summary. This issue closes itself when output is back."
+          n=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$n" ]; then gh issue comment "$n" --body "$body"; else gh issue create --title "$title" --body "$body"; fi
+      - name: Close the alert issue when output is back
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh issue list --state open --search "\"Output watch: nothing published\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$n" ]; then gh issue close "$n" --comment "Output is back: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"; fi

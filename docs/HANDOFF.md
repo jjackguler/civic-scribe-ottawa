@@ -3,6 +3,8 @@
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
 Last updated: 31 Oct 2026 (Broadsheet v2 redesign on branch `broadsheet-v2`, PR open, not merged).
+Last updated: 3 Nov 2026 (fixed five desks, truthful summary labels, editor's book page; before that: newsroom
+directives file, morning Canadian AI Brief, Output watch issue).
 
 ## Ground rules from the owner
 - Post only from AI Broadsheet's own accounts. Never touch other brands the owner is logged
@@ -48,6 +50,44 @@ Last updated: 31 Oct 2026 (Broadsheet v2 redesign on branch `broadsheet-v2`, PR 
 - Studio: approved pieces are committed as `src/content/studio/<id>.json`; `scripts/studio-test.ts`
   validates them in CI. The example is only in `scripts/fixtures/studio/`.
 - Dev preview without network: `AIB_NEWS_FIXTURE=1 npx vite dev` serves a fictional desk.
+## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)
+- The site has exactly five sections: Canada, Rights & power, Work & culture, Research, World
+  (`src/lib/desks.ts`). Every feed story, newsroom summary and video maps to one of them
+  (`deskOf`, `deskOfSummary`, `deskOfOriginal`; World is the fallback). A new feed beat or topic
+  never adds a menu entry, chip, sitemap URL or page. Old `/news?section=<topic>` links answer 301
+  to their desk. Explainer shelves are fixed too (`originalSection` clamps unknown values).
+- Newsroom pieces are "Newsroom summaries" / "Résumés de la rédaction": no byline, no "our
+  articles", no "by AI Broadsheet"; the outlets are named and linked. `scripts/labels-test.ts`
+  fails CI on those phrasings and the newsroom copy desk rejects drafts that claim the reporting
+  (`OWN_REPORTING` in `scripts/newsroom/guard.ts`). "Our" is only for what we made.
+- The editor's book: `/books/the-new-cave` (EN/FR), listed under "Books by the editor" on `/editor`,
+  linked from the footer and /about only, never from news pages. Data in `src/lib/books.ts`.
+
+## Newsroom directives (3 Nov 2026)
+- The owner steers the newsroom with one plain file: **`newsroom/DIRECTIVES.md`** on `main`. Every
+  Newsroom run reads it. To change it: open the file on GitHub, click the pencil, edit, "Commit
+  changes". No code, no keys, no Lovable credits; the next run (about 30 minutes) uses it.
+- Sections (keep the `##` headings; one item per line starting with `- `):
+  - **Focus topics**: `label | keywords: a, b, c`. Canadian stories come first, then these.
+  - **Banned topics**: same format; matching stories are skipped before any paid call. They add to
+    the house rules, which stay in code and can't be switched off from this file.
+  - **Tone**: one line each; told to the reporter, copy editor and translator.
+  - **Daily target**: `min` (Output watch warns below it) and `max` (the desks stop for the day once
+    reached). It never raises `NEWSROOM_DAILY_CAP` or the per-run guard.
+  - **Morning brief**: the "Canadian AI Brief", a roundup of 3-6 separate Canadian stories in the
+    first run between 06:00 and 11:00 Toronto time; skipped (with the reason in the log) when there
+    are not enough. `on: no` turns it off.
+- A line that can't be read keeps its default and shows as a yellow warning in the run.
+- Since the same change: thin reports gather other outlets' reports of the same event before being
+  skipped; Output watch also opens one issue, "Output watch: nothing published", when it fails, and
+  closes it when output is back. Newsroom cron moved to :11 and :41 (GitHub was dropping most
+  :00/:30 runs).
+- Unblocked 3 Nov (after run 41638633098 published nothing): the fact guard lets ordinary dictionary
+  words start a sentence ("Falling", "Hardware") and standard acronyms ("LLMs", "GPUs") through, but
+  still rejects invented names and numbers. Official announcements (labs, companies, governments)
+  whose feed excerpt is under 600 characters are read from their own page (`scripts/newsroom/fulltext.ts`:
+  own site only, robots.txt obeyed, 8 pages and 60 s per run, no paid calls). Third-party reporting is
+  never fetched; its bar is unchanged.
 
 ## Generative imagery withdrawn (29 Oct 2026)
 - Owner decision: the three Sir Jack special editions made with Google Flow / Veo (Twenty-Three
@@ -117,7 +157,7 @@ Bio everywhere: "AI news, with the human stakes left in. One catch a day." Sign-
 - Social profiles are in `src/lib/site.ts` (`social`).
 
 ## Pipelines
-- **Newsroom** (`.github/workflows/newsroom.yml`, every 30 min). Gemini writes; writer timeout
+- **Newsroom** (`.github/workflows/newsroom.yml`, every 30 min, steered by `newsroom/DIRECTIVES.md`). Gemini writes; writer timeout
   280 s (`NEWSROOM_TIMEOUT_MS`). `NEWSROOM_REVIEW`: `auto` (default), `hold`, `off`.
 - **Output watch** (`.github/workflows/output-watch.yml`, daily). Goes red when no article for
   24 h or no new video for 72 h. **When it is red, that is the first job of the day.**

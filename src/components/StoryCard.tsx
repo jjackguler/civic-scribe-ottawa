@@ -2,7 +2,7 @@ import { t } from "@/lib/i18n";
 import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import type { Story } from "@/lib/news";
-import { timeAgo, topicLabel, useNow, LEVEL_LABEL, display } from "@/lib/news";
+import { timeAgo, useNow, display, deskOf, deskLabel } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { StoryImage } from "./StoryImage";
 import { AiBadge } from "./Trust";
@@ -36,12 +36,9 @@ export function StoryMeta({ s, className = "", dark = false }: { s: Story; class
   );
 }
 
+/** The story's desk: always one of the five (desks.ts), never a topic of its own. */
 export function storyKicker(s: Story, locale: "en" | "fr") {
-  if (s.minister) return locale === "fr" ? "Ministère de l'IA" : "AI Ministry";
-  if (s.level && s.level !== "federal") return LEVEL_LABEL[s.level][locale];
-  if (s.kind === "lab") return locale === "fr" ? "Laboratoires" : "From the labs";
-  if (s.kind === "analysis") return locale === "fr" ? "Analyse" : "Analysis";
-  return topicLabel(s.topic, locale);
+  return deskLabel(deskOf(s), locale);
 }
 
 /**

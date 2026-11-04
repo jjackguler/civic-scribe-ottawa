@@ -1,6 +1,7 @@
 import type { Locale } from "./i18n";
 import { NEWSROOM_RAW, type NewsroomSummary } from "./newsroom-types";
 import { originalPublishable, type Original } from "./originals-types";
+import { deskLabel, deskOfSummary } from "./desks";
 
 export type BriefSource = { name: string; url: string };
 export type Brief = {
@@ -120,7 +121,8 @@ export function newsroomBrief(a: NewsroomSummary, locale: Locale): Brief {
       locale === "fr"
         ? "Consultez l’article complet pour les sources, les limites et les mises à jour."
         : "Open the full article for its source ledger, limitations and updates.",
-    topic: a.topic,
+    // One of the five desks, never the raw classification topic (desks.ts).
+    topic: deskLabel(deskOfSummary(a), locale),
     format: "carousel",
     date: a.updatedAt,
     coverWord: a.cover[locale].big,
@@ -130,7 +132,8 @@ export function newsroomBrief(a: NewsroomSummary, locale: Locale): Brief {
     path: `${locale === "fr" ? "/fr" : ""}/article/${a.slug[locale]}`,
     // The summary index contains outlet names, not URLs. Never invent source links.
     sources: [],
-    aiLabel: locale === "fr" ? "Rédaction assistée par IA" : "AI-assisted reporting",
+    // A summary of other outlets' reporting, not reporting of our own.
+    aiLabel: locale === "fr" ? "Résumé de la rédaction, rédigé avec l'IA, de reportages d'autres médias" : "Newsroom summary of other outlets' reporting, written with AI",
   };
 }
 

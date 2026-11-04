@@ -28,7 +28,7 @@ export const LINKS: LinkOption[] = [
   { id: "learn", path: "/learn", title: { en: "Guides to using AI", fr: "Guides pour utiliser l'IA" } },
   ...GUIDES.map(g => ({ id: `learn/${g.slug}`, path: `/learn/${g.slug}`, title: g.title })),
   { id: "values", path: "/values", title: { en: "Our values", fr: "Nos valeurs" } },
-  { id: "standards", path: "/standards", title: { en: "How we write and check our articles", fr: "Comment nous écrivons et vérifions nos articles" } },
+  { id: "standards", path: "/standards", title: { en: "How we write and check our newsroom summaries", fr: "Comment nous rédigeons et vérifions les résumés de notre rédaction" } },
 ];
 
 const PASSAGES: Passage[] = [];

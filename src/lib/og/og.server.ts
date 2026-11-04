@@ -64,14 +64,14 @@ export async function ogArticle(request: Request, rawId: string): Promise<Respon
     d = await getDispatchById(id).catch(() => null);
   }
   if (!d) {
-    // Our newsroom's own articles share the article card.
+    // Newsroom summaries share the article card, labelled as summaries ("Reported by" names the outlets).
     const { articleById } = await import("../newsroom.server");
     const a = await articleById(id).catch(() => null);
     if (!a) return fallback(request);
     const v = ogVersion(a.updatedAt);
     return serve(request, {
       kind: "article", locale, id: a.id,
-      kicker: locale === "fr" ? "AI Broadsheet" : "AI Broadsheet",
+      kicker: locale === "fr" ? "Résumé" : "Summary",
       headline: a[locale].headline,
       outlets: [...new Set(a.sources.map(s => s.outlet))],
     }, `n-${a.id}-${locale}-${v}`, url.searchParams.get("v") === v);
@@ -83,7 +83,7 @@ export async function ogArticle(request: Request, rawId: string): Promise<Respon
     kind: "article",
     locale,
     id: d.id,
-    kicker: locale === "fr" ? "Dépêche" : "Dispatch",
+    kicker: locale === "fr" ? "Résumé" : "Summary",
     headline: c.headline,
     outlets,
   }, `a-${d.id}-${locale}-${version}`, url.searchParams.get("v") === version);

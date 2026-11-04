@@ -6,13 +6,17 @@
  */
 import assert from "node:assert/strict";
 import { killedIds, slugify, uniqueSlug, isKilled } from "../../src/lib/newsroom-types";
-import { factGuard, overlapProblems } from "./guard";
+import { factGuard, overlapProblems, OWN_REPORTING } from "./guard";
+import { DESK_IDS, deskOf, deskOfOriginal, deskOfSummary, deskOfTopic, legacySectionDesk } from "../../src/lib/desks";
+import { originalSection } from "../../src/lib/originals-types";
 import { mergeRewrite, shapeDraft, unwrapDraft, type Draft } from "./shape";
 import { editorialGate } from "../../src/lib/editorial";
 import { upsettingReasons } from "./upsetting";
-import { clip, publishedWords } from "./roles";
+import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
+import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
+import { pickBrief, pickEvents, splitForReporting } from "./pick";
+import { enrichOfficial, extractText, officialCandidates, onOwnSite, robotsAllows } from "./fulltext";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
-import { splitForReporting } from "./pick";
 import type { Story } from "../../src/lib/news-engine";
 
 let passed = 0;
@@ -54,6 +58,41 @@ test("sentence-initial connective adverbs pass, but new names and numbers still 
   assert.deepEqual(factGuard(["Alongside Toronto, Northwind cited 99 people."], SRC), ["99", "Toronto"]);
   assert.deepEqual(factGuard(["Northwind met Alongside."], SRC), ["Alongside"]);
   assert.deepEqual(factGuard(["Residents say Aurora-2 is open."], SRC), ["Residents"]);
+});
+test("ordinary openers, AI- compounds and country adjectives pass; spoken attributions still fail", () => {
+  assert.deepEqual(factGuard(["Additionally, Aurora-2 runs on a laptop [s1]. Currently, the model is open [s1]. Developers can run it on one GPU [s1]."], SRC), []);
+  assert.deepEqual(factGuard(["Users need a commercial licence above 50 employees [s1]. AI-driven tutoring is offered by KestrelStudy [s3]."], SRC), []);
+  assert.deepEqual(factGuard(["Users say Aurora-2 is slow."], SRC), ["Users"]);
+  assert.deepEqual(factGuard(["Developers told Northwind it is slow."], SRC), ["Developers"]);
+  assert.deepEqual(factGuard(["Aurora-2 handles France's language well [s1]."], SRC), []);
+  assert.deepEqual(factGuard(["Aurora-2 is a Chinese model."], SRC), ["Chinese"]);
+  assert.deepEqual(factGuard(["Ottawa bought a stake in Cohere."], "The Canadian government bought a stake in Cohere."), []);
+});
+
+// Run 41638633098 (3 Nov 2026) turned down the Canadian AI Brief over these ordinary words.
+test("ordinary words at the start of a sentence pass (Falling, Technological, Artificial, Hardware, Advancements)", () => {
+  const src = "Northwind Labs: chip prices drop for Canadian startups. Maple Tech Review: Aurora-2 runs on one GPU.";
+  assert.deepEqual(factGuard(["Canadian AI Brief: Falling chip prices help startups [s1]. Technological change is fast [s2]. Artificial intelligence tools run on one GPU [s2]."], `${src}\nCanadian AI Brief.`), []);
+  assert.deepEqual(factGuard(["Hardware is cheaper for startups [s1]. Advancements in chips help [s1]."], src), []);
+  // French too.
+  assert.deepEqual(factGuard(["Baisse des prix des puces pour les jeunes pousses [s1]."], "Northwind Labs : les prix des puces baissent."), []);
+});
+test("standard acronyms and their plurals pass (LLMs, GPUs, APIs)", () => {
+  assert.deepEqual(factGuard(["LLMs now run on one laptop [s1]. Aurora-2 needs GPUs with 16 GB [s1]. Developers reach it through APIs [s1]."], SRC), []);
+});
+test("invented names and numbers still fail at the start of a sentence", () => {
+  // Not dictionary words.
+  assert.deepEqual(factGuard(["Zentrix Labs released Aurora-2 [s1]."], SRC), ["Zentrix"]);
+  // Dictionary words that are names of companies or places.
+  assert.deepEqual(factGuard(["Apple released Aurora-2 [s1]."], SRC), ["Apple"]);
+  assert.deepEqual(factGuard(["Victoria hosts Northwind Labs [s1]."], SRC), ["Victoria"]);
+  // A dictionary word used as a name elsewhere in the copy is a name.
+  assert.deepEqual(factGuard(["Falcon released a model [s1].", "The model is called Falcon [s1]."], SRC), ["Falcon"]);
+  // A dictionary word that speaks is an invented attribution.
+  assert.deepEqual(factGuard(["Hunter said Aurora-2 is open."], SRC), ["Hunter"]);
+  assert.deepEqual(factGuard(["Critics say Aurora-2 is open."], SRC), ["Critics"]);
+  // Numbers are never words.
+  assert.ok(factGuard(["Falling prices cut costs by 40 percent [s1]."], SRC).includes("40 percent"));
 });
 
 test("transitively linked unrelated stories are separated for reporting", () => {
@@ -214,6 +253,218 @@ await test("house rule: stories that could upset people are turned down, useful 
   assert.deepEqual(upsettingReasons("OpenAI acquires Orchestra Bio to expand its life sciences AI tools"), []);
   assert.deepEqual(upsettingReasons("Bank of Canada tests AI for loan reviews"), []);
 });
+test("a surname ending in -ly is a name, not an adverb (Connolly, Reilly)", () => {
+  assert.deepEqual(factGuard(["Connolly says Aurora-2 is open [s1]."], SRC), ["Connolly"]);
+  assert.deepEqual(factGuard(["Reilly, a researcher, tested Aurora-2."], SRC), ["Reilly"]);
+  assert.deepEqual(factGuard(["Additionally, Aurora-2 runs on a laptop [s1]. Previously, the model was closed."], SRC), []);
+});
+
+console.log("owner's directives (newsroom/DIRECTIVES.md)");
+const DIR = await loadDirectives();
+test("the repository's directives file reads cleanly", () => {
+  assert.equal(DIR.from, "newsroom/DIRECTIVES.md");
+  assert.deepEqual(DIR.warnings, []);
+  assert.ok(DIR.focus.length >= 3 && DIR.focus[0].keywords.includes("Canada"), JSON.stringify(DIR.focus[0]));
+  assert.ok(DIR.banned.length >= 1);
+  assert.deepEqual(DIR.target, { min: 3, max: 5 });
+  assert.equal(DIR.brief.on, true);
+  assert.equal(DIR.brief.title.en, "Canadian AI Brief");
+  assert.deepEqual([DIR.brief.fromHour, DIR.brief.toHour, DIR.brief.minStories, DIR.brief.maxStories], [6, 11, 3, 6]);
+});
+test("a missing file or a broken line falls back to the defaults, with a warning", () => {
+  const none = parseDirectives(null);
+  assert.equal(none.from, "defaults");
+  assert.deepEqual(none.target, DEFAULT_DIRECTIVES.target);
+  assert.equal(none.warnings.length, 1);
+  const bad = parseDirectives("## Daily target\n- min: lots\n- max: 2\n## Morning brief\n- on: no\n- window: mornings\n");
+  assert.deepEqual(bad.target, { min: 3, max: 3 }, "max below the default min is raised to min");
+  assert.equal(bad.brief.on, false);
+  assert.equal(bad.brief.fromHour, 6);
+  assert.ok(bad.warnings.some(w => w.includes("min")) && bad.warnings.some(w => w.includes("window")), bad.warnings.join(" / "));
+  assert.equal(DEFAULT_DIRECTIVES.target.max, 5, "parsing never changes the defaults");
+});
+test("notes in brackets are ignored; keywords match whole words only", () => {
+  const d = parseDirectives("## Banned topics\n(only a note)\n- Crypto | keywords: crypto, token sale\n");
+  assert.equal(d.banned.length, 1);
+  assert.equal(bannedBy("A new crypto exchange opens", d), "Crypto");
+  assert.equal(bannedBy("Cryptography researchers publish a paper", d), null);
+  assert.ok(matchesTopic("Cohere raises a Series E", { label: "x", keywords: ["series e"] }));
+  assert.ok(!matchesTopic("Apple ships a model", { label: "x", keywords: ["app"] }));
+});
+test("the desks are told the directives, and that they never override the rules or the sources", () => {
+  const r = directivesPrompt(DIR, "reporter");
+  assert.match(r, /never override the hard rules/);
+  assert.match(r, /Canadian AI policy/);
+  assert.match(r, /never invent a Canadian angle/);
+  assert.match(directivesPrompt(DIR, "standards"), /FAIL an article/);
+  assert.doesNotMatch(directivesPrompt(DIR, "standards"), /Tone:/);
+  assert.match(briefPrompt(DIR.brief.title), /SEVERAL SEPARATE Canadian AI stories/);
+});
+test("the daily target only ever stops work early", () => {
+  assert.equal(targetRoom(0, DIR), 5);
+  assert.equal(targetRoom(4, DIR), 1);
+  assert.equal(targetRoom(7, DIR), 0);
+});
+
+console.log("picking events (directives, gathering, the morning brief)");
+const NOW = Date.now();
+const hAgo = (h: number, now = NOW) => new Date(now - h * 3600_000).toISOString();
+const story = (p: Partial<Story> & Pick<Story, "id" | "title" | "summary" | "source">, now = NOW): Story => ({
+  link: `https://example.com/${p.id}`, sourceId: p.source.toLowerCase().replace(/[^a-z]+/g, "-"), region: "world", topic: "business", tags: ["business"],
+  lang: "en", image: null, kind: "news", gov: false, lab: false, level: null, minister: false, publishedAt: hAgo(2, now), ...p,
+});
+const SEEN = () => ({ ids: new Set<string>(), storyIds: new Set<string>(), killed: new Set<string>(), rejectedAt: new Map<string, string>() });
+const LONG = (s: string) => `${s} `.repeat(Math.ceil(320 / (s.length + 1))).trim().slice(0, 320);
+test("a thin single report gathers another outlet's report of the same event before giving up", () => {
+  const a = story({ id: "g1", source: "Maple Tech Review", title: "Ottawa opens a compute fund for startups", summary: LONG("The federal compute fund gives Canadian startups cheaper access to sovereign GPU capacity, the department said on Monday.") });
+  const b = story({ id: "g2", source: "Lakeshore Tribune", title: "Federal program offers startups cheaper GPU time", summary: LONG("Canadian startups can apply to the federal compute fund for sovereign GPU capacity at lower prices, the department said.") });
+  const { events, skipped } = pickEvents([a, b], SEEN(), NOW, DIR);
+  assert.equal(events.length, 1, JSON.stringify(skipped));
+  assert.deepEqual(events[0].sources.map(s => s.outlet).sort(), ["Lakeshore Tribune", "Maple Tech Review"]);
+  assert.equal(events[0].gathered, 1);
+  assert.ok(skipped.some(s => s.why === "already part of another event in this run"), JSON.stringify(skipped));
+});
+test("a thin report with no other outlet on the same event is still skipped, and says so", () => {
+  const a = story({ id: "t1", source: "Maple Tech Review", title: "Northwind adds a French voice to its assistant", summary: "Northwind added a French voice to its assistant on Tuesday." });
+  const c = story({ id: "t2", source: "Lakeshore Tribune", title: "Port of Halifax tests sorting robots", summary: "The port tests robots." });
+  const { events, skipped } = pickEvents([a, c], SEEN(), NOW, DIR);
+  assert.equal(events.length, 0);
+  assert.match(skipped.find(s => s.id === "t1")!.why, /no other outlet found; needs 450/);
+});
+test("banned topics are skipped before any paid call; Canadian events come first", () => {
+  const w1 = story({ id: "w1", source: "Outlet A", title: "Northwind and Kestrel sign a chip supply deal in Taipei", summary: LONG("Northwind and Kestrel signed a chip supply deal in Taipei covering accelerators.") });
+  const w2 = story({ id: "w2", source: "Outlet B", title: "Northwind Kestrel chip supply deal signed in Taipei", summary: LONG("The chip supply deal between Northwind and Kestrel was signed in Taipei.") });
+  const c1 = story({ id: "c1", region: "canada", source: "Outlet C", title: "Quebec opens Lumen AI tutoring pilot in Montreal schools", summary: LONG("Quebec opened the Lumen AI tutoring pilot for Montreal teachers.") });
+  const c2 = story({ id: "c2", region: "canada", source: "Outlet D", title: "Lumen AI tutoring pilot opens in Quebec, Montreal first", summary: LONG("The Lumen AI tutoring pilot opened in Quebec, starting in Montreal.") });
+  const x1 = story({ id: "x1", source: "Outlet E", title: "Bitcoin miners pivot to Brightwater AI hosting", summary: LONG("Bitcoin miners are moving their sites to Brightwater AI hosting.") });
+  const x2 = story({ id: "x2", source: "Outlet F", title: "Brightwater AI hosting draws bitcoin miners", summary: LONG("Bitcoin miners now rent Brightwater AI hosting space.") });
+  const { events, skipped } = pickEvents([w1, w2, c1, c2, x1, x2], SEEN(), NOW, DIR);
+  assert.deepEqual(events.map(e => e.region), ["canada", "world"], JSON.stringify(events.map(e => e.id)));
+  assert.ok(skipped.some(s => /banned topic \(Crypto/.test(s.why)), JSON.stringify(skipped));
+});
+// A clock in the brief window (Toronto 06:00-11:00): 14:00 UTC is 09:00 or 10:00 in Toronto.
+const MORNING = Date.parse(`${new Date().toISOString().slice(0, 10)}T14:00:00Z`);
+const ca = (id: string, title: string, summary: string) => story({ id, region: "canada", source: `Outlet ${id}`, title, summary: LONG(summary) }, MORNING);
+const CANADA = [
+  ca("b1", "Mila opens a public AI course for Quebec nurses", "Mila opened a free public AI course for Quebec nurses this week."),
+  ca("b2", "Ontario funds an AI tool for small farms", "Ontario will fund an AI tool that helps small farms plan crops."),
+  ca("b3", "Vector Institute publishes a model safety benchmark", "The Vector Institute published a safety benchmark for language models."),
+  ca("b4", "Mila public AI course for Quebec nurses opens", "Quebec nurses can take the free public AI course from Mila."),
+];
+test("the morning brief picks one story per event, in its window, once a day", () => {
+  const { hour, date } = torontoClock(MORNING);
+  assert.ok(hour >= 6 && hour < 11, String(hour));
+  const r = pickBrief(CANADA, SEEN(), MORNING, DIR);
+  assert.ok(r.event, r.why);
+  assert.equal(r.event!.id, `brief-${date}`);
+  assert.equal(r.event!.sources.length, 3, "b1 and b4 are the same event");
+  assert.equal(r.event!.brief?.title.en, "Canadian AI Brief");
+  assert.equal(pickBrief(CANADA, SEEN(), MORNING + 6 * 3600_000, DIR).event, null, "afternoon: outside the window");
+  const seen = SEEN(); seen.ids.add(`brief-${date}`);
+  assert.match(pickBrief(CANADA, seen, MORNING, DIR).why, /already published today/);
+  assert.match(pickBrief(CANADA.slice(0, 2), SEEN(), MORNING, DIR).why, /only 2 separate Canadian stories/);
+  assert.equal(pickBrief(CANADA, SEEN(), MORNING, parseDirectives("## Morning brief\n- on: no\n")).event, null);
+});
+test("the brief's own name passes the fact guard; invented facts in it still fail", () => {
+  const e = pickBrief(CANADA, SEEN(), MORNING, DIR).event as Event;
+  assert.deepEqual(factGuard(["Canadian AI Brief: Mila opens a public AI course for Quebec nurses [s1]."], sourceText(e)), []);
+  assert.deepEqual(factGuard(["Canadian AI Brief: Mila opens a course in Halifax."], sourceText(e)), ["Halifax"]);
+});
+test("the brief never includes a story the house rules turn down", () => {
+  const extra = ca("b5", "Police charge man over AI deepfake scheme in Toronto", "Police charged a man over a deepfake scheme.");
+  const r = pickBrief([...CANADA, extra], SEEN(), MORNING, DIR);
+  assert.ok(r.event && !r.event.sources.some(s => s.storyId === "b5"));
+});
+test("a summary never claims the outlets' reporting as ours", () => {
+  for (const bad of ["We learned that the model ships in May.", "According to our reporting, the lab hired 40 people.", "AI Broadsheet has confirmed the deal.", "Notre reportage montre que le projet avance.", "Nous avons appris que le laboratoire ferme."])
+    assert.ok(OWN_REPORTING.test(bad), bad);
+  for (const ok of ["TechCrunch reported that the model ships in May [s1].", "Our guide explains how to change the setting [b1].", "La Presse rapporte que le projet avance [s1]."])
+    assert.ok(!OWN_REPORTING.test(ok), ok);
+});
+const deskStory = (p: Partial<Story>): Story => ({ id: "x", title: "", summary: "", link: "", source: "S", sourceId: "s", region: "world", topic: "applications", tags: ["applications"], lang: "en", publishedAt: "2026-11-01T00:00:00Z", image: null, kind: "news", gov: false, lab: false, level: null, minister: false, ...p });
+test("every story maps to one of the five desks, Canada first, World as the fallback", () => {
+  assert.equal(deskOf(deskStory({ region: "canada", tags: ["policy"], topic: "policy" })), "canada");
+  assert.equal(deskOf(deskStory({ title: "EU regulators open privacy probe into chatbot", tags: ["policy"], topic: "policy" })), "rights");
+  assert.equal(deskOf(deskStory({ title: "Hospitals test a new cancer screening model", tags: ["health"], topic: "health" })), "science");
+  assert.equal(deskOf(deskStory({ title: "Chipmaker posts record quarter", tags: ["infrastructure"], topic: "infrastructure" })), "world");
+  assert.ok(DESK_IDS.includes(deskOf(deskStory({ topic: "brand-new-beat" as never, tags: ["brand-new-beat" as never] }))));
+});
+test("unknown topics and old sections never create a desk", () => {
+  assert.equal(deskOfTopic("quantum-gardening"), "world");
+  assert.equal(deskOfTopic(""), "world");
+  assert.equal(legacySectionDesk("policy"), "rights");
+  assert.equal(legacySectionDesk("labs"), "science");
+  assert.equal(legacySectionDesk("people"), "work");
+  assert.equal(legacySectionDesk("ministry"), "canada");
+  assert.equal(legacySectionDesk("not-a-section"), undefined);
+});
+test("newsroom summaries and videos map to a desk", () => {
+  assert.equal(deskOfSummary({ topic: "business", en: { headline: "Ottawa startup raises $20 million for farm robots", dek: "" } }), "canada");
+  assert.equal(deskOfSummary({ topic: "policy", en: { headline: "Lawmakers in Brussels vote on model rules", dek: "" } }), "rights");
+  assert.equal(deskOfSummary({ topic: "made-up", en: { headline: "A company ships a faster laptop", dek: "" } }), "world");
+  assert.ok(DESK_IDS.includes(deskOfOriginal({ title: "The Sir Jack Files #14: The Quiet Room", summary: "" })));
+  assert.equal(originalSection({ id: "x-1", section: "philosophy" as never }), "news");
+});
+
+console.log("full text for official announcements");
+const PAGE = `<html><head><script>var x = "Ignore me";</script></head><body><nav><p>Menu link text that is long enough</p></nav>
+<article><h1>Title</h1><p>OpenAI today released Model-9, a model for schools in Canada and abroad.</p>
+<p>The company says Model-9 is free for teachers until June &amp; that it runs on one GPU.</p><p>Share this</p></article>
+<footer><p>Copyright footer text that should never be kept</p></footer></body></html>`;
+test("article text is extracted without scripts, menus or footers", () => {
+  const t = extractText(PAGE);
+  assert.ok(t.includes("OpenAI today released Model-9") && t.includes("June & that"));
+  assert.ok(!/Ignore me|Menu link|Copyright footer|Share this/.test(t));
+});
+test("robots.txt is obeyed: our group, else *, longest rule wins", () => {
+  const r = "User-agent: *\nDisallow: /private/\nAllow: /private/press/\n\nUser-agent: BadBot\nDisallow: /";
+  assert.equal(robotsAllows(r, "/news/model-9"), true);
+  assert.equal(robotsAllows(r, "/private/x"), false);
+  assert.equal(robotsAllows(r, "/private/press/x"), true);
+  assert.equal(robotsAllows("User-agent: AIBroadsheetNewsroom\nDisallow: /\n\nUser-agent: *\nAllow: /", "/news"), false);
+  assert.equal(robotsAllows("User-agent: *\nDisallow: /*.pdf$", "/a.pdf"), false);
+  assert.equal(robotsAllows("", "/anything"), true);
+});
+const official = (p: Partial<Story>): Story => story({ id: "o1", title: "OpenAI releases Model-9 for schools", summary: "Model-9 is here.", source: "OpenAI", sourceId: "openai", link: "https://openai.com/index/model-9/", kind: "lab", lab: true, ...p });
+test("only first-party pages on the source's own site are candidates; third-party reporting never is", () => {
+  assert.deepEqual(officialCandidates([official({})]).map(s => s.id), ["o1"]);
+  assert.deepEqual(officialCandidates([official({ link: "https://someblog.example/openai-model-9" })]), []);
+  assert.deepEqual(officialCandidates([story({ id: "n1", title: "TechCrunch on Model-9", summary: "Short.", source: "TechCrunch", sourceId: "techcrunch", link: "https://techcrunch.com/x" })]), []);
+  assert.deepEqual(officialCandidates([official({ summary: "x".repeat(700) })]), []);
+  assert.ok(onOwnSite("https://www.canada.ca/en/innovation/news/2026/11/x.html", "https://www.canada.ca/en/news.html"));
+});
+const asyncTests: [string, () => Promise<void>][] = [
+  ["a short official excerpt is replaced by its own page's text, and then clears the length bar", async () => {
+    const s = official({});
+    const calls: string[] = [];
+    const fake = async (u: string) => { calls.push(u); return u.endsWith("/robots.txt") ? new Response("User-agent: *\nDisallow: /private/", { status: 200 }) : new Response(PAGE.replace("</article>", `<p>${"Teachers can sign up through their school board, the company says. ".repeat(12)}</p></article>`), { status: 200, headers: { "content-type": "text/html" } }); };
+    assert.equal(await enrichOfficial([s], { fetch: fake }), 1);
+    assert.ok(s.summary.length >= 600 && s.summary.startsWith("Title") === false && s.summary.includes("Model-9"));
+    assert.deepEqual(calls, ["https://openai.com/robots.txt", "https://openai.com/index/model-9/"]);
+    const r = pickEvents([s], SEEN());
+    assert.equal(r.events.length, 1, r.skipped.map(x => x.why).join("; "));
+  }],
+  ["robots.txt that disallows, or can't be read, means no fetch", async () => {
+    const s = official({});
+    let pages = 0;
+    const deny = async (u: string) => u.endsWith("/robots.txt") ? new Response("User-agent: *\nDisallow: /", { status: 200 }) : (pages++, new Response(PAGE, { status: 200, headers: { "content-type": "text/html" } }));
+    assert.equal(await enrichOfficial([s], { fetch: deny }), 0);
+    const down = async (u: string) => u.endsWith("/robots.txt") ? new Response("", { status: 503 }) : (pages++, new Response(PAGE, { status: 200, headers: { "content-type": "text/html" } }));
+    assert.equal(await enrichOfficial([official({ id: "o2" })], { fetch: down }), 0);
+    assert.equal(pages, 0);
+    assert.equal(s.summary, "Model-9 is here.");
+  }],
+  ["at most `max` pages per run, and network errors never throw", async () => {
+    const many = Array.from({ length: 5 }, (_, i) => official({ id: `m${i}`, link: `https://openai.com/index/m${i}/` }));
+    let pages = 0;
+    const fake = async (u: string) => { if (u.endsWith("/robots.txt")) return new Response("", { status: 404 }); pages++; throw new Error("ECONNRESET"); };
+    assert.equal(await enrichOfficial(many, { fetch: fake, max: 2 }), 0);
+    assert.equal(pages, 2);
+  }],
+];
+for (const [name, fn] of asyncTests) {
+  try { await fn(); passed++; console.log(`  ✓ ${name}`); } catch (e) { failures.push(name); console.log(`  ✗ ${name}\n    ${(e as Error).message.split("\n").join("\n    ")}`); }
+}
 console.log(`\n${passed} passed, ${failures.length} failed`);
 process.exit(failures.length ? 1 : 0);
 

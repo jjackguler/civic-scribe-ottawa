@@ -6,4 +6,3 @@ Disallow: /fr/editor/tools
 Disallow: /api/
 
 Sitemap: https://aibroadsheet.com/sitemap.xml
-Sitemap: https://aibroadsheet.com/news-sitemap.xml

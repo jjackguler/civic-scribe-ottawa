@@ -129,7 +129,7 @@ export function LiveHero({ slides, latest, own = [] }: { slides: HeroSlide[]; la
                 </span>
                 <span className="hidden md:block mt-2 text-[0.8rem] font-semibold leading-snug line-clamp-2">
                   {sl.kind === "original" && <span className="text-signal">{fr ? "Vidéo · " : "Video · "}</span>}
-                  {sl.kind === "article" && <span className="text-signal">{fr ? "Rédaction · " : "Newsroom · "}</span>}
+                  {sl.kind === "article" && <span className="text-signal">{fr ? "Résumé · " : "Summary · "}</span>}
                   {slideTitle(sl, locale)}
                 </span>
               </button>
@@ -294,8 +294,8 @@ function OriginalStage({ o, onPlayingChange }: { o: Original; onPlayingChange: (
 }
 
 /**
- * One of our newsroom's articles on the stage: our headline and dek beside its
- * house cover (typographic, never a publisher's photo).
+ * A newsroom summary on the stage: its headline and dek beside its house cover
+ * (typographic, never a publisher's photo), labelled as a summary of others' reporting.
  */
 function ArticleStage({ a }: { a: NewsroomSummary }) {
   const { locale } = useLocale();
@@ -309,7 +309,7 @@ function ArticleStage({ a }: { a: NewsroomSummary }) {
       <div className="lead-copy min-w-0 flex">
         <div className="w-full flex flex-col justify-center p-5 sm:p-7 border-l-[4px] border-signal">
           <p className="flex flex-wrap items-center gap-2 text-[0.8rem] font-bold">
-            <span className="bg-signal text-signal-ink px-2 py-0.5">{fr ? "Rédaction AI Broadsheet" : "AI Broadsheet Newsroom"}</span>
+            <span className="bg-signal text-signal-ink px-2 py-0.5">{fr ? "Résumé de la rédaction" : "Newsroom summary"}</span>
             <span className="text-signal">{FORMAT_LABEL[a.format]?.[locale]}</span>
           </p>
           <h2 className="hl lead-headline text-white mt-3 group-hover:underline decoration-signal decoration-2 underline-offset-4">
@@ -334,9 +334,9 @@ function OwnColumn({ items }: { items: OwnItem[] }) {
   const now = useNow();
   const row = "group grid grid-cols-[72px_minmax(0,1fr)] gap-3 py-3 transition-transform duration-200 hover:translate-x-1";
   return (
-    <aside className="frontpage-live min-w-0" aria-label={fr ? "De notre rédaction" : "From our newsroom"}>
+    <aside className="frontpage-live min-w-0" aria-label={fr ? "Nos vidéos et les résumés de la rédaction" : "Our videos and newsroom summaries"}>
       <div className="flex items-baseline justify-between gap-3 pb-3 border-b-[3px] border-signal">
-        <p className="font-bold text-[1.15rem]">{fr ? "De notre rédaction" : "From our newsroom"}</p>
+        <p className="font-bold text-[1.15rem]">{fr ? "Vidéos et résumés" : "Videos and summaries"}</p>
         <Link to="/originals" className="text-[0.85rem] font-semibold text-white/70 hover:text-signal">{fr ? "Tout voir" : "See all"}</Link>
       </div>
       <p className="text-[0.8rem] text-white/60 mt-2">{fr ? "Nos vidéos et nos résumés de reportages d'autres médias, vérifiés contre leurs sources." : "Our videos, and summaries of other outlets' reporting, checked against their sources."}</p>

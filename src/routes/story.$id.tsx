@@ -12,7 +12,7 @@ import { ExplainLike12 } from "@/components/YouthKit";
 import { FromOurDesk } from "@/components/StudioCards";
 import { keepNames } from "@/components/Dispatch";
 import { AiBadge, Breadcrumbs } from "@/components/Trust";
-import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isBreaking, isFrontPool, display, inSection, SECTIONS, type NewsPayload } from "@/lib/news";
+import { getAiNewsFast, useAiNews, byLocale, diversify, clusterStories, isDeveloping, isBreaking, isFrontPool, display, inSection, deskOf, SECTIONS, type NewsPayload } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
@@ -112,7 +112,7 @@ function StoryPage() {
   const d = display(s, locale);
   const cluster = clusters.find(c => c.stories.some(x => x.id === s.id));
   const coverage = cluster ? cluster.stories.filter(x => x.id !== s.id) : [];
-  const deskId = s.tags?.[0] ?? s.topic;
+  const deskId = deskOf(s);
   const desk = SECTIONS.find(x => x.id === deskId);
   const more = diversify(all.filter(x => x.id !== s.id && !coverage.includes(x) && inSection(x, deskId)), 1, 8).slice(0, 6);
   const latest = diversify(all.filter(isFrontPool));

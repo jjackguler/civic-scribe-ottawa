@@ -30,6 +30,10 @@ So at least 6 model calls per published article, more when the translator retrie
 - Daily cap (`NEWSROOM_DAILY_CAP`, default 40) used to count only outcomes on record (published + rejected), so model/infra failures were not counted. The run now writes `attempts.json` in the newsroom store before each event and uses whichever count is higher. It relies on the workflow's concurrency group; it is not safe for parallel runs.
 - The run summary logs effective provider, models, calls, tokens and estimated spend. Error logs keep only the HTTP status , never keys or full provider bodies.
 
+## Owner's directives and cost (3 Nov 2026)
+
+`newsroom/DIRECTIVES.md` can only reduce spend: banned topics are skipped before any call, and the daily target's `max` (default 5 published) stops the run for the day once reached. It never raises `NEWSROOM_DAILY_CAP`, `NEWSROOM_MAX_PER_RUN` or the per-run guard. The morning Canadian AI Brief is one event through the same six desks, counted like any other attempt. The pick stage now asks for at least 400 characters of excerpts before writing a multi-outlet event (was 240; those events were turned down by the reporter at a paid call anyway).
+
 ## Illustrative monthly estimate
 
 Source: <https://ai.google.dev/gemini-api/docs/pricing> (check before relying on it). As given for this estimate: Gemini 3.1 Flash-Lite $0.25 in / $1.50 out per 1M tokens; Gemini 3.8 Flash $0.75 / $3.75 until 2026-12-31.

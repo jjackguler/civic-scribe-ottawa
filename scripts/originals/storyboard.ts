@@ -97,7 +97,7 @@ const shortDate = (iso?: string) => { const d = iso ? new Date(iso) : null; retu
 const fmtN = (n: number, d = 0) => d ? n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }) : Math.round(n).toLocaleString("en-US");
 export const listNames = (xs: string[]) => xs.length <= 1 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`;
 
-/** The request: numbered sources, our reporting, the editor's note, and the material available. */
+/** The request: numbered sources, the newsroom summary, the editor's note, and the material available. */
 function userMessage(brief: Brief, figures: KitFigure[], feedback?: string[]): string {
   const req = {
     sources: brief.items.map((it, i) => ({ n: i + 1, publisher: it.publisher, headline: it.headline, excerpt: it.excerpt || undefined, published: it.published })),

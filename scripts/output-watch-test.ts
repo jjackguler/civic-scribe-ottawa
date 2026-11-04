@@ -37,4 +37,13 @@ assert.equal(
   ).problems.length,
   1,
 );
+// Zero attempts today on a stale day: say where to look (picker or busy provider, not a key).
+const idle = assess(now, [{ id: "a", createdAt: "2026-10-14T10:00:00Z" }], [{ publishedAt: "2026-10-15T10:00:00Z" }], { date: "2026-10-16", count: 0 }, 24, 72, 3);
+assert.equal(idle.problems.length, 1);
+assert.match(idle.warnings[0], /No event was attempted today/);
+// Below the owner's daily minimum is a warning, not a failure.
+const thin = assess(now, [{ id: "a", createdAt: "2026-10-16T10:00:00Z" }], [{ publishedAt: "2026-10-15T10:00:00Z" }], { date: "2026-10-16", count: 4 }, 24, 72, 3);
+assert.deepEqual(thin.problems, []);
+assert.match(thin.warnings[0], /Only 1 article.*at least 3/);
+assert.deepEqual(fresh.warnings, []);
 console.log("Output watch checks passed.");

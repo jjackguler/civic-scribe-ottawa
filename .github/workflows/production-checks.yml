@@ -36,6 +36,7 @@ jobs:
           npx tsx ../output-watch-test.ts
           npx tsx ../studio-test.ts
           npx tsx ../forms-test.ts
+          npx tsx ../labels-test.ts
           npx tsx run.ts --dry-run --store out/ci-fixture
       - name: Build the existing site
         run: npm run build

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { Fragment, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
@@ -9,7 +9,7 @@ import { NewsletterPromo } from "@/components/NewsletterBox";
 import { Breadcrumbs } from "@/components/Trust";
 import { AdSlot } from "@/components/AdSlot";
 import {
-  getAiNewsFast, useAiNews, byLocale, diversify, display, SECTIONS, SECTION_ABOUT, RELATED_SECTIONS, inSection, isFrontPool, timeAgo, useNow, type SectionId,
+  getAiNewsFast, useAiNews, byLocale, diversify, display, SECTIONS, SECTION_ABOUT, RELATED_SECTIONS, inSection, isFrontPool, timeAgo, useNow, isDeskId, legacySectionDesk, type SectionId,
   type Story,
 } from "@/lib/news";
 import { useLocale } from "@/lib/locale-context";
@@ -27,7 +27,16 @@ const ALL_ABOUT = {
 export const Route = createFileRoute("/news")({
   validateSearch: (s: Record<string, unknown>): Search => {
     const v = s.section ?? s.topic;
-    return { section: typeof v === "string" && SECTIONS.some(x => x.id === v) ? (v as SectionId) : undefined };
+    // Old topic and section ids (policy, labs, analysis, …) are kept as given here and moved to their desk below.
+    return { section: typeof v === "string" && v ? (v as SectionId) : undefined };
+  },
+  // The site has five desks and no other sections: an old section link answers 301 with its parent desk,
+  // and an id that was never a section lands on the full feed.
+  beforeLoad: ({ search }) => {
+    const v = search.section;
+    if (v === undefined || isDeskId(v)) return;
+    const desk = legacySectionDesk(v);
+    throw redirect({ to: "/news", search: desk ? { section: desk } : {}, statusCode: 301 });
   },
   loader: () => getAiNewsFast(),
   head: ({ match }) => {

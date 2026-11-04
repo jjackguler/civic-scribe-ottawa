@@ -15,7 +15,11 @@ export const NEWSROOM_BRANCH = "newsroom";
 /** Fresh copy of the store (raw.githubusercontent caches for ~5 minutes; jsDelivr would cache for hours). */
 export const NEWSROOM_RAW = `https://raw.githubusercontent.com/${NEWSROOM_REPO}/${NEWSROOM_BRANCH}`;
 
-export const BYLINE: Bi = { en: "AI Broadsheet Newsroom", fr: "Salle de rédaction d'AI Broadsheet" };
+/**
+ * What a newsroom piece is, where a byline would go. It is a summary of other outlets' reporting,
+ * written with AI: never a byline, never "by AI Broadsheet" (the outlets did the reporting).
+ */
+export const BYLINE: Bi = { en: "Newsroom summary, written with AI", fr: "Résumé de la rédaction, rédigé avec l'IA" };
 
 /** How the page designer lays the article out. */
 export type ArticleFormat = "standard" | "explainer" | "numbers" | "timeline" | "people";
