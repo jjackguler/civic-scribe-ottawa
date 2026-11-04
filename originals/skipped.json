@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:1c926oh",
+    "at": "2026-11-04T01:40:08.317Z",
+    "reason": "fact guard / layout check failed twice: scene 3 (clippings): needs 1-3 clips; not in the sources: Elsewhere"
+  },
+  {
     "key": "story:4da0m2",
     "at": "2026-11-03T18:33:27.198Z",
     "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; not in the sources: STOP, Preventing, Recreation"
