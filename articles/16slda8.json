@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "id": "16slda8",
+  "slug": {
+    "en": "hugging-face-palette-slide-design",
+    "fr": "hugging-face-palette-conception-presentations"
+  },
+  "createdAt": "2026-11-04T21:38:09.921Z",
+  "updatedAt": "2026-11-04T21:38:09.921Z",
+  "topic": "research",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "Palette: teaching a small model to build decks in your design language",
+      "url": "https://huggingface.co/blog/ibm-research/palette-deck-building",
+      "publishedAt": "2026-11-03T16:35:36.000Z",
+      "storyId": "16slda8",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "brass",
+    "motif": "grid",
+    "en": {
+      "kicker": "Design automation",
+      "big": "Palette",
+      "small": "AI model for consistent, private slide decks"
+    },
+    "fr": {
+      "kicker": "Automatisation design",
+      "big": "Palette",
+      "small": "Modèle IA pour des présentations cohérentes"
+    }
+  },
+  "en": {
+    "headline": "Hugging Face releases Palette, a small AI model for custom slide deck design",
+    "news": "Hugging Face introduced Palette, a fine-tuned 20B model designed to generate slide decks that adhere to specific organizational design standards [s1].",
+    "thirty": [
+      "Palette helps small AI models create professional slide decks without layout errors [s1].",
+      "It uses synthetic data to learn specific design languages and local infrastructure [s1].",
+      "This allows users to keep their data private while maintaining consistent branding [s1]."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says Palette competes with frontier models by using a designer-coder workflow and synthetic training data [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face says Palette ranks first on two of three domains measured on PresentBench [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether Palette will be released for public download or remain an internal tool [s1].",
+      "How the model performs on design languages other than the one used in its training [s1]."
+    ],
+    "matters": "This development allows organizations to generate consistent, branded slide decks without sending sensitive information to external frontier AI providers [s1]. It offers a way to maintain design standards that are often lost when using generic AI tools [s1].",
+    "timeline": [
+      {
+        "when": "2026-11-03",
+        "text": "Hugging Face announced the development and testing of the Palette model [s1].",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face has created a new AI tool called Palette that helps smaller, private computer systems build professional slide decks [s1]. Unlike large AI models that often force their own generic style onto presentations, Palette is trained to follow a specific company's design rules [s1].",
+        "Small AI models often struggle to place text and images correctly, leading to messy slides where words run off the page [s1]. Palette fixes this by acting like a team of two: one part of the AI plans the story, and the other part writes the code to place every item exactly where it belongs [s1]."
+      ],
+      "standard": [
+        "Hugging Face has introduced Palette, a specialized 20B model designed to create slide decks that follow a specific design language [s1]. The tool addresses the tendency of larger, frontier AI models to default to generic styles and ensures that content remains within a user's own infrastructure [s1].",
+        "The model functions by separating the design process into two distinct roles: a designer that plans the deck's narrative and a coder that executes the precise placement of elements [s1]. This approach is intended to prevent common errors in small models, such as overlapping shapes or text extending beyond slide boundaries [s1].",
+        "Hugging Face claims that Palette outperforms other small models by using synthetic data trained on a specific design language [s1]. The company reports that the model ranks first in two of the three domains measured on PresentBench, a benchmark for presentation generation [s1].",
+        "The model relies on a harness to check its output, as small models often struggle with the arithmetic required to fit text and shapes accurately [s1]. It remains unclear how the model will perform across diverse design environments or if it will be accessible for broader use [s1].",
+        "For users, Palette offers a way to automate slide creation while keeping sensitive data private and ensuring the output matches a company's specific visual identity [s1]. By running on local infrastructure, it removes the need to rely on external systems that may not support custom templates [s1]."
+      ],
+      "expert": [
+        "Palette is a 20B parameter model fine-tuned on synthetic data to address the limitations of small open-weight models in generative design [s1]. The architecture employs a dual-process workflow—editorial judgment for narrative structure and geometric calculation for element rendering—to mitigate common layout failures [s1].",
+        "Performance metrics are evaluated via PresentBench, where the model currently leads in two of three measured domains [s1]. The system relies on a custom harness to validate rendering constraints, specifically targeting the arithmetic errors inherent in small-scale models when calculating font sizes and coordinate placement [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face releases Palette AI for custom slide decks",
+    "dek": "The new 20B model uses synthetic data to match specific design languages while running on local infrastructure.",
+    "metaDescription": "Hugging Face introduces Palette, a 20B AI model that generates slide decks locally to maintain brand standards and data privacy.",
+    "keywords": [
+      "hugging face",
+      "palette ai",
+      "slide deck generation",
+      "local ai infrastructure",
+      "synthetic data"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face has introduced Palette, a specialized 20B model designed to create slide decks that follow a specific design language [s1]. The tool addresses the tendency of larger, frontier AI models to default to generic styles and ensures that content remains within a user's own infrastructure [s1].",
+          "The model functions by separating the design process into two distinct roles: a designer that plans the deck's narrative and a coder that executes the precise placement of elements [s1]. This approach is intended to prevent common errors in small models, such as overlapping shapes or text extending beyond slide boundaries [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face claims that Palette outperforms other small models by using synthetic data trained on a specific design language [s1]. The company reports that the model ranks first in two of the three domains measured on PresentBench, a benchmark for presentation generation [s1].",
+          "The model relies on a harness to check its output, as small models often struggle with the arithmetic required to fit text and shapes accurately [s1]. It remains unclear how the model will perform across diverse design environments or if it will be accessible for broader use [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For users, Palette offers a way to automate slide creation while keeping sensitive data private and ensuring the output matches a company's specific visual identity [s1]. By running on local infrastructure, it removes the need to rely on external systems that may not support custom templates [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is the primary purpose of the Palette model?",
+        "a": "Palette is a 20B model designed to generate slide decks that adhere to specific organizational design standards."
+      },
+      {
+        "q": "How does Palette maintain design accuracy?",
+        "a": "The model separates the process into a designer role for narrative planning and a coder role for element placement, supported by a harness to check output."
+      }
+    ],
+    "links": []
+  },
+  "fr": {
+    "headline": "Hugging Face lance Palette, un modèle IA pour la conception de présentations",
+    "news": "Hugging Face a dévoilé Palette, un modèle de 20B ajusté pour générer des présentations respectant des normes de conception organisationnelles précises [s1].",
+    "thirty": [
+      "Palette aide les petits modèles IA à créer des présentations professionnelles sans erreurs de mise en page [s1].",
+      "Il utilise des données synthétiques pour apprendre des langages visuels spécifiques tout en fonctionnant sur une infrastructure locale [s1].",
+      "Cette approche permet aux utilisateurs de préserver la confidentialité de leurs données tout en assurant une image de marque cohérente [s1]."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face affirme que Palette rivalise avec les modèles de pointe grâce à un flux de travail séparant la conception du codage et l'usage de données d'entraînement synthétiques [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face indique que Palette se classe au premier rang dans deux des trois domaines mesurés par PresentBench [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La disponibilité publique de Palette ou son maintien en tant qu'outil interne reste à confirmer [s1].",
+      "La performance du modèle sur des langages visuels autres que celui utilisé lors de son entraînement demeure inconnue [s1]."
+    ],
+    "matters": "Ce développement permet aux organisations de générer des présentations cohérentes et personnalisées sans transmettre d'informations sensibles à des fournisseurs d'IA externes [s1]. Il offre une solution pour maintenir des standards graphiques souvent perdus avec les outils d'IA génériques [s1].",
+    "timeline": [
+      {
+        "when": "2026-11-03",
+        "text": "Hugging Face a annoncé le développement et les tests du modèle Palette [s1].",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face a créé un nouvel outil IA nommé Palette qui aide les systèmes informatiques privés à concevoir des présentations professionnelles [s1]. Contrairement aux grands modèles IA qui imposent souvent un style générique, Palette est entraîné à suivre les règles de conception propres à une entreprise [s1].",
+        "Les petits modèles IA ont souvent de la difficulté à placer correctement le texte et les images, ce qui entraîne des diapositives désordonnées où les mots débordent [s1]. Palette corrige ce problème en agissant comme une équipe de deux: une partie de l'IA planifie l'histoire, tandis que l'autre écrit le code pour placer chaque élément exactement là où il doit être [s1]."
+      ],
+      "standard": [
+        "Hugging Face a introduit Palette, un modèle spécialisé de 20B conçu pour créer des présentations suivant un langage visuel défini [s1]. L'outil répond à la tendance des grands modèles d'IA à privilégier des styles génériques et garantit que le contenu demeure au sein de l'infrastructure de l'utilisateur [s1].",
+        "Le modèle sépare le processus de conception en deux rôles distincts: un concepteur qui planifie la narration et un codeur qui exécute le placement précis des éléments [s1]. Cette méthode vise à éviter les erreurs courantes des petits modèles, comme le chevauchement de formes ou le texte dépassant des diapositives [s1].",
+        "Hugging Face soutient que Palette surpasse d'autres petits modèles en utilisant des données synthétiques entraînées sur un langage de conception spécifique [s1]. L'entreprise rapporte que le modèle occupe la première place dans deux des trois domaines évalués sur PresentBench, un banc d'essai pour la génération de présentations [s1].",
+        "Le modèle s'appuie sur un mécanisme de contrôle pour valider sa sortie, car les petits modèles peinent souvent avec les calculs nécessaires pour ajuster correctement le texte et les formes [s1]. Il reste incertain comment le modèle se comportera dans des environnements de conception variés ou s'il sera accessible à un usage plus large [s1].",
+        "Pour les utilisateurs, Palette propose une façon d'automatiser la création de présentations tout en protégeant la confidentialité des données et en assurant une conformité avec l'identité visuelle de l'entreprise [s1]. En fonctionnant sur une infrastructure locale, il élimine le besoin de dépendre de systèmes externes qui pourraient ne pas supporter les modèles personnalisés [s1]."
+      ],
+      "expert": [
+        "Palette est un modèle de 20B paramètres ajusté sur des données synthétiques pour pallier les limites des petits modèles à poids ouverts en conception générative [s1]. L'architecture emploie un flux de travail à double processus — jugement éditorial pour la structure narrative et calcul géométrique pour le rendu des éléments — afin d'atténuer les échecs de mise en page [s1].",
+        "Les mesures de performance sont évaluées via PresentBench, où le modèle mène actuellement dans deux des trois domaines mesurés [s1]. Le système repose sur un mécanisme personnalisé pour valider les contraintes de rendu, ciblant spécifiquement les erreurs arithmétiques inhérentes aux modèles de petite taille lors du calcul des tailles de police et du placement des coordonnées [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face lance Palette pour créer des présentations",
+    "dek": "Ce modèle de 20B utilise des données synthétiques pour respecter des chartes graphiques spécifiques sur vos propres serveurs.",
+    "metaDescription": "Hugging Face dévoile Palette, un modèle de 20B permettant de générer des présentations localement pour respecter l'identité visuelle.",
+    "keywords": [
+      "hugging face",
+      "palette ia",
+      "génération de présentations",
+      "infrastructure locale",
+      "données synthétiques"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face a introduit Palette, un modèle spécialisé de 20B conçu pour créer des présentations suivant un langage visuel défini [s1]. L'outil répond à la tendance des grands modèles d'IA à privilégier des styles génériques et garantit que le contenu demeure au sein de l'infrastructure de l'utilisateur [s1].",
+          "Le modèle sépare le processus de conception en deux rôles distincts: un concepteur qui planifie la narration et un codeur qui exécute le placement précis des éléments [s1]. Cette méthode vise à éviter les erreurs courantes des petits modèles, comme le chevauchement de formes ou le texte dépassant des diapositives [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face soutient que Palette surpasse d'autres petits modèles en utilisant des données synthétiques entraînées sur un langage de conception spécifique [s1]. L'entreprise rapporte que le modèle occupe la première place dans deux des trois domaines évalués sur PresentBench, un banc d'essai pour la génération de présentations [s1].",
+          "Le modèle s'appuie sur un mécanisme de contrôle pour valider sa sortie, car les petits modèles peinent souvent avec les calculs nécessaires pour ajuster correctement le texte et les formes [s1]. Il reste incertain comment le modèle se comportera dans des environnements de conception variés ou s'il sera accessible à un usage plus large [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les utilisateurs, Palette propose une façon d'automatiser la création de présentations tout en protégeant la confidentialité des données et en assurant une conformité avec l'identité visuelle de l'entreprise [s1]. En fonctionnant sur une infrastructure locale, il élimine le besoin de dépendre de systèmes externes qui pourraient ne pas supporter les modèles personnalisés [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quel est l'objectif principal du modèle Palette ?",
+        "a": "Palette est un modèle de 20B conçu pour créer des présentations qui respectent des normes de conception organisationnelles précises."
+      },
+      {
+        "q": "Comment Palette assure-t-il la précision du design ?",
+        "a": "Le modèle sépare la narration du placement des éléments et utilise un mécanisme de contrôle pour valider la sortie et éviter les erreurs de mise en page."
+      }
+    ],
+    "links": []
+  },
+  "model": "gemini",
+  "words": {
+    "en": 227,
+    "fr": 246
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-04T21:37:50.207Z",
+      "verdict": "done",
+      "notes": [
+        "227 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-04T21:37:52.768Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): IBM's."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-04T21:37:53.560Z",
+      "verdict": "pass",
+      "notes": [
+        "The article is well-structured and adheres to the house voice. It clearly distinguishes between Hugging Face's claims and demonstrated results, and maintains a balanced, non-hyped tone."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-04T21:37:58.233Z",
+      "verdict": "pass",
+      "notes": [
+        "246 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-04T21:38:07.641Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face releases Palette AI for custom slide decks (55)",
+        "fr: Hugging Face lance Palette pour créer des présentations (55)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-04T21:38:09.921Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: brass/grid \"Palette\""
+      ]
+    }
+  ]
+}

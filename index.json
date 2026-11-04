@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-10-31T13:03:26.081Z",
+  "updatedAt": "2026-11-04T21:38:09.924Z",
   "items": [
+    {
+      "id": "16slda8",
+      "slug": {
+        "en": "hugging-face-palette-slide-design",
+        "fr": "hugging-face-palette-conception-presentations"
+      },
+      "createdAt": "2026-11-04T21:38:09.921Z",
+      "updatedAt": "2026-11-04T21:38:09.921Z",
+      "topic": "research",
+      "format": "standard",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-03T16:35:36.000Z"
+      ],
+      "storyIds": [
+        "16slda8"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "grid",
+        "en": {
+          "kicker": "Design automation",
+          "big": "Palette",
+          "small": "AI model for consistent, private slide decks"
+        },
+        "fr": {
+          "kicker": "Automatisation design",
+          "big": "Palette",
+          "small": "Modèle IA pour des présentations cohérentes"
+        }
+      },
+      "words": 227,
+      "en": {
+        "headline": "Hugging Face releases Palette, a small AI model for custom slide deck design",
+        "dek": "The new 20B model uses synthetic data to match specific design languages while running on local infrastructure.",
+        "news": "Hugging Face introduced Palette, a fine-tuned 20B model designed to generate slide decks that adhere to specific organizational design standards [s1].",
+        "matters": "This development allows organizations to generate consistent, branded slide decks without sending sensitive information to external frontier AI providers [s1]. It offers a way to maintain design standards that are often lost when using generic AI tools [s1]."
+      },
+      "fr": {
+        "headline": "Hugging Face lance Palette, un modèle IA pour la conception de présentations",
+        "dek": "Ce modèle de 20B utilise des données synthétiques pour respecter des chartes graphiques spécifiques sur vos propres serveurs.",
+        "news": "Hugging Face a dévoilé Palette, un modèle de 20B ajusté pour générer des présentations respectant des normes de conception organisationnelles précises [s1].",
+        "matters": "Ce développement permet aux organisations de générer des présentations cohérentes et personnalisées sans transmettre d'informations sensibles à des fournisseurs d'IA externes [s1]. Il offre une solution pour maintenir des standards graphiques souvent perdus avec les outils d'IA génériques [s1]."
+      }
+    },
     {
       "id": "198ywhw",
       "slug": {

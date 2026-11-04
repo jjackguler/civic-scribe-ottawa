@@ -1,5 +1,38 @@
 [
   {
+    "id": "1q00339",
+    "at": "2026-11-04T21:37:46.317Z",
+    "stage": "copy",
+    "headline": "Dharma Field Extractor: Any Document In, Structured Fields in JSON Out",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker."
+    ]
+  },
+  {
+    "id": "6rdjy2",
+    "at": "2026-11-04T21:37:39.589Z",
+    "stage": "copy",
+    "headline": "Le ministre Solomon conclut une visite en Allemagne pour faire progresser les partenariats internationaux du Canada en matière d’intelligence artificielle",
+    "reasons": [
+      "Not in the sources (names or numbers): Artificial, Digital, German, Economic, Development, Technological, Sovereignty, Germany, Summit, State, Modernization, European.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Artificial, Digital, German, Economic, Development, Technological, Sovereignty, Germany, Summit, State, Modernization."
+    ]
+  },
+  {
+    "id": "1adaavs",
+    "at": "2026-11-04T21:37:32.633Z",
+    "stage": "copy",
+    "headline": "Minister Solomon concludes visit to Germany to advance Canada’s international AI partnerships",
+    "reasons": [
+      "Too close to Minister of AI and Digital Innovation's wording (\"is essential to supporting responsible innovation and creating opportunities…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Minister of AI and Digital Innovation's wording (\"participated in a ministerial discussion hosted by german chancellor…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "x7zvya",
     "at": "2026-11-03T20:12:01.172Z",
     "stage": "copy",
