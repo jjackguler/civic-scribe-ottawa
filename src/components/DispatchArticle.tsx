@@ -4,6 +4,7 @@
  * sorted into what's confirmed, what's claimed and what's still unknown; why
  * it matters; then the story itself at the depth the reader picks.
  */
+import { AiBadge } from "./Trust";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { CircleCheck, Quote, CircleHelp, ExternalLink, Headphones, Pause, Play, Flag } from "lucide-react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type KeyboardEvent } from "react";
@@ -544,6 +545,7 @@ export function DispatchArticle({ d, audio, more }: { d: Dispatch; audio: boolea
         <div className="container-mw pt-7 pb-8 sm:pt-10 sm:pb-11">
           <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.85rem] font-bold">
             <Link to="/dispatch" className="bg-signal text-signal-ink px-2 py-0.5 hover:bg-white">{DISPATCH_WORD[locale]}</Link>
+            <Link to="/how-we-use-ai"><AiBadge kind="summary" dark /></Link>
             <span className="text-brass">{locale === "fr" ? `${new Set(d.sources.map(s => s.outlet)).size} médias` : `${new Set(d.sources.map(s => s.outlet)).size} outlets`}</span>
             <time dateTime={d.createdAt} className="font-semibold text-white/70" suppressHydrationWarning>{timeAgo(d.createdAt, now, locale)}</time>
           </p>

@@ -22,15 +22,36 @@ Method: each page was read on the publisher's own site (some in a browser becaus
 
 Not yet checked: government feeds (Government of Canada, provinces, cities, OPC, CanadaBuys), AI labs (OpenAI, Google, DeepMind, Hugging Face, NVIDIA, AWS, Vector), newsletters (The Batch, Import AI, One Useful Thing, Last Week in AI, The Gradient), specialist beats (UploadVR, Road to VR, The Robot Report, DCD), Hacker News, Hugging Face Papers, AllBusiness, YouTube channels and podcasts.
 
-## What the code can do now
+## What the site does now (changed 31 Oct 2026)
 
 `src/lib/rights.ts` switches any source, or the whole site, between:
-- `full` — headline, excerpt and photo (today)
-- `headline` — headline and link only
+- `full` — headline, excerpt and photo
+- `headline` — headline, source name, time and link only
+
+**The default is now `headline` for every source** (`DEFAULT_DISPLAY = "headline"`). Recommendation 1 below is done, in its stricter "everyone by default" form. Reason: almost every publisher in the table limits its feed to personal or non-commercial use, forbids reuse of its images, or asks for written permission, and the site is preparing for sponsorship and advertising.
+
+Explicit allowances (`DISPLAY` in `rights.ts`), each tied to the publisher's own terms:
+
+| Source id | Display | Why it is allowed |
+|---|---|---|
+| `techcrunch` | full | techcrunch.com/rss-terms-of-use: display the feed content as provided, attribute TechCrunch and link to the full article; don't modify it and don't put ads into the feed. Commercial use is not restricted there. |
+
+Everything else is headline-and-link, including:
+- every publisher in the table above other than TechCrunch (CBC, Radio-Canada, Globe and Mail, La Presse, Condé Nast titles, The Verge/PMC, MIT Technology Review, Global News, BetaKit, VentureBeat, IEEE Spectrum, The Decoder);
+- Government of Canada feeds. canada.ca/en/transparency/terms.html (modified 2025-09-05, read 31 Oct 2026) allows reproduction "for non-commercial purposes" and says materials may not be reproduced "for the purposes of commercial redistribution" without prior written permission. Provincial and municipal feeds have not been checked and follow the same conservative default;
+- every source listed under "Not yet checked".
+
+How it is enforced: the feed parser drops the excerpt and photo for headline-only sources, the publisher-photo lookup (og:image) skips them, and the payload is filtered once more before it is served, so a cached copy from before a change cannot leak an excerpt or photo. The shared desk snapshot key moved to `desk:v2` so the old snapshot (built under `full`) is ignored.
+
+What readers see: story pages and cards show the headline, the publisher, the time and a prominent "Read at <publisher>" link; a designed cover (never an AI image) replaces the photo where a layout needs one. Story pages stay `noindex`. Our own work (newsroom summaries, Studio dispatches, videos, guides) is not affected.
+
+To show a source in full again: get written permission (or find terms that allow it), add the source id to `DISPLAY` with a comment naming the page or agreement, and add a row to the table above.
+
+Open question for the owner: the AI desk (`src/lib/ai-desk.server.ts`) writes its own short headline and brief for lead stories. With excerpts no longer collected for headline-only sources, it works from headlines alone. Facts are not copyrightable, and the copy is our own words and labelled, but a lawyer should confirm this before ads run.
 
 ## Recommended before ads go live (owner's decision)
 
-1. Switch to headline-and-link for publishers that forbid images or commercial use (at minimum CBC/Radio-Canada and The Verge, whose terms name images), or for everyone by default.
+1. ~~Switch to headline-and-link for publishers that forbid images or commercial use, or for everyone by default.~~ Done 31 Oct 2026: everyone by default, TechCrunch allowed in full.
 2. Write to the licensing contacts above for the publishers you most want to show in full (CBC/Radio-Canada, The Globe and Mail, La Presse, BetaKit).
 3. Lean on sources that publish for re-use: government releases, AI labs' own announcements, and your own original writing.
 4. Ask a lawyer to review this table and the site's terms.

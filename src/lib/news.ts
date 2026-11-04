@@ -218,3 +218,21 @@ export function applyRefinement(clusters: Cluster[], splits: Record<string, stri
   }
   return out.sort((a, b) => clusterScore(b, now) - clusterScore(a, now));
 }
+
+/** What each desk covers: its page description and meta description (unique per desk, for search). */
+export const SECTION_ABOUT: Record<SectionId, Bi> = {
+  canada: { en: "AI news from and about Canada: Ottawa, the provinces, Canadian labs, companies and public services, from Canadian and international outlets.", fr: "L'actualité de l'IA au Canada : Ottawa, les provinces, les laboratoires, entreprises et services publics d'ici, selon les médias canadiens et internationaux." },
+  rights: { en: "Rights and power: data sovereignty, privacy, military AI, democracy and regulation, and the people holding AI to account.", fr: "Droits et pouvoir : souveraineté des données, vie privée, IA militaire, démocratie et réglementation, et ceux qui demandent des comptes à l'IA." },
+  work: { en: "Work and culture: AI and jobs, artists' rights, schools, families and everyday life.", fr: "Travail et culture : l'IA et l'emploi, les droits des artistes, l'école, les familles et la vie quotidienne." },
+  science: { en: "Research: new models, papers and findings from labs and scientists, and what the results do not prove.", fr: "Recherche : nouveaux modèles, articles et résultats des laboratoires et des chercheurs, et ce qu'ils ne prouvent pas." },
+  world: { en: "Artificial intelligence news from the rest of the world, briefly, each headline linked to the original.", fr: "L'actualité de l'intelligence artificielle dans le reste du monde, en bref, chaque titre lié à l'original." },
+};
+
+/** Neighbouring desks, for internal links between desk pages. */
+export const RELATED_SECTIONS: Partial<Record<SectionId, SectionId[]>> = {
+  canada: ["rights", "work", "science"],
+  rights: ["canada", "work", "world"],
+  work: ["rights", "canada", "science"],
+  science: ["work", "world", "canada"],
+  world: ["rights", "science", "canada"],
+};

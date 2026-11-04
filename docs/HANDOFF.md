@@ -2,6 +2,7 @@
 
 Read this first. It is the shared memory between Claude sessions (cloud, this computer, the
 AI News project) and Codex. Update it at the end of any session that changes how things run.
+Last updated: 31 Oct 2026 (Broadsheet v2 redesign on branch `broadsheet-v2`, PR open, not merged).
 Last updated: 3 Nov 2026 (fixed five desks, truthful summary labels, editor's book page; before that: newsroom
 directives file, morning Canadian AI Brief, Output watch issue).
 
@@ -34,6 +35,21 @@ directives file, morning Canadian AI Brief, Output watch issue).
 - Next project to add to the site: the owner's **immersive journalism** work (Unreal), from the
   same computer.
 
+## Broadsheet v2 (31 Oct 2026, branch `broadsheet-v2`, awaiting the owner's review)
+- Redesign: Newsreader serif headlines, warm paper, centred masthead + sticky section bar, text-first
+  cards (other publishers' photos are off), new front page, desk, story, footer. The owner authorised
+  a broad visual change this time; Ink & Gold is still confined to the logo and brand assets.
+- Rights: every publisher is headline-and-link by default; TechCrunch allowed in full. See
+  `docs/feed-terms.md`. Shared desk snapshot key is now `desk:v2`.
+- Editor named everywhere as **Cem (Jack) Guler** (`SITE.editor.name`). Publisher GEN:A Labs links
+  to buildgena.ca (footer, /about#ownership, JSON-LD). `SITE.publisher.mailingAddress` is a TODO (CASL).
+- New pages: /how-we-use-ai, /canada (hub), /tips, /desk and /desk/<id> (Buildgena Studio pieces),
+  rebuilt /about, /newsletter, /advertise ("Founding sponsors" of The Canadian AI Brief).
+- Newsletter: The Canadian AI Brief (weekly). First-party form → `/api/subscribe` → secret
+  `SUBSCRIBE_WEBHOOK_URL`; until it is set the form says "opening soon" with an email fallback.
+- Studio: approved pieces are committed as `src/content/studio/<id>.json`; `scripts/studio-test.ts`
+  validates them in CI. The example is only in `scripts/fixtures/studio/`.
+- Dev preview without network: `AIB_NEWS_FIXTURE=1 npx vite dev` serves a fictional desk.
 ## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)
 - The site has exactly five sections: Canada, Rights & power, Work & culture, Research, World
   (`src/lib/desks.ts`). Every feed story, newsroom summary and video maps to one of them

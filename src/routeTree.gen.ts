@@ -15,10 +15,12 @@ import { Route as AdsDottxtRouteImport } from './routes/ads[.]txt'
 import { Route as AdvertiseRouteImport } from './routes/advertise'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AskRouteImport } from './routes/ask'
+import { Route as CanadaRouteImport } from './routes/canada'
 import { Route as CorrectionsRouteImport } from './routes/corrections'
 import { Route as DeskHealthDotjsonRouteImport } from './routes/desk-health[.]json'
 import { Route as FundingRouteImport } from './routes/funding'
 import { Route as GovernmentRouteImport } from './routes/government'
+import { Route as HowWeUseAiRouteImport } from './routes/how-we-use-ai'
 import { Route as InterviewsRouteImport } from './routes/interviews'
 import { Route as ListenRouteImport } from './routes/listen'
 import { Route as MinistryRouteImport } from './routes/ministry'
@@ -39,6 +41,7 @@ import { Route as SirJackRouteImport } from './routes/sir-jack'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StandardsRouteImport } from './routes/standards'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TipsRouteImport } from './routes/tips'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ValuesRouteImport } from './routes/values'
@@ -46,9 +49,13 @@ import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ApiBriefDotjsonRouteImport } from './routes/api.brief[.]json'
 import { Route as ApiDispatchesDotjsonRouteImport } from './routes/api.dispatches[.]json'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
+import { Route as ApiSubscribeRouteImport } from './routes/api.subscribe'
+import { Route as ApiTipRouteImport } from './routes/api.tip'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as BooksIndexRouteImport } from './routes/books.index'
 import { Route as BooksSlugRouteImport } from './routes/books.$slug'
+import { Route as DeskIndexRouteImport } from './routes/desk.index'
+import { Route as DeskIdRouteImport } from './routes/desk.$id'
 import { Route as DevSocialRouteImport } from './routes/dev.social'
 import { Route as DispatchIndexRouteImport } from './routes/dispatch.index'
 import { Route as DispatchIdRouteImport } from './routes/dispatch.$id'
@@ -107,6 +114,11 @@ const AskRoute = AskRouteImport.update({
   path: '/ask',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CanadaRoute = CanadaRouteImport.update({
+  id: '/canada',
+  path: '/canada',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CorrectionsRoute = CorrectionsRouteImport.update({
   id: '/corrections',
   path: '/corrections',
@@ -125,6 +137,11 @@ const FundingRoute = FundingRouteImport.update({
 const GovernmentRoute = GovernmentRouteImport.update({
   id: '/government',
   path: '/government',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowWeUseAiRoute = HowWeUseAiRouteImport.update({
+  id: '/how-we-use-ai',
+  path: '/how-we-use-ai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InterviewsRoute = InterviewsRouteImport.update({
@@ -227,6 +244,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TipsRoute = TipsRouteImport.update({
+  id: '/tips',
+  path: '/tips',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
@@ -262,6 +284,16 @@ const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSubscribeRoute = ApiSubscribeRouteImport.update({
+  id: '/api/subscribe',
+  path: '/api/subscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTipRoute = ApiTipRouteImport.update({
+  id: '/api/tip',
+  path: '/api/tip',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
   id: '/article/$slug',
   path: '/article/$slug',
@@ -275,6 +307,16 @@ const BooksIndexRoute = BooksIndexRouteImport.update({
 const BooksSlugRoute = BooksSlugRouteImport.update({
   id: '/books/$slug',
   path: '/books/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeskIndexRoute = DeskIndexRouteImport.update({
+  id: '/desk/',
+  path: '/desk/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeskIdRoute = DeskIdRouteImport.update({
+  id: '/desk/$id',
+  path: '/desk/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevSocialRoute = DevSocialRouteImport.update({
@@ -420,10 +462,12 @@ export interface FileRoutesByFullPath {
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
+  '/canada': typeof CanadaRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/how-we-use-ai': typeof HowWeUseAiRoute
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
@@ -444,6 +488,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
@@ -451,8 +496,11 @@ export interface FileRoutesByFullPath {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
+  '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/books/$slug': typeof BooksSlugRoute
+  '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -466,6 +514,7 @@ export interface FileRoutesByFullPath {
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
   '/books/': typeof BooksIndexRoute
+  '/desk/': typeof DeskIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -489,10 +538,12 @@ export interface FileRoutesByTo {
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
+  '/canada': typeof CanadaRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/how-we-use-ai': typeof HowWeUseAiRoute
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
@@ -513,6 +564,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
@@ -520,8 +572,11 @@ export interface FileRoutesByTo {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
+  '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/books/$slug': typeof BooksSlugRoute
+  '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -535,6 +590,7 @@ export interface FileRoutesByTo {
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
   '/books': typeof BooksIndexRoute
+  '/desk': typeof DeskIndexRoute
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/glossary': typeof GlossaryIndexRoute
@@ -559,10 +615,12 @@ export interface FileRoutesById {
   '/advertise': typeof AdvertiseRoute
   '/app': typeof AppRoute
   '/ask': typeof AskRoute
+  '/canada': typeof CanadaRoute
   '/corrections': typeof CorrectionsRoute
   '/desk-health.json': typeof DeskHealthDotjsonRoute
   '/funding': typeof FundingRoute
   '/government': typeof GovernmentRoute
+  '/how-we-use-ai': typeof HowWeUseAiRoute
   '/interviews': typeof InterviewsRoute
   '/listen': typeof ListenRoute
   '/ministry': typeof MinistryRoute
@@ -583,6 +641,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
   '/terms': typeof TermsRoute
+  '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
@@ -590,8 +649,11 @@ export interface FileRoutesById {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/subscribe': typeof ApiSubscribeRoute
+  '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/books/$slug': typeof BooksSlugRoute
+  '/desk/$id': typeof DeskIdRoute
   '/dev/social': typeof DevSocialRoute
   '/dispatch/$id': typeof DispatchIdRoute
   '/editor/$slug': typeof EditorSlugRoute
@@ -605,6 +667,7 @@ export interface FileRoutesById {
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
   '/books/': typeof BooksIndexRoute
+  '/desk/': typeof DeskIndexRoute
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
@@ -630,10 +693,12 @@ export interface FileRouteTypes {
     | '/advertise'
     | '/app'
     | '/ask'
+    | '/canada'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
     | '/government'
+    | '/how-we-use-ai'
     | '/interviews'
     | '/listen'
     | '/ministry'
@@ -654,6 +719,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/tips'
     | '/today'
     | '/tools'
     | '/values'
@@ -661,8 +727,11 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/subscribe'
+    | '/api/tip'
     | '/article/$slug'
     | '/books/$slug'
+    | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -676,6 +745,7 @@ export interface FileRouteTypes {
     | '/story/$id'
     | '/video/$slug'
     | '/books/'
+    | '/desk/'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -699,10 +769,12 @@ export interface FileRouteTypes {
     | '/advertise'
     | '/app'
     | '/ask'
+    | '/canada'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
     | '/government'
+    | '/how-we-use-ai'
     | '/interviews'
     | '/listen'
     | '/ministry'
@@ -723,6 +795,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/tips'
     | '/today'
     | '/tools'
     | '/values'
@@ -730,8 +803,11 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/subscribe'
+    | '/api/tip'
     | '/article/$slug'
     | '/books/$slug'
+    | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -745,6 +821,7 @@ export interface FileRouteTypes {
     | '/story/$id'
     | '/video/$slug'
     | '/books'
+    | '/desk'
     | '/dispatch'
     | '/editor'
     | '/glossary'
@@ -768,10 +845,12 @@ export interface FileRouteTypes {
     | '/advertise'
     | '/app'
     | '/ask'
+    | '/canada'
     | '/corrections'
     | '/desk-health.json'
     | '/funding'
     | '/government'
+    | '/how-we-use-ai'
     | '/interviews'
     | '/listen'
     | '/ministry'
@@ -792,6 +871,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/standards'
     | '/terms'
+    | '/tips'
     | '/today'
     | '/tools'
     | '/values'
@@ -799,8 +879,11 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/subscribe'
+    | '/api/tip'
     | '/article/$slug'
     | '/books/$slug'
+    | '/desk/$id'
     | '/dev/social'
     | '/dispatch/$id'
     | '/editor/$slug'
@@ -814,6 +897,7 @@ export interface FileRouteTypes {
     | '/story/$id'
     | '/video/$slug'
     | '/books/'
+    | '/desk/'
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
@@ -838,10 +922,12 @@ export interface RootRouteChildren {
   AdvertiseRoute: typeof AdvertiseRoute
   AppRoute: typeof AppRoute
   AskRoute: typeof AskRoute
+  CanadaRoute: typeof CanadaRoute
   CorrectionsRoute: typeof CorrectionsRoute
   DeskHealthDotjsonRoute: typeof DeskHealthDotjsonRoute
   FundingRoute: typeof FundingRoute
   GovernmentRoute: typeof GovernmentRoute
+  HowWeUseAiRoute: typeof HowWeUseAiRoute
   InterviewsRoute: typeof InterviewsRoute
   ListenRoute: typeof ListenRoute
   MinistryRoute: typeof MinistryRoute
@@ -862,6 +948,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
   TermsRoute: typeof TermsRoute
+  TipsRoute: typeof TipsRoute
   TodayRoute: typeof TodayRoute
   ToolsRoute: typeof ToolsRoute
   ValuesRoute: typeof ValuesRoute
@@ -869,8 +956,11 @@ export interface RootRouteChildren {
   ApiBriefDotjsonRoute: typeof ApiBriefDotjsonRoute
   ApiDispatchesDotjsonRoute: typeof ApiDispatchesDotjsonRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
+  ApiSubscribeRoute: typeof ApiSubscribeRoute
+  ApiTipRoute: typeof ApiTipRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
   BooksSlugRoute: typeof BooksSlugRoute
+  DeskIdRoute: typeof DeskIdRoute
   DevSocialRoute: typeof DevSocialRoute
   DispatchIdRoute: typeof DispatchIdRoute
   EditorSlugRoute: typeof EditorSlugRoute
@@ -884,6 +974,7 @@ export interface RootRouteChildren {
   StoryIdRoute: typeof StoryIdRoute
   VideoSlugRoute: typeof VideoSlugRoute
   BooksIndexRoute: typeof BooksIndexRoute
+  DeskIndexRoute: typeof DeskIndexRoute
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   GlossaryIndexRoute: typeof GlossaryIndexRoute
@@ -945,6 +1036,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AskRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/canada': {
+      id: '/canada'
+      path: '/canada'
+      fullPath: '/canada'
+      preLoaderRoute: typeof CanadaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/corrections': {
       id: '/corrections'
       path: '/corrections'
@@ -971,6 +1069,13 @@ declare module '@tanstack/react-router' {
       path: '/government'
       fullPath: '/government'
       preLoaderRoute: typeof GovernmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-we-use-ai': {
+      id: '/how-we-use-ai'
+      path: '/how-we-use-ai'
+      fullPath: '/how-we-use-ai'
+      preLoaderRoute: typeof HowWeUseAiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/interviews': {
@@ -1113,6 +1218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tips': {
+      id: '/tips'
+      path: '/tips'
+      fullPath: '/tips'
+      preLoaderRoute: typeof TipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/today': {
       id: '/today'
       path: '/today'
@@ -1162,6 +1274,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/subscribe': {
+      id: '/api/subscribe'
+      path: '/api/subscribe'
+      fullPath: '/api/subscribe'
+      preLoaderRoute: typeof ApiSubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/tip': {
+      id: '/api/tip'
+      path: '/api/tip'
+      fullPath: '/api/tip'
+      preLoaderRoute: typeof ApiTipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/article/$slug': {
       id: '/article/$slug'
       path: '/article/$slug'
@@ -1181,6 +1307,20 @@ declare module '@tanstack/react-router' {
       path: '/books/$slug'
       fullPath: '/books/$slug'
       preLoaderRoute: typeof BooksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desk/': {
+      id: '/desk/'
+      path: '/desk'
+      fullPath: '/desk/'
+      preLoaderRoute: typeof DeskIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desk/$id': {
+      id: '/desk/$id'
+      path: '/desk/$id'
+      fullPath: '/desk/$id'
+      preLoaderRoute: typeof DeskIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dev/social': {
@@ -1382,10 +1522,12 @@ const rootRouteChildren: RootRouteChildren = {
   AdvertiseRoute: AdvertiseRoute,
   AppRoute: AppRoute,
   AskRoute: AskRoute,
+  CanadaRoute: CanadaRoute,
   CorrectionsRoute: CorrectionsRoute,
   DeskHealthDotjsonRoute: DeskHealthDotjsonRoute,
   FundingRoute: FundingRoute,
   GovernmentRoute: GovernmentRoute,
+  HowWeUseAiRoute: HowWeUseAiRoute,
   InterviewsRoute: InterviewsRoute,
   ListenRoute: ListenRoute,
   MinistryRoute: MinistryRoute,
@@ -1406,6 +1548,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
   TermsRoute: TermsRoute,
+  TipsRoute: TipsRoute,
   TodayRoute: TodayRoute,
   ToolsRoute: ToolsRoute,
   ValuesRoute: ValuesRoute,
@@ -1413,8 +1556,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBriefDotjsonRoute: ApiBriefDotjsonRoute,
   ApiDispatchesDotjsonRoute: ApiDispatchesDotjsonRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
+  ApiSubscribeRoute: ApiSubscribeRoute,
+  ApiTipRoute: ApiTipRoute,
   ArticleSlugRoute: ArticleSlugRoute,
   BooksSlugRoute: BooksSlugRoute,
+  DeskIdRoute: DeskIdRoute,
   DevSocialRoute: DevSocialRoute,
   DispatchIdRoute: DispatchIdRoute,
   EditorSlugRoute: EditorSlugRoute,
@@ -1428,6 +1574,7 @@ const rootRouteChildren: RootRouteChildren = {
   StoryIdRoute: StoryIdRoute,
   VideoSlugRoute: VideoSlugRoute,
   BooksIndexRoute: BooksIndexRoute,
+  DeskIndexRoute: DeskIndexRoute,
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   GlossaryIndexRoute: GlossaryIndexRoute,

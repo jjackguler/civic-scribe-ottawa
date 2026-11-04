@@ -34,8 +34,8 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
 
   return (
     <aside className="flex flex-col">
-      <div className="flex items-center justify-between pb-2 border-b-[3px] border-night">
-        <h2 className="hl text-[1.3rem] flex items-center gap-2.5">
+      <div className="flex items-center justify-between pb-2 border-b-2 border-ink">
+        <h2 className="font-sans font-bold uppercase tracking-[0.08em] text-[0.8rem] flex items-center gap-2.5">
           <span className="live-dot" aria-hidden="true" />
           {t("latest", locale)}
         </h2>
@@ -57,14 +57,14 @@ export function LatestRail({ stories, fetchedAt, limit = 12 }: { stories: Story[
 
       <ol className="flex-1">
         {shown.slice(0, limit).map(s => (
-          <li key={s.id} className={`py-2.5 border-b border-line last:border-0 ${fresh.has(s.id) ? "flash-new" : ""}`}>
+          <li key={s.id} className={`py-3 border-b border-line last:border-0 ${fresh.has(s.id) ? "flash-new" : ""}`}>
             <StoryLink s={s} className="group block">
               <p className="meta mb-0.5 flex gap-2">
-                <time dateTime={s.publishedAt} className="font-semibold text-live" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
-                <span>{s.source}</span>
+                <time dateTime={s.publishedAt} className="font-bold text-live tabular-nums" suppressHydrationWarning>{timeAgo(s.publishedAt, now, locale)}</time>
+                <span className="truncate">{s.source}</span>
               </p>
               {(() => { const d = display(s, locale); return (<>
-                <p className="font-semibold leading-snug text-[0.97rem] group-hover:underline" title={d.translated ? d.original : undefined}>{d.title}</p>
+                <p className="hl-sm text-[1.02rem] group-hover:underline underline-offset-2" title={d.translated ? d.original : undefined}>{d.title}</p>
                 {d.translated && <TranslatedNote original={d.original} compact />}
               </>); })()}
             </StoryLink>

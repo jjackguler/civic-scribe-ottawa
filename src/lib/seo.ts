@@ -187,7 +187,11 @@ export function breadcrumbLd(locale: Locale, crumbs: Crumb[]) {
   };
 }
 
-/** The publication, for JSON-LD `publisher` fields and the home page. */
+/**
+ * The publication, for the home page and every page's `publisher`. Each policy URL
+ * points at a real page (Google and the Trust Project read these):
+ * standards, corrections, values, ownership and funding, feedback, and AI use.
+ */
 export function organizationLd(locale: Locale) {
   const sameAs = Object.values(SITE.social).filter(Boolean);
   return {
@@ -200,13 +204,23 @@ export function organizationLd(locale: Locale) {
     image: DEFAULT_OG_IMAGE,
     description: SITE.description[locale],
     inLanguage: [LANG_TAG.en, LANG_TAG.fr],
-    parentOrganization: { "@type": "Organization", name: SITE.publisher.name },
+    foundingLocation: { "@type": "Place", name: `${SITE.publisher.city}, ${SITE.publisher.region}, ${SITE.publisher.country}` },
     address: { "@type": "PostalAddress", addressLocality: SITE.publisher.city, addressRegion: SITE.publisher.region, addressCountry: "CA" },
+    areaServed: ["CA", "Worldwide"],
+    parentOrganization: { "@type": "Organization", "@id": `${SITE.publisher.url}/#organization`, name: SITE.publisher.name, url: SITE.publisher.url },
+    founder: { "@type": "Person", "@id": `${ORIGIN}/#editor`, name: SITE.editor.name, alternateName: [...SITE.editor.alternateName] },
     publishingPrinciples: absUrl("/standards", locale),
     correctionsPolicy: absUrl("/corrections", locale),
     ethicsPolicy: absUrl("/values", locale),
+    ownershipFundingInfo: `${absUrl("/about", locale)}#ownership`,
+    actionableFeedbackPolicy: `${absUrl("/corrections", locale)}#report`,
+    noBylinesPolicy: absUrl("/how-we-use-ai", locale),
+    verificationFactCheckingPolicy: absUrl("/how-we-use-ai", locale),
     masthead: `${absUrl("/about", locale)}#who`,
-    actionableFeedbackPolicy: absUrl("/corrections", locale),
+    contactPoint: [
+      { "@type": "ContactPoint", contactType: "Corrections", email: SITE.email.editor, availableLanguage: ["English", "French"] },
+      { "@type": "ContactPoint", contactType: "General", email: SITE.email.general, availableLanguage: ["English", "French"] },
+    ],
     ...(SITE.email.editor ? { email: SITE.email.editor } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
