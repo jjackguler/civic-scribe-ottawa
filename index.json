@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-04T21:38:09.924Z",
+  "updatedAt": "2026-11-05T01:53:00.499Z",
   "items": [
+    {
+      "id": "18i1bjd",
+      "slug": {
+        "en": "hugging-face-open-source-business",
+        "fr": "hugging-face-modele-affaires-ia"
+      },
+      "createdAt": "2026-11-05T01:53:00.496Z",
+      "updatedAt": "2026-11-05T01:53:00.496Z",
+      "topic": "business",
+      "format": "standard",
+      "outlets": [
+        "TechCrunch"
+      ],
+      "times": [
+        "2026-11-04T19:30:04.000Z"
+      ],
+      "storyIds": [
+        "18i1bjd"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "grid",
+        "en": {
+          "kicker": "Open source business",
+          "big": "Hugging",
+          "small": "Monetizing open models in a competitive market"
+        },
+        "fr": {
+          "kicker": "Modèle économique",
+          "big": "Hugging",
+          "small": "Monétiser l'IA ouverte sur un marché concurrentiel"
+        }
+      },
+      "words": 218,
+      "en": {
+        "headline": "Hugging Face examines the business of open source artificial intelligence models",
+        "dek": "Enterprises and governments increasingly adopt open source models for cost and control. Questions remain on how companies monetize these tools amid rising international competition.",
+        "news": "Hugging Face explores how organizations capture value from open source AI models as adoption grows among businesses, governments, and startups [s1].",
+        "matters": "The shift toward open source tools may offer more options and lower costs for organizations using AI [s1]."
+      },
+      "fr": {
+        "headline": "Hugging Face examine le modèle d'affaires de l'IA à code source ouvert",
+        "dek": "Les entreprises et les gouvernements adoptent de plus en plus de modèles à code source ouvert pour réduire les coûts et garder le contrôle. La question de la monétisation demeure entière.",
+        "news": "Hugging Face étudie la façon dont les organisations tirent profit des modèles d'IA à code source ouvert alors que leur adoption progresse chez les entreprises, les gouvernements et les jeunes pousses [s1].",
+        "matters": "Le virage vers des outils à code source ouvert pourrait offrir davantage d'options et réduire les coûts pour les organisations utilisant l'IA [s1]."
+      }
+    },
     {
       "id": "16slda8",
       "slug": {
