@@ -1,5 +1,39 @@
 [
   {
+    "id": "1gjp90l",
+    "at": "2026-11-05T22:57:23.963Z",
+    "stage": "copy",
+    "headline": "Formally verifying agent-written full-stack web apps with PDD Kit",
+    "reasons": [
+      "Not in the sources (names or numbers): Rust-based.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Rust-based."
+    ]
+  },
+  {
+    "id": "1nvylch",
+    "at": "2026-11-05T22:57:16.025Z",
+    "stage": "copy",
+    "headline": "New NVIDIA Cosmos 3 Open Models for Interactive World Simulation",
+    "reasons": [
+      "Not in the sources (names or numbers): 16 billion, RGB-LiDAR.",
+      "rewrite: no news section"
+    ]
+  },
+  {
+    "id": "1u8179n",
+    "at": "2026-11-05T22:56:36.881Z",
+    "stage": "copy",
+    "headline": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
+    "reasons": [
+      "Not in the sources (names or numbers): 10-second.",
+      "Too close to Google DeepMind's wording (\"gemini omni 1 2 flash introduces native 15 second…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): 10-second.",
+      "Too close to Google DeepMind's wording (\"gemini omni 1 2 flash introduces native 15 second…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "mc5i1d",
     "at": "2026-11-05T17:46:49.864Z",
     "stage": "translator",
