@@ -1,5 +1,26 @@
 [
   {
+    "id": "mc5i1d",
+    "at": "2026-11-05T17:46:49.864Z",
+    "stage": "translator",
+    "headline": "A Closer Look at Phonon TTS. Launching High-Quality On-Device Speech That Tops the Benchmarks.",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): Internet, 31 millions, 40 millions, denial not in the sources: \"Pour le grand public, Phonon offre un moyen utiliser des outils de synthèse voca\".",
+      "attempt 2: no plain version"
+    ]
+  },
+  {
+    "id": "gwj74t",
+    "at": "2026-11-05T17:46:32.560Z",
+    "stage": "copy",
+    "headline": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
+    "reasons": [
+      "Not in the sources (names or numbers): 30 percent, 10-second.",
+      "Too close to Google DeepMind's wording (\"the gemini api google vids and gemini for business…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no news section"
+    ]
+  },
+  {
     "id": "1q00339",
     "at": "2026-11-04T21:37:46.317Z",
     "stage": "copy",
