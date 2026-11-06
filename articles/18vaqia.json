@@ -1,0 +1,292 @@
+{
+  "version": 1,
+  "id": "18vaqia",
+  "slug": {
+    "en": "hugging-face-toyblocks-robot-learning",
+    "fr": "hugging-face-toyblocks-apprentissage-robot"
+  },
+  "createdAt": "2026-11-06T23:32:34.730Z",
+  "updatedAt": "2026-11-06T23:32:34.730Z",
+  "topic": "robotics",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "ToyBlocks: A controlled world for robot learning and evaluation",
+      "url": "https://huggingface.co/blog/allenai/toyblocks",
+      "publishedAt": "2026-11-06T14:00:48.000Z",
+      "storyId": "18vaqia",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "night",
+    "motif": "grid",
+    "en": {
+      "kicker": "Robot learning",
+      "big": "ToyBlocks",
+      "small": "New simulation framework for controlled robot training"
+    },
+    "fr": {
+      "kicker": "Apprentissage robotique",
+      "big": "ToyBlocks",
+      "small": "Nouveau cadre de simulation pour l'entraînement robotique"
+    }
+  },
+  "en": {
+    "headline": "Hugging Face releases ToyBlocks for controlled robot learning and evaluation",
+    "news": "Hugging Face introduced ToyBlocks, an open simulation framework designed to help researchers study and improve robot learning in controlled, tabletop environments [s1].",
+    "thirty": [
+      "Hugging Face launched ToyBlocks to help robots learn tasks like stacking blocks [s1].",
+      "Researchers can now generate automated training data without needing to control robots manually [s1].",
+      "The framework aims to make robot behavior easier to measure and understand [s1]."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says ToyBlocks provides a controlled setting to study how models improve with more data and how they combine reasoning with physical control [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether this framework will improve real-world robot performance.",
+      "How quickly researchers can adapt ToyBlocks to more complex environments."
+    ],
+    "matters": "This development provides researchers with better tools to understand why robots succeed or fail at specific tasks. For the public, this may eventually lead to more reliable robots capable of handling household chores [s1].",
+    "timeline": [
+      {
+        "when": "2026-11-06",
+        "text": "Hugging Face introduced the ToyBlocks framework.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face has released a new tool called ToyBlocks that acts as a digital training ground for robots. Instead of testing robots in the real world, which can be unpredictable, researchers use this software to simulate a robot arm moving blocks on a table [s1].",
+        "This tool allows computers to practice tasks automatically, meaning humans do not have to control the robot manually for every training session. By watching how the robot performs in this simple, controlled space, scientists can better understand how robots learn to solve problems and why they might make mistakes [s1]."
+      ],
+      "standard": [
+        "Hugging Face has introduced a new simulation framework called ToyBlocks, designed to provide a controlled environment for researching robot learning [s1]. The platform is the first in a series of \"FoundationWorlds\" intended to help scientists investigate how robots acquire skills and why they sometimes fail [s1].",
+        "ToyBlocks centers on a simulated robot arm interacting with blocks on a tabletop [s1]. By using this constrained setting, researchers can test how robots reason about object interactions, such as pushing, flipping, and stacking, while maintaining the ability to repeat tests and adjust training data [s1].",
+        "Hugging Face states that ToyBlocks allows for the automatic generation of training demonstrations, removing the need for time-consuming teleoperation, where a human remotely controls the robot [s1]. The framework is built on four core requirements: realistic physics, automated task generation, a mix of reasoning and dexterity, and broad task coverage [s1].",
+        "The project builds upon the company's previous open robot learning research, including its work on MolmoAct 2, MolmoBot, and MolmoSpaces [s1]. While ToyBlocks is currently limited to a simple tabletop environment, the developers intend to expand the approach to increasingly complex settings in the future [s1].",
+        "The framework matters because it addresses a common challenge in robotics: the difficulty of understanding the internal logic of a robot's actions [s1]. By creating a \"petri dish\" for robot learning, researchers can more effectively trace the causes of failure [s1].",
+        "For ordinary people, this research is a step toward robots that can perform everyday tasks like folding laundry or sorting items more reliably [s1]. By improving the transparency and evaluation of robot models, the project aims to bridge the gap between high-level reasoning and precise physical control [s1]."
+      ],
+      "expert": [
+        "ToyBlocks functions as a FoundationWorld, a framework designed to facilitate the study of robot learning through controlled, simulated environments [s1]. It emphasizes the integration of high-level reasoning with physical dexterity, utilizing automated demonstration generation to bypass the limitations of traditional teleoperation [s1].",
+        "The framework adheres to four specific design criteria: realistic physics and appearance, scalable task generation, a combination of reasoning and dexterity, and broad domain coverage [s1]. It is intended to serve as a standardized platform for evaluating how model performance scales with training data [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face releases ToyBlocks for robot learning research",
+    "dek": "The new simulation framework provides researchers with a standardized environment to study how robots reason, move, and interact with objects.",
+    "metaDescription": "Hugging Face introduces ToyBlocks, a simulation framework designed to improve robot learning and transparency in controlled tabletop environments.",
+    "keywords": [
+      "hugging face",
+      "toyblocks",
+      "robot learning",
+      "robotics research",
+      "simulation"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face has introduced a new simulation framework called ToyBlocks, designed to provide a controlled environment for researching robot learning [s1]. The platform is the first in a series of \"FoundationWorlds\" intended to help scientists investigate how robots acquire skills and why they sometimes fail [s1].",
+          "ToyBlocks centers on a simulated robot arm interacting with blocks on a tabletop [s1]. By using this constrained setting, researchers can test how robots reason about object interactions, such as pushing, flipping, and stacking, while maintaining the ability to repeat tests and adjust training data [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face states that ToyBlocks allows for the automatic generation of training demonstrations, removing the need for time-consuming teleoperation, where a human remotely controls the robot [s1]. The framework is built on four core requirements: realistic physics, automated task generation, a mix of reasoning and dexterity, and broad task coverage [s1].",
+          "The project builds upon the company's previous open robot learning research, including its work on MolmoAct 2, MolmoBot, and MolmoSpaces [s1]. While ToyBlocks is currently limited to a simple tabletop environment, the developers intend to expand the approach to increasingly complex settings in the future [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The framework matters because it addresses a common challenge in robotics: the difficulty of understanding the internal logic of a robot's actions [s1]. By creating a \"petri dish\" for robot learning, researchers can more effectively trace the causes of failure [s1].",
+          "For ordinary people, this research is a step toward robots that can perform everyday tasks like folding laundry or sorting items more reliably [s1]. By improving the transparency and evaluation of robot models, the project aims to bridge the gap between high-level reasoning and precise physical control [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is ToyBlocks?",
+        "a": "ToyBlocks is an open simulation framework from Hugging Face that provides a controlled environment for researching how robots learn and interact with objects."
+      },
+      {
+        "q": "How does ToyBlocks help researchers?",
+        "a": "It allows for the automatic generation of training demonstrations, removing the need for manual teleoperation and helping researchers trace the causes of robot failures."
+      }
+    ],
+    "links": []
+  },
+  "fr": {
+    "headline": "Hugging Face lance ToyBlocks pour encadrer l'apprentissage des robots",
+    "news": "Hugging Face a présenté ToyBlocks, un cadre de simulation ouvert conçu pour aider les chercheurs à étudier et à améliorer l'apprentissage des robots dans des environnements de table contrôlés [s1].",
+    "thirty": [
+      "Hugging Face a lancé ToyBlocks pour aider les robots à apprendre des tâches comme empiler des blocs [s1].",
+      "Les chercheurs peuvent désormais générer des données d'entraînement automatisées sans avoir à contrôler les robots manuellement [s1].",
+      "Le cadre vise à rendre le comportement des robots plus facile à mesurer et à comprendre [s1]."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face affirme que ToyBlocks fournit un cadre contrôlé pour étudier comment les modèles s'améliorent avec plus de données et comment ils combinent le raisonnement avec le contrôle physique [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La question de savoir si ce cadre améliorera la performance des robots dans le monde réel.",
+      "La rapidité avec laquelle les chercheurs pourront adapter ToyBlocks à des environnements plus complexes."
+    ],
+    "matters": "Ce développement fournit aux chercheurs de meilleurs outils pour comprendre pourquoi les robots réussissent ou échouent à des tâches précises. Pour le public, cela pourrait mener à terme à des robots plus fiables capables d'effectuer des tâches ménagères [s1].",
+    "timeline": [
+      {
+        "when": "2026-11-06",
+        "text": "Hugging Face a introduit le cadre ToyBlocks.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face a publié un nouvel outil nommé ToyBlocks qui sert de terrain d'entraînement numérique pour les robots. Au lieu de tester les robots dans le monde réel, ce qui peut être imprévisible, les chercheurs utilisent ce logiciel pour simuler un bras robotique déplaçant des blocs sur une table [s1].",
+        "Cet outil permet aux ordinateurs de pratiquer des tâches automatiquement, ce qui signifie que les humains n'ont pas à contrôler le robot manuellement pour chaque session d'entraînement. En observant la performance du robot dans cet espace simple et contrôlé, les scientifiques peuvent mieux comprendre comment les robots apprennent à résoudre des problèmes et pourquoi ils peuvent commettre des erreurs [s1]."
+      ],
+      "standard": [
+        "Hugging Face a introduit un nouveau cadre de simulation nommé ToyBlocks, conçu pour offrir un environnement contrôlé pour la recherche sur l'apprentissage robotique [s1]. La plateforme est la première d'une série de « FoundationWorlds » destinée à aider les scientifiques à étudier comment les robots acquièrent des compétences et pourquoi ils échouent parfois [s1].",
+        "ToyBlocks se concentre sur un bras robotique simulé interagissant avec des blocs sur une table [s1]. En utilisant ce cadre restreint, les chercheurs peuvent tester la manière dont les robots raisonnent sur les interactions avec les objets, comme pousser, retourner et empiler, tout en conservant la capacité de répéter les tests et d'ajuster les données d'entraînement [s1].",
+        "Hugging Face indique que ToyBlocks permet la génération automatique de démonstrations d'entraînement, éliminant le besoin de téléopération fastidieuse, où un humain contrôle le robot à distance [s1]. Le cadre repose sur quatre exigences fondamentales: une physique réaliste, une génération de tâches automatisée, un mélange de raisonnement et de dextérité, ainsi qu'une large couverture des tâches [s1].",
+        "Le projet s'appuie sur les travaux antérieurs de l'entreprise en matière d'apprentissage robotique ouvert, notamment MolmoAct 2, MolmoBot et MolmoSpaces [s1]. Bien que ToyBlocks soit actuellement limité à un environnement de table simple, les concepteurs prévoient d'étendre l'approche à des contextes de plus en plus complexes à l'avenir [s1].",
+        "Le cadre est important car il répond à un défi courant en robotique: la difficulté de comprendre la logique interne des actions d'un robot [s1]. En créant une « boîte de Petri » pour l'apprentissage robotique, les chercheurs peuvent plus efficacement retracer les causes d'un échec [s1].",
+        "Pour le grand public, cette recherche constitue un pas vers des robots capables d'effectuer des tâches quotidiennes comme plier le linge ou trier des objets de manière plus fiable [s1]. En améliorant la transparence et l'évaluation des modèles robotiques, le projet vise à combler l'écart entre le raisonnement de haut niveau et le contrôle physique précis [s1]."
+      ],
+      "expert": [
+        "ToyBlocks fonctionne comme un FoundationWorld, un cadre conçu pour faciliter l'étude de l'apprentissage robotique via des environnements simulés et contrôlés [s1]. Il met l'accent sur l'intégration du raisonnement de haut niveau avec la dextérité physique, utilisant la génération automatique de démonstrations pour contourner les limites de la téléopération traditionnelle [s1].",
+        "Le cadre respecte quatre critères de conception spécifiques: physique et apparence réalistes, génération de tâches évolutive, combinaison de raisonnement et de dextérité, et large couverture du domaine [s1]. Il est destiné à servir de plateforme normalisée pour évaluer comment la performance des modèles évolue avec les données d'entraînement [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face lance ToyBlocks pour la recherche en robotique",
+    "dek": "Ce nouveau cadre de simulation offre aux chercheurs un environnement normalisé pour étudier le raisonnement et les mouvements des robots.",
+    "metaDescription": "Hugging Face présente ToyBlocks, un cadre de simulation ouvert pour améliorer l'apprentissage et la transparence des robots dans des environnements…",
+    "keywords": [
+      "hugging face",
+      "toyblocks",
+      "apprentissage robotique",
+      "recherche robotique",
+      "simulation"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face a introduit un nouveau cadre de simulation nommé ToyBlocks, conçu pour offrir un environnement contrôlé pour la recherche sur l'apprentissage robotique [s1]. La plateforme est la première d'une série de « FoundationWorlds » destinée à aider les scientifiques à étudier comment les robots acquièrent des compétences et pourquoi ils échouent parfois [s1].",
+          "ToyBlocks se concentre sur un bras robotique simulé interagissant avec des blocs sur une table [s1]. En utilisant ce cadre restreint, les chercheurs peuvent tester la manière dont les robots raisonnent sur les interactions avec les objets, comme pousser, retourner et empiler, tout en conservant la capacité de répéter les tests et d'ajuster les données d'entraînement [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face indique que ToyBlocks permet la génération automatique de démonstrations d'entraînement, éliminant le besoin de téléopération fastidieuse, où un humain contrôle le robot à distance [s1]. Le cadre repose sur quatre exigences fondamentales: une physique réaliste, une génération de tâches automatisée, un mélange de raisonnement et de dextérité, ainsi qu'une large couverture des tâches [s1].",
+          "Le projet s'appuie sur les travaux antérieurs de l'entreprise en matière d'apprentissage robotique ouvert, notamment MolmoAct 2, MolmoBot et MolmoSpaces [s1]. Bien que ToyBlocks soit actuellement limité à un environnement de table simple, les concepteurs prévoient d'étendre l'approche à des contextes de plus en plus complexes à l'avenir [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Le cadre est important car il répond à un défi courant en robotique: la difficulté de comprendre la logique interne des actions d'un robot [s1]. En créant une « boîte de Petri » pour l'apprentissage robotique, les chercheurs peuvent plus efficacement retracer les causes d'un échec [s1].",
+          "Pour le grand public, cette recherche constitue un pas vers des robots capables d'effectuer des tâches quotidiennes comme plier le linge ou trier des objets de manière plus fiable [s1]. En améliorant la transparence et l'évaluation des modèles robotiques, le projet vise à combler l'écart entre le raisonnement de haut niveau et le contrôle physique précis [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qu'est-ce que ToyBlocks ?",
+        "a": "ToyBlocks est un cadre de simulation ouvert de Hugging Face qui offre un environnement contrôlé pour étudier comment les robots apprennent et interagissent avec des objets."
+      },
+      {
+        "q": "Comment ToyBlocks aide-t-il les chercheurs ?",
+        "a": "Il permet la génération automatique de démonstrations d'entraînement, éliminant le besoin de téléopération manuelle et aidant les chercheurs à identifier les causes des échecs robotiques."
+      }
+    ],
+    "links": []
+  },
+  "model": "gemini",
+  "words": {
+    "en": 266,
+    "fr": 304
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-06T23:32:04.193Z",
+      "verdict": "done",
+      "notes": [
+        "264 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-06T23:32:24.306Z",
+      "verdict": "fixed",
+      "notes": [
+        "Too close to Hugging Face's wording (\"work in open robot learning including molmoact 2 molmobot…\"): say it in our own words, or quote and attribute it."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-06T23:32:25.127Z",
+      "verdict": "pass",
+      "notes": []
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-06T23:32:32.150Z",
+      "verdict": "pass",
+      "notes": [
+        "304 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-06T23:32:33.791Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face releases ToyBlocks for robot learning research (59)",
+        "fr: Hugging Face lance ToyBlocks pour la recherche en robotique (59)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-06T23:32:34.730Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: night/grid \"ToyBlocks\""
+      ]
+    }
+  ]
+}

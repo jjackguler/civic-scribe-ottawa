@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-05T01:53:00.499Z",
+  "updatedAt": "2026-11-06T23:32:34.733Z",
   "items": [
+    {
+      "id": "18vaqia",
+      "slug": {
+        "en": "hugging-face-toyblocks-robot-learning",
+        "fr": "hugging-face-toyblocks-apprentissage-robot"
+      },
+      "createdAt": "2026-11-06T23:32:34.730Z",
+      "updatedAt": "2026-11-06T23:32:34.730Z",
+      "topic": "robotics",
+      "format": "standard",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-06T14:00:48.000Z"
+      ],
+      "storyIds": [
+        "18vaqia"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "grid",
+        "en": {
+          "kicker": "Robot learning",
+          "big": "ToyBlocks",
+          "small": "New simulation framework for controlled robot training"
+        },
+        "fr": {
+          "kicker": "Apprentissage robotique",
+          "big": "ToyBlocks",
+          "small": "Nouveau cadre de simulation pour l'entraînement robotique"
+        }
+      },
+      "words": 266,
+      "en": {
+        "headline": "Hugging Face releases ToyBlocks for controlled robot learning and evaluation",
+        "dek": "The new simulation framework provides researchers with a standardized environment to study how robots reason, move, and interact with objects.",
+        "news": "Hugging Face introduced ToyBlocks, an open simulation framework designed to help researchers study and improve robot learning in controlled, tabletop environments [s1].",
+        "matters": "This development provides researchers with better tools to understand why robots succeed or fail at specific tasks. For the public, this may eventually lead to more reliable robots capable of handling household chores [s1]."
+      },
+      "fr": {
+        "headline": "Hugging Face lance ToyBlocks pour encadrer l'apprentissage des robots",
+        "dek": "Ce nouveau cadre de simulation offre aux chercheurs un environnement normalisé pour étudier le raisonnement et les mouvements des robots.",
+        "news": "Hugging Face a présenté ToyBlocks, un cadre de simulation ouvert conçu pour aider les chercheurs à étudier et à améliorer l'apprentissage des robots dans des environnements de table contrôlés [s1].",
+        "matters": "Ce développement fournit aux chercheurs de meilleurs outils pour comprendre pourquoi les robots réussissent ou échouent à des tâches précises. Pour le public, cela pourrait mener à terme à des robots plus fiables capables d'effectuer des tâches ménagères [s1]."
+      }
+    },
     {
       "id": "18i1bjd",
       "slug": {
