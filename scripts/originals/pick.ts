@@ -60,6 +60,23 @@ export function riskReasons(text: string, lens: string[] = []): string[] {
   return [...new Set(out)];
 }
 
+/**
+ * The explainer beats, in the human-centred lens: AI in government and digital
+ * transformation, funding, the rise of open source, jobs that AI can make better,
+ * and the worries people have about AI (answered with evidence and hope).
+ * One point per beat matched, so a story touching more beats ranks higher.
+ */
+export function beatScore(text: string): number {
+  const beats: RegExp[] = [
+    /\b(government|public sector|ministr\w*|federal|province|provincial|municipal\w*|city of|regulat\w*|policy|digital (transformation|services?|government))\b/i,
+    /\b(fund\w*|grants?|invest\w*|raises?|raised|series [a-d]|budget|programme|program)\b/i,
+    /\b(open[- ]source|open[- ]weights?|hugging ?face|llama|mistral|deepseek|qwen)\b/i,
+    /\b(jobs?|workers?|careers?|skills?|nurses?|teachers?|doctors?|farmers?|trades|small business(es)?|productivity)\b/i,
+    /\b(anxiety|fear\w*|worr\w*|trust|safety|wellbeing|well-being|privacy|rights)\b/i,
+  ];
+  return beats.reduce((n, re) => n + (re.test(text) ? 1 : 0), 0);
+}
+
 async function readJson<T>(f: string, fallback: T): Promise<T> {
   try { return JSON.parse(await readFile(f, "utf8")) as T; }
   catch (e) {
@@ -220,14 +237,15 @@ export async function chooseStory(o: { mediaDir: string; manifest: OriginalsMani
     throw new SkipRun("Queued source unavailable", "The first queued story could not be read. It was kept in queue.json; check its URL/id or retry when the source returns.");
   }
 
-  // 2. Our own newsroom articles, newest first.
+  // 2. Our own newsroom articles: editorial beats first, then newest.
   const hours = Number(env("ORIGINALS_NEWSROOM_HOURS") || 72);
   const index = await newsroomFile<NewsroomIndex>("index.json");
   const killedFile = await newsroomFile<unknown>("killed.json");
   if (index?.items?.length) {
     const { killedIds, isKilled } = await import("../../src/lib/newsroom-types");
     const killed = killedIds(killedFile);
-    const fresh = [...index.items].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    const beat = (s: NewsroomIndex["items"][number]) => beatScore(`${s.en.headline} ${s.en.dek} ${s.en.news}`);
+    const fresh = [...index.items].sort((a, b) => beat(b) - beat(a) || b.createdAt.localeCompare(a.createdAt))
       .filter(s => Date.now() - new Date(s.createdAt).getTime() < hours * 3600_000 && !isKilled(killed, s));
     for (const s of fresh) {
       const key = `article:${s.id}`;
