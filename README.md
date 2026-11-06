@@ -1,4 +1,4 @@
-# AI Broadsheet
+# AI Broadsheet — an Open Desk newsroom
 
 The world's AI newspaper, live, in English and French: news from public publisher feeds filed into topic desks, a front page led by the story most outlets are covering, video, interviews and podcasts, a Canadian AI Ministry tracker, ad positions and a media kit.
 
@@ -21,6 +21,7 @@ The world's AI newspaper, live, in English and French: news from public publishe
 | Buildgena Studio pieces (editor-approved, AI-assisted) | `src/content/studio/<id>.json` → `/desk/<id>` (schema in `src/lib/studio-schema.ts`) |
 | Founding sponsors of the newsletter | `FOUNDING_SPONSORS` in `src/lib/ads.ts` |
 | Corrections log | `src/lib/corrections.ts` |
+| Open Desk Ledger records (one file each, signed by the editor) | `src/content/ledger/OD-NNNN.json` → `/ledger/<id>` (guide: `docs/open-desk.md`) |
 | Interface text (EN/FR) | `src/lib/i18n.ts` |
 
 ## Languages and SEO

@@ -17,6 +17,7 @@ type Item = { label: Bi; to: string; section?: SectionId; hash?: string };
  * News desks first, then our own journalism, then learning.
  */
 const BAR: Item[] = [
+  { label: { en: "The Ledger", fr: "Le registre" }, to: "/ledger" },
   { label: { en: "Latest", fr: "En continu" }, to: "/news" },
   { label: { en: "Canada", fr: "Canada" }, to: "/canada" },
   ...DESKS.filter(d => d.id !== "canada").map(d => ({ label: d.label, to: "/news" as const, section: d.id })),
@@ -31,6 +32,7 @@ const GROUPS: { title: Bi; items: Item[] }[] = [
   {
     title: { en: "News", fr: "Actualités" },
     items: [
+      { label: SITE.openDesk.ledger, to: "/ledger" },
       { label: { en: "Latest AI news", fr: "Dernières nouvelles" }, to: "/news" },
       { label: { en: "AI in Canada", fr: "L'IA au Canada" }, to: "/canada" },
       { label: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" }, to: "/ministry" },
@@ -68,7 +70,7 @@ const GROUPS: { title: Bi; items: Item[] }[] = [
     title: { en: "About us", fr: "À propos" },
     items: [
       { label: { en: "How we use AI", fr: "Comment nous utilisons l'IA" }, to: "/how-we-use-ai" },
-      { label: { en: "Editorial standards", fr: "Normes éditoriales" }, to: "/standards" },
+      { label: { en: "Standards (Open Desk protocol)", fr: "Normes (protocole Open Desk)" }, to: "/standards" },
       { label: { en: "Corrections", fr: "Corrections" }, to: "/corrections" },
       { label: { en: "About and ownership", fr: "À propos et propriété" }, to: "/about" },
       { label: { en: "Newsletter", fr: "Infolettre" }, to: "/newsletter" },
@@ -153,7 +155,7 @@ export function SiteHeader() {
               <span className="sm:hidden"><Logo compact /></span>
               <span className="hidden sm:inline"><Logo masthead /></span>
             </Link>
-            <p className="hidden md:block mt-1.5 font-serif italic text-[0.95rem] text-muted-ink">{fr ? "L'IA au Canada et dans le monde, avec les enjeux humains" : "AI in Canada and the world, with the human stakes left in"}</p>
+            <p className="hidden md:block mt-1.5 font-serif italic text-[0.95rem] text-muted-ink">{SITE.openDesk.subtitle[locale].replace(/^./, c => c.toUpperCase())} · {fr ? "les promesses de l'IA, consignées et vérifiées" : "AI claims, recorded and tested"}</p>
           </div>
           <div className="flex justify-end">
             <Link to="/newsletter" className="inline-flex items-center h-10 sm:h-11 px-2.5 sm:px-4 rounded-[4px] bg-ink text-white text-[0.8rem] sm:text-[0.9rem] font-bold hover:bg-lake whitespace-nowrap">

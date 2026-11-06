@@ -164,6 +164,17 @@ function StudioPiece() {
                   {readingMinutes(p.body)} {T("min read", "min de lecture")}
                 </span>
               </p>
+              {p.records.length > 0 && (
+                <p>
+                  {T("Based on ledger record", "D'après le dossier")}{" "}
+                  {p.records.map((id, i) => (
+                    <span key={id}>
+                      {i > 0 && ", "}
+                      <Link to="/ledger/$id" params={{ id }} className="font-mono font-semibold text-lake underline">{id}</Link>
+                    </span>
+                  ))}
+                </p>
+              )}
               <p className="text-muted-ink">
                 {p.aiDisclosure}{" "}
                 <Link to="/how-we-use-ai" className="text-lake font-semibold underline">

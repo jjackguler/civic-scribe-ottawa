@@ -17,6 +17,7 @@ import type { Dispatch } from "./dispatch-types";
 import type { NewsroomSummary } from "./newsroom-types";
 import { ORIGINALS_MANIFEST_URL, originalPublishable, videoSlug, type OriginalsManifest } from "./originals-types";
 import { STUDIO, studioRecent, type StudioDispatch } from "./studio";
+import { LEDGER, lastChange } from "./ledger";
 
 // XML 1.0 forbids most control characters; one in a feed item would break the whole file.
 const esc = (s: string) =>
@@ -129,6 +130,10 @@ export async function buildSitemap(): Promise<string> {
 
   // Buildgena Studio pieces (our own, editor-approved): the list page once there is something on it.
   if (STUDIO.length) entries.push({ path: "/desk", changefreq: "daily", priority: "0.8", lastmod: STUDIO[0].approvedAt.slice(0, 10) });
+
+  // The Open Desk Ledger: the list once the first record is signed, and every record.
+  if (LEDGER.length) entries.push({ path: "/ledger", changefreq: "daily", priority: "0.9", lastmod: lastChange(LEDGER[0]).slice(0, 10) });
+  for (const r of LEDGER) entries.push({ path: `/ledger/${r.id}`, changefreq: "weekly", priority: "0.8", lastmod: lastChange(r).slice(0, 10) });
 
   const articles = await currentArticles();
   const dispatches = await currentDispatches(articles);

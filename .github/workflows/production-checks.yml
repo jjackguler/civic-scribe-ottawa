@@ -35,6 +35,7 @@ jobs:
           npx tsx ../ads-test.ts
           npx tsx ../output-watch-test.ts
           npx tsx ../studio-test.ts
+          npx tsx ../ledger-test.ts
           npx tsx ../forms-test.ts
           npx tsx ../labels-test.ts
           npx tsx run.ts --dry-run --store out/ci-fixture

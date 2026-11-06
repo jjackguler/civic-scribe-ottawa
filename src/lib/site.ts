@@ -12,6 +12,18 @@ export const SITE = {
    * Keep this aligned with the primary deployment domain and public/robots.txt.
    */
   domain: "aibroadsheet.com",
+  /**
+   * Naming (owner plan, 6 Nov 2026): the publication keeps its name, AI Broadsheet; Open Desk
+   * Journalism is its method, and the public record of tested claims is the Open Desk Ledger.
+   * Change the publication's name above, not here, if that decision changes.
+   */
+  openDesk: {
+    method: "Open Desk Journalism",
+    subtitle: { en: "an Open Desk newsroom", fr: "une rédaction Open Desk" },
+    ledger: { en: "The Open Desk Ledger", fr: "Le registre Open Desk" },
+    /** Version of the public protocol on /standards. */
+    protocolVersion: "0.9",
+  },
   tagline: {
     en: "AI news, with the human stakes left in. One catch a day.",
     fr: "L'actualité IA, sans perdre de vue les enjeux humains. Une mise au point par jour.",

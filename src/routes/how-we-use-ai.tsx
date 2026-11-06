@@ -129,6 +129,13 @@ const NEVER: Bi[] = [
 
 const QA: { q: Bi; a: Bi }[] = [
   {
+    q: { en: "What does AI do in the Open Desk Ledger?", fr: "Que fait l'IA dans le registre Open Desk?" },
+    a: {
+      en: "AI watches public statements, splits a statement into claims that can be tested, matches them with earlier statements and documents, and flags contradictions. It never writes a record's status: only a named editor does, and signs it. Each record says what AI did on it.",
+      fr: "L'IA suit les déclarations publiques, découpe une déclaration en affirmations vérifiables, les rapproche des déclarations antérieures et des documents, et signale les contradictions. Elle n'écrit jamais le statut d'un dossier : seul un responsable éditorial nommé le fait et le signe. Chaque dossier précise ce que l'IA y a fait.",
+    },
+  },
+  {
     q: { en: "Which AI models do you use?", fr: "Quels modèles d'IA utilisez-vous?" },
     a: {
       en: "Mainly Google's Gemini models, and Anthropic's Claude when we switch it on, for writing, translating and grouping stories. Narrated explainers use AI voices from ElevenLabs. Our privacy page lists what is sent to these providers.",
