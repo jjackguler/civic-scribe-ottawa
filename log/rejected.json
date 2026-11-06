@@ -1,5 +1,18 @@
 [
   {
+    "id": "1evctf7",
+    "at": "2026-11-06T11:33:53.493Z",
+    "stage": "copy",
+    "headline": "Egyptian and Nigerian English join the Open ASR Leaderboard",
+    "reasons": [
+      "Not in the sources (names or numbers): 06, 2026-11-06, Automated, Recognition.",
+      "Too close to Hugging Face's wording (\"private split for indian accented english with voice arena…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): 06, 2026-11-06, Automated, Recognition.",
+      "Too close to Hugging Face's wording (\"private split for indian accented english with voice arena…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1gjp90l",
     "at": "2026-11-05T22:57:23.963Z",
     "stage": "copy",
