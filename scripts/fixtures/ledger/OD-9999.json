@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "id": "OD-9999",
+  "beat": "ai-and-work",
+  "headline": {
+    "en": "Halvorsen Freight said AI would replace no one. Seven months later it cut 1,200 jobs, citing AI.",
+    "fr": "Halvorsen Freight assurait que l'IA ne remplacerait personne. Sept mois plus tard, elle supprimait 1 200 postes en invoquant l'IA."
+  },
+  "actor": { "name": "Halvorsen Freight (fictional example)", "kind": "company" },
+  "claim": {
+    "quote": "AI is now doing this work. We are reducing our dispatch and back-office teams by 1,200 roles.",
+    "lang": "en",
+    "context": "Press release on restructuring",
+    "madeAt": "2026-09-14",
+    "source": { "title": "Halvorsen Freight restructures operations", "url": "https://example.com/halvorsen/restructuring", "publisher": "Halvorsen Freight" },
+    "archiveUrl": "https://web.archive.org/web/20260914000000/https://example.com/halvorsen/restructuring"
+  },
+  "parts": [
+    { "en": "1,200 roles are being cut.", "fr": "1 200 postes sont supprimés." },
+    { "en": "AI tools now do the work those roles did.", "fr": "Des outils d'IA font désormais le travail de ces postes." },
+    { "en": "In February the CEO said AI would not replace anyone.", "fr": "En février, le PDG affirmait que l'IA ne remplacerait personne." }
+  ],
+  "evidence": [
+    {
+      "title": "CEO remarks at the February investor day",
+      "url": "https://example.com/halvorsen/investor-day-transcript",
+      "publisher": "Halvorsen Freight",
+      "archiveUrl": "https://web.archive.org/web/20260220000000/https://example.com/halvorsen/investor-day-transcript",
+      "stance": "contradicts",
+      "independent": false,
+      "note": { "en": "The CEO said: \"AI will not replace anyone here.\"", "fr": "Le PDG déclarait : « L'IA ne remplacera personne ici. »" },
+      "addedAt": "2026-09-15"
+    },
+    {
+      "title": "Job postings for dispatch coordinators in Manila and Kraków",
+      "url": "https://example.com/jobs/halvorsen-dispatch",
+      "publisher": "Example Jobs Board",
+      "stance": "contradicts",
+      "independent": true,
+      "note": { "en": "140 dispatch roles were advertised abroad in the same month, which suggests part of the work moved rather than being automated.", "fr": "140 postes de répartition ont été affichés à l'étranger le même mois : une partie du travail semble avoir été déplacée plutôt qu'automatisée." },
+      "addedAt": "2026-09-16"
+    },
+    {
+      "title": "Former dispatcher, interviewed on the record",
+      "url": "https://example.com/interviews/former-dispatcher",
+      "publisher": "AI Broadsheet",
+      "stance": "context",
+      "independent": true,
+      "note": { "en": "Says the team trained the replacement software for two months before the cuts.", "fr": "Affirme que l'équipe a entraîné le logiciel de remplacement pendant deux mois avant les suppressions." },
+      "addedAt": "2026-09-17"
+    }
+  ],
+  "rightOfReply": {
+    "requestedAt": "2026-09-15T14:00:00Z",
+    "to": "Media relations, Halvorsen Freight",
+    "deadlineHours": 48,
+    "response": null
+  },
+  "history": [
+    {
+      "status": "attributed",
+      "at": "2026-09-15T09:00:00Z",
+      "reason": { "en": "Recorded from the company's own press release.", "fr": "Consigné à partir du communiqué de l'entreprise." },
+      "editor": "Example Editor"
+    },
+    {
+      "status": "unresolved",
+      "at": "2026-09-15T15:00:00Z",
+      "reason": { "en": "Testing: earlier statements, job postings and former staff.", "fr": "Vérification en cours : déclarations antérieures, offres d'emploi et anciens employés." },
+      "editor": "Example Editor"
+    },
+    {
+      "status": "conflicting",
+      "at": "2026-09-18T16:00:00Z",
+      "reason": { "en": "The CEO's February remarks and the roles advertised abroad conflict with the claim that AI is doing this work. The company did not answer within 48 hours.", "fr": "Les propos du PDG en février et les postes affichés à l'étranger contredisent l'affirmation selon laquelle l'IA fait ce travail. L'entreprise n'a pas répondu dans les 48 heures." },
+      "editor": "Example Editor"
+    }
+  ],
+  "coverage": [],
+  "corrections": [],
+  "aiAssistance": {
+    "en": "AI split the press release into testable parts and flagged the February remarks. The editor chose the record, checked every source and wrote the status.",
+    "fr": "L'IA a découpé le communiqué en éléments vérifiables et repéré les propos de février. Le responsable éditorial a choisi le dossier, vérifié chaque source et rédigé le statut."
+  }
+}

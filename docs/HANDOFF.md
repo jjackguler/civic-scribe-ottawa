@@ -50,6 +50,14 @@ directives file, morning Canadian AI Brief, Output watch issue).
 - Studio: approved pieces are committed as `src/content/studio/<id>.json`; `scripts/studio-test.ts`
   validates them in CI. The example is only in `scripts/fixtures/studio/`.
 - Dev preview without network: `AIB_NEWS_FIXTURE=1 npx vite dev` serves a fictional desk.
+## Open Desk newsroom (6 Nov 2026, PR from `claude/project-thread-24p9f1`)
+- AI Broadsheet stays the name; subtitle "an Open Desk newsroom". The ledger of tested claims
+  (`/ledger`, records in `src/content/ledger/OD-NNNN.json`) leads the front page; other outlets'
+  news follows under "On our watch". `/standards` is the Open Desk protocol v0.9 with five
+  statuses (Attributed only, Unresolved, Supported, Conflicting evidence, Refuted). Only a named
+  human editor writes a status; CI (`scripts/ledger-test.ts`) enforces the rules. Full guide:
+  `docs/open-desk.md`. No real records yet: the first five are the editor's job (Day 3–5 of the plan).
+
 ## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)
 - The site has exactly five sections: Canada, Rights & power, Work & culture, Research, World
   (`src/lib/desks.ts`). Every feed story, newsroom summary and video maps to one of them

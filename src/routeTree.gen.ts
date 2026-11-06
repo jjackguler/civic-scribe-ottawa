@@ -49,6 +49,7 @@ import { Route as WatchRouteImport } from './routes/watch'
 import { Route as ApiBriefDotjsonRouteImport } from './routes/api.brief[.]json'
 import { Route as ApiDispatchesDotjsonRouteImport } from './routes/api.dispatches[.]json'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
+import { Route as ApiLedgerDotjsonRouteImport } from './routes/api.ledger[.]json'
 import { Route as ApiSubscribeRouteImport } from './routes/api.subscribe'
 import { Route as ApiTipRouteImport } from './routes/api.tip'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
@@ -71,6 +72,8 @@ import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
+import { Route as LedgerIndexRouteImport } from './routes/ledger.index'
+import { Route as LedgerIdRouteImport } from './routes/ledger.$id'
 import { Route as OgQuizDotpngRouteImport } from './routes/og.quiz[.]png'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as VideoSlugRouteImport } from './routes/video.$slug'
@@ -284,6 +287,11 @@ const ApiKeeperTtsRoute = ApiKeeperTtsRouteImport.update({
   path: '/api/keeper-tts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiLedgerDotjsonRoute = ApiLedgerDotjsonRouteImport.update({
+  id: '/api/ledger.json',
+  path: '/api/ledger.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiSubscribeRoute = ApiSubscribeRouteImport.update({
   id: '/api/subscribe',
   path: '/api/subscribe',
@@ -394,6 +402,16 @@ const LearnSlugRoute = LearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LedgerIndexRoute = LedgerIndexRouteImport.update({
+  id: '/ledger/',
+  path: '/ledger/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LedgerIdRoute = LedgerIdRouteImport.update({
+  id: '/ledger/$id',
+  path: '/ledger/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OgQuizDotpngRoute = OgQuizDotpngRouteImport.update({
   id: '/og/quiz.png',
   path: '/og/quiz.png',
@@ -496,6 +514,7 @@ export interface FileRoutesByFullPath {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/ledger.json': typeof ApiLedgerDotjsonRoute
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
@@ -510,6 +529,7 @@ export interface FileRoutesByFullPath {
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
@@ -521,6 +541,7 @@ export interface FileRoutesByFullPath {
   '/immersive/': typeof ImmersiveIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
+  '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
@@ -572,6 +593,7 @@ export interface FileRoutesByTo {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/ledger.json': typeof ApiLedgerDotjsonRoute
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
@@ -586,6 +608,7 @@ export interface FileRoutesByTo {
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
@@ -597,6 +620,7 @@ export interface FileRoutesByTo {
   '/immersive': typeof ImmersiveIndexRoute
   '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
+  '/ledger': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
@@ -649,6 +673,7 @@ export interface FileRoutesById {
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
+  '/api/ledger.json': typeof ApiLedgerDotjsonRoute
   '/api/subscribe': typeof ApiSubscribeRoute
   '/api/tip': typeof ApiTipRoute
   '/article/$slug': typeof ArticleSlugRoute
@@ -663,6 +688,7 @@ export interface FileRoutesById {
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/learn/$slug': typeof LearnSlugRoute
+  '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
   '/story/$id': typeof StoryIdRoute
   '/video/$slug': typeof VideoSlugRoute
@@ -674,6 +700,7 @@ export interface FileRoutesById {
   '/immersive/': typeof ImmersiveIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
+  '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
@@ -727,6 +754,7 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/ledger.json'
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
@@ -741,6 +769,7 @@ export interface FileRouteTypes {
     | '/immersive/$slug'
     | '/labs/$path'
     | '/learn/$slug'
+    | '/ledger/$id'
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
@@ -752,6 +781,7 @@ export interface FileRouteTypes {
     | '/immersive/'
     | '/labs/'
     | '/learn/'
+    | '/ledger/'
     | '/api/dispatch-audio/$id'
     | '/labs/young/$activity'
     | '/labs/young/explorers'
@@ -803,6 +833,7 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/ledger.json'
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
@@ -817,6 +848,7 @@ export interface FileRouteTypes {
     | '/immersive/$slug'
     | '/labs/$path'
     | '/learn/$slug'
+    | '/ledger/$id'
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
@@ -828,6 +860,7 @@ export interface FileRouteTypes {
     | '/immersive'
     | '/labs'
     | '/learn'
+    | '/ledger'
     | '/api/dispatch-audio/$id'
     | '/labs/young/$activity'
     | '/labs/young/explorers'
@@ -879,6 +912,7 @@ export interface FileRouteTypes {
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
+    | '/api/ledger.json'
     | '/api/subscribe'
     | '/api/tip'
     | '/article/$slug'
@@ -893,6 +927,7 @@ export interface FileRouteTypes {
     | '/immersive/$slug'
     | '/labs/$path'
     | '/learn/$slug'
+    | '/ledger/$id'
     | '/og/quiz.png'
     | '/story/$id'
     | '/video/$slug'
@@ -904,6 +939,7 @@ export interface FileRouteTypes {
     | '/immersive/'
     | '/labs/'
     | '/learn/'
+    | '/ledger/'
     | '/api/dispatch-audio/$id'
     | '/labs/young/$activity'
     | '/labs/young/explorers'
@@ -956,6 +992,7 @@ export interface RootRouteChildren {
   ApiBriefDotjsonRoute: typeof ApiBriefDotjsonRoute
   ApiDispatchesDotjsonRoute: typeof ApiDispatchesDotjsonRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
+  ApiLedgerDotjsonRoute: typeof ApiLedgerDotjsonRoute
   ApiSubscribeRoute: typeof ApiSubscribeRoute
   ApiTipRoute: typeof ApiTipRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
@@ -970,6 +1007,7 @@ export interface RootRouteChildren {
   ImmersiveSlugRoute: typeof ImmersiveSlugRoute
   LabsPathRoute: typeof LabsPathRoute
   LearnSlugRoute: typeof LearnSlugRoute
+  LedgerIdRoute: typeof LedgerIdRoute
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
   StoryIdRoute: typeof StoryIdRoute
   VideoSlugRoute: typeof VideoSlugRoute
@@ -981,6 +1019,7 @@ export interface RootRouteChildren {
   ImmersiveIndexRoute: typeof ImmersiveIndexRoute
   LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
+  LedgerIndexRoute: typeof LedgerIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
   LabsYoungActivityRoute: typeof LabsYoungActivityRoute
   LabsYoungExplorersRoute: typeof LabsYoungExplorersRoute
@@ -1274,6 +1313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiKeeperTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ledger.json': {
+      id: '/api/ledger.json'
+      path: '/api/ledger.json'
+      fullPath: '/api/ledger.json'
+      preLoaderRoute: typeof ApiLedgerDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/subscribe': {
       id: '/api/subscribe'
       path: '/api/subscribe'
@@ -1428,6 +1474,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ledger/': {
+      id: '/ledger/'
+      path: '/ledger'
+      fullPath: '/ledger/'
+      preLoaderRoute: typeof LedgerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ledger/$id': {
+      id: '/ledger/$id'
+      path: '/ledger/$id'
+      fullPath: '/ledger/$id'
+      preLoaderRoute: typeof LedgerIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/og/quiz.png': {
       id: '/og/quiz.png'
       path: '/og/quiz.png'
@@ -1556,6 +1616,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBriefDotjsonRoute: ApiBriefDotjsonRoute,
   ApiDispatchesDotjsonRoute: ApiDispatchesDotjsonRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,
+  ApiLedgerDotjsonRoute: ApiLedgerDotjsonRoute,
   ApiSubscribeRoute: ApiSubscribeRoute,
   ApiTipRoute: ApiTipRoute,
   ArticleSlugRoute: ArticleSlugRoute,
@@ -1570,6 +1631,7 @@ const rootRouteChildren: RootRouteChildren = {
   ImmersiveSlugRoute: ImmersiveSlugRoute,
   LabsPathRoute: LabsPathRoute,
   LearnSlugRoute: LearnSlugRoute,
+  LedgerIdRoute: LedgerIdRoute,
   OgQuizDotpngRoute: OgQuizDotpngRoute,
   StoryIdRoute: StoryIdRoute,
   VideoSlugRoute: VideoSlugRoute,
@@ -1581,6 +1643,7 @@ const rootRouteChildren: RootRouteChildren = {
   ImmersiveIndexRoute: ImmersiveIndexRoute,
   LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
+  LedgerIndexRoute: LedgerIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
   LabsYoungActivityRoute: LabsYoungActivityRoute,
   LabsYoungExplorersRoute: LabsYoungExplorersRoute,

@@ -71,6 +71,8 @@ export const studioDispatchSchema = z.object({
       'producedWith must read "Buildgena Studio <version>"',
     ),
   aiDisclosure: z.string().trim().min(20).max(400),
+  /** Open Desk Ledger records this piece is built on, e.g. ["OD-0001"]. */
+  records: z.array(z.string().regex(/^OD-\d{4,}$/, 'a record id like "OD-0001"')).max(10).default([]),
 });
 
 export type StudioDispatch = z.infer<typeof studioDispatchSchema>;

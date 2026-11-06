@@ -28,7 +28,8 @@ export function SiteFooter() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-end border-b border-white/15 pb-10">
           <div>
             <Logo inverse />
-            <p className="mt-4 max-w-md font-serif text-[1.15rem] leading-relaxed text-brand-paper/85">{SITE.tagline[locale]}</p>
+            <p className="mt-3 text-[0.8rem] font-bold uppercase tracking-[0.08em] text-brass">{SITE.openDesk.subtitle[locale]}</p>
+            <p className="mt-3 max-w-md font-serif text-[1.15rem] leading-relaxed text-brand-paper/85">{SITE.tagline[locale]}</p>
           </div>
           <Link to="/newsletter" className="group justify-self-start lg:justify-self-end flex items-center gap-4 border border-white/25 px-5 py-4 hover:border-brass">
             <span>
@@ -41,6 +42,7 @@ export function SiteFooter() {
 
         <div className="grid gap-10 py-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <Col title={fr ? "Actualités" : "News"}>
+            <li><Link to="/ledger" className={link}>{SITE.openDesk.ledger[locale]}</Link></li>
             <li><Link to="/news" className={link}>{fr ? "En continu" : "Latest"}</Link></li>
             <li><Link to="/canada" className={link}>{fr ? "L'IA au Canada" : "AI in Canada"}</Link></li>
             {DESKS.filter(d => d.id !== "canada").map(d => (
@@ -69,7 +71,7 @@ export function SiteFooter() {
           </Col>
           <Col title={fr ? "Confiance" : "Trust"}>
             <li><Link to="/how-we-use-ai" className={link}>{fr ? "Comment nous utilisons l'IA" : "How we use AI"}</Link></li>
-            <li><Link to="/standards" className={link}>{fr ? "Normes éditoriales" : "Editorial standards"}</Link></li>
+            <li><Link to="/standards" className={link}>{fr ? "Normes (protocole Open Desk)" : "Standards (Open Desk protocol)"}</Link></li>
             <li><Link to="/corrections" className={link}>Corrections</Link></li>
             <li><Link to="/values" className={link}>{fr ? "Nos valeurs" : "What we stand for"}</Link></li>
             <li><Link to="/about" hash="ownership" className={link}>{fr ? "Propriété et financement" : "Ownership and funding"}</Link></li>

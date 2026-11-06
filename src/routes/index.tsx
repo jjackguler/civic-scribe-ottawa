@@ -14,6 +14,7 @@ import { NewsroomCover } from "@/components/NewsroomCover";
 import { NewsroomLead } from "@/components/NewsroomLead";
 import { FromOurDesk, StudioCard } from "@/components/StudioCards";
 import { AiBadge, TrustBar } from "@/components/Trust";
+import { LedgerFront } from "@/components/Ledger";
 import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
 import { QuizCard } from "@/components/Quiz";
@@ -52,10 +53,10 @@ export const Route = createFileRoute("/")({
   },
   head: ({ match }) =>
     seoHead(match, {
-      title: { en: `${SITE.name}: AI news for Canada, with the human stakes`, fr: `${SITE.name} : l'actualité de l'IA pour le Canada` },
+      title: { en: `${SITE.name}: ${SITE.openDesk.subtitle.en}`, fr: `${SITE.name} : ${SITE.openDesk.subtitle.fr}` },
       description: {
-        en: "Independent, bilingual AI news from Ottawa: what's changing in artificial intelligence, what it means for Canada, with every source named and AI-assisted work labelled.",
-        fr: "Actualité indépendante et bilingue de l'IA, depuis Ottawa : ce qui change en intelligence artificielle et ce que cela signifie pour le Canada, sources nommées.",
+        en: "An Open Desk newsroom from Ottawa: what AI companies say about jobs and AI, recorded, tested against the evidence and signed by a named editor, in English and French.",
+        fr: "Une rédaction Open Desk à Ottawa : ce que disent les entreprises d'IA sur l'emploi, consigné, vérifié et signé par un responsable nommé, en français et en anglais.",
       },
       jsonLd: locale => [organizationLd(locale), websiteLd(locale)],
     }),
@@ -148,7 +149,7 @@ function Home() {
 
   return (
     <PageShell>
-      <h1 className="sr-only">{SITE.name} — {fr ? "l'actualité de l'IA pour le Canada" : "AI news for Canada"}</h1>
+      <h1 className="sr-only">{SITE.name} — {SITE.openDesk.subtitle[locale]}</h1>
 
       {alert && (
         <div className={alert.kind === "breaking" ? "bg-live text-white" : "bg-ink text-white"}>
@@ -162,8 +163,12 @@ function Home() {
         </div>
       )}
 
-      {/* The front: our lead and the top events on the left, the running Latest list on the right. */}
-      <section className="container-mw pt-6 sm:pt-8" aria-label={fr ? "À la une" : "Top of the front page"}>
+      {/* Open Desk (owner plan, 6 Nov 2026): the ledger of recorded and tested claims leads the paper. */}
+      <LedgerFront className="container-mw pt-6 sm:pt-8" />
+
+      {/* Then the watch: our lead and the top events on the left, the running Latest list on the right. */}
+      <section className="container-mw mt-12" aria-labelledby="on-our-watch">
+        <h2 id="on-our-watch" className="kicker text-ink mb-3">{fr ? "Sous surveillance : l'actualité IA des autres médias" : "On our watch: AI news from other outlets"}</h2>
         {news.length === 0 && !articleLead && !studioLead ? (
           <div className="border-t-2 border-ink pt-10 pb-16 text-center">
             <span className="live-dot inline-block" aria-hidden="true" />
@@ -201,17 +206,6 @@ function Home() {
       </section>
 
       <div className="container-mw mt-8"><TrustBar /></div>
-      <section className="container-mw mt-6" aria-labelledby="open-desk-intro">
-        <div className="grid gap-2 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8 items-baseline">
-          <h2 id="open-desk-intro" className="hl text-[1.25rem]">Open Desk Journalism</h2>
-          <p className="font-serif text-[1.05rem] leading-relaxed text-ink/80 max-w-3xl">
-            {fr
-              ? `Sous la direction de ${SITE.editor.name}, nous associons journalisme, cinéma et création assistée par l'IA pour raconter les enjeux humains de l'intelligence artificielle. `
-              : `Led by editor ${SITE.editor.name}, we combine journalism, filmmaking and AI-assisted creativity to tell the human stories behind artificial intelligence. `}
-            <Link to="/about" hash="how-we-work" className="font-sans text-[0.92rem] text-lake font-semibold hover:underline">{fr ? "Comment nous travaillons →" : "How we work →"}</Link>
-          </p>
-        </div>
-      </section>
 
       <FromOurDesk className="container-mw mt-12" exclude={studioLead?.id} />
 
