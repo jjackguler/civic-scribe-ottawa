@@ -24,6 +24,23 @@ claims we test. Plan and decisions: the owner's "AI Broadsheet'i Open Desk masas
 Until the first record is committed, `/ledger` is noindex and the front page shows a short
 "first records open soon" band.
 
+## Open Desk page, video, theme and motion (7 Nov 2026)
+
+- `/open-desk` (EN/FR): what Open Desk Journalism is, why, four aims, the interactive desk
+  walkthrough (`src/components/DeskWalkthrough.tsx`, fictional Halvorsen case, labelled), who does
+  what, the five statuses, six commitments (from the concept paper v2), first-season targets
+  (marked as goals, not results), what we don't claim, and how to take part.
+- Explainer video: `public/open-desk/open-desk-explainer-en.mp4` (re-encoded to 10 MB from the
+  project's 19 MB master), poster and chapters next to it; `src/components/ExplainerVideo.tsx`.
+  Also on the front page in the Open Desk band. VideoObject JSON-LD on /open-desk.
+- Light / dark / system theme: toggle in the utility bar (`ThemeToggle`), choice kept in this
+  browser only (`localStorage["aib-theme"]`), applied before first paint (`THEME_BOOT` in
+  `src/lib/theme.ts`). Dark tokens are in `src/styles.css`; Young Lab stays light.
+- Micro-interactions (`src/components/Motion.tsx` + CSS): stamps land when they scroll into view,
+  marker highlight sweeps, sections rise in, cards lift, counters count up, copy link/citation
+  on record pages, the theme icon turns. All off under `prefers-reduced-motion`; content is
+  visible without JavaScript.
+
 ## The five statuses
 
 | Old stamp | Status | Meaning | Rule the schema enforces |

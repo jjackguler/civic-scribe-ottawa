@@ -43,6 +43,7 @@ export function SiteFooter() {
         <div className="grid gap-10 py-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <Col title={fr ? "Actualités" : "News"}>
             <li><Link to="/ledger" className={link}>{SITE.openDesk.ledger[locale]}</Link></li>
+            <li><Link to="/open-desk" className={link}>{fr ? "Qu'est-ce qu'Open Desk?" : "What is Open Desk?"}</Link></li>
             <li><Link to="/news" className={link}>{fr ? "En continu" : "Latest"}</Link></li>
             <li><Link to="/canada" className={link}>{fr ? "L'IA au Canada" : "AI in Canada"}</Link></li>
             {DESKS.filter(d => d.id !== "canada").map(d => (

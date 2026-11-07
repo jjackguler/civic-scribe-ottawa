@@ -10,6 +10,8 @@ import {
   statusCounts, type LedgerRecord, type LedgerText, type Status,
 } from "@/lib/ledger";
 import { SITE } from "@/lib/site";
+import { CountUp } from "./Motion";
+import { ExplainerVideo } from "./ExplainerVideo";
 
 export const STATUS_TONE: Record<Status, string> = {
   attributed: "text-muted-ink",
@@ -19,10 +21,15 @@ export const STATUS_TONE: Record<Status, string> = {
   refuted: "bg-live text-white !border-live",
 };
 
-export function StatusMark({ s, className = "" }: { s: Status; className?: string }) {
+export function StatusMark({ s, className = "", animate = false, delay = 0 }: { s: Status; className?: string; animate?: boolean; delay?: number }) {
   const { pick } = useLocale();
   return (
-    <span className={`stamp ${STATUS_TONE[s]} ${className}`} title={pick(STATUS_HELP[s])}>
+    <span
+      className={`stamp ${STATUS_TONE[s]} ${className}`}
+      title={pick(STATUS_HELP[s])}
+      data-reveal={animate ? "" : undefined}
+      style={delay ? ({ "--delay": `${delay}ms` } as React.CSSProperties) : undefined}
+    >
       {pick(STATUS_LABEL[s])}
     </span>
   );
@@ -64,7 +71,7 @@ export function StatusLegend({
               <StatusMark s={s} />
             </span>
             <span className="text-[0.92rem] text-muted-ink leading-snug">
-              {counts && <strong className="text-ink tabular-nums mr-1.5">{counts[s]}</strong>}
+              {counts && <strong className="text-ink mr-1.5"><CountUp to={counts[s]} /></strong>}
               {pick(STATUS_HELP[s])}
             </span>
           </>
@@ -96,11 +103,11 @@ export function RecordCard({ r, size = "card" }: { r: LedgerRecord; size?: "lead
   const fr = locale === "fr";
   const entry = currentEntry(r);
   return (
-    <article className="group">
+    <article className="group lift">
       <Link to="/ledger/$id" params={{ id: r.id }} className="block">
         <p className="flex flex-wrap items-center gap-2.5">
           <span className="kicker font-mono tracking-normal">{r.id}</span>
-          <StatusMark s={currentStatus(r)} />
+          <StatusMark s={currentStatus(r)} animate />
         </p>
         <h3 className={`hl mt-2 group-hover:underline decoration-1 underline-offset-4 ${size === "lead" ? "text-[1.8rem] sm:text-[2.2rem] leading-[1.1]" : "text-[1.2rem] leading-snug"}`}>
           <LT t={r.headline} />
@@ -182,6 +189,7 @@ export function LedgerFront({ className = "" }: { className?: string }) {
                 : "Our first beat: companies that say they are cutting jobs because of AI. Each record gets a permanent number (OD-0001, OD-0002 …), archived sources, the company's right of reply and the history of every status change."}
             </p>
             <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[0.92rem] font-semibold">
+              <Link to="/open-desk" className="text-lake hover:underline">{fr ? "Qu'est-ce qu'Open Desk?" : "What is Open Desk?"}</Link>
               <Link to="/standards" className="text-lake hover:underline">{fr ? "Le protocole Open Desk" : "The Open Desk protocol"}</Link>
               <Link to="/tips" className="text-lake hover:underline">{fr ? "Signaler une déclaration" : "Flag a statement"}</Link>
             </p>
@@ -189,6 +197,40 @@ export function LedgerFront({ className = "" }: { className?: string }) {
           <StatusLegend />
         </div>
       )}
+    </section>
+  );
+}
+
+/** Front page: what Open Desk is, in one band, with the explainer video. */
+export function OpenDeskBand({ className = "" }: { className?: string }) {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+  const steps = fr
+    ? [["Consigner", "ce que disent les entreprises d'IA, avec une copie archivée"], ["Vérifier", "auprès des documents, des paroles antérieures et des témoins"], ["Signer", "un statut, par un responsable nommé, jamais par l'IA"], ["Rouvrir", "chaque dossier après 3 et 6 mois"]]
+    : [["Record", "what AI companies say, with an archived copy"], ["Test", "against documents, earlier words and witnesses"], ["Sign", "a status, by a named editor, never by AI"], ["Reopen", "every record after 3 and 6 months"]];
+  return (
+    <section className={className} aria-labelledby="open-desk-band">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center bg-surface border border-line p-5 sm:p-8">
+        <div>
+          <p className="kicker">{SITE.openDesk.method}</p>
+          <h2 id="open-desk-band" className="hl text-[1.9rem] sm:text-[2.3rem] leading-[1.08] mt-1">
+            {fr ? <>Les machines cherchent. Les humains décident. <span className="marker" data-reveal="">Ce qui a été dit reste au dossier.</span></> : <>Machines scan. People decide. <span className="marker" data-reveal="">What was said stays on the record.</span></>}
+          </h2>
+          <ol className="mt-5 grid gap-2.5 sm:grid-cols-2">
+            {steps.map(([h, p], n) => (
+              <li key={h} className="rise flex gap-3" data-reveal="" style={{ "--delay": `${n * 80}ms` } as React.CSSProperties}>
+                <span className="grid place-items-center h-7 w-7 shrink-0 rounded-full bg-ink text-white text-[0.8rem] font-bold">{n + 1}</span>
+                <span className="text-[0.95rem] leading-snug"><strong>{h}</strong> {p}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-semibold text-[0.95rem]">
+            <Link to="/open-desk" className="text-lake hover:underline inline-flex items-center gap-1">{fr ? "Qu'est-ce que le journalisme Open Desk?" : "What is Open Desk Journalism?"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+            <Link to="/open-desk" hash="desk" className="text-lake hover:underline">{fr ? "Le pupitre, étape par étape" : "The desk, step by step"}</Link>
+          </p>
+        </div>
+        <ExplainerVideo compact />
+      </div>
     </section>
   );
 }
