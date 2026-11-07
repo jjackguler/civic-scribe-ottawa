@@ -1,5 +1,10 @@
 [
   {
+    "key": "article:18vaqia",
+    "at": "2026-11-07T01:28:47.103Z",
+    "reason": "fact guard / layout check failed twice: not in the sources: 4, Tested, Instant"
+  },
+  {
     "key": "story:t645r4",
     "at": "2026-11-06T01:47:50.189Z",
     "reason": "fact guard / layout check failed twice: 7 to 10 scenes (got 5); narration must be 115-175 words in total (got 83)"
