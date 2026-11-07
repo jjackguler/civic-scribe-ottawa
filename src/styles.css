@@ -928,3 +928,85 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
 .group:hover .house-photo, .group:focus-visible .house-photo, .house-photo-frame:hover .house-photo { filter: none; }
 .group:hover .house-photo-wash, .group:focus-visible .house-photo-wash, .house-photo-frame:hover .house-photo-wash { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .house-photo, .house-photo-wash { transition: none; } }
+
+/*
+  Dark theme (7 Nov 2026). The reader picks Light, Dark or System with the toggle in the
+  utility bar; a script in <head> sets html[data-theme] before first paint (see theme.ts).
+  Every colour on the site comes from these tokens, so the dark set below re-themes the
+  pages; the few hard-coded whites are patched after it. Text pairs keep WCAG AA contrast.
+*/
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #ece8df;
+  --night: #0a1f23;
+  --night-2: #112e33;
+  --paper: #111517;
+  --surface: #181d20;
+  --ice: #20272a;
+  --line: #2f373b;
+  --rule: #ece8df;
+  --muted-ink: #a3abae;
+  --lake: #6cc4ca;
+  --brass-ink: #dcbc66;
+  --live: #f0655c;
+  --spruce: #72c497;
+  --primary-foreground: #111517;
+  --destructive-foreground: #111517;
+}
+:root[data-theme="light"] { color-scheme: light; }
+/* White text sits on ink and lake buttons; in the dark theme those turn light, so the text turns dark. */
+:root[data-theme="dark"] :is(.bg-ink, .bg-lake, .hover\:bg-lake:hover, .bg-spruce, .bg-live) { --color-white: var(--paper); }
+:root[data-theme="dark"] :is(.bg-white) { background-color: var(--surface); }
+:root[data-theme="dark"] .text-brand-ink { color: var(--brand-paper); }
+:root[data-theme="dark"] img:not([src$=".svg"]) { filter: brightness(0.92); }
+/* Young Lab keeps its own bright, light palette in both themes (it is built for children). */
+:root[data-theme="dark"] :is(.yl, .theme-light) {
+  color-scheme: light;
+  --ink: #14181a; --paper: #f7f5f0; --surface: #ffffff; --ice: #ece8df; --line: #dcd7cc; --rule: #14181a;
+  --muted-ink: #545b5f; --lake: #0b6168; --brass-ink: #7a5b12; --live: #c8302a; --spruce: #2b6a4e;
+  --color-white: #ffffff;
+  color: var(--ink);
+}
+html.theme-swap, html.theme-swap * { transition: background-color 280ms ease, color 280ms ease, border-color 280ms ease !important; }
+
+/* Micro-interactions. Every one switches off under prefers-reduced-motion. */
+@layer components {
+  /* A status stamp lands like a rubber stamp the first time it scrolls into view. */
+  .reveal-ready .stamp[data-reveal]:not([data-reveal="in"]) { opacity: 0; }
+  .stamp[data-reveal="in"] { animation: stamp-land 420ms cubic-bezier(.2,.9,.3,1.25) both; animation-delay: var(--delay, 0ms); }
+  @keyframes stamp-land {
+    0% { opacity: 0; transform: rotate(-9deg) scale(1.9); }
+    60% { opacity: 1; transform: rotate(-1deg) scale(.94); }
+    100% { opacity: 1; transform: rotate(-1.5deg) scale(1); }
+  }
+  /* Marker-pen highlight that sweeps under a phrase once it is visible. */
+  .marker { background-image: linear-gradient(color-mix(in oklab, var(--signal) 70%, transparent), color-mix(in oklab, var(--signal) 70%, transparent)); background-repeat: no-repeat; background-position: 0 88%; background-size: 0% 38%; transition: background-size 900ms cubic-bezier(.2,.7,.2,1) 150ms; padding: 0 .05em; }
+  .marker[data-reveal="in"] { background-size: 100% 38%; }
+  :root[data-theme="dark"] .marker { background-image: linear-gradient(color-mix(in oklab, var(--signal) 38%, transparent), color-mix(in oklab, var(--signal) 38%, transparent)); }
+  /* Rise in: sections and timeline entries ease up as they arrive. */
+  .rise[data-reveal] { transition: opacity 520ms ease, transform 520ms cubic-bezier(.2,.7,.2,1); transition-delay: var(--delay, 0ms); }
+  .reveal-ready .rise[data-reveal]:not([data-reveal="in"]) { opacity: 0; transform: translateY(14px); }
+  .rise[data-reveal="in"] { opacity: 1; transform: none; }
+  /* Enter: content that swaps in place (walkthrough steps) fades up as it mounts. */
+  .enter { animation: enter 420ms cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--delay, 0ms); }
+  @keyframes enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  /* Cards lift a little under the pointer. */
+  .lift { transition: transform 180ms ease, box-shadow 180ms ease; }
+  .lift:hover { transform: translateY(-2px); box-shadow: 0 6px 0 -2px color-mix(in oklab, var(--ink) 14%, transparent); }
+  /* The theme toggle's icon turns when it changes. */
+  .spin-in { animation: spin-in 380ms cubic-bezier(.2,.8,.2,1.2); }
+  @keyframes spin-in { from { transform: rotate(-120deg) scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+  /* A copied-to-clipboard tick. */
+  .pop-in { animation: pop-in 260ms cubic-bezier(.2,.9,.3,1.4); }
+  @keyframes pop-in { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+  /* Desk walkthrough: the active step's dot pulses once. */
+  .pulse-once { animation: pulse-once 700ms ease-out; }
+  @keyframes pulse-once { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--lake) 55%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp[data-reveal], .rise[data-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+  .marker { transition: none; background-size: 100% 38%; }
+  .lift, .lift:hover { transition: none; transform: none; }
+  .spin-in, .pop-in, .pulse-once, .enter { animation: none; }
+  html.theme-swap, html.theme-swap * { transition: none !important; }
+}

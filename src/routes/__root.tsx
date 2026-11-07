@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { THEME_BOOT } from "@/lib/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, createRootRouteWithContext, useRouter, useRouterState, HeadContent, Scripts, type ErrorComponentProps } from "@tanstack/react-router";
 
@@ -96,6 +97,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "alternate", type: "application/rss+xml", title: `${SITE.name} (français)`, href: "/fr/rss.xml" },
     ],
     scripts: [
+      // Light/dark theme before first paint (the reader's choice is kept in this browser only).
+      { children: THEME_BOOT },
       { children: `document.fonts.add(new FontFace("Bodoni Moda", "url(/brand/bodoni-moda-brand.woff), url(${new URL(brandFont.url, `https://${SITE.domain}`).href})", { weight: "700", style: "normal" }));` },
       // Cloudflare Web Analytics: cookieless, no personal data. Off until a token is set.
       ...(SITE.cloudflareAnalyticsToken
@@ -112,7 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: React.ReactNode }) {
   const fr = useFr();
   return (
-    <html lang={fr ? "fr-CA" : "en-CA"}>
+    <html lang={fr ? "fr-CA" : "en-CA"} suppressHydrationWarning>
       <head><HeadContent /></head>
       <body>
         {children}

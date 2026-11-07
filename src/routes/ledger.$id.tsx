@@ -3,6 +3,7 @@ import { Archive, ExternalLink, Flag } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { Breadcrumbs } from "@/components/Trust";
 import { LT, RecordCard, StatusMark } from "@/components/Ledger";
+import { CopyButton } from "@/components/Motion";
 import { useLocale } from "@/lib/locale-context";
 import {
   LEDGER, STATUS_HELP, STATUS_LABEL, currentEntry, currentStatus, ledgerDate, openedAt, pickText,
@@ -142,7 +143,7 @@ function RecordPage() {
             {/* The signed status. */}
             <section className="mt-8 bg-surface border border-line p-5 sm:p-6" aria-labelledby="status">
               <h2 id="status" className="kicker text-ink">{fr ? "Statut actuel" : "Current status"}</h2>
-              <p className="mt-3"><StatusMark s={status} className="text-[0.8rem]" /></p>
+              <p className="mt-3"><StatusMark s={status} className="text-[0.8rem]" animate /></p>
               <p className="mt-3 text-[0.92rem] text-muted-ink">{pick(STATUS_HELP[status])}</p>
               <p className="mt-4 font-serif text-[1.12rem] leading-relaxed"><LT t={entry.reason} /></p>
               <p className="mt-3 text-[0.9rem]">
@@ -214,10 +215,10 @@ function RecordPage() {
               <h2 id="history" className="kicker text-ink">{fr ? "Historique du statut" : "Status history"}</h2>
               <ol className="mt-4 grid gap-5 border-l-2 border-line pl-5">
                 {[...r.history].reverse().map((h, i) => (
-                  <li key={h.at + h.status} className="relative">
+                  <li key={h.at + h.status} className="relative rise" data-reveal="" style={{ "--delay": `${i * 90}ms` } as React.CSSProperties}>
                     <span className={`absolute -left-[1.6rem] top-1.5 h-2.5 w-2.5 rounded-full ${i === 0 ? "bg-ink" : "bg-line"}`} aria-hidden="true" />
                     <p className="flex flex-wrap items-center gap-3">
-                      <StatusMark s={h.status} />
+                      <StatusMark s={h.status} animate delay={i * 90 + 120} />
                       <time className="meta" dateTime={h.at}>{ledgerDate(h.at, locale)}</time>
                     </p>
                     <p className="mt-1.5 text-[0.98rem] leading-relaxed"><LT t={h.reason} /></p>
@@ -271,6 +272,15 @@ function RecordPage() {
               <p><LT t={r.aiAssistance} /></p>
               <p className="text-muted-ink">{fr ? "L'IA n'attribue jamais de statut : seul un responsable éditorial nommé le fait." : "AI never assigns a status: only a named editor does."}</p>
               <Link to="/how-we-use-ai" className="text-lake font-semibold hover:underline">{fr ? "Comment nous utilisons l'IA" : "How we use AI"}</Link>
+            </div>
+            <div className="border-t-2 border-ink pt-3 grid gap-2 text-[0.92rem]">
+              <h2 className="kicker text-ink">{fr ? "Citer ce dossier" : "Cite this record"}</h2>
+              <CopyButton text={absUrl(`/ledger/${r.id}`, locale)} label={fr ? "Copier le lien" : "Copy link"} done={fr ? "Lien copié" : "Link copied"} />
+              <CopyButton
+                text={`${SITE.openDesk.ledger[locale]}, ${r.id}: ${pickText(r.headline, locale).text} ${fr ? "Statut" : "Status"}: ${STATUS_LABEL[status][locale]} (${ledgerDate(entry.at, locale)}). ${absUrl(`/ledger/${r.id}`, locale)}`}
+                label={fr ? "Copier la citation" : "Copy citation"}
+                done={fr ? "Citation copiée" : "Citation copied"}
+              />
             </div>
             {mail && (
               <a href={mail} className="inline-flex items-center gap-2 text-[0.92rem] font-semibold text-lake hover:underline">

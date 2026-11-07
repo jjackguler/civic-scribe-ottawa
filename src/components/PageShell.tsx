@@ -3,6 +3,7 @@ import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { KeeperLauncher } from "./Keeper";
 import { MobileNav } from "./MobileApp";
+import { RevealObserver } from "./Motion";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       <main id="main" className="flex-1">{children}</main>
       <SiteFooter />
       <MobileNav />
+      <RevealObserver />
       {/* On phones the floating Keeper competed with the story; it lives in the menu there. */}
       <div className="hidden md:block"><KeeperLauncher /></div>
     </div>

@@ -28,6 +28,7 @@ import { Route as MoreRouteImport } from './routes/more'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as NewsSitemapDotxmlRouteImport } from './routes/news-sitemap[.]xml'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
+import { Route as OpenDeskRouteImport } from './routes/open-desk'
 import { Route as OriginalsRouteImport } from './routes/originals'
 import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as PodcastDotxmlRouteImport } from './routes/podcast[.]xml'
@@ -180,6 +181,11 @@ const NewsSitemapDotxmlRoute = NewsSitemapDotxmlRouteImport.update({
 const NewsletterRoute = NewsletterRouteImport.update({
   id: '/newsletter',
   path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpenDeskRoute = OpenDeskRouteImport.update({
+  id: '/open-desk',
+  path: '/open-desk',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OriginalsRoute = OriginalsRouteImport.update({
@@ -493,6 +499,7 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
+  '/open-desk': typeof OpenDeskRoute
   '/originals': typeof OriginalsRoute
   '/podcast': typeof PodcastRoute
   '/podcast.xml': typeof PodcastDotxmlRoute
@@ -572,6 +579,7 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
+  '/open-desk': typeof OpenDeskRoute
   '/originals': typeof OriginalsRoute
   '/podcast': typeof PodcastRoute
   '/podcast.xml': typeof PodcastDotxmlRoute
@@ -652,6 +660,7 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/news-sitemap.xml': typeof NewsSitemapDotxmlRoute
   '/newsletter': typeof NewsletterRoute
+  '/open-desk': typeof OpenDeskRoute
   '/originals': typeof OriginalsRoute
   '/podcast': typeof PodcastRoute
   '/podcast.xml': typeof PodcastDotxmlRoute
@@ -733,6 +742,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
+    | '/open-desk'
     | '/originals'
     | '/podcast'
     | '/podcast.xml'
@@ -812,6 +822,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
+    | '/open-desk'
     | '/originals'
     | '/podcast'
     | '/podcast.xml'
@@ -891,6 +902,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/news-sitemap.xml'
     | '/newsletter'
+    | '/open-desk'
     | '/originals'
     | '/podcast'
     | '/podcast.xml'
@@ -971,6 +983,7 @@ export interface RootRouteChildren {
   NewsRoute: typeof NewsRoute
   NewsSitemapDotxmlRoute: typeof NewsSitemapDotxmlRoute
   NewsletterRoute: typeof NewsletterRoute
+  OpenDeskRoute: typeof OpenDeskRoute
   OriginalsRoute: typeof OriginalsRoute
   PodcastRoute: typeof PodcastRoute
   PodcastDotxmlRoute: typeof PodcastDotxmlRoute
@@ -1164,6 +1177,13 @@ declare module '@tanstack/react-router' {
       path: '/newsletter'
       fullPath: '/newsletter'
       preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/open-desk': {
+      id: '/open-desk'
+      path: '/open-desk'
+      fullPath: '/open-desk'
+      preLoaderRoute: typeof OpenDeskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/originals': {
@@ -1595,6 +1615,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewsRoute: NewsRoute,
   NewsSitemapDotxmlRoute: NewsSitemapDotxmlRoute,
   NewsletterRoute: NewsletterRoute,
+  OpenDeskRoute: OpenDeskRoute,
   OriginalsRoute: OriginalsRoute,
   PodcastRoute: PodcastRoute,
   PodcastDotxmlRoute: PodcastDotxmlRoute,

@@ -6,6 +6,7 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { DESKS, type SectionId } from "@/lib/news";
 import { SITE } from "@/lib/site";
+import { ThemeToggle } from "./Motion";
 import { STUDIO } from "@/lib/studio";
 import { localePath } from "@/lib/seo";
 import type { Bi } from "@/lib/i18n";
@@ -18,6 +19,7 @@ type Item = { label: Bi; to: string; section?: SectionId; hash?: string };
  */
 const BAR: Item[] = [
   { label: { en: "The Ledger", fr: "Le registre" }, to: "/ledger" },
+  { label: { en: "Open Desk", fr: "Open Desk" }, to: "/open-desk" },
   { label: { en: "Latest", fr: "En continu" }, to: "/news" },
   { label: { en: "Canada", fr: "Canada" }, to: "/canada" },
   ...DESKS.filter(d => d.id !== "canada").map(d => ({ label: d.label, to: "/news" as const, section: d.id })),
@@ -33,6 +35,7 @@ const GROUPS: { title: Bi; items: Item[] }[] = [
     title: { en: "News", fr: "Actualités" },
     items: [
       { label: SITE.openDesk.ledger, to: "/ledger" },
+      { label: { en: "What is Open Desk?", fr: "Qu'est-ce qu'Open Desk?" }, to: "/open-desk" },
       { label: { en: "Latest AI news", fr: "Dernières nouvelles" }, to: "/news" },
       { label: { en: "AI in Canada", fr: "L'IA au Canada" }, to: "/canada" },
       { label: { en: "AI Ministry tracker", fr: "Suivi du ministère de l'IA" }, to: "/ministry" },
@@ -132,6 +135,7 @@ export function SiteHeader() {
             <Link to="/how-we-use-ai" className="hidden lg:inline hover:text-ink hover:underline">{fr ? "Comment nous utilisons l'IA" : "How we use AI"}</Link>
             <Link to="/tips" className="hidden md:inline hover:text-ink hover:underline">{fr ? "Envoyer un tuyau" : "Send a tip"}</Link>
             <Link to="/advertise" className="hidden md:inline hover:text-ink hover:underline">{fr ? "Commanditaires" : "Sponsor"}</Link>
+            <ThemeToggle />
             <a href={otherLang} hrefLang={fr ? "en" : "fr"} lang={fr ? "en" : "fr"} className="font-bold text-ink hover:text-lake">{t("lang", locale)}</a>
           </nav>
         </div>

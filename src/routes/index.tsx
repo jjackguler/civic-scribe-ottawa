@@ -14,7 +14,7 @@ import { NewsroomCover } from "@/components/NewsroomCover";
 import { NewsroomLead } from "@/components/NewsroomLead";
 import { FromOurDesk, StudioCard } from "@/components/StudioCards";
 import { AiBadge, TrustBar } from "@/components/Trust";
-import { LedgerFront } from "@/components/Ledger";
+import { LedgerFront, OpenDeskBand } from "@/components/Ledger";
 import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
 import { QuizCard } from "@/components/Quiz";
@@ -151,24 +151,25 @@ function Home() {
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.openDesk.subtitle[locale]}</h1>
 
-      {alert && (
-        <div className={alert.kind === "breaking" ? "bg-live text-white" : "bg-ink text-white"}>
-          <StoryLink s={alert.story} className="container-mw flex items-center gap-3 py-2.5 group">
-            <span className={`shrink-0 font-bold text-[0.72rem] uppercase tracking-[0.08em] px-2 py-0.5 ${alert.kind === "breaking" ? "bg-white text-live" : "bg-live text-white"}`}>
-              {alert.kind === "breaking" ? (fr ? "Dernière heure" : "Breaking") : (fr ? "En développement" : "Developing")}
-            </span>
-            <span className="font-serif font-semibold text-[1.05rem] leading-snug truncate group-hover:underline">{display(alert.story, locale).title}</span>
-            <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{alert.outlets} {fr ? "médias" : "outlets"}</span>
-          </StoryLink>
-        </div>
-      )}
 
       {/* Open Desk (owner plan, 6 Nov 2026): the ledger of recorded and tested claims leads the paper. */}
       <LedgerFront className="container-mw pt-6 sm:pt-8" />
+      <OpenDeskBand className="container-mw mt-10" />
 
       {/* Then the watch: our lead and the top events on the left, the running Latest list on the right. */}
       <section className="container-mw mt-12" aria-labelledby="on-our-watch">
         <h2 id="on-our-watch" className="kicker text-ink mb-3">{fr ? "Sous surveillance : l'actualité IA des autres médias" : "On our watch: AI news from other outlets"}</h2>
+        {alert && (
+          <div className={`mb-4 ${alert.kind === "breaking" ? "bg-live text-white" : "bg-ink text-white"}`}>
+            <StoryLink s={alert.story} className="flex items-center gap-3 px-3 py-2.5 group">
+              <span className={`shrink-0 font-bold text-[0.72rem] uppercase tracking-[0.08em] px-2 py-0.5 ${alert.kind === "breaking" ? "bg-white text-live" : "bg-live text-white"}`}>
+                {alert.kind === "breaking" ? (fr ? "Dernière heure" : "Breaking") : (fr ? "En développement" : "Developing")}
+              </span>
+              <span className="font-serif font-semibold text-[1.05rem] leading-snug truncate group-hover:underline">{display(alert.story, locale).title}</span>
+              <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{alert.outlets} {fr ? "médias" : "outlets"}</span>
+            </StoryLink>
+          </div>
+        )}
         {news.length === 0 && !articleLead && !studioLead ? (
           <div className="border-t-2 border-ink pt-10 pb-16 text-center">
             <span className="live-dot inline-block" aria-hidden="true" />
