@@ -22,7 +22,7 @@ export const SITE = {
     subtitle: { en: "an Open Desk newsroom", fr: "une rédaction Open Desk" },
     ledger: { en: "The Open Desk Ledger", fr: "Le registre Open Desk" },
     /** Version of the public protocol on /standards. */
-    protocolVersion: "0.9",
+    protocolVersion: "1.0",
   },
   tagline: {
     en: "AI news, with the human stakes left in. One catch a day.",

@@ -12,10 +12,10 @@ claims we test. Plan and decisions: the owner's "AI Broadsheet'i Open Desk masas
 | Naming (publication, method, ledger, protocol version) | `SITE.openDesk` in `src/lib/site.ts` |
 | Record schema and rules | `src/lib/ledger-schema.ts` |
 | Records (one JSON file each) | `src/content/ledger/OD-0001.json` → `/ledger/OD-0001` |
-| Ledger list with status filter | `/ledger` (`?status=conflicting` etc.) |
-| Record page (claim, evidence, reply, signed status, history, reopen dates) | `/ledger/<id>`, ClaimReview JSON-LD |
-| Open data | `/api/ledger.json` |
-| Standards = Open Desk protocol v0.9 (roles, five statuses, AI rules, reply, archiving, reopening) | `/standards` (`#statuses`, `#roles`, `#reply`, `#reopen`) |
+| Ledger list with result filter | `/ledger` (`?status=conflicting` etc.) |
+| Record page (claim in four parts, test plan, evidence, reply, signed result + stage + reply lines, history, return dates) | `/ledger/<id>`, ClaimReview JSON-LD only on verdicts, no numeric rating |
+| Open data (v2: result, stage, reply state and deadline, schedule, "not in ledger" note) | `/api/ledger.json` |
+| Standards = Open Desk protocol v1.0 (roles, test first, five results, reply, reopening, corrections, conflicts, how statements are chosen, changelog) | `/standards` (`#roles`, `#test`, `#statuses`, `#reply`, `#reopen`, `#record-corrections`, `#conflicts`, `#proposals`, `#changes`) |
 | Front page: the ledger leads, other outlets' news follows under "On our watch" | `src/routes/index.tsx`, `src/components/Ledger.tsx` |
 | Corrections to records join the site corrections log | `/corrections` |
 | A Studio piece can cite its record(s) | `"records": ["OD-0001"]` in `src/content/studio/<id>.json` |
@@ -43,32 +43,65 @@ Until the first record is committed, `/ledger` is noindex and the front page sho
 
 ## The five statuses
 
-| Old stamp | Status | Meaning | Rule the schema enforces |
-| --- | --- | --- | --- |
-| COMPANY CLAIM | Attributed only | Only source is the claimant | — |
-| NOT YET PROVEN | Unresolved | Testing, or not enough evidence | — |
-| CHECKED | Supported | Independent evidence supports it | needs `independent: true` + `stance: "supports"` evidence |
-| — | Conflicting evidence | Own documents, earlier words or outcomes conflict | needs `stance: "contradicts"` evidence |
-| — | Refuted | Evidence shows it is false | needs independent contradicting evidence + `secondReader` ≠ editor |
+### Protocol v1.0 (8 Nov 2026): three fields, one stamp
 
-Any status beyond Attributed/Unresolved is accepted only after the reply arrived or the reply
-window (at least 48 h) has closed. A history entry signed by "AI", "Claude", "bot", "automated",
-"system" etc. is rejected: **only a named human editor writes a status.**
+Readers see **one stamp** (the evidence result) and **two small lines** under it (stage, right of
+reply). The record file keeps them apart:
+
+| Field | Values | Where |
+| --- | --- | --- |
+| Evidence result (the stamp) | `attributed` Recorded, not yet tested · `unresolved` No conclusion yet · `supported` Supported by the evidence · `conflicting` Conflicting evidence · `refuted` Refuted by the evidence | `history[].status` |
+| Why no conclusion | `insufficient-evidence` · `test-date-not-reached` (required with `unresolved`) | `history[].pending` |
+| Stage | `testing` Being tested · `monitoring` Monitoring · `closed` Active follow-up closed | `history[].stage` |
+| Right of reply | Reply requested (with deadline) · Reply received · Declined to comment · No reply by the deadline | computed from `rightOfReply` |
+| Company's own later action | `corrected` · `withdrawn` · `stood-by` (not our result) | `rightOfReply.actorAction` |
+
+| Old stamp | Result | Rule the schema enforces |
+| --- | --- | --- |
+| COMPANY CLAIM | Recorded, not yet tested | — |
+| NOT YET PROVEN | No conclusion yet | needs `pending` (why) |
+| CHECKED | Supported by the evidence | independent `supports` evidence + second reader |
+| — | Conflicting evidence | `contradicts` evidence + second reader |
+| — | Refuted by the evidence | independent `contradicts` evidence + second reader |
+
+Other rules (CI rejects a file that breaks one):
+
+- **Four parts.** `parts` has one entry each for `event`, `scale`, `period`, `cause` (write "not
+  stated" if the claim does not say), each with its own `finding`.
+- **Test first.** `test` says what is measured, the baseline, the scope, which evidence counts and
+  the documents expected (`checks[]`, each with `expectedBy`). Each check date is a return date.
+- **Right of reply.** Default deadline: 5 business days after the request, 17:00 Ottawa time,
+  skipping weekends and the holidays in `DESK_HOLIDAYS` (`src/lib/ledger-schema.ts`; add next
+  year's dates each December). A shorter `deadline` needs `expedited.reason` and is never under
+  48 h. `extensions[]` push the deadline (each must end later than the last). A verdict is only
+  accepted after the reply (`response`, `kind` `answered` or `declined`) or the deadline.
+- **Second reader on every verdict**, not the editor. Editors, second readers and correction
+  signers must be people: "AI", "Claude", "bot", "automated", "system" etc. are rejected.
+- **Corrections** have a `kind` (`correction`, `update`, `clarification`), an `editor`, and a
+  `cause` when the kind is `correction`. **Redactions** record what kind of material was removed,
+  when and why (`source-safety`, `personal-data`, `legal`), never the material itself.
+- **Return dates:** 3-month review, 6-month review (continue or close active follow-up; no verdict
+  is forced) and every `test.checks[].expectedBy`. `reopen` overrides the 3/6-month dates.
+  Records at stage `closed` leave the to-do list.
 
 ## Adding a record (the editor's steps)
 
 1. Copy `scripts/fixtures/ledger/OD-9999.json` (fictional, never ship it) to
    `src/content/ledger/OD-00NN.json` with the next free number; set `"id"` to match.
 2. Fill `headline`, `actor`, `claim` (verbatim quote, source link **and** archive link, e.g.
-   `https://web.archive.org/save/<url>`), `parts`, `evidence`.
-3. Send the right-of-reply email; record `rightOfReply.requestedAt` and `to`.
-4. Add the first `history` entry (`attributed` or `unresolved`) signed with your name.
-5. When the window closes (or the answer arrives), add the verdict entry with its reason.
+   `https://web.archive.org/save/<url>`), the four `parts`, and the `test` **before** any result.
+3. Send the right-of-reply email; record `rightOfReply.requestedAt` and `to`. The record page
+   shows the deadline (5 business days, 17:00 Ottawa time).
+4. Add the first `history` entry (`attributed`, or `unresolved` with `pending`) signed with your
+   name; add `evidence` as you go.
+5. When the deadline passes (or the reply arrives), have a second person read the evidence, then
+   add the verdict entry with its reason, `stage` and `secondReader`.
    Never edit or delete an earlier entry; append a new one.
 6. Commit to a branch and open a PR. CI runs `npx tsx scripts/ledger-test.ts`; a bad file fails
    the check and is left off the site.
-7. On the reopen dates (3 and 6 months, shown on the record page), look again and append a
-   new entry even if the status stays the same.
+7. On each return date (test checks, 3 and 6 months, shown on the record page), look again and
+   append a new entry even if the result stays the same. At 6 months set `stage` to `monitoring`
+   or `closed`.
 
 French text is optional per field (`"fr"`); the French page shows the English text, marked,
 until a human-checked translation is added.
@@ -76,7 +109,7 @@ until a human-checked translation is added.
 ## Daily rhythm (one-person desk, about 3 hours, target 5 records a week)
 
 08:00 AI scans the watch list → 08:30 AI splits and matches claims → 09:00 editor picks 1–2
-and opens records → 09:15 reporter tests, sends questions (48 h) → editor signs the verdict →
+and opens records → 09:15 reporter tests, sends questions (5 business days) → second reader reads, editor signs the verdict →
 same day: record page, short story, 60 s vertical video, creator pack → Friday: The Weekly Catch
 (the week's five records).
 
