@@ -53,9 +53,12 @@ directives file, morning Canadian AI Brief, Output watch issue).
 ## Open Desk newsroom (6 Nov 2026, PR from `claude/project-thread-24p9f1`)
 - AI Broadsheet stays the name; subtitle "an Open Desk newsroom". The ledger of tested claims
   (`/ledger`, records in `src/content/ledger/OD-NNNN.json`) leads the front page; other outlets'
-  news follows under "On our watch". `/standards` is the Open Desk protocol v0.9 with five
-  statuses (Attributed only, Unresolved, Supported, Conflicting evidence, Refuted). Only a named
-  human editor writes a status; CI (`scripts/ledger-test.ts`) enforces the rules. Full guide:
+  news follows under "On our watch". `/standards` is the Open Desk protocol v1.0 (8 Nov 2026):
+  one stamp for the evidence result (Recorded, not yet tested · No conclusion yet · Supported by
+  the evidence · Conflicting evidence · Refuted by the evidence) plus two small lines (stage,
+  right of reply); four parts and a test plan per record; 5 business days to reply; a second
+  reader on every verdict. Only a named human editor writes a result; CI
+  (`scripts/ledger-test.ts`) enforces the rules. Full guide:
   `docs/open-desk.md`. No real records yet: the first five are the editor's job (Day 3–5 of the plan).
 
 ## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)

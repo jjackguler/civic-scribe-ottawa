@@ -9,14 +9,14 @@ import { seoHead } from "@/lib/seo";
 
 type Search = { status?: Status };
 
-/** The Open Desk Ledger: every recorded claim, its current status and a filter by status. */
+/** The Open Desk Ledger: every recorded claim, its current result and a filter by result. */
 export const Route = createFileRoute("/ledger/")({
   validateSearch: (s: Record<string, unknown>): Search => ({ status: isStatus(s.status) ? s.status : undefined }),
   head: ({ match }) =>
     seoHead(match, {
       title: { en: `${SITE.openDesk.ledger.en} — ${SITE.name}`, fr: `${SITE.openDesk.ledger.fr} — ${SITE.name}` },
       description: {
-        en: "What AI companies and their leaders say about jobs and AI, tested against documents, earlier statements and outcomes, with a status signed by a named editor.",
+        en: "What AI companies and their leaders say about jobs and AI, tested against documents, earlier statements and outcomes, with a result signed by a named editor after a second reading.",
         fr: "Ce que disent les entreprises d'IA et leurs dirigeants sur l'emploi et l'IA, vérifié auprès des documents, des déclarations antérieures et des résultats.",
       },
       // An empty list is a thin page: keep it out of search until the first record is signed.
@@ -42,18 +42,18 @@ function LedgerIndex() {
             <h1 className="hl text-[2.5rem] sm:text-[3.2rem] mt-1">{SITE.openDesk.ledger[locale]}</h1>
             <p className="font-serif text-[1.2rem] leading-relaxed text-ink/80 mt-3 max-w-[62ch]">
               {fr
-                ? "Un registre public de ce que disent les entreprises d'IA et leurs dirigeants. Chaque déclaration reçoit un numéro permanent, ses sources archivées et un statut signé par un responsable éditorial nommé. Rien n'est effacé : chaque changement de statut reste visible, et chaque dossier est rouvert après 3 et 6 mois."
-                : "A public record of what AI companies and their leaders say. Each statement gets a permanent number, archived sources and a status signed by a named editor. Nothing is erased: every status change stays visible, and every record is reopened after 3 and 6 months."}
+                ? "Un registre public de ce que disent les entreprises d'IA et leurs dirigeants. Chaque déclaration reçoit un numéro permanent, ses sources archivées et un résultat signé par un responsable éditorial nommé, après une deuxième lecture. Rien n'est effacé : chaque changement reste visible, et chaque dossier revient sur la table à 3 et 6 mois et à ses dates de vérification. Une déclaration absente du registre n'a pas été évaluée."
+                : "A public record of what AI companies and their leaders say. Each statement gets a permanent number, archived sources and a result signed by a named editor after a second reading. Nothing is erased: every change stays visible, and every record comes back to the desk at 3 and 6 months and on its test dates. A statement that is not in the ledger has not been assessed."}
             </p>
             <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[0.92rem] font-semibold">
-              <Link to="/standards" hash="statuses" className="text-lake hover:underline">{fr ? "Comment nous attribuons un statut" : "How we assign a status"}</Link>
+              <Link to="/standards" hash="statuses" className="text-lake hover:underline">{fr ? "Comment nous établissons un résultat" : "How we reach a result"}</Link>
               <Link to="/corrections" className="text-lake hover:underline">{fr ? "Corrections" : "Corrections"}</Link>
               <a href="/api/ledger.json" className="text-lake hover:underline">{fr ? "Données ouvertes (JSON)" : "Open data (JSON)"}</a>
             </p>
           </div>
           <div>
-            <h2 className="kicker text-ink pb-1 border-b border-ink mb-4">{fr ? "Filtrer par statut" : "Filter by status"}</h2>
-            <StatusLegend counts={counts} active={status ?? null} linked />
+            <h2 className="kicker text-ink pb-1 border-b border-ink mb-4">{fr ? "Filtrer par résultat" : "Filter by result"}</h2>
+            <StatusLegend counts={counts} active={status ?? null} linked compact />
           </div>
         </header>
 
@@ -76,7 +76,7 @@ function LedgerIndex() {
             </p>
           </div>
         ) : items.length === 0 ? (
-          <p className="py-12 text-muted-ink">{fr ? "Aucun dossier n'a ce statut pour l'instant." : "No record has this status yet."}</p>
+          <p className="py-12 text-muted-ink">{fr ? "Aucun dossier n'a ce résultat pour l'instant." : "No record has this result yet."}</p>
         ) : (
           <ol className="mt-4 grid gap-x-10 md:grid-cols-2">
             {items.map((r) => (

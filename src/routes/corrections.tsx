@@ -26,7 +26,10 @@ function Corrections() {
   // One list: site corrections and corrections to ledger records, newest first.
   const all = [
     ...CORRECTIONS,
-    ...LEDGER.flatMap(r => r.corrections.map(c => ({ date: c.at, page: `/ledger/${r.id}`, what: { en: `${r.id}: ${c.what.en}`, fr: `${r.id} : ${c.what.fr ?? c.what.en}` } }))),
+    ...LEDGER.flatMap(r => r.corrections.map(c => {
+      const kind = { correction: ["Correction", "Correction"], update: ["Update", "Mise à jour"], clarification: ["Clarification", "Précision"] }[c.kind];
+      return { date: c.at, page: `/ledger/${r.id}`, what: { en: `${r.id}, ${kind[0].toLowerCase()}: ${c.what.en}`, fr: `${r.id}, ${kind[1].toLowerCase()} : ${c.what.fr ?? c.what.en}` } };
+    })),
   ].sort((a, b) => b.date.localeCompare(a.date));
   const mail = editorMailto(fr ? "Signaler une erreur" : "Report an error");
   const items: ProseSection[] = [

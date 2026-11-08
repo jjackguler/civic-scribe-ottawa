@@ -1,13 +1,15 @@
 /**
  * The Open Desk Ledger on lists, record pages and the front page.
- * Statuses are shown as stamps with their meaning spelled out next to them.
+ * Results are shown as stamps with their meaning spelled out next to them, and two small lines
+ * (stage, right of reply) underneath.
  */
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
 import {
-  LEDGER, STATUSES, STATUS_HELP, STATUS_LABEL, currentEntry, currentStatus, ledgerDate, pickText,
-  statusCounts, type LedgerRecord, type LedgerText, type Status,
+  LEDGER, PENDING_LABEL, REPLY_LABEL, STAGE_LABEL, STATUSES, STATUS_HELP, STATUS_LABEL, currentEntry,
+  currentStatus, ledgerDate, pickText, replyDeadline, replyState, statusCounts, type LedgerRecord,
+  type LedgerText, type Status,
 } from "@/lib/ledger";
 import { SITE } from "@/lib/site";
 import { CountUp } from "./Motion";
@@ -32,6 +34,35 @@ export function StatusMark({ s, className = "", animate = false, delay = 0 }: { 
     >
       {pick(STATUS_LABEL[s])}
     </span>
+  );
+}
+
+/**
+ * The two small lines under the result: where the review stands and where the right of reply
+ * stands. Protocol v1.0 keeps these apart from the evidence result so a stamp never has to say
+ * three things at once.
+ */
+export function StatusLines({ r, compact = false, className = "" }: { r: LedgerRecord; compact?: boolean; className?: string }) {
+  const { locale, pick } = useLocale();
+  const fr = locale === "fr";
+  const entry = currentEntry(r);
+  const reply = replyState(r);
+  const stage = pick(STAGE_LABEL[entry.stage]) + (entry.pending ? ` (${pick(PENDING_LABEL[entry.pending])})` : "");
+  const replyText =
+    pick(REPLY_LABEL[reply]) + (reply === "waiting" ? ` · ${fr ? "échéance" : "deadline"} ${ledgerDate(replyDeadline(r), locale)}` : "");
+  if (compact)
+    return (
+      <span className={`meta block ${className}`}>
+        {stage} · {replyText}
+      </span>
+    );
+  return (
+    <dl className={`grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 text-[0.9rem] ${className}`}>
+      <dt className="text-muted-ink">{fr ? "Étape" : "Stage"}</dt>
+      <dd className="font-semibold">{stage}</dd>
+      <dt className="text-muted-ink">{fr ? "Droit de réponse" : "Right of reply"}</dt>
+      <dd className="font-semibold">{replyText}</dd>
+    </dl>
   );
 }
 
@@ -67,8 +98,8 @@ export function StatusLegend({
       {STATUSES.map((s) => {
         const body = (
           <>
-            <span className={`shrink-0 pt-0.5 ${compact ? "" : "sm:w-[11.5rem]"}`}>
-              <StatusMark s={s} />
+            <span className={`shrink-0 pt-0.5 ${compact ? "" : "sm:w-[14.5rem]"}`}>
+              <StatusMark s={s} className="whitespace-nowrap" />
             </span>
             <span className="text-[0.92rem] text-muted-ink leading-snug">
               {counts && <strong className="text-ink mr-1.5"><CountUp to={counts[s]} /></strong>}
@@ -109,6 +140,7 @@ export function RecordCard({ r, size = "card" }: { r: LedgerRecord; size?: "lead
           <span className="kicker font-mono tracking-normal">{r.id}</span>
           <StatusMark s={currentStatus(r)} animate />
         </p>
+        <StatusLines r={r} compact className="mt-1.5" />
         <h3 className={`hl mt-2 group-hover:underline decoration-1 underline-offset-4 ${size === "lead" ? "text-[1.8rem] sm:text-[2.2rem] leading-[1.1]" : "text-[1.2rem] leading-snug"}`}>
           <LT t={r.headline} />
         </h3>
@@ -117,7 +149,7 @@ export function RecordCard({ r, size = "card" }: { r: LedgerRecord; size?: "lead
         </blockquote>
         <p className="meta mt-2">
           {r.actor.name}
-          {r.actor.role ? `, ${r.actor.role}` : ""} · {fr ? "Statut signé par" : "Status signed by"} {entry.editor},{" "}
+          {r.actor.role ? `, ${r.actor.role}` : ""} · {fr ? "Résultat signé par" : "Result signed by"} {entry.editor},{" "}
           <time dateTime={entry.at}>{ledgerDate(entry.at, locale)}</time>
         </p>
       </Link>
@@ -151,10 +183,10 @@ export function LedgerFront({ className = "" }: { className?: string }) {
         </div>
         <p className="mt-2 font-serif text-[1.08rem] leading-relaxed text-ink/80 max-w-3xl">
           {fr
-            ? "Nous consignons ce que disent les entreprises d'IA et leurs dirigeants, nous le vérifions auprès des documents, de leurs déclarations antérieures et des résultats, puis un responsable éditorial signe le statut. Chaque dossier est rouvert après 3 et 6 mois."
-            : "We record what AI companies and their leaders say, test it against documents, their earlier statements and outcomes, and a named editor signs the status. Every record is reopened after 3 and 6 months."}{" "}
+            ? "Nous consignons ce que disent les entreprises d'IA et leurs dirigeants, nous le vérifions auprès des documents, de leurs déclarations antérieures et des résultats, puis un responsable éditorial signe le résultat, relu par une deuxième personne. Chaque dossier revient au pupitre après 3 et 6 mois et à chaque date de vérification prévue."
+            : "We record what AI companies and their leaders say, test it against documents, their earlier statements and outcomes, and a named editor signs the result, read by a second person. Every record comes back to the desk at 3 and 6 months and on each test date set when it opened."}{" "}
           <Link to="/standards" hash="statuses" className="font-sans text-[0.92rem] text-lake font-semibold hover:underline">
-            {fr ? "Les cinq statuts →" : "The five statuses →"}
+            {fr ? "Les cinq résultats →" : "The five results →"}
           </Link>
         </p>
       </div>
@@ -185,8 +217,8 @@ export function LedgerFront({ className = "" }: { className?: string }) {
             </p>
             <p className="mt-2 text-[0.95rem] text-muted-ink leading-relaxed">
               {fr
-                ? "Notre premier thème : les entreprises qui disent réduire leurs effectifs à cause de l'IA. Chaque dossier aura un numéro permanent (OD-0001, OD-0002…), ses sources archivées, le droit de réponse de l'entreprise et l'historique de chaque changement de statut."
-                : "Our first beat: companies that say they are cutting jobs because of AI. Each record gets a permanent number (OD-0001, OD-0002 …), archived sources, the company's right of reply and the history of every status change."}
+                ? "Notre premier thème : les entreprises qui disent réduire leurs effectifs à cause de l'IA. Chaque dossier aura un numéro permanent (OD-0001, OD-0002…), ses sources archivées, le droit de réponse de l'entreprise et l'historique de chaque changement de résultat."
+                : "Our first beat: companies that say they are cutting jobs because of AI. Each record gets a permanent number (OD-0001, OD-0002 …), archived sources, the company's right of reply and the history of every change of result."}
             </p>
             <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[0.92rem] font-semibold">
               <Link to="/open-desk" className="text-lake hover:underline">{fr ? "Qu'est-ce qu'Open Desk?" : "What is Open Desk?"}</Link>
@@ -206,8 +238,8 @@ export function OpenDeskBand({ className = "" }: { className?: string }) {
   const { locale } = useLocale();
   const fr = locale === "fr";
   const steps = fr
-    ? [["Consigner", "ce que disent les entreprises d'IA, avec une copie archivée"], ["Vérifier", "auprès des documents, des paroles antérieures et des témoins"], ["Signer", "un statut, par un responsable nommé, jamais par l'IA"], ["Rouvrir", "chaque dossier après 3 et 6 mois"]]
-    : [["Record", "what AI companies say, with an archived copy"], ["Test", "against documents, earlier words and witnesses"], ["Sign", "a status, by a named editor, never by AI"], ["Reopen", "every record after 3 and 6 months"]];
+    ? [["Consigner", "ce que disent les entreprises d'IA, avec une copie archivée"], ["Vérifier", "auprès des documents, des paroles antérieures et des témoins"], ["Signer", "un résultat, par un responsable nommé et relu par une deuxième personne, jamais par l'IA"], ["Rouvrir", "chaque dossier à 3 et 6 mois et à ses dates de vérification"]]
+    : [["Record", "what AI companies say, with an archived copy"], ["Test", "against documents, earlier words and witnesses"], ["Sign", "a result, by a named editor with a second reader, never by AI"], ["Reopen", "every record at 3 and 6 months and on its test dates"]];
   return (
     <section className={className} aria-labelledby="open-desk-band">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center bg-surface border border-line p-5 sm:p-8">

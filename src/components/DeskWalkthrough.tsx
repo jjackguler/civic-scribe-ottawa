@@ -39,35 +39,36 @@ const STEPS: Step[] = [
     what: { en: "A press release says AI is now doing 1,200 people's work. The desk saves it with an archived copy and a time stamp, and opens record OD-9999.", fr: "Un communiqué affirme que l'IA fait désormais le travail de 1 200 personnes. Le pupitre l'enregistre avec une copie archivée et l'heure, et ouvre le dossier OD-9999." },
   },
   {
-    name: { en: "Break down", fr: "Découper" }, actor: "ai", status: "attributed", parts: 3, evidence: 0, reply: "none", history: 1,
-    what: { en: "AI splits the statement into three claims that can each be tested. It drafts; it does not judge.", fr: "L'IA découpe la déclaration en trois affirmations vérifiables une par une. Elle prépare; elle ne juge pas." },
+    name: { en: "Break down", fr: "Découper" }, actor: "ai", status: "attributed", parts: 4, evidence: 0, reply: "none", history: 1,
+    what: { en: "AI splits the statement into four parts tested one by one: what happened, how many, when, and the stated cause. It drafts; it does not judge. The editor writes down what will settle it and which documents are due when.", fr: "L'IA découpe la déclaration en quatre parties vérifiées une à une : ce qui s'est passé, combien, quand et la cause invoquée. Elle prépare; elle ne juge pas. Le responsable note ce qui tranchera et quels documents sont attendus, et quand." },
   },
   {
-    name: { en: "Match", fr: "Rapprocher" }, actor: "ai", status: "attributed", parts: 3, evidence: 1, reply: "none", history: 1,
+    name: { en: "Match", fr: "Rapprocher" }, actor: "ai", status: "attributed", parts: 4, evidence: 1, reply: "none", history: 1,
     what: { en: "AI finds the CEO's February words, “AI will not replace anyone here”, and flags the contradiction for a person to check.", fr: "L'IA retrouve les propos du PDG en février, « L'IA ne remplacera personne ici », et signale la contradiction pour qu'une personne la vérifie." },
   },
   {
-    name: { en: "Test", fr: "Vérifier" }, actor: "reporter", status: "unresolved", parts: 3, evidence: 3, reply: "waiting", history: 2,
-    what: { en: "A reporter checks job postings, talks to a former dispatcher and sends the company written questions. The 48-hour reply clock starts.", fr: "Un journaliste vérifie les offres d'emploi, parle à un ancien répartiteur et envoie des questions écrites à l'entreprise. Le délai de réponse de 48 heures commence." },
+    name: { en: "Test", fr: "Vérifier" }, actor: "reporter", status: "unresolved", parts: 4, evidence: 3, reply: "waiting", history: 2,
+    what: { en: "A reporter checks job postings, talks to a former dispatcher and sends the company written questions. The company has five business days to reply.", fr: "Un journaliste vérifie les offres d'emploi, parle à un ancien répartiteur et envoie des questions écrites à l'entreprise. L'entreprise a cinq jours ouvrables pour répondre." },
   },
   {
-    name: { en: "Verdict", fr: "Statut" }, actor: "editor", status: "conflicting", parts: 3, evidence: 3, reply: "closed", history: 3,
-    what: { en: "The window closes with no answer. The editor weighs the evidence, writes the reason and signs “Conflicting evidence” by name. AI cannot write this field.", fr: "Le délai se termine sans réponse. Le responsable pèse les preuves, rédige la raison et signe « Preuves contradictoires » de son nom. L'IA ne peut pas écrire ce champ." },
+    name: { en: "Verdict", fr: "Statut" }, actor: "editor", status: "conflicting", parts: 4, evidence: 3, reply: "closed", history: 3,
+    what: { en: "The window closes with no answer. The editor weighs the evidence and writes the reason, a second person reads it, and the editor signs “Conflicting evidence” by name. AI cannot write this field.", fr: "Le délai se termine sans réponse. Le responsable pèse les preuves et rédige la raison, une deuxième personne relit, puis il signe « Éléments de preuve contradictoires » de son nom. L'IA ne peut pas écrire ce champ." },
   },
   {
-    name: { en: "Publish", fr: "Publier" }, actor: "creators", status: "conflicting", parts: 3, evidence: 3, reply: "closed", history: 3, published: true,
+    name: { en: "Publish", fr: "Publier" }, actor: "creators", status: "conflicting", parts: 4, evidence: 3, reply: "closed", history: 3, published: true,
     what: { en: "The record page goes live with a short story and a 60-second vertical video. Creators share it with the record number, and update their post if the record changes.", fr: "La page du dossier est publiée avec un court article et une vidéo verticale de 60 secondes. Les créateurs la relaient avec le numéro du dossier et mettent à jour leur publication si le dossier change." },
   },
   {
-    name: { en: "Reopen", fr: "Rouvrir" }, actor: "editor", status: "conflicting", parts: 3, evidence: 3, reply: "closed", history: 3, published: true, reopen: true,
-    what: { en: "Three and six months later the record comes back to the desk. What happened next is added to the history; nothing earlier is erased.", fr: "Trois et six mois plus tard, le dossier revient sur la table. La suite s'ajoute à l'historique; rien d'antérieur n'est effacé." },
+    name: { en: "Reopen", fr: "Rouvrir" }, actor: "editor", status: "conflicting", parts: 4, evidence: 3, reply: "closed", history: 3, published: true, reopen: true,
+    what: { en: "The record comes back to the desk when the quarterly report is due, then at three and six months. What happened next is added to the history; nothing earlier is erased.", fr: "Le dossier revient sur la table à la publication du rapport trimestriel, puis à trois et six mois. La suite s'ajoute à l'historique; rien d'antérieur n'est effacé." },
   },
 ];
 
 const PARTS: Bi[] = [
-  { en: "1,200 roles are being cut.", fr: "1 200 postes sont supprimés." },
-  { en: "AI tools now do that work.", fr: "Des outils d'IA font désormais ce travail." },
-  { en: "In February the CEO said AI would replace no one.", fr: "En février, le PDG disait que l'IA ne remplacerait personne." },
+  { en: "What happened: dispatch and back-office roles are cut.", fr: "Ce qui s'est passé : des postes de répartition et de soutien sont supprimés." },
+  { en: "How many: 1,200.", fr: "Combien : 1 200." },
+  { en: "When: announced 14 September, no end date.", fr: "Quand : annoncé le 14 septembre, sans date de fin." },
+  { en: "Stated cause: AI tools now do that work.", fr: "Cause invoquée : des outils d'IA font désormais ce travail." },
 ];
 const EVIDENCE: { t: Bi; kind: "contradicts" | "context" }[] = [
   { t: { en: "CEO remarks, February investor day (the company's own words)", fr: "Propos du PDG, journée investisseurs de février (paroles de l'entreprise)" }, kind: "contradicts" },
@@ -77,7 +78,7 @@ const EVIDENCE: { t: Bi; kind: "contradicts" | "context" }[] = [
 const HISTORY: { s: Status; d: Bi }[] = [
   { s: "attributed", d: { en: "15 Sep · recorded from the press release", fr: "15 sept. · consigné à partir du communiqué" } },
   { s: "unresolved", d: { en: "15 Sep · testing begins", fr: "15 sept. · vérification en cours" } },
-  { s: "conflicting", d: { en: "18 Sep · signed by the editor, no reply from the company", fr: "18 sept. · signé par le responsable, pas de réponse de l'entreprise" } },
+  { s: "conflicting", d: { en: "23 Sep · signed by the editor after a second reading, no reply from the company", fr: "23 sept. · signé par le responsable après une deuxième lecture, pas de réponse de l'entreprise" } },
 ];
 
 export function DeskWalkthrough() {
@@ -207,11 +208,11 @@ export function DeskWalkthrough() {
               <div className="mt-1.5 h-2 bg-ice rounded-full overflow-hidden" aria-hidden="true">
                 <div className={`h-full bg-lake transition-[width] duration-[1200ms] ease-out ${step.reply === "closed" ? "w-full" : "w-1/3"}`} />
               </div>
-              <p className="mt-1">{step.reply === "waiting" ? (fr ? "Questions envoyées · 48 h pour répondre" : "Questions sent · 48 h to answer") : (fr ? "Délai écoulé · pas de réponse" : "Window closed · no answer")}</p>
+              <p className="mt-1">{step.reply === "waiting" ? (fr ? "Questions envoyées · 5 jours ouvrables pour répondre" : "Questions sent · 5 business days to answer") : (fr ? "Aucune réponse reçue à l'échéance" : "No reply by the deadline")}</p>
             </div>
           )}
           <div className="mt-4">
-            <p className="kicker text-ink">{fr ? "Historique du statut" : "Status history"}</p>
+            <p className="kicker text-ink">{fr ? "Historique du résultat" : "History of the result"}</p>
             <ol className="mt-1.5 grid gap-1.5">
               {HISTORY.slice(0, step.history).reverse().map((h) => (
                 <li key={h.s} className="flex flex-wrap items-center gap-2">

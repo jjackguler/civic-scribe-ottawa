@@ -70,7 +70,7 @@ const COMMITMENTS: { h: Bi; p: Bi }[] = [
   },
   {
     h: { en: "Change stays visible", fr: "Les changements restent visibles" },
-    p: { en: "A new development, a correction, a clarification and a retraction are named as what they are. Every status change keeps its date, reason and signature, and the earlier status stays on the page.", fr: "Un fait nouveau, une correction, une précision et un retrait sont nommés comme tels. Chaque changement de statut garde sa date, sa raison et sa signature, et l'ancien statut reste affiché." },
+    p: { en: "A new development, a correction, a clarification and a retraction are named as what they are. Every change of result keeps its date, reason and signature, and the earlier result stays on the page.", fr: "Un fait nouveau, une correction, une précision et un retrait sont nommés comme tels. Chaque changement de résultat garde sa date, sa raison et sa signature, et l'ancien résultat reste affiché." },
   },
   {
     h: { en: "We listen to readers and protect sources", fr: "Nous écoutons les lecteurs et protégeons les sources" },
@@ -78,22 +78,22 @@ const COMMITMENTS: { h: Bi; p: Bi }[] = [
   },
   {
     h: { en: "Evidence does not bend to tone or funders", fr: "Les preuves ne plient ni devant le ton ni devant les financeurs" },
-    p: { en: "Hope, solutions and harm appear as far as the evidence shows them, no further. No sponsor or supporter can choose a story, set a status, see it before publication or stop it.", fr: "L'espoir, les solutions et les torts apparaissent dans la mesure où les preuves les montrent, pas davantage. Aucun commanditaire ni soutien ne peut choisir un sujet, fixer un statut, le voir avant publication ou l'arrêter." },
+    p: { en: "Hope, solutions and harm appear as far as the evidence shows them, no further. No sponsor or supporter can choose a story, set a result, see it before publication or stop it, and we take no money from companies on the ledger.", fr: "L'espoir, les solutions et les torts apparaissent dans la mesure où les preuves les montrent, pas davantage. Aucun commanditaire ni soutien ne peut choisir un sujet, fixer un résultat, le voir avant publication ou l'arrêter, et nous n'acceptons aucun argent des entreprises inscrites au registre." },
   },
 ];
 
 const ROLES: { icon: typeof Bot; h: Bi; p: Bi }[] = [
-  { icon: Bot, h: { en: "AI: speed", fr: "L'IA : la vitesse" }, p: { en: "Watches public statements, opens records, splits claims, matches earlier words and documents, flags contradictions. Never writes a status.", fr: "Suit les déclarations publiques, ouvre les dossiers, découpe les affirmations, rapproche paroles et documents antérieurs, signale les contradictions. N'écrit jamais un statut." } },
+  { icon: Bot, h: { en: "AI: speed", fr: "L'IA : la vitesse" }, p: { en: "Watches public statements, opens records, splits claims, matches earlier words and documents, flags contradictions. Never writes a result.", fr: "Suit les déclarations publiques, ouvre les dossiers, découpe les affirmations, rapproche paroles et documents antérieurs, signale les contradictions. N'écrit jamais un résultat." } },
   { icon: Search, h: { en: "Reporters: evidence", fr: "Les journalistes : les preuves" }, p: { en: "Check documents, talk to former staff and experts, send the company its questions and wait for the answer.", fr: "Vérifient les documents, interrogent anciens employés et spécialistes, envoient leurs questions à l'entreprise et attendent sa réponse." } },
-  { icon: PenLine, h: { en: "The editor: the decision", fr: "Le responsable : la décision" }, p: { en: "The only person who writes a status, with the reason, signed by name. “Refuted” also needs a second reader.", fr: "La seule personne qui écrit un statut, avec sa raison, signé de son nom. « Réfuté » exige aussi une deuxième lecture." } },
+  { icon: PenLine, h: { en: "The editor: the decision", fr: "Le responsable : la décision" }, p: { en: "The only person who writes a result, with the reason, signed by name. Every verdict is read first by a second person.", fr: "La seule personne qui écrit un résultat, avec sa raison, signé de son nom. Chaque verdict est d'abord relu par une deuxième personne." } },
   { icon: Megaphone, h: { en: "Creators: reach", fr: "Les créateurs : la portée" }, p: { en: "Share signed records in their own voice, show the record number and update their post when the record changes. Witnesses are asked for consent, credited and paid.", fr: "Relaient les dossiers signés avec leur propre voix, affichent le numéro et mettent à jour leur publication quand le dossier change. Les témoins donnent leur consentement, sont crédités et rémunérés." } },
 ];
 
 const TARGETS: { n: number; suffix?: string; h: Bi }[] = [
-  { n: 50, h: { en: "records in the first 10 weeks", fr: "dossiers en 10 semaines" } },
-  { n: 80, suffix: "%", h: { en: "of readers in our tests tell “attributed” from “independently supported”", fr: "des lecteurs testés distinguent « attribué » et « étayé de façon indépendante »" } },
-  { n: 48, suffix: " h", h: { en: "minimum right of reply before any verdict", fr: "de droit de réponse minimum avant tout statut" } },
-  { n: 2, h: { en: "reopenings for every record, at 3 and 6 months", fr: "réouvertures par dossier, à 3 et 6 mois" } },
+  { n: 50, h: { en: "statements screened in the first 10 weeks; we publish how many became records, and why", fr: "déclarations examinées en 10 semaines; nous publions combien sont devenues des dossiers, et pourquoi" } },
+  { n: 10, h: { en: "active records at most at any time, so each one gets real testing", fr: "dossiers actifs au plus à la fois, pour que chacun soit vraiment vérifié" } },
+  { n: 5, h: { en: "business days of right of reply before any verdict", fr: "jours ouvrables de droit de réponse avant tout verdict" } },
+  { n: 80, suffix: "%", h: { en: "of readers in our tests tell “recorded” from “supported by the evidence”", fr: "des lecteurs testés distinguent « consignée » et « étayée par les éléments disponibles »" } },
 ];
 
 function OpenDesk() {
@@ -151,7 +151,7 @@ function OpenDesk() {
             <ol className="grid gap-4 sm:grid-cols-2">
               {[
                 { en: "A public, permanent record of what powerful actors in AI say about work, kept before a claim goes viral, not after.", fr: "Un registre public et permanent de ce que disent les acteurs puissants de l'IA sur le travail, tenu avant qu'une affirmation ne devienne virale, pas après." },
-                { en: "Readers who can tell at a glance whether a claim is only attributed, still open, independently supported, contradicted or refuted.", fr: "Des lecteurs qui voient d'un coup d'œil si une affirmation est seulement attribuée, encore ouverte, étayée de façon indépendante, contredite ou réfutée." },
+                { en: "Readers who can tell at a glance whether a claim is only recorded, still without a conclusion, supported, contradicted by other evidence or refuted.", fr: "Des lecteurs qui voient d'un coup d'œil si une affirmation est seulement consignée, encore sans conclusion, étayée, contredite par d'autres éléments ou réfutée." },
                 { en: "AI that makes a small desk fast, with people who stay accountable for every decision.", fr: "Une IA qui rend un petit pupitre rapide, avec des personnes qui répondent de chaque décision." },
                 { en: "Creators and witnesses as partners: credited, paid, and tied to a record that can be checked.", fr: "Des créateurs et des témoins comme partenaires : crédités, rémunérés, et liés à un dossier vérifiable." },
               ].map((a, n) => (
@@ -167,7 +167,7 @@ function OpenDesk() {
         {/* The desk, interactive */}
         <section id="desk" className="mt-16 scroll-mt-20" aria-labelledby="desk-h">
           <h2 id="desk-h" className="hl text-[1.9rem] leading-tight">{fr ? "Comment une affirmation traverse le pupitre" : "How a claim moves through the desk"}</h2>
-          <p className="mt-2 text-muted-ink max-w-[62ch]">{fr ? "Sept étapes, de la déclaration au statut signé, puis la réouverture. Avancez à votre rythme." : "Seven steps, from the statement to the signed status, then the reopening. Go at your own pace."}</p>
+          <p className="mt-2 text-muted-ink max-w-[62ch]">{fr ? "Sept étapes, de la déclaration au résultat signé, puis la réouverture. Avancez à votre rythme." : "Seven steps, from the statement to the signed result, then the reopening. Go at your own pace."}</p>
           <div className="mt-5"><DeskWalkthrough /></div>
         </section>
 
@@ -189,8 +189,8 @@ function OpenDesk() {
         {/* Statuses */}
         <section className="mt-16 grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)]" aria-labelledby="statuses-h">
           <div>
-            <h2 id="statuses-h" className="hl text-[1.9rem] leading-tight">{fr ? "Cinq statuts, pas un score" : "Five statuses, not a score"}</h2>
-            <p className="mt-2 text-muted-ink">{fr ? "Pas de pourcentage de vérité. Un statut peut monter comme descendre quand de nouvelles preuves arrivent." : "No truth percentage. A status can move either way as new evidence arrives."}</p>
+            <h2 id="statuses-h" className="hl text-[1.9rem] leading-tight">{fr ? "Cinq résultats, pas un score" : "Five results, not a score"}</h2>
+            <p className="mt-2 text-muted-ink">{fr ? "Pas de pourcentage de vérité. Un résultat peut évoluer dans un sens comme dans l'autre quand de nouveaux éléments arrivent. Sous le tampon, deux petites lignes disent où en sont l'examen et le droit de réponse." : "No truth percentage. A result can move either way as new evidence arrives. Under the stamp, two small lines say where the review and the right of reply stand."}</p>
           </div>
           <StatusLegend />
         </section>
@@ -230,8 +230,8 @@ function OpenDesk() {
         <section className="mt-16 grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)]" aria-labelledby="limits">
           <h2 id="limits" className="hl text-[1.9rem] leading-tight">{fr ? "Ce que nous ne prétendons pas" : "What we don't claim"}</h2>
           <ul className="grid gap-3 text-[1.02rem] leading-relaxed list-disc pl-5">
-            <li>{fr ? "Nous n'avons pas inventé la citation des sources, la correction publique ou la responsabilité humaine. Ce qui est nouveau, c'est de les réunir dans un registre suivi dans le temps." : "We did not invent citing sources, public corrections or human responsibility. What is new is putting them together in a record that is followed over time."}</li>
-            <li>{fr ? "Un statut n'est pas une note de vérité sur une entreprise : il porte sur une affirmation précise, à une date précise." : "A status is not a truth score for a company: it is about one claim, at one date."}</li>
+            <li>{fr ? "Nous n'avons pas inventé la citation des sources, la correction publique ou la responsabilité humaine. Ce que nous ajoutons, c'est une vérification écrite avant le résultat, un verdict qui attend la fin du droit de réponse, et un calendrier de retour fixé dès l'ouverture." : "We did not invent citing sources, public corrections or human responsibility. What we add is a test written before the result, a verdict that waits for the right of reply, and return dates set when the record opens."}</li>
+            <li>{fr ? "Un résultat n'est pas une note de vérité sur une entreprise : il porte sur une affirmation précise, à une date précise. Une déclaration absente du registre n'a pas été évaluée." : "A result is not a truth score for a company: it is about one claim, at one date. A statement that is not in the ledger has not been assessed."}</li>
             <li>{fr ? "Une méthode ne garantit pas l'absence d'erreur. Quand nous nous trompons, la correction est datée et publique." : "A method is no guarantee against error. When we get it wrong, the correction is dated and public."}</li>
           </ul>
         </section>
@@ -243,7 +243,7 @@ function OpenDesk() {
             {[
               { to: "/tips", h: { en: "Flag a statement", fr: "Signaler une déclaration" }, p: { en: "Seen a company blame or credit AI for jobs? Send it to the desk.", fr: "Une entreprise accuse ou crédite l'IA pour des emplois? Envoyez-la au pupitre." } },
               { to: "/corrections", h: { en: "Challenge a record", fr: "Contester un dossier" }, p: { en: "Bring a document or point out an error. We answer with reasons.", fr: "Apportez un document ou signalez une erreur. Nous répondons, raisons à l'appui." } },
-              { to: "/ledger", h: { en: "Follow the ledger", fr: "Suivre le registre" }, p: { en: "Every record, its status and its history, open to all.", fr: "Chaque dossier, son statut et son historique, ouverts à tous." } },
+              { to: "/ledger", h: { en: "Follow the ledger", fr: "Suivre le registre" }, p: { en: "Every record, its result and its history, open to all.", fr: "Chaque dossier, son résultat et son historique, ouverts à tous." } },
               { to: "/newsletter", h: { en: "Get the weekly brief", fr: "Recevoir le brief" }, p: { en: "The week's records in your inbox.", fr: "Les dossiers de la semaine dans votre boîte." } },
             ].map((x) => (
               <li key={x.to}>
