@@ -12,6 +12,7 @@ import { deskLabel, deskOfSummary } from "@/lib/desks";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, publisherRef, absUrl, localeOf } from "@/lib/seo";
+import { setPageStatus } from "@/lib/http-status";
 import type { Locale } from "@/lib/i18n";
 
 type Search = { fixture?: string };
@@ -85,6 +86,9 @@ export const Route = createFileRoute("/article/$slug")({
           new Promise<ArticlePage>(r => setTimeout(() => r({ status: "unavailable" }), 6000)),
         ]);
     if (page.status === "missing") throw notFound();
+    // Not 200 for these, or Google files them as soft 404s: withdrawn is gone for good, unavailable is temporary.
+    if (page.status === "killed") setPageStatus(410);
+    if (page.status === "unavailable") setPageStatus(503, 120);
     const locale: Locale = (context as { locale?: Locale }).locale === "fr" ? "fr" : "en";
     // One URL per language: the other language's slug (or an old one) moves here for good.
     if (page.status === "ok" && page.article.slug[locale] !== params.slug) {

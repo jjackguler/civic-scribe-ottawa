@@ -1,11 +1,12 @@
 import { ogImageFor } from "@/lib/og/url";
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { DispatchArticle } from "@/components/DispatchArticle";
 import { getDispatch, summarize, type DispatchPage } from "@/lib/dispatch";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, publisherRef, DEFAULT_OG_IMAGE, absUrl, localeOf } from "@/lib/seo";
+import { setPageStatus } from "@/lib/http-status";
 
 type Search = { fixture?: string };
 
@@ -21,12 +22,18 @@ export const Route = createFileRoute("/dispatch/$id")({
     }
     const page = await Promise.race([
       getDispatch({ data: { id: params.id } }),
-      new Promise<DispatchPage>(r => setTimeout(() => r({ dispatch: null, audio: false, more: [] }), 3000)),
+      new Promise<DispatchPage>(r => setTimeout(() => r({ dispatch: null, audio: false, more: [], unavailable: true }), 3000)),
     ]);
     // The Newsroom wrote this event: its article is the permanent page.
     if (page.article) {
       const locale = (context as { locale?: "en" | "fr" }).locale === "fr" ? "fr" : "en";
       throw redirect({ to: "/article/$slug", params: { slug: page.article[locale] }, statusCode: 301 });
+    }
+    // Not 200 for an empty page, or Google files it as a soft 404: an unknown id is a real 404,
+    // a lookup that failed or timed out is a temporary 503.
+    if (!page.dispatch) {
+      if (!page.unavailable) throw notFound();
+      setPageStatus(503, 120);
     }
     return page;
   },

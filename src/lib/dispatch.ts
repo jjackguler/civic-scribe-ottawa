@@ -50,6 +50,7 @@ export const getDispatch = createServerFn({ method: "GET" })
   .inputValidator((d) => z.object({ id: z.string().max(120) }).parse(d))
   .handler(async ({ data }): Promise<DispatchPage> => {
     // An id the Newsroom wrote (or one of the stories it wrote from): the article, and where it lives now.
+    let newsroomFailed = false;
     try {
       const { newsroomState, articleById } = await import("./newsroom.server");
       const nr = await newsroomState();
@@ -58,14 +59,14 @@ export const getDispatch = createServerFn({ method: "GET" })
         const article = await articleById(item.id);
         if (article) return { dispatch: article, audio: false, more: nr.items.filter(i => i.id !== item.id).slice(0, 8).map(fromNewsroom), article: item.slug };
       }
-    } catch { /* fall back to the Worker desk */ }
+    } catch { newsroomFailed = true; /* fall back to the Worker desk */ }
     try {
       const [{ listDispatches }, { ttsAvailable }] = await Promise.all([import("./dispatch.server"), import("./dispatch-audio.server")]);
       const all = await listDispatches();
       const dispatch = all.find(d => d.id === data.id) ?? null;
-      return { dispatch, audio: ttsAvailable(), more: all.filter(d => d.id !== data.id).slice(0, 8).map(summarize) };
+      return { dispatch, audio: ttsAvailable(), more: all.filter(d => d.id !== data.id).slice(0, 8).map(summarize), ...(dispatch || !newsroomFailed ? {} : { unavailable: true }) };
     } catch {
-      return { dispatch: null, audio: false, more: [] };
+      return { dispatch: null, audio: false, more: [], unavailable: true };
     }
   });
 

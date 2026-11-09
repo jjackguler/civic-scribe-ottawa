@@ -50,6 +50,14 @@ directives file, morning Canadian AI Brief, Output watch issue).
 - Studio: approved pieces are committed as `src/content/studio/<id>.json`; `scripts/studio-test.ts`
   validates them in CI. The example is only in `scripts/fixtures/studio/`.
 - Dev preview without network: `AIB_NEWS_FIXTURE=1 npx vite dev` serves a fictional desk.
+## Search status codes (9 Nov 2026)
+- Google reported "Soft 404": pages that say "not available" or "withdrawn" but answer 200. Now a
+  withdrawn article answers 410, an unknown dispatch id 404, and a page whose data lookup failed or
+  timed out 503 with Retry-After. Routes call `setPageStatus()` (`src/lib/http-status.ts`);
+  `src/server.ts` applies it, because the router picks the SSR status itself.
+- "Excluded by noindex" is expected for /story/*, /search, /saved, /more, the Young Lab passport
+  and the empty /ledger and /desk lists. None of them is in the sitemap; don't "fix" them.
+
 ## Open Desk newsroom (6 Nov 2026, PR from `claude/project-thread-24p9f1`)
 - AI Broadsheet stays the name; subtitle "an Open Desk newsroom". The ledger of tested claims
   (`/ledger`, records in `src/content/ledger/OD-NNNN.json`) leads the front page; other outlets'
