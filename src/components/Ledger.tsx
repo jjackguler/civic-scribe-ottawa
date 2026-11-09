@@ -7,7 +7,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
 import {
-  LEDGER, PENDING_LABEL, REPLY_LABEL, STAGE_LABEL, STATUSES, STATUS_HELP, STATUS_LABEL, currentEntry,
+  LEDGER, PENDING_LABEL, PUBLIC_STATUSES, REPLY_LABEL, STAGE_LABEL, STATUS_HELP, STATUS_LABEL, currentEntry,
   currentStatus, ledgerDate, pickText, replyDeadline, replyState, statusCounts, type LedgerRecord,
   type LedgerText, type Status,
 } from "@/lib/ledger";
@@ -78,7 +78,7 @@ export function LT({ t, className }: { t: LedgerText; className?: string }) {
   );
 }
 
-/** The five statuses with what each one means, optionally with counts and filter links. */
+/** The four public results with what each one means, optionally with counts and filter links. */
 export function StatusLegend({
   counts,
   active,
@@ -95,7 +95,7 @@ export function StatusLegend({
   const { pick } = useLocale();
   return (
     <ul className="grid gap-3">
-      {STATUSES.map((s) => {
+      {PUBLIC_STATUSES.map((s) => {
         const body = (
           <>
             <span className={`shrink-0 pt-0.5 ${compact ? "" : "sm:w-[14.5rem]"}`}>
@@ -186,7 +186,7 @@ export function LedgerFront({ className = "" }: { className?: string }) {
             ? "Nous consignons ce que disent les entreprises d'IA et leurs dirigeants, nous le vérifions auprès des documents, de leurs déclarations antérieures et des résultats, puis un responsable éditorial signe le résultat, relu par une deuxième personne. Chaque dossier revient au pupitre après 3 et 6 mois et à chaque date de vérification prévue."
             : "We record what AI companies and their leaders say, test it against documents, their earlier statements and outcomes, and a named editor signs the result, read by a second person. Every record comes back to the desk at 3 and 6 months and on each test date set when it opened."}{" "}
           <Link to="/standards" hash="statuses" className="font-sans text-[0.92rem] text-lake font-semibold hover:underline">
-            {fr ? "Les cinq résultats →" : "The five results →"}
+            {fr ? "Les quatre résultats →" : "The four results →"}
           </Link>
         </p>
       </div>

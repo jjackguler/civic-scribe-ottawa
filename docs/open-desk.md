@@ -15,7 +15,7 @@ claims we test. Plan and decisions: the owner's "AI Broadsheet'i Open Desk masas
 | Ledger list with result filter | `/ledger` (`?status=conflicting` etc.) |
 | Record page (claim in four parts, test plan, evidence, reply, signed result + stage + reply lines, history, return dates) | `/ledger/<id>`, ClaimReview JSON-LD only on verdicts, no numeric rating |
 | Open data (v2: result, stage, reply state and deadline, schedule, "not in ledger" note) | `/api/ledger.json` |
-| Standards = Open Desk protocol v1.0 (roles, test first, five results, reply, reopening, corrections, conflicts, how statements are chosen, changelog) | `/standards` (`#roles`, `#test`, `#statuses`, `#reply`, `#reopen`, `#record-corrections`, `#conflicts`, `#proposals`, `#changes`) |
+| Standards = Open Desk protocol v1.1 (roles, test first, five results, reply, reopening, corrections, conflicts, how statements are chosen, changelog) | `/standards` (`#roles`, `#test`, `#statuses`, `#reply`, `#reopen`, `#sources`, `#record-corrections`, `#conflicts`, `#proposals`, `#changes`) |
 | Front page: the ledger leads, other outlets' news follows under "On our watch" | `src/routes/index.tsx`, `src/components/Ledger.tsx` |
 | Corrections to records join the site corrections log | `/corrections` |
 | A Studio piece can cite its record(s) | `"records": ["OD-0001"]` in `src/content/studio/<id>.json` |
@@ -64,6 +64,22 @@ reply). The record file keeps them apart:
 | — | Conflicting evidence | `contradicts` evidence + second reader |
 | — | Refuted by the evidence | independent `contradicts` evidence + second reader |
 
+### Protocol v1.1 (9 Nov 2026, after the Gemini review)
+
+- **Publication gate (owner decision).** A record is public only once it has left `attributed`,
+  and any entry after `attributed` must come after `rightOfReply.requestedAt`. A file still at
+  `attributed` is valid but stays off the site, the API and the sitemap. The repository may be
+  public, so keep such files on a branch until the questions are sent.
+- **Two sources (EFCSN 2.G).** Only evidence with `independent: true` and `anonymous: false`
+  counts. `supported` needs two such supporting items, `refuted` two such contradicting items,
+  `conflicting` a contradicting item plus two counted items.
+- **Anonymous sources** (`anonymous: true`) are shown as "Unnamed source" and never count.
+- **No pay for information** (CAJ, RTDNA 3.3). `licensed: true` marks a disclosed licence fee for
+  a named person's own photos or video; it cannot be combined with `anonymous`.
+- **One extension** at most, ending no later than 5 business days after the base deadline.
+- **Cause.** `parts[aspect=cause].finding = "refuted"` needs a `note` on the direct evidence.
+- First season: every `refuted` result is read by a media lawyer before it is committed.
+
 Other rules (CI rejects a file that breaks one):
 
 - **Four parts.** `parts` has one entry each for `event`, `scale`, `period`, `cause` (write "not
@@ -91,7 +107,8 @@ Other rules (CI rejects a file that breaks one):
 2. Fill `headline`, `actor`, `claim` (verbatim quote, source link **and** archive link, e.g.
    `https://web.archive.org/save/<url>`), the four `parts`, and the `test` **before** any result.
 3. Send the right-of-reply email; record `rightOfReply.requestedAt` and `to`. The record page
-   shows the deadline (5 business days, 17:00 Ottawa time).
+   shows the deadline (5 business days, 17:00 Ottawa time). Only now does the record go public:
+   add the next `history` entry (`unresolved` with `pending`) after the request time.
 4. Add the first `history` entry (`attributed`, or `unresolved` with `pending`) signed with your
    name; add `evidence` as you go.
 5. When the deadline passes (or the reply arrives), have a second person read the evidence, then

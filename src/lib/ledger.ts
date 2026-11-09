@@ -2,7 +2,7 @@
  * Loads the Open Desk Ledger records committed to src/content/ledger/*.json at build time.
  * Schema, rules and helpers live in ledger-schema.ts.
  */
-import { loadLedgerFiles, type LedgerRecord } from "./ledger-schema";
+import { isPublicRecord, loadLedgerFiles, type LedgerRecord } from "./ledger-schema";
 
 export * from "./ledger-schema";
 
@@ -14,8 +14,11 @@ if (loaded.rejected.length && typeof console !== "undefined") {
     console.warn(`[ledger] ${r.file} left off the site: ${r.errors.join("; ")}`);
 }
 
-/** Every valid record, latest status change first. */
-export const LEDGER: LedgerRecord[] = loaded.records;
+/**
+ * Every valid public record, latest change first. A record still at "attributed" (questions not yet
+ * sent) is valid but stays off the site (protocol v1.1).
+ */
+export const LEDGER: LedgerRecord[] = loaded.records.filter(isPublicRecord);
 
 export const recordById = (id: string) => LEDGER.find((r) => r.id === id.toUpperCase()) ?? null;
 

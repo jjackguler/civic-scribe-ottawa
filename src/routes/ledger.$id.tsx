@@ -184,6 +184,7 @@ function RecordPage() {
                     <dt className="kicker text-muted-ink">{pick(ASPECT_LABEL[p.aspect])}</dt>
                     <dd className="font-serif text-[1.06rem] leading-relaxed"><LT t={p.text} /></dd>
                     <dd className={`text-[0.85rem] font-semibold ${p.finding === "untested" ? "text-muted-ink" : ""}`}>{pick(FINDING_LABEL[p.finding])}</dd>
+                    {p.note && <dd className="sm:col-start-2 sm:col-span-2 text-[0.9rem] text-muted-ink"><LT t={p.note} /></dd>}
                   </div>
                 ))}
               </dl>
@@ -223,7 +224,9 @@ function RecordPage() {
                           <ExternalLink className="h-3.5 w-3.5 shrink-0 translate-y-0.5" aria-hidden="true" />
                         </a>
                         <span className="block text-[0.88rem] text-muted-ink">
-                          {e.publisher} · {e.independent ? (fr ? "source indépendante" : "independent source") : (fr ? "source liée à l'auteur de l'affirmation" : "source tied to the claimant")}
+                          {e.anonymous ? (fr ? "Source non nommée" : "Unnamed source") : e.publisher} · {e.independent ? (fr ? "source indépendante" : "independent source") : (fr ? "source liée à l'auteur de l'affirmation" : "source tied to the claimant")}
+                          {e.anonymous && <> · {fr ? "corroborée par un document, ne compte pas seule" : "backed by a document, never counted on its own"}</>}
+                          {e.licensed && <> · {fr ? "droits payés pour ses propres images" : "licence fee paid for their own footage"}</>}
                           {e.archiveUrl && <> · <a href={e.archiveUrl} rel="noopener nofollow" className="text-lake hover:underline">{fr ? "copie archivée" : "archived copy"}</a></>}
                         </span>
                         <p className="mt-1.5 text-[0.98rem] leading-relaxed"><LT t={e.note} /></p>
