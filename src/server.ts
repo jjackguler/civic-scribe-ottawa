@@ -5,6 +5,20 @@ import { renderErrorPage } from "./lib/error-page";
 import { bindRequest } from "./lib/shared-cache";
 import { GONE, goneResponse, isGone } from "./lib/gone";
 
+// Kept in sync with PAGE_STATUS_HEADER in src/lib/http-status.ts (not imported: that module pulls in the Start runtime).
+const PAGE_STATUS_HEADER = "x-aib-page-status";
+
+/** A page asked for a status other than 200 (410 withdrawn, 503 temporarily unavailable): apply it. */
+function applyPageStatus(response: Response): Response {
+  const wanted = Number(response.headers.get(PAGE_STATUS_HEADER));
+  if (!wanted) return response;
+  const headers = new Headers(response.headers);
+  headers.delete(PAGE_STATUS_HEADER);
+  if (response.status !== 200 || wanted < 400 || wanted > 599) return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  if (wanted === 503) headers.set("cache-control", "no-store");
+  return new Response(response.body, { status: wanted, headers });
+}
+
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
@@ -77,7 +91,7 @@ export default {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return applyPageStatus(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return brandedErrorResponse();

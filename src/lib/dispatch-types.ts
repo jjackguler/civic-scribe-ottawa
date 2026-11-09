@@ -72,6 +72,8 @@ export type DispatchSummary = {
 export type DispatchList = { items: DispatchSummary[]; audio: boolean };
 export type DispatchPage = {
   dispatch: Dispatch | null;
+  /** True when a lookup failed or timed out: "missing" can't be trusted, so the page answers 503, not 404. */
+  unavailable?: boolean;
   audio: boolean;
   more: DispatchSummary[];
   /** The Newsroom article that replaced this dispatch: the route redirects there. */

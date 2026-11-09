@@ -18,6 +18,7 @@ import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { editorMailto } from "@/lib/contact";
 import { seoHead, publisherRef, DEFAULT_OG_IMAGE, localeOf } from "@/lib/seo";
+import { setPageStatus } from "@/lib/http-status";
 
 /**
  * A story from another publisher's feed: their headline, the source, the time
@@ -32,6 +33,8 @@ export const Route = createFileRoute("/story/$id")({
     const story = payload?.stories.find(s => s.id === params.id) ?? null;
     // A full desk without this story: it has aged out (30 days). Answer 404 rather than a thin page.
     if (!story && payload && payload.stories.length > 0 && !payload.partial) throw notFound();
+    // The desk is still loading (cold start or partial): a temporary 503, not a thin 200 page (a soft 404).
+    if (!story) setPageStatus(503, 120);
     return { payload, story };
   },
   head: ({ match, loaderData }) => {
