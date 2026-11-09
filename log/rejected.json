@@ -1,5 +1,46 @@
 [
   {
+    "id": "49neyk",
+    "at": "2026-11-09T21:26:56.096Z",
+    "stage": "copy",
+    "headline": "Your Experts Have Partners. There's HOPE for Keeping Them Together",
+    "reasons": [
+      "Not in the sources (names or numbers): 95 percent, 50 percent, 6.1 percent, 250-gigabyte, denial not in the sources: \"Hugging Face designed HOPE to look at how these specialized modules work togethe\".",
+      "after the rewrite:",
+      "Too close to Hugging Face's wording (\"gains of up to 6 1 on agentic coding…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1ucctd1",
+    "at": "2026-11-09T21:21:01.063Z",
+    "stage": "copy",
+    "headline": "Nemotron-Personas-Finance-Japan: A Synthetic Dataset Capturing Japan's Demographics and Financial Context",
+    "reasons": [
+      "Not in the sources (names or numbers): 1.5 billion, Nemotron-Personas-Japan-Finance, 1,000,000, 9,000,000, 000.",
+      "Too close to Hugging Face's wording (\"a probabilistic graphical model framework for synthetic data generation…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Hugging Face's wording (\"elith and nvidia have released nemotron personas finance japan…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "bb4ljk",
+    "at": "2026-11-09T21:12:42.849Z",
+    "stage": "reporter",
+    "headline": "Le ministre Solomon fera le point sur les investissements dans la culture prévus dans le budget de 2026",
+    "reasons": [
+      "skip: media advisory contains insufficient information to support 120 words of reporting without padding"
+    ]
+  },
+  {
+    "id": "q2bwfg",
+    "at": "2026-11-09T21:07:54.709Z",
+    "stage": "reporter",
+    "headline": "Minister Solomon to highlight Budget 2026 investments in culture",
+    "reasons": [
+      "skip: insufficient information: routine media advisory cannot support 120 words of real information without padding"
+    ]
+  },
+  {
     "id": "1evctf7",
     "at": "2026-11-06T11:33:53.493Z",
     "stage": "copy",
