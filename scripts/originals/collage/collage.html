@@ -9,10 +9,10 @@
 @font-face{font-family:Grot;src:url("FONT_DIR/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2") format("woff2");font-weight:400 900}
 @font-face{font-family:News;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-normal.woff2") format("woff2");font-weight:200 800}
 @font-face{font-family:News;font-style:italic;src:url("FONT_DIR/newsreader/files/newsreader-latin-opsz-italic.woff2") format("woff2");font-weight:200 800}
-@font-face{font-family:Anton;src:url("FSRC_DIR/anton/files/anton-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:Anton;src:url("https://aibroadsheet.com/__l5e/assets-v1/fe207202-f955-4cbd-8938-c7442dcd502f/bodoni-moda-brand.woff") format("woff"),url("FSRC_DIR/anton/files/anton-latin-400-normal.woff2") format("woff2")} /* Ink & Gold: headline face is Bodoni Moda; Anton only as offline fallback */
 @font-face{font-family:Elite;src:url("FSRC_DIR/special-elite/files/special-elite-latin-400-normal.woff2") format("woff2")}
 @font-face{font-family:Hand;src:url("FSRC_DIR/caveat/files/caveat-latin-400-normal.woff2") format("woff2")}
-:root{--y:#F5C400;--ink:#141414;--paper:#F1ECE1;--red:#D7372F;--board:#1B1A18}
+:root{--y:#D7B54A;--ink:#16181A;--paper:#EFE8DA;--red:#D9412B;--board:#16181A}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;overflow:hidden;background:var(--board);font-family:Grot,sans-serif;color:var(--ink)}
 #frame{position:absolute;inset:0;overflow:hidden}
@@ -23,7 +23,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--board);fon
 .yboard{position:absolute;inset:-40px;background-color:var(--y);background-image:var(--blotch),var(--grain)}
 .piece{position:absolute;filter:drop-shadow(0 16px 18px rgba(0,0,0,.42)) drop-shadow(0 2px 2px rgba(0,0,0,.35));will-change:transform}
 .paper{background-color:var(--paper);background-image:var(--blotch),var(--grain);isolation:isolate;position:relative}
-.black{background-color:#151515;background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.8px),var(--grain);background-size:9px 9px,auto;color:#fff;isolation:isolate;position:relative}
+.black{background-color:#16181A;background-image:radial-gradient(rgba(255,255,255,.07) 1.2px,transparent 1.8px),var(--grain);background-size:9px 9px,auto;color:#fff;isolation:isolate;position:relative}
 .yellow{background-color:var(--y);background-image:var(--blotch),var(--grain);isolation:isolate;position:relative}
 .tape{position:absolute;width:190px;height:54px;background:rgba(236,226,196,.78);background-image:var(--grain);mix-blend-mode:normal;filter:none;box-shadow:0 1px 2px rgba(0,0,0,.15)}
 .outlet{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;font-size:27px;letter-spacing:.2px;border-bottom:3px solid var(--ink);padding-bottom:12px;margin-bottom:18px}
@@ -41,11 +41,11 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--board);fon
 .serif{font-family:News}
 .credit{font-weight:600;font-size:26px;opacity:.75}
 svg{overflow:visible}
-#head.ink{color:#141414}#head.ink .pill{background:#141414;color:var(--y)}#prog.ink i{background:rgba(0,0,0,.2)}#prog.ink i u{background:#141414}
-#head{position:absolute;left:44px;right:44px;top:92px;display:flex;align-items:center;gap:18px;z-index:20;color:#fff;background:#141414;padding:12px 18px 12px 18px;box-shadow:0 10px 22px rgba(0,0,0,.35)}
+#head.ink{color:#16181A}#head.ink .pill{background:#16181A;color:var(--y)}#prog.ink i{background:rgba(0,0,0,.2)}#prog.ink i u{background:#16181A}
+#head{position:absolute;left:44px;right:44px;top:92px;display:flex;align-items:center;gap:18px;z-index:20;color:#fff;background:#16181A;padding:12px 18px 12px 18px;box-shadow:0 10px 22px rgba(0,0,0,.35)}
 #head b{font-family:News;font-weight:600;font-size:40px}
 #head .pill{margin-left:auto;font-weight:800;font-size:26px;padding:8px 16px;background:var(--y);color:var(--ink)}
-#prog{position:absolute;left:44px;right:44px;top:186px;background:#141414;padding:0 18px 12px;display:flex;gap:8px;z-index:20}
+#prog{position:absolute;left:44px;right:44px;top:186px;background:#16181A;padding:0 18px 12px;display:flex;gap:8px;z-index:20}
 #prog i{flex:1;height:7px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
 #prog i u{position:absolute;inset:0;background:var(--y);transform-origin:0 50%;transform:scaleX(0)}
 #cap{position:absolute;left:60px;right:60px;top:1418px;display:flex;justify-content:center;z-index:20}
@@ -70,7 +70,7 @@ const W = 1080, H = 1920, FPS_Q = 12; // paper pieces move "on twos" like stop-m
 const grainSvg = (freq, alpha, oct) => `url("data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='${oct}' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ${alpha} 0'/></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>`)}")`;
 document.documentElement.style.setProperty("--grain", grainSvg(0.85, 0.16, 3));
 document.documentElement.style.setProperty("--blotch", grainSvg(0.012, 0.10, 2));
-const MARK = `<svg viewBox="0 0 64 64" width="58" height="58"><rect width="64" height="64" rx="12" fill="#F5C400"/><rect x="11" y="11" width="42" height="9" rx="1" fill="#111"/><rect x="11" y="26" width="20" height="27" rx="1" fill="#111"/><path d="M37 29h16M37 38h16M37 47h8" stroke="#111" stroke-width="4.5" stroke-linecap="round"/><circle cx="51" cy="48" r="5" fill="#D7372F"/></svg>`;
+const MARK = `<svg viewBox="0 0 64 64" width="58" height="58"><rect width="64" height="64" rx="12" fill="#16181A"/><text x="29" y="51" font-family="Bodoni Moda,Didot,Georgia,serif" font-weight="800" font-size="54" fill="#D7B54A" text-anchor="middle">b</text><circle cx="49" cy="17" r="5" fill="#D9412B"/></svg>`;
 
 function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const hash = (a, b = 0) => rng(a * 7919 + b * 104729)();
@@ -146,7 +146,7 @@ function highlightText(text, mark) {
   if (i < 0) return esc(text);
   return esc(text.slice(0, i)) + `<span class="hl"><i class="mk"></i>${esc(mark)}</span>` + esc(text.slice(i + mark.length));
 }
-function stroke(svg, d, color = "#D7372F", w = 20) {
+function stroke(svg, d, color = "#D9412B", w = 20) {
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("d", d); path.setAttribute("fill", "none"); path.setAttribute("stroke", color);
   path.setAttribute("stroke-width", w); path.setAttribute("stroke-linecap", "round"); path.setAttribute("stroke-linejoin", "round");
@@ -224,8 +224,8 @@ const BUILD = {
     const strip = h(`<div class="piece" style="width:900px"><div class="paper" style="padding:34px 44px 38px;clip-path:${torn(502, 7)}"><div class="mid">${esc(sc.data.verdict)}</div></div></div>`);
     root.appendChild(strip);
     const svg = svgLayer(root);
-    const s1 = stroke(svg, roughPath([[175, 395], [540, 520], [925, 655]], 7), "#D7372F", 26);
-    const s2 = stroke(svg, roughPath([[185, 665], [560, 530], [915, 385]], 9), "#D7372F", 26);
+    const s1 = stroke(svg, roughPath([[175, 395], [540, 520], [925, 655]], 7), "#D9412B", 26);
+    const s2 = stroke(svg, roughPath([[185, 665], [560, 530], [915, 385]], 9), "#D9412B", 26);
     const a = sc.start + .05;
     const c = sc.data.cue ? cueOr(si, sc.data.cue, .2, sc.start + 1) : cue(si, "different", .2);
     const v = sc.data.verdictCue ? cueOr(si, sc.data.verdictCue, .3, Math.max(c + .9, sent(si, 1).start)) : cue(si, "success", .3);
@@ -246,8 +246,8 @@ const BUILD = {
     svg.setAttribute("viewBox", "-320 -320 640 640"); svg.setAttribute("width", 640); svg.setAttribute("height", 640);
     svg.style.cssText = "position:absolute;left:0;top:0";
     let ticks = "";
-    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; ticks += `<line x1="${Math.sin(a) * 250}" y1="${-Math.cos(a) * 250}" x2="${Math.sin(a) * (i % 3 ? 225 : 200)}" y2="${-Math.cos(a) * (i % 3 ? 225 : 200)}" stroke="#141414" stroke-width="${i % 3 ? 7 : 12}" stroke-linecap="round"/>`; }
-    svg.innerHTML = `<path id="wedge" fill="#F5C400" stroke="#141414" stroke-width="5"/>${ticks}<line id="hand" x1="0" y1="20" x2="0" y2="-215" stroke="#141414" stroke-width="16" stroke-linecap="round"/><circle r="20" fill="#D7372F"/>`;
+    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; ticks += `<line x1="${Math.sin(a) * 250}" y1="${-Math.cos(a) * 250}" x2="${Math.sin(a) * (i % 3 ? 225 : 200)}" y2="${-Math.cos(a) * (i % 3 ? 225 : 200)}" stroke="#16181A" stroke-width="${i % 3 ? 7 : 12}" stroke-linecap="round"/>`; }
+    svg.innerHTML = `<path id="wedge" fill="#D7B54A" stroke="#16181A" stroke-width="5"/>${ticks}<line id="hand" x1="0" y1="20" x2="0" y2="-215" stroke="#16181A" stroke-width="16" stroke-linecap="round"/><circle r="20" fill="#D9412B"/>`;
     face.firstChild.appendChild(svg);
     const txt = h(`<div style="position:absolute;left:84px;right:84px;top:1040px;color:#fff"><div class="big" style="color:var(--y)">${esc(sc.data.big)}</div><div class="sm" style="margin-top:20px">${esc(sc.data.small)}</div></div>`);
     root.appendChild(txt);
@@ -279,7 +279,7 @@ const BUILD = {
     at.forEach(x => ev(x + .3, "slap"));
     const svg = svgLayer(root);
     const ci = sc.data.circle ?? 1, sp = spots[ci];
-    const ring = stroke(svg, roughPath(ellipsePts(sp.x + 360, sp.y + 70, 420, 120, 1.1, 70, 5), 3, 4), "#D7372F", 14);
+    const ring = stroke(svg, roughPath(ellipsePts(sp.x + 360, sp.y + 70, 420, 120, 1.1, 70, 5), 3, 4), "#D9412B", 14);
     const note = h(`<div class="piece" style="width:820px"><div class="yellow" style="padding:36px 46px 40px;clip-path:${torn(720, 6)}"><div class="mid">${esc(sc.data.note)}</div></div></div>`);
     note.appendChild(tape(560, -22, 6, 160));
     root.appendChild(note);
@@ -317,9 +317,9 @@ const BUILD = {
         const d = (c / cols) * .7 + (r / rows) * .3;
         if (shown < d) continue;
         const on = i < sc.data.highlight && lit > (i / sc.data.highlight);
-        ctx.fillStyle = on ? "#F5C400" : "rgba(20,20,20,.78)";
+        ctx.fillStyle = on ? "#D7B54A" : "rgba(20,20,20,.78)";
         ctx.beginPath(); ctx.arc(c * pitch + pitch / 2, r * pitch + pitch / 2, on ? 9.5 : 8, 0, Math.PI * 2); ctx.fill();
-        if (on) { ctx.strokeStyle = "#141414"; ctx.lineWidth = 2; ctx.stroke(); }
+        if (on) { ctx.strokeStyle = "#16181A"; ctx.lineWidth = 2; ctx.stroke(); }
       }
       const k = p(t, bc, .8);
       txt.style.opacity = oCubic(p(t, bc - .1, .4));

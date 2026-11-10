@@ -4,7 +4,7 @@
 // Loaded after collage.html's main script; adds builders to BUILD.
 (() => {
   const A = n => `ASSET_DIR/${n}`;
-  const RED = "#C8372D", CREAM = "#F2EDE2";
+  const RED = "#D9412B", CREAM = "#EFE8DA";
   const NEWS = ["newsprint/page-a.jpg", "newsprint/page-b.jpg"];
   const figSize = name => (B.assets && B.assets.figs && B.assets.figs[name]) || [800, 1000];
   const css = document.createElement("style");
@@ -85,14 +85,14 @@
     const el = h(`<div class="bg2"></div>`), seed = 5000 + si * 97, r = rng(seed);
     const svg = () => svgEl(el, 3);
     if (kind === "kraft") {
-      el.style.backgroundColor = "#C2924A";
+      el.style.backgroundColor = "#2B2E31";
       newsPiece(el, NEWS[si % 2], 40 + r() * 80, 120, 640, 980, -3 + r() * 6, seed + 1, "grayscale(1) sepia(.5) contrast(1.05)", .55);
       newsPiece(el, NEWS[(si + 1) % 2], 560, 900 + r() * 160, 540, 700, 4 - r() * 6, seed + 2, "grayscale(1) sepia(.35)", .45);
       stain(el, 700 + r() * 200, 200 + r() * 200, 300, seed + 3); stain(el, 40, 1350, 240, seed + 4);
       const s = svg(); scribble(s, 600, 260, 420, 600, seed + 5); scribble(s, 40, 1150, 400, 400, seed + 6, "#3a342c", 7, 2); paint(s, 80, 1600, 380, seed + 7);
-      const t = h(`<div style="position:absolute;left:${720 + r() * 120}px;top:60px;width:200px;height:56px;background:#151515;transform:rotate(${(-6 + r() * 12).toFixed(1)}deg);clip-path:${torn(seed + 8, 4, 6)}"></div>`); el.appendChild(t);
+      const t = h(`<div style="position:absolute;left:${720 + r() * 120}px;top:60px;width:200px;height:56px;background:#16181A;transform:rotate(${(-6 + r() * 12).toFixed(1)}deg);clip-path:${torn(seed + 8, 4, 6)}"></div>`); el.appendChild(t);
     } else if (kind === "cream") {
-      el.style.backgroundColor = "#EBE3D2";
+      el.style.backgroundColor = "#EFE8DA";
       const grid = h(`<div style="position:absolute;right:20px;top:${260 + r() * 300}px;width:420px;height:620px;background-color:#F4F1EA;background-image:linear-gradient(rgba(60,80,110,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(60,80,110,.22) 1px,transparent 1px);background-size:28px 28px;transform:rotate(${(2 - r() * 4).toFixed(1)}deg);clip-path:${torn(seed + 1, 6)};box-shadow:0 6px 12px rgba(0,0,0,.15)"></div>`); el.appendChild(grid);
       newsPiece(el, NEWS[si % 2], 30, 1180, 560, 420, -2, seed + 2, "grayscale(1) contrast(1.1)", .8);
       stain(el, 60, 260, 260, seed + 3);
@@ -111,19 +111,19 @@
       right.appendChild(h(`<div style="position:absolute;inset:0;background:${RED};mix-blend-mode:multiply"></div>`));
       el.appendChild(h(`<div style="position:absolute;inset:0;background:rgba(18,18,18,.12)"></div>`));
     } else if (kind === "slate") {
-      el.style.backgroundColor = "#4A5867";
+      el.style.backgroundColor = "#16181A";
       for (let i = 0; i < 3; i++) {
         const st = h(`<div style="position:absolute;left:${(r() * 800).toFixed(0)}px;top:${(200 + r() * 1500).toFixed(0)}px;width:${(240 + r() * 300).toFixed(0)}px;height:${(30 + r() * 40).toFixed(0)}px;background:var(--y);background-image:var(--grain);transform:rotate(${(-8 + r() * 16).toFixed(1)}deg);clip-path:${torn(seed + 10 + i, 4, 8)};box-shadow:0 4px 8px rgba(0,0,0,.25)"></div>`);
         el.appendChild(st);
       }
       const s = svg(); const r2 = rng(seed + 20);
       const d = `M${900} ${1250} C ${1000} ${1050}, ${980} ${800}, ${880} ${640}`;
-      path(s, d, "#C9D466", 9, .75, "stroke-dasharray:28 22");
+      path(s, d, "#D7B54A", 9, .75, "stroke-dasharray:28 22");
       el.appendChild(h(`<div style="position:absolute;left:${(60 + r2() * 200).toFixed(0)}px;top:${(1320 + r2() * 200).toFixed(0)}px;width:150px;height:150px;border-radius:50%;background:var(--y);background-image:var(--grain);opacity:.9"></div>`));
     } else if (kind === "yellow") {
-      el.style.backgroundColor = "#F5C400";
+      el.style.backgroundColor = "#D7B54A";
       el.appendChild(h(`<div style="position:absolute;inset:0;opacity:.08;background:repeating-linear-gradient(135deg,#111 0 3px,transparent 3px 30px)"></div>`));
-      const s = svg(); scribble(s, 680, 1300, 360, 300, seed + 2, "#141414", 7, 2.5);
+      const s = svg(); scribble(s, 680, 1300, 360, 300, seed + 2, "#16181A", 7, 2.5);
     } else {
       el.style.backgroundColor = "var(--board)";
       newsPiece(el, NEWS[si % 2], 600, 1150, 520, 600, 5, seed + 1, "grayscale(1) brightness(.55)", .5);
@@ -153,9 +153,9 @@
     return { pc: piece(el, seed, base), w, h: height };
   }
   const STY = [
-    { bg: "#141414", fg: "#F4F0E6", f: "anton" }, { bg: CREAM, fg: "#141414", f: "serif", w: 800 },
-    { bg: "#F5C400", fg: "#141414", f: "grot", w: 900 }, { bg: "news", fg: "#141414", f: "anton" },
-    { bg: RED, fg: "#F4F0E6", f: "anton" }, { bg: CREAM, fg: "#141414", f: "elite" },
+    { bg: "#16181A", fg: "#F4F0E6", f: "anton" }, { bg: CREAM, fg: "#16181A", f: "serif", w: 800 },
+    { bg: "#D7B54A", fg: "#16181A", f: "grot", w: 900 }, { bg: "news", fg: "#16181A", f: "anton" },
+    { bg: RED, fg: "#F4F0E6", f: "anton" }, { bg: CREAM, fg: "#16181A", f: "elite" },
   ];
   function ransom(words, fs, seed) {
     const box = h(`<div style="position:absolute;left:0;right:0;text-align:center"></div>`);
@@ -339,7 +339,7 @@
       const r = rng(7400 + si);
       const ws = sc.data.words.map((w, k) => {
         const len = w.t.length, fs = Math.min(250, 900 / (0.56 * len + 0.44));
-        const sty = w.s === "black" ? "background:#141414;color:#F4F0E6" : w.s === "red" ? `background:${RED};color:#F4F0E6` : `background:${CREAM};color:#141414`;
+        const sty = w.s === "black" ? "background:#16181A;color:#F4F0E6" : w.s === "red" ? `background:${RED};color:#F4F0E6` : `background:${CREAM};color:#16181A`;
         const el = h(`<div class="piece"><div class="strip" style="font-size:${fs.toFixed(0)}px;${sty};background-image:var(--grain);clip-path:${torn(7500 + k + si, 9)}">${esc(w.t)}</div></div>`);
         root.appendChild(el);
         const x = k % 2 ? 1080 - 50 - (len * .56 + .44) * fs : 60;
@@ -361,8 +361,8 @@
 
     form(sc, si, root) {
       const f = h(`<div class="piece" style="width:860px"><div class="paper" style="padding:50px 56px 60px;background-color:#F3EFE4;clip-path:${torn(7800 + si, 6)}">
-        <div class="elite" style="font-size:46px;border-bottom:3px solid #141414;padding-bottom:16px;margin-bottom:26px">${esc(sc.data.formTitle)}</div>
-        ${sc.data.rows.map(rw => `<div style="display:flex;align-items:center;gap:26px;margin:22px 0"><div style="width:58px;height:58px;border:5px solid #141414;flex:none"></div><div class="elite" style="font-size:40px">${esc(rw)}</div></div>`).join("")}
+        <div class="elite" style="font-size:46px;border-bottom:3px solid #16181A;padding-bottom:16px;margin-bottom:26px">${esc(sc.data.formTitle)}</div>
+        ${sc.data.rows.map(rw => `<div style="display:flex;align-items:center;gap:26px;margin:22px 0"><div style="width:58px;height:58px;border:5px solid #16181A;flex:none"></div><div class="elite" style="font-size:40px">${esc(rw)}</div></div>`).join("")}
         <div class="elite" style="font-size:26px;opacity:.6;margin-top:30px">Signature ____________________</div></div></div>`);
       f.appendChild(tape(330, -24, 2)); root.appendChild(f);
       const pf = piece(f, 7810 + si, { x: 110, y: 330, rot: -1.5 });
@@ -390,7 +390,7 @@
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("width", 200); svg.setAttribute("height", 200); svg.style.cssText = "position:absolute;left:24px;top:40px;overflow:visible";
       big.appendChild(svg);
-      const ck = stroke(svg, roughPath([[10, 90], [60, 150], [170, 10]], 9, 6), "#F5C400", 22);
+      const ck = stroke(svg, roughPath([[10, 90], [60, 150], [170, 10]], 9, 6), "#D7B54A", 22);
       const sm = h(`<div class="piece"><div class="paper" style="padding:26px 36px 30px;clip-path:${torn(7910 + si, 5)}"><div class="elite" style="font-size:36px;max-width:700px">${esc(sc.data.small)}</div></div></div>`);
       root.appendChild(sm);
       const pb = piece(big, 7920 + si, { x: 90, y: 360, rot: -2 }), ps = piece(sm, 7921 + si, { x: 200, y: 1100, rot: 2.5 });
@@ -453,7 +453,7 @@
     receipt(sc, si, root) {
       const rows = sc.data.rows;
       const el = h(`<div class="piece" style="width:760px"><div class="rcpt elite" style="padding:56px 50px 80px;clip-path:polygon(${Array.from({ length: 31 }, (_, i) => `${(i / 30 * 100).toFixed(2)}% ${i % 2 ? 0 : 14}px`).join(",")},${Array.from({ length: 31 }, (_, i) => `${(100 - i / 30 * 100).toFixed(2)}% calc(100% - ${i % 2 ? 0 : 14}px)`).join(",")})">
-        <div style="text-align:center;font-size:34px;border-bottom:3px dashed #141414;padding-bottom:20px;margin-bottom:10px">${esc(sc.data.title)}</div>
+        <div style="text-align:center;font-size:34px;border-bottom:3px dashed #16181A;padding-bottom:20px;margin-bottom:10px">${esc(sc.data.title)}</div>
         ${rows.map((rw, k) => `<div class="row" data-k="${k}" style="padding:26px 6px;border-bottom:2px dashed rgba(0,0,0,.25)"><div style="font-size:34px">${esc(rw.label)}</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:6px"><span style="font-size:44px;text-decoration:line-through;opacity:.5">${esc(rw.old)}</span><span style="font-size:30px">→</span><span class="anton" style="font-size:96px;line-height:1">${esc(rw.new)}</span></div></div>`).join("")}
         ${(sc.data.footer ?? "*** list prices, standard tier ***") ? `<div style="text-align:center;font-size:26px;margin-top:24px;opacity:.7">${esc(sc.data.footer ?? "*** list prices, standard tier ***")}</div>` : ""}</div></div>`);
       root.appendChild(el);
@@ -513,11 +513,11 @@
         const wfull = 260 + (it.value - min) / (max - min) * 640;
         const el = h(`<div style="position:absolute;left:70px;top:${460 + k * 250}px">
           <div style="font-weight:800;font-size:42px;margin-bottom:10px">${esc(it.label)}</div>
-          <div class="bar" style="height:120px;width:${wfull.toFixed(0)}px;background:${it.hi ? RED : "#141414"};background-image:var(--grain);clip-path:${torn(8620 + k, 6, 12)};transform-origin:0 50%;display:flex;align-items:center;justify-content:flex-end;padding-right:26px"><span class="anton" style="font-size:84px;color:#F4F0E6">0</span></div></div>`);
+          <div class="bar" style="height:120px;width:${wfull.toFixed(0)}px;background:${it.hi ? RED : "#16181A"};background-image:var(--grain);clip-path:${torn(8620 + k, 6, 12)};transform-origin:0 50%;display:flex;align-items:center;justify-content:flex-end;padding-right:26px"><span class="anton" style="font-size:84px;color:#F4F0E6">0</span></div></div>`);
         root.appendChild(el);
         return { el, bar: el.querySelector(".bar"), num: el.querySelector("span"), it, wfull };
       });
-      const st = stampEl(sc.data.stamp, 80, "#141414"); root.appendChild(st);
+      const st = stampEl(sc.data.stamp, 80, "#16181A"); root.appendChild(st);
       const a = sc.start + .4, sa = cueMaybe(si, sc.data.cue || "independent", .2) ?? sent(si, 1).start;
       bars.forEach((_, k) => ev(a + k * .45, "slide")); ev(sa + .18, "stamp");
       return t => {

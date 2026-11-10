@@ -29,6 +29,7 @@ import { chooseStory, FIXTURE_BRIEF, type Brief, type Origin } from "./pick";
 import { fixtureBoard, validate, writeStoryboard, type Board } from "./storyboard";
 import { narrateElevenLabs, placeholderNarration, type Timing } from "./narrate";
 import { buildKit, creditsLine, loadKit, type Kit } from "./collage/kit";
+import { renderOwnPages } from "./collage/own-pages";
 import { pickVoice, speak, uploadToYouTube } from "./media-apis";
 import { checkScript, validShape, writeScript, type Script } from "./script";
 import { compose, renderCards, silence, readBuffer, poster as cardPoster } from "./render";
@@ -80,7 +81,15 @@ async function makeCollage(brief: Brief): Promise<Made | string | null> {
     if (kit.sfxMap && !env("COLLAGE_SFX_MAP")) process.env.COLLAGE_SFX_MAP = kit.sfxMap;
     if (kit.music && !env("COLLAGE_MUSIC")) process.env.COLLAGE_MUSIC = kit.music;
   }
-  const figures = kit?.figures ?? [];
+  // Original visuals (default): no archive photos or public-domain newspaper pages,
+  // only our own Ink & Gold pages set from this story's headlines. ORIGINALS_ARCHIVE=1 restores the archive kit.
+  const original = env("ORIGINALS_ARCHIVE") !== "1";
+  const figures = original ? [] : kit?.figures ?? [];
+  if (original && !DRY) {
+    const dir = kit?.dir ?? join(OUT, "own-kit");
+    if (!kit) process.env.COLLAGE_ASSETS = dir;
+    await renderOwnPages(dir, brief.sources.map(x => x.title).filter(Boolean), brief.items.map(i => i.excerpt).join(" ").slice(0, 900) + " ");
+  }
 
   // Storyboard
   let board: Board;
@@ -140,7 +149,7 @@ async function makeCollage(brief: Brief): Promise<Made | string | null> {
   if (kit) {
     const used = existsSync(join(work, "sfx-used.json")) ? JSON.parse(await readFile(join(work, "sfx-used.json"), "utf8")) as { files: string[] } : { files: [] };
     const figs = board.scenes.map(s => s.figure).filter((f): f is string => typeof f === "string");
-    const newsprint = board.scenes.some(s => ["newsprint", "split", "kraft", "cream", "board"].includes(s.bg) || s.type === "ransom");
+    const newsprint = !original && board.scenes.some(s => ["newsprint", "split", "kraft", "cream", "board"].includes(s.bg) || s.type === "ransom");
     credits = creditsLine(kit, { figures: [...new Set(figs)], newsprint, sfxFiles: used.files }, `AI voice, ${voice}`);
   }
   return {
