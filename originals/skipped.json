@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:1frf9li",
+    "at": "2026-11-10T18:46:45.032Z",
+    "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; not in the sources: 1.404T, Market"
+  },
+  {
     "key": "story:1x0a2zf",
     "at": "2026-11-09T21:34:38.193Z",
     "reason": "the writer declined: The source material consists of only two headlines and a single sentence, which is too thin to sustain a 45-second explainer without adding unverified details."
