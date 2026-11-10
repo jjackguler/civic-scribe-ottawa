@@ -125,7 +125,7 @@ export async function buildSitemap(): Promise<string> {
   const originals = await withTimeout(fetch(ORIGINALS_MANIFEST_URL).then(r => (r.ok ? (r.json() as Promise<OriginalsManifest>) : null)).catch(() => null), 4000, null);
   for (const o of (originals?.items ?? []).filter(originalPublishable)) entries.push({ path: `/video/${videoSlug(o)}`, changefreq: "monthly", priority: "0.6", lastmod: o.publishedAt.slice(0, 10) });
   // Young Lab (the passport is personal and noindex, so it stays out).
-  for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
+  for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/classroom", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
 
