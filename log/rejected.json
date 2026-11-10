@@ -1,5 +1,52 @@
 [
   {
+    "id": "16eklw0",
+    "at": "2026-11-10T19:50:48.545Z",
+    "stage": "copy",
+    "headline": "Gemini 4 Carbon is now available",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to Google DeepMind's wording (\"cursorbench 4 0 perplexity s wandr and zapier s…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to Google DeepMind's wording (\"cursorbench 4 0 perplexity s wandr and zapier s…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1y7yilz",
+    "at": "2026-11-10T19:50:22.206Z",
+    "stage": "copy",
+    "headline": "We’re bringing Adobe’s creative and productivity tools closer to your everyday Google apps.",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"Google and Adobe are making their software work better together so you do not ha\".",
+      "Too close to Google AI's wording (\"a direct pathway from google drive and gmail into…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google AI's wording (\"businesses will be able to use adobe s cx…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "17jbilb",
+    "at": "2026-11-10T19:50:09.051Z",
+    "stage": "translator",
+    "headline": "Le ministre Solomon présente les investissements du gouvernement du Canada dans le Budget de 2026 – Maîtres chez nous visant à soutenir la culture canadienne, à renforcer nos industries créatives, et à favoriser l’accès aux arts et au patrimoine partout au pays",
+    "reasons": [
+      "attempt 1: Too close to Ministre de l'IA et de l'Innovation numérique's wording (\"le budget de 2026 propose pres de 4 milliards…\"): say it in our own words, or quote and attribute it.",
+      "attempt 2: Too close to Ministre de l'IA et de l'Innovation numérique's wording (\"2026 propose pres de 4 milliards de dollars sur…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1up8rzo",
+    "at": "2026-11-10T19:46:49.130Z",
+    "stage": "copy",
+    "headline": "Minister Solomon highlights Government of Canada investments from Budget 2026: Masters of our destiny to support Canadian culture, strengthen creative industries and improve access to arts and heritage across the country",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"The specific implementation details for the Canada Creative Credit are not yet d\".",
+      "Too close to Minister of AI and Digital Innovation's wording (\"the 1 000 cap on deductible work expenses for…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Minister of AI and Digital Innovation's wording (\"permanent year round free admission to national museums for…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "49neyk",
     "at": "2026-11-09T21:26:56.096Z",
     "stage": "copy",
