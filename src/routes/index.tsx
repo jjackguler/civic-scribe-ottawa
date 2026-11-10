@@ -21,6 +21,7 @@ import { AskKeeperBand } from "@/components/Keeper";
 import { QuizCard } from "@/components/Quiz";
 import { YoungLabBand } from "@/components/YoungLab";
 import { WeekSheetBand } from "@/components/WeekSheet";
+import { EightyEight } from "@/components/EightyEight";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { getDispatchesFast } from "@/lib/dispatch";
@@ -160,7 +161,6 @@ function Home() {
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.openDesk.subtitle[locale]}</h1>
 
-
       {/* Today in 60 seconds: the round story bubbles of the first edition (owner asked for them back, 10 Nov 2026). */}
       <div className="bg-night"><TodayLauncher initialNews={initial} initialDispatches={dispatches} dark className="container-mw pt-4 pb-1" /></div>
 
@@ -177,7 +177,8 @@ function Home() {
         </div>
       )}
 
-      {/* Front-page slot for a short "news in seconds" feature: add it here, between the strip and the stage. */}
+      {/* 88 seconds (owner request, 10 Nov 2026): the AI day in 88 s, our newsroom first. */}
+      <EightyEight initialNews={initial} initialNewsroom={newsroom} className="container-mw mt-8" />
 
       {/* The stage: our own videos and articles, the first edition's hero. */}
       {slides.length === 0 ? (
