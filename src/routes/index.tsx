@@ -19,6 +19,7 @@ import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
 import { QuizCard } from "@/components/Quiz";
 import { YoungLabBand } from "@/components/YoungLab";
+import { EightyEight } from "@/components/EightyEight";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { getDispatchesFast } from "@/lib/dispatch";
@@ -151,9 +152,11 @@ function Home() {
     <PageShell>
       <h1 className="sr-only">{SITE.name} — {SITE.openDesk.subtitle[locale]}</h1>
 
+      {/* 88 seconds (owner request, 10 Nov 2026): the AI day in 88 s, our newsroom first. */}
+      <EightyEight initialNews={initial} initialNewsroom={newsroom} className="container-mw pt-6 sm:pt-8" />
 
       {/* Open Desk (owner plan, 6 Nov 2026): the ledger of recorded and tested claims leads the paper. */}
-      <LedgerFront className="container-mw pt-6 sm:pt-8" />
+      <LedgerFront className="container-mw mt-10" />
       <OpenDeskBand className="container-mw mt-10" />
 
       {/* Then the watch: our lead and the top events on the left, the running Latest list on the right. */}
