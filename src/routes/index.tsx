@@ -3,17 +3,18 @@ import { ArrowRight, BookOpen, Coins, Landmark, Wrench } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { LatestRail } from "@/components/LatestRail";
-import { StoryCard, StoryLink, StoryMeta, CoverageBadge } from "@/components/StoryCard";
+import { StoryCard, StoryLink, CoverageBadge } from "@/components/StoryCard";
 import { AdSlot } from "@/components/AdSlot";
 import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
-import { NewsletterBox, NewsletterPromo } from "@/components/NewsletterBox";
-import { TrendsPanel, Thumb } from "@/components/Showcase";
+import { NewsletterBox } from "@/components/NewsletterBox";
 import { OriginalCard } from "@/components/Originals";
-import { DispatchRail, keepNames, listOutlets } from "@/components/Dispatch";
-import { NewsroomCover } from "@/components/NewsroomCover";
+import { LiveHero, ownDate, type HeroSlide, type OwnItem } from "@/components/LiveHero";
+import { TodayLauncher } from "@/components/Today";
+import { originalSection } from "@/lib/originals-types";
+import { DispatchRail } from "@/components/Dispatch";
 import { NewsroomLead } from "@/components/NewsroomLead";
-import { FromOurDesk, StudioCard } from "@/components/StudioCards";
-import { AiBadge, TrustBar } from "@/components/Trust";
+import { FromOurDesk } from "@/components/StudioCards";
+import { TrustBar } from "@/components/Trust";
 import { LedgerFront, OpenDeskBand } from "@/components/Ledger";
 import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
@@ -23,11 +24,10 @@ import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pul
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { getDispatchesFast } from "@/lib/dispatch";
 import { getDailyQuizFast } from "@/lib/youth";
-import { getNewsroomFast, useNewsroom, FORMAT_LABEL, newsroomFixtureRequested, type NewsroomSummary } from "@/lib/newsroom";
-import { humanLens, LENS_LABEL } from "@/lib/editorial";
+import { getNewsroomFast, useNewsroom } from "@/lib/newsroom";
 import {
   getFrontPageNews, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
-  SECTIONS, inSection, timeAgo, useNow, type Story, type SectionId, type Cluster,
+  type Story, type SectionId,
 } from "@/lib/news";
 import { useMedia, type MediaItem } from "@/lib/media";
 import { GUIDES } from "@/lib/guides";
@@ -35,11 +35,9 @@ import { TOOLS } from "@/lib/tools";
 import { PROGRAMS } from "@/lib/funding";
 import { HUBS } from "@/lib/hubs";
 import { EDITORIALS } from "@/lib/editorials";
-import { STUDIO } from "@/lib/studio";
 import { useLocale } from "@/lib/locale-context";
-import { t, type Locale } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
-import type { Topic } from "@/lib/news-sources";
 import { seoHead, organizationLd, websiteLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
@@ -75,9 +73,6 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
   return out;
 }
 
-/** The desks shown as a grid on the front page, in order. */
-const FRONT_DESKS: SectionId[] = ["rights", "work", "science", "world"];
-
 const CANADA_HUBS = ["ai-and-jobs-in-canada", "ai-and-privacy"];
 
 function Home() {
@@ -89,7 +84,6 @@ function Home() {
   const { data: nrData } = useNewsroom(newsroom);
   const { locale, pick } = useLocale();
   const fr = locale === "fr";
-  const now = useNow();
 
   const all = byLocale(data?.stories ?? [], locale);
   const news = diversify(all.filter(isFrontPool));
@@ -108,32 +102,46 @@ function Home() {
     .sort((x, y) => y.score - x.score)
     .map(x => x.c);
 
-  // Our own work leads (owner decision): a fresh Studio piece, else the newest newsroom summary.
-  // Only when neither exists does the event most outlets are covering take the lead.
-  const studioLead = STUDIO.find(p => p.lang === locale && Date.now() - Date.parse(p.approvedAt) < 48 * 3600_000) ?? null;
   const articles = nrData?.items ?? [];
-  // A newsroom summary leads only while it is fresh (36 h); after that the top event does.
-  const articleLead = studioLead ? null : articles.find(a => Date.now() - Date.parse(a.createdAt) < 36 * 3600_000) ?? null;
-  const clusterLead = !studioLead && !articleLead ? ranked[0] ?? null : null;
-  if (clusterLead) clusterLead.stories.forEach(s => used.add(s.id));
-  const topClusters = ranked.filter(c => c !== clusterLead).slice(0, clusterLead ? 4 : 6);
+  // Other outlets' events get one compact block lower on the page (owner, 10 Nov 2026: the front was drowning in them).
+  const topClusters = ranked.slice(0, 6);
   topClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
-  const moreClusters = ranked.filter(c => c !== clusterLead && !topClusters.includes(c)).slice(0, 6);
-  moreClusters.forEach(c => c.stories.forEach(s => used.add(s.id)));
   const newestFirst = [...news].sort((x, y) => y.publishedAt.localeCompare(x.publishedAt));
-  // Fill the front's left column under the top events, so it reads as long as the Latest rail.
-  const moreHeadlines = take(newestFirst, used, clusterLead ? 6 : 4, s => s.kind !== "trending");
 
-  const peopleFirst = take(news, used, 6, s => humanLens(s).length > 0 && s.kind !== "trending");
   const canada = take(news, used, 5, s => s.region === "canada");
   const official = all.filter(s => s.minister && s.gov && s.lang === locale).slice(0, 3);
-  const desks = FRONT_DESKS.map(id => ({ id, items: take(diversify(all.filter(s => inSection(s, id)), 1, 8), used, 4, s => s.kind !== "trending") })).filter(d => d.items.length > 0);
-  const analysis = take(news, used, 4, s => s.kind === "analysis");
-  const labs = take(news, used, 4, s => s.kind === "lab");
-  const hn = all.filter(s => s.sourceId === "hn").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
-  const papers = all.filter(s => s.sourceId === "hf-papers").sort((a, b) => (b.popularity?.score ?? 0) - (a.popularity?.score ?? 0)).slice(0, 5);
 
-  const ownVideos = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).slice(0, 8);
+  // The stage (owner decision, 10 Nov 2026: bring back the first edition's hero). Our own work holds it:
+  // our newest videos, with one of our newsroom's articles in every other slot. Other outlets' events
+  // only stand in while our own lists are empty.
+  const ownAll = [...(originals?.items ?? [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  const stageVideos = ownAll.slice(0, 4);
+  const stageArticles = articles.slice(0, articles.length >= 5 ? 2 : 1);
+  const ownStage: HeroSlide[] = stageVideos.flatMap((o, i) => [
+    { kind: "original" as const, original: o },
+    ...(stageArticles[i] ? [{ kind: "article" as const, article: stageArticles[i] }] : []),
+  ]);
+  const storySlides: HeroSlide[] = ranked.slice(0, 5).map(c => ({
+    kind: "story" as const, story: c.lead, outlets: c.sources, sources: [...new Set(c.stories.map(s => s.source))],
+    developing: isDeveloping(c), breaking: isBreaking(c), trend: trendMatch(c.lead, pulse),
+  }));
+  const slides: HeroSlide[] = (ownStage.length > 0 ? ownStage : storySlides).slice(0, 6);
+  // Beside the stage: the rest of our own work, newest first, at most two from any one shelf.
+  const perShelf = new Map<string, number>();
+  const columnVideos = ownAll.filter(o => {
+    if (stageVideos.includes(o)) return false;
+    const shelf = originalSection(o), k = perShelf.get(shelf) ?? 0;
+    if (k >= 2) return false;
+    perShelf.set(shelf, k + 1);
+    return true;
+  });
+  const columnArticles = articles.filter(a => !stageArticles.includes(a)).slice(0, 2);
+  const ownColumn: OwnItem[] = [
+    ...columnArticles.map(a => ({ kind: "article" as const, article: a })),
+    ...columnVideos.slice(0, 6 - columnArticles.length).map(o => ({ kind: "original" as const, original: o })),
+  ].sort((x, y) => ownDate(y).localeCompare(ownDate(x)));
+
+  const ownVideos = ownAll.slice(0, 8);
   const items = media?.items ?? [];
   const videos = items.filter(m => m.type === "video");
   const watchList = [...videos.filter(v => v.newsroom && !v.interview).slice(0, 3), ...videos.filter(v => !v.newsroom && !v.interview).slice(0, 2)].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
@@ -152,66 +160,49 @@ function Home() {
       <h1 className="sr-only">{SITE.name} — {SITE.openDesk.subtitle[locale]}</h1>
 
 
-      {/* Open Desk (owner plan, 6 Nov 2026): the ledger of recorded and tested claims leads the paper. */}
-      <LedgerFront className="container-mw pt-6 sm:pt-8" />
-      <OpenDeskBand className="container-mw mt-10" />
+      {/* Today in 60 seconds: the round story bubbles of the first edition (owner asked for them back, 10 Nov 2026). */}
+      <div className="bg-night"><TodayLauncher initialNews={initial} initialDispatches={dispatches} dark className="container-mw pt-4 pb-1" /></div>
 
-      {/* Then the watch: our lead and the top events on the left, the running Latest list on the right. */}
-      <section className="container-mw mt-12" aria-labelledby="on-our-watch">
-        <h2 id="on-our-watch" className="kicker text-ink mb-3">{fr ? "Sous surveillance : l'actualité IA des autres médias" : "On our watch: AI news from other outlets"}</h2>
-        {alert && (
-          <div className={`mb-4 ${alert.kind === "breaking" ? "bg-live text-white" : "bg-ink text-white"}`}>
-            <StoryLink s={alert.story} className="flex items-center gap-3 px-3 py-2.5 group">
-              <span className={`shrink-0 font-bold text-[0.72rem] uppercase tracking-[0.08em] px-2 py-0.5 ${alert.kind === "breaking" ? "bg-white text-live" : "bg-live text-white"}`}>
-                {alert.kind === "breaking" ? (fr ? "Dernière heure" : "Breaking") : (fr ? "En développement" : "Developing")}
-              </span>
-              <span className="font-serif font-semibold text-[1.05rem] leading-snug truncate group-hover:underline">{display(alert.story, locale).title}</span>
-              <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{alert.outlets} {fr ? "médias" : "outlets"}</span>
-            </StoryLink>
-          </div>
-        )}
-        {news.length === 0 && !articleLead && !studioLead ? (
-          <div className="border-t-2 border-ink pt-10 pb-16 text-center">
+      {/* Breaking or developing: one line, only when several outlets are on the same event. */}
+      {alert && (
+        <div className={alert.kind === "breaking" ? "bg-live text-white" : "bg-ink text-white"}>
+          <StoryLink s={alert.story} className="container-mw flex items-center gap-3 py-2.5 group">
+            <span className={`shrink-0 font-bold text-[0.72rem] uppercase tracking-[0.08em] px-2 py-0.5 ${alert.kind === "breaking" ? "bg-white text-live animate-pulse motion-reduce:animate-none" : "bg-live text-white"}`}>
+              {alert.kind === "breaking" ? (fr ? "Dernière heure" : "Breaking") : (fr ? "En développement" : "Developing")}
+            </span>
+            <span className="font-serif font-semibold text-[1.05rem] leading-snug truncate group-hover:underline">{display(alert.story, locale).title}</span>
+            <span className="hidden sm:inline shrink-0 text-white/85 text-sm ml-auto">{alert.outlets} {fr ? "médias" : "outlets"}</span>
+          </StoryLink>
+        </div>
+      )}
+
+      {/* Front-page slot for a short "news in seconds" feature: add it here, between the strip and the stage. */}
+
+      {/* The stage: our own videos and articles, the first edition's hero. */}
+      {slides.length === 0 ? (
+        <section className="container-mw pt-10">
+          <div className="border-t-[3px] border-night pt-10 pb-16 text-center">
             <span className="live-dot inline-block" aria-hidden="true" />
             <p className="hl text-2xl mt-4">{loading ? t("loading", locale) : t("feedDown", locale)}</p>
           </div>
-        ) : (
-          <div className="grid gap-x-10 gap-y-10 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div className="min-w-0">
-              {studioLead && <div className="border-t-2 border-ink pt-4"><StudioCard p={studioLead} size="lead" /></div>}
-              {articleLead && <ArticleLead a={articleLead} locale={locale} />}
-              {clusterLead && <ClusterLead c={clusterLead} pulse={pulse} />}
-              {topClusters.length > 0 && (
-                <div className="mt-8 grid gap-x-8 sm:grid-cols-2 border-t border-ink/80">
-                  {topClusters.map(c => (
-                    <div key={c.id} className="py-4 border-b border-line">
-                      <StoryCard s={c.lead} variant="text" showTopic badge={<CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} />} />
-                    </div>
-                  ))}
-                </div>
-              )}
-              {moreHeadlines.length > 0 && (
-                <div className="mt-8">
-                  <h2 className="kicker text-ink pb-1 border-b border-ink">{t("moreHeadlines", locale)}</h2>
-                  <div className="grid gap-x-8 sm:grid-cols-2">{moreHeadlines.map(s => <StoryCard key={s.id} s={s} variant="list" />)}</div>
-                </div>
-              )}
-            </div>
-            <aside className="min-w-0 grid gap-6 content-start lg:border-l lg:border-line lg:pl-8">
-              <LatestRail stories={newestFirst} fetchedAt={data?.fetchedAt} limit={8} />
-              <Link to="/news" className="inline-flex items-center gap-1 text-[0.9rem] font-semibold text-lake hover:underline">{fr ? "Toutes les nouvelles" : "All the latest"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-              <NewsletterPromo />
-            </aside>
-          </div>
-        )}
-      </section>
+        </section>
+      ) : (
+        <LiveHero slides={slides} latest={newestFirst} own={ownColumn} />
+      )}
+
+      {/* Open Desk: the ledger of recorded and tested claims, right under our own work. */}
+      <LedgerFront className="container-mw mt-12" />
+      <OpenDeskBand className="container-mw mt-10" />
 
       <div className="container-mw mt-8"><TrustBar /></div>
 
-      <FromOurDesk className="container-mw mt-12" exclude={studioLead?.id} />
+      <FromOurDesk className="container-mw mt-12" />
 
       {/* Our newsroom's summaries (the lead above is left out) and dispatches. */}
-      <NewsroomLead initial={newsroom} exclude={articleLead ? [articleLead.id] : []} className="container-mw mt-12" />
+      <NewsroomLead initial={newsroom} exclude={stageArticles.map(a => a.id)} className="container-mw mt-12" />
+
+      {/* Young Lab: the part of the site real readers (classrooms) use most. */}
+      <div className="mt-14"><YoungLabBand /></div>
       {/* Dispatches are listed only until the newsroom publishes (their pages then redirect to its articles). */}
       {articles.length === 0 && <DispatchRail initial={dispatches} className="container-mw mt-12" />}
 
@@ -249,21 +240,22 @@ function Home() {
         </div>
       </section>
 
-      {moreClusters.length > 0 && (
-        <section className="container-mw mt-14" aria-labelledby="top-stories">
-          <ZoneHead id="top-stories" title={t("topStories", locale)} sub={fr ? "Les événements que plusieurs médias couvrent. Titres et liens vers les reportages originaux." : "The events several outlets are covering. Headlines and links to the original reporting."} action={<MoreLink to="/news" />} />
-          <div className="grid gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 xl:grid-cols-3 content-start">
-              {moreClusters.map(c => (
-                <div key={c.id} className="border-t border-line pt-3">
-                  <StoryCard s={c.lead} variant="text" badge={<><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></>} />
+      {/* Other outlets, once and compactly: the events several newsrooms are covering, and the running list. */}
+      {(topClusters.length > 0 || newestFirst.length > 0) && (
+        <section className="container-mw mt-14" aria-labelledby="other-outlets">
+          <ZoneHead id="other-outlets" title={fr ? "Ailleurs dans l'actualité IA" : "Elsewhere in AI news"} sub={fr ? "Titres d'autres médias, avec un lien vers leur reportage." : "Headlines from other newsrooms, linked to their reporting."} action={<MoreLink to="/news" />} />
+          <div className="grid gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <div className="grid gap-x-8 sm:grid-cols-2 content-start border-t border-ink/80">
+              {topClusters.map(c => (
+                <div key={c.id} className="py-4 border-b border-line">
+                  <StoryCard s={c.lead} variant="text" showTopic badge={<><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></>} />
                 </div>
               ))}
             </div>
-            <div className="grid gap-6 content-start">
+            <aside className="min-w-0 grid gap-6 content-start lg:border-l lg:border-line lg:pl-8">
+              <LatestRail stories={newestFirst} fetchedAt={data?.fetchedAt} limit={6} />
               <AdSlot size="mpu" placement="home-right" />
-              {pulse && <TrendsPanel pulse={pulse} />}
-            </div>
+            </aside>
           </div>
         </section>
       )}
@@ -272,102 +264,7 @@ function Home() {
         <div className="container-mw py-12"><NewsletterBox variant="band" /></div>
       </section>
 
-      {desks.length > 0 && (
-        <section className="container-mw mt-14" aria-labelledby="the-desks">
-          <ZoneHead id="the-desks" title={fr ? "Les sections" : "The desks"} sub={fr ? "Chaque nouvelle est classée par sujet, comme dans une salle de rédaction." : "Every story is filed to a desk, the way a newsroom works."} />
-          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
-            {desks.map(d => (
-              <div key={d.id}>
-                <h3 className="flex items-center justify-between gap-2 pb-1 border-b border-ink">
-                  <Link to="/news" search={{ section: d.id }} className="kicker text-ink hover:text-lake">{pick(SECTIONS.find(x => x.id === d.id)!.label)}</Link>
-                  <MoreLink to="/news" section={d.id} compact />
-                </h3>
-                {d.items.map(s => <StoryCard key={s.id} s={s} variant="list" />)}
-              </div>
-            ))}
-          </div>
-          <ul className="mt-8 flex flex-wrap gap-2" aria-label={fr ? "Tous les thèmes" : "All desks"}>
-            {SECTIONS.filter(tp => !FRONT_DESKS.includes(tp.id)).map(tp => (
-              <li key={tp.id}><Link to="/news" search={{ section: tp.id }} className="inline-flex rounded-full border border-line bg-surface px-3.5 py-1.5 text-[0.9rem] font-semibold hover:border-ink">{pick(tp.label)}</Link></li>
-            ))}
-          </ul>
-        </section>
-      )}
-
       <AdSlot size="leaderboard" placement="home-top" className="container-mw mt-14" />
-
-      {peopleFirst.length > 0 && (
-        <section className="container-mw mt-14" aria-labelledby="people-first">
-          <ZoneHead id="people-first" title={fr ? "L'humain d'abord" : "People first"} sub={fr ? "Ce que l'IA change cette semaine pour les droits, le travail, les enfants et la démocratie." : "What AI is changing this week for people's rights, work, children and democracy."} action={<Link to="/values" className="inline-flex items-center gap-1 font-semibold text-[0.9rem] text-lake hover:underline">{fr ? "Nos valeurs" : "Our values"} <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>} />
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-            {peopleFirst.map(s => (
-              <div key={s.id} className="border-t border-line pt-3">
-                <StoryCard s={s} variant="text" showTopic={false} badge={<span className="inline-flex flex-wrap gap-1.5">{humanLens(s).map(l => <span key={l} className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-lake">{pick(LENS_LABEL[l])}</span>)}</span>} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {(analysis.length > 0 || labs.length > 0) && (
-        <section className="container-mw mt-14 grid gap-x-10 gap-y-12 lg:grid-cols-2">
-          {analysis.length > 0 && (
-            <div>
-              <ZoneHead title={t("analysis", locale)} action={<MoreLink to="/news" />} />
-              <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">{analysis.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}</div>
-            </div>
-          )}
-          {labs.length > 0 && (
-            <div>
-              <ZoneHead title={t("researchLabs", locale)} action={<MoreLink to="/news" section="science" />} />
-              <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">{labs.map(s => <StoryCard key={s.id} s={s} variant="text" showTopic={false} />)}</div>
-            </div>
-          )}
-        </section>
-      )}
-
-      {(hn.length > 0 || papers.length > 0) && (
-        <section className="container-mw mt-14" aria-labelledby="trending">
-          <ZoneHead id="trending" title={t("trending", locale)} action={<MoreLink to="/news" />} />
-          <div className="grid gap-x-10 gap-y-10 lg:grid-cols-2">
-            {hn.length > 0 && (
-              <div>
-                <h3 className="kicker text-ink pb-1 border-b border-ink">{t("mostDiscussed", locale)}</h3>
-                <ol>
-                  {hn.map((s, i) => (
-                    <li key={s.id} className="flex gap-4 py-3 border-b border-line last:border-0">
-                      <span className="hl text-[1.6rem] text-brass-ink w-6 shrink-0 leading-none" aria-hidden="true">{i + 1}</span>
-                      <div className="min-w-0 flex-1">
-                        <a href={s.link} target="_blank" rel="noopener noreferrer" className="hl-sm text-[1.04rem] hover:underline">{s.title}</a>
-                        <p className="meta mt-1"><a href={s.popularity?.discussUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.popularity?.score} {t("points", locale)} · {s.popularity?.comments ?? 0} {t("comments", locale)}</a></p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-                <p className="meta mt-2">{fr ? "Classement selon les votes sur Hacker News, 3 derniers jours." : "Ranked by Hacker News votes over the last 3 days."}</p>
-              </div>
-            )}
-            {papers.length > 0 && (
-              <div>
-                <h3 className="kicker text-ink pb-1 border-b border-ink">{t("trendingPapers", locale)}</h3>
-                <ul>
-                  {papers.map(s => (
-                    <li key={s.id} className="py-3 border-b border-line last:border-0">
-                      <a href={s.link} target="_blank" rel="noopener noreferrer" className="group flex gap-3">
-                        <Thumb src={s.image} label={s.title} />
-                        <span className="min-w-0">
-                          <span className="block hl-sm text-[1.02rem] group-hover:underline">{s.title}</span>
-                          <span className="meta mt-1 block">arXiv · {s.popularity?.score} {t("upvotes", locale)} {fr ? "sur Hugging Face" : "on Hugging Face"}</span>
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
 
       <div className="container-mw mt-14 mb-14 grid gap-8 lg:grid-cols-2 items-start">
         <QuizCard initial={quiz} />
@@ -385,7 +282,6 @@ function Home() {
       </div>
 
       <LabsBand />
-      <YoungLabBand />
 
       {watchList.length > 0 && <WatchBand videos={watchList} />}
 
@@ -422,63 +318,6 @@ function Home() {
         </div>
       </section>
     </PageShell>
-  );
-}
-
-/** Our newsroom's newest summary, leading the page (labelled as an AI-assisted summary). */
-function ArticleLead({ a, locale }: { a: NewsroomSummary; locale: Locale }) {
-  const now = useNow();
-  const fr = locale === "fr";
-  const c = a[locale];
-  const fixture = newsroomFixtureRequested() ? ({ fixture: "1" } as never) : undefined;
-  return (
-    <article className="group border-t-2 border-ink pt-4 grid gap-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:items-start">
-      <div className="min-w-0 md:order-2">
-        <Link to="/article/$slug" params={{ slug: a.slug[locale] }} search={fixture} tabIndex={-1} aria-hidden="true">
-          <NewsroomCover cover={a.cover} locale={locale} size="hero" />
-        </Link>
-      </div>
-      <div className="min-w-0 md:order-1">
-        <p className="flex flex-wrap items-center gap-2">
-          <span className="kicker">{fr ? "De notre rédaction" : "From our newsroom"}{FORMAT_LABEL[a.format] ? ` · ${FORMAT_LABEL[a.format][locale]}` : ""}</span>
-          <AiBadge kind="summary" />
-        </p>
-        <Link to="/article/$slug" params={{ slug: a.slug[locale] }} search={fixture} className="block mt-3">
-          <h2 className="hl text-[2rem] sm:text-[2.5rem] lg:text-[2.75rem] leading-[1.06] group-hover:underline decoration-1 underline-offset-4">{keepNames(c.headline)}</h2>
-        </Link>
-        {c.dek && <p className="font-serif text-[1.18rem] sm:text-[1.25rem] leading-snug text-ink/80 mt-3">{c.dek}</p>}
-        <p className="meta mt-4 flex flex-wrap gap-x-2">
-          <span>{fr ? "D'après" : "Reported by"} <span className="font-semibold text-ink">{listOutlets(a.outlets.slice(0, 3), locale)}</span>{a.outlets.length > 3 ? ` +${a.outlets.length - 3}` : ""}</span>
-          <span aria-hidden="true">·</span>
-          <time dateTime={a.createdAt} suppressHydrationWarning>{timeAgo(a.createdAt, now, locale)}</time>
-        </p>
-      </div>
-    </article>
-  );
-}
-
-/** When we have nothing of our own yet: the event most outlets are covering, text-led. */
-function ClusterLead({ c, pulse }: { c: Cluster; pulse: PulsePayload | undefined }) {
-  const { locale } = useLocale();
-  const d = display(c.lead, locale);
-  const others = c.stories.filter(s => s.id !== c.lead.id).slice(0, 3);
-  return (
-    <article className="border-t-2 border-ink pt-4">
-      <p className="flex flex-wrap items-center gap-2.5"><CoverageBadge outlets={c.sources} developing={isDeveloping(c)} breaking={isBreaking(c)} /><TrendBadge s={c.lead} pulse={pulse} /></p>
-      <StoryLink s={c.lead} className="group block mt-2">
-        <h2 className="hl text-[2rem] sm:text-[2.6rem] lg:text-[3rem] leading-[1.05] group-hover:underline decoration-1 underline-offset-4">{keepNames(d.title)}</h2>
-        {d.summary && <p className="font-serif text-[1.2rem] leading-snug text-ink/80 mt-3 max-w-[60ch]">{d.summary}</p>}
-      </StoryLink>
-      {d.ai && <p className="mt-2"><AiBadge kind="headline" /> <span className="meta">{locale === "fr" ? "Titre original" : "Original headline"}: <span className="italic">{d.original}</span></span></p>}
-      <StoryMeta s={c.lead} className="mt-3 text-[0.88rem]" />
-      {others.length > 0 && (
-        <ul className="mt-4 grid gap-2 border-l-2 border-line pl-4">
-          {others.map(s => (
-            <li key={s.id}><StoryLink s={s} className="group text-[0.95rem]"><span className="font-semibold">{s.source}</span>: <span className="group-hover:underline">{display(s, locale).title}</span></StoryLink></li>
-          ))}
-        </ul>
-      )}
-    </article>
   );
 }
 
