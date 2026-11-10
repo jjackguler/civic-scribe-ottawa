@@ -50,6 +50,13 @@ directives file, morning Canadian AI Brief, Output watch issue).
 - Studio: approved pieces are committed as `src/content/studio/<id>.json`; `scripts/studio-test.ts`
   validates them in CI. The example is only in `scripts/fixtures/studio/`.
 - Dev preview without network: `AIB_NEWS_FIXTURE=1 npx vite dev` serves a fictional desk.
+## 88 seconds (10 Nov 2026, branch `claude/88-seconds`)
+- Front-page band `src/components/EightyEight.tsx`: up to 8 slides sharing 88 s. Order: Breaking (3+ outlets
+  in 2 h) or Developing, told in our newsroom's words when we have a summary; then our newsroom summaries
+  (last 48 h, newest first); other outlets' clusters (2+ sources) only fill a thin day, labelled "On our watch".
+  Plays only on screen, pauses on hover/focus, no autoplay for reduced motion, ends with "You're up to date".
+  Data refresh by themselves (news 90 s, newsroom 15 min). Sits below the story bubbles/breaking strip, above the hero.
+
 ## Search status codes (9 Nov 2026)
 - Google reported "Soft 404": pages that say "not available" or "withdrawn" but answer 200. Now a
   withdrawn article answers 410, an unknown dispatch id 404, and a page whose data lookup failed or

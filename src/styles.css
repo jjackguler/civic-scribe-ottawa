@@ -1010,3 +1010,8 @@ html.theme-swap, html.theme-swap * { transition: background-color 280ms ease, co
   .spin-in, .pop-in, .pulse-once, .enter { animation: none; }
   html.theme-swap, html.theme-swap * { transition: none !important; }
 }
+
+/* 88 seconds (src/components/EightyEight.tsx): each slide fades up as it arrives. */
+@keyframes eighty-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.eighty-in { animation: eighty-in 420ms cubic-bezier(.2,.7,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .eighty-in { animation: none; } }
