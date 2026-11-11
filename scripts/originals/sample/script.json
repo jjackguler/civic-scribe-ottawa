@@ -1,0 +1,16 @@
+{
+  "slug": "anthropic-cuts-junior-hiring-ai-agents",
+  "sources": "TechCrunch, The Decoder · Oct 17, 2026",
+  "lines": [
+    { "scene": "hook",  "who": "narrator", "text": "This is Pip. Pip just learned to code. But Pip's *first* *job*... might not be there." },
+    { "scene": "data",  "who": "narrator", "text": "At Anthropic, junior roles fell from *27* *percent* of new tech hires to just *9*." },
+    { "scene": "agents","who": "narrator", "text": "Over the same stretch, its AI agents were logging *six* *times* as many hours." },
+    { "scene": "talk",  "who": "quill",    "text": "Pip! What did a *first* *job* used to look like?" },
+    { "scene": "talk",  "who": "pip",      "text": "Small bug fixes. Writing tests. The *boring* stuff you *learn* from." },
+    { "scene": "talk",  "who": "quill",    "text": "And now?" },
+    { "scene": "talk",  "who": "pip",      "text": "Now an *agent* does it before *lunch*." },
+    { "scene": "catch", "who": "narrator", "text": "The catch: those small tasks were how beginners *learned*. Nobody knows yet where the *new* *first* *step* will be." },
+    { "scene": "close", "who": "quill",    "text": "So, Pip. What's next?" },
+    { "scene": "close", "who": "pip",      "text": "I'm learning to *check* the *agent's* *work*." }
+  ]
+}
