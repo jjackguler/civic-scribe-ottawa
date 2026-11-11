@@ -36,7 +36,7 @@ type Step = {
 const STEPS: Step[] = [
   {
     name: { en: "Capture", fr: "Capter" }, actor: "ai", status: "attributed", parts: 0, evidence: 0, reply: "none", history: 1,
-    what: { en: "A press release says AI is now doing 1,200 people's work. The desk saves it with an archived copy and a time stamp, and opens record OD-9999.", fr: "Un communiqué affirme que l'IA fait désormais le travail de 1 200 personnes. Le pupitre l'enregistre avec une copie archivée et l'heure, et ouvre le dossier OD-9999." },
+    what: { en: "A press release says AI is now doing 1,200 people's work. The desk saves it with an archived copy and a time stamp, and opens record OD-9999. It stays internal until the company has its questions.", fr: "Un communiqué affirme que l'IA fait désormais le travail de 1 200 personnes. Le pupitre l'enregistre avec une copie archivée et l'heure, et ouvre le dossier OD-9999. Il reste interne jusqu'à l'envoi des questions à l'entreprise." },
   },
   {
     name: { en: "Break down", fr: "Découper" }, actor: "ai", status: "attributed", parts: 4, evidence: 0, reply: "none", history: 1,
@@ -48,7 +48,7 @@ const STEPS: Step[] = [
   },
   {
     name: { en: "Test", fr: "Vérifier" }, actor: "reporter", status: "unresolved", parts: 4, evidence: 3, reply: "waiting", history: 2,
-    what: { en: "A reporter checks job postings, talks to a former dispatcher and sends the company written questions. The company has five business days to reply.", fr: "Un journaliste vérifie les offres d'emploi, parle à un ancien répartiteur et envoie des questions écrites à l'entreprise. L'entreprise a cinq jours ouvrables pour répondre." },
+    what: { en: "A reporter checks job postings, talks to a former dispatcher and sends the company written questions. The company has five business days to reply, and the record goes public.", fr: "Un journaliste vérifie les offres d'emploi, parle à un ancien répartiteur et envoie des questions écrites à l'entreprise. L'entreprise a cinq jours ouvrables pour répondre, et le dossier devient public." },
   },
   {
     name: { en: "Verdict", fr: "Statut" }, actor: "editor", status: "conflicting", parts: 4, evidence: 3, reply: "closed", history: 3,

@@ -86,14 +86,14 @@ const ROLES: { icon: typeof Bot; h: Bi; p: Bi }[] = [
   { icon: Bot, h: { en: "AI: speed", fr: "L'IA : la vitesse" }, p: { en: "Watches public statements, opens records, splits claims, matches earlier words and documents, flags contradictions. Never writes a result.", fr: "Suit les déclarations publiques, ouvre les dossiers, découpe les affirmations, rapproche paroles et documents antérieurs, signale les contradictions. N'écrit jamais un résultat." } },
   { icon: Search, h: { en: "Reporters: evidence", fr: "Les journalistes : les preuves" }, p: { en: "Check documents, talk to former staff and experts, send the company its questions and wait for the answer.", fr: "Vérifient les documents, interrogent anciens employés et spécialistes, envoient leurs questions à l'entreprise et attendent sa réponse." } },
   { icon: PenLine, h: { en: "The editor: the decision", fr: "Le responsable : la décision" }, p: { en: "The only person who writes a result, with the reason, signed by name. Every verdict is read first by a second person.", fr: "La seule personne qui écrit un résultat, avec sa raison, signé de son nom. Chaque verdict est d'abord relu par une deuxième personne." } },
-  { icon: Megaphone, h: { en: "Creators: reach", fr: "Les créateurs : la portée" }, p: { en: "Share signed records in their own voice, show the record number and update their post when the record changes. Witnesses are asked for consent, credited and paid.", fr: "Relaient les dossiers signés avec leur propre voix, affichent le numéro et mettent à jour leur publication quand le dossier change. Les témoins donnent leur consentement, sont crédités et rémunérés." } },
+  { icon: Megaphone, h: { en: "Creators: reach", fr: "Les créateurs : la portée" }, p: { en: "Share signed records in their own voice, show the record number and update their post when the record changes. Witnesses are asked for consent and credited; we never pay for information.", fr: "Relaient les dossiers signés avec leur propre voix, affichent le numéro et mettent à jour leur publication quand le dossier change. Les témoins donnent leur consentement et sont crédités; nous ne payons jamais l'information." } },
 ];
 
 const TARGETS: { n: number; suffix?: string; h: Bi }[] = [
-  { n: 50, h: { en: "statements screened in the first 10 weeks; we publish how many became records, and why", fr: "déclarations examinées en 10 semaines; nous publions combien sont devenues des dossiers, et pourquoi" } },
-  { n: 10, h: { en: "active records at most at any time, so each one gets real testing", fr: "dossiers actifs au plus à la fois, pour que chacun soit vraiment vérifié" } },
+  { n: 25, h: { en: "statements screened in the first 10 weeks; we publish how many became records, and why", fr: "déclarations examinées en 10 semaines; nous publions combien sont devenues des dossiers, et pourquoi" } },
+  { n: 5, h: { en: "active records at most at any time, so each one gets real testing", fr: "dossiers actifs au plus à la fois, pour que chacun soit vraiment vérifié" } },
   { n: 5, h: { en: "business days of right of reply before any verdict", fr: "jours ouvrables de droit de réponse avant tout verdict" } },
-  { n: 80, suffix: "%", h: { en: "of readers in our tests tell “recorded” from “supported by the evidence”", fr: "des lecteurs testés distinguent « consignée » et « étayée par les éléments disponibles »" } },
+  { n: 80, suffix: "%", h: { en: "of readers in a short test we will run tell “no conclusion yet” from “supported by the evidence”", fr: "des lecteurs, lors d'un court test que nous mènerons, distinguent « aucune conclusion » et « étayée par les éléments disponibles »" } },
 ];
 
 function OpenDesk() {
@@ -153,7 +153,7 @@ function OpenDesk() {
                 { en: "A public, permanent record of what powerful actors in AI say about work, kept before a claim goes viral, not after.", fr: "Un registre public et permanent de ce que disent les acteurs puissants de l'IA sur le travail, tenu avant qu'une affirmation ne devienne virale, pas après." },
                 { en: "Readers who can tell at a glance whether a claim is only recorded, still without a conclusion, supported, contradicted by other evidence or refuted.", fr: "Des lecteurs qui voient d'un coup d'œil si une affirmation est seulement consignée, encore sans conclusion, étayée, contredite par d'autres éléments ou réfutée." },
                 { en: "AI that makes a small desk fast, with people who stay accountable for every decision.", fr: "Une IA qui rend un petit pupitre rapide, avec des personnes qui répondent de chaque décision." },
-                { en: "Creators and witnesses as partners: credited, paid, and tied to a record that can be checked.", fr: "Des créateurs et des témoins comme partenaires : crédités, rémunérés, et liés à un dossier vérifiable." },
+                { en: "Creators and witnesses as partners: credited, and tied to a record that can be checked. We do not pay for information.", fr: "Des créateurs et des témoins comme partenaires : crédités, et liés à un dossier vérifiable. Nous ne payons pas l'information." },
               ].map((a, n) => (
                 <li key={a.en} className="rise border-t-2 border-ink pt-3" data-reveal="" style={{ "--delay": `${n * 80}ms` } as React.CSSProperties}>
                   <span className="font-mono text-[0.8rem] text-muted-ink">0{n + 1}</span>

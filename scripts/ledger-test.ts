@@ -11,7 +11,7 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  addMonths, businessDeadline, currentStage, currentStatus, dueForReopen, loadLedgerFiles, parseLedgerFile,
+  addMonths, businessDeadline, isPublicRecord, PUBLIC_STATUSES, currentStage, currentStatus, dueForReopen, loadLedgerFiles, parseLedgerFile,
   publicRecord, reopenDates, replyDeadline, replyState, reviewSchedule, statusCounts, ASPECTS, ASPECT_LABEL,
   PENDING_LABEL, REPLY_LABEL, STAGES, STAGE_LABEL, STAMP_TO_STATUS, STATUSES, STATUS_HELP, STATUS_LABEL,
   type LedgerRecord,
@@ -74,6 +74,19 @@ bad(r => { r.history.push(verdict({ status: "supported" })); }, "supported witho
 bad(r => { r.history.push(verdict({ status: "supported", secondReader: undefined })); }, "supported without a second reader");
 bad(r => { r.history.push(verdict({ status: "refuted", secondReader: undefined })); }, "refuted without a second reader");
 bad(r => { r.evidence.forEach((e: any) => { e.independent = false; }); r.history.push(verdict({ status: "refuted" })); }, "refuted without independent contradicting evidence");
+// Protocol v1.1: publication gate, two sources, anonymity, paid footage, one extension, cause.
+bad(r => { r.rightOfReply.requestedAt = "2026-09-15T16:00:00Z"; }, "record leaves attributed before the questions are sent");
+bad(r => { r.evidence.find((e: any) => e.title.startsWith("Former")).anonymous = true; }, "conflicting resting on one named independent source");
+bad(r => { r.evidence.push({ ...r.evidence[1], url: "https://example.com/jobs/2", stance: "supports" }); r.history.push(verdict({ status: "supported" })); }, "supported with a single independent source");
+bad(r => { r.history.push(verdict({ status: "refuted" })); }, "refuted with a single independent contradicting source");
+bad(r => { r.evidence.push({ ...r.evidence[1], url: "https://example.com/tip", anonymous: true }); r.history.push(verdict({ status: "refuted" })); }, "refuted counting an anonymous source");
+bad(r => { r.evidence[2].anonymous = true; r.evidence[2].licensed = true; }, "licence fee paid to an anonymous person");
+bad(r => { r.parts[3].finding = "refuted"; }, "cause refuted without a note on direct evidence");
+bad(r => { r.rightOfReply.extensions = [
+  { at: "2026-09-21T14:00:00Z", until: "2026-09-24T21:00:00Z", reason: { en: "New point raised." } },
+  { at: "2026-09-24T14:00:00Z", until: "2026-09-28T21:00:00Z", reason: { en: "Another new point." } },
+]; r.history[2].at = "2026-09-29T16:00:00Z"; }, "two extensions");
+bad(r => { r.rightOfReply.extensions = [{ at: "2026-09-21T14:00:00Z", until: "2026-10-09T21:00:00Z", reason: { en: "Long extension." } }]; r.history[2].at = "2026-10-10T16:00:00Z"; }, "extension longer than 5 business days");
 // Corrections and links
 bad(r => { r.corrections = [{ at: "2026-09-24", kind: "correction", what: { en: "Fixed the headcount." }, editor: "Example Editor" }]; }, "correction without a cause");
 bad(r => { r.corrections = [{ at: "2026-09-24", kind: "update", what: { en: "Added the Q3 report." }, editor: "Claude" }]; }, "correction signed by an AI");
@@ -106,6 +119,8 @@ assert.equal(parseLedgerFile("OD-0001.json", fixture).ok, false, "file name must
   const x = clone();
   x.rightOfReply.extensions = [{ at: "2026-09-21T14:00:00Z", until: "2026-09-25T21:00:00Z", reason: { en: "The company asked for more time to answer a new point." } }];
   x.history[2].at = "2026-09-28T16:00:00Z";
+  x.evidence.push({ title: "Provincial mass-termination notice", url: "https://example.com/notice", publisher: "Example Ministry of Labour", stance: "contradicts", independent: true, note: { en: "Lists 420 roles, not 1,200." }, addedAt: "2026-09-29" });
+  x.parts[3] = { ...x.parts[3], finding: "refuted", note: { en: "The notice and the postings show the work moved abroad; no AI system was deployed." } };
   x.history.push(verdict({ status: "refuted", stage: "closed" }));
   x.corrections = [{ at: "2026-10-02", kind: "correction", what: { en: "The headcount was 1,150, not 1,200." }, cause: { en: "We copied the figure from the headline, not the filing." }, editor: "Example Editor" }];
   x.rightOfReply.actorAction = { at: "2026-10-05", kind: "stood-by", note: { en: "The company repeated the claim on its blog." } };
@@ -115,6 +130,23 @@ assert.equal(parseLedgerFile("OD-0001.json", fixture).ok, false, "file name must
   assert.equal(replyDeadline(xr), "2026-09-25T21:00:00Z");
   assert.equal(currentStage(xr), "closed");
   assert.equal(dueForReopen([xr], "2027-06-01").length, 0, "closed records leave the to-do list");
+}
+
+// A cause refuted with a note, and a named witness paid a licence fee for their own video, pass.
+{
+  const r = clone();
+  r.evidence[2].licensed = true;
+  assert.ok(parseLedgerFile("OD-9999.json", r).ok, "a disclosed licence fee to a named person is allowed");
+}
+// Publication gate: a record still at "attributed" is valid but not public.
+{
+  const r = clone();
+  r.history = [r.history[0]];
+  const out = parseLedgerFile("OD-9999.json", r);
+  assert.ok(out.ok, "an attributed-only record is a valid file");
+  assert.equal(isPublicRecord((out as { record: LedgerRecord }).record), false, "attributed-only records stay off the site");
+  assert.equal(isPublicRecord(rec), true);
+  assert.ok(!(PUBLIC_STATUSES as string[]).includes("attributed"));
 }
 
 const dup = loadLedgerFiles({ "a/OD-9999.json": fixture, "b/OD-9999.json": fixture });

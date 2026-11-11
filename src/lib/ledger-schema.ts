@@ -28,6 +28,12 @@
  *     written reason and is never under 48 h. A result ("supported", "conflicting", "refuted")
  *     is only allowed once the reply arrived or the window closed. Silence is not evidence.
  *   - Every result has a second reader other than the editor (EFCSN Code §2.J).
+ *   - A record goes public only once the company has been sent its questions (protocol v1.1).
+ *   - Every verdict rests on two named, independent sources (EFCSN Code §2.G). Anonymous sources
+ *     never count on their own. We do not pay for information; a disclosed licence fee for a
+ *     person's own photos or video is the only payment (CAJ, RTDNA 3.3).
+ *   - One reply extension at most, only for a new point we raised, and at most 5 business days.
+ *   - The stated cause is refuted only on direct evidence, with a note; another cause is not enough.
  *   - "Supported" needs independent supporting evidence; "Conflicting evidence" needs contradicting
  *     evidence; "Refuted" needs independent contradicting evidence.
  *   - "No conclusion yet" says why: not enough evidence, or the test date has not come.
@@ -38,7 +44,7 @@ import { z } from "zod";
 import type { Bi, Locale } from "./i18n";
 
 /** The protocol a record was opened under. Records keep their version when the protocol changes. */
-export const PROTOCOL_VERSIONS = ["1.0"] as const;
+export const PROTOCOL_VERSIONS = ["1.0", "1.1"] as const;
 export const PROTOCOL_VERSION = PROTOCOL_VERSIONS[PROTOCOL_VERSIONS.length - 1];
 
 /** The five evidence results, in the order readers meet them. Not a scale: a record can move either way. */
@@ -46,6 +52,12 @@ export const STATUSES = ["attributed", "unresolved", "supported", "conflicting",
 export type Status = (typeof STATUSES)[number];
 /** Results that are a verdict on the evidence (and so need the reply window, a second reader …). */
 export const VERDICTS = ["supported", "conflicting", "refuted"] as const satisfies readonly Status[];
+/**
+ * Results readers can see. "attributed" is the desk's internal first step: a record goes public
+ * only once the company has been sent its questions and the test is written (owner decision,
+ * 9 Nov 2026), so a public record never shows "Recorded, not yet tested" as its current result.
+ */
+export const PUBLIC_STATUSES = STATUSES.filter((s) => s !== "attributed") as Exclude<Status, "attributed">[];
 export const isVerdict = (s: Status) => (VERDICTS as readonly Status[]).includes(s);
 
 /** How the three older stamps carry over (owner plan, 6 Nov 2026). */
@@ -65,8 +77,8 @@ export const STATUS_LABEL: Record<Status, Bi> = {
 
 export const STATUS_HELP: Record<Status, Bi> = {
   attributed: {
-    en: "We recorded who said it, where and when. This is not a verdict: we have not tested the claim yet.",
-    fr: "Nous avons consigné qui l'a dit, où et quand. Ce n'est pas un verdict : l'affirmation n'a pas encore été vérifiée.",
+    en: "The desk's first step: who said it, where and when. Not a verdict, and not public: a record goes public once the company has been sent its questions.",
+    fr: "La première étape du pupitre : qui l'a dit, où et quand. Ce n'est ni un verdict ni une publication : le dossier devient public une fois les questions envoyées à l'entreprise.",
   },
   unresolved: {
     en: "We have looked, and the evidence so far is not enough for a conclusion, or the documents that will settle it are not out yet.",
@@ -159,6 +171,14 @@ export const evidenceSchema = source.extend({
   stance: z.enum(["supports", "contradicts", "context"]),
   /** True when the evidence does not come from the actor (or a party paid by it). */
   independent: z.boolean(),
+  /** A source we do not name. Never counts on its own toward a result; it must be backed by a document. */
+  anonymous: z.boolean().default(false),
+  /**
+   * A licence fee was paid for photos or video the person made themselves (CAJ Ethics Guidelines,
+   * Transparency 6). We never pay for information or interviews, and never pay someone with a stake
+   * in the story (RTDNA Code 3.3). Shown on the record.
+   */
+  licensed: z.boolean().default(false),
   note: text,
   addedAt: isoDate,
 });
@@ -183,6 +203,8 @@ const partSchema = z.object({
   aspect: z.enum(ASPECTS),
   text,
   finding: z.enum(FINDINGS).default("untested"),
+  /** What the finding rests on. Required to call the stated cause refuted. */
+  note: text.optional(),
 });
 export type Part = z.infer<typeof partSchema>;
 
@@ -239,10 +261,13 @@ export const recordSchema = z
       deadline: isoDateTime.optional(),
       /** Required when the window is shorter than the default; never under 48 h. */
       expedited: z.object({ reason: text }).optional(),
-      /** Extra time given, for a stated reason (a new substantive point, a fair request). */
+      /**
+       * Extra time, only when we raised a new substantive point. At most one per record and at most
+       * 5 more business days. A partial reply from the company does not extend the window.
+       */
       extensions: z
         .array(z.object({ at: isoDateTime, until: isoDateTime, reason: text }))
-        .max(5)
+        .max(1, "at most one extension per record")
         .default([]),
       response: z
         .object({
@@ -317,6 +342,18 @@ export const recordSchema = z
         issue(["history", i, "pending"], '"unresolved" says why: "insufficient-evidence" or "test-date-not-reached"');
       if (h.status !== "unresolved" && h.pending)
         issue(["history", i, "pending"], '"pending" only goes with "unresolved"');
+      // A record goes public once the questions are out: every entry after "attributed" comes after the request.
+      if (h.status !== "attributed" && Date.parse(h.at) < Date.parse(r.rightOfReply.requestedAt))
+        issue(["history", i, "at"], "the company must be sent its questions before the record leaves \"attributed\"");
+    });
+
+    // The stated cause is refuted only on direct evidence, written down. Another cause is not enough.
+    r.parts.forEach((p, i) => {
+      if (p.aspect === "cause" && p.finding === "refuted" && !p.note)
+        issue(["parts", i, "note"], "a refuted cause needs a note on the direct evidence; evidence of another cause alone is not enough");
+    });
+    r.evidence.forEach((e, i) => {
+      if (e.licensed && e.anonymous) issue(["evidence", i, "licensed"], "a licence fee is paid only to a named person, and disclosed");
     });
     r.corrections.forEach((c, i) => {
       if (MACHINE_SIGNER.test(c.editor)) issue(["corrections", i, "editor"], "a correction is signed by a person");
@@ -333,14 +370,16 @@ export const recordSchema = z
       else if (set < standard && !reply.expedited)
         issue(["rightOfReply", "expedited"], "a window shorter than 5 business days needs a written reason");
     }
-    let last = Date.parse(baseDeadline(r));
+    const base = baseDeadline(r);
     reply.extensions.forEach((x, i) => {
-      if (Date.parse(x.until) <= last) issue(["rightOfReply", "extensions", i, "until"], "an extension must end after the current deadline");
-      last = Math.max(last, Date.parse(x.until));
+      if (Date.parse(x.until) <= Date.parse(base)) issue(["rightOfReply", "extensions", i, "until"], "an extension must end after the current deadline");
+      else if (Date.parse(x.until) > Date.parse(businessDeadline(base, REPLY_BUSINESS_DAYS)))
+        issue(["rightOfReply", "extensions", i, "until"], "an extension adds at most 5 business days");
     });
     const deadline = Date.parse(replyDeadline(r));
-    const independent = (stance: Evidence["stance"]) =>
-      r.evidence.some((e) => e.stance === stance && e.independent);
+    // Two sources (EFCSN Code 2.G): what counts is named and independent of the claimant.
+    const counted = r.evidence.filter((e) => e.independent && !e.anonymous);
+    const independent = (stance: Evidence["stance"]) => counted.filter((e) => e.stance === stance).length;
 
     r.history.forEach((h, i) => {
       if (!isVerdict(h.status)) return;
@@ -351,12 +390,14 @@ export const recordSchema = z
       if (!h.secondReader) issue(["history", i, "secondReader"], `"${h.status}" needs a second reader before publication`);
       else if (h.secondReader.trim().toLowerCase() === h.editor.trim().toLowerCase())
         issue(["history", i, "secondReader"], "the second reader must be someone other than the editor");
-      if (h.status === "supported" && !independent("supports"))
-        issue(["history", i, "status"], '"supported" needs independent evidence that supports the claim');
+      if (h.status === "supported" && independent("supports") < 2)
+        issue(["history", i, "status"], '"supported" needs two named, independent sources that support the claim');
       if (h.status === "conflicting" && !r.evidence.some((e) => e.stance === "contradicts"))
         issue(["history", i, "status"], '"conflicting" needs evidence that contradicts the claim');
-      if (h.status === "refuted" && !independent("contradicts"))
-        issue(["history", i, "status"], '"refuted" needs independent evidence that contradicts the claim');
+      if (h.status === "conflicting" && counted.length < 2)
+        issue(["history", i, "status"], '"conflicting" needs two named, independent sources');
+      if (h.status === "refuted" && independent("contradicts") < 2)
+        issue(["history", i, "status"], '"refuted" needs two named, independent sources that contradict the claim');
     });
   });
 
@@ -412,6 +453,8 @@ export function loadLedgerFiles(files: Record<string, unknown>): {
 export const currentEntry = (r: LedgerRecord): HistoryEntry => r.history[r.history.length - 1];
 export const currentStatus = (r: LedgerRecord): Status => currentEntry(r).status;
 export const currentStage = (r: LedgerRecord): Stage => currentEntry(r).stage;
+/** A record readers can see: the questions are out, so it has left "attributed". */
+export const isPublicRecord = (r: LedgerRecord) => currentStatus(r) !== "attributed";
 /** When the record was opened (its first signed entry). */
 export const openedAt = (r: LedgerRecord) => r.history[0].at;
 /** The latest change. */
