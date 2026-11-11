@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, HeartHandshake, Stamp as StampIcon } from "lucide-react";
-import { ACTIVITY_ICON, ActivityCard, SafetyPromise, Stamp, YoungCrumbs, YoungShell, toneClass, useT } from "@/components/YoungLab";
+import { ArrowRight, GraduationCap, HeartHandshake, Stamp as StampIcon } from "lucide-react";
+import { ACTIVITY_ICON, SafetyPromise, Stamp, YoungCrumbs, YoungShell, toneClass, useT } from "@/components/YoungLab";
 import { SITE } from "@/lib/site";
 import { seoHead, absUrl, publisherRef } from "@/lib/seo";
 import { ACTIVITIES, GROUP, byGroup, type Group } from "@/lib/young-lab";
@@ -92,7 +92,7 @@ function YoungHome() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link to="/labs/young/explorers" className="yl-btn yl-btn--big yl-tone-sky">{t("I'm 8 to 12", "J'ai 8 à 12 ans")} <ArrowRight className="h-5 w-5" aria-hidden="true" /></Link>
                 <Link to="/labs/young/makers" className="yl-btn yl-btn--big yl-tone-coral">{t("I'm 13 to 17", "J'ai 13 à 17 ans")} <ArrowRight className="h-5 w-5" aria-hidden="true" /></Link>
-                <Link to="/labs/young/grown-ups" className="yl-btn yl-btn--big"><HeartHandshake className="h-5 w-5" aria-hidden="true" />{t("I'm a grown-up", "Je suis un adulte")}</Link>
+                <Link to="/labs/young/classroom" className="yl-btn yl-btn--big"><GraduationCap className="h-5 w-5" aria-hidden="true" />{t("I'm a teacher", "J'enseigne")}</Link>
               </div>
             </div>
             <div className="lg:col-span-5 flex justify-center lg:justify-end">
@@ -130,13 +130,6 @@ function YoungHome() {
           </ul>
         </section>
 
-        <section aria-labelledby="all-games">
-          <h2 id="all-games" className="yl-title text-[1.9rem] sm:text-[2.3rem] leading-tight">{t("All nine games", "Les neuf jeux")}</h2>
-          <p className="mt-1 text-[1.05rem]">{t("Explorers can try Makers games, and Makers can play the Explorers ones. Go where you're curious.", "Les Explorateurs peuvent essayer les jeux des Créateurs, et vice versa. Suis ta curiosité.")}</p>
-          <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {ACTIVITIES.map(a => <li key={a.id} className="flex"><ActivityCard a={a} /></li>)}
-          </ul>
-        </section>
 
         <section aria-labelledby="promise">
           <h2 id="promise" className="yl-title text-[1.9rem] sm:text-[2.3rem] leading-tight">{t("Our promise", "Notre promesse")}</h2>
@@ -149,7 +142,10 @@ function YoungHome() {
             <h2 id="grownups" className="yl-title text-[1.7rem] sm:text-[2rem] leading-tight">{t("For parents and teachers", "Pour les parents et les enseignants")}</h2>
             <p className="mt-2 text-[1.05rem] leading-relaxed max-w-[44rem]">{t("What each game teaches, learning objectives, conversation starters, safety notes and printable activity sheets for unplugged lessons.", "Ce que chaque jeu enseigne, des objectifs d'apprentissage, des pistes de discussion, des notes de sécurité et des fiches à imprimer pour des leçons sans écran.")}</p>
           </div>
-          <Link to="/labs/young/grown-ups" className="yl-btn yl-btn--big yl-btn--ink">{t("Grown-ups' guide", "Guide des adultes")} <ArrowRight className="h-5 w-5" aria-hidden="true" /></Link>
+          <div className="flex flex-col gap-3">
+            <Link to="/labs/young/classroom" className="yl-btn yl-btn--big yl-btn--ink"><GraduationCap className="h-5 w-5" aria-hidden="true" />{t("Classroom mode", "Mode classe")} <ArrowRight className="h-5 w-5" aria-hidden="true" /></Link>
+            <Link to="/labs/young/grown-ups" className="yl-btn yl-btn--big"><HeartHandshake className="h-5 w-5" aria-hidden="true" />{t("Parents' guide", "Guide des parents")}</Link>
+          </div>
         </section>
       </div>
     </YoungShell>

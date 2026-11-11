@@ -81,6 +81,7 @@ import { Route as VideoSlugRouteImport } from './routes/video.$slug'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
 import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
 import { Route as LabsYoungActivityRouteImport } from './routes/labs.young.$activity'
+import { Route as LabsYoungClassroomRouteImport } from './routes/labs.young.classroom'
 import { Route as LabsYoungExplorersRouteImport } from './routes/labs.young.explorers'
 import { Route as LabsYoungGrownUpsRouteImport } from './routes/labs.young.grown-ups'
 import { Route as LabsYoungMakersRouteImport } from './routes/labs.young.makers'
@@ -448,6 +449,11 @@ const LabsYoungActivityRoute = LabsYoungActivityRouteImport.update({
   path: '/labs/young/$activity',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsYoungClassroomRoute = LabsYoungClassroomRouteImport.update({
+  id: '/labs/young/classroom',
+  path: '/labs/young/classroom',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LabsYoungExplorersRoute = LabsYoungExplorersRouteImport.update({
   id: '/labs/young/explorers',
   path: '/labs/young/explorers',
@@ -551,6 +557,7 @@ export interface FileRoutesByFullPath {
   '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
+  '/labs/young/classroom': typeof LabsYoungClassroomRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
   '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
   '/labs/young/makers': typeof LabsYoungMakersRoute
@@ -631,6 +638,7 @@ export interface FileRoutesByTo {
   '/ledger': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
+  '/labs/young/classroom': typeof LabsYoungClassroomRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
   '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
   '/labs/young/makers': typeof LabsYoungMakersRoute
@@ -712,6 +720,7 @@ export interface FileRoutesById {
   '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
+  '/labs/young/classroom': typeof LabsYoungClassroomRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
   '/labs/young/grown-ups': typeof LabsYoungGrownUpsRoute
   '/labs/young/makers': typeof LabsYoungMakersRoute
@@ -794,6 +803,7 @@ export interface FileRouteTypes {
     | '/ledger/'
     | '/api/dispatch-audio/$id'
     | '/labs/young/$activity'
+    | '/labs/young/classroom'
     | '/labs/young/explorers'
     | '/labs/young/grown-ups'
     | '/labs/young/makers'
@@ -874,6 +884,7 @@ export interface FileRouteTypes {
     | '/ledger'
     | '/api/dispatch-audio/$id'
     | '/labs/young/$activity'
+    | '/labs/young/classroom'
     | '/labs/young/explorers'
     | '/labs/young/grown-ups'
     | '/labs/young/makers'
@@ -954,6 +965,7 @@ export interface FileRouteTypes {
     | '/ledger/'
     | '/api/dispatch-audio/$id'
     | '/labs/young/$activity'
+    | '/labs/young/classroom'
     | '/labs/young/explorers'
     | '/labs/young/grown-ups'
     | '/labs/young/makers'
@@ -1035,6 +1047,7 @@ export interface RootRouteChildren {
   LedgerIndexRoute: typeof LedgerIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
   LabsYoungActivityRoute: typeof LabsYoungActivityRoute
+  LabsYoungClassroomRoute: typeof LabsYoungClassroomRoute
   LabsYoungExplorersRoute: typeof LabsYoungExplorersRoute
   LabsYoungGrownUpsRoute: typeof LabsYoungGrownUpsRoute
   LabsYoungMakersRoute: typeof LabsYoungMakersRoute
@@ -1550,6 +1563,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabsYoungActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/young/classroom': {
+      id: '/labs/young/classroom'
+      path: '/labs/young/classroom'
+      fullPath: '/labs/young/classroom'
+      preLoaderRoute: typeof LabsYoungClassroomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/labs/young/explorers': {
       id: '/labs/young/explorers'
       path: '/labs/young/explorers'
@@ -1667,6 +1687,7 @@ const rootRouteChildren: RootRouteChildren = {
   LedgerIndexRoute: LedgerIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
   LabsYoungActivityRoute: LabsYoungActivityRoute,
+  LabsYoungClassroomRoute: LabsYoungClassroomRoute,
   LabsYoungExplorersRoute: LabsYoungExplorersRoute,
   LabsYoungGrownUpsRoute: LabsYoungGrownUpsRoute,
   LabsYoungMakersRoute: LabsYoungMakersRoute,

@@ -758,10 +758,47 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
 }
 
+/* Bit, the lab guide, and its speech bubble */
+.yl-guide { display: flex; align-items: flex-end; gap: 0.9rem; }
+.yl-guide.is-compact { align-items: center; }
+.yl-bubble { position: relative; flex: 1; min-width: 0; padding: 0.9em 1.1em 1em; border: 3px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); }
+.yl-bubble::before { content: ""; position: absolute; left: -15px; bottom: 22px; border: 9px solid transparent; border-right: 12px solid var(--ink); border-left-width: 0; }
+@media (max-width: 639px) {
+  .yl-guide { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .yl-guide-bot svg { width: 64px; height: auto; }
+  .yl-bubble { width: 100%; }
+  .yl-bubble::before { left: 26px; top: -15px; bottom: auto; border: 9px solid transparent; border-bottom: 12px solid var(--ink); border-top-width: 0; }
+}
+.yl-bot-body { transform-box: fill-box; transform-origin: 50% 100%; animation: yl-bob 3.2s ease-in-out infinite; }
+.yl-bot-eyes { transform-box: fill-box; transform-origin: center; animation: yl-blink 4.6s ease-in-out infinite; }
+.yl-bot-light { animation: yl-glow 1.8s ease-in-out infinite; }
+.yl-bot-mouth { transform-box: fill-box; transform-origin: center; animation: yl-talk 260ms ease-in-out infinite alternate; }
+.yl-bot.is-talking .yl-bot-body { animation-duration: 1.1s; }
+@keyframes yl-bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(-2deg); } }
+@keyframes yl-blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
+@keyframes yl-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+@keyframes yl-talk { from { transform: scaleY(0.35); } to { transform: scaleY(1.1); } }
+
+/* Level path (AI or not) */
+.yl-levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; position: relative; }
+.yl-level { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.9rem 0.6rem 1rem; text-align: center; border: 3px solid var(--ink); border-radius: 18px; background: #fff; box-shadow: 4px 4px 0 var(--ink); cursor: pointer; transition: transform 90ms ease-out, box-shadow 90ms ease-out; }
+.yl-level:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.yl-level:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.yl-level[aria-current="step"] { outline: 4px solid var(--ink); outline-offset: 3px; }
+.yl-level-num { display: grid; place-items: center; width: 3rem; height: 3rem; border: 3px solid var(--ink); border-radius: 999px; font: 900 1.4rem/1 var(--font-display); }
+.yl-level-bars { display: flex; gap: 3px; align-items: flex-end; height: 18px; }
+.yl-level-bars > span { width: 7px; border: 2px solid var(--ink); border-radius: 3px; background: #fff; }
+.yl-level-bars > span.is-on { background: var(--ink); }
+.yl-meter { height: 14px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; overflow: hidden; }
+.yl-meter > span { display: block; height: 100%; background: var(--yl-mint); transition: width 420ms cubic-bezier(.2,.7,.2,1); }
+.yl-wiggle { animation: yl-wiggle 420ms ease-in-out both; }
+@keyframes yl-wiggle { 0%, 100% { transform: none; } 25% { transform: translateX(-6px) rotate(-1deg); } 75% { transform: translateX(6px) rotate(1deg); } }
+.yl-step-num { display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border: 3px solid var(--ink); border-radius: 999px; background: var(--yl-sun); font: 900 1.25rem/1 var(--font-display); }
+
 @media (prefers-reduced-motion: reduce) {
-  .yl-in, .yl-deal, .yl-pop, .yl-thump, .yl-star-on, .yl-draw, .yl-drop > *, .yl-pop-svg, .yl-shape, .yl-piece, .yl-flow .is-hit { animation: none !important; }
+  .yl-in, .yl-deal, .yl-pop, .yl-thump, .yl-star-on, .yl-draw, .yl-drop > *, .yl-pop-svg, .yl-shape, .yl-piece, .yl-flow .is-hit, .yl-bot-body, .yl-bot-eyes, .yl-bot-light, .yl-bot-mouth, .yl-wiggle { animation: none !important; }
   .yl-confetti { display: none; }
-  .yl-flip-inner, .yl-lift, .yl-btn, .yl-chip, .yl-tile, .yl-bar-btn, .yl-bar-fill, .yl-flow-rule { transition: none !important; }
+  .yl-flip-inner, .yl-lift, .yl-btn, .yl-chip, .yl-tile, .yl-bar-btn, .yl-bar-fill, .yl-flow-rule, .yl-level, .yl-meter > span { transition: none !important; }
   .yl-lift:hover, .yl-lift:active, .yl-btn:hover, .yl-btn:active, .yl-tile:hover, .yl-bar-btn:hover, .yl-bar-btn:active, .yl-chip:active { transform: none; }
 }
 

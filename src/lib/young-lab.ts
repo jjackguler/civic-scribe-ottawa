@@ -46,9 +46,9 @@ export const ACTIVITIES: Activity[] = [
   {
     id: "ai-or-not", group: "explorers", n: 1, tone: "sun",
     title: { en: "AI or not?", fr: "IA ou pas?" },
-    tagline: { en: "Ten everyday things. Which ones use AI? Flip the cards and find out.", fr: "Dix objets de tous les jours. Lesquels utilisent l'IA? Retournez les cartes pour le savoir." },
+    tagline: { en: "Everyday machines: which ones really use AI? Three levels, from warm-up to expert, with Bit as your guide.", fr: "Des machines de tous les jours : lesquelles utilisent vraiment l'IA? Trois niveaux, de l'échauffement à expert, avec Bit comme guide." },
     stamp: { en: "AI spotter", fr: "Repère l'IA" },
-    minutes: 5,
+    minutes: 12,
     teaches: { en: "AI is software that learns patterns from examples; plenty of useful machines just follow fixed rules.", fr: "L'IA est un logiciel qui apprend des régularités à partir d'exemples; bien des machines utiles suivent simplement des règles fixes." },
     objectives: [
       { en: "Tell the difference between a machine that follows fixed rules and one that learned from examples.", fr: "Distinguer une machine qui suit des règles fixes d'une machine qui a appris à partir d'exemples." },
@@ -270,35 +270,47 @@ export const GROUP: Record<Group, { title: Bi; ages: Bi; dek: Bi }> = {
 /* 1. AI or not?                                                       */
 /* ------------------------------------------------------------------ */
 
-export type AiOrNotItem = { id: string; icon: string; name: Bi; ai: boolean; why: Bi; partly?: boolean };
+/** level 1 = obvious, 2 = trickier, 3 = expert (adds a "partly AI" answer). */
+export type AiOrNotItem = { id: string; icon: string; name: Bi; ai: boolean; why: Bi; partly?: boolean; level: 1 | 2 | 3 };
 
 export const AI_OR_NOT: AiOrNotItem[] = [
-  { id: "spam", icon: "mail", ai: true, name: { en: "Spam filter", fr: "Filtre antipourriel" },
+  { id: "spam", level: 2, icon: "mail", ai: true, name: { en: "Spam filter", fr: "Filtre antipourriel" },
     why: { en: "It learned what junk mail looks like from millions of examples.", fr: "Il a appris à quoi ressemble un pourriel à partir de millions d'exemples." } },
-  { id: "calc", icon: "calculator", ai: false, name: { en: "Calculator", fr: "Calculatrice" },
+  { id: "calc", level: 1, icon: "calculator", ai: false, name: { en: "Calculator", fr: "Calculatrice" },
     why: { en: "It follows exact maths rules a person wrote. It never guesses.", fr: "Elle suit des règles de maths exactes écrites par une personne. Elle ne devine jamais." } },
-  { id: "voice", icon: "mic", ai: true, name: { en: "Voice assistant", fr: "Assistant vocal" },
+  { id: "voice", level: 1, icon: "mic", ai: true, name: { en: "Voice assistant", fr: "Assistant vocal" },
     why: { en: "It learned to turn sounds into words by hearing lots of voices.", fr: "Il a appris à changer des sons en mots en entendant beaucoup de voix." } },
-  { id: "thermo", icon: "thermometer", ai: false, name: { en: "Simple thermostat", fr: "Thermostat simple" },
+  { id: "thermo", level: 2, icon: "thermometer", ai: false, name: { en: "Simple thermostat", fr: "Thermostat simple" },
     why: { en: "One rule: too cold, turn on the heat. (Some \"smart\" ones do learn your habits.)", fr: "Une seule règle : trop froid, on chauffe. (Certains modèles « intelligents » apprennent vos habitudes.)" } },
-  { id: "maps", icon: "map", ai: true, partly: true, name: { en: "Map directions", fr: "Itinéraire sur une carte" },
+  { id: "maps", level: 3, icon: "map", ai: true, partly: true, name: { en: "Map directions", fr: "Itinéraire sur une carte" },
     why: { en: "Partly: finding the shortest road is a classic recipe, but guessing traffic is learned from patterns.", fr: "En partie : trouver le chemin le plus court est une recette classique, mais prévoir la circulation s'apprend." } },
-  { id: "light", icon: "lightbulb", ai: false, name: { en: "Light switch", fr: "Interrupteur" },
+  { id: "light", level: 1, icon: "lightbulb", ai: false, name: { en: "Light switch", fr: "Interrupteur" },
     why: { en: "Up is on, down is off. No learning needed!", fr: "En haut, allumé; en bas, éteint. Aucun apprentissage!" } },
-  { id: "videos", icon: "clapperboard", ai: true, name: { en: "\"Up next\" video picks", fr: "Vidéos « à suivre »" },
+  { id: "videos", level: 2, icon: "clapperboard", ai: true, name: { en: "\"Up next\" video picks", fr: "Vidéos « à suivre »" },
     why: { en: "It learns from what people watch to guess what you'll click next.", fr: "Il apprend de ce que les gens regardent pour deviner ton prochain clic." } },
-  { id: "microwave", icon: "microwave", ai: false, name: { en: "Microwave timer", fr: "Minuterie du micro-ondes" },
+  { id: "microwave", level: 1, icon: "microwave", ai: false, name: { en: "Microwave timer", fr: "Minuterie du micro-ondes" },
     why: { en: "It counts down the time you set. Same every time.", fr: "Il compte à rebours le temps choisi. Toujours pareil." } },
-  { id: "keyboard", icon: "keyboard", ai: true, name: { en: "Word suggestions on a phone keyboard", fr: "Suggestions de mots du clavier" },
+  { id: "keyboard", level: 2, icon: "keyboard", ai: true, name: { en: "Word suggestions on a phone keyboard", fr: "Suggestions de mots du clavier" },
     why: { en: "It predicts your next word from patterns in lots of writing.", fr: "Il prédit ton prochain mot grâce aux régularités de beaucoup de textes." } },
-  { id: "translate", icon: "languages", ai: true, name: { en: "Translation app", fr: "Appli de traduction" },
+  { id: "translate", level: 1, icon: "languages", ai: true, name: { en: "Translation app", fr: "Appli de traduction" },
     why: { en: "It learned from huge numbers of sentences already translated by people.", fr: "Elle a appris de très nombreuses phrases déjà traduites par des personnes." } },
-  { id: "traffic", icon: "traffic-cone", ai: false, name: { en: "Traffic light on a timer", fr: "Feu de circulation minuté" },
+  { id: "traffic", level: 2, icon: "traffic-cone", ai: false, name: { en: "Traffic light on a timer", fr: "Feu de circulation minuté" },
     why: { en: "It changes colour on a fixed schedule someone set.", fr: "Il change de couleur selon un horaire fixe choisi par quelqu'un." } },
-  { id: "photos", icon: "images", ai: true, name: { en: "Photo app that finds \"dog\" pictures", fr: "Appli photo qui trouve les « chiens »" },
+  { id: "photos", level: 1, icon: "images", ai: true, name: { en: "Photo app that finds \"dog\" pictures", fr: "Appli photo qui trouve les « chiens »" },
     why: { en: "It learned what dogs look like from many labelled pictures.", fr: "Elle a appris à quoi ressemble un chien à partir de nombreuses images étiquetées." } },
+  { id: "faceunlock", level: 2, icon: "scan-face", ai: true, name: { en: "Face unlock on a phone", fr: "Déverrouillage par le visage" },
+    why: { en: "It learned what faces look like from huge numbers of examples, then checks if this one matches yours.", fr: "Il a appris à quoi ressemblent les visages à partir d'énormément d'exemples, puis vérifie si celui-ci correspond au tien." } },
+  { id: "smartthermo", level: 3, icon: "house", ai: true, name: { en: "Thermostat that learns your schedule", fr: "Thermostat qui apprend ton horaire" },
+    why: { en: "This one watches when you turn the heat up and down, and learns your habits. Same job as a simple thermostat, different way of working!", fr: "Celui-ci observe quand tu montes ou baisses le chauffage et apprend tes habitudes. Même travail qu'un thermostat simple, mais autrement!" } },
+  { id: "gamechar", level: 3, icon: "gamepad", ai: false, name: { en: "A video game enemy that walks the same path", fr: "Un ennemi de jeu vidéo qui suit le même chemin" },
+    why: { en: "Game makers often call it \"AI\", but this character follows a script a person wrote. It never learns from you.", fr: "Les créateurs de jeux l'appellent souvent « IA », mais ce personnage suit un script écrit par une personne. Il n'apprend jamais de toi." } },
+  { id: "weather", level: 3, icon: "cloud-sun", ai: true, partly: true, name: { en: "Weather forecast", fr: "Prévisions météo" },
+    why: { en: "Partly: forecasters use computer models built on the rules of physics, and some now add AI that learned from years of past weather.", fr: "En partie : les prévisionnistes utilisent des modèles basés sur les lois de la physique, et certains ajoutent une IA qui a appris des années de météo passée." } },
+  { id: "vacuum", level: 3, icon: "circle-dot", ai: false, name: { en: "Robot vacuum that turns when it bumps a wall", fr: "Aspirateur robot qui tourne quand il touche un mur" },
+    why: { en: "A simple rule: bump, turn, keep going. (Fancier ones that map your home and spot socks do use AI.)", fr: "Une règle simple : je touche, je tourne, je continue. (Les modèles plus évolués qui cartographient la maison et repèrent les chaussettes utilisent l'IA.)" } },
+  { id: "selfie", level: 3, icon: "camera", ai: true, name: { en: "Selfie filter that puts ears on your head", fr: "Filtre selfie qui te met des oreilles" },
+    why: { en: "It has to find your eyes, nose and head in every frame. It learned that from many pictures of faces.", fr: "Il doit trouver tes yeux, ton nez et ta tête à chaque image. Il l'a appris grâce à beaucoup de photos de visages." } },
 ];
-
 /* ------------------------------------------------------------------ */
 /* 2. Teach the machine                                                */
 /* ------------------------------------------------------------------ */

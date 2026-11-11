@@ -50,6 +50,19 @@ directives file, morning Canadian AI Brief, Output watch issue).
 - Studio: approved pieces are committed as `src/content/studio/<id>.json`; `scripts/studio-test.ts`
   validates them in CI. The example is only in `scripts/fixtures/studio/`.
 - Dev preview without network: `AIB_NEWS_FIXTURE=1 npx vite dev` serves a fictional desk.
+## Young Lab edutainment, step 1 (10 Nov 2026)
+- Why: Young Lab pages are 7 of the site's top 10 (all five Explorers games), and 56 visits in 30 days came
+  from app.nearpod.com, so teachers already use it in class. Plan: Claude Doc "Young Lab: edutainment yatırım planı".
+- **Bit**, the Young Lab guide (`src/components/young/LabGuide.tsx`): code-drawn SVG bot with a speech
+  bubble and a "Read it to me" button using the browser's own speechSynthesis (fixed lines only, nothing
+  typed is read or sent). Name kept in `GUIDE_NAME`; the owner may still pick a different mascot.
+- **AI or not?** now has three levels (6 cards each, `level` on `AI_OR_NOT` items): Warm-up, Trickier,
+  Expert (adds a "Partly AI" answer). All levels are open; the stamp comes with the warm-up.
+- **/labs/young/classroom** (Classroom mode): three steps, a five-lesson Explorers unit with "Open on the
+  board", "Copy student link" and lesson-sheet links, a 45-minute lesson flow, Nearpod/Classroom/Teams
+  steps. In the sitemap. Young Lab home: "I'm a teacher" goes there; the duplicate "All nine games" grid is gone.
+- Next (not built): visual exit tickets at the end of each game, the Explorers unit map, Teach-the-machine 3D.
+
 ## Search status codes (9 Nov 2026)
 - Google reported "Soft 404": pages that say "not available" or "withdrawn" but answer 200. Now a
   withdrawn article answers 410, an unknown dispatch id 404, and a page whose data lookup failed or
