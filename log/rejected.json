@@ -1,5 +1,25 @@
 [
   {
+    "id": "1ulh809",
+    "at": "2026-11-11T15:42:22.589Z",
+    "stage": "standards",
+    "headline": "Experience the art and legacy of Dr. Esther Mahlangu",
+    "reasons": [
+      "The article presents the AI-generated recreations of childhood memories as a factual preservation of history, which constitutes speculation as fact regarding the accuracy of AI-generated content."
+    ]
+  },
+  {
+    "id": "ww1rk5",
+    "at": "2026-11-11T15:41:48.313Z",
+    "stage": "copy",
+    "headline": "AlphaGenome 2: Deciphering how cells read DNA to better understand disease",
+    "reasons": [
+      "Too close to Google DeepMind's wording (\"how dna sequences and their variations impact specific human…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google DeepMind's wording (\"to predict variant effects in disease relevant cells that…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "16eklw0",
     "at": "2026-11-10T19:50:48.545Z",
     "stage": "copy",

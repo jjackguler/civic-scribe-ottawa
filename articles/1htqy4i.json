@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "id": "1htqy4i",
+  "slug": {
+    "en": "google-openai-ai-agent-updates",
+    "fr": "mises-a-jour-agents-ia-google-openai"
+  },
+  "createdAt": "2026-11-11T15:39:54.522Z",
+  "updatedAt": "2026-11-11T15:39:54.522Z",
+  "topic": "agents",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "TechCrunch",
+      "title": "OpenAI rolls out new business profiles, making ChatGPT just a little bit more like Google",
+      "url": "https://techcrunch.com/2026/11/10/openai-rolls-out-new-business-profiles-making-chatgpt-just-a-little-bit-more-like-google/",
+      "publishedAt": "2026-11-10T18:49:52.000Z",
+      "storyId": "1htqy4i",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "Google AI",
+      "title": "Gemini Intelligence: New features, on more devices",
+      "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence-november-features-devices/",
+      "publishedAt": "2026-11-10T19:00:00.000Z",
+      "storyId": "11gqkm9",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "The Decoder",
+      "title": "OpenAI turns ChatGPT into a business directory with AI agents that handle customer questions",
+      "url": "https://the-decoder.com/openai-turns-chatgpt-into-a-business-directory-with-ai-agents-that-handle-customer-questions/",
+      "publishedAt": "2026-11-10T20:17:00.000Z",
+      "storyId": "4zhjpq",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b2",
+      "path": "/learn/use-ai-safely",
+      "title": {
+        "en": "Use AI safely: accuracy, privacy and scams",
+        "fr": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    },
+    {
+      "key": "b3",
+      "path": "/labs/agents",
+      "title": {
+        "en": "Agents",
+        "fr": "Les agents"
+      }
+    }
+  ],
+  "cover": {
+    "color": "brass",
+    "motif": "grid",
+    "en": {
+      "kicker": "AI AGENT EXPANSION",
+      "big": "AGENTS",
+      "small": "New tools for mobile tasks and discovery"
+    },
+    "fr": {
+      "kicker": "EXPANSION DES AGENTS",
+      "big": "AGENTS",
+      "small": "Nouveaux outils pour tâches et découverte"
+    }
+  },
+  "en": {
+    "headline": "Google and OpenAI expand AI agent capabilities for mobile and business discovery",
+    "news": "Google expanded Gemini Intelligence to new devices and regions, as OpenAI launched business profiles to turn ChatGPT into a searchable directory.",
+    "thirty": [
+      "Google is adding task automation and new AI features to more Android devices.",
+      "OpenAI now allows businesses to create profiles, turning ChatGPT into a discovery tool.",
+      "These updates aim to help users manage daily tasks and find local services."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Google says Gemini Intelligence is expanding to the motorola signature 27 and Pixel 10 series, with task automation now available in the UK, India, and Japan.",
+        "by": "Google AI",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "OpenAI says its new business profiles will allow ChatGPT to function as a consumer discovery engine for finding local services.",
+        "by": "TechCrunch",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether OpenAI's business profiles will be available globally.",
+      "When task automation will expand to regions beyond the UK, India, and Japan."
+    ],
+    "matters": "These updates may simplify daily logistics like booking reservations or organizing information on your phone. Users should be aware that these tools rely on personal data from apps like Gmail and Calendar to function.",
+    "timeline": [
+      {
+        "when": "November 19",
+        "text": "The motorola signature 27 becomes available for pre-order in the U.S.",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Google and OpenAI are updating their AI tools to help you get more done. Google is adding features to more Android phones that can help you order food, book rides, or create custom buttons for your home screen just by asking [s2].",
+        "OpenAI is changing ChatGPT so businesses can create profiles, making it easier for you to find services or ask questions directly to a company [s1,s3]. An AI agent is a program that can use other apps to finish tasks for you, like checking your calendar or sending messages."
+      ],
+      "standard": [
+        "Google and OpenAI announced updates to their AI offerings on November 10, 2026, focusing on device integration and business discovery [s1,s2]. Google expanded its Gemini Intelligence features to additional Android devices, including the motorola signature 27 and the Pixel 10 series [s2]. Simultaneously, OpenAI introduced new business profiles for ChatGPT, aiming to position the platform as a tool for consumer discovery [s1,s3].",
+        "Google's update includes the rollout of task automation in the UK, India, and Japan, allowing users to order food or book reservations through Gemini [s2]. OpenAI's changes enable businesses to create profiles, which The Decoder reports will allow the AI to handle customer inquiries directly [s3].",
+        "Google claims that its new 'Create My Widget' feature will allow users to design personalized home screen widgets using natural language prompts [s2]. The company also stated that its 'Rambler' tool, which converts spoken thoughts into text, is now available on the latest Pixel and Motorola devices [s2].",
+        "OpenAI claims that the new business profiles are designed to make ChatGPT a more robust search engine for consumers [s1]. The Decoder notes that these profiles will incorporate AI agents capable of answering customer questions [s3].",
+        "Whether these features will be available on older hardware or in other international markets remains unknown [s2].",
+        "For the average person, these tools represent a shift toward AI that performs actions rather than just generating text [s2,s3]. By integrating with calendars and email, these agents aim to reduce the time spent on administrative tasks [s2].",
+        "Users should remain cautious about data privacy when granting AI agents access to personal information like location or communication history [s2]. As these tools become more capable, verifying the accuracy of information provided by AI remains essential.",
+        "Software that plans, uses tools and acts on its own is known as an agent [b3].",
+        "Chat assistants can sometimes invent facts, so users should treat answers as a starting point [b2]."
+      ],
+      "expert": [
+        "Google's update introduces 'Create My Widget', which uses natural language processing to generate UI components from user prompts, pulling data from Gmail, Calendar, and Search [s2]. The 'Rambler' feature provides real-time transcription, while task automation handles logistics [s2].",
+        "OpenAI's implementation of business profiles shifts ChatGPT toward a discovery model, allowing agents to query business-specific datasets to resolve customer inquiries [s1,s3]."
+      ]
+    },
+    "seoTitle": "Google and OpenAI update AI agents for mobile and business",
+    "dek": "Google is bringing task automation to Android phones, while OpenAI introduces business profiles to transform ChatGPT into a consumer discovery engine.",
+    "metaDescription": "Google expands Gemini Intelligence to new Android devices, while OpenAI launches business profiles to turn ChatGPT into a searchable directory.",
+    "keywords": [
+      "gemini intelligence",
+      "chatgpt business profiles",
+      "ai agents",
+      "android task automation"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Google and OpenAI announced updates to their AI offerings on November 10, 2026, focusing on device integration and business discovery [s1,s2]. Google expanded its Gemini Intelligence features to additional Android devices, including the motorola signature 27 and the Pixel 10 series [s2]. Simultaneously, OpenAI introduced new business profiles for ChatGPT, aiming to position the platform as a tool for consumer discovery [s1,s3].",
+          "Google's update includes the rollout of task automation in the UK, India, and Japan, allowing users to order food or book reservations through Gemini [s2]. OpenAI's changes enable businesses to create profiles, which The Decoder reports will allow the AI to handle customer inquiries directly [s3]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Google claims that its new 'Create My Widget' feature will allow users to design personalized home screen widgets using natural language prompts [s2]. The company also stated that its 'Rambler' tool, which converts spoken thoughts into text, is now available on the latest Pixel and Motorola devices [s2].",
+          "OpenAI claims that the new business profiles are designed to make ChatGPT a more robust search engine for consumers [s1]. The Decoder notes that these profiles will incorporate AI agents capable of answering customer questions [s3].",
+          "Whether these features will be available on older hardware or in other international markets remains unknown [s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For the average person, these tools represent a shift toward AI that performs actions rather than just generating text [s2,s3]. By integrating with calendars and email, these agents aim to reduce the time spent on administrative tasks [s2].",
+          "Users should remain cautious about data privacy when granting AI agents access to personal information like location or communication history [s2]. As these tools become more capable, verifying the accuracy of information provided by AI remains essential."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Software that plans, uses tools and acts on its own is known as an agent [b3].",
+          "Chat assistants can sometimes invent facts, so users should treat answers as a starting point [b2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What new features did Google announce for Android?",
+        "a": "Google expanded Gemini Intelligence to devices like the Pixel 10 and motorola signature 27, introduced task automation in select regions, and launched the 'Create My Widget' and 'Rambler' tools."
+      },
+      {
+        "q": "How is OpenAI changing ChatGPT for businesses?",
+        "a": "OpenAI introduced business profiles that allow the platform to function as a consumer discovery engine, with AI agents capable of handling customer inquiries directly."
+      }
+    ],
+    "links": []
+  },
+  "fr": {
+    "headline": "Google et OpenAI étendent les capacités d'agents IA pour le mobile et les entreprises",
+    "news": "Google a étendu Gemini Intelligence à de nouveaux appareils et régions, alors qu'OpenAI a lancé des profils d'entreprise pour faire de ChatGPT un répertoire consultable.",
+    "thirty": [
+      "Google ajoute l'automatisation des tâches et de nouvelles fonctions IA à davantage d'appareils Android.",
+      "OpenAI permet désormais aux entreprises de créer des profils, transformant ChatGPT en outil de découverte.",
+      "Ces mises à jour visent à aider les utilisateurs à gérer leurs tâches quotidiennes et à trouver des services locaux."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Google affirme que Gemini Intelligence s'étend aux séries motorola signature 27 et Pixel 10, avec une automatisation des tâches désormais disponible au UK, en India et au Japan.",
+        "by": "Google AI",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "OpenAI indique que ses nouveaux profils d'entreprise permettront à ChatGPT de fonctionner comme un moteur de découverte pour trouver des services locaux.",
+        "by": "TechCrunch",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La disponibilité mondiale des profils d'entreprise d'OpenAI reste à confirmer.",
+      "Le calendrier d'expansion de l'automatisation des tâches au-delà du UK, de l'India et du Japan demeure inconnu."
+    ],
+    "matters": "Ces mises à jour pourraient simplifier la logistique quotidienne comme les réservations ou l'organisation d'informations sur votre cellulaire. Les utilisateurs doivent savoir que ces outils dépendent de données personnelles provenant d'applications comme Gmail et Calendar pour fonctionner.",
+    "timeline": [
+      {
+        "when": "19 novembre",
+        "text": "Le motorola signature 27 devient disponible en précommande aux U.S.",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Google et OpenAI mettent à jour leurs outils IA pour vous aider à accomplir davantage. Google ajoute à plus de téléphones Android des fonctions permettant de commander de la nourriture, de réserver des trajets ou de créer des boutons personnalisés pour votre écran d'accueil sur simple demande [s2].",
+        "OpenAI modifie ChatGPT pour permettre aux entreprises de créer des profils, facilitant ainsi la recherche de services ou la pose de questions directement à une entreprise [s1,s3]. Un agent IA est un programme capable d'utiliser d'autres applications pour terminer des tâches à votre place, comme consulter votre calendrier ou envoyer des messages."
+      ],
+      "standard": [
+        "Google et OpenAI ont annoncé des mises à jour de leurs offres IA le 10 novembre 2026, axées sur l'intégration aux appareils et la découverte d'entreprises [s1,s2]. Google a étendu les fonctionnalités de Gemini Intelligence à des appareils Android supplémentaires, dont le motorola signature 27 et la série Pixel 10 [s2]. Parallèlement, OpenAI a introduit de nouveaux profils d'entreprise pour ChatGPT, visant à positionner la plateforme comme un outil de découverte pour les consommateurs [s1,s3].",
+        "La mise à jour de Google inclut le déploiement de l'automatisation des tâches au UK, en India et au Japan, permettant aux utilisateurs de commander de la nourriture ou d'effectuer des réservations via Gemini [s2]. Les changements d'OpenAI permettent aux entreprises de créer des profils, ce qui, selon The Decoder, permettra à l'IA de traiter directement les demandes des clients [s3].",
+        "Google soutient que sa nouvelle fonction « Create My Widget » permettra aux utilisateurs de concevoir des widgets personnalisés pour l'écran d'accueil à l'aide de commandes en langage naturel [s2]. L'entreprise a également déclaré que son outil « Rambler », qui convertit les pensées exprimées oralement en texte, est désormais disponible sur les derniers appareils Pixel et Motorola [s2].",
+        "OpenAI prétend que les nouveaux profils d'entreprise sont conçus pour faire de ChatGPT un moteur de recherche plus robuste pour les consommateurs [s1]. The Decoder note que ces profils intégreront des agents IA capables de répondre aux questions des clients [s3].",
+        "La disponibilité de ces fonctionnalités sur du matériel plus ancien ou sur d'autres marchés internationaux reste inconnue [s2].",
+        "Pour le citoyen moyen, ces outils marquent un virage vers une IA qui exécute des actions plutôt que de simplement générer du texte [s2,s3]. En s'intégrant aux calendriers et aux courriels, ces agents visent à réduire le temps consacré aux tâches administratives [s2].",
+        "Les utilisateurs devraient rester prudents concernant la confidentialité des données lorsqu'ils accordent à des agents IA l'accès à des informations personnelles comme la localisation ou l'historique des communications [s2]. À mesure que ces outils gagnent en capacité, vérifier l'exactitude des informations fournies par l'IA demeure essentiel.",
+        "Un logiciel qui planifie, utilise des outils et agit de manière autonome est appelé un agent [b3].",
+        "Les assistants de clavardage peuvent parfois inventer des faits; les utilisateurs devraient donc considérer les réponses comme un point de départ [b2]."
+      ],
+      "expert": [
+        "La mise à jour de Google introduit « Create My Widget », qui utilise le traitement du langage naturel pour générer des composants d'interface à partir des demandes des utilisateurs, en extrayant des données de Gmail, Calendar et Search [s2]. La fonction « Rambler » assure une transcription en temps réel, tandis que l'automatisation des tâches gère la logistique [s2].",
+        "L'implémentation des profils d'entreprise par OpenAI oriente ChatGPT vers un modèle de découverte, permettant aux agents d'interroger des ensembles de données spécifiques aux entreprises pour résoudre les demandes des clients [s1,s3]."
+      ]
+    },
+    "seoTitle": "Google et OpenAI mettent à jour leurs agents IA",
+    "dek": "Google intègre l'automatisation des tâches à davantage de téléphones Android, tandis qu'OpenAI lance des profils d'entreprise pour transformer ChatGPT en moteur de découverte.",
+    "metaDescription": "Google étend Gemini Intelligence aux appareils Android, tandis qu'OpenAI lance des profils d'entreprise pour faire de ChatGPT un répertoire consultable.",
+    "keywords": [
+      "gemini intelligence",
+      "chatgpt profils entreprise",
+      "agents ia",
+      "automatisation android"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Google et OpenAI ont annoncé des mises à jour de leurs offres IA le 10 novembre 2026, axées sur l'intégration aux appareils et la découverte d'entreprises [s1,s2]. Google a étendu les fonctionnalités de Gemini Intelligence à des appareils Android supplémentaires, dont le motorola signature 27 et la série Pixel 10 [s2]. Parallèlement, OpenAI a introduit de nouveaux profils d'entreprise pour ChatGPT, visant à positionner la plateforme comme un outil de découverte pour les consommateurs [s1,s3].",
+          "La mise à jour de Google inclut le déploiement de l'automatisation des tâches au UK, en India et au Japan, permettant aux utilisateurs de commander de la nourriture ou d'effectuer des réservations via Gemini [s2]. Les changements d'OpenAI permettent aux entreprises de créer des profils, ce qui, selon The Decoder, permettra à l'IA de traiter directement les demandes des clients [s3]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Google soutient que sa nouvelle fonction « Create My Widget » permettra aux utilisateurs de concevoir des widgets personnalisés pour l'écran d'accueil à l'aide de commandes en langage naturel [s2]. L'entreprise a également déclaré que son outil « Rambler », qui convertit les pensées exprimées oralement en texte, est désormais disponible sur les derniers appareils Pixel et Motorola [s2].",
+          "OpenAI prétend que les nouveaux profils d'entreprise sont conçus pour faire de ChatGPT un moteur de recherche plus robuste pour les consommateurs [s1]. The Decoder note que ces profils intégreront des agents IA capables de répondre aux questions des clients [s3].",
+          "La disponibilité de ces fonctionnalités sur du matériel plus ancien ou sur d'autres marchés internationaux reste inconnue [s2]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour le citoyen moyen, ces outils marquent un virage vers une IA qui exécute des actions plutôt que de simplement générer du texte [s2,s3]. En s'intégrant aux calendriers et aux courriels, ces agents visent à réduire le temps consacré aux tâches administratives [s2].",
+          "Les utilisateurs devraient rester prudents concernant la confidentialité des données lorsqu'ils accordent à des agents IA l'accès à des informations personnelles comme la localisation ou l'historique des communications [s2]. À mesure que ces outils gagnent en capacité, vérifier l'exactitude des informations fournies par l'IA demeure essentiel."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Un logiciel qui planifie, utilise des outils et agit de manière autonome est appelé un agent [b3].",
+          "Les assistants de clavardage peuvent parfois inventer des faits; les utilisateurs devraient donc considérer les réponses comme un point de départ [b2]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quelles sont les nouveautés de Google pour Android ?",
+        "a": "Google a étendu Gemini Intelligence aux appareils comme le Pixel 10 et le motorola signature 27, a déployé l'automatisation des tâches dans certaines régions et a lancé les outils 'Create My Widget' et 'Rambler'."
+      },
+      {
+        "q": "Comment OpenAI transforme-t-il ChatGPT pour les entreprises ?",
+        "a": "OpenAI a introduit des profils d'entreprise permettant à la plateforme de servir d'outil de découverte pour les consommateurs, avec des agents IA capables de répondre directement aux demandes des clients."
+      }
+    ],
+    "links": []
+  },
+  "model": "gemini",
+  "words": {
+    "en": 301,
+    "fr": 363
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-11T15:39:23.301Z",
+      "verdict": "done",
+      "notes": [
+        "302 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-11T15:39:37.958Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): API-driven, RAG-based, Retrieval-Augmented, Generation."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-11T15:39:38.994Z",
+      "verdict": "pass",
+      "notes": [
+        "The article is well-structured and adheres to the house voice and charter requirements."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-11T15:39:48.752Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): Calendrier, Royaume-Uni, Inde, Japon, États-Unis.",
+        "363 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-11T15:39:51.891Z",
+      "verdict": "done",
+      "notes": [
+        "en: Google and OpenAI update AI agents for mobile and business (58)",
+        "fr: Google et OpenAI mettent à jour leurs agents IA (47)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-11T15:39:54.522Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: brass/grid \"AGENTS\""
+      ]
+    }
+  ]
+}

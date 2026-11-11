@@ -1,6 +1,106 @@
 {
-  "updatedAt": "2026-11-06T23:32:34.733Z",
+  "updatedAt": "2026-11-11T15:42:45.479Z",
   "items": [
+    {
+      "id": "wkytel",
+      "slug": {
+        "en": "hugging-face-token-pooling-training",
+        "fr": "hugging-face-entrainement-regroupement-jetons"
+      },
+      "createdAt": "2026-11-11T15:42:45.478Z",
+      "updatedAt": "2026-11-11T15:42:45.478Z",
+      "topic": "research",
+      "format": "explainer",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-11T00:00:00.000Z"
+      ],
+      "storyIds": [
+        "wkytel"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "grid",
+        "en": {
+          "kicker": "Research",
+          "big": "Efficiency",
+          "small": "Optimizing document compression for better search results"
+        },
+        "fr": {
+          "kicker": "Recherche IA",
+          "big": "Efficacité",
+          "small": "Optimiser la compression documentaire pour la recherche"
+        }
+      },
+      "words": 255,
+      "en": {
+        "headline": "Hugging Face introduces token pooling-aware training to improve search efficiency",
+        "dek": "A new training method helps multi-vector search models maintain high accuracy while significantly reducing the storage space required for document data.",
+        "news": "Hugging Face released a training technique that improves retrieval quality in multi-vector embedding models by optimizing how document data is compressed.",
+        "matters": "This development helps organizations manage large document collections more efficiently without sacrificing the quality of their search results. It allows for better performance within existing storage budgets."
+      },
+      "fr": {
+        "headline": "Hugging Face lance une méthode d'entraînement pour optimiser la recherche par IA",
+        "dek": "Une nouvelle technique d'entraînement permet aux modèles de recherche multi-vecteurs de conserver leur précision tout en réduisant l'espace de stockage requis.",
+        "news": "Hugging Face a publié une technique d'entraînement qui améliore la qualité de la recherche dans les modèles de plongements multi-vecteurs en optimisant la compression des données documentaires.",
+        "matters": "Ce développement aide les organisations à gérer efficacement de grandes collections de documents sans sacrifier la qualité des résultats de recherche. Il permet d'améliorer la performance tout en respectant les budgets de stockage existants."
+      }
+    },
+    {
+      "id": "1htqy4i",
+      "slug": {
+        "en": "google-openai-ai-agent-updates",
+        "fr": "mises-a-jour-agents-ia-google-openai"
+      },
+      "createdAt": "2026-11-11T15:39:54.522Z",
+      "updatedAt": "2026-11-11T15:39:54.522Z",
+      "topic": "agents",
+      "format": "standard",
+      "outlets": [
+        "TechCrunch",
+        "Google AI",
+        "The Decoder"
+      ],
+      "times": [
+        "2026-11-10T18:49:52.000Z",
+        "2026-11-10T19:00:00.000Z",
+        "2026-11-10T20:17:00.000Z"
+      ],
+      "storyIds": [
+        "1htqy4i",
+        "11gqkm9",
+        "4zhjpq"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "grid",
+        "en": {
+          "kicker": "AI AGENT EXPANSION",
+          "big": "AGENTS",
+          "small": "New tools for mobile tasks and discovery"
+        },
+        "fr": {
+          "kicker": "EXPANSION DES AGENTS",
+          "big": "AGENTS",
+          "small": "Nouveaux outils pour tâches et découverte"
+        }
+      },
+      "words": 301,
+      "en": {
+        "headline": "Google and OpenAI expand AI agent capabilities for mobile and business discovery",
+        "dek": "Google is bringing task automation to Android phones, while OpenAI introduces business profiles to transform ChatGPT into a consumer discovery engine.",
+        "news": "Google expanded Gemini Intelligence to new devices and regions, as OpenAI launched business profiles to turn ChatGPT into a searchable directory.",
+        "matters": "These updates may simplify daily logistics like booking reservations or organizing information on your phone. Users should be aware that these tools rely on personal data from apps like Gmail and Calendar to function."
+      },
+      "fr": {
+        "headline": "Google et OpenAI étendent les capacités d'agents IA pour le mobile et les entreprises",
+        "dek": "Google intègre l'automatisation des tâches à davantage de téléphones Android, tandis qu'OpenAI lance des profils d'entreprise pour transformer ChatGPT en moteur de découverte.",
+        "news": "Google a étendu Gemini Intelligence à de nouveaux appareils et régions, alors qu'OpenAI a lancé des profils d'entreprise pour faire de ChatGPT un répertoire consultable.",
+        "matters": "Ces mises à jour pourraient simplifier la logistique quotidienne comme les réservations ou l'organisation d'informations sur votre cellulaire. Les utilisateurs doivent savoir que ces outils dépendent de données personnelles provenant d'applications comme Gmail et Calendar pour fonctionner."
+      }
+    },
     {
       "id": "18vaqia",
       "slug": {
