@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:1htqy4i",
+    "at": "2026-11-11T01:28:15.686Z",
+    "reason": "the writer declined: The provided sources contain only three headlines and one excerpt sentence, lacking sufficient factual detail for a 45-second explainer without extrapolation."
+  },
+  {
     "key": "story:1frf9li",
     "at": "2026-11-10T18:46:45.032Z",
     "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; not in the sources: 1.404T, Market"
