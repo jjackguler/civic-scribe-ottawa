@@ -1,5 +1,42 @@
 [
   {
+    "id": "1hp9yhz",
+    "at": "2026-11-12T19:54:15.128Z",
+    "stage": "copy",
+    "headline": "Introducing Gemini 4 Hydrogen",
+    "reasons": [
+      "Too close to Google DeepMind's wording (\"speed and efficiency for everyday coding and agentic workflows…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google DeepMind's wording (\"speed and efficiency for everyday coding and agentic workflows…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "ms6q8j",
+    "at": "2026-11-12T19:54:06.805Z",
+    "stage": "copy",
+    "headline": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
+    "reasons": [
+      "Not in the sources (names or numbers): LLMON-enabled, Large, 4.1-based.",
+      "No words in ALL CAPS in the headline.",
+      "Too close to Hugging Face's wording (\"granite 4 1 3b llmon preview and granite 4…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Large.",
+      "No words in ALL CAPS in the headline.",
+      "Too close to Hugging Face's wording (\"granite 4 1 3b llmon preview and granite 4…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1qm3kpv",
+    "at": "2026-11-12T19:53:59.229Z",
+    "stage": "copy",
+    "headline": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker."
+    ]
+  },
+  {
     "id": "1ulh809",
     "at": "2026-11-11T15:42:22.589Z",
     "stage": "standards",

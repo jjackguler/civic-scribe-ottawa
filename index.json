@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-11T15:42:45.479Z",
+  "updatedAt": "2026-11-12T19:54:37.818Z",
   "items": [
+    {
+      "id": "qztobn",
+      "slug": {
+        "en": "hugging-face-trellis-fine-tuning-tools",
+        "fr": "hugging-face-outils-personnalisation-trellis"
+      },
+      "createdAt": "2026-11-12T19:54:37.815Z",
+      "updatedAt": "2026-11-12T19:54:37.815Z",
+      "topic": "research",
+      "format": "standard",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-12T00:00:00.000Z"
+      ],
+      "storyIds": [
+        "qztobn"
+      ],
+      "cover": {
+        "color": "spruce",
+        "motif": "grid",
+        "en": {
+          "kicker": "3D GENERATION",
+          "big": "TRELLIS",
+          "small": "New tools allow custom fine-tuning for robotics"
+        },
+        "fr": {
+          "kicker": "GÉNÉRATION 3D",
+          "big": "TRELLIS",
+          "small": "Des outils pour personnaliser la robotique"
+        }
+      },
+      "words": 313,
+      "en": {
+        "headline": "Hugging Face releases fine-tuning tools for the trellis model",
+        "dek": "New scripts and containers allow users to adapt the Trellis model to specific tasks, improving accuracy for specialized 3D geometry needs.",
+        "news": "Hugging Face released fine-tuning resources for Trellis to help users customize 3D generation for specific applications like robotics and media.",
+        "matters": "People working in fields like robotics or media can now better customize 3D models to meet strict design requirements. This change allows for more precise geometry in generated objects compared to using a general-purpose model [s1]."
+      },
+      "fr": {
+        "headline": "Hugging Face lance des outils pour personnaliser le modèle 3D trellis",
+        "dek": "De nouveaux scripts permettent d'adapter le modèle Trellis à des tâches précises, améliorant la précision géométrique pour des besoins spécialisés.",
+        "news": "Hugging Face a publié des ressources de réglage fin pour Trellis afin d'aider les utilisateurs à personnaliser la génération 3D pour des domaines comme la robotique et les médias.",
+        "matters": "Les professionnels de la robotique ou des médias peuvent désormais mieux adapter les modèles 3D pour répondre à des exigences de conception strictes. Ce changement permet d'obtenir une géométrie plus précise pour les objets générés par rapport à l'utilisation d'un modèle généraliste [s1]."
+      }
+    },
     {
       "id": "wkytel",
       "slug": {

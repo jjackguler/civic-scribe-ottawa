@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "id": "qztobn",
+  "slug": {
+    "en": "hugging-face-trellis-fine-tuning-tools",
+    "fr": "hugging-face-outils-personnalisation-trellis"
+  },
+  "createdAt": "2026-11-12T19:54:37.815Z",
+  "updatedAt": "2026-11-12T19:54:37.815Z",
+  "topic": "research",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "The Definitive Fine-Tuning Guide for 3D Generation Models",
+      "url": "https://huggingface.co/blog/3d-lora-finetuning",
+      "publishedAt": "2026-11-12T00:00:00.000Z",
+      "storyId": "qztobn",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "spruce",
+    "motif": "grid",
+    "en": {
+      "kicker": "3D GENERATION",
+      "big": "TRELLIS",
+      "small": "New tools allow custom fine-tuning for robotics"
+    },
+    "fr": {
+      "kicker": "GÉNÉRATION 3D",
+      "big": "TRELLIS",
+      "small": "Des outils pour personnaliser la robotique"
+    }
+  },
+  "en": {
+    "headline": "Hugging Face releases fine-tuning tools for the trellis model",
+    "news": "Hugging Face released fine-tuning resources for Trellis to help users customize 3D generation for specific applications like robotics and media.",
+    "thirty": [
+      "Hugging Face released tools to fine-tune the trellis 3D generation model [s1].",
+      "Users can now adapt the model to specific tasks using LoRA techniques [s1].",
+      "This helps improve accuracy for specialized geometry in robotics and entertainment fields [s1]."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says its new scripts and containers allow users to fine-tune Trellis on their own 3D assets locally or via Hugging Face Jobs [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face says fine-tuning only specific pipeline components, such as those handling detailed geometry, can improve performance on specific object categories [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether these tools will be compatible with future versions of Trellis models.",
+      "How much computational time is required for users to achieve specific accuracy improvements."
+    ],
+    "matters": "People working in fields like robotics or media can now better customize 3D models to meet strict design requirements. This change allows for more precise geometry in generated objects compared to using a general-purpose model [s1].",
+    "timeline": [
+      {
+        "when": "2026",
+        "text": "Hugging Face released the fine-tuning guide and resources for Trellis [s1].",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face has released new tools to help people customize a 3D generation model called Trellis. A 3D generation model is a type of AI that creates three-dimensional objects from data, which can be used in movies, video games, or robotics [s1].",
+        "Sometimes these models make mistakes, such as getting the shape of an object wrong. These new tools allow users to 'fine-tune' the model, which means training it further on a smaller, specific set of examples to make it more accurate for their particular needs [s1]."
+      ],
+      "standard": [
+        "Hugging Face has released a set of fine-tuning scripts and containers designed to help users adapt the Trellis 3D generation model to their own specific datasets [s1]. This release aims to address the difficulty of standardizing 3D model representations and ensuring generated objects follow strict rules for applications in robotics, simulation, and media [s1].",
+        "The new resources allow users to run fine-tuning processes either locally or through Hugging Face Jobs [s1]. By using these tools, developers can refine the model's output to better suit particular tasks, such as creating accurate furniture geometry, which the company noted can be challenging for general-purpose models [s1].",
+        "Hugging Face claims that the Trellis model uses a unified latent representation, which allows decoders to convert data into various 3D formats without needing separate models for each [s1]. To improve performance on specific object categories, the company suggests using LoRA, or low-rank adaptation, which trains small adapter matrices while keeping the original model weights frozen [s1].",
+        "The company demonstrated this approach using a subset of the Google Scanned Objects (GSO) dataset, specifically focusing on footwear [s1]. In their testing, they found that while the pretrained model could generate the general shape of a shoe, it often struggled with the accuracy of the soles, a detail they aimed to correct through fine-tuning [s1].",
+        "Whether these techniques will be effective for all types of 3D assets remains to be seen, and the company notes that choosing which components to freeze during training is as important as choosing what to fine-tune [s1].",
+        "For professionals in industries like entertainment and simulation, this development offers a way to overcome the limitations of general-purpose 3D generation models [s1]. By enabling more precise control over geometry, users can create 3D assets that better align with specific project requirements [s1].",
+        "This shift provides a practical method for creators to improve the reliability of their 3D models, potentially reducing the manual work needed to correct errors in generated structures [s1]."
+      ],
+      "expert": [
+        "The release provides scripts for applying LoRA (low-rank adaptation) to the Trellis architecture [s1]. LoRA is a parameter-efficient fine-tuning method that freezes the pretrained weights of a model and introduces trainable rank-decomposition matrices into the layers [s1].",
+        "Hugging Face emphasizes a modular approach to the pipeline, where users can selectively fine-tune components responsible for structure, geometry, or materials while freezing others to optimize memory usage and training efficiency [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face releases fine-tuning tools for Trellis model",
+    "dek": "New scripts and containers allow users to adapt the Trellis model to specific tasks, improving accuracy for specialized 3D geometry needs.",
+    "metaDescription": "Hugging Face has released fine-tuning resources for the Trellis 3D generation model to help users customize outputs for robotics, media, and simulation.",
+    "keywords": [
+      "hugging face",
+      "trellis",
+      "3d generation",
+      "fine-tuning",
+      "lora"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face has released a set of fine-tuning scripts and containers designed to help users adapt the Trellis 3D generation model to their own specific datasets [s1]. This release aims to address the difficulty of standardizing 3D model representations and ensuring generated objects follow strict rules for applications in robotics, simulation, and media [s1].",
+          "The new resources allow users to run fine-tuning processes either locally or through Hugging Face Jobs [s1]. By using these tools, developers can refine the model's output to better suit particular tasks, such as creating accurate furniture geometry, which the company noted can be challenging for general-purpose models [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face claims that the Trellis model uses a unified latent representation, which allows decoders to convert data into various 3D formats without needing separate models for each [s1]. To improve performance on specific object categories, the company suggests using LoRA, or low-rank adaptation, which trains small adapter matrices while keeping the original model weights frozen [s1].",
+          "The company demonstrated this approach using a subset of the Google Scanned Objects (GSO) dataset, specifically focusing on footwear [s1]. In their testing, they found that while the pretrained model could generate the general shape of a shoe, it often struggled with the accuracy of the soles, a detail they aimed to correct through fine-tuning [s1].",
+          "Whether these techniques will be effective for all types of 3D assets remains to be seen, and the company notes that choosing which components to freeze during training is as important as choosing what to fine-tune [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For professionals in industries like entertainment and simulation, this development offers a way to overcome the limitations of general-purpose 3D generation models [s1]. By enabling more precise control over geometry, users can create 3D assets that better align with specific project requirements [s1].",
+          "This shift provides a practical method for creators to improve the reliability of their 3D models, potentially reducing the manual work needed to correct errors in generated structures [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is the purpose of the new Trellis fine-tuning tools?",
+        "a": "The tools allow users to adapt the Trellis 3D generation model to specific datasets, helping ensure generated objects meet strict requirements for robotics, simulation, and media."
+      },
+      {
+        "q": "How can developers improve Trellis performance on specific objects?",
+        "a": "Hugging Face suggests using LoRA, which trains small adapter matrices while keeping the original model weights frozen."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/build",
+        "label": "Build with AI APIs"
+      },
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Hugging Face lance des outils pour personnaliser le modèle 3D trellis",
+    "news": "Hugging Face a publié des ressources de réglage fin pour Trellis afin d'aider les utilisateurs à personnaliser la génération 3D pour des domaines comme la robotique et les médias.",
+    "thirty": [
+      "Hugging Face a lancé des outils permettant d'ajuster le modèle de génération 3D trellis [s1].",
+      "Les utilisateurs peuvent désormais adapter le modèle à des tâches spécifiques grâce aux techniques LoRA [s1].",
+      "Cette approche aide à améliorer la précision des géométries spécialisées en robotique et dans le secteur du divertissement [s1]."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face affirme que ses nouveaux scripts et conteneurs permettent aux utilisateurs d'ajuster Trellis sur leurs propres actifs 3D, localement ou via Hugging Face Jobs [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face soutient que le réglage fin de composants spécifiques du pipeline, comme ceux traitant la géométrie détaillée, peut améliorer les résultats pour certaines catégories d'objets [s1].",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La compatibilité de ces outils avec les futures versions des modèles Trellis.",
+      "Le temps de calcul nécessaire pour que les utilisateurs atteignent des gains de précision spécifiques."
+    ],
+    "matters": "Les professionnels de la robotique ou des médias peuvent désormais mieux adapter les modèles 3D pour répondre à des exigences de conception strictes. Ce changement permet d'obtenir une géométrie plus précise pour les objets générés par rapport à l'utilisation d'un modèle généraliste [s1].",
+    "timeline": [
+      {
+        "when": "2026",
+        "text": "Hugging Face a publié le guide de réglage fin et les ressources pour Trellis [s1].",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face a lancé de nouveaux outils pour aider les utilisateurs à personnaliser un modèle de génération 3D nommé Trellis. Un modèle de génération 3D est une forme d'IA qui crée des objets en trois dimensions à partir de données, utiles pour les films, les jeux vidéo ou la robotique [s1].",
+        "Ces modèles commettent parfois des erreurs, comme une forme d'objet incorrecte. Ces nouveaux outils permettent aux utilisateurs de procéder à un « réglage fin », c'est-à-dire d'entraîner davantage le modèle sur un ensemble plus restreint et spécifique d'exemples pour le rendre plus précis selon leurs besoins [s1]."
+      ],
+      "standard": [
+        "Hugging Face a publié une série de scripts et de conteneurs de réglage fin conçus pour aider les utilisateurs à adapter le modèle de génération 3D Trellis à leurs propres jeux de données [s1]. Cette nouveauté vise à résoudre les difficultés liées à la standardisation des représentations 3D et à garantir que les objets générés respectent des règles strictes pour des applications en robotique, en simulation et dans les médias [s1].",
+        "Les nouvelles ressources permettent d'exécuter les processus de réglage fin localement ou via Hugging Face Jobs [s1]. En utilisant ces outils, les développeurs peuvent affiner la sortie du modèle pour mieux répondre à des tâches particulières, comme la création de géométries de meubles précises, ce qui peut s'avérer complexe pour les modèles généralistes selon l'entreprise [s1].",
+        "Hugging Face indique que le modèle Trellis utilise une représentation latente unifiée, permettant aux décodeurs de convertir les données en divers formats 3D sans nécessiter de modèles distincts pour chaque format [s1]. Pour améliorer la performance sur des catégories d'objets spécifiques, l'entreprise suggère d'utiliser LoRA, ou adaptation de bas rang, qui entraîne de petites matrices d'adaptation tout en conservant les poids originaux du modèle figés [s1].",
+        "L'entreprise a démontré cette approche en utilisant un sous-ensemble du jeu de données Google Scanned Objects (GSO), en se concentrant sur des chaussures [s1]. Lors de leurs tests, ils ont constaté que si le modèle pré-entraîné pouvait générer la forme générale d'une chaussure, il peinait souvent sur la précision des semelles, un détail qu'ils ont cherché à corriger par le réglage fin [s1].",
+        "L'efficacité de ces techniques pour tous les types d'actifs 3D reste à démontrer, et l'entreprise souligne que le choix des composants à figer durant l'entraînement est tout aussi crucial que le choix de ce qui doit être ajusté [s1].",
+        "Pour les professionnels des industries du divertissement et de la simulation, ce développement offre un moyen de surmonter les limites des modèles de génération 3D généralistes [s1]. En permettant un contrôle plus précis de la géométrie, les utilisateurs peuvent créer des actifs 3D qui correspondent mieux aux exigences spécifiques de leurs projets [s1].",
+        "Ce changement fournit une méthode pratique pour améliorer la fiabilité des modèles 3D, réduisant potentiellement le travail manuel nécessaire pour corriger les erreurs dans les structures générées [s1]."
+      ],
+      "expert": [
+        "La publication fournit des scripts pour appliquer la technique LoRA (adaptation de bas rang) à l'architecture Trellis [s1]. LoRA est une méthode de réglage fin efficace en termes de paramètres qui fige les poids pré-entraînés d'un modèle et introduit des matrices de décomposition de rang entraînables dans les couches [s1].",
+        "Hugging Face met l'accent sur une approche modulaire du pipeline, où les utilisateurs peuvent ajuster sélectivement les composants responsables de la structure, de la géométrie ou des matériaux tout en en figeant d'autres pour optimiser l'utilisation de la mémoire et l'efficacité de l'entraînement [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face lance des outils pour personnaliser Trellis",
+    "dek": "De nouveaux scripts permettent d'adapter le modèle Trellis à des tâches précises, améliorant la précision géométrique pour des besoins spécialisés.",
+    "metaDescription": "Hugging Face publie des ressources de réglage fin pour le modèle Trellis afin d'aider les utilisateurs à personnaliser la génération 3D.",
+    "keywords": [
+      "hugging face",
+      "trellis",
+      "génération 3d",
+      "réglage fin",
+      "lora"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face a publié une série de scripts et de conteneurs de réglage fin conçus pour aider les utilisateurs à adapter le modèle de génération 3D Trellis à leurs propres jeux de données [s1]. Cette nouveauté vise à résoudre les difficultés liées à la standardisation des représentations 3D et à garantir que les objets générés respectent des règles strictes pour des applications en robotique, en simulation et dans les médias [s1].",
+          "Les nouvelles ressources permettent d'exécuter les processus de réglage fin localement ou via Hugging Face Jobs [s1]. En utilisant ces outils, les développeurs peuvent affiner la sortie du modèle pour mieux répondre à des tâches particulières, comme la création de géométries de meubles précises, ce qui peut s'avérer complexe pour les modèles généralistes selon l'entreprise [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face indique que le modèle Trellis utilise une représentation latente unifiée, permettant aux décodeurs de convertir les données en divers formats 3D sans nécessiter de modèles distincts pour chaque format [s1]. Pour améliorer la performance sur des catégories d'objets spécifiques, l'entreprise suggère d'utiliser LoRA, ou adaptation de bas rang, qui entraîne de petites matrices d'adaptation tout en conservant les poids originaux du modèle figés [s1].",
+          "L'entreprise a démontré cette approche en utilisant un sous-ensemble du jeu de données Google Scanned Objects (GSO), en se concentrant sur des chaussures [s1]. Lors de leurs tests, ils ont constaté que si le modèle pré-entraîné pouvait générer la forme générale d'une chaussure, il peinait souvent sur la précision des semelles, un détail qu'ils ont cherché à corriger par le réglage fin [s1].",
+          "L'efficacité de ces techniques pour tous les types d'actifs 3D reste à démontrer, et l'entreprise souligne que le choix des composants à figer durant l'entraînement est tout aussi crucial que le choix de ce qui doit être ajusté [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les professionnels des industries du divertissement et de la simulation, ce développement offre un moyen de surmonter les limites des modèles de génération 3D généralistes [s1]. En permettant un contrôle plus précis de la géométrie, les utilisateurs peuvent créer des actifs 3D qui correspondent mieux aux exigences spécifiques de leurs projets [s1].",
+          "Ce changement fournit une méthode pratique pour améliorer la fiabilité des modèles 3D, réduisant potentiellement le travail manuel nécessaire pour corriger les erreurs dans les structures générées [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "À quoi servent les nouveaux outils de réglage fin pour Trellis ?",
+        "a": "Ces outils permettent d'adapter le modèle Trellis à des jeux de données spécifiques pour garantir que les objets générés respectent des règles strictes en robotique, simulation et médias."
+      },
+      {
+        "q": "Comment améliorer la performance du modèle sur des objets spécifiques ?",
+        "a": "L'entreprise suggère d'utiliser LoRA, une méthode qui entraîne de petites matrices d'adaptation tout en conservant les poids originaux du modèle figés."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/build",
+        "label": "Créer avec les API d'IA"
+      },
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 313,
+    "fr": 364
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-12T19:54:19.391Z",
+      "verdict": "done",
+      "notes": [
+        "313 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-12T19:54:24.254Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): 2 3, 12, 2026-11-12.",
+        "No words in ALL CAPS in the headline."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-12T19:54:26.273Z",
+      "verdict": "pass",
+      "notes": []
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-12T19:54:30.919Z",
+      "verdict": "pass",
+      "notes": [
+        "364 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-12T19:54:32.836Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face releases fine-tuning tools for Trellis model (57)",
+        "fr: Hugging Face lance des outils pour personnaliser Trellis (56)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-12T19:54:37.815Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: spruce/grid \"TRELLIS\""
+      ]
+    }
+  ]
+}
