@@ -1,5 +1,29 @@
 [
   {
+    "id": "10rrj4s",
+    "at": "2026-11-13T22:14:28.279Z",
+    "stage": "copy",
+    "headline": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker."
+    ]
+  },
+  {
+    "id": "4n72y3",
+    "at": "2026-11-13T22:12:58.783Z",
+    "stage": "copy",
+    "headline": "Jensen Huang Didn’t Name His Own Replacement as One of Tech’s Most Powerful Women",
+    "reasons": [
+      "Not in the sources (names or numbers): 8,000, 000.",
+      "Too close to Hugging Face's wording (\"claude sonnet 4 6 gpt 5 gemini 3 1…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): 8,000, 000.",
+      "Too close to Hugging Face's wording (\"claude sonnet 4 6 gpt 5 gemini 3 1…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1hp9yhz",
     "at": "2026-11-12T19:54:15.128Z",
     "stage": "copy",

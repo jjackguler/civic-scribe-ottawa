@@ -1,0 +1,361 @@
+{
+  "version": 1,
+  "id": "17hu88x",
+  "slug": {
+    "en": "hugging-face-llama-cpp-stable-release",
+    "fr": "hugging-face-llama-cpp-version-stable"
+  },
+  "createdAt": "2026-11-13T22:14:21.648Z",
+  "updatedAt": "2026-11-13T22:14:21.648Z",
+  "topic": "agents",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem",
+      "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+      "publishedAt": "2026-11-13T14:05:22.000Z",
+      "storyId": "17hu88x",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b2",
+      "path": "/learn/small-business-first-steps",
+      "title": {
+        "en": "AI for small business: five first steps",
+        "fr": "L'IA pour les petites entreprises : cinq premiers pas"
+      }
+    },
+    {
+      "key": "b3",
+      "path": "/learn/start-in-30-minutes",
+      "title": {
+        "en": "Start using AI in 30 minutes",
+        "fr": "Commencer avec l'IA en 30 minutes"
+      }
+    }
+  ],
+  "cover": {
+    "color": "spruce",
+    "motif": "grid",
+    "en": {
+      "kicker": "Local AI",
+      "big": "1.0.0",
+      "small": "Stable foundation for private AI development"
+    },
+    "fr": {
+      "kicker": "IA locale",
+      "big": "1.0.0",
+      "small": "Base stable pour le développement d'IA privée"
+    }
+  },
+  "en": {
+    "headline": "Hugging Face releases llama.cpp v1.0.0 to support private local AI development",
+    "news": "Hugging Face released llama.cpp v1.0.0, introducing semantic versioning to provide a stable foundation for developers building private, cross-platform AI products.",
+    "thirty": [
+      "Hugging Face released llama.cpp v1.0.0 to stabilize local AI development.",
+      "The update introduces strict versioning rules for developers building private applications.",
+      "It supports running multi-modal models on hardware ranging from consumer PCs to servers."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says llama.cpp provides a lightweight and versatile platform for building private AI products.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face says it will now use major-version bumps to signal API and ABI incompatibilities.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether specific downstream applications will require immediate updates to maintain compatibility.",
+      "How many developers will transition their existing projects to the new v1.0.0 framework."
+    ],
+    "matters": "This release helps developers build more reliable AI tools that run locally on a user's own machine rather than in the cloud. By keeping data on a local device, users may better protect their personal information when using AI software.",
+    "timeline": [
+      {
+        "when": "3.5 years since its inception",
+        "text": "The project has grown significantly, with many downstream applications now depending on the library.",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "when": "Today",
+        "text": "Hugging Face released libraries v1.0.0.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face has updated a tool called llama.cpp, which allows computers to run artificial intelligence programs locally. Instead of sending your data to a company's cloud server, this tool lets your own machine do the work, which can help keep your information private.",
+        "The new version, 1.0.0, is designed to be more reliable for the software developers who build these AI tools. By setting clear rules for how the software is updated, the creators want to ensure that apps built today will continue to work correctly in the future."
+      ],
+      "standard": [
+        "Hugging Face has launched version 1.0.0 of llama.cpp, a software library designed to enable the execution of multi-modal large language models on various hardware platforms [s1]. The release aims to provide a stable foundation for the local AI ecosystem, allowing software to run on devices ranging from standard consumer machines to enterprise-grade servers [s1].",
+        "The update introduces formal semantic versioning rules for the project [s1]. By implementing these standards, the organization intends to provide clearer boundaries for developers who rely on its library interfaces, ensuring that future changes to the application programming interface (API) and application binary interface (ABI) are clearly signaled through major-version updates [s1].",
+        "Hugging Face states that this release reflects its responsibility to the growing community of developers who depend on its tools [s1]. The organization claims that llama.cpp is a versatile and lightweight platform for creating AI products that prioritize user privacy by operating locally [s1].",
+        "To support this development, the project continues to utilize infrastructure such as HF Buckets and HF Jobs to verify code changes [s1]. Hardware support for the platform currently includes contributions from NVIDIA, AMD, Qualcomm, Arm, IBM, and Intel [s1].",
+        "It remains unclear how quickly the broader developer community will adopt these new versioning standards or how existing applications will manage the transition to the v1.0.0 framework [s1].",
+        "For individuals, this development supports the growth of AI tools that function locally on their own hardware [s1]. By processing data on a local machine rather than sending it to a remote server, users may maintain greater control over their personal information [s1].",
+        "As more applications adopt these stable interfaces, users may experience more consistent performance and reliability in the AI tools they use for daily tasks [s1].",
+        "Canada's privacy law already applies to personal information you feed into AI tools [b2].",
+        "Do not paste your SIN, banking details, health records or other people's private information [b3]."
+      ],
+      "expert": [
+        "The release of llama.cpp v1.0.0 formalizes the project's commitment to semantic versioning for both the llama.cpp and ggml libraries [s1]. This shift mandates that any API or ABI changes must be accompanied by a major-version increment [s1].",
+        "The engine utilizes quantization and optimized backends to facilitate inference across diverse hardware architectures [s1]. The organization is scaling its continuous integration (CI) infrastructure using self-hosted runners to maintain codebase integrity across these platforms [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face releases llama.cpp v1.0.0 for local AI",
+    "dek": "The new version establishes stable API and ABI standards for developers, aiming to improve reliability for applications running multi-modal models on consumer hardware.",
+    "metaDescription": "Hugging Face has launched llama.cpp v1.0.0, introducing semantic versioning to provide a stable foundation for building private, local AI products.",
+    "keywords": [
+      "llama.cpp",
+      "hugging face",
+      "local ai",
+      "semantic versioning",
+      "privacy"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face has launched version 1.0.0 of llama.cpp, a software library designed to enable the execution of multi-modal large language models on various hardware platforms [s1]. The release aims to provide a stable foundation for the local AI ecosystem, allowing software to run on devices ranging from standard consumer machines to enterprise-grade servers [s1].",
+          "The update introduces formal semantic versioning rules for the project [s1]. By implementing these standards, the organization intends to provide clearer boundaries for developers who rely on its library interfaces, ensuring that future changes to the application programming interface (API) and application binary interface (ABI) are clearly signaled through major-version updates [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face states that this release reflects its responsibility to the growing community of developers who depend on its tools [s1]. The organization claims that llama.cpp is a versatile and lightweight platform for creating AI products that prioritize user privacy by operating locally [s1].",
+          "To support this development, the project continues to utilize infrastructure such as HF Buckets and HF Jobs to verify code changes [s1]. Hardware support for the platform currently includes contributions from NVIDIA, AMD, Qualcomm, Arm, IBM, and Intel [s1].",
+          "It remains unclear how quickly the broader developer community will adopt these new versioning standards or how existing applications will manage the transition to the v1.0.0 framework [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For individuals, this development supports the growth of AI tools that function locally on their own hardware [s1]. By processing data on a local machine rather than sending it to a remote server, users may maintain greater control over their personal information [s1].",
+          "As more applications adopt these stable interfaces, users may experience more consistent performance and reliability in the AI tools they use for daily tasks [s1]."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Canada's privacy law already applies to personal information you feed into AI tools [b2].",
+          "Do not paste your SIN, banking details, health records or other people's private information [b3]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is the purpose of llama.cpp v1.0.0?",
+        "a": "It provides a stable foundation for developers to build private, cross-platform AI products that run locally on various hardware."
+      },
+      {
+        "q": "How does local AI processing affect user privacy?",
+        "a": "By processing data on a local machine instead of a remote server, users can maintain greater control over their personal information."
+      }
+    ],
+    "links": []
+  },
+  "fr": {
+    "headline": "Hugging Face lance llama.cpp v1.0.0 pour stabiliser le développement d'IA locale",
+    "news": "Hugging Face a publié llama.cpp v1.0.0, introduisant un versionnage sémantique pour offrir une base stable aux développeurs qui créent des produits d'IA privés et multiplateformes.",
+    "thirty": [
+      "Hugging Face a lancé llama.cpp v1.0.0 pour stabiliser le développement d'IA locale.",
+      "La mise à jour introduit des règles de versionnage strictes pour les développeurs d'applications privées.",
+      "Le logiciel permet d'exécuter des modèles multimodaux sur divers appareils, des ordinateurs personnels aux serveurs."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face affirme que llama.cpp offre une plateforme légère et polyvalente pour concevoir des produits d'IA privés.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face indique qu'elle utilisera désormais des changements de version majeure pour signaler les incompatibilités d'API et d'ABI.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "La rapidité avec laquelle les applications tierces devront être mises à jour pour maintenir leur compatibilité.",
+      "Le nombre de développeurs qui migreront leurs projets existants vers le nouveau cadre v1.0.0."
+    ],
+    "matters": "Cette version aide les développeurs à créer des outils d'IA plus fiables fonctionnant localement sur la machine de l'utilisateur plutôt que dans le nuage. En conservant les données sur un appareil local, les utilisateurs peuvent mieux protéger leurs renseignements personnels lors de l'utilisation de logiciels d'IA.",
+    "timeline": [
+      {
+        "when": "3,5 ans depuis sa création",
+        "text": "Le projet a connu une croissance importante, de nombreuses applications dépendant désormais de la bibliothèque.",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "when": "Le lancement",
+        "text": "Hugging Face a publié les bibliothèques v1.0.0.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face a mis à jour un outil nommé llama.cpp, qui permet aux ordinateurs d'exécuter des programmes d'intelligence artificielle localement. Au lieu d'envoyer vos données vers le serveur en nuage d'une entreprise, cet outil laisse votre propre machine effectuer le travail, ce qui peut aider à garder vos informations privées.",
+        "La nouvelle version, 1.0.0, est conçue pour être plus fiable pour les développeurs de logiciels qui créent ces outils d'IA. En établissant des règles claires sur la façon dont le logiciel est mis à jour, les créateurs veulent s'assurer que les applications conçues aujourd'hui continueront de fonctionner correctement à l'avenir."
+      ],
+      "standard": [
+        "Hugging Face a lancé la version 1.0.0 de llama.cpp, une bibliothèque logicielle conçue pour permettre l'exécution de modèles de langage multimodaux sur diverses plateformes matérielles [s1]. Cette version vise à fournir une base stable à l'écosystème d'IA locale, permettant aux logiciels de fonctionner sur des appareils allant des machines grand public aux serveurs d'entreprise [s1].",
+        "La mise à jour introduit des règles formelles de versionnage sémantique pour le projet [s1]. En mettant en œuvre ces normes, l'organisation entend clarifier les limites pour les développeurs utilisant ses interfaces, garantissant que les modifications futures de l'interface de programmation d'application (API) et de l'interface binaire d'application (ABI) soient clairement signalées par des mises à jour de version majeure [s1].",
+        "Hugging Face déclare que cette version reflète sa responsabilité envers la communauté croissante de développeurs qui dépendent de ses outils [s1]. L'organisation soutient que llama.cpp est une plateforme polyvalente et légère pour créer des produits d'IA qui privilégient la confidentialité des utilisateurs en opérant localement [s1].",
+        "Pour soutenir ce développement, le projet continue d'utiliser des infrastructures comme HF Buckets et HF Jobs afin de vérifier les changements de code [s1]. Le support matériel pour la plateforme inclut actuellement des contributions de NVIDIA, AMD, Qualcomm, Arm, IBM et Intel [s1].",
+        "Il reste incertain à quelle vitesse la communauté de développeurs adoptera ces nouvelles normes de versionnage ou comment les applications existantes géreront la transition vers le cadre v1.0.0 [s1].",
+        "Pour les particuliers, ce développement favorise la croissance d'outils d'IA fonctionnant localement sur leur propre matériel [s1]. En traitant les données sur une machine locale plutôt que de les envoyer vers un serveur distant, les utilisateurs peuvent conserver un meilleur contrôle sur leurs renseignements personnels [s1].",
+        "À mesure que davantage d'applications adopteront ces interfaces stables, les utilisateurs pourraient bénéficier d'une performance et d'une fiabilité accrues dans les outils d'IA utilisés pour leurs tâches quotidiennes [s1].",
+        "La loi canadienne sur la protection des renseignements personnels s'applique déjà aux données que vous fournissez aux outils d'IA [b2].",
+        "Ne collez jamais votre NAS, vos données bancaires, médicales ou les renseignements privés d'autrui [b3]."
+      ],
+      "expert": [
+        "Le lancement de llama.cpp v1.0.0 formalise l'engagement du projet envers le versionnage sémantique pour les bibliothèques llama.cpp et ggml [s1]. Ce changement impose que toute modification d'API ou d'ABI soit accompagnée d'une augmentation de la version majeure [s1].",
+        "Le moteur utilise la quantification et des environnements optimisés pour faciliter l'inférence sur diverses architectures matérielles [s1]. L'organisation adapte son infrastructure d'intégration continue (CI) en utilisant des exécuteurs auto-hébergés pour maintenir l'intégrité du code sur ces plateformes [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face lance llama.cpp v1.0.0 pour l'IA locale",
+    "dek": "La nouvelle version instaure des normes API et ABI stables pour les développeurs, visant à accroître la fiabilité des modèles multimodaux sur le matériel grand public.",
+    "metaDescription": "Hugging Face a publié llama.cpp v1.0.0, introduisant un versionnage sémantique pour offrir une base stable aux développeurs créant des produits d'IA…",
+    "keywords": [
+      "llama.cpp",
+      "hugging face",
+      "ia locale",
+      "versionnage sémantique",
+      "confidentialité"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face a lancé la version 1.0.0 de llama.cpp, une bibliothèque logicielle conçue pour permettre l'exécution de modèles de langage multimodaux sur diverses plateformes matérielles [s1]. Cette version vise à fournir une base stable à l'écosystème d'IA locale, permettant aux logiciels de fonctionner sur des appareils allant des machines grand public aux serveurs d'entreprise [s1].",
+          "La mise à jour introduit des règles formelles de versionnage sémantique pour le projet [s1]. En mettant en œuvre ces normes, l'organisation entend clarifier les limites pour les développeurs utilisant ses interfaces, garantissant que les modifications futures de l'interface de programmation d'application (API) et de l'interface binaire d'application (ABI) soient clairement signalées par des mises à jour de version majeure [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face déclare que cette version reflète sa responsabilité envers la communauté croissante de développeurs qui dépendent de ses outils [s1]. L'organisation soutient que llama.cpp est une plateforme polyvalente et légère pour créer des produits d'IA qui privilégient la confidentialité des utilisateurs en opérant localement [s1].",
+          "Pour soutenir ce développement, le projet continue d'utiliser des infrastructures comme HF Buckets et HF Jobs afin de vérifier les changements de code [s1]. Le support matériel pour la plateforme inclut actuellement des contributions de NVIDIA, AMD, Qualcomm, Arm, IBM et Intel [s1].",
+          "Il reste incertain à quelle vitesse la communauté de développeurs adoptera ces nouvelles normes de versionnage ou comment les applications existantes géreront la transition vers le cadre v1.0.0 [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les particuliers, ce développement favorise la croissance d'outils d'IA fonctionnant localement sur leur propre matériel [s1]. En traitant les données sur une machine locale plutôt que de les envoyer vers un serveur distant, les utilisateurs peuvent conserver un meilleur contrôle sur leurs renseignements personnels [s1].",
+          "À mesure que davantage d'applications adopteront ces interfaces stables, les utilisateurs pourraient bénéficier d'une performance et d'une fiabilité accrues dans les outils d'IA utilisés pour leurs tâches quotidiennes [s1]."
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "La loi canadienne sur la protection des renseignements personnels s'applique déjà aux données que vous fournissez aux outils d'IA [b2].",
+          "Ne collez jamais votre NAS, vos données bancaires, médicales ou les renseignements privés d'autrui [b3]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quel est l'objectif de llama.cpp v1.0.0 ?",
+        "a": "Cette version fournit une base stable aux développeurs pour créer des produits d'IA privés et multiplateformes fonctionnant localement."
+      },
+      {
+        "q": "Quel est l'avantage de l'IA locale pour la vie privée ?",
+        "a": "Le traitement des données sur une machine locale, plutôt que sur un serveur distant, permet aux utilisateurs de mieux contrôler leurs renseignements personnels."
+      }
+    ],
+    "links": []
+  },
+  "model": "gemini",
+  "words": {
+    "en": 300,
+    "fr": 330
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:20.160Z",
+      "verdict": "done",
+      "notes": [
+        "300 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:55.275Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): 86, x86, ARM-based.",
+        "Remove the hype word \"breaking\"."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:14:00.355Z",
+      "verdict": "pass",
+      "notes": []
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:14:15.521Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): Aujourd'hui.",
+        "330 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:14:18.028Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face releases llama.cpp v1.0.0 for local AI (51)",
+        "fr: Hugging Face lance llama.cpp v1.0.0 pour l'IA locale (52)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:14:21.648Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: spruce/grid \"1.0.0\""
+      ]
+    }
+  ]
+}

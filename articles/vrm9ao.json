@@ -1,0 +1,307 @@
+{
+  "version": 1,
+  "id": "vrm9ao",
+  "slug": {
+    "en": "hugging-face-simready-central-robotics",
+    "fr": "hugging-face-simready-central-robotique"
+  },
+  "createdAt": "2026-11-13T22:13:14.761Z",
+  "updatedAt": "2026-11-13T22:13:14.761Z",
+  "topic": "robotics",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "Build a Robot Pick-and-Place Simulation with SimReady Assets",
+      "url": "https://huggingface.co/blog/nvidia/simready-assets-robot-pick-and-place",
+      "publishedAt": "2026-11-13T18:00:39.000Z",
+      "storyId": "vrm9ao",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "brass",
+    "motif": "grid",
+    "en": {
+      "kicker": "Robotics innovation",
+      "big": "SimReady",
+      "small": "Standardized assets for testing robotic environments"
+    },
+    "fr": {
+      "kicker": "Innovation robotique",
+      "big": "SimReady",
+      "small": "Actifs standardisés pour tester les environnements robotiques"
+    }
+  },
+  "en": {
+    "headline": "Hugging Face launches SimReady Central to standardize robot simulation assets",
+    "news": "Hugging Face released SimReady Central, a library of OpenUSD assets designed to simplify the creation and testing of robotic simulation environments.",
+    "thirty": [
+      "Hugging Face introduced SimReady Central to help developers build robot simulations.",
+      "The library provides pre-configured assets like robot arms and grippers for Isaac Sim.",
+      "Users can now test robotic movements and interactions using standardized, validated simulation properties."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says SimReady Foundation defines the necessary features for simulation use cases, including robot bodies, controllable joints, and specific drive settings.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether additional hardware models will be added to the library in the future.",
+      "How widely developers will adopt these specific asset standards for commercial robotics."
+    ],
+    "matters": "This library helps developers ensure that virtual robots behave realistically before they are deployed in physical environments. By using standardized assets, engineers can reduce the time spent troubleshooting movement and contact errors in simulations.",
+    "timeline": [
+      {
+        "when": "2026-11-13",
+        "text": "Hugging Face announced the launch of SimReady Central.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face has released a new collection of digital parts for robots, called SimReady Central. These parts are designed for use in computer simulations, which are virtual environments where engineers test how robots move and interact with objects without needing the physical machine [s1].",
+        "Each part in the library comes with pre-set information about its weight, how it moves, and how it hits other objects. This helps developers ensure that their virtual robots act like real ones, making it easier to test tasks like picking up a can before building the actual robot [s1]."
+      ],
+      "standard": [
+        "Hugging Face has launched SimReady Central, an open asset library designed to streamline the development of robotic simulations [s1]. This platform provides developers with OpenUSD assets that come pre-configured with essential simulation properties, such as mass, collision data, and joint drive settings [s1].",
+        "The initiative aims to support robotics workflows by offering validated models, such as the UR17G arm and the Robotiq 2F-140 gripper, which can be used to build scenes in Isaac Sim [s1]. By using these assets, users can perform tasks like pick-and-place simulations with agent-generated controls [s1].",
+        "Hugging Face claims that the SimReady Foundation framework establishes three levels of requirements for assets: profiles for specific use cases, features like controllable joints, and technical requirements for settings [s1]. These standards allow for validation checks to ensure that a robot's physical properties are correctly configured for simulation [s1].",
+        "The process requires users to assemble scenes and write task code to define work surfaces and movement controls [s1]. Before running full tasks, developers are encouraged to test joint limits, movement, and contact behavior to ensure the robot interacts correctly with objects like beverage cans [s1].",
+        "For those working in robotics, this tool simplifies the transition from visual design to functional simulation [s1]. By providing pre-validated assets, the library helps engineers identify potential interaction errors early, potentially improving the safety and reliability of robotic systems before they are built in the real world [s1]."
+      ],
+      "expert": [
+        "SimReady Central utilizes OpenUSD assets to provide standardized simulation properties, including mass, collision geometry, and joint drive parameters [s1]. The framework relies on the SimReady Foundation, which categorizes requirements into profiles, features, and specific drive settings to ensure compatibility within Isaac Sim [s1].",
+        "Developers must still define the task-specific logic, including the arm-gripper assembly, work surface geometry, and the control sequences for the end-effector [s1]. The workflow emphasizes the importance of validating joint limits and contact behavior to prevent simulation artifacts, such as objects passing through surfaces [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face launches SimReady Central for robot simulation",
+    "dek": "The new open asset library provides pre-configured models for robotics workflows, allowing developers to test pick-and-place tasks in Isaac Sim with validated physical properties.",
+    "metaDescription": "Hugging Face released SimReady Central, a library of OpenUSD assets designed to simplify the creation and testing of robotic simulation environments.",
+    "keywords": [
+      "hugging face",
+      "simready central",
+      "robotics simulation",
+      "openusd",
+      "isaac sim"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face has launched SimReady Central, an open asset library designed to streamline the development of robotic simulations [s1]. This platform provides developers with OpenUSD assets that come pre-configured with essential simulation properties, such as mass, collision data, and joint drive settings [s1].",
+          "The initiative aims to support robotics workflows by offering validated models, such as the UR17G arm and the Robotiq 2F-140 gripper, which can be used to build scenes in Isaac Sim [s1]. By using these assets, users can perform tasks like pick-and-place simulations with agent-generated controls [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face claims that the SimReady Foundation framework establishes three levels of requirements for assets: profiles for specific use cases, features like controllable joints, and technical requirements for settings [s1]. These standards allow for validation checks to ensure that a robot's physical properties are correctly configured for simulation [s1].",
+          "The process requires users to assemble scenes and write task code to define work surfaces and movement controls [s1]. Before running full tasks, developers are encouraged to test joint limits, movement, and contact behavior to ensure the robot interacts correctly with objects like beverage cans [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For those working in robotics, this tool simplifies the transition from visual design to functional simulation [s1]. By providing pre-validated assets, the library helps engineers identify potential interaction errors early, potentially improving the safety and reliability of robotic systems before they are built in the real world [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is SimReady Central?",
+        "a": "It is an open library of OpenUSD assets pre-configured with physical properties like mass and collision data to streamline robotic simulations."
+      },
+      {
+        "q": "How does this tool improve robotic safety?",
+        "a": "By providing pre-validated assets, it helps engineers identify interaction errors early, improving system reliability before real-world construction."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/build",
+        "label": "Build with AI APIs"
+      },
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Hugging Face lance SimReady Central pour normaliser les actifs de simulation robotique",
+    "news": "Hugging Face a lancé SimReady Central, une bibliothèque d'actifs OpenUSD conçue pour simplifier la création et l'essai d'environnements de simulation robotique.",
+    "thirty": [
+      "Hugging Face a introduit SimReady Central pour aider les développeurs à bâtir des simulations de robots.",
+      "La bibliothèque fournit des actifs préconfigurés comme des bras robotisés et des pinces pour Isaac Sim.",
+      "Les utilisateurs peuvent maintenant tester les mouvements et les interactions robotiques en utilisant des propriétés de simulation normalisées et validées."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face affirme que SimReady Foundation définit les caractéristiques nécessaires aux cas d'utilisation en simulation, incluant les corps de robots, les articulations contrôlables et des paramètres de commande spécifiques.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Si d'autres modèles de matériel seront ajoutés à la bibliothèque à l'avenir.",
+      "L'ampleur de l'adoption de ces normes d'actifs spécifiques par les développeurs pour la robotique commerciale."
+    ],
+    "matters": "Cette bibliothèque aide les développeurs à s'assurer que les robots virtuels se comportent de manière réaliste avant leur déploiement dans des environnements physiques. En utilisant des actifs normalisés, les ingénieurs peuvent réduire le temps consacré au dépannage des erreurs de mouvement et de contact dans les simulations.",
+    "timeline": [
+      {
+        "when": "2026-11-13",
+        "text": "Hugging Face a annoncé le lancement de SimReady Central.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Hugging Face a publié une nouvelle collection de pièces numériques pour robots, nommée SimReady Central. Ces pièces sont conçues pour être utilisées dans des simulations informatiques, soit des environnements virtuels où les ingénieurs testent la façon dont les robots bougent et interagissent avec des objets sans avoir besoin de la machine physique [s1].",
+        "Chaque pièce de la bibliothèque comprend des informations prédéfinies sur son poids, sa façon de bouger et sa réaction lors d'impacts avec d'autres objets. Cela aide les développeurs à s'assurer que leurs robots virtuels agissent comme de vrais robots, facilitant ainsi les tests de tâches comme ramasser une canette avant de construire le robot réel [s1]."
+      ],
+      "standard": [
+        "Hugging Face a lancé SimReady Central, une bibliothèque ouverte d'actifs conçue pour rationaliser le développement de simulations robotiques [s1]. Cette plateforme fournit aux développeurs des actifs OpenUSD préconfigurés avec des propriétés de simulation essentielles, telles que la masse, les données de collision et les paramètres de commande des articulations [s1].",
+        "L'initiative vise à soutenir les flux de travail en robotique en offrant des modèles validés, comme le bras UR17G et la pince Robotiq 2F-140, qui peuvent servir à construire des scènes dans Isaac Sim [s1]. En utilisant ces actifs, les utilisateurs peuvent effectuer des tâches comme des simulations de saisie avec des commandes générées par des agents [s1].",
+        "Hugging Face soutient que le cadre SimReady Foundation établit trois niveaux d'exigences pour les actifs: des profils pour des cas d'utilisation spécifiques, des fonctionnalités comme les articulations contrôlables, et des exigences techniques pour les paramètres [s1]. Ces normes permettent des vérifications de validation pour s'assurer que les propriétés physiques d'un robot sont correctement configurées pour la simulation [s1].",
+        "Le processus exige que les utilisateurs assemblent des scènes et rédigent du code de tâche pour définir les surfaces de travail et les commandes de mouvement [s1]. Avant d'exécuter des tâches complètes, les développeurs sont encouragés à tester les limites des articulations, le mouvement et le comportement de contact pour s'assurer que le robot interagit correctement avec des objets comme des canettes de boisson [s1].",
+        "Pour ceux qui travaillent en robotique, cet outil simplifie la transition de la conception visuelle à la simulation fonctionnelle [s1]. En fournissant des actifs prévalidés, la bibliothèque aide les ingénieurs à identifier rapidement les erreurs d'interaction potentielles, améliorant ainsi la sécurité et la fiabilité des systèmes robotiques avant leur construction dans le monde réel [s1]."
+      ],
+      "expert": [
+        "SimReady Central utilise des actifs OpenUSD pour fournir des propriétés de simulation normalisées, incluant la masse, la géométrie de collision et les paramètres de commande des articulations [s1]. Le cadre repose sur SimReady Foundation, qui catégorise les exigences en profils, fonctionnalités et paramètres de commande spécifiques pour assurer la compatibilité au sein d'Isaac Sim [s1].",
+        "Les développeurs doivent toujours définir la logique spécifique à la tâche, incluant l'assemblage bras-pince, la géométrie de la surface de travail et les séquences de contrôle pour l'effecteur terminal [s1]. Le flux de travail souligne l'importance de valider les limites des articulations et le comportement de contact pour éviter les artéfacts de simulation, tels que des objets traversant des surfaces [s1]."
+      ]
+    },
+    "seoTitle": "Hugging Face lance SimReady Central pour la robotique",
+    "dek": "La nouvelle bibliothèque ouverte offre des modèles préconfigurés pour les flux de travail en robotique, permettant aux développeurs de tester des tâches de saisie dans Isaac Sim avec des propriétés physiques validées.",
+    "metaDescription": "Hugging Face a lancé SimReady Central, une bibliothèque d'actifs OpenUSD conçue pour simplifier la création et l'essai d'environnements de simulation…",
+    "keywords": [
+      "hugging face",
+      "simready central",
+      "simulation robotique",
+      "openusd",
+      "isaac sim"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face a lancé SimReady Central, une bibliothèque ouverte d'actifs conçue pour rationaliser le développement de simulations robotiques [s1]. Cette plateforme fournit aux développeurs des actifs OpenUSD préconfigurés avec des propriétés de simulation essentielles, telles que la masse, les données de collision et les paramètres de commande des articulations [s1].",
+          "L'initiative vise à soutenir les flux de travail en robotique en offrant des modèles validés, comme le bras UR17G et la pince Robotiq 2F-140, qui peuvent servir à construire des scènes dans Isaac Sim [s1]. En utilisant ces actifs, les utilisateurs peuvent effectuer des tâches comme des simulations de saisie avec des commandes générées par des agents [s1]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face soutient que le cadre SimReady Foundation établit trois niveaux d'exigences pour les actifs: des profils pour des cas d'utilisation spécifiques, des fonctionnalités comme les articulations contrôlables, et des exigences techniques pour les paramètres [s1]. Ces normes permettent des vérifications de validation pour s'assurer que les propriétés physiques d'un robot sont correctement configurées pour la simulation [s1].",
+          "Le processus exige que les utilisateurs assemblent des scènes et rédigent du code de tâche pour définir les surfaces de travail et les commandes de mouvement [s1]. Avant d'exécuter des tâches complètes, les développeurs sont encouragés à tester les limites des articulations, le mouvement et le comportement de contact pour s'assurer que le robot interagit correctement avec des objets comme des canettes de boisson [s1]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour ceux qui travaillent en robotique, cet outil simplifie la transition de la conception visuelle à la simulation fonctionnelle [s1]. En fournissant des actifs prévalidés, la bibliothèque aide les ingénieurs à identifier rapidement les erreurs d'interaction potentielles, améliorant ainsi la sécurité et la fiabilité des systèmes robotiques avant leur construction dans le monde réel [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qu'est-ce que SimReady Central ?",
+        "a": "Il s'agit d'une bibliothèque ouverte d'actifs OpenUSD préconfigurés avec des propriétés physiques comme la masse et les données de collision pour faciliter les simulations."
+      },
+      {
+        "q": "Comment cet outil améliore-t-il la sécurité robotique ?",
+        "a": "En fournissant des actifs prévalidés, il aide les ingénieurs à identifier rapidement les erreurs d'interaction, améliorant la fiabilité des systèmes avant leur construction."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/build",
+        "label": "Créer avec les API d'IA"
+      },
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      }
+    ]
+  },
+  "model": "gemini",
+  "words": {
+    "en": 223,
+    "fr": 276
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:03.663Z",
+      "verdict": "done",
+      "notes": [
+        "223 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "mechanical",
+      "at": "2026-11-13T22:13:03.669Z",
+      "verdict": "pass",
+      "notes": [
+        "fact guard: every name and number found in the sources",
+        "house style: clean"
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:04.293Z",
+      "verdict": "pass",
+      "notes": []
+    },
+    {
+      "role": "translator",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:07.844Z",
+      "verdict": "pass",
+      "notes": [
+        "276 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:11.853Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face launches SimReady Central for robot simulation (59)",
+        "fr: Hugging Face lance SimReady Central pour la robotique (53)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "gemini-3.1-flash-lite",
+      "at": "2026-11-13T22:13:14.761Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: brass/grid \"SimReady\""
+      ]
+    }
+  ]
+}

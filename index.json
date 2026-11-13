@@ -1,6 +1,100 @@
 {
-  "updatedAt": "2026-11-12T19:54:37.818Z",
+  "updatedAt": "2026-11-13T22:14:21.650Z",
   "items": [
+    {
+      "id": "17hu88x",
+      "slug": {
+        "en": "hugging-face-llama-cpp-stable-release",
+        "fr": "hugging-face-llama-cpp-version-stable"
+      },
+      "createdAt": "2026-11-13T22:14:21.648Z",
+      "updatedAt": "2026-11-13T22:14:21.648Z",
+      "topic": "agents",
+      "format": "standard",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-13T14:05:22.000Z"
+      ],
+      "storyIds": [
+        "17hu88x"
+      ],
+      "cover": {
+        "color": "spruce",
+        "motif": "grid",
+        "en": {
+          "kicker": "Local AI",
+          "big": "1.0.0",
+          "small": "Stable foundation for private AI development"
+        },
+        "fr": {
+          "kicker": "IA locale",
+          "big": "1.0.0",
+          "small": "Base stable pour le développement d'IA privée"
+        }
+      },
+      "words": 300,
+      "en": {
+        "headline": "Hugging Face releases llama.cpp v1.0.0 to support private local AI development",
+        "dek": "The new version establishes stable API and ABI standards for developers, aiming to improve reliability for applications running multi-modal models on consumer hardware.",
+        "news": "Hugging Face released llama.cpp v1.0.0, introducing semantic versioning to provide a stable foundation for developers building private, cross-platform AI products.",
+        "matters": "This release helps developers build more reliable AI tools that run locally on a user's own machine rather than in the cloud. By keeping data on a local device, users may better protect their personal information when using AI software."
+      },
+      "fr": {
+        "headline": "Hugging Face lance llama.cpp v1.0.0 pour stabiliser le développement d'IA locale",
+        "dek": "La nouvelle version instaure des normes API et ABI stables pour les développeurs, visant à accroître la fiabilité des modèles multimodaux sur le matériel grand public.",
+        "news": "Hugging Face a publié llama.cpp v1.0.0, introduisant un versionnage sémantique pour offrir une base stable aux développeurs qui créent des produits d'IA privés et multiplateformes.",
+        "matters": "Cette version aide les développeurs à créer des outils d'IA plus fiables fonctionnant localement sur la machine de l'utilisateur plutôt que dans le nuage. En conservant les données sur un appareil local, les utilisateurs peuvent mieux protéger leurs renseignements personnels lors de l'utilisation de logiciels d'IA."
+      }
+    },
+    {
+      "id": "vrm9ao",
+      "slug": {
+        "en": "hugging-face-simready-central-robotics",
+        "fr": "hugging-face-simready-central-robotique"
+      },
+      "createdAt": "2026-11-13T22:13:14.761Z",
+      "updatedAt": "2026-11-13T22:13:14.761Z",
+      "topic": "robotics",
+      "format": "standard",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-13T18:00:39.000Z"
+      ],
+      "storyIds": [
+        "vrm9ao"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "grid",
+        "en": {
+          "kicker": "Robotics innovation",
+          "big": "SimReady",
+          "small": "Standardized assets for testing robotic environments"
+        },
+        "fr": {
+          "kicker": "Innovation robotique",
+          "big": "SimReady",
+          "small": "Actifs standardisés pour tester les environnements robotiques"
+        }
+      },
+      "words": 223,
+      "en": {
+        "headline": "Hugging Face launches SimReady Central to standardize robot simulation assets",
+        "dek": "The new open asset library provides pre-configured models for robotics workflows, allowing developers to test pick-and-place tasks in Isaac Sim with validated physical properties.",
+        "news": "Hugging Face released SimReady Central, a library of OpenUSD assets designed to simplify the creation and testing of robotic simulation environments.",
+        "matters": "This library helps developers ensure that virtual robots behave realistically before they are deployed in physical environments. By using standardized assets, engineers can reduce the time spent troubleshooting movement and contact errors in simulations."
+      },
+      "fr": {
+        "headline": "Hugging Face lance SimReady Central pour normaliser les actifs de simulation robotique",
+        "dek": "La nouvelle bibliothèque ouverte offre des modèles préconfigurés pour les flux de travail en robotique, permettant aux développeurs de tester des tâches de saisie dans Isaac Sim avec des propriétés physiques validées.",
+        "news": "Hugging Face a lancé SimReady Central, une bibliothèque d'actifs OpenUSD conçue pour simplifier la création et l'essai d'environnements de simulation robotique.",
+        "matters": "Cette bibliothèque aide les développeurs à s'assurer que les robots virtuels se comportent de manière réaliste avant leur déploiement dans des environnements physiques. En utilisant des actifs normalisés, les ingénieurs peuvent réduire le temps consacré au dépannage des erreurs de mouvement et de contact dans les simulations."
+      }
+    },
     {
       "id": "qztobn",
       "slug": {
