@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:abav69",
+    "at": "2026-11-13T18:41:22.364Z",
+    "reason": "fact guard / layout check failed twice: narration must be 115-175 words in total (got 98); scene 5 (note): \"small\" must be at most 100 characters (got \"The software is intended to perform tasks that previously required manual user input during checkout.\"); scene 6 (outro): \"lines[1]\" must be at most 26 characters (got \"Sources: TechCrunch, OpenAI\"); not in the sources: Access"
+  },
+  {
     "key": "article:qztobn",
     "at": "2026-11-13T02:06:06.715Z",
     "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; scene 3 (figure): \"say\" needs 1-3 sentences; scene 3 (figure): \"quote\" must be 4-at most 70 characters (got \"fine-tuning only specific pipeline components, such as those handling detailed geometry, can improve performance\"); scene 4 (note): \"small\" must be at most 100 characters (got \"Creators can now refine 3D assets to align with project requirements, potentially reducing manual work.\"); not in the sources: UPDATE, ADAPTED, Reliable"
