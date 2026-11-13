@@ -1,5 +1,10 @@
 [
   {
+    "key": "article:qztobn",
+    "at": "2026-11-13T02:06:06.715Z",
+    "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; scene 3 (figure): \"say\" needs 1-3 sentences; scene 3 (figure): \"quote\" must be 4-at most 70 characters (got \"fine-tuning only specific pipeline components, such as those handling detailed geometry, can improve performance\"); scene 4 (note): \"small\" must be at most 100 characters (got \"Creators can now refine 3D assets to align with project requirements, potentially reducing manual work.\"); not in the sources: UPDATE, ADAPTED, Reliable"
+  },
+  {
     "key": "article:1htqy4i",
     "at": "2026-11-12T02:30:13.397Z",
     "reason": "fact guard / layout check failed twice: scene 2 (clippings): needs 1-3 clips; scene 5 (note): \"small\" must be at most 100 characters (got \"Users should remain cautious about data privacy when granting AI agents access to personal information.\"); scene 6 (figure): \"quote\" must be 4-at most 70 characters (got \"Software that plans, uses tools and acts on its own is known as an agent.\"); scene 6 (figure): \"credit\" must be at most 60 characters (got null); not in the sources: GROW, Independent"
