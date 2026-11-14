@@ -1,0 +1,103 @@
+{
+  "version": 2,
+  "protocol": "1.0",
+  "id": "OD-0002",
+  "beat": "ai-and-work",
+  "headline": {
+    "en": "Amazon's CEO said AI would shrink Amazon's corporate workforce in the next few years."
+  },
+  "actor": {
+    "name": "Andy Jassy",
+    "kind": "executive",
+    "role": "President and CEO, Amazon"
+  },
+  "claim": {
+    "quote": "We will need fewer people doing some of the jobs that are being done today, and more people doing other types of jobs. […] in the next few years, we expect that this will reduce our total corporate workforce",
+    "lang": "en",
+    "context": "Message to Amazon employees, published on Amazon's news site",
+    "madeAt": "2025-06-17",
+    "source": {
+      "title": "Message from CEO Andy Jassy: Some thoughts on Generative AI",
+      "url": "https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-on-generative-ai",
+      "publisher": "Amazon"
+    },
+    "archiveUrl": "https://web.archive.org/web/20250618/https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-on-generative-ai"
+  },
+  "parts": [
+    {
+      "aspect": "event",
+      "text": {
+        "en": "Amazon's total corporate workforce will get smaller."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "scale",
+      "text": {
+        "en": "Not stated."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "period",
+      "text": {
+        "en": "In the next few years from June 2025."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "cause",
+      "text": {
+        "en": "Efficiency gains from using generative AI across the company."
+      },
+      "finding": "untested"
+    }
+  ],
+  "test": {
+    "measure": {
+      "en": "Amazon's corporate (non-warehouse) headcount, and the reasons Amazon gives for each round of corporate job cuts."
+    },
+    "baseline": {
+      "en": "Corporate headcount around June 2025, from Amazon's filings or statements (the editor copies the figure and its source)."
+    },
+    "scope": {
+      "en": "Amazon corporate roles, all countries, June 2025 to the end of 2027."
+    },
+    "evidenceAccepted": {
+      "en": "Amazon's annual reports, official layoff announcements and their stated reasons, and on-the-record accounts. A later statement by Amazon counts as Amazon's account, not as independent proof of the cause."
+    },
+    "checks": [
+      {
+        "document": "Amazon 2026 annual report (Form 10-K)",
+        "expectedBy": "2027-02-15"
+      },
+      {
+        "document": "Amazon 2027 annual report (Form 10-K)",
+        "expectedBy": "2028-02-15"
+      }
+    ]
+  },
+  "evidence": [],
+  "rightOfReply": {
+    "requestedAt": "2026-11-17T15:00:00Z",
+    "to": "Media relations, Amazon",
+    "extensions": [],
+    "response": null
+  },
+  "history": [
+    {
+      "status": "attributed",
+      "at": "2026-11-17T14:00:00Z",
+      "reason": {
+        "en": "Recorded from the CEO's message as Amazon published it. Nothing tested yet."
+      },
+      "editor": "EDITOR SIGNS HERE",
+      "stage": "testing"
+    }
+  ],
+  "coverage": [],
+  "corrections": [],
+  "aiAssistance": {
+    "en": "AI found the statement, copied the quote from the source and drafted the four parts and the test plan. Before the record opens, the editor checks every quote, link and date, sends the reply request and signs the first entry."
+  }
+}

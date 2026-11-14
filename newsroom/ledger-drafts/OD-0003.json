@@ -1,0 +1,99 @@
+{
+  "version": 2,
+  "protocol": "1.0",
+  "id": "OD-0003",
+  "beat": "ai-and-work",
+  "headline": {
+    "en": "Shopify's CEO told teams to show AI can't do the work before asking for more staff."
+  },
+  "actor": {
+    "name": "Tobi Lütke",
+    "kind": "executive",
+    "role": "CEO, Shopify"
+  },
+  "claim": {
+    "quote": "Before asking for more headcount and resources, teams must demonstrate why they cannot get what they want done using AI",
+    "lang": "en",
+    "context": "Internal memo, shared publicly by the CEO on social media",
+    "madeAt": "2025-04-07",
+    "source": {
+      "title": "Shopify CEO tells teams to consider using AI before growing headcount",
+      "url": "https://techcrunch.com/2025/04/07/shopify-ceo-tells-teams-to-consider-using-ai-before-growing-headcount/",
+      "publisher": "TechCrunch"
+    },
+    "archiveUrl": "https://web.archive.org/web/20250408/https://techcrunch.com/2025/04/07/shopify-ceo-tells-teams-to-consider-using-ai-before-growing-headcount/"
+  },
+  "parts": [
+    {
+      "aspect": "event",
+      "text": {
+        "en": "New headcount requests must first show why AI cannot do the work."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "scale",
+      "text": {
+        "en": "Not stated: applies to all teams."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "period",
+      "text": {
+        "en": "From April 2025, no end date given."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "cause",
+      "text": {
+        "en": "The company expects AI to do work that would otherwise need new hires."
+      },
+      "finding": "untested"
+    }
+  ],
+  "test": {
+    "measure": {
+      "en": "Shopify's total headcount and hiring after April 2025, and whether the rule is applied as described."
+    },
+    "baseline": {
+      "en": "Shopify's headcount at 31 December 2024, from its 2024 annual report (the editor copies the figure)."
+    },
+    "scope": {
+      "en": "Shopify, all teams and countries, April 2025 to the end of 2026."
+    },
+    "evidenceAccepted": {
+      "en": "Shopify's annual reports, job postings, on-the-record staff accounts and later statements by Shopify. A Canadian company: Canadian filings and reporting come first."
+    },
+    "checks": [
+      {
+        "document": "Shopify 2026 annual report (Form 10-K / 40-F)",
+        "expectedBy": "2027-02-28"
+      }
+    ]
+  },
+  "evidence": [],
+  "rightOfReply": {
+    "requestedAt": "2026-11-17T15:00:00Z",
+    "to": "Communications, Shopify",
+    "extensions": [],
+    "response": null
+  },
+  "history": [
+    {
+      "status": "attributed",
+      "at": "2026-11-17T14:00:00Z",
+      "reason": {
+        "en": "Recorded from the memo as quoted by TechCrunch; the editor matches it to the CEO's own post before opening. Nothing tested yet."
+      },
+      "editor": "EDITOR SIGNS HERE",
+      "stage": "testing"
+    }
+  ],
+  "coverage": [],
+  "corrections": [],
+  "aiAssistance": {
+    "en": "AI found the statement, copied the quote from the source and drafted the four parts and the test plan. Before the record opens, the editor checks every quote, link and date, sends the reply request and signs the first entry."
+  }
+}

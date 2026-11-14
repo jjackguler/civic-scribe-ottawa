@@ -106,6 +106,8 @@ Other rules (CI rejects a file that breaks one):
 French text is optional per field (`"fr"`); the French page shows the English text, marked,
 until a human-checked translation is added.
 
+Drafts prepared for the editor live in `newsroom/ledger-drafts/` (never on the site); see its README.
+
 ## Daily rhythm (one-person desk, about 3 hours, target 5 records a week)
 
 08:00 AI scans the watch list → 08:30 AI splits and matches claims → 09:00 editor picks 1–2

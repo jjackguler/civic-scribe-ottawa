@@ -69,6 +69,13 @@ directives file, morning Canadian AI Brief, Output watch issue).
   (`scripts/ledger-test.ts`) enforces the rules. Full guide:
   `docs/open-desk.md`. No real records yet: the first five are the editor's job (Day 3–5 of the plan).
 
+## First five ledger drafts (14 Nov 2026)
+- `newsroom/ledger-drafts/OD-0001..0005.json`: Klarna, Amazon (Jassy), Shopify (Lütke), Salesforce
+  (Benioff), IBM (Krishna). Not on the site. Valid records except the signature
+  (`EDITOR SIGNS HERE`), the real reply-request time and the baseline figures. Steps and source
+  checks: `newsroom/ledger-drafts/README.md`. CI: `scripts/ledger-drafts-test.ts` (drafts valid,
+  no unsigned live record).
+
 ## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)
 - The site has exactly five sections: Canada, Rights & power, Work & culture, Research, World
   (`src/lib/desks.ts`). Every feed story, newsroom summary and video maps to one of them
