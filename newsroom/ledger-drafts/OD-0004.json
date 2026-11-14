@@ -1,0 +1,99 @@
+{
+  "version": 2,
+  "protocol": "1.0",
+  "id": "OD-0004",
+  "beat": "ai-and-work",
+  "headline": {
+    "en": "Salesforce's CEO said AI agents let him cut support staff from 9,000 to about 5,000."
+  },
+  "actor": {
+    "name": "Marc Benioff",
+    "kind": "executive",
+    "role": "Chair and CEO, Salesforce"
+  },
+  "claim": {
+    "quote": "I’ve reduced it from 9,000 heads to about 5,000 because I need less heads.",
+    "lang": "en",
+    "context": "Interview on The Logan Bartlett Show podcast",
+    "madeAt": "2025-09-01",
+    "source": {
+      "title": "Salesforce CEO Marc Benioff says the company has cut 4,000 customer support staff for AI agents so far",
+      "url": "https://www.itpro.com/technology/artificial-intelligence/marc-benioff-says-salesforce-has-already-cut-4-000-customer-support-staff-for-ai-agents-and-workforce-productivity-hasnt-dipped",
+      "publisher": "IT Pro"
+    },
+    "archiveUrl": "https://web.archive.org/web/20250902/https://www.itpro.com/technology/artificial-intelligence/marc-benioff-says-salesforce-has-already-cut-4-000-customer-support-staff-for-ai-agents-and-workforce-productivity-hasnt-dipped"
+  },
+  "parts": [
+    {
+      "aspect": "event",
+      "text": {
+        "en": "Salesforce's customer support staff was cut."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "scale",
+      "text": {
+        "en": "From 9,000 to about 5,000: about 4,000 roles."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "period",
+      "text": {
+        "en": "Not stated: before September 2025."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "cause",
+      "text": {
+        "en": "AI agents now handle the work, so fewer people are needed."
+      },
+      "finding": "untested"
+    }
+  ],
+  "test": {
+    "measure": {
+      "en": "Salesforce customer support headcount, and how much support work AI agents close without a person."
+    },
+    "baseline": {
+      "en": "9,000 support staff, as stated by the CEO; the editor looks for an independent figure."
+    },
+    "scope": {
+      "en": "Salesforce customer support, all countries, 2024 to the end of fiscal 2027."
+    },
+    "evidenceAccepted": {
+      "en": "Salesforce's annual reports, WARN notices and other layoff filings, job postings, on-the-record staff accounts. The CEO's remarks alone show only that he said it."
+    },
+    "checks": [
+      {
+        "document": "Salesforce fiscal 2027 annual report (Form 10-K)",
+        "expectedBy": "2027-03-15"
+      }
+    ]
+  },
+  "evidence": [],
+  "rightOfReply": {
+    "requestedAt": "2026-11-17T15:00:00Z",
+    "to": "Media relations, Salesforce",
+    "extensions": [],
+    "response": null
+  },
+  "history": [
+    {
+      "status": "attributed",
+      "at": "2026-11-17T14:00:00Z",
+      "reason": {
+        "en": "Recorded from the CEO's interview as reported by IT Pro; the editor finds the episode and its date before opening. Nothing tested yet."
+      },
+      "editor": "EDITOR SIGNS HERE",
+      "stage": "testing"
+    }
+  ],
+  "coverage": [],
+  "corrections": [],
+  "aiAssistance": {
+    "en": "AI found the statement, copied the quote from the source and drafted the four parts and the test plan. Before the record opens, the editor checks every quote, link and date, sends the reply request and signs the first entry."
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "version": 2,
+  "protocol": "1.0",
+  "id": "OD-0005",
+  "beat": "ai-and-work",
+  "headline": {
+    "en": "IBM's CEO said AI replaced hundreds of HR workers but total employment went up."
+  },
+  "actor": {
+    "name": "Arvind Krishna",
+    "kind": "executive",
+    "role": "Chairman and CEO, IBM"
+  },
+  "claim": {
+    "quote": "Our total employment has actually gone up, because what [AI] does is it gives you more investment to put into other areas",
+    "lang": "en",
+    "context": "Interview with The Wall Street Journal",
+    "madeAt": "2025-05-05",
+    "source": {
+      "title": "IBM Replaced Hundreds of HR Workers With AI, According to Its CEO",
+      "url": "https://www.entrepreneur.com/business-news/ibm-ceo-ai-replaced-hundreds-of-human-resources-staff/491341",
+      "publisher": "Entrepreneur"
+    },
+    "archiveUrl": "https://web.archive.org/web/20250509/https://www.entrepreneur.com/business-news/ibm-ceo-ai-replaced-hundreds-of-human-resources-staff/491341"
+  },
+  "parts": [
+    {
+      "aspect": "event",
+      "text": {
+        "en": "AI replaced HR roles while IBM's total employment rose."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "scale",
+      "text": {
+        "en": "Several hundred HR roles, as reported; total employment change not stated."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "period",
+      "text": {
+        "en": "Not stated: up to May 2025."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "cause",
+      "text": {
+        "en": "Savings from AI were put into hiring in other areas, such as programming and sales."
+      },
+      "finding": "untested"
+    }
+  ],
+  "test": {
+    "measure": {
+      "en": "IBM's total headcount, and HR and other back-office headcount, from 2023 to 2026."
+    },
+    "baseline": {
+      "en": "IBM's total headcount at 31 December 2023 and 2024, from its annual reports (the editor copies the figures)."
+    },
+    "scope": {
+      "en": "IBM, all countries, 2023 to the end of 2026."
+    },
+    "evidenceAccepted": {
+      "en": "IBM's annual reports, layoff filings, job postings, on-the-record staff accounts. The CEO's interview alone shows only that he said it."
+    },
+    "checks": [
+      {
+        "document": "IBM 2026 annual report (Form 10-K)",
+        "expectedBy": "2027-02-28"
+      }
+    ]
+  },
+  "evidence": [],
+  "rightOfReply": {
+    "requestedAt": "2026-11-17T15:00:00Z",
+    "to": "Media relations, IBM",
+    "extensions": [],
+    "response": null
+  },
+  "history": [
+    {
+      "status": "attributed",
+      "at": "2026-11-17T14:00:00Z",
+      "reason": {
+        "en": "Recorded from the CEO's interview as reported by Entrepreneur; the editor reads the Wall Street Journal original before opening. Nothing tested yet."
+      },
+      "editor": "EDITOR SIGNS HERE",
+      "stage": "testing"
+    }
+  ],
+  "coverage": [],
+  "corrections": [],
+  "aiAssistance": {
+    "en": "AI found the statement, copied the quote from the source and drafted the four parts and the test plan. Before the record opens, the editor checks every quote, link and date, sends the reply request and signs the first entry."
+  }
+}

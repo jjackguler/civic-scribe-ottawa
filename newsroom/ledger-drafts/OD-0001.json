@@ -1,0 +1,102 @@
+{
+  "version": 2,
+  "protocol": "1.0",
+  "id": "OD-0001",
+  "beat": "ai-and-work",
+  "headline": {
+    "en": "Klarna said its AI assistant does the work of 700 full-time customer service agents."
+  },
+  "actor": {
+    "name": "Klarna",
+    "kind": "company"
+  },
+  "claim": {
+    "quote": "It is doing the equivalent work of 700 full-time agents",
+    "lang": "en",
+    "context": "Press release on the first month of its AI assistant",
+    "madeAt": "2024-02-27",
+    "source": {
+      "title": "Klarna AI assistant handles two-thirds of customer service chats in its first month",
+      "url": "https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/",
+      "publisher": "Klarna"
+    },
+    "archiveUrl": "https://web.archive.org/web/20240228/https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/"
+  },
+  "parts": [
+    {
+      "aspect": "event",
+      "text": {
+        "en": "An AI assistant handles customer service chats that people used to handle."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "scale",
+      "text": {
+        "en": "The work of 700 full-time agents."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "period",
+      "text": {
+        "en": "The assistant's first month, to late February 2024."
+      },
+      "finding": "untested"
+    },
+    {
+      "aspect": "cause",
+      "text": {
+        "en": "The AI assistant, built with OpenAI, does the work."
+      },
+      "finding": "untested"
+    }
+  ],
+  "test": {
+    "measure": {
+      "en": "Customer service staff (Klarna's own and outsourced) and the share of chats the assistant closes without a person, from 2024 to 2026."
+    },
+    "baseline": {
+      "en": "Customer service staffing before February 2024, from Klarna's filings or statements (the editor copies the figure and its source)."
+    },
+    "scope": {
+      "en": "Klarna customer service, all markets, February 2024 to the end of 2026."
+    },
+    "evidenceAccepted": {
+      "en": "Klarna's filed reports, statements from its outsourcing partners, on-the-record staff accounts and later statements by Klarna. The press release alone shows only that Klarna said it."
+    },
+    "checks": [
+      {
+        "document": "Klarna Q4 2026 results",
+        "expectedBy": "2027-02-28"
+      },
+      {
+        "document": "Klarna 2026 annual report",
+        "expectedBy": "2027-04-30"
+      }
+    ]
+  },
+  "evidence": [],
+  "rightOfReply": {
+    "requestedAt": "2026-11-17T15:00:00Z",
+    "to": "Press office, Klarna",
+    "extensions": [],
+    "response": null
+  },
+  "history": [
+    {
+      "status": "attributed",
+      "at": "2026-11-17T14:00:00Z",
+      "reason": {
+        "en": "Recorded from Klarna's own press release. Nothing tested yet."
+      },
+      "editor": "EDITOR SIGNS HERE",
+      "stage": "testing"
+    }
+  ],
+  "coverage": [],
+  "corrections": [],
+  "aiAssistance": {
+    "en": "AI found the statement, copied the quote from the source and drafted the four parts and the test plan. Before the record opens, the editor checks every quote, link and date, sends the reply request and signs the first entry."
+  }
+}
