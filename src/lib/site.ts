@@ -68,13 +68,12 @@ export const SITE = {
   },
   email: {
     /**
-     * The newsroom's working inbox. hello@ and corrections@aibroadsheet.com do not receive mail yet
-     * (owner, 15 Nov 2026), so every address on the site points here. Once Cloudflare Email Routing
-     * forwards those addresses, switch these three back.
+     * hello@ forwards to the owner's inbox through Cloudflare Email Routing (confirmed by the owner,
+     * 15 Nov 2026). corrections@ is not confirmed, so corrections also go to hello@ for now.
      */
-    general: "aibroadsheet@gmail.com",
-    editor: "aibroadsheet@gmail.com",
-    advertise: "aibroadsheet@gmail.com",
+    general: "hello@aibroadsheet.com",
+    editor: "hello@aibroadsheet.com",
+    advertise: "hello@aibroadsheet.com",
   },
   newsletter: {
     /** The weekly newsletter. Launches with issue #1; founding sponsors are sold on /advertise. */
