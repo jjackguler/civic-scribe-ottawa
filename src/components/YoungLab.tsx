@@ -12,7 +12,7 @@ import {
   AlarmClock, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Bot, BrainCircuit, Calculator, ChefHat, Clapperboard, Compass,
   Eye, GraduationCap, HandHeart, HeartHandshake, Images, Keyboard, Languages, Lightbulb, Lock, Mail, Map as MapIcon,
   MessageSquareText, Mic, Microwave, Palette, Puzzle, RotateCcw, Scale, ScanFace, SearchCheck, ShieldCheck, Sparkles,
-  Stamp as StampIcon, Thermometer, TrafficCone, Users, WandSparkles, Workflow, type LucideIcon,
+  Stamp as StampIcon, Thermometer, TrafficCone, Users, WandSparkles, Workflow, House, Gamepad2, CloudSun, CircleDot, Camera, type LucideIcon,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { useLocale } from "@/lib/locale-context";
@@ -31,6 +31,7 @@ export const ICONS: Record<string, LucideIcon> = {
   images: Images, puzzle: Puzzle, "scan-face": ScanFace, "book-open": BookOpen, users: Users, "brain-circuit": BrainCircuit,
   bot: Bot, scale: Scale, "hand-heart": HandHeart, "wand-sparkles": WandSparkles, "shield-check": ShieldCheck,
   "graduation-cap": GraduationCap, "heart-handshake": HeartHandshake, palette: Palette, "alarm-clock": AlarmClock,
+  house: House, gamepad: Gamepad2, "cloud-sun": CloudSun, "circle-dot": CircleDot, camera: Camera,
 };
 
 export const ACTIVITY_ICON: Record<ActivityId, LucideIcon> = {
