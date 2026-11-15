@@ -758,16 +758,13 @@ html.keeper-calm *, html.keeper-calm *::before, html.keeper-calm *::after { anim
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
 }
 
-/* Bit, the lab guide, and its speech bubble */
+/* Lab note card (no mascot) */
 .yl-guide { display: flex; align-items: flex-end; gap: 0.9rem; }
 .yl-guide.is-compact { align-items: center; }
 .yl-bubble { position: relative; flex: 1; min-width: 0; padding: 0.9em 1.1em 1em; border: 3px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); }
-.yl-bubble::before { content: ""; position: absolute; left: -15px; bottom: 22px; border: 9px solid transparent; border-right: 12px solid var(--ink); border-left-width: 0; }
 @media (max-width: 639px) {
   .yl-guide { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-  .yl-guide-bot svg { width: 64px; height: auto; }
   .yl-bubble { width: 100%; }
-  .yl-bubble::before { left: 26px; top: -15px; bottom: auto; border: 9px solid transparent; border-bottom: 12px solid var(--ink); border-top-width: 0; }
 }
 .yl-bot-body { transform-box: fill-box; transform-origin: 50% 100%; animation: yl-bob 3.2s ease-in-out infinite; }
 .yl-bot-eyes { transform-box: fill-box; transform-origin: center; animation: yl-blink 4.6s ease-in-out infinite; }

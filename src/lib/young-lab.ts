@@ -46,7 +46,7 @@ export const ACTIVITIES: Activity[] = [
   {
     id: "ai-or-not", group: "explorers", n: 1, tone: "sun",
     title: { en: "AI or not?", fr: "IA ou pas?" },
-    tagline: { en: "Everyday machines: which ones really use AI? Three levels, from warm-up to expert, with Bit as your guide.", fr: "Des machines de tous les jours : lesquelles utilisent vraiment l'IA? Trois niveaux, de l'échauffement à expert, avec Bit comme guide." },
+    tagline: { en: "Everyday machines: which ones really use AI? Three levels, from warm-up to expert.", fr: "Des machines de tous les jours : lesquelles utilisent vraiment l'IA? Trois niveaux, de l'échauffement à expert." },
     stamp: { en: "AI spotter", fr: "Repère l'IA" },
     minutes: 12,
     teaches: { en: "AI is software that learns patterns from examples; plenty of useful machines just follow fixed rules.", fr: "L'IA est un logiciel qui apprend des régularités à partir d'exemples; bien des machines utiles suivent simplement des règles fixes." },

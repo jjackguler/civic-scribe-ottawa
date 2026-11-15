@@ -98,8 +98,8 @@ function Classroom() {
           <p className="mt-3 text-[1.15rem] sm:text-[1.3rem] leading-relaxed max-w-[42rem]">{t("Free, bilingual games. No accounts, no sign-ups, no setup. Share one link and press play.", "Des jeux gratuits et bilingues. Pas de compte, pas d'inscription, rien à installer. Partagez un lien et lancez le jeu.")}</p>
           <div className="mt-6 max-w-[44rem]">
             <LabGuide say={t(
-              "Hello, teachers! I'm Bit. Pick a game below, put it on the board or share the link, then use the lesson sheet to talk about it. Students can press Read it to me if they want me to read aloud.",
-              "Bonjour! Je suis Bit. Choisissez un jeu ci-dessous, affichez-le au tableau ou partagez le lien, puis utilisez la fiche de leçon pour en discuter. Les élèves peuvent appuyer sur Lis-le-moi pour que je lise à voix haute.",
+              "Pick a game below, put it on the board or share the link, then use the lesson sheet to talk about it. Students can press Read it to me to hear the text aloud.",
+              "Choisissez un jeu ci-dessous, affichez-le au tableau ou partagez le lien, puis utilisez la fiche de leçon pour en discuter. Les élèves peuvent appuyer sur Lis-le-moi pour entendre le texte à voix haute.",
             )} />
           </div>
         </div>

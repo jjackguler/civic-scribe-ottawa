@@ -55,7 +55,7 @@ directives file, morning Canadian AI Brief, Output watch issue).
   from app.nearpod.com, so teachers already use it in class. Plan: Claude Doc "Young Lab: edutainment yatırım planı".
 - **Bit**, the Young Lab guide (`src/components/young/LabGuide.tsx`): code-drawn SVG bot with a speech
   bubble and a "Read it to me" button using the browser's own speechSynthesis (fixed lines only, nothing
-  typed is read or sent). Name kept in `GUIDE_NAME`; the owner may still pick a different mascot.
+  typed is read or sent). 15 Nov 2026: the owner rejected robots, mascots and cartoon icons, so the Bit robot was removed; LabGuide is now a plain "Lab note" card. Design brief: no mascot, editorial 3D objects (paper, glass, brass), site tokens.
 - **AI or not?** now has three levels (6 cards each, `level` on `AI_OR_NOT` items): Warm-up, Trickier,
   Expert (adds a "Partly AI" answer). All levels are open; the stamp comes with the warm-up.
 - **/labs/young/classroom** (Classroom mode): three steps, a five-lesson Explorers unit with "Open on the

@@ -123,8 +123,8 @@ export function AiOrNot() {
     return (
       <div ref={topRef} tabIndex={-1} className="grid gap-6 outline-none">
         <LabGuide say={t(
-          "Hi, I'm Bit! Lots of machines around you seem smart. But which ones really use AI? Start with the warm-up. Each level gets a little harder.",
-          "Salut, je suis Bit! Plein de machines autour de toi ont l'air intelligentes. Mais lesquelles utilisent vraiment l'IA? Commence par l'échauffement. Chaque niveau est un peu plus difficile.",
+          "Lots of machines around you seem smart. But which ones really use AI? Start with the warm-up. Each level gets a little harder.",
+          "Plein de machines autour de toi ont l'air intelligentes. Mais lesquelles utilisent vraiment l'IA? Commence par l'échauffement. Chaque niveau est un peu plus difficile.",
         )} />
         <div className="yl-levels" role="list" aria-label={t("Levels", "Niveaux")}>
           {LEVELS.map(l => {
