@@ -33,6 +33,7 @@ import {
   type Story,
 } from "@/lib/news";
 import type { Locale } from "@/lib/i18n";
+import { deskOf, deskOfSummary, deskLabel, type DeskId } from "@/lib/desks";
 
 const TOTAL_MS = 88_000;
 const MAX_SLIDES = 8;
@@ -44,6 +45,8 @@ export type Slide = {
   id: string;
   /** "ours": our newsroom's summary. "watch": another outlet's story, headline and link only. */
   source: "ours" | "watch";
+  /** The site desk (Canada, AI, Robotics, Tech, Human stakes), shown as the slide kicker. */
+  desk: DeskId;
   flag: Flag;
   headline: string;
   what: string;
@@ -130,6 +133,7 @@ function buildSlides(
   const fromSummary = (a: NewsroomSummary, flag: Flag): Slide => ({
     id: a.id,
     source: "ours",
+    desk: deskOfSummary(a),
     flag,
     headline: a[locale].headline,
     what: firstSentence(a[locale].dek || a[locale].news),
@@ -143,6 +147,7 @@ function buildSlides(
     return {
       id: s.id,
       source: "watch",
+      desk: deskOf(s),
       flag,
       headline: d.title,
       what: d.summary ? firstSentence(d.summary) : "",
@@ -491,6 +496,7 @@ function SlideView({ s, index, total }: { s: Slide; index: number; total: number
             {s.flag === "breaking" ? c.breaking : c.developing}
           </span>
         )}
+        <span className="text-white">{deskLabel(s.desk, locale)}</span>
         <span className={s.source === "ours" ? "text-brass" : "text-white/70"}>
           {s.source === "ours" ? c.ours : c.watch}
         </span>

@@ -68,6 +68,7 @@ directives file, morning Canadian AI Brief, Output watch issue).
   (last 48 h, newest first); other outlets' clusters (2+ sources) only fill a thin day, labelled "On our watch".
   Plays only on screen, pauses on hover/focus, no autoplay for reduced motion, ends with "You're up to date".
   Data refresh by themselves (news 90 s, newsroom 15 min). Sits below the story bubbles/breaking strip, above the hero.
+  Each slide shows its desk (Canada, AI, Robotics, Tech, Human stakes) via `deskOfSummary` / `deskOf`.
 
 ## Search status codes (9 Nov 2026)
 - Google reported "Soft 404": pages that say "not available" or "withdrawn" but answer 200. Now a
