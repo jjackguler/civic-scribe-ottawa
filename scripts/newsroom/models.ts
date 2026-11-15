@@ -27,7 +27,11 @@ export async function withRetry(f: () => Promise<Response>, max = 1, wait = (n: 
 export type Provider = "gemini" | "claude";
 export type NewsroomConfig = { provider: Provider; profile: "standard" | "economy"; names: Record<Tier, string>; chain: Record<Tier, string[]>; retries: number; busyFallback?: string };
 /** Known illustrative prices only; unrecognised models never borrow another model's price. */
-export const PRICE_PER_M: Record<string, [number, number]> = { "gemini-3.1-flash-lite": [0.25, 1.5], "gemini-3.8-flash": [0.75, 3.75] };
+export const PRICE_PER_M: Record<string, [number, number]> = {
+  "gemini-3.1-flash-lite": [0.25, 1.5], "gemini-3.8-flash": [0.75, 3.75],
+  // Anthropic list prices per million tokens (Nov 2026). Haiku 5.5 is $0.10/$0.50 up to 100K input tokens; our prompts stay well under that.
+  "claude-sonnet-5-5": [2, 10], "claude-haiku-5-5": [0.1, 0.5], "claude-haiku-4-5": [1, 5], "claude-haiku-4-5-20251001": [1, 5],
+};
 export function priceOf(model: string): [number, number] | null { return PRICE_PER_M[model] ?? null; }
 export function resolveConfig(e: Record<string, string | undefined>): NewsroomConfig | { error: string } {
   const g = (k: string) => e[k]?.trim() || "";
@@ -42,8 +46,8 @@ export function resolveConfig(e: Record<string, string | undefined>): NewsroomCo
   const retries = Math.min(2, Math.max(0, Math.floor(Number(g("NEWSROOM_RETRIES") || "2") || 0)));
   const cheap = g("NEWSROOM_ECONOMY_MODEL") || "gemini-3.1-flash-lite";
   const names: Record<Tier, string> = provider === "claude" ? {
-    writer: g("NEWSROOM_CLAUDE_WRITER") || g("CLAUDE_MODEL") || (profile === "economy" ? "claude-haiku-4-5-20251001" : "claude-sonnet-5-5"),
-    checker: g("NEWSROOM_CLAUDE_CHECKER") || "claude-haiku-4-5-20251001",
+    writer: g("NEWSROOM_CLAUDE_WRITER") || g("CLAUDE_MODEL") || (profile === "economy" ? "claude-haiku-5-5" : "claude-sonnet-5-5"),
+    checker: g("NEWSROOM_CLAUDE_CHECKER") || "claude-haiku-5-5",
   } : {
     writer: g("NEWSROOM_GEMINI_WRITER") || (profile === "economy" ? cheap : "gemini-3.8-flash"),
     checker: g("NEWSROOM_GEMINI_CHECKER") || (profile === "economy" ? cheap : "gemini-3.8-flash"),
@@ -132,7 +136,12 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
             const body=isGemini ? {
               systemInstruction:{parts:[{text:system+"\n\nReply with JSON only."}]},contents:[{role:"user",parts:[{text:user}]}],
               generationConfig:{maxOutputTokens:geminiMaxOutput(maxTokens,e),temperature:0.3,responseMimeType:"application/json"}
-            } : {model,max_tokens:maxTokens,temperature:0.3,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}]};
+            } : {
+              // Current Claude models reject a non-default temperature and always think, so the answer gets room on top of
+              // the thinking, and effort keeps the thinking short: medium for the writer, low for the checker.
+              model,max_tokens:maxTokens+4096,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}],
+              output_config:{effort:tier==="writer"?"medium":"low"},
+            };
             // Long articles with thinking can take Gemini over 2.5 minutes; NEWSROOM_TIMEOUT_MS overrides.
             return transport(url,{method:"POST",headers,body:JSON.stringify(body),signal:AbortSignal.timeout(Number(e.NEWSROOM_TIMEOUT_MS)||280000)});
           },cfg.retries,wait);
