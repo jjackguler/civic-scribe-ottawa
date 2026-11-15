@@ -51,6 +51,7 @@ type Entry = { path: string; changefreq: "always" | "hourly" | "daily" | "weekly
 const STATIC: Entry[] = [
   { path: "/", changefreq: "always", priority: "1.0" },
   { path: "/news", changefreq: "always", priority: "0.9" },
+  { path: "/week", changefreq: "weekly", priority: "0.8" },
   { path: "/watch", changefreq: "hourly", priority: "0.7" },
   { path: "/showcase", changefreq: "hourly", priority: "0.7" },
   { path: "/originals", changefreq: "daily", priority: "0.7" },

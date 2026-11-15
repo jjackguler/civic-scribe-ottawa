@@ -138,7 +138,7 @@ function NewsPage() {
                 {related.map(id => (
                   <li key={id}><Link to="/news" search={{ section: id }} className="flex items-center justify-between py-2.5 font-semibold hover:text-lake">{pick(SECTIONS.find(x => x.id === id)!.label)}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></li>
                 ))}
-                {(section === "canada" || section === "policy" || section === "government" || section === "ministry") && (
+                {section === "canada" && (
                   <li><Link to="/canada" className="flex items-center justify-between py-2.5 font-semibold text-lake hover:underline">{fr ? "Dossier : l'IA au Canada" : "Hub: AI in Canada"}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></li>
                 )}
               </ul>

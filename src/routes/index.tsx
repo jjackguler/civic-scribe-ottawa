@@ -20,6 +20,7 @@ import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
 import { QuizCard } from "@/components/Quiz";
 import { YoungLabBand } from "@/components/YoungLab";
+import { WeekSheetBand } from "@/components/WeekSheet";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { getDispatchesFast } from "@/lib/dispatch";
@@ -189,6 +190,9 @@ function Home() {
       ) : (
         <LiveHero slides={slides} latest={newestFirst} own={ownColumn} />
       )}
+
+      {/* The week in AI, robotics and tech: the editor's picks in the house format (docs/editorial-concept.md). */}
+      <WeekSheetBand className="container-mw mt-12" />
 
       {/* Open Desk: the ledger of recorded and tested claims, right under our own work. */}
       <LedgerFront className="container-mw mt-12" />

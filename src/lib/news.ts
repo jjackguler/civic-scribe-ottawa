@@ -87,7 +87,7 @@ export const TOPICS: { id: Topic; label: Bi }[] = [
 export type SectionId = DeskId;
 export { DESKS, DESK_IDS, deskOf, deskOfTopic, deskOfSummary, deskOfOriginal, deskLabel, isDeskId, legacySectionDesk, type DeskId };
 
-/** Sections of the news page, in navigation order: the five desks. */
+/** Sections of the news page, in navigation order: the five desks (Canada, AI, Robotics, Tech, Human stakes). */
 export const SECTIONS: { id: SectionId; label: Bi }[] = DESKS.map(({ id, label }) => ({ id, label }));
 
 /** Whether a story belongs on a desk's page (desks.ts inDesk). */
@@ -222,17 +222,17 @@ export function applyRefinement(clusters: Cluster[], splits: Record<string, stri
 /** What each desk covers: its page description and meta description (unique per desk, for search). */
 export const SECTION_ABOUT: Record<SectionId, Bi> = {
   canada: { en: "AI news from and about Canada: Ottawa, the provinces, Canadian labs, companies and public services, from Canadian and international outlets.", fr: "L'actualité de l'IA au Canada : Ottawa, les provinces, les laboratoires, entreprises et services publics d'ici, selon les médias canadiens et internationaux." },
-  rights: { en: "Rights and power: data sovereignty, privacy, military AI, democracy and regulation, and the people holding AI to account.", fr: "Droits et pouvoir : souveraineté des données, vie privée, IA militaire, démocratie et réglementation, et ceux qui demandent des comptes à l'IA." },
-  work: { en: "Work and culture: AI and jobs, artists' rights, schools, families and everyday life.", fr: "Travail et culture : l'IA et l'emploi, les droits des artistes, l'école, les familles et la vie quotidienne." },
-  science: { en: "Research: new models, papers and findings from labs and scientists, and what the results do not prove.", fr: "Recherche : nouveaux modèles, articles et résultats des laboratoires et des chercheurs, et ce qu'ils ne prouvent pas." },
-  world: { en: "Artificial intelligence news from the rest of the world, briefly, each headline linked to the original.", fr: "L'actualité de l'intelligence artificielle dans le reste du monde, en bref, chaque titre lié à l'original." },
+  ai: { en: "Artificial intelligence news: new models, labs, tools and the companies building them, each headline linked to the original reporting.", fr: "L'actualité de l'intelligence artificielle : nouveaux modèles, laboratoires, outils et entreprises, chaque titre lié au reportage original." },
+  robotics: { en: "Robotics news: humanoid robots, factory and warehouse automation, self-driving vehicles and AI in the physical world.", fr: "L'actualité de la robotique : robots humanoïdes, automatisation des usines et entrepôts, véhicules autonomes et l'IA dans le monde physique." },
+  tech: { en: "Technology news around AI: chips, data centres, devices, energy and the platforms people use every day.", fr: "L'actualité techno autour de l'IA : puces, centres de données, appareils, énergie et plateformes du quotidien." },
+  people: { en: "The human stakes of AI: rights, privacy, jobs, schools, families, culture and the rules that protect people.", fr: "Les enjeux humains de l'IA : droits, vie privée, emploi, écoles, familles, culture et les règles qui protègent les gens." },
 };
 
 /** Neighbouring desks, for internal links between desk pages. */
 export const RELATED_SECTIONS: Partial<Record<SectionId, SectionId[]>> = {
-  canada: ["rights", "work", "science"],
-  rights: ["canada", "work", "world"],
-  work: ["rights", "canada", "science"],
-  science: ["work", "world", "canada"],
-  world: ["rights", "science", "canada"],
+  canada: ["ai", "people", "tech"],
+  ai: ["robotics", "tech", "people"],
+  robotics: ["ai", "tech", "people"],
+  tech: ["ai", "robotics", "canada"],
+  people: ["canada", "ai", "robotics"],
 };

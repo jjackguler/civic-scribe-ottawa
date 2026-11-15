@@ -382,26 +382,32 @@ test("a summary never claims the outlets' reporting as ours", () => {
     assert.ok(!OWN_REPORTING.test(ok), ok);
 });
 const deskStory = (p: Partial<Story>): Story => ({ id: "x", title: "", summary: "", link: "", source: "S", sourceId: "s", region: "world", topic: "applications", tags: ["applications"], lang: "en", publishedAt: "2026-11-01T00:00:00Z", image: null, kind: "news", gov: false, lab: false, level: null, minister: false, ...p });
-test("every story maps to one of the five desks, Canada first, World as the fallback", () => {
+test("every story maps to one of the five desks, Canada first, AI as the fallback", () => {
   assert.equal(deskOf(deskStory({ region: "canada", tags: ["policy"], topic: "policy" })), "canada");
-  assert.equal(deskOf(deskStory({ title: "EU regulators open privacy probe into chatbot", tags: ["policy"], topic: "policy" })), "rights");
-  assert.equal(deskOf(deskStory({ title: "Hospitals test a new cancer screening model", tags: ["health"], topic: "health" })), "science");
-  assert.equal(deskOf(deskStory({ title: "Chipmaker posts record quarter", tags: ["infrastructure"], topic: "infrastructure" })), "world");
+  assert.equal(deskOf(deskStory({ title: "EU regulators open privacy probe into chatbot", tags: ["policy"], topic: "policy" })), "people");
+  assert.equal(deskOf(deskStory({ title: "Humanoid robot maker starts factory pilot", tags: ["robotics"], topic: "robotics" })), "robotics");
+  assert.equal(deskOf(deskStory({ title: "Chipmaker posts record quarter", tags: ["infrastructure"], topic: "infrastructure" })), "tech");
+  assert.equal(deskOf(deskStory({ title: "Lab releases a new reasoning model", tags: ["research"], topic: "research" })), "ai");
   assert.ok(DESK_IDS.includes(deskOf(deskStory({ topic: "brand-new-beat" as never, tags: ["brand-new-beat" as never] }))));
 });
 test("unknown topics and old sections never create a desk", () => {
-  assert.equal(deskOfTopic("quantum-gardening"), "world");
-  assert.equal(deskOfTopic(""), "world");
-  assert.equal(legacySectionDesk("policy"), "rights");
-  assert.equal(legacySectionDesk("labs"), "science");
-  assert.equal(legacySectionDesk("people"), "work");
+  assert.equal(deskOfTopic("quantum-gardening"), "ai");
+  assert.equal(deskOfTopic(""), "ai");
+  assert.equal(legacySectionDesk("policy"), "people");
+  assert.equal(legacySectionDesk("labs"), "ai");
+  assert.equal(legacySectionDesk("rights"), "people");
+  assert.equal(legacySectionDesk("work"), "people");
+  assert.equal(legacySectionDesk("science"), "ai");
+  assert.equal(legacySectionDesk("world"), "ai");
+  assert.equal(legacySectionDesk("infrastructure"), "tech");
   assert.equal(legacySectionDesk("ministry"), "canada");
   assert.equal(legacySectionDesk("not-a-section"), undefined);
 });
 test("newsroom summaries and videos map to a desk", () => {
   assert.equal(deskOfSummary({ topic: "business", en: { headline: "Ottawa startup raises $20 million for farm robots", dek: "" } }), "canada");
-  assert.equal(deskOfSummary({ topic: "policy", en: { headline: "Lawmakers in Brussels vote on model rules", dek: "" } }), "rights");
-  assert.equal(deskOfSummary({ topic: "made-up", en: { headline: "A company ships a faster laptop", dek: "" } }), "world");
+  assert.equal(deskOfSummary({ topic: "policy", en: { headline: "Lawmakers in Brussels vote on model rules", dek: "" } }), "people");
+  assert.equal(deskOfSummary({ topic: "made-up", en: { headline: "A company ships a faster laptop", dek: "" } }), "tech");
+  assert.equal(deskOfSummary({ topic: "made-up", en: { headline: "Warehouse robots learn to pack boxes", dek: "" } }), "robotics");
   assert.ok(DESK_IDS.includes(deskOfOriginal({ title: "The Sir Jack Files #14: The Quiet Room", summary: "" })));
   assert.equal(originalSection({ id: "x-1", section: "philosophy" as never }), "news");
 });
