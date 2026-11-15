@@ -1044,3 +1044,42 @@ html.theme-swap, html.theme-swap * { transition: background-color 280ms ease, co
   .spin-in, .pop-in, .pulse-once, .enter { animation: none; }
   html.theme-swap, html.theme-swap * { transition: none !important; }
 }
+
+/* ---------- Codex plates: "Open the machine" (Young Lab, AI or not?) ---------- */
+.yl-codex { --cx-paper: #f1e6cc; --cx-ink: #2e2318; --cx-red: #b5432a; --cx-brass: #a87a26;
+  background: radial-gradient(ellipse at 50% 40%, #f7eed8 0%, var(--cx-paper) 60%, #e6d4ad 100%);
+  color: var(--cx-ink); border: 1.5px solid #8a6f48; border-radius: 6px; padding: clamp(14px, 3vw, 28px);
+  box-shadow: inset 0 0 60px rgba(120, 85, 40, 0.18), 0 2px 0 rgba(20, 24, 26, 0.08); }
+.yl-codex-head { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: end; border-bottom: 1px solid rgba(46, 35, 24, 0.35); padding-bottom: 12px; margin-bottom: 14px; }
+.yl-codex-kicker { font-family: var(--font-sans, "Schibsted Grotesk", sans-serif); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cx-red); font-weight: 700; }
+.yl-codex-title { font-family: "Newsreader", Georgia, serif; font-style: italic; font-size: clamp(1.5rem, 3.4vw, 2.3rem); line-height: 1.1; margin-top: 4px; }
+.yl-codex-tabs { display: flex; gap: 6px; }
+.yl-codex-tabs button { min-width: 48px; min-height: 44px; font-family: "Newsreader", Georgia, serif; font-size: 1.15rem; border: 1.5px solid var(--cx-ink); background: transparent; border-radius: 3px; color: var(--cx-ink); }
+.yl-codex-tabs button[aria-current="true"] { background: var(--cx-ink); color: var(--cx-paper); }
+.yl-codex-tabs button:focus-visible, .yl-codex-ans:focus-visible, .yl-codex-slider input:focus-visible { outline: 3px solid var(--signal, #f5c400); outline-offset: 2px; }
+.yl-codex-body { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .yl-codex-body { grid-template-columns: minmax(0, 1fr) 300px; } }
+.yl-codex-stage { position: relative; height: clamp(320px, 52vw, 520px); overflow: hidden; touch-action: pan-y; cursor: grab; color: var(--cx-ink); }
+.yl-codex-stage:active { cursor: grabbing; }
+.yl-codex-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.yl-codex-leaders { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.yl-codex-pin { position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--cx-paper); border: 1.5px solid var(--cx-ink); font: 700 0.72rem/19px "Newsreader", Georgia, serif; text-align: center; pointer-events: none; }
+.yl-codex-label { position: absolute; left: 0; top: 0; width: 186px; font-family: "Newsreader", Georgia, serif; font-size: 0.86rem; line-height: 1.3; pointer-events: none; }
+.yl-codex-label b { display: block; font-family: var(--font-sans, "Schibsted Grotesk", sans-serif); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cx-red); }
+.yl-codex-drag { position: absolute; right: 10px; bottom: 8px; font: italic 0.85rem "Newsreader", Georgia, serif; opacity: 0.7; }
+.yl-codex-fallback { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; font-family: "Newsreader", Georgia, serif; }
+.yl-codex-legend { display: grid; gap: 6px; margin-top: 10px; font-family: "Newsreader", Georgia, serif; font-size: 0.98rem; }
+.yl-codex-legend li { padding-left: 30px; text-indent: -30px; }
+.yl-codex-legend li .yl-codex-key { display: inline-grid; margin-right: 8px; text-indent: 0; vertical-align: 1px; }
+.yl-codex-key { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--cx-ink); font-size: 0.72rem; font-weight: 700; display: grid; place-items: center; }
+.yl-codex-side { display: grid; gap: 14px; align-content: start; }
+.yl-codex-q { font-family: "Newsreader", Georgia, serif; font-size: 1.25rem; line-height: 1.3; }
+.yl-codex-slider { display: grid; gap: 6px; font-weight: 700; font-size: 0.9rem; }
+.yl-codex-slider input { accent-color: var(--cx-red); width: 100%; min-height: 32px; }
+.yl-codex-ans { text-align: left; min-height: 48px; padding: 10px 14px; border: 1.5px solid var(--cx-ink); border-radius: 4px; background: rgba(255, 255, 255, 0.45); font-weight: 700; color: var(--cx-ink); }
+.yl-codex-ans[aria-pressed="true"] { background: var(--cx-ink); color: var(--cx-paper); }
+.yl-codex-feedback { font-family: "Newsreader", Georgia, serif; font-size: 1.02rem; line-height: 1.4; min-height: 3em; }
+.yl-codex-feedback .is-ok, .yl-codex-feedback .is-no { display: block; font-family: var(--font-sans, "Schibsted Grotesk", sans-serif); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.85rem; }
+.yl-codex-feedback .is-ok { color: #2f6b3a; }
+.yl-codex-feedback .is-no { color: var(--cx-red); }
+.yl-codex-ask { display: block; margin-top: 8px; font-style: italic; opacity: 0.85; }
