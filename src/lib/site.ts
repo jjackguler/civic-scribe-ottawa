@@ -67,9 +67,12 @@ export const SITE = {
     },
   },
   email: {
-    /** Cloudflare Email Routing, enabled 2026-10-10. */
+    /**
+     * hello@ forwards to the owner's inbox through Cloudflare Email Routing (confirmed by the owner,
+     * 15 Nov 2026). corrections@ is not confirmed, so corrections also go to hello@ for now.
+     */
     general: "hello@aibroadsheet.com",
-    editor: "corrections@aibroadsheet.com",
+    editor: "hello@aibroadsheet.com",
     advertise: "hello@aibroadsheet.com",
   },
   newsletter: {

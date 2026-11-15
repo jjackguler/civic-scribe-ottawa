@@ -12,6 +12,7 @@ import {
   senderLine,
 } from "../src/lib/forms";
 import { forward } from "../src/lib/forms.server";
+import { SITE } from "../src/lib/site";
 
 const ok = parseSubscribe({
   email: " Reader@Example.CA ",
@@ -59,7 +60,7 @@ assert.equal(
 for (const l of ["en", "fr"] as const) {
   const c = consentText(l);
   assert.match(c, /GEN:A Labs/, "consent names the sender");
-  assert.match(c, /hello@aibroadsheet\.com/, "consent gives a contact");
+  assert.ok(c.includes(SITE.email.general), "consent gives a contact");
   assert.match(
     c,
     l === "fr" ? /retirer mon consentement/ : /withdraw my consent/,

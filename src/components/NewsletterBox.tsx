@@ -94,6 +94,34 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
     );
   }
 
+  // With a hosted provider, the provider's own page takes the address and the consent once.
+  // Our own form in front of it made readers type their email twice (owner, 15 Nov 2026).
+  if (provider) {
+    return (
+      <div className={variant === "band" ? "grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] items-center" : ""}>
+        {intro}
+        <div className={variant === "band" ? "" : "mt-5"}>
+          <a
+            href={new URL("/subscribe", provider).toString()}
+            target="_blank"
+            rel="noopener"
+            className={`h-12 px-6 rounded-[4px] font-bold inline-flex items-center justify-center gap-2 ${tone.btn}`}
+          >
+            {fr ? "M'abonner gratuitement" : "Subscribe free"}
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </a>
+          <p id={`${id}-sender`} className={`text-[0.8rem] mt-3 leading-snug ${tone.small}`}>
+            {fr
+              ? "L'inscription se fait sur beehiiv, notre service d'infolettre : une seule adresse à entrer. "
+              : "You sign up on beehiiv, our newsletter service: one email address, one step. "}
+            {unsubscribeText(locale)}{" "}
+            <Link to="/privacy" hash="newsletter" className={tone.link}>{fr ? "Confidentialité" : "Privacy"}</Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={variant === "band" ? "grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] items-start" : ""}>
       {intro}
