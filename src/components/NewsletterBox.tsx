@@ -10,7 +10,7 @@ type Variant = "band" | "card" | "inline" | "page";
 type Status = "idle" | "sending" | "done" | "closed" | "error" | "rate";
 
 /**
- * The Canadian AI Brief sign-up (weekly, EN/FR).
+ * AI Broadsheet Weekly sign-up (weekly, EN/FR), hosted on beehiiv.
  *
  * - Explicit consent: an unticked checkbox with the exact consent wording (CASL),
  *   the sender's identity and the unsubscribe promise, all visible before sending.

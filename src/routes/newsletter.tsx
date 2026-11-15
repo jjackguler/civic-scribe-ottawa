@@ -30,7 +30,7 @@ const FAQ: { q: Bi; a: Bi }[] = [
 export const Route = createFileRoute("/newsletter")({
   head: ({ match }) =>
     seoHead(match, {
-      title: { en: `The Canadian AI Brief: weekly AI newsletter — ${SITE.name}`, fr: `Le Brief canadien de l'IA : infolettre hebdomadaire — ${SITE.name}` },
+      title: { en: `AI Broadsheet Weekly: weekly AI newsletter — ${SITE.name}`, fr: `AI Broadsheet Weekly : infolettre hebdomadaire — ${SITE.name}` },
       description: {
         en: "A free weekly email on what changed in artificial intelligence and what it means for Canada. Named sources, AI-assisted work labelled, unsubscribe in one click.",
         fr: "Une infolettre gratuite chaque semaine : ce qui a changé en intelligence artificielle et ce que cela signifie pour le Canada. Sources nommées, désabonnement en un clic.",
