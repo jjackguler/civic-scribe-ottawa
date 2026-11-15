@@ -67,10 +67,14 @@ export const SITE = {
     },
   },
   email: {
-    /** Cloudflare Email Routing, enabled 2026-10-10. */
-    general: "hello@aibroadsheet.com",
-    editor: "corrections@aibroadsheet.com",
-    advertise: "hello@aibroadsheet.com",
+    /**
+     * The newsroom's working inbox. hello@ and corrections@aibroadsheet.com do not receive mail yet
+     * (owner, 15 Nov 2026), so every address on the site points here. Once Cloudflare Email Routing
+     * forwards those addresses, switch these three back.
+     */
+    general: "aibroadsheet@gmail.com",
+    editor: "aibroadsheet@gmail.com",
+    advertise: "aibroadsheet@gmail.com",
   },
   newsletter: {
     /** The weekly newsletter. Launches with issue #1; founding sponsors are sold on /advertise. */

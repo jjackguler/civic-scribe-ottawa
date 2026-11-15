@@ -74,7 +74,13 @@ function Tips() {
         );
         return;
       }
-      setStatus(res.status === 503 ? "closed" : "error");
+      if (res.status === 503) {
+        // No inbox wired to the form yet: open the reader's email app with the tip already written.
+        setStatus("closed");
+        window.location.href = mailto;
+        return;
+      }
+      setStatus("error");
     } catch {
       setStatus("error");
     }
@@ -203,10 +209,10 @@ function Tips() {
                 {status === "closed" && (
                   <p className="text-[0.95rem]">
                     {fr
-                      ? "Le formulaire ouvre bientôt. D'ici là, "
-                      : "This form opens soon. Until then, "}
+                      ? "Le formulaire n'est pas encore relié à notre boîte. "
+                      : "This form isn't connected to our inbox yet. "}
                     <a href={mailto} className="font-semibold text-lake underline">
-                      {fr ? `écrivez à ${editor}` : `email ${editor}`}
+                      {fr ? `Envoyez-le à ${editor}` : `Send it to ${editor}`}
                     </a>
                     {fr
                       ? " (votre texte est déjà dans le message)."
