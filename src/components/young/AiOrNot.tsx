@@ -4,6 +4,7 @@ import { AI_OR_NOT, activityById, type AiOrNotItem } from "@/lib/young-lab";
 import { useYoungProgress } from "@/lib/young-progress";
 import { FinishPanel, ICONS, RoundDots, usePlaying, useT } from "@/components/YoungLab";
 import { LabGuide } from "@/components/young/LabGuide";
+import { CodexPlates } from "@/components/young/CodexPlates";
 import type { Bi } from "@/lib/i18n";
 
 const A = activityById("ai-or-not")!;
@@ -126,6 +127,7 @@ export function AiOrNot() {
           "Lots of machines around you seem smart. But which ones really use AI? Start with the warm-up. Each level gets a little harder.",
           "Plein de machines autour de toi ont l'air intelligentes. Mais lesquelles utilisent vraiment l'IA? Commence par l'échauffement. Chaque niveau est un peu plus difficile.",
         )} />
+        <CodexPlates onDone={() => start(nextUp)} />
         <div className="yl-levels" role="list" aria-label={t("Levels", "Niveaux")}>
           {LEVELS.map(l => {
             const info = LEVEL_INFO[l];
