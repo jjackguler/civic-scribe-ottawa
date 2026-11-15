@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 /**
- * POST /api/subscribe — The Canadian AI Brief sign-up.
+ * POST /api/subscribe — AI Broadsheet Weekly sign-up (fallback when no provider URL is set).
  * Validates the address and the explicit consent, then forwards the record
  * (consent text, version, time, page) to SUBSCRIBE_WEBHOOK_URL. Stores nothing
  * and never logs the address. 503 while the webhook is not configured, so the

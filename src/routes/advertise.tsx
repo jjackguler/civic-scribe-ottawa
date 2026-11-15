@@ -9,17 +9,17 @@ import { SITE } from "@/lib/site";
 import { seoHead } from "@/lib/seo";
 
 /**
- * Founding sponsors of The Canadian AI Brief. Only what exists: the weekly
+ * Founding sponsors of AI Broadsheet Weekly. Only what exists: the weekly
  * newsletter launching with issue #1. No audience numbers until there are real
  * ones, and no packages that don't exist (display ads are off; see ads.ts).
  */
 export const Route = createFileRoute("/advertise")({
   head: ({ match }) =>
     seoHead(match, {
-      title: { en: `Founding sponsors: The Canadian AI Brief — ${SITE.name}`, fr: `Commanditaires fondateurs : Le Brief canadien de l'IA — ${SITE.name}` },
+      title: { en: `Founding sponsors: AI Broadsheet Weekly — ${SITE.name}`, fr: `Commanditaires fondateurs : AI Broadsheet Weekly — ${SITE.name}` },
       description: {
-        en: "Sponsor The Canadian AI Brief from issue #1: one clearly labelled sponsor per weekly issue, in English and French, under published rules that keep our journalism independent.",
-        fr: "Commanditez Le Brief canadien de l'IA dès le numéro 1 : un seul commanditaire identifié par numéro hebdomadaire, en anglais et en français, selon des règles publiées.",
+        en: "Sponsor AI Broadsheet Weekly from issue #1: one clearly labelled sponsor per weekly issue, in English and French, under published rules that keep our journalism independent.",
+        fr: "Commanditez AI Broadsheet Weekly dès le numéro 1 : un seul commanditaire identifié par numéro hebdomadaire, en anglais et en français, selon des règles publiées.",
       },
       breadcrumbs: [{ name: { en: "Founding sponsors", fr: "Commanditaires fondateurs" }, path: "/advertise" }],
     }),

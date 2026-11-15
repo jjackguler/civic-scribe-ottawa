@@ -74,10 +74,10 @@ export const SITE = {
   },
   newsletter: {
     /** The weekly newsletter. Launches with issue #1; founding sponsors are sold on /advertise. */
-    name: { en: "The Canadian AI Brief", fr: "Le Brief canadien de l'IA" },
+    name: { en: "AI Broadsheet Weekly", fr: "AI Broadsheet Weekly" },
     frequency: { en: "weekly", fr: "hebdomadaire" },
     /** TODO [NEWSLETTER_PROVIDER], e.g. "Buttondown" or "Beehiiv". Named on /privacy once set. */
-    provider: "",
+    provider: "beehiiv",
     /**
      * TODO [NEWSLETTER_SUBSCRIBE_URL] — optional. When set (e.g. "https://aibroadsheet.substack.com"),
      * the sign-up box sends readers to the provider's own subscribe page after they tick the
@@ -85,7 +85,7 @@ export const SITE = {
      * SUBSCRIBE_WEBHOOK_URL secret (and says "opening soon" with an email fallback while that
      * secret is missing).
      */
-    url: "",
+    url: "https://aibroadsheet.beehiiv.com",
   },
   /** Cloudflare Web Analytics (cookieless), installed manually to avoid duplicate beacons. */
   cloudflareAnalyticsToken: "9a828408ce894cf0865655bda68a0d73",

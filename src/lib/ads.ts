@@ -98,7 +98,7 @@ export type DirectCampaign = {
 export const DIRECT_CAMPAIGNS: DirectCampaign[] = [];
 
 /**
- * Founding sponsors of The Canadian AI Brief (see /advertise). Listed by name on
+ * Founding sponsors of AI Broadsheet Weekly (see /advertise). Listed by name on
  * /newsletter once an agreement is signed. Add { name, url } here; keep it empty
  * until then. Sponsors never appear in the news feed.
  */
