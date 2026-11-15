@@ -47,6 +47,7 @@ import { Route as TodayRouteImport } from './routes/today'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ValuesRouteImport } from './routes/values'
 import { Route as WatchRouteImport } from './routes/watch'
+import { Route as WeekRouteImport } from './routes/week'
 import { Route as ApiBriefDotjsonRouteImport } from './routes/api.brief[.]json'
 import { Route as ApiDispatchesDotjsonRouteImport } from './routes/api.dispatches[.]json'
 import { Route as ApiKeeperTtsRouteImport } from './routes/api.keeper-tts'
@@ -276,6 +277,11 @@ const ValuesRoute = ValuesRouteImport.update({
 const WatchRoute = WatchRouteImport.update({
   id: '/watch',
   path: '/watch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WeekRoute = WeekRouteImport.update({
+  id: '/week',
+  path: '/week',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiBriefDotjsonRoute = ApiBriefDotjsonRouteImport.update({
@@ -518,6 +524,7 @@ export interface FileRoutesByFullPath {
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
+  '/week': typeof WeekRoute
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
@@ -598,6 +605,7 @@ export interface FileRoutesByTo {
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
+  '/week': typeof WeekRoute
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
@@ -679,6 +687,7 @@ export interface FileRoutesById {
   '/tools': typeof ToolsRoute
   '/values': typeof ValuesRoute
   '/watch': typeof WatchRoute
+  '/week': typeof WeekRoute
   '/api/brief.json': typeof ApiBriefDotjsonRoute
   '/api/dispatches.json': typeof ApiDispatchesDotjsonRoute
   '/api/keeper-tts': typeof ApiKeeperTtsRoute
@@ -761,6 +770,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/values'
     | '/watch'
+    | '/week'
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
@@ -841,6 +851,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/values'
     | '/watch'
+    | '/week'
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
@@ -921,6 +932,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/values'
     | '/watch'
+    | '/week'
     | '/api/brief.json'
     | '/api/dispatches.json'
     | '/api/keeper-tts'
@@ -1002,6 +1014,7 @@ export interface RootRouteChildren {
   ToolsRoute: typeof ToolsRoute
   ValuesRoute: typeof ValuesRoute
   WatchRoute: typeof WatchRoute
+  WeekRoute: typeof WeekRoute
   ApiBriefDotjsonRoute: typeof ApiBriefDotjsonRoute
   ApiDispatchesDotjsonRoute: typeof ApiDispatchesDotjsonRoute
   ApiKeeperTtsRoute: typeof ApiKeeperTtsRoute
@@ -1310,6 +1323,13 @@ declare module '@tanstack/react-router' {
       path: '/watch'
       fullPath: '/watch'
       preLoaderRoute: typeof WatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/week': {
+      id: '/week'
+      path: '/week'
+      fullPath: '/week'
+      preLoaderRoute: typeof WeekRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/brief.json': {
@@ -1634,6 +1654,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsRoute: ToolsRoute,
   ValuesRoute: ValuesRoute,
   WatchRoute: WatchRoute,
+  WeekRoute: WeekRoute,
   ApiBriefDotjsonRoute: ApiBriefDotjsonRoute,
   ApiDispatchesDotjsonRoute: ApiDispatchesDotjsonRoute,
   ApiKeeperTtsRoute: ApiKeeperTtsRoute,

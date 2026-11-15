@@ -22,7 +22,7 @@ export function parseBriefPreferences(raw: string | null): BriefPreferences {
 }
 /**
  * What "Follow topic" stores: a desk id for anything that belongs to a desk, in either language
- * ("Rights & power", "Droits et pouvoir", an old "policy" follow → "rights"), so the topics a
+ * ("Human stakes", "Enjeux humains", an old "policy" or "rights" follow → "people"), so the topics a
  * reader can follow stay the five desks plus the app's own shelves (AI literacy, Originals).
  */
 const DESK_KEYS = new Map<string, string>(

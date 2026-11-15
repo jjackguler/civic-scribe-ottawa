@@ -76,8 +76,16 @@ directives file, morning Canadian AI Brief, Output watch issue).
   checks: `newsroom/ledger-drafts/README.md`. CI: `scripts/ledger-drafts-test.ts` (drafts valid,
   no unsigned live record).
 
+## New concept: AI, Robotics, Tech (15 Nov 2026)
+- The five desks are now Canada, AI, Robotics, Tech, Human stakes (`src/lib/desks.ts`); the old
+  ids rights/work → people, science/world → ai (301). Full concept: `docs/editorial-concept.md`.
+- New `/week` page and front-page band: the editor's weekly six stories in the house format
+  (what happened, the facts, the human stakes, source). Add a new edition at the top of
+  `SHEET_EDITIONS` in `src/lib/week-sheet.ts` every Sunday.
+- New feeds for the beats: IEEE Spectrum robotics, TechCrunch robotics and hardware.
+
 ## Five fixed desks, truthful labels, the editor's book (3 Nov 2026)
-- The site has exactly five sections: Canada, Rights & power, Work & culture, Research, World
+- (Superseded 15 Nov 2026, see above.) The site had exactly five sections: Canada, Rights & power, Work & culture, Research, World
   (`src/lib/desks.ts`). Every feed story, newsroom summary and video maps to one of them
   (`deskOf`, `deskOfSummary`, `deskOfOriginal`; World is the fallback). A new feed beat or topic
   never adds a menu entry, chip, sitemap URL or page. Old `/news?section=<topic>` links answer 301

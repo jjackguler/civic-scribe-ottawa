@@ -93,6 +93,10 @@ export const NEWS_SOURCES: NewsSource[] = [
 
   // ── Specialist beats: immersive tech, robotics, data centres ───────────
   { id: "robotreport", name: "The Robot Report", url: "https://www.therobotreport.com/feed/", home: "https://www.therobotreport.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "robotics", slow: true },
+  // Added 15 Nov 2026 for the Robotics and Tech desks (Rundown-style concept); not yet checked from the newsroom's network.
+  { id: "ieee-robotics", name: "IEEE Spectrum", url: "https://spectrum.ieee.org/feeds/topic/robotics.rss", home: "https://spectrum.ieee.org/topic/robotics/", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "robotics", slow: true },
+  { id: "tc-robotics", name: "TechCrunch", url: "https://techcrunch.com/category/robotics/feed/", home: "https://techcrunch.com/category/robotics/", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "robotics", slow: true },
+  { id: "tc-hardware", name: "TechCrunch", url: "https://techcrunch.com/category/hardware/feed/", home: "https://techcrunch.com/category/hardware/", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "tech", slow: true },
   { id: "dcd", name: "DatacenterDynamics", url: "https://www.datacenterdynamics.com/en/rss/", home: "https://www.datacenterdynamics.com", region: "world", lang: "en", kind: "beat", aiOnly: false, beat: "infrastructure", slow: true },
   { id: "vector", name: "Vector Institute", url: "https://vectorinstitute.ai/feed/", home: "https://vectorinstitute.ai", region: "canada", lang: "en", kind: "lab", aiOnly: true, slow: true },
 
@@ -113,7 +117,7 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "quebec", name: "Gouvernement du Québec", url: "https://www.quebec.ca/fil-de-presse.rss", home: "https://www.quebec.ca/nouvelles", region: "canada", lang: "fr", kind: "gov", aiOnly: false, level: "provincial", slow: true },
   { id: "ottawa", name: "City of Ottawa", url: "https://ottawa.ca/en/news.rss", home: "https://ottawa.ca/en/news", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "municipal", slow: true },
   { id: "opc", name: "Office of the Privacy Commissioner of Canada", url: "https://www.priv.gc.ca/en/rss/news/", home: "https://www.priv.gc.ca/en/", region: "canada", lang: "en", kind: "gov", aiOnly: false, level: "federal", slow: true },
-  // Added 29 Oct 2026 for the Rights & power desk; not yet checked from the newsroom's network.
+  // Added 29 Oct 2026 for the rights desk (now Human stakes); not yet checked from the newsroom's network.
   { id: "ploughshares", name: "Project Ploughshares", url: "https://ploughshares.ca/feed/", home: "https://ploughshares.ca", region: "canada", lang: "en", kind: "analysis", aiOnly: false, slow: true },
   { id: "citizenlab", name: "Citizen Lab", url: "https://citizenlab.ca/feed/", home: "https://citizenlab.ca", region: "canada", lang: "en", kind: "analysis", aiOnly: false, slow: true },
   { id: "canadabuys-ai", name: "CanadaBuys — AI tenders", url: "https://canadabuys.canada.ca/en/search-feed?words=%22artificial%20intelligence%22&status%5B87%5D=87", home: "https://canadabuys.canada.ca/en/tender-opportunities", region: "canada", lang: "en", kind: "gov", aiOnly: true, level: "federal", slow: true },

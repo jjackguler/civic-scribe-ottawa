@@ -23,6 +23,8 @@ How to write it:
 - AI funding and investment in Canada | keywords: funding, investment, invests, grant, Series A, Series B, Series C, Series D, Series E, venture, Cohere, Mila, Vector Institute, Amii, CIFAR, sovereign compute
 - AI research | keywords: research, researchers, study, paper, university, laboratory, benchmark
 - AI tools people can use | keywords: launches, launched, released, available, free, app, tool, feature, open-source, open-weight
+- Robotics and physical AI | keywords: robot, robots, robotics, humanoid, humanoids, cobot, warehouse automation, self-driving, autonomous vehicle, robotaxi, physical AI, embodied
+- Tech around AI | keywords: chip, chips, GPU, semiconductor, data centre, data center, smartphone, laptop, smart glasses, wearable, quantum, energy
 
 ## Banned topics
 
@@ -38,6 +40,8 @@ How to write it:
 - Name people's worries plainly, then end on what the sources show people can do.
 - Plain words for readers new to AI; explain every technical term once.
 - When the sources support it, say what the news means for people in Canada.
+- Every piece answers three things in order: what happened, the facts (names and numbers from the sources), and the human stakes (what it changes for people).
+- Company figures, targets and plans are claims: say whose claim they are.
 
 ## Daily target
 
