@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:q0qwnn",
+    "at": "2026-11-16T21:09:47.627Z",
+    "reason": "the writer declined: The input has only four headlines and no excerpts or article text. They say that allies and tech leaders want Jensen Huang back at Nvidia, and that the board is reportedly 'not considering' it. They don't say why he left, who signed the petition, or any numbers or dates. A fair 45-second explainer would need facts beyond the sources."
+  },
+  {
     "key": "article:vrm9ao",
     "at": "2026-11-16T01:22:09.024Z",
     "reason": "fact guard / layout check failed twice: not in the sources: Examples, Spot"
