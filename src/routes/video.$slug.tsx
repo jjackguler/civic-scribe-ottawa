@@ -94,6 +94,9 @@ function VideoPage() {
               {o.credits ?? (fr ? "Voix synthétique ; illustrations dessinées en code." : "Synthetic voice; illustrations drawn in code.")}
               {" "}<Link to="/corrections" className="text-lake hover:underline">{fr ? "Signaler une erreur" : "Report a mistake"}</Link>
             </p>
+            {o.correction && (
+              <p className="text-[0.95rem] mt-6 max-w-[62ch] border-l-[4px] border-l-brass pl-3 italic">{o.correction}</p>
+            )}
           </div>
         </div>
       </article>

@@ -80,6 +80,8 @@ export type Original = {
   aspect?: "16:9" | "9:16";
   /** Where the video sends the reader next: the newsroom summary, or the reporting it was built from. */
   readMore?: { url: string; urlFr?: string; en: string; fr: string };
+  /** A published correction, shown at the bottom of the video's page (corrections policy: say what changed and when). */
+  correction?: string;
 };
 
 export type OriginalsManifest = { updatedAt: string; items: Original[] };
