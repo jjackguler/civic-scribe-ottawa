@@ -187,12 +187,19 @@ export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome
   const first = copyProblems(d, e, "en");
   if (!first.facts.length && !first.style.length) return { ok: true, value: d, note: note("copy", "mechanical", "pass", ["fact guard: every name and number found in the sources", "house style: clean"]) };
   const problems = describe(first);
-  const raw = await m.json<RawDraft>("copy", "writer", COPY + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
-  const fixed = shapeDraft(mergeRewrite(raw, toRaw(d)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
-  if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
-  const again = copyProblems(fixed, e, "en");
-  if (again.facts.length || again.style.length) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...describe(again)]) };
-  return { ok: true, value: fixed, note: note("copy", m.model("writer"), "fixed", problems) };
+  // Up to two rewrites: the second only when the first left fewer problems than it was given (it is converging).
+  let current = d, open = problems;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const raw = await m.json<RawDraft>("copy", "writer", COPY + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems: open, article: toRaw(current), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt }, 6000);
+    const fixed = shapeDraft(mergeRewrite(raw, toRaw(current)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
+    if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
+    const again = copyProblems(fixed, e, "en");
+    const left = describe(again);
+    if (!again.facts.length && !again.style.length) return { ok: true, value: fixed, note: note("copy", m.model("writer"), "fixed", problems) };
+    if (attempt === 1 || left.length >= open.length || m.failure) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...left]) };
+    current = fixed; open = left;
+  }
+  return { ok: false, note: note("copy", m.model("writer"), "fail", problems) };
 }
 
 // ── standards editor ───────────────────────────────────────────────────────
