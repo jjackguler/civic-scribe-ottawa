@@ -132,10 +132,13 @@ export async function enrichOfficial(stories: Story[], opts: EnrichOptions = {})
     } finally { clearTimeout(t); }
   };
   let filled = 0, tried = 0;
+  // A site that refuses us once (401/403/429) refuses the rest of its items too: don't spend the run's tries on it.
+  const refused = new Set<string>();
   for (const s of officialCandidates(stories)) {
     if (tried >= max || Date.now() - started > budgetMs) break;
     let url: URL;
     try { url = new URL(s.link); } catch { continue; }
+    if (refused.has(url.host)) continue;
     if (!robots.has(url.origin)) {
       try {
         const r = await get(`${url.origin}/robots.txt`);
@@ -148,7 +151,10 @@ export async function enrichOfficial(stories: Story[], opts: EnrichOptions = {})
     tried++;
     try {
       const r = await get(url.href);
-      if (!r.ok || !/text\/html|text\/plain|xhtml/i.test(r.headers.get("content-type") ?? "")) { log(`  full text: ${url.host} answered ${r.status}`); continue; }
+      if (!r.ok || !/text\/html|text\/plain|xhtml/i.test(r.headers.get("content-type") ?? "")) {
+        if ([401, 403, 429].includes(r.status)) refused.add(url.host);
+        log(`  full text: ${url.host} answered ${r.status}`); continue;
+      }
       const text = extractText(await readCapped(r, maxBytes));
       if (text.length <= (s.summary?.length ?? 0) || text.length < 200) continue;
       s.summary = text.slice(0, KEEP);
