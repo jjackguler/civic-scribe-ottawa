@@ -89,6 +89,19 @@ directives file, morning Canadian AI Brief, Output watch issue).
   (`scripts/ledger-test.ts`) enforces the rules. Full guide:
   `docs/open-desk.md`. No real records yet: the first five are the editor's job (Day 3–5 of the plan).
 
+## Newsroom web research, drafts first (16 Nov 2026)
+- Most feeds give a headline and no text, so events were skipped as "too little reporting".
+  `scripts/newsroom/research.ts`: for up to 2 such events a run (6 a day, Canadian and focus
+  topics first, each at most once in 3 days, `log/research.json` in the store) Claude searches
+  the web (web_search tool). Only the passages it cites, verbatim, become the reporting, one
+  source per cited page, named and linked. Its own wording is never a source.
+- Owner's rule: researched articles never publish on their own. They wait in `drafts/`;
+  `drafts/README.md` on the `newsroom` branch shows each one as it would read. Publish by adding
+  the id to `approved.json`. `NEWSROOM_RESEARCH_REVIEW=off` lets them publish like the rest
+  (only on the owner's word). Caps: `NEWSROOM_RESEARCH_PER_RUN`, `NEWSROOM_RESEARCH_DAILY`
+  (0 turns it off), model `NEWSROOM_RESEARCH_MODEL` (default: the writer).
+- Cost: about $0.05-0.15 per researched event (search results are input tokens, plus $0.01 a search).
+
 ## First five ledger drafts (14 Nov 2026)
 - `newsroom/ledger-drafts/OD-0001..0005.json`: Klarna, Amazon (Jassy), Shopify (Lütke), Salesforce
   (Benioff), IBM (Krishna). Not on the site. Valid records except the signature

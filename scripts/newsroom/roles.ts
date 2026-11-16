@@ -50,6 +50,8 @@ export type Event = {
   region?: "canada" | "world";
   /** How many other outlets' reports were gathered because the first ones were too thin. */
   gathered?: number;
+  /** How many web pages the research step (research.ts) cited for this event. Such articles wait for the editor. */
+  researched?: number;
   /** Set for the morning roundup slot (several separate Canadian stories, one article). */
   brief?: { title: { en: string; fr: string } };
 };
