@@ -1,5 +1,16 @@
 [
   {
+    "id": "x0cl5q",
+    "at": "2026-11-16T02:31:12.261Z",
+    "stage": "copy",
+    "headline": "Anthropic's Claude Fable 5.2 doesn't generate images, it paints them",
+    "reasons": [
+      "Too close to the-decoder.com's wording (\"a single photorealistic parking garage scene took roughly 700…\"): say it in our own words, or quote and attribute it.",
+      "Too close to mlq.ai's wording (\"that moves a virtual brush one stroke at a…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
     "id": "e9wtxm",
     "at": "2026-11-16T02:29:17.023Z",
     "stage": "copy",
