@@ -222,6 +222,18 @@ export function negationProblems(fields: string[], sourceText: string): string[]
 }
 
 /** Every field of a reporter's or translator's draft, one at a time. */
+/** The same fields as draftFields, each with the name the reporter's JSON uses. */
+export function labeledFields(d: Draft): [string, string][] {
+  return [
+    ["headline", d.headline], ["dek", d.dek], ["news", d.news], ...d.thirty.map(t => ["thirty", t] as [string, string]), ["matters", d.matters],
+    ...d.unknown.map(t => ["unknown", t] as [string, string]),
+    ...d.confirmed.map(x => ["confirmed", x.text] as [string, string]), ...d.claimed.map(x => ["claimed", x.text] as [string, string]),
+    ...d.timeline.map(x => ["timeline", x.text] as [string, string]),
+    ...d.sections.flatMap(s => s.paras.map(p => [`article.${s.kind}`, p] as [string, string])),
+    ...d.body.plain.map(t => ["plain", t] as [string, string]), ...d.body.expert.map(t => ["expert", t] as [string, string]),
+  ];
+}
+
 export function draftFields(d: Draft): string[] {
   return [
     d.headline, d.dek, d.news, ...d.thirty, d.matters, ...d.unknown,
@@ -247,7 +259,10 @@ export function overlapProblems(d: Draft, sources: { outlet: string; text: strin
   const problems: string[] = [];
   for (const s of sources) {
     const hit = [...grams(norm(s.text))].find(g => ours.has(g));
-    if (hit) problems.push(`Too close to ${s.outlet}'s wording ("${hit}…"): say it in our own words, or quote and attribute it.`);
+    if (!hit) continue;
+    // Name the field: the phrase is often in "claimed", "expert" or "thirty", not in the article the editor looks at first.
+    const where = labeledFields(d).find(([, t]) => grams(norm(stripAllMarkers(t))).has(hit))?.[0];
+    problems.push(`Too close to ${s.outlet}'s wording ("${hit}…")${where ? ` in "${where}"` : ""}: say it in our own words, or quote and attribute it.`);
   }
   return problems;
 }
