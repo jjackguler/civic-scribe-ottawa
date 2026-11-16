@@ -113,8 +113,8 @@ const SHAPE = `Return JSON:
    "matters": 1-2 paragraphs: why it matters to people (rights, work, privacy, children, safety, democracy, money) as far as the sources support it,
    "background": 0-2 paragraphs from the background passages only, each sentence ending with its [bN] marker
  },
- "plain": 2 short paragraphs for someone new to AI: the same news in everyday words, every technical term explained,
- "expert": 1-3 short paragraphs for specialists: the precise terms and figures the sources give, and where the outlets' accounts differ,
+ "plain": an ARRAY of 2 short paragraph strings for someone new to AI: the same news in everyday words, every technical term explained,
+ "expert": an ARRAY of 1-3 short paragraph strings for specialists: the precise terms and figures the sources give, and where the outlets' accounts differ,
  "timeline": [{"when", "text", "src"}] ONLY for times or dates the sources themselves state ("when" copied as written); otherwise []}
 
 Markers: end every sentence in "article", "plain" and "expert" that carries a fact with the source marker(s) it comes from, like "[s2]" or "[s1,s3]" ([bN] for background).
@@ -141,8 +141,11 @@ This run is the morning "${t.en}" slot. The sources are SEVERAL SEPARATE Canadia
 - "thirty": one line each for the three most useful items.
 Return {"skip": true, "reason": "..."} only if fewer than three items have enough reporting for two sentences each.`;
 
+/** Researched events (research.ts): the excerpts are short passages quoted from web pages, so copying is the main risk. */
+export const RESEARCHED_NOTE = "The excerpts are short passages quoted word for word from web pages. Restate every fact in new words and new sentence order: never reuse five or more words in a row from an excerpt unless you put them in quotation marks and name who said them. Every paragraph, including \"matters\", carries source markers; if the sources say nothing about why it matters to people, write one short paragraph that says what is different now, with its markers.";
+
 export async function reporter(m: Models, e: Event): Promise<Outcome<Draft>> {
-  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens, ...(e.brief ? { slot: e.brief.title.en } : {}) }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
+  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens, ...(e.brief ? { slot: e.brief.title.en } : {}), ...(e.researched ? { note: RESEARCHED_NOTE } : {}) }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
   const shape = (raw: RawDraft | null) => shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
   const system = `${REPORTER}${e.brief ? briefPrompt(e.brief.title) : ""}${directivesPrompt(DIRECTIVES, "reporter")}`;
   let d = shape(await m.json<RawDraft>("reporter", "writer", system, input, { id: e.id, attempt: 0 }, 6000));
@@ -184,12 +187,19 @@ export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome
   const first = copyProblems(d, e, "en");
   if (!first.facts.length && !first.style.length) return { ok: true, value: d, note: note("copy", "mechanical", "pass", ["fact guard: every name and number found in the sources", "house style: clean"]) };
   const problems = describe(first);
-  const raw = await m.json<RawDraft>("copy", "writer", COPY + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 0 }, 6000);
-  const fixed = shapeDraft(mergeRewrite(raw, toRaw(d)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
-  if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
-  const again = copyProblems(fixed, e, "en");
-  if (again.facts.length || again.style.length) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...describe(again)]) };
-  return { ok: true, value: fixed, note: note("copy", m.model("writer"), "fixed", problems) };
+  // Up to two rewrites: the second only when the first left fewer problems than it was given (it is converging).
+  let current = d, open = problems;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const raw = await m.json<RawDraft>("copy", "writer", COPY + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems: open, article: toRaw(current), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt }, 6000);
+    const fixed = shapeDraft(mergeRewrite(raw, toRaw(current)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
+    if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
+    const again = copyProblems(fixed, e, "en");
+    const left = describe(again);
+    if (!again.facts.length && !again.style.length) return { ok: true, value: fixed, note: note("copy", m.model("writer"), "fixed", problems) };
+    if (attempt === 1 || left.length >= open.length || m.failure) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...left]) };
+    current = fixed; open = left;
+  }
+  return { ok: false, note: note("copy", m.model("writer"), "fail", problems) };
 }
 
 // ── standards editor ───────────────────────────────────────────────────────

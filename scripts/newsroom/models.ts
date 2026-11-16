@@ -17,7 +17,58 @@ export function parseJson<T>(text: string): T | null {
   const t = text.replace(/^```(?:json)?\s*|\s*```$/g, "").trim();
   const i = t.indexOf("{"), j = t.lastIndexOf("}");
   if (i < 0 || j <= i) return null;
-  try { return JSON.parse(t.slice(i, j + 1)) as T; } catch { return null; }
+  const whole = t.slice(i, j + 1);
+  // The whole span, the first complete object (a reply can add a second object or notes with braces), then both with quotes repaired.
+  for (const c of [whole, firstObject(whole), repairQuotes(whole), firstObject(repairQuotes(whole))]) {
+    if (!c) continue;
+    try { return JSON.parse(c) as T; } catch { /* next */ }
+  }
+  return null;
+}
+/** The first balanced {...} in the text, strings and escapes respected. */
+export function firstObject(t: string): string | null {
+  let depth = 0, inStr = false, start = -1;
+  for (let k = 0; k < t.length; k++) {
+    const c = t[k];
+    if (inStr) { if (c === "\\") k++; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true;
+    else if (c === "{") { if (depth++ === 0) start = k; }
+    else if (c === "}" && depth > 0 && --depth === 0) return t.slice(start, k + 1);
+  }
+  return null;
+}
+/** Where a reply's JSON breaks, for the log: the parser's message and a little text around it. */
+export function jsonProblem(text: string): string {
+  const i = text.indexOf("{"), j = text.lastIndexOf("}");
+  if (i < 0 || j <= i) return "no JSON object";
+  const span = text.slice(i, j + 1);
+  try { JSON.parse(span); return "parses"; } catch (err) {
+    const msg = String((err as Error).message);
+    const m = /position (\d+)/.exec(msg);
+    const at = m ? Number(m[1]) : -1;
+    return msg.slice(0, 90) + (at >= 0 ? " near: " + JSON.stringify(span.slice(Math.max(0, at - 50), at + 30)) : "");
+  }
+}
+/**
+ * Escape straight double quotes used as quotation marks inside a JSON string
+ * ("…said "we will" today…"): Claude does this when asked to quote a source.
+ * A quote ends the string only when the next non-space character is , : } ] or the end.
+ */
+export function repairQuotes(t: string): string {
+  let out = "", inStr = false;
+  for (let k = 0; k < t.length; k++) {
+    const c = t[k];
+    if (inStr && c === "\\") { out += c + (t[k + 1] ?? ""); k++; continue; }
+    if (c === '"') {
+      if (!inStr) { inStr = true; out += c; continue; }
+      const next = t.slice(k + 1).match(/^\s*(.)/s)?.[1];
+      if (next === undefined || ",:}]".includes(next)) { inStr = false; out += c; } else out += '\\"';
+      continue;
+    }
+    if (inStr && c === "\n") { out += "\\n"; continue; }
+    out += c;
+  }
+  return out;
 }
 export async function withRetry(f: () => Promise<Response>, max = 1, wait = (n: number) => new Promise<void>(r => setTimeout(r, 4000 * n))): Promise<Response> {
   let res = await f();
@@ -139,7 +190,8 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
             } : {
               // Current Claude models reject a non-default temperature and always think, so the answer gets room on top of
               // the thinking, and effort keeps the thinking short: medium for the writer, low for the checker.
-              model,max_tokens:maxTokens+4096,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}],
+              // A whole-article rewrite (copy desk) with thinking ran past +4096 and came back empty; unused room costs nothing.
+              model,max_tokens:maxTokens+12000,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}],
               output_config:{effort:tier==="writer"?"medium":"low"},
             };
             // Long articles with thinking can take Gemini over 2.5 minutes; NEWSROOM_TIMEOUT_MS overrides.
@@ -168,8 +220,11 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
             const c=body.candidates?.[0];if(!c||["SAFETY","MAX_TOKENS"].includes(c.finishReason))return null;
             return parseJson<T>((c.content?.parts??[]).filter((p:any)=>!p.thought).map((p:any)=>p.text??"").join(""));
           }
-          if(["refusal","max_tokens"].includes(body.stop_reason))return null;
-          return parseJson<T>((body.content??[]).filter((c:any)=>c.type==="text").map((c:any)=>c.text??"").join(""));
+          const text=(body.content??[]).filter((c:any)=>c.type==="text").map((c:any)=>c.text??"").join("");
+          const parsed=["refusal","max_tokens"].includes(body.stop_reason)?null:parseJson<T>(text);
+          // Why a reply was unusable, without its content: the stop reason and sizes only.
+          if(parsed===null)report("["+role+"] "+model+" reply unusable: stop "+body.stop_reason+", "+output+" output tokens, "+text.length+" characters of text; "+jsonProblem(text)+"; starts "+JSON.stringify(text.slice(0,40)));
+          return parsed;
         }catch{
           // A timeout may have been billed. Unknown usage stops additional paid calls; keys/response bodies are never logged.
           budget.usd=null;

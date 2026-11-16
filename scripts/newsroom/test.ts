@@ -15,7 +15,8 @@ import { upsettingReasons } from "./upsetting";
 import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
-import { citedPassages, passagesToStories, researchEvent, SEARCH_USD } from "./research";
+import { parseJson } from "./models";
+import { citedPassages, NOT_AN_EVENT, passagesToStories, researchEvent, SEARCH_USD } from "./research";
 import { enrichOfficial, extractText, officialCandidates, onOwnSite, robotsAllows } from "./fulltext";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 import type { Story } from "../../src/lib/news-engine";
@@ -197,6 +198,19 @@ test("one non-official outlet's 'confirmed' point becomes a claim in its name", 
   assert.equal(d.sections[0].paras[0], "Para [s1] with a fake marker and a background marker.");
 });
 
+console.log("model replies");
+test("a reply that quotes with straight double quotes inside a JSON string still parses", () => {
+  const raw = '```json\n{"headline": "Apple tests "paint" mode", "article": {"news": ["It said "we paint, not print" on Monday [s1]."]}, "n": 2}\n```';
+  const r = parseJson<{ headline: string; article: { news: string[] }; n: number }>(raw);
+  assert.ok(r, "parsed");
+  assert.equal(r!.headline, 'Apple tests "paint" mode');
+  assert.equal(r!.article.news[0], 'It said "we paint, not print" on Monday [s1].');
+  assert.equal(r!.n, 2);
+  assert.deepEqual(parseJson('{"a": "plain", "b": ["x", "y"]}'), { a: "plain", b: ["x", "y"] });
+  assert.deepEqual(parseJson('{"a": "x {b}"}\n\nNotes: {fixed two problems}'), { a: "x {b}" });
+  assert.deepEqual(parseJson('{"a": 1}\n{"sources": []}'), { a: 1 });
+});
+
 console.log("meaning check");
 test("a flipped verb ('did not release') is caught", () => {
   const bad = factGuard(["Northwind Labs did not release Aurora-2."], "Northwind Labs released Aurora-2, an open-weight model, on Tuesday.");
@@ -216,6 +230,17 @@ test("a draft wrapped in one key is unwrapped", () => {
 });
 test("a skip is never unwrapped", () => {
   assert.equal(unwrapDraft({ skip: true, reason: "thin" })?.skip, true);
+});
+test("'plain' and 'expert' given as one string of paragraphs are accepted (Claude's usual reply)", () => {
+  const sources: DispatchSource[] = [{ key: "s1", outlet: "A", title: "", url: "", publishedAt: "", storyId: "1", official: false, lang: "en" }];
+  const d = shapeDraft({
+    headline: "A headline that is long enough to pass", news: "News.", thirty: ["a", "b", "c"], matters: "m",
+    claimed: [{ text: "A says it.", by: "A", src: ["s1"] }], article: { news: ["Para [s1]."] }, plain: "First plain paragraph [s1].\n\nSecond plain paragraph.", expert: "One expert paragraph [s1].",
+  } as never, sources, []);
+  assert.ok(typeof d !== "string", String(d));
+  if (typeof d === "string") return;
+  assert.equal(d.body.plain.length, 2);
+  assert.equal(d.body.expert.length, 1);
 });
 test("missing fields are named", () => {
   const r = shapeDraft({ headline: "Northwind releases Aurora-2", news: "Northwind released a model." } as never, [], []);
@@ -356,6 +381,18 @@ test("only the passages a research answer cites become reporting, one report per
   assert.match(pages[1].summary, /existing Quebec sites …$/);
   assert.equal(pages[0].region, "canada");
   assert.equal(pages[0].link, "https://www.cbc.ca/news/telus-ai-centres");
+});
+test("aggregators and social media are never named as sources; lists and reviews are not researched", () => {
+  const lead = story({ id: "r5", source: "Lakeshore Tribune", title: "Northwind opens a Montreal lab", summary: "" });
+  const pages = passagesToStories([
+    { url: "https://news.google.com/articles/abc", title: "Northwind lab", text: "Northwind opened a lab in Montreal." },
+    { url: "https://www.reddit.com/r/x/1", title: "Northwind lab", text: "Northwind opened a lab in Montreal." },
+    { url: "https://www.lapresse.ca/affaires/northwind", title: "Northwind ouvre un labo - La Presse", text: "Northwind a ouvert un laboratoire à Montréal." },
+  ], lead);
+  assert.deepEqual(pages.map(p => p.source), ["La Presse"]);
+  assert.ok(NOT_AN_EVENT.test("The AI graveyard: a running list of projects that didn't make it"));
+  assert.ok(NOT_AN_EVENT.test("The Sony Aibo was a robot revolution dressed like a dog"));
+  assert.ok(!NOT_AN_EVENT.test("Telus pulls out of two planned Vancouver AI data centres"));
 });
 test("a thin event becomes writable with web research, and is marked as researched", () => {
   const lead = story({ id: "r1", region: "canada", source: "Lakeshore Tribune", title: "Northwind opens a Montreal research lab", summary: "Northwind opened a lab." });
