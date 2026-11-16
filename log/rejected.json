@@ -1,5 +1,25 @@
 [
   {
+    "id": "1twcd0t",
+    "at": "2026-11-16T02:26:18.210Z",
+    "stage": "copy",
+    "headline": "The AI graveyard: a running list of projects and startups that didn't make it",
+    "reasons": [
+      "Not in the sources (names or numbers): Readers.",
+      "Paragraph 1 of \"matters\" has no [sN] source marker.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to techcrunch.com's wording (\"tool built as an alternative to zapier shut down…\"): say it in our own words, or quote and attribute it.",
+      "Too close to news.google.com's wording (\"discontinued on august 9 with its most useful features…\"): say it in our own words, or quote and attribute it.",
+      "Too close to progressiverobot.com's wording (\"running list of ai products startups and bets that…\"): say it in our own words, or quote and attribute it.",
+      "Too close to daily.dev's wording (\"character ai filed for bankruptcy in october citing legal…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Anyone.",
+      "Too close to techcrunch.com's wording (\"shut down its ai pin business in february 2025…\"): say it in our own words, or quote and attribute it.",
+      "Too close to news.google.com's wording (\"about 42 of ai initiatives are ultimately abandoned by…\"): say it in our own words, or quote and attribute it.",
+      "Too close to progressiverobot.com's wording (\"running list of ai products startups and bets that…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "10jl3ej",
     "at": "2026-11-16T02:24:27.133Z",
     "stage": "copy",
