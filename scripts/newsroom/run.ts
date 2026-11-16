@@ -295,8 +295,8 @@ async function main() {
  */
 async function researchThin(m: Models, skipped: Skip[], d: Directives, today: string, want: number): Promise<Map<string, Story[]>> {
   const out = new Map<string, Story[]>();
-  const perRun = Math.max(0, Number(env("NEWSROOM_RESEARCH_PER_RUN") || "2") || 0);
-  const daily = Math.max(0, Number(env("NEWSROOM_RESEARCH_DAILY") || "6") || 0);
+  const perRun = Math.max(0, Number(env("NEWSROOM_RESEARCH_PER_RUN") || "3") || 0);
+  const daily = Math.max(0, Number(env("NEWSROOM_RESEARCH_DAILY") || "27") || 0);
   const key = env("ANTHROPIC_API_KEY");
   if (!key || perRun === 0 || daily === 0 || want <= 0) return out;
   const book = await loadResearchLog(STORE, today);
