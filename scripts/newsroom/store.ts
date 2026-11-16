@@ -40,6 +40,7 @@ Remove the line to bring it back. Never delete files by hand: the workflow keeps
 House rule: stories that could upset or harm people (accusations, crime and courts, deaths,
 abuse, war, elections) are turned down. Other sensitive topics publish automatically; with
 NEWSROOM_REVIEW=hold they wait in \`drafts/\` and are listed in \`drafts.json\` with the reasons.
+Articles built from web research always wait there too. \`drafts/README.md\` shows every draft as it would read.
 Read the draft; to publish it, add its id to \`approved.json\`:
 
 \`\`\`json

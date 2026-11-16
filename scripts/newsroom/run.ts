@@ -28,9 +28,12 @@ import { countWords, uniqueSlug, type NewsroomArticle, type NewsroomCopy, type R
 import { loadAttempts, recordAttempt, releaseAttempt } from "./attempts";
 import { cannedModels, illustrate, liveModels, type Models } from "./models";
 import { LINKS, loadGlossary } from "./library";
-import { pickBrief, pickEvents } from "./pick";
+import { pickBrief, pickEvents, type Skip } from "./pick";
+import { loadResearchLog, researchEvent, saveResearchLog } from "./research";
+import { writeDraftsPreview } from "./preview";
+import type { Story } from "../../src/lib/news-engine";
 import { copyEditor, pageDesigner, reporter, seoEditor, standardsEditor, translator, useDirectives, type Event, type Seo, type SeoCopy } from "./roles";
-import { loadDirectives, targetRoom } from "./directives";
+import { focusHits, loadDirectives, targetRoom, type Directives } from "./directives";
 import type { Draft } from "./shape";
 import { openStore, type Store } from "./store";
 
@@ -168,6 +171,12 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
   const upset = upsettingReasons(`${article.en.headline} ${article.en.dek ?? ""} ${article.en.news ?? ""}`);
   if (upset.length && REVIEW !== "off") return stop("house rule", { role: "standards", model: "rules", at: new Date().toISOString(), verdict: "fail", notes: [`could upset or harm people: ${upset.join(", ")}`] });
   // Health, money and other sensitive-but-useful topics publish automatically; NEWSROOM_REVIEW=hold restores the human check.
+  // Articles built from web research wait for the editor until the owner switches that off (NEWSROOM_RESEARCH_REVIEW=off).
+  if (e.researched && env("NEWSROOM_RESEARCH_REVIEW").toLowerCase() !== "off") {
+    await store.hold(article, ["built from web research: the editor reads it first"]);
+    log(`  ⏸ draft for the editor (web research, ${e.researched} page(s)): add "${article.id}" to approved.json on the newsroom branch to publish`);
+    return "held";
+  }
   const risk = riskReasons(article);
   if (risk.length && REVIEW === "hold") {
     await store.hold(article, risk);
@@ -238,8 +247,13 @@ async function main() {
     killed: store.killed,
     rejectedAt: new Map(store.rejected.map(r => [r.id, r.at] as const)),
   };
-  const { events, skipped } = pickEvents(stories, seen, Date.now(), directives);
+  let { events, skipped } = pickEvents(stories, seen, Date.now(), directives);
   log(`store: ${STORE} (${store.index.items.length} published, ${store.rejected.length} on record as turned down)`);
+  // Too few events with enough reporting: research a few thin ones on the web (research.ts), then pick again.
+  if (!DRY && models.provider === "claude" && events.length < Math.min(budget, room)) {
+    const research = await researchThin(models, skipped, directives, today, Math.min(budget, room) - events.length);
+    if (research.size) ({ events, skipped } = pickEvents(stories, seen, Date.now(), directives, research));
+  }
   if (!DRY) {
     const brief = pickBrief(stories, seen, Date.now(), directives);
     log(`${directives.brief.title.en}: ${brief.event ? `picked (${brief.why})` : `not this run, ${brief.why}`}`);
@@ -275,7 +289,45 @@ async function main() {
   return finish(models);
 }
 
+/**
+ * Research up to `want` thin events (Canadian and focus-topic events first) within the per-run and daily caps.
+ * Returns the cited pages per event id. Spend is added to this run's budget.
+ */
+async function researchThin(m: Models, skipped: Skip[], d: Directives, today: string, want: number): Promise<Map<string, Story[]>> {
+  const out = new Map<string, Story[]>();
+  const perRun = Math.max(0, Number(env("NEWSROOM_RESEARCH_PER_RUN") || "2") || 0);
+  const daily = Math.max(0, Number(env("NEWSROOM_RESEARCH_DAILY") || "6") || 0);
+  const key = env("ANTHROPIC_API_KEY");
+  if (!key || perRun === 0 || daily === 0 || want <= 0) return out;
+  const book = await loadResearchLog(STORE, today);
+  const room = Math.min(perRun, want, daily - book.count);
+  if (room <= 0) { log(`Web research: daily cap reached (${book.count} of ${daily}).`); return out; }
+  const score = (s: Story) => (s.region === "canada" ? 2 : 0) + (focusHits(`${s.title} ${s.summary ?? ""}`, d).length ? 1 : 0);
+  const thin = skipped
+    .filter(s => s.lead && s.why.startsWith("too little reporting") && !book.at[s.id])
+    .map((s, i) => ({ s, i, score: score(s.lead!) }))
+    .sort((a, b) => b.score - a.score || a.i - b.i)
+    .slice(0, room)
+    .map(x => x.s);
+  const model = env("NEWSROOM_RESEARCH_MODEL") || m.model("writer");
+  for (const s of thin) {
+    if (m.usage.capped) break;
+    book.count++; book.at[s.id] = new Date().toISOString();
+    await saveResearchLog(STORE, book);
+    const r = await researchEvent(s.lead!, { apiKey: key, model });
+    if (!r) { log(`Web research: no price known for ${model}, skipped.`); break; }
+    m.usage.calls++; m.usage.inTokens += r.inTokens; m.usage.outTokens += r.outTokens;
+    if (m.usage.usd != null) m.usage.usd += r.usd;
+    log(`Web research ▸ ${s.id}: ${s.title} — ${r.note} (≈$${r.usd.toFixed(3)})`);
+    if (r.stories.length) out.set(s.id, r.stories);
+  }
+  return out;
+}
+
 async function finish(m: Models) {
+  // Drafts waiting for the editor, readable on GitHub (drafts/README.md on the newsroom branch).
+  const drafts = await writeDraftsPreview(STORE);
+  if (drafts) log(`Drafts waiting for the editor: ${drafts} (newsroom branch, drafts/README.md).`);
   // A busy provider is not something the owner can fix: warn, don't fail (and don't email).
   if (m.failure && m.busy) log(`::warning title=Newsroom paused: provider busy::${m.failure}`);
   else if (m.failure) {

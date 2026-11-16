@@ -21,7 +21,8 @@ import type { Event } from "./roles";
 import { DEFAULT_DIRECTIVES, bannedBy, focusHits, torontoClock, type Directives } from "./directives";
 
 export type Seen = { ids: Set<string>; storyIds: Set<string>; killed: Set<string>; rejectedAt: Map<string, string> };
-export type Skip = { id: string; title: string; why: string };
+/** `lead` is set when the event was skipped for thin reporting, so a run can research it (research.ts). */
+export type Skip = { id: string; title: string; why: string; lead?: Story };
 
 const HOURS = 36;
 
@@ -100,7 +101,7 @@ function toEvent(id: string, lead: Story, stories: Story[]): Event {
  * here before any paid call, and focus topics: Canadian stories first, then
  * stories on a focus topic, then the usual order.
  */
-export function pickEvents(stories: Story[], seen: Seen, now = Date.now(), d: Directives = DEFAULT_DIRECTIVES): { events: Event[]; skipped: Skip[] } {
+export function pickEvents(stories: Story[], seen: Seen, now = Date.now(), d: Directives = DEFAULT_DIRECTIVES, research: Map<string, Story[]> = new Map()): { events: Event[]; skipped: Skip[] } {
   const events: Event[] = [];
   const skipped: Skip[] = [];
   const fresh = (iso: string) => now - new Date(iso).getTime() < HOURS * 3600_000;
@@ -148,10 +149,20 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now(), d: Di
       gathered = more.length;
       all = [...all, ...more];
     }
-    if (chars(all) < need(all)) return skipped.push({ id, title: lead.title, why: `too little reporting to write from (${chars(all)} characters of excerpts from ${new Set(all.map(s => s.source)).size} outlet(s)${gathered ? `, after gathering ${gathered} more` : ", no other outlet found"}; needs ${need(all)})` });
+    // Web research (research.ts): passages from pages the research cited, verbatim. The same house rules apply to them.
+    const found = chars(all) < need(all) ? research.get(id) ?? [] : [];
+    if (found.length) {
+      const upsetting = upsettingReasons(textOf(found));
+      if (upsetting.length) return skipped.push({ id, title: lead.title, why: `house rule, the web research could upset or harm people (${upsetting.join(", ")})` });
+      const bannedFound = bannedBy(textOf(found), d);
+      if (bannedFound) return skipped.push({ id, title: lead.title, why: `owner's directives, banned topic in the web research (${bannedFound})` });
+      all = [...all, ...found];
+    }
+    if (chars(all) < need(all)) return skipped.push({ id, title: lead.title, lead, why: `too little reporting to write from (${chars(all)} characters of excerpts from ${new Set(all.map(s => s.source)).size} outlet(s)${gathered ? `, after gathering ${gathered} more` : ", no other outlet found"}${found.length ? `, after web research` : ""}; needs ${need(all)})` });
     for (const s of all) used.add(s.id);
     const e = toEvent(id, lead, all);
     if (gathered) e.gathered = gathered;
+    if (found.length) e.researched = found.length;
     events.push(e);
   };
 

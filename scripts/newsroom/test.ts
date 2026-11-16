@@ -15,6 +15,7 @@ import { upsettingReasons } from "./upsetting";
 import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
+import { citedPassages, passagesToStories, researchEvent, SEARCH_USD } from "./research";
 import { enrichOfficial, extractText, officialCandidates, onOwnSite, robotsAllows } from "./fulltext";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 import type { Story } from "../../src/lib/news-engine";
@@ -331,6 +332,52 @@ test("a thin report with no other outlet on the same event is still skipped, and
   assert.equal(events.length, 0);
   assert.match(skipped.find(s => s.id === "t1")!.why, /no other outlet found; needs 450/);
 });
+console.log("web research (research.ts)");
+const RESEARCH_CONTENT = [
+  { type: "server_tool_use" },
+  { type: "web_search_tool_result", content: [] },
+  { type: "text", text: "Telus cancelled two planned data centres in Vancouver.", citations: [
+    { type: "web_search_result_location", url: "https://www.cbc.ca/news/telus-ai-centres", title: "Telus pulls out of two Vancouver AI data centres - CBC News", cited_text: "Telus said Monday it will not build two planned AI data centres in Vancouver, citing the cost of power." },
+  ] },
+  { type: "text", text: " The company said the sites would have used 90 megawatts.", citations: [
+    { type: "web_search_result_location", url: "https://www.cbc.ca/news/telus-ai-centres", title: "Telus pulls out of two Vancouver AI data centres - CBC News", cited_text: "The two sites would have drawn about 90 megawatts, the company said." },
+    { type: "web_search_result_location", url: "https://www.cbc.ca/news/telus-ai-centres", title: "Telus pulls out of two Vancouver AI data centres - CBC News", cited_text: "The two sites would have drawn about 90 megawatts, the company said." },
+    { type: "web_search_result_location", url: "https://www.telus.com/en/about/news/ai-factory-update", title: "Update on our AI factory plans", cited_text: "TELUS will focus its sovereign AI factory investment on its existing Quebec sites" },
+  ] },
+];
+test("only the passages a research answer cites become reporting, one report per page, repeats dropped", () => {
+  const cited = citedPassages(RESEARCH_CONTENT as never);
+  assert.equal(cited.length, 3);
+  const lead = story({ id: "r0", region: "canada", source: "Lakeshore Tribune", title: "Telus pulls out of two planned Vancouver AI data centres", summary: "" });
+  const pages = passagesToStories(cited, lead);
+  assert.deepEqual(pages.map(p => p.source), ["CBC News", "telus.com"]);
+  assert.equal(pages[0].title, "Telus pulls out of two Vancouver AI data centres");
+  assert.match(pages[0].summary, /citing the cost of power\. The two sites would have drawn about 90 megawatts/);
+  assert.match(pages[1].summary, /existing Quebec sites …$/);
+  assert.equal(pages[0].region, "canada");
+  assert.equal(pages[0].link, "https://www.cbc.ca/news/telus-ai-centres");
+});
+test("a thin event becomes writable with web research, and is marked as researched", () => {
+  const lead = story({ id: "r1", region: "canada", source: "Lakeshore Tribune", title: "Northwind opens a Montreal research lab", summary: "Northwind opened a lab." });
+  const before = pickEvents([lead], SEEN(), NOW, DIR);
+  assert.equal(before.events.length, 0);
+  assert.equal(before.skipped[0].lead?.id, "r1");
+  const found = [
+    story({ id: "web-a", source: "Maple Tech Review", title: "Northwind lab in Montreal", summary: LONG("Northwind opened a research lab in Montreal with 40 researchers, the company said on Tuesday.") }),
+    story({ id: "web-b", source: "northwind.example", title: "Our Montreal lab", summary: LONG("Our new Montreal lab will work on French-language models and hire 40 researchers this year.") }),
+  ];
+  const after = pickEvents([lead], SEEN(), NOW, DIR, new Map([["r1", found]]));
+  assert.equal(after.events.length, 1, JSON.stringify(after.skipped));
+  assert.equal(after.events[0].researched, 2);
+  assert.deepEqual(after.events[0].sources.map(s => s.outlet).sort(), ["Lakeshore Tribune", "Maple Tech Review", "northwind.example"]);
+});
+test("web research that would break a house rule keeps the event off", () => {
+  const lead = story({ id: "r2", source: "Lakeshore Tribune", title: "Northwind opens a Montreal research lab", summary: "Northwind opened a lab." });
+  const found = [story({ id: "web-c", source: "Outlet Z", title: "Lab", summary: LONG("A worker was killed in a shooting at the Northwind lab in Montreal on Tuesday.") })];
+  const r = pickEvents([lead], SEEN(), NOW, DIR, new Map([["r2", found]]));
+  assert.equal(r.events.length, 0);
+  assert.match(r.skipped[0].why, /house rule|too little/);
+});
 test("banned topics are skipped before any paid call; Canadian events come first", () => {
   const w1 = story({ id: "w1", source: "Outlet A", title: "Northwind and Kestrel sign a chip supply deal in Taipei", summary: LONG("Northwind and Kestrel signed a chip supply deal in Taipei covering accelerators.") });
   const w2 = story({ id: "w2", source: "Outlet B", title: "Northwind Kestrel chip supply deal signed in Taipei", summary: LONG("The chip supply deal between Northwind and Kestrel was signed in Taipei.") });
@@ -470,6 +517,30 @@ const asyncTests: [string, () => Promise<void>][] = [
     assert.equal(await enrichOfficial([official({ id: "o2" })], { fetch: down }), 0);
     assert.equal(pages, 0);
     assert.equal(s.summary, "Model-9 is here.");
+  }],
+  ["research: web search tool request, pause_turn continued, cost counted, NOT_FOUND gives nothing", async () => {
+    const lead = story({ id: "r9", source: "Lakeshore Tribune", title: "Telus pulls out of two planned Vancouver AI data centres", summary: "" });
+    const bodies: { tools: { type: string; max_uses: number }[]; messages: unknown[] }[] = [];
+    let n = 0;
+    const fake = (async (_u: string, init: RequestInit) => {
+      bodies.push(JSON.parse(String(init.body)));
+      n++;
+      const usage = { input_tokens: 10000, output_tokens: 1000, server_tool_use: { web_search_requests: 1 } };
+      return new Response(JSON.stringify(n === 1 ? { content: [{ type: "server_tool_use" }], stop_reason: "pause_turn", usage } : { content: RESEARCH_CONTENT, stop_reason: "end_turn", usage }), { status: 200 });
+    }) as typeof fetch;
+    const r = await researchEvent(lead, { apiKey: "test", model: "claude-sonnet-5-5", fetch: fake });
+    assert.ok(r);
+    assert.equal(bodies[0].tools[0].type, "web_search_20260209");
+    assert.equal(bodies[0].tools[0].max_uses, 3);
+    assert.equal(bodies[1].messages.length, 2);
+    assert.equal(r!.stories.length, 2);
+    assert.equal(r!.searches, 2);
+    assert.ok(Math.abs(r!.usd - (2 * (10000 * 2 + 1000 * 10) / 1e6 + 2 * SEARCH_USD)) < 1e-9);
+    const none = await researchEvent(lead, { apiKey: "test", model: "claude-sonnet-5-5", fetch: (async () => new Response(JSON.stringify({ content: [{ type: "text", text: "NOT_FOUND" }], stop_reason: "end_turn", usage: {} }))) as typeof fetch });
+    assert.equal(none!.stories.length, 0);
+    const down = await researchEvent(lead, { apiKey: "test", model: "claude-sonnet-5-5", fetch: (async () => { throw new Error("ECONNRESET"); }) as typeof fetch });
+    assert.equal(down!.stories.length, 0);
+    assert.equal(await researchEvent(lead, { apiKey: "test", model: "unknown-model", fetch: fake }), null);
   }],
   ["at most `max` pages per run, and network errors never throw", async () => {
     const many = Array.from({ length: 5 }, (_, i) => official({ id: `m${i}`, link: `https://openai.com/index/m${i}/` }));
