@@ -141,8 +141,11 @@ This run is the morning "${t.en}" slot. The sources are SEVERAL SEPARATE Canadia
 - "thirty": one line each for the three most useful items.
 Return {"skip": true, "reason": "..."} only if fewer than three items have enough reporting for two sentences each.`;
 
+/** Researched events (research.ts): the excerpts are short passages quoted from web pages, so copying is the main risk. */
+export const RESEARCHED_NOTE = "The excerpts are short passages quoted word for word from web pages. Restate every fact in new words and new sentence order: never reuse five or more words in a row from an excerpt unless you put them in quotation marks and name who said them. Every paragraph, including \"matters\", carries source markers; if the sources say nothing about why it matters to people, write one short paragraph that says what is different now, with its markers.";
+
 export async function reporter(m: Models, e: Event): Promise<Outcome<Draft>> {
-  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens, ...(e.brief ? { slot: e.brief.title.en } : {}) }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
+  const input = JSON.stringify({ event: { topic: e.topic, peopleSide: e.lens, ...(e.brief ? { slot: e.brief.title.en } : {}), ...(e.researched ? { note: RESEARCHED_NOTE } : {}) }, sources: sourcesFor(e), background: backgroundFor(e, "en") });
   const shape = (raw: RawDraft | null) => shapeDraft(raw, e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
   const system = `${REPORTER}${e.brief ? briefPrompt(e.brief.title) : ""}${directivesPrompt(DIRECTIVES, "reporter")}`;
   let d = shape(await m.json<RawDraft>("reporter", "writer", system, input, { id: e.id, attempt: 0 }, 6000));

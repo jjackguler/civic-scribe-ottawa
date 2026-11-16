@@ -29,7 +29,7 @@ import { loadAttempts, recordAttempt, releaseAttempt } from "./attempts";
 import { cannedModels, illustrate, liveModels, type Models } from "./models";
 import { LINKS, loadGlossary } from "./library";
 import { pickBrief, pickEvents, type Skip } from "./pick";
-import { loadResearchLog, researchEvent, saveResearchLog } from "./research";
+import { loadResearchLog, NOT_AN_EVENT, researchEvent, saveResearchLog } from "./research";
 import { writeDraftsPreview } from "./preview";
 import type { Story } from "../../src/lib/news-engine";
 import { copyEditor, pageDesigner, reporter, seoEditor, standardsEditor, translator, useDirectives, type Event, type Seo, type SeoCopy } from "./roles";
@@ -304,7 +304,7 @@ async function researchThin(m: Models, skipped: Skip[], d: Directives, today: st
   if (room <= 0) { log(`Web research: daily cap reached (${book.count} of ${daily}).`); return out; }
   const score = (s: Story) => (s.region === "canada" ? 2 : 0) + (focusHits(`${s.title} ${s.summary ?? ""}`, d).length ? 1 : 0);
   const thin = skipped
-    .filter(s => s.lead && s.why.startsWith("too little reporting") && !book.at[s.id])
+    .filter(s => s.lead && s.why.startsWith("too little reporting") && !book.at[s.id] && !NOT_AN_EVENT.test(s.title))
     .map((s, i) => ({ s, i, score: score(s.lead!) }))
     .sort((a, b) => b.score - a.score || a.i - b.i)
     .slice(0, room)

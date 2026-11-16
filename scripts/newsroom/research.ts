@@ -24,6 +24,10 @@ import type { Story } from "../../src/lib/news-engine";
 import { priceOf, withRetry } from "./models";
 
 export const SEARCH_USD = 10 / 1000;
+/** Aggregators, social media and forums: never a source we name. */
+export const BLOCKED = ["news.google.com", "msn.com", "yahoo.com", "flipboard.com", "reddit.com", "x.com", "twitter.com", "facebook.com", "instagram.com", "threads.net", "tiktok.com", "youtube.com", "linkedin.com", "medium.com", "substack.com", "quora.com", "daily.dev", "news.ycombinator.com", "wikipedia.org"];
+/** Features, lists and reviews are not events: researching them finds nothing to report. */
+export const NOT_AN_EVENT = /\b(running list|list of|how to|hands-on|review|opinion|podcast|newsletter|explained|everything we know|what to know|deep dive|interview|was a|best \w+ of)\b/i;
 const RESEARCH_COOLDOWN_MS = 72 * 3600_000;
 
 export type Cited = { url: string; title: string; text: string };
@@ -61,7 +65,12 @@ const hash = (s: string) => { let h = 0; for (let i = 0; i < s.length; i++) h = 
 /** One synthetic report per cited page: its passages, verbatim, are the excerpt the writer and the fact guard see. */
 export function passagesToStories(cited: Cited[], lead: Story): Story[] {
   const byUrl = new Map<string, Cited[]>();
-  for (const c of cited) byUrl.set(c.url, [...(byUrl.get(c.url) ?? []), c]);
+  for (const c of cited) {
+    let host = "";
+    try { host = new URL(c.url).hostname.replace(/^www\./, ""); } catch { continue; }
+    if (BLOCKED.some(b => host === b || host.endsWith(`.${b}`))) continue;
+    byUrl.set(c.url, [...(byUrl.get(c.url) ?? []), c]);
+  }
   return [...byUrl.entries()].map(([url, cs]) => {
     const title = cs.find(c => c.title)?.title ?? lead.title;
     return {
@@ -122,7 +131,7 @@ export async function researchEvent(lead: Story, opts: { apiKey: string; model: 
           system: RESEARCH_SYSTEM,
           messages,
           // Direct calls: with dynamic filtering (the default caller) the answer came back without citations, and citations are all we use.
-          tools: [{ type: "web_search_20260209", name: "web_search", max_uses: opts.maxSearches ?? 3, allowed_callers: ["direct"] }],
+          tools: [{ type: "web_search_20260209", name: "web_search", max_uses: opts.maxSearches ?? 3, allowed_callers: ["direct"], blocked_domains: BLOCKED }],
           output_config: { effort: "low" },
         }),
         signal: AbortSignal.timeout(opts.timeoutMs ?? 180_000),

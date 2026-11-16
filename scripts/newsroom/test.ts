@@ -15,7 +15,7 @@ import { upsettingReasons } from "./upsetting";
 import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
-import { citedPassages, passagesToStories, researchEvent, SEARCH_USD } from "./research";
+import { citedPassages, NOT_AN_EVENT, passagesToStories, researchEvent, SEARCH_USD } from "./research";
 import { enrichOfficial, extractText, officialCandidates, onOwnSite, robotsAllows } from "./fulltext";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 import type { Story } from "../../src/lib/news-engine";
@@ -367,6 +367,18 @@ test("only the passages a research answer cites become reporting, one report per
   assert.match(pages[1].summary, /existing Quebec sites …$/);
   assert.equal(pages[0].region, "canada");
   assert.equal(pages[0].link, "https://www.cbc.ca/news/telus-ai-centres");
+});
+test("aggregators and social media are never named as sources; lists and reviews are not researched", () => {
+  const lead = story({ id: "r5", source: "Lakeshore Tribune", title: "Northwind opens a Montreal lab", summary: "" });
+  const pages = passagesToStories([
+    { url: "https://news.google.com/articles/abc", title: "Northwind lab", text: "Northwind opened a lab in Montreal." },
+    { url: "https://www.reddit.com/r/x/1", title: "Northwind lab", text: "Northwind opened a lab in Montreal." },
+    { url: "https://www.lapresse.ca/affaires/northwind", title: "Northwind ouvre un labo - La Presse", text: "Northwind a ouvert un laboratoire à Montréal." },
+  ], lead);
+  assert.deepEqual(pages.map(p => p.source), ["La Presse"]);
+  assert.ok(NOT_AN_EVENT.test("The AI graveyard: a running list of projects that didn't make it"));
+  assert.ok(NOT_AN_EVENT.test("The Sony Aibo was a robot revolution dressed like a dog"));
+  assert.ok(!NOT_AN_EVENT.test("Telus pulls out of two planned Vancouver AI data centres"));
 });
 test("a thin event becomes writable with web research, and is marked as researched", () => {
   const lead = story({ id: "r1", region: "canada", source: "Lakeshore Tribune", title: "Northwind opens a Montreal research lab", summary: "Northwind opened a lab." });

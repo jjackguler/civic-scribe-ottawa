@@ -58,7 +58,7 @@ const GENERIC = new Set((
   "users people developers programmers residents consumers customers businesses companies organisations organizations " +
   "workers employees parents children students teachers families readers creators artists citizens governments " +
   "software tools models systems products services platforms ordinary everyday reporting further furthermore moreover " +
-  "overall elsewhere together"
+  "overall elsewhere together anyone everyone"
 ).split(" "));
 /**
  * Sentence-opening adverbs, by name. Not every capitalised "-ly" word: surnames
