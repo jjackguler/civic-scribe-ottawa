@@ -139,7 +139,8 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
             } : {
               // Current Claude models reject a non-default temperature and always think, so the answer gets room on top of
               // the thinking, and effort keeps the thinking short: medium for the writer, low for the checker.
-              model,max_tokens:maxTokens+4096,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}],
+              // A whole-article rewrite (copy desk) with thinking ran past +4096 and came back empty; unused room costs nothing.
+              model,max_tokens:maxTokens+12000,system:system+"\n\nReply with JSON only.",messages:[{role:"user",content:user}],
               output_config:{effort:tier==="writer"?"medium":"low"},
             };
             // Long articles with thinking can take Gemini over 2.5 minutes; NEWSROOM_TIMEOUT_MS overrides.
@@ -168,8 +169,11 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
             const c=body.candidates?.[0];if(!c||["SAFETY","MAX_TOKENS"].includes(c.finishReason))return null;
             return parseJson<T>((c.content?.parts??[]).filter((p:any)=>!p.thought).map((p:any)=>p.text??"").join(""));
           }
-          if(["refusal","max_tokens"].includes(body.stop_reason))return null;
-          return parseJson<T>((body.content??[]).filter((c:any)=>c.type==="text").map((c:any)=>c.text??"").join(""));
+          const text=(body.content??[]).filter((c:any)=>c.type==="text").map((c:any)=>c.text??"").join("");
+          const parsed=["refusal","max_tokens"].includes(body.stop_reason)?null:parseJson<T>(text);
+          // Why a reply was unusable, without its content: the stop reason and sizes only.
+          if(parsed===null)report("["+role+"] "+model+" reply unusable: stop "+body.stop_reason+", "+output+" output tokens, "+text.length+" characters of text");
+          return parsed;
         }catch{
           // A timeout may have been billed. Unknown usage stops additional paid calls; keys/response bodies are never logged.
           budget.usd=null;
