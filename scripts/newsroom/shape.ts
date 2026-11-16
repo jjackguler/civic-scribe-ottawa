@@ -134,8 +134,10 @@ export function shapeDraft(raw: RawDraft | null | undefined, sources: DispatchSo
   }
   if (!sections.some(s => s.kind === "news")) return "no news section";
 
-  const plain = arr<unknown>(r.plain).map(p => (typeof p === "string" ? cleanMarkers(p, srcKeys, false) : "")).filter(Boolean).slice(0, 3);
-  const expert = arr<unknown>(r.expert).map(p => (typeof p === "string" ? cleanMarkers(p, srcKeys, false) : "")).filter(Boolean).slice(0, 3);
+  // Claude often returns "plain" and "expert" as one string of paragraphs, not an array: accept both.
+  const paras = (v: unknown) => typeof v === "string" ? v.split(/\n\s*\n/).map(x => x.trim()).filter(Boolean) : arr<unknown>(v);
+  const plain = paras(r.plain).map(p => (typeof p === "string" ? cleanMarkers(p, srcKeys, false) : "")).filter(Boolean).slice(0, 3);
+  const expert = paras(r.expert).map(p => (typeof p === "string" ? cleanMarkers(p, srcKeys, false) : "")).filter(Boolean).slice(0, 3);
   if (plain.length === 0) return "no plain version";
 
   const confirmed = arr<{ text?: unknown; src?: unknown }>(r.confirmed)

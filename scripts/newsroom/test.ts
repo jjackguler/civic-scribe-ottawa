@@ -217,6 +217,17 @@ test("a draft wrapped in one key is unwrapped", () => {
 test("a skip is never unwrapped", () => {
   assert.equal(unwrapDraft({ skip: true, reason: "thin" })?.skip, true);
 });
+test("'plain' and 'expert' given as one string of paragraphs are accepted (Claude's usual reply)", () => {
+  const sources: DispatchSource[] = [{ key: "s1", outlet: "A", title: "", url: "", publishedAt: "", storyId: "1", official: false, lang: "en" }];
+  const d = shapeDraft({
+    headline: "A headline that is long enough to pass", news: "News.", thirty: ["a", "b", "c"], matters: "m",
+    claimed: [{ text: "A says it.", by: "A", src: ["s1"] }], article: { news: ["Para [s1]."] }, plain: "First plain paragraph [s1].\n\nSecond plain paragraph.", expert: "One expert paragraph [s1].",
+  } as never, sources, []);
+  assert.ok(typeof d !== "string", String(d));
+  if (typeof d === "string") return;
+  assert.equal(d.body.plain.length, 2);
+  assert.equal(d.body.expert.length, 1);
+});
 test("missing fields are named", () => {
   const r = shapeDraft({ headline: "Northwind releases Aurora-2", news: "Northwind released a model." } as never, [], []);
   assert.ok(typeof r === "string" && r.startsWith("missing fields:") && r.includes("thirty") && r.includes("matters"), String(r));
