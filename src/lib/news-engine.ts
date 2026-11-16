@@ -439,7 +439,9 @@ async function buildPayload(fetchFeeds = true): Promise<NewsPayload> {
     })
     .filter(x => fetchFeeds && x.overdue >= 0)
     .sort((a, b) => a.group - b.group || a.rank - b.rank)
-    .slice(0, MAX_FEEDS_PER_RUN);
+    // The site caps each rebuild to stay inside a Worker's limits. The newsroom (a GitHub Action, a fresh
+    // cache on every run) reads every feed, or half the desk, the slow feeds above all, would never reach it.
+    .slice(0, g.__mwExcerptMax ? NEWS_SOURCES.length : MAX_FEEDS_PER_RUN);
 
   await Promise.all(due.map(async ({ src }) => {
     const c = await withTimeout(fetchSource(src), 9000, { ts: Date.now(), ok: false, stories: [], error: "Timed out" } as SourceCache);
