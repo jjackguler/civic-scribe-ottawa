@@ -86,6 +86,11 @@ export const NEWS_SOURCES: NewsSource[] = [
   { id: "deepmind", name: "Google DeepMind", url: "https://deepmind.google/blog/feed", home: "https://deepmind.google/discover/blog/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   { id: "google-ai", name: "Google AI", url: "https://blog.google/technology/ai/rss/", home: "https://blog.google/technology/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true },
   // Labs and model makers without (or in addition to) the big newsrooms: their own announcements, first-hand.
+  // Press-release wires (added 2026-11-16): companies and organizations publish these releases for media
+  // to reuse, so the newsroom may read the release page itself (scripts/newsroom/fulltext.ts). The issuing
+  // company is the announcing party; every claim is written in its name. The feeds carry teasers only.
+  { id: "globenewswire-ai", name: "GlobeNewswire", url: "https://www.globenewswire.com/RssFeed/subjectcode/88-Artificial%20Intelligence/feedTitle/GlobeNewswire%20-%20Artificial%20Intelligence", home: "https://www.globenewswire.com", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
+  { id: "newswire-ca", name: "Newswire.ca", url: "https://www.newswire.ca/rss/news-releases-list.rss", home: "https://www.newswire.ca", region: "canada", lang: "en", kind: "lab", aiOnly: false, slow: true },
   { id: "microsoft-ai", name: "Microsoft AI", url: "https://blogs.microsoft.com/ai/feed/", home: "https://blogs.microsoft.com/ai/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
   { id: "msr", name: "Microsoft Research", url: "https://www.microsoft.com/en-us/research/feed/", home: "https://www.microsoft.com/en-us/research/blog/", region: "world", lang: "en", kind: "lab", aiOnly: false, slow: true },
   { id: "apple-ml", name: "Apple Machine Learning Research", url: "https://machinelearning.apple.com/rss.xml", home: "https://machinelearning.apple.com/", region: "world", lang: "en", kind: "lab", aiOnly: true, slow: true },
