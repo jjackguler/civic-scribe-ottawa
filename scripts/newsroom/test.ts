@@ -450,6 +450,17 @@ const asyncTests: [string, () => Promise<void>][] = [
     const r = pickEvents([s], SEEN());
     assert.equal(r.events.length, 1, r.skipped.map(x => x.why).join("; "));
   }],
+  ["a site that answers 403 is not asked again in the same run, so other sites still get their tries", async () => {
+    const calls: string[] = [];
+    const fake = async (u: string) => { calls.push(u);
+      if (u.endsWith("/robots.txt")) return new Response("", { status: 404 });
+      if (u.includes("openai.com")) return new Response("no", { status: 403 });
+      return new Response(PAGE.replace("</article>", `<p>${"The company says the tool is free for schools. ".repeat(12)}</p></article>`), { status: 200, headers: { "content-type": "text/html" } }); };
+    const blocked = [1, 2, 3].map(i => official({ id: `b${i}`, link: `https://openai.com/index/m${i}/`, publishedAt: `2026-11-16T0${i}:00:00Z` }));
+    const wire = official({ id: "w1", source: "GlobeNewswire", sourceId: "globenewswire-ai", link: "https://www.globenewswire.com/news-release/2026/11/16/1/0/en/x.html", publishedAt: "2026-11-15T00:00:00Z" });
+    assert.equal(await enrichOfficial([...blocked, wire], { fetch: fake, max: 2 }), 1);
+    assert.equal(calls.filter(u => u.includes("openai.com/index")).length, 1);
+  }],
   ["robots.txt that disallows, or can't be read, means no fetch", async () => {
     const s = official({});
     let pages = 0;
