@@ -1,5 +1,46 @@
 [
   {
+    "id": "xhuukc",
+    "at": "2026-11-16T02:36:41.164Z",
+    "stage": "copy",
+    "headline": "Anthropic says outdated prompting habits are slowing down Claude Opus 5.5",
+    "reasons": [
+      "Too close to the-decoder.com's wording (\"users can change the setting in the model menu…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to the-decoder.com's wording (\"the desired result in a single message rather than…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "dp00b6",
+    "at": "2026-11-16T02:36:19.966Z",
+    "stage": "copy",
+    "headline": "Gemini 4 Carbon Takes the MathArena Lead From GPT-6.1 Sol",
+    "reasons": [
+      "Not in the sources (names or numbers): 4.8-point.",
+      "Too close to inoryva.blogspot.com's wording (\"jasper dekoninck the eth zurich researcher who runs matharena…\"): say it in our own words, or quote and attribute it.",
+      "Too close to tbreak.com's wording (\"1 07 for gpt 6 1 sol and 40…\"): say it in our own words, or quote and attribute it.",
+      "Too close to The Decoder's wording (\"costs 15 times more than gpt 6 1 sol…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to inoryva.blogspot.com's wording (\"the 2 6 point gap between first and second…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "m1lvg9",
+    "at": "2026-11-16T02:35:55.668Z",
+    "stage": "copy",
+    "headline": "Anthropic CEO Amodei admits \"there's a huge uncertainty in what's going to happen next year\" days before a record IPO",
+    "reasons": [
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Paragraph 1 of \"matters\" has no [sN] source marker.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to the-decoder.com's wording (\"at a jpmorgan chase investor event in new york…\"): say it in our own words, or quote and attribute it.",
+      "Too close to Peter Theil's wording (\"anthropic plans to raise up to 64 4 billion…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to the-decoder.com's wording (\"at a jpmorgan chase investor event in new york…\"): say it in our own words, or quote and attribute it.",
+      "Too close to Peter Theil's wording (\"anthropic plans to raise up to 64 4 billion…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1xwxkzz",
     "at": "2026-11-16T02:33:45.045Z",
     "stage": "copy",
