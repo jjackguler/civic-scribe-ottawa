@@ -1,5 +1,50 @@
 [
   {
+    "id": "1vxvm6g",
+    "at": "2026-11-16T18:32:22.702Z",
+    "stage": "copy",
+    "headline": "Hugging Face and OpenRouter join forces to make open-weight models easy to run",
+    "reasons": [
+      "Not in the sources (names or numbers): Readers, 5.2 65, denial not in the sources: \"According to Hugging Face, people who already call models through its token do n\", denial not in the sources: \"How requests are handled for models that are not language models.\".",
+      "Too close to Hugging Face's wording (\"every open weight model on the hub that a…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Anyone, 5.2 65.",
+      "Too close to Hugging Face's wording (\"open weight model on the hub that a provider…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1tdvgfv",
+    "at": "2026-11-16T18:32:00.307Z",
+    "stage": "copy",
+    "headline": "New Ask Maps features to help with holiday travel and prep",
+    "reasons": [
+      "Too close to Google AI's wording (\"updates are rolling out today on android and ios…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google AI's wording (\"real time updates on traffic business hours and parking…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "6dcuvm",
+    "at": "2026-11-16T18:31:42.621Z",
+    "stage": "copy",
+    "headline": "How Canada lost its AI chip champions",
+    "reasons": [
+      "Not in the sources (names or numbers): Canadian-founded.",
+      "Too close to betakit.com's wording (\"relocated to the us in 2023 to support its…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to betakit.com's wording (\"with over 2 billion usd in funding announced since…\") in \"expert\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "567knz",
+    "at": "2026-11-16T18:31:08.604Z",
+    "stage": "standards",
+    "headline": "Minister says Canada’s national AI literacy training will go live next month",
+    "reasons": [
+      "The 'background' section states that the national AI strategy commits to free AI training for everyone and that the Training Finder site will list courses as they launch, citing [b1]. No source b1 is supplied, so this claim cannot be checked against the evidence."
+    ]
+  },
+  {
     "id": "655dor",
     "at": "2026-11-16T16:33:19.560Z",
     "stage": "copy",
