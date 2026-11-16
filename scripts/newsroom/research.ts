@@ -121,7 +121,8 @@ export async function researchEvent(lead: Story, opts: { apiKey: string; model: 
           max_tokens: 8192,
           system: RESEARCH_SYSTEM,
           messages,
-          tools: [{ type: "web_search_20260209", name: "web_search", max_uses: opts.maxSearches ?? 3 }],
+          // Direct calls: with dynamic filtering (the default caller) the answer came back without citations, and citations are all we use.
+          tools: [{ type: "web_search_20260209", name: "web_search", max_uses: opts.maxSearches ?? 3, allowed_callers: ["direct"] }],
           output_config: { effort: "low" },
         }),
         signal: AbortSignal.timeout(opts.timeoutMs ?? 180_000),
@@ -142,7 +143,8 @@ export async function researchEvent(lead: Story, opts: { apiKey: string; model: 
   const answer = content.filter(b => b.type === "text").map(b => b.text ?? "").join("").trim();
   if (/^NOT_FOUND\b/.test(answer) || /\bNOT_FOUND\s*$/.test(answer)) return { stories: [], searches, inTokens, outTokens, usd: cost(), note: "event not found on the web" };
   const stories = passagesToStories(citedPassages(content), lead);
-  return { stories, searches, inTokens, outTokens, usd: cost(), note: `${stories.length} page(s) cited, ${searches} search(es)` };
+  const shape = stories.length ? "" : ` [answer: ${content.map(b => b.type + (b.citations?.length ? `+${b.citations.length}` : "")).join(",").slice(0, 300)}; ${answer.slice(0, 160).replace(/\s+/g, " ")}]`;
+  return { stories, searches, inTokens, outTokens, usd: cost(), note: `${stories.length} page(s) cited, ${searches} search(es)${shape}` };
 
   function cost() { return (inTokens * price![0] + outTokens * price![1]) / 1e6 + searches * SEARCH_USD; }
 }
