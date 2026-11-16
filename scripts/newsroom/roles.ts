@@ -113,8 +113,8 @@ const SHAPE = `Return JSON:
    "matters": 1-2 paragraphs: why it matters to people (rights, work, privacy, children, safety, democracy, money) as far as the sources support it,
    "background": 0-2 paragraphs from the background passages only, each sentence ending with its [bN] marker
  },
- "plain": 2 short paragraphs for someone new to AI: the same news in everyday words, every technical term explained,
- "expert": 1-3 short paragraphs for specialists: the precise terms and figures the sources give, and where the outlets' accounts differ,
+ "plain": an ARRAY of 2 short paragraph strings for someone new to AI: the same news in everyday words, every technical term explained,
+ "expert": an ARRAY of 1-3 short paragraph strings for specialists: the precise terms and figures the sources give, and where the outlets' accounts differ,
  "timeline": [{"when", "text", "src"}] ONLY for times or dates the sources themselves state ("when" copied as written); otherwise []}
 
 Markers: end every sentence in "article", "plain" and "expert" that carries a fact with the source marker(s) it comes from, like "[s2]" or "[s1,s3]" ([bN] for background).
