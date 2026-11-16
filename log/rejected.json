@@ -1,5 +1,19 @@
 [
   {
+    "id": "10jl3ej",
+    "at": "2026-11-16T02:24:27.133Z",
+    "stage": "copy",
+    "headline": "Apple’s First Smart Glasses Will Be iPhone-Only, Gurman Reports",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"Apps would run on the iPhone, controlled by Siri, not on the glasses.\".",
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to androidpure.com's wording (\"slightly thinner than meta s second generation ray ban…\"): say it in our own words, or quote and attribute it.",
+      "Too close to inquisitr.com's wording (\"apple aims to begin shipments before the end of…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
     "id": "1pyd25d",
     "at": "2026-11-16T02:22:28.383Z",
     "stage": "reporter",
