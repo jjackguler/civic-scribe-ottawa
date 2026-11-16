@@ -15,6 +15,7 @@ import { upsettingReasons } from "./upsetting";
 import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
+import { parseJson } from "./models";
 import { citedPassages, NOT_AN_EVENT, passagesToStories, researchEvent, SEARCH_USD } from "./research";
 import { enrichOfficial, extractText, officialCandidates, onOwnSite, robotsAllows } from "./fulltext";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
@@ -195,6 +196,17 @@ test("one non-official outlet's 'confirmed' point becomes a claim in its name", 
   assert.deepEqual(d.confirmed.map(c => c.text), ["Both say it."]);
   assert.deepEqual(d.claimed.map(c => [c.text, c.by]), [["Only A says it.", "A"]]);
   assert.equal(d.sections[0].paras[0], "Para [s1] with a fake marker and a background marker.");
+});
+
+console.log("model replies");
+test("a reply that quotes with straight double quotes inside a JSON string still parses", () => {
+  const raw = '```json\n{"headline": "Apple tests "paint" mode", "article": {"news": ["It said "we paint, not print" on Monday [s1]."]}, "n": 2}\n```';
+  const r = parseJson<{ headline: string; article: { news: string[] }; n: number }>(raw);
+  assert.ok(r, "parsed");
+  assert.equal(r!.headline, 'Apple tests "paint" mode');
+  assert.equal(r!.article.news[0], 'It said "we paint, not print" on Monday [s1].');
+  assert.equal(r!.n, 2);
+  assert.deepEqual(parseJson('{"a": "plain", "b": ["x", "y"]}'), { a: "plain", b: ["x", "y"] });
 });
 
 console.log("meaning check");

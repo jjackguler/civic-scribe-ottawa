@@ -17,7 +17,29 @@ export function parseJson<T>(text: string): T | null {
   const t = text.replace(/^```(?:json)?\s*|\s*```$/g, "").trim();
   const i = t.indexOf("{"), j = t.lastIndexOf("}");
   if (i < 0 || j <= i) return null;
-  try { return JSON.parse(t.slice(i, j + 1)) as T; } catch { return null; }
+  try { return JSON.parse(t.slice(i, j + 1)) as T; } catch { /* try a repair */ }
+  try { return JSON.parse(repairQuotes(t.slice(i, j + 1))) as T; } catch { return null; }
+}
+/**
+ * Escape straight double quotes used as quotation marks inside a JSON string
+ * ("…said "we will" today…"): Claude does this when asked to quote a source.
+ * A quote ends the string only when the next non-space character is , : } ] or the end.
+ */
+export function repairQuotes(t: string): string {
+  let out = "", inStr = false;
+  for (let k = 0; k < t.length; k++) {
+    const c = t[k];
+    if (inStr && c === "\\") { out += c + (t[k + 1] ?? ""); k++; continue; }
+    if (c === '"') {
+      if (!inStr) { inStr = true; out += c; continue; }
+      const next = t.slice(k + 1).match(/^\s*(.)/s)?.[1];
+      if (next === undefined || ",:}]".includes(next)) { inStr = false; out += c; } else out += '\\"';
+      continue;
+    }
+    if (inStr && c === "\n") { out += "\\n"; continue; }
+    out += c;
+  }
+  return out;
 }
 export async function withRetry(f: () => Promise<Response>, max = 1, wait = (n: number) => new Promise<void>(r => setTimeout(r, 4000 * n))): Promise<Response> {
   let res = await f();
@@ -172,7 +194,10 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
           const text=(body.content??[]).filter((c:any)=>c.type==="text").map((c:any)=>c.text??"").join("");
           const parsed=["refusal","max_tokens"].includes(body.stop_reason)?null:parseJson<T>(text);
           // Why a reply was unusable, without its content: the stop reason and sizes only.
-          if(parsed===null)report("["+role+"] "+model+" reply unusable: stop "+body.stop_reason+", "+output+" output tokens, "+text.length+" characters of text");
+          if(parsed===null){
+            let where="";try{JSON.parse(repairQuotes(text.slice(text.indexOf("{"),text.lastIndexOf("}")+1)));}catch(err){const m=/position (\d+)/.exec(String((err as Error).message));const at=m?Number(m[1])+Math.max(0,text.indexOf("{")):-1;where=at>=0?" near: "+JSON.stringify(text.slice(Math.max(0,at-60),at+30)):" ("+String((err as Error).message).slice(0,80)+")";}
+            report("["+role+"] "+model+" reply unusable: stop "+body.stop_reason+", "+output+" output tokens, "+text.length+" characters of text"+where);
+          }
           return parsed;
         }catch{
           // A timeout may have been billed. Unknown usage stops additional paid calls; keys/response bodies are never logged.
