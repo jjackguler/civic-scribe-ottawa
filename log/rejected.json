@@ -1,5 +1,45 @@
 [
   {
+    "id": "655dor",
+    "at": "2026-11-16T16:33:19.560Z",
+    "stage": "copy",
+    "headline": "New Ask Maps features to help with holiday travel and prep",
+    "reasons": [
+      "Not in the sources (names or numbers): French.",
+      "Too close to Google AI's wording (\"updates are rolling out today on android and ios…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to TechCrunch's wording (\"google maps can now build trip itineraries with real…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google AI's wording (\"a day by day schedule with insider tips and…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1pkpy0z",
+    "at": "2026-11-16T16:32:46.596Z",
+    "stage": "copy",
+    "headline": "OmniByte Launches VERTEX: An AI-Powered Operational Execution Platform for Field Service and Asset-Intensive Enterprises",
+    "reasons": [
+      "Not in the sources (names or numbers): Canada.",
+      "No words in ALL CAPS in the headline.",
+      "Paragraph 5 of \"known\" has no [sN] source marker.",
+      "Too close to prnewswire.com's wording (\"vertex an ai powered operational execution platform for field…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to uk.advfn.com's wording (\"vertex an ai powered operational execution platform for field…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to newswire.ca's wording (\"vertex an ai powered operational execution platform for field…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to Newswire.ca's wording (\"vertex an ai powered operational execution platform for field…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "No words in ALL CAPS in the headline."
+    ]
+  },
+  {
+    "id": "87pul6",
+    "at": "2026-11-16T16:32:15.178Z",
+    "stage": "standards",
+    "headline": "Telus pulls out of two planned Vancouver AI data centres",
+    "reasons": [
+      "The 'matters' section says the projects 'will go ahead without Telus, according to Westbank', but the source (s2) only says Westbank is proceeding with a new partner. Stating a future outcome as settled ignores the pending city consultation and M3 application that the article itself describes.",
+      "'Telus is instead expanding its Kamloops facility' implies Kamloops replaces the Vancouver projects. Daily Hive (s2) reports the Kamloops expansion and the Vancouver exit separately, and does not link them."
+    ]
+  },
+  {
     "id": "ccbpyn",
     "at": "2026-11-16T02:38:37.296Z",
     "stage": "copy",
