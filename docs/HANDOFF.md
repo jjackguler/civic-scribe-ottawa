@@ -62,6 +62,13 @@ directives file, morning Canadian AI Brief, Output watch issue).
   board", "Copy student link" and lesson-sheet links, a 45-minute lesson flow, Nearpod/Classroom/Teams
   steps. In the sitemap. Young Lab home: "I'm a teacher" goes there; the duplicate "All nine games" grid is gone.
 - Next (not built): visual exit tickets at the end of each game, the Explorers unit map, Teach-the-machine 3D.
+## 88 seconds (10 Nov 2026, branch `claude/88-seconds`)
+- Front-page band `src/components/EightyEight.tsx`: up to 8 slides sharing 88 s. Order: Breaking (3+ outlets
+  in 2 h) or Developing, told in our newsroom's words when we have a summary; then our newsroom summaries
+  (last 48 h, newest first); other outlets' clusters (2+ sources) only fill a thin day, labelled "On our watch".
+  Plays only on screen, pauses on hover/focus, no autoplay for reduced motion, ends with "You're up to date".
+  Data refresh by themselves (news 90 s, newsroom 15 min). Sits below the story bubbles/breaking strip, above the hero.
+  Each slide shows its desk (Canada, AI, Robotics, Tech, Human stakes) via `deskOfSummary` / `deskOf`.
 
 ## Search status codes (9 Nov 2026)
 - Google reported "Soft 404": pages that say "not available" or "withdrawn" but answer 200. Now a
