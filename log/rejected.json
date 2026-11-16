@@ -1,5 +1,29 @@
 [
   {
+    "id": "e9wtxm",
+    "at": "2026-11-16T02:29:17.023Z",
+    "stage": "copy",
+    "headline": "How Jensen Huang’s resignation from Nvidia is threatening AI-powered economy",
+    "reasons": [
+      "Not in the sources (names or numbers): Outlets, denial not in the sources: \"The excerpts do not describe any direct effect on consumers or workers.\".",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to thehill.com's wording (\"150 for the first time since june 2025 the…\"): say it in our own words, or quote and attribute it.",
+      "Too close to inc.com's wording (\"both inside and outside the company including amd ceo…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
+    "id": "a321ej",
+    "at": "2026-11-16T02:28:53.699Z",
+    "stage": "copy",
+    "headline": "Our new blog for science",
+    "reasons": [
+      "Not in the sources (names or numbers): Chinese-language, ChatGPT.",
+      "Too close to openai.com's wording (\"to give scientists and academic researchers a place to…\"): say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
     "id": "1twcd0t",
     "at": "2026-11-16T02:26:18.210Z",
     "stage": "copy",
