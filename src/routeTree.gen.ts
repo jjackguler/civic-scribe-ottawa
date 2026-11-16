@@ -41,6 +41,7 @@ import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SirJackRouteImport } from './routes/sir-jack'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StandardsRouteImport } from './routes/standards'
+import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TipsRouteImport } from './routes/tips'
 import { Route as TodayRouteImport } from './routes/today'
@@ -248,6 +249,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const StandardsRoute = StandardsRouteImport.update({
   id: '/standards',
   path: '/standards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubscribeRoute = SubscribeRouteImport.update({
+  id: '/subscribe',
+  path: '/subscribe',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -524,6 +530,7 @@ export interface FileRoutesByFullPath {
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
+  '/subscribe': typeof SubscribeRoute
   '/terms': typeof TermsRoute
   '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
@@ -606,6 +613,7 @@ export interface FileRoutesByTo {
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
+  '/subscribe': typeof SubscribeRoute
   '/terms': typeof TermsRoute
   '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
@@ -689,6 +697,7 @@ export interface FileRoutesById {
   '/sir-jack': typeof SirJackRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/standards': typeof StandardsRoute
+  '/subscribe': typeof SubscribeRoute
   '/terms': typeof TermsRoute
   '/tips': typeof TipsRoute
   '/today': typeof TodayRoute
@@ -773,6 +782,7 @@ export interface FileRouteTypes {
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
+    | '/subscribe'
     | '/terms'
     | '/tips'
     | '/today'
@@ -855,6 +865,7 @@ export interface FileRouteTypes {
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
+    | '/subscribe'
     | '/terms'
     | '/tips'
     | '/today'
@@ -937,6 +948,7 @@ export interface FileRouteTypes {
     | '/sir-jack'
     | '/sitemap.xml'
     | '/standards'
+    | '/subscribe'
     | '/terms'
     | '/tips'
     | '/today'
@@ -1020,6 +1032,7 @@ export interface RootRouteChildren {
   SirJackRoute: typeof SirJackRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StandardsRoute: typeof StandardsRoute
+  SubscribeRoute: typeof SubscribeRoute
   TermsRoute: typeof TermsRoute
   TipsRoute: typeof TipsRoute
   TodayRoute: typeof TodayRoute
@@ -1294,6 +1307,13 @@ declare module '@tanstack/react-router' {
       path: '/standards'
       fullPath: '/standards'
       preLoaderRoute: typeof StandardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subscribe': {
+      id: '/subscribe'
+      path: '/subscribe'
+      fullPath: '/subscribe'
+      preLoaderRoute: typeof SubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -1668,6 +1688,7 @@ const rootRouteChildren: RootRouteChildren = {
   SirJackRoute: SirJackRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StandardsRoute: StandardsRoute,
+  SubscribeRoute: SubscribeRoute,
   TermsRoute: TermsRoute,
   TipsRoute: TipsRoute,
   TodayRoute: TodayRoute,
