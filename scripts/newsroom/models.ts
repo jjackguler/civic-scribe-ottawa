@@ -17,8 +17,37 @@ export function parseJson<T>(text: string): T | null {
   const t = text.replace(/^```(?:json)?\s*|\s*```$/g, "").trim();
   const i = t.indexOf("{"), j = t.lastIndexOf("}");
   if (i < 0 || j <= i) return null;
-  try { return JSON.parse(t.slice(i, j + 1)) as T; } catch { /* try a repair */ }
-  try { return JSON.parse(repairQuotes(t.slice(i, j + 1))) as T; } catch { return null; }
+  const whole = t.slice(i, j + 1);
+  // The whole span, the first complete object (a reply can add a second object or notes with braces), then both with quotes repaired.
+  for (const c of [whole, firstObject(whole), repairQuotes(whole), firstObject(repairQuotes(whole))]) {
+    if (!c) continue;
+    try { return JSON.parse(c) as T; } catch { /* next */ }
+  }
+  return null;
+}
+/** The first balanced {...} in the text, strings and escapes respected. */
+export function firstObject(t: string): string | null {
+  let depth = 0, inStr = false, start = -1;
+  for (let k = 0; k < t.length; k++) {
+    const c = t[k];
+    if (inStr) { if (c === "\\") k++; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true;
+    else if (c === "{") { if (depth++ === 0) start = k; }
+    else if (c === "}" && depth > 0 && --depth === 0) return t.slice(start, k + 1);
+  }
+  return null;
+}
+/** Where a reply's JSON breaks, for the log: the parser's message and a little text around it. */
+export function jsonProblem(text: string): string {
+  const i = text.indexOf("{"), j = text.lastIndexOf("}");
+  if (i < 0 || j <= i) return "no JSON object";
+  const span = text.slice(i, j + 1);
+  try { JSON.parse(span); return "parses"; } catch (err) {
+    const msg = String((err as Error).message);
+    const m = /position (\d+)/.exec(msg);
+    const at = m ? Number(m[1]) : -1;
+    return msg.slice(0, 90) + (at >= 0 ? " near: " + JSON.stringify(span.slice(Math.max(0, at - 50), at + 30)) : "");
+  }
 }
 /**
  * Escape straight double quotes used as quotation marks inside a JSON string
@@ -194,10 +223,7 @@ export function liveModels(e:Record<string,string|undefined>=process.env, transp
           const text=(body.content??[]).filter((c:any)=>c.type==="text").map((c:any)=>c.text??"").join("");
           const parsed=["refusal","max_tokens"].includes(body.stop_reason)?null:parseJson<T>(text);
           // Why a reply was unusable, without its content: the stop reason and sizes only.
-          if(parsed===null){
-            let where="";try{JSON.parse(repairQuotes(text.slice(text.indexOf("{"),text.lastIndexOf("}")+1)));}catch(err){const m=/position (\d+)/.exec(String((err as Error).message));const at=m?Number(m[1])+Math.max(0,text.indexOf("{")):-1;where=at>=0?" near: "+JSON.stringify(text.slice(Math.max(0,at-60),at+30)):" ("+String((err as Error).message).slice(0,80)+")";}
-            report("["+role+"] "+model+" reply unusable: stop "+body.stop_reason+", "+output+" output tokens, "+text.length+" characters of text"+where);
-          }
+          if(parsed===null)report("["+role+"] "+model+" reply unusable: stop "+body.stop_reason+", "+output+" output tokens, "+text.length+" characters of text; "+jsonProblem(text)+"; starts "+JSON.stringify(text.slice(0,40)));
           return parsed;
         }catch{
           // A timeout may have been billed. Unknown usage stops additional paid calls; keys/response bodies are never logged.

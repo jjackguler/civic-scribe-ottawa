@@ -207,6 +207,8 @@ test("a reply that quotes with straight double quotes inside a JSON string still
   assert.equal(r!.article.news[0], 'It said "we paint, not print" on Monday [s1].');
   assert.equal(r!.n, 2);
   assert.deepEqual(parseJson('{"a": "plain", "b": ["x", "y"]}'), { a: "plain", b: ["x", "y"] });
+  assert.deepEqual(parseJson('{"a": "x {b}"}\n\nNotes: {fixed two problems}'), { a: "x {b}" });
+  assert.deepEqual(parseJson('{"a": 1}\n{"sources": []}'), { a: 1 });
 });
 
 console.log("meaning check");
