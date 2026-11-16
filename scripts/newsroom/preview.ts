@@ -38,7 +38,7 @@ export function draftMarkdown(a: NewsroomArticle, reasons: string[]): string {
 /** Rewrites drafts/README.md from drafts.json. Never throws. */
 export async function writeDraftsPreview(dir: string): Promise<number> {
   try {
-    const list = existsSync(join(dir, "drafts.json")) ? (JSON.parse(await readFile(join(dir, "drafts.json"), "utf8")) as { items: { id: string; reasons: string[] }[] }).items : [];
+    const list = existsSync(join(dir, "drafts.json")) ? (JSON.parse(await readFile(join(dir, "drafts.json"), "utf8")) as { items: { id: string; reasons: string[]; createdAt?: string }[] }).items : [];
     const parts = [
       "# Drafts waiting for the editor",
       "",
@@ -46,7 +46,10 @@ export async function writeDraftsPreview(dir: string): Promise<number> {
       "",
     ];
     let n = 0;
-    for (const d of list) {
+    // Old drafts are old news: the page shows the last week; the rest stay in drafts/ and drafts.json.
+    const recent = list.filter(d => Date.now() - new Date(d.createdAt ?? 0).getTime() < 7 * 24 * 3600_000);
+    if (recent.length < list.length) parts.push(`${list.length - recent.length} older draft(s), more than a week old, are not shown here.`, "");
+    for (const d of recent) {
       const file = join(dir, "drafts", `${d.id}.json`);
       if (!existsSync(file)) continue;
       parts.push(draftMarkdown(JSON.parse(await readFile(file, "utf8")) as NewsroomArticle, d.reasons));
