@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:ty9v05",
+    "at": "2026-11-17T19:58:14.328Z",
+    "reason": "the writer declined: The sources are mostly headlines with two short excerpts. They don't say why Jensen Huang resigned, what the lawmakers' questioning is about, or who is alleged to have plotted against him. Without those facts, a fair 45-second explainer would mean guessing or repeating an unsupported claim about a named person."
+  },
+  {
     "key": "story:1f533ep",
     "at": "2026-11-17T04:09:17.603Z",
     "reason": "the writer declined: The input has only six headlines and no excerpts or article text. They show that Jensen Huang left Nvidia, that tech leaders and allies are calling for his return, and that Nvidia's board is reportedly 'not considering' it. They give no dates, numbers, reasons, quotes or details of how he left. Without those, a fair 45-second explainer would need facts we don't have. The story also includes a claim of a 'plot' against a named person, which we can't check or attribute from headlines alone."
