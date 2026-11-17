@@ -1,5 +1,49 @@
 [
   {
+    "id": "1evpenp",
+    "at": "2026-11-17T19:52:25.917Z",
+    "stage": "copy",
+    "headline": "Cribl Named a Leader in the 2026 Gartner® Magic Quadrant™ for Observability Pipelines",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"The release does not give Gartner's own wording.\".",
+      "Too close to GlobeNewswire's wording (\"positioned highest in ability to execute and furthest in…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to GlobeNewswire's wording (\"that gartner has named it a leader in the…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "12nqiuj",
+    "at": "2026-11-17T19:51:50.333Z",
+    "stage": "copy",
+    "headline": "Datadog Named a Leader in the 2026 Gartner® Magic Quadrant™ for Observability Pipelines",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to GlobeNewswire's wording (\"observability pipelines helps security and devops teams control telemetry…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to GlobeNewswire's wording (\"named a leader in the gartner magic quadrant for…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "2qc44o",
+    "at": "2026-11-17T19:51:20.379Z",
+    "stage": "reporter",
+    "headline": "DP World Named Among Canada’s Top 100 Employers for Second Consecutive Year",
+    "reasons": [
+      "skip: Press release about an employer award (Canada's Top 100 Employers) with no AI content; off-focus for an AI newsroom and only marketing-style claims from one wire source."
+    ]
+  },
+  {
+    "id": "30hsn2",
+    "at": "2026-11-17T19:51:19.271Z",
+    "stage": "copy",
+    "headline": "eLeapPower, named one of Canada's most investable cleantech companies, opens the world's largest EV markets to its technology",
+    "reasons": [
+      "Too close to GlobeNewswire's wording (\"in thousands of electric trucks passenger cars and motorcycles…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to GlobeNewswire's wording (\"list is selected by investors from across north america…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "q4lm4g",
     "at": "2026-11-17T10:44:19.041Z",
     "stage": "copy",
