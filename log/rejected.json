@@ -1,5 +1,39 @@
 [
   {
+    "id": "1b31tyk",
+    "at": "2026-11-17T02:08:11.827Z",
+    "stage": "copy",
+    "headline": "TokenEconomizer: Learning from Experience to Make AI Coding Agents More Efficient",
+    "reasons": [
+      "Not in the sources (names or numbers): Canada.",
+      "Too close to Microsoft Research's wording (\"learns from an agent s past sessions in a…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Microsoft Research's wording (\"an open source plugin from uc berkeley microsoft research…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "se7kkj",
+    "at": "2026-11-17T02:07:31.765Z",
+    "stage": "reporter",
+    "headline": "Nasdaq Sinks 2.5% as Nvidia Leads an AI Rout and Fed Chair Warsh Warns a Bust Could Raise Unemployment",
+    "reasons": [
+      "skip: banned topic: stock tips and share-price moves (the event is mainly a stock-market selloff)"
+    ]
+  },
+  {
+    "id": "dv84fj",
+    "at": "2026-11-17T02:07:30.037Z",
+    "stage": "copy",
+    "headline": "Telus pulls out of two government-backed AI data centres in Vancouver",
+    "reasons": [
+      "Too close to The Globe and Mail's wording (\"telus pulls out of two planned vancouver ai data…\") in \"headline\": say it in our own words, or quote and attribute it.",
+      "Too close to mobilesyrup.com's wording (\"it is advancing other plans to expand canadian ai…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to ca.headtopics.com's wording (\"will continue developing the data centres with a new…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to The Globe and Mail's wording (\"had also signed a memorandum of understanding with the…\") in \"expert\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1vxvm6g",
     "at": "2026-11-16T18:32:22.702Z",
     "stage": "copy",
