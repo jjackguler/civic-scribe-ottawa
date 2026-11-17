@@ -1,6 +1,56 @@
 {
-  "updatedAt": "2026-11-13T22:14:21.650Z",
+  "updatedAt": "2026-11-17T21:12:25.983Z",
   "items": [
+    {
+      "id": "1aiaagw",
+      "slug": {
+        "en": "google-ask-maps-trip-itineraries-gemini-tasks",
+        "fr": "google-ask-maps-itineraires-gemini-tasks"
+      },
+      "createdAt": "2026-11-17T21:12:25.981Z",
+      "updatedAt": "2026-11-17T21:12:25.981Z",
+      "topic": "agents",
+      "format": "standard",
+      "outlets": [
+        "Google AI",
+        "TechCrunch"
+      ],
+      "times": [
+        "2026-11-16T14:00:00.000Z",
+        "2026-11-17T19:02:20.000Z"
+      ],
+      "storyIds": [
+        "1tdvgfv",
+        "1aiaagw"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "grid",
+        "en": {
+          "kicker": "Product news",
+          "big": "Gemini",
+          "small": "Google adds trip planning and widens Gemini Tasks"
+        },
+        "fr": {
+          "kicker": "Nouveautés produits",
+          "big": "Gemini",
+          "small": "Google ajoute la planification de voyages"
+        }
+      },
+      "words": 250,
+      "en": {
+        "headline": "Google adds trip itineraries to Ask Maps and widens access to Gemini Tasks",
+        "dek": "Google says Ask Maps can build day-by-day itineraries and search saved lists on Android and iOS in more than 200 regions. TechCrunch reports Gemini Tasks can also help with calls and purchases.",
+        "news": "Google says it is rolling out new Ask Maps features for holiday travel and errands, while TechCrunch reports wider access to Gemini Tasks.",
+        "matters": "People who use Google Maps on Android or iOS can ask it to plan trips and look for open appointments, according to Google. The sources do not say how the tools work in Canada."
+      },
+      "fr": {
+        "headline": "Google ajoute les itinéraires de voyage à Ask Maps et élargit l'accès à Gemini Tasks",
+        "dek": "Google affirme qu'Ask Maps peut créer des itinéraires jour par jour et fouiller les listes enregistrées, sur Android et iOS dans plus de 200 régions. Selon TechCrunch, Gemini Tasks peut aussi aider pour les appels et les achats.",
+        "news": "Google affirme déployer de nouvelles fonctions d'Ask Maps pour les voyages et les courses de la saison des vacances, tandis que TechCrunch rapporte un accès élargi à Gemini Tasks.",
+        "matters": "Selon Google, les personnes qui utilisent Google Maps sur Android ou iOS peuvent lui demander de planifier des voyages et de chercher des rendez-vous libres. Les sources ne disent pas comment ces outils fonctionnent au Canada."
+      }
+    },
     {
       "id": "17hu88x",
       "slug": {

@@ -1,5 +1,37 @@
 [
   {
+    "id": "mq0re8",
+    "at": "2026-11-17T21:10:59.066Z",
+    "stage": "standards",
+    "headline": "Put Gemini to work for you",
+    "reasons": [
+      "The headline states Google's claims as settled fact ('books, pays and shops for users'), although the only source is Google's own announcement and the article itself says every detail is unverified.",
+      "The background paragraph says 'Canada's privacy law already applies to personal information fed into AI tools' and cites [b2], which is not among the supplied sources, so this legal claim is unsupported."
+    ]
+  },
+  {
+    "id": "waes7l",
+    "at": "2026-11-17T21:10:16.812Z",
+    "stage": "copy",
+    "headline": "How Québec Tech Companies are turning breakthrough technologies into global growth",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"The excerpts do not describe effects on the public.\".",
+      "Paragraph 5 of \"known\" has no [sN] source marker.",
+      "Too close to betakit.com's wording (\"is designed to create more hyper growth scaleups in…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to betakit.com's wording (\"the new round of stage v companies was announced…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1eirzsr",
+    "at": "2026-11-17T21:09:49.746Z",
+    "stage": "standards",
+    "headline": "Physical AI company Promise Robotics announces $40-million Series B round",
+    "reasons": [
+      "The plain-language section says the company builds 'parts of houses' and that the homes are 'assembled on site'. No supplied source states either detail; the sources say only that it makes modular, prefabricated homes."
+    ]
+  },
+  {
     "id": "1evpenp",
     "at": "2026-11-17T19:52:25.917Z",
     "stage": "copy",

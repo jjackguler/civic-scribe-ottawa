@@ -1,0 +1,404 @@
+{
+  "version": 1,
+  "id": "1aiaagw",
+  "slug": {
+    "en": "google-ask-maps-trip-itineraries-gemini-tasks",
+    "fr": "google-ask-maps-itineraires-gemini-tasks"
+  },
+  "createdAt": "2026-11-17T21:12:25.981Z",
+  "updatedAt": "2026-11-17T21:12:25.981Z",
+  "topic": "agents",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Google AI",
+      "title": "New Ask Maps features to help with holiday travel and prep",
+      "url": "https://blog.google/products-and-platforms/products/maps/ask-maps-holiday-travel-features-2026/",
+      "publishedAt": "2026-11-16T14:00:00.000Z",
+      "storyId": "1tdvgfv",
+      "official": true,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "TechCrunch",
+      "title": "Google expands access to Gemini Tasks, which can help with calls, purchases",
+      "url": "https://techcrunch.com/2026/11/17/google-expands-access-to-gemini-tasks-which-can-help-with-calls-purchases/",
+      "publishedAt": "2026-11-17T19:02:20.000Z",
+      "storyId": "1aiaagw",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b3",
+      "path": "/learn/start-in-30-minutes",
+      "title": {
+        "en": "Start using AI in 30 minutes",
+        "fr": "Commencer avec l'IA en 30 minutes"
+      }
+    }
+  ],
+  "cover": {
+    "color": "night",
+    "motif": "grid",
+    "en": {
+      "kicker": "Product news",
+      "big": "Gemini",
+      "small": "Google adds trip planning and widens Gemini Tasks"
+    },
+    "fr": {
+      "kicker": "Nouveautés produits",
+      "big": "Gemini",
+      "small": "Google ajoute la planification de voyages"
+    }
+  },
+  "en": {
+    "headline": "Google adds trip itineraries to Ask Maps and widens access to Gemini Tasks",
+    "news": "Google says it is rolling out new Ask Maps features for holiday travel and errands, while TechCrunch reports wider access to Gemini Tasks.",
+    "thirty": [
+      "Google launched new Ask Maps features for holiday trips and errands.",
+      "Google says they build itineraries and find appointments for pet care and repairs.",
+      "TechCrunch says Gemini Tasks can help with calls, log-ins and purchases."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Google says Ask Maps can now build step-by-step trip itineraries, with a day-by-day schedule, insider tips and numbered map pins.",
+        "by": "Google AI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Google says new agentic capabilities let users book beauty, pet care and home repair appointments.",
+        "by": "Google AI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Google says the updates are rolling out on Android and iOS in over 200 global regions.",
+        "by": "Google AI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "TechCrunch reports that Gemini's Task mode can help users with calls, website log-ins and purchases made for them.",
+        "by": "TechCrunch",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether the features are available in Canada.",
+      "How well the booking and purchase tools work in everyday use.",
+      "What controls users have when an assistant buys or books for them."
+    ],
+    "matters": "People who use Google Maps on Android or iOS can ask it to plan trips and look for open appointments, according to Google. The sources do not say how the tools work in Canada.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Google is adding new abilities to Ask Maps, a helper inside Google Maps. Google says it can plan a trip stop by stop and find open appointments for things like pet care. [s1]",
+        "TechCrunch reports that another Google tool, Gemini Tasks, can help make calls, log into websites and buy things for you. These are called agentic tools because they take actions, not just give answers. [s2]"
+      ],
+      "standard": [
+        "Google AI says it is launching new Ask Maps features to help people plan holiday travel and daily errands. The company says the rollout covers Android and iOS in more than 200 regions worldwide. [s1]",
+        "Separately, TechCrunch reports that Google is expanding access to Gemini Tasks. It says the Task mode in Gemini can help users set up calls, sign in to websites and buy things for them. [s2]",
+        "Google says Ask Maps can build step-by-step itineraries, such as a day trip for shopping or a three-day road trip with coastal hikes and oceanfront dining. It says users get a day-by-day schedule with tips and numbered map pins, and can share the plan or export it to Google Docs on desktop. [s1]",
+        "These points come from Google's own announcement. TechCrunch's account covers Gemini Tasks, not Ask Maps, and its excerpt gives no further detail. The sources do not say whether the features are available in Canada, or what safeguards apply when an assistant makes a purchase. [s1] [s2]",
+        "For people who plan trips or book local services, Google says the tools help with itineraries, appointments and saved lists. Both products can act for the user, so the details of what they do on a person's behalf are worth checking before use. [s1] [s2]",
+        "The sources do not describe privacy terms, costs or limits. They also give no Canadian rollout details. [s1] [s2]",
+        "The newsroom's beginner guide says vague questions get vague answers, and that telling an assistant what you want and what the result should look like works better. [b3]"
+      ],
+      "expert": [
+        "Google describes the Ask Maps update as agentic: itinerary generation with numbered pins, appointment booking for beauty, pet care and home repair, and search over saved lists, rolling out on Android and iOS in more than 200 regions. [s1]",
+        "TechCrunch reports Gemini's Task mode can handle calls, website log-ins and purchases. The excerpts do not state the underlying models, permissions or rollout limits. [s2]"
+      ]
+    },
+    "seoTitle": "Google Ask Maps trip itineraries and Gemini Tasks access",
+    "dek": "Google says Ask Maps can build day-by-day itineraries and search saved lists on Android and iOS in more than 200 regions. TechCrunch reports Gemini Tasks can also help with calls and purchases.",
+    "metaDescription": "Google says Ask Maps can build itineraries and search saved lists. TechCrunch reports wider Gemini Tasks access for calls, website log-ins and purchases.",
+    "keywords": [
+      "ask maps",
+      "google maps itinerary",
+      "gemini tasks",
+      "gemini task mode",
+      "ai assistant purchases"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Google AI says it is launching new Ask Maps features to help people plan holiday travel and daily errands. The company says the rollout covers Android and iOS in more than 200 regions worldwide. [s1]",
+          "Separately, TechCrunch reports that Google is expanding access to Gemini Tasks. It says the Task mode in Gemini can help users set up calls, sign in to websites and buy things for them. [s2]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Google says Ask Maps can build step-by-step itineraries, such as a day trip for shopping or a three-day road trip with coastal hikes and oceanfront dining. It says users get a day-by-day schedule with tips and numbered map pins, and can share the plan or export it to Google Docs on desktop. [s1]",
+          "These points come from Google's own announcement. TechCrunch's account covers Gemini Tasks, not Ask Maps, and its excerpt gives no further detail. The sources do not say whether the features are available in Canada, or what safeguards apply when an assistant makes a purchase. [s1] [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For people who plan trips or book local services, Google says the tools help with itineraries, appointments and saved lists. Both products can act for the user, so the details of what they do on a person's behalf are worth checking before use. [s1] [s2]",
+          "The sources do not describe privacy terms, costs or limits. They also give no Canadian rollout details. [s1] [s2]"
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "The newsroom's beginner guide says vague questions get vague answers, and that telling an assistant what you want and what the result should look like works better. [b3]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Which platforms and regions does the Ask Maps rollout cover?",
+        "a": "Google says the rollout covers Android and iOS in more than 200 regions worldwide."
+      },
+      {
+        "q": "What can Gemini's Task mode do?",
+        "a": "TechCrunch reports that Task mode can help users set up calls, sign in to websites and buy things for them."
+      },
+      {
+        "q": "Are these features available in Canada?",
+        "a": "The sources do not say whether the features are available in Canada."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Agents"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      },
+      {
+        "path": "/labs/assistants",
+        "label": "Use AI assistants well"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Google ajoute les itinéraires de voyage à Ask Maps et élargit l'accès à Gemini Tasks",
+    "news": "Google affirme déployer de nouvelles fonctions d'Ask Maps pour les voyages et les courses de la saison des vacances, tandis que TechCrunch rapporte un accès élargi à Gemini Tasks.",
+    "thirty": [
+      "Google lance de nouvelles fonctions d'Ask Maps pour les voyages et les courses des vacances.",
+      "Google affirme qu'elles créent des itinéraires et trouvent des rendez-vous pour les soins aux animaux et les réparations.",
+      "Selon TechCrunch, Gemini Tasks peut aider pour les appels, les connexions et les achats."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Google affirme qu'Ask Maps peut maintenant créer des itinéraires de voyage étape par étape, avec un horaire jour par jour, des conseils d'initiés et des épingles numérotées sur la carte.",
+        "by": "Google AI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Google affirme que de nouvelles capacités dites agentiques permettent de réserver des rendez-vous de beauté, de soins aux animaux et de réparations domiciliaires.",
+        "by": "Google AI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Google affirme que les mises à jour sont déployées sur Android et iOS dans plus de 200 régions du monde.",
+        "by": "Google AI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "TechCrunch rapporte que le mode Task de Gemini peut aider les utilisateurs pour les appels, les connexions à des sites Web et les achats faits à leur place.",
+        "by": "TechCrunch",
+        "src": [
+          "s2"
+        ]
+      }
+    ],
+    "unknown": [
+      "Si les fonctions sont offertes au Canada.",
+      "Dans quelle mesure les outils de réservation et d'achat fonctionnent bien au quotidien.",
+      "De quels contrôles disposent les utilisateurs quand un assistant achète ou réserve pour eux."
+    ],
+    "matters": "Selon Google, les personnes qui utilisent Google Maps sur Android ou iOS peuvent lui demander de planifier des voyages et de chercher des rendez-vous libres. Les sources ne disent pas comment ces outils fonctionnent au Canada.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Google ajoute de nouvelles capacités à Ask Maps, un assistant intégré à Google Maps. Selon Google, il peut planifier un voyage arrêt par arrêt et trouver des rendez-vous libres, par exemple pour les soins aux animaux. [s1]",
+        "TechCrunch rapporte qu'un autre outil de Google, Gemini Tasks, peut aider à passer des appels, à se connecter à des sites Web et à acheter des produits pour vous. On dit de ces outils qu'ils sont agentiques, parce qu'ils posent des gestes au lieu de seulement donner des réponses. [s2]"
+      ],
+      "standard": [
+        "Google AI affirme lancer de nouvelles fonctions d'Ask Maps pour aider les gens à planifier leurs voyages des vacances et leurs courses quotidiennes. L'entreprise dit que le déploiement touche Android et iOS dans plus de 200 régions du monde. [s1]",
+        "Par ailleurs, TechCrunch rapporte que Google élargit l'accès à Gemini Tasks. Le mode Task de Gemini peut, selon le média, aider les utilisateurs à organiser des appels, à se connecter à des sites Web et à acheter des produits pour eux. [s2]",
+        "Google affirme qu'Ask Maps peut créer des itinéraires étape par étape, par exemple une journée de magasinage ou un voyage de trois jours avec randonnées côtières et repas face à l'océan. Selon l'entreprise, l'utilisateur obtient un horaire jour par jour avec des conseils et des épingles numérotées, puis peut partager le plan ou l'exporter vers Google Docs sur ordinateur. [s1]",
+        "Ces éléments proviennent de l'annonce de Google. Le compte rendu de TechCrunch porte sur Gemini Tasks, pas sur Ask Maps, et son extrait n'en dit pas davantage. Les sources ne précisent pas si les fonctions sont offertes au Canada ni quelles protections s'appliquent quand un assistant fait un achat. [s1] [s2]",
+        "Pour les gens qui planifient des voyages ou réservent des services locaux, Google affirme que les outils aident avec les itinéraires, les rendez-vous et les listes enregistrées. Les deux produits peuvent agir au nom de l'utilisateur; il vaut donc la peine de vérifier ce qu'ils font en son nom avant de s'en servir. [s1] [s2]",
+        "Les sources ne décrivent ni les règles de confidentialité, ni les coûts, ni les limites. Elles ne donnent pas non plus de détails sur un déploiement canadien. [s1] [s2]",
+        "Le guide pour débutants de notre salle de rédaction explique qu'une question vague donne une réponse vague, et qu'il vaut mieux dire à l'assistant ce qu'on veut et la forme du résultat attendu. [b3]"
+      ],
+      "expert": [
+        "Google décrit la mise à jour d'Ask Maps comme agentique: génération d'itinéraires avec épingles numérotées, réservation de rendez-vous de beauté, de soins aux animaux et de réparations domiciliaires, et recherche dans les listes enregistrées, déployées sur Android et iOS dans plus de 200 régions. [s1]",
+        "TechCrunch rapporte que le mode Task de Gemini peut gérer des appels, des connexions à des sites Web et des achats. Les extraits n'indiquent ni les modèles sous-jacents, ni les autorisations, ni les limites du déploiement. [s2]"
+      ]
+    },
+    "seoTitle": "Google : itinéraires dans Ask Maps, Gemini Tasks élargi",
+    "dek": "Google affirme qu'Ask Maps peut créer des itinéraires jour par jour et fouiller les listes enregistrées, sur Android et iOS dans plus de 200 régions. Selon TechCrunch, Gemini Tasks peut aussi aider pour les appels et les achats.",
+    "metaDescription": "Google affirme qu'Ask Maps peut créer des itinéraires et fouiller les listes enregistrées. TechCrunch rapporte un accès élargi à Gemini Tasks…",
+    "keywords": [
+      "ask maps",
+      "itinéraire google maps",
+      "gemini tasks",
+      "mode task gemini",
+      "assistant ia achats"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Google AI affirme lancer de nouvelles fonctions d'Ask Maps pour aider les gens à planifier leurs voyages des vacances et leurs courses quotidiennes. L'entreprise dit que le déploiement touche Android et iOS dans plus de 200 régions du monde. [s1]",
+          "Par ailleurs, TechCrunch rapporte que Google élargit l'accès à Gemini Tasks. Le mode Task de Gemini peut, selon le média, aider les utilisateurs à organiser des appels, à se connecter à des sites Web et à acheter des produits pour eux. [s2]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Google affirme qu'Ask Maps peut créer des itinéraires étape par étape, par exemple une journée de magasinage ou un voyage de trois jours avec randonnées côtières et repas face à l'océan. Selon l'entreprise, l'utilisateur obtient un horaire jour par jour avec des conseils et des épingles numérotées, puis peut partager le plan ou l'exporter vers Google Docs sur ordinateur. [s1]",
+          "Ces éléments proviennent de l'annonce de Google. Le compte rendu de TechCrunch porte sur Gemini Tasks, pas sur Ask Maps, et son extrait n'en dit pas davantage. Les sources ne précisent pas si les fonctions sont offertes au Canada ni quelles protections s'appliquent quand un assistant fait un achat. [s1] [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les gens qui planifient des voyages ou réservent des services locaux, Google affirme que les outils aident avec les itinéraires, les rendez-vous et les listes enregistrées. Les deux produits peuvent agir au nom de l'utilisateur; il vaut donc la peine de vérifier ce qu'ils font en son nom avant de s'en servir. [s1] [s2]",
+          "Les sources ne décrivent ni les règles de confidentialité, ni les coûts, ni les limites. Elles ne donnent pas non plus de détails sur un déploiement canadien. [s1] [s2]"
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Le guide pour débutants de notre salle de rédaction explique qu'une question vague donne une réponse vague, et qu'il vaut mieux dire à l'assistant ce qu'on veut et la forme du résultat attendu. [b3]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Sur quelles plateformes et dans quelles régions le déploiement d'Ask Maps se fait-il?",
+        "a": "Google affirme que le déploiement touche Android et iOS dans plus de 200 régions du monde."
+      },
+      {
+        "q": "Que peut faire le mode Task de Gemini?",
+        "a": "Selon TechCrunch, le mode Task peut aider les utilisateurs à organiser des appels, à se connecter à des sites Web et à acheter des produits pour eux."
+      },
+      {
+        "q": "Ces fonctions sont-elles offertes au Canada?",
+        "a": "Les sources ne précisent pas si les fonctions sont offertes au Canada."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Les agents"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      },
+      {
+        "path": "/labs/assistants",
+        "label": "Bien utiliser les assistants IA"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 250,
+    "fr": 301
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-17T21:11:10.109Z",
+      "verdict": "done",
+      "notes": [
+        "305 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-17T21:11:32.618Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): French.",
+        "Paragraph 3 of \"known\" has no [sN] source marker.",
+        "Paragraph 1 of \"matters\" has no [sN] source marker.",
+        "Paragraph 2 of \"matters\" has no [sN] source marker.",
+        "Too close to Google AI's wording (\"out today on android and ios across more than…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "Too close to TechCrunch's wording (\"gemini s task mode can help users coordinate calls…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to Google AI's wording (\"real time updates on traffic business hours and parking…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+        "trimmed 2 sentence(s) that still failed:",
+        "cut: \"It says users can search saved lists for local spots with immediate availability, and get real-time updates on traffic, \"",
+        "cut: \"Google also says new agentic capabilities, meaning tools that act on a user's behalf, can book beauty, pet care and home\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-17T21:11:38.180Z",
+      "verdict": "pass",
+      "notes": [
+        "The headline states Ask Maps' appointment booking as fact. Google makes that claim, so the headline should say so, for example \"Google says Ask Maps can now book appointments\".",
+        "The 'matters' section says 'Both products can act for the user' as fact. Google describes Ask Maps as agentic, but the TechCrunch excerpt covers only Gemini Tasks. Attribute the claim to each source.",
+        "The thirty-second summary says Ask Maps 'find[s] appointments', while Google's excerpt says users can 'book' them. Use Google's wording.",
+        "The background item cites [b3], a newsroom beginner guide that is not among the supplied sources. Confirm it is a verified internal source, or drop it from a news story.",
+        "The phrase 'These are called agentic tools because they take actions' is an explanation not stated in the sources. Attribute it to Google's own description or remove it."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-17T21:12:13.889Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): Fêtes.",
+        "301 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-17T21:12:22.970Z",
+      "verdict": "done",
+      "notes": [
+        "en: Google Ask Maps trip itineraries and Gemini Tasks access (56)",
+        "fr: Google : itinéraires dans Ask Maps, Gemini Tasks élargi (55)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-17T21:12:25.981Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: night/grid \"Gemini\""
+      ]
+    }
+  ]
+}
