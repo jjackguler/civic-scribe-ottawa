@@ -25,7 +25,9 @@ import { priceOf, withRetry } from "./models";
 
 export const SEARCH_USD = 10 / 1000;
 /** Aggregators, social media and forums: never a source we name. */
-export const BLOCKED = ["news.google.com", "msn.com", "yahoo.com", "flipboard.com", "reddit.com", "x.com", "twitter.com", "facebook.com", "instagram.com", "threads.net", "tiktok.com", "youtube.com", "linkedin.com", "medium.com", "substack.com", "quora.com", "daily.dev", "news.ycombinator.com", "wikipedia.org"];
+export const BLOCKED = ["news.google.com", "msn.com", "yahoo.com", "flipboard.com", "reddit.com", "x.com", "twitter.com", "facebook.com", "instagram.com", "threads.net", "tiktok.com", "youtube.com", "linkedin.com", "medium.com", "substack.com", "quora.com", "daily.dev", "news.ycombinator.com", "wikipedia.org",
+  // Content farms and scrapers that republish other outlets' reporting (seen in research on 16-17 Nov 2026).
+  "blogspot.com", "headtopics.com", "newsbreak.com", "ground.news", "inkl.com", "biztoc.com"];
 /** Features, lists and reviews are not events: researching them finds nothing to report. */
 export const NOT_AN_EVENT = /\b(running list|list of|how to|hands-on|review|opinion|podcast|newsletter|explained|everything we know|what to know|deep dive|interview|was a|best \w+ of)\b/i;
 const RESEARCH_COOLDOWN_MS = 72 * 3600_000;

@@ -12,7 +12,7 @@ import { originalSection } from "../../src/lib/originals-types";
 import { mergeRewrite, shapeDraft, unwrapDraft, type Draft } from "./shape";
 import { editorialGate } from "../../src/lib/editorial";
 import { upsettingReasons } from "./upsetting";
-import { clip, publishedWords, sourceText, briefPrompt, type Event } from "./roles";
+import { clip, publishedWords, sourceText, briefPrompt, trimDraft, copyProblems, type Event } from "./roles";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
 import { parseJson } from "./models";
@@ -141,6 +141,43 @@ test("our own wording passes", () => {
 test("a quotation in quotation marks is not counted as copying", () => {
   const out = overlapProblems(draft("Roy said the goal is a model “that runs on a single laptop GPU with 16 GB of memory” [s1]."), [{ outlet: "Northwind Labs", text: SRC.split("\n")[0] }]);
   assert.deepEqual(out, []);
+});
+
+console.log("copy desk trim (last resort)");
+const TRIM_EVENT: Event = {
+  id: "t1", topic: "ai", lens: [], background: [],
+  sources: [{ key: "s1", outlet: "Northwind Labs", title: "Northwind Labs introduces Aurora-2", url: "https://northwind.example/aurora-2", publishedAt: "2026-11-16T10:00:00Z" } as never],
+  excerpts: [SRC.split("\n")[0].replace(/^Northwind Labs: /, "")],
+};
+const P = "Aurora-2 is a new model from Northwind Labs, and it works in both English and French for people who write in either language every day [s1].";
+const trimBase = (paras: string[]): Draft => ({
+  headline: "Northwind Labs releases Aurora-2, an open model for English and French",
+  dek: "The model is small enough for one laptop [s1].", news: "Northwind Labs released Aurora-2 [s1].",
+  thirty: ["Aurora-2 works in English and French [s1]."], confirmed: [], claimed: [], unknown: [], matters: "It is a small open model [s1].",
+  sections: [{ kind: "news", paras }], body: { plain: [], expert: [] }, timeline: [],
+});
+test("sentences that copy an outlet or name what the sources don't are cut; the rest stays", () => {
+  const d = trimBase([P, P, `${P} The model runs on a single laptop GPU with 16 GB of memory, the company said [s1].`, P, `${P} It was built in Halifax [s1].`, P, P]);
+  assert.ok(copyProblems(d, TRIM_EVENT, "en").style.some(x => /Too close/.test(x)));
+  assert.ok(copyProblems(d, TRIM_EVENT, "en").facts.includes("Halifax"));
+  const t = trimDraft(d, TRIM_EVENT);
+  assert.ok(t, "trim should succeed");
+  assert.equal(t!.cut.length, 2);
+  assert.ok(!t!.draft.sections[0].paras.join(" ").includes("Halifax"));
+  assert.ok(!/single laptop GPU with 16 GB/.test(t!.draft.sections[0].paras.join(" ")));
+  assert.equal(t!.draft.sections[0].paras.length, 7);
+  const left = copyProblems(t!.draft, TRIM_EVENT, "en");
+  assert.deepEqual([...left.facts, ...left.style], []);
+});
+test("a paragraph with no source marker is dropped by the trim", () => {
+  const t = trimDraft(trimBase([P, P, P, P, P, P, "This paragraph has no marker at all and should go."]), TRIM_EVENT);
+  assert.ok(t);
+  assert.equal(t!.draft.sections[0].paras.length, 6);
+});
+test("the trim gives up when the headline fails or too much would go", () => {
+  assert.equal(trimDraft({ ...trimBase([P, P, P, P, P, P, P]), headline: "Northwind Labs opens an office in Halifax for Aurora-2" , dek: "x [s1]. It was built in Halifax [s1]." }, TRIM_EVENT), null);
+  const copied = `${P} The model runs on a single laptop GPU with 16 GB of memory, the company said [s1].`;
+  assert.equal(trimDraft(trimBase([copied, copied, copied, copied, copied, P, P]), TRIM_EVENT), null);
 });
 
 console.log("slugs");
