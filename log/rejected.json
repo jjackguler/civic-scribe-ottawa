@@ -1,5 +1,39 @@
 [
   {
+    "id": "q4lm4g",
+    "at": "2026-11-17T10:44:19.041Z",
+    "stage": "copy",
+    "headline": "ROBOTERA Humanoids Reach 11 China Post Hubs Across Guangdong",
+    "reasons": [
+      "Not in the sources (names or numbers): 500-parcels-per-hour.",
+      "No words in ALL CAPS in the headline.",
+      "Too close to securities.io's wording (\"guangzhou shenzhen dongguan jiangmen shantou shanwei jieyang and heyuan…\") in \"confirmed\": say it in our own words, or quote and attribute it.",
+      "Too close to prnewswire.com's wording (\"and most geographically extensive deployment of embodied intelligence robots…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to aiweekly.co's wording (\"the release attributes no comment to a china post…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): 500-parcels-per-hour.",
+      "No words in ALL CAPS in the headline.",
+      "Too close to securities.io's wording (\"guangzhou shenzhen dongguan jiangmen shantou shanwei jieyang and heyuan…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to prnewswire.com's wording (\"and most geographically extensive deployment of embodied intelligence robots…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to aiweekly.co's wording (\"no per hub utilization or uptime and names no…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1l3vmys",
+    "at": "2026-11-17T10:43:58.099Z",
+    "stage": "copy",
+    "headline": "Tencent Launches Hy4 flash to Power High-Speed, Cost-Efficient AI Deployment for Everyday Workflows",
+    "reasons": [
+      "Not in the sources (names or numbers): Canada, Outlets, 224B, 64B, 12B, denial not in the sources: \"Tencent is offering a cheaper model, free on WorkBuddy until November 30, and it\", denial not in the sources: \"Weights are planned, not yet released.\".",
+      "Too close to Tencent's wording (\"available across tencent cloud tokenhub workbuddy yuanbao wecom qq…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to Dataconomy's wording (\"compared with 2 81 for claude haiku 5 5…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to newswire.ca's wording (\"hy4 flash has 224 billion total parameters including 64…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Two.",
+      "Too close to Tencent's wording (\"tencent cloud tokenhub workbuddy yuanbao wecom qq ima and…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1b31tyk",
     "at": "2026-11-17T02:08:11.827Z",
     "stage": "copy",
