@@ -12,12 +12,12 @@
 import { VALUES, editorialGate } from "../../src/lib/editorial";
 import type { DispatchSource } from "../../src/lib/dispatch-types";
 import {
-  COVER_COLORS, COVER_MOTIFS, FORMATS, TOPIC_KICKER, countWords, slugify,
+  COVER_COLORS, COVER_MOTIFS, FORMATS, TOPIC_KICKER, countWords, slugify, stripAllMarkers,
   type ArticleFormat, type Cover, type CoverText, type Faq, type RoleName, type RoleNote,
 } from "../../src/lib/newsroom-types";
 import type { Models } from "./models";
-import { alignFrench, mergeRewrite, shapeDraft, toRaw, type Draft, type RawDraft } from "./shape";
-import { draftFields, factGuard, overlapProblems, styleProblems } from "./guard";
+import { alignFrench, markerKeys, mergeRewrite, shapeDraft, toRaw, type Draft, type RawDraft } from "./shape";
+import { draftFields, factGuard, overlappingSentences, overlapProblems, sourceGrams, splitSentences, styleProblems } from "./guard";
 import type { LinkOption, Passage } from "./library";
 import { DEFAULT_DIRECTIVES, directivesPrompt, type Directives } from "./directives";
 
@@ -183,6 +183,57 @@ const describe = (p: { facts: string[]; style: string[] }) => [
   ...p.style,
 ];
 
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
+ * The copy desk's last resort, after the rewrites: cut what still fails rather
+ * than turn the event down. Only removes, never adds: sentences that copy an
+ * outlet's wording, that name something the sources don't, or that deny what the
+ * sources don't deny; paragraphs without their source marker; list items left
+ * empty. Gives up (null) when the headline itself fails, when it would cut more
+ * than 6 sentences or a quarter of the article, or when the result still fails a check.
+ */
+export function trimDraft(d: Draft, e: Event): { draft: Draft; cut: string[] } | null {
+  const sources = e.sources.map((s, i) => ({ outlet: s.outlet, text: `${s.title}. ${e.excerpts[i] ?? ""}` }));
+  const grams = sourceGrams(sources);
+  if (overlappingSentences(d.headline, grams).length || factGuard([d.headline], sourceText(e)).length) return null;
+  const bad = factGuard(draftFields(d), sourceText(e));
+  const denials = bad.filter(b => b.startsWith("denial not in the sources: ")).map(b => b.replace(/^denial not in the sources: "/, "").replace(/"$/, "").slice(0, 60));
+  const words = bad.filter(b => !b.startsWith("denial not in the sources: ")).map(w => new RegExp(`(^|[^\\p{L}\\p{N}])${escapeRe(w)}(?![\\p{L}\\p{N}])`, "u"));
+  const cut: string[] = [];
+  const fails = (sent: string) => { const plain = stripAllMarkers(sent); return words.some(r => r.test(plain)) || denials.some(p => p && plain.includes(p)); };
+  const trim = (t: string) => {
+    const sents = splitSentences(t ?? "");
+    const copied = new Set(overlappingSentences(t ?? "", grams));
+    return sents.filter((s, i) => { const drop = copied.has(i) || fails(s); if (drop) cut.push(s); return !drop; }).join(" ");
+  };
+  const list = (xs: string[]) => xs.map(trim).filter(Boolean);
+  const items = <T extends { text: string }>(xs: T[], extra: (x: T) => string[] = () => []) =>
+    xs.filter(x => { if (extra(x).some(fails)) { cut.push(x.text); return false; } return true; }).map(x => ({ ...x, text: trim(x.text) })).filter(x => x.text);
+  const before = countWords(d.sections.flatMap(s => s.paras));
+  const out: Draft = {
+    ...d,
+    dek: trim(d.dek), news: trim(d.news), matters: trim(d.matters),
+    thirty: list(d.thirty), unknown: list(d.unknown),
+    confirmed: items(d.confirmed), claimed: items(d.claimed, x => [x.by]), timeline: items(d.timeline, x => [x.when]),
+    body: { plain: list(d.body.plain), expert: list(d.body.expert) },
+    sections: d.sections.map(s => ({
+      ...s,
+      paras: s.paras.map(trim).filter(p => {
+        if (!p) return false;
+        const keys = markerKeys(p);
+        const ok = s.kind === "background" ? keys.some(k => k.startsWith("b")) : keys.some(k => k.startsWith("s"));
+        if (!ok) cut.push(p);
+        return ok;
+      }),
+    })).filter(s => s.paras.length),
+  };
+  if (!cut.length || !out.dek || !out.news || !out.matters) return null;
+  if (cut.length > 6 || countWords(out.sections.flatMap(s => s.paras)) < before * 0.75) return null;
+  const left = copyProblems(out, e, "en");
+  return left.facts.length || left.style.length ? null : { draft: out, cut };
+}
+
 export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome<Draft>> {
   const first = copyProblems(d, e, "en");
   if (!first.facts.length && !first.style.length) return { ok: true, value: d, note: note("copy", "mechanical", "pass", ["fact guard: every name and number found in the sources", "house style: clean"]) };
@@ -192,14 +243,21 @@ export async function copyEditor(m: Models, e: Event, d: Draft): Promise<Outcome
   for (let attempt = 0; attempt < 2; attempt++) {
     const raw = await m.json<RawDraft>("copy", "writer", COPY + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems: open, article: toRaw(current), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt }, 6000);
     const fixed = shapeDraft(mergeRewrite(raw, toRaw(current)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n"));
-    if (typeof fixed === "string") return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, `rewrite: ${fixed}`]) };
+    if (typeof fixed === "string") return trimmed(current, [...problems, `rewrite: ${fixed}`]);
     const again = copyProblems(fixed, e, "en");
     const left = describe(again);
     if (!again.facts.length && !again.style.length) return { ok: true, value: fixed, note: note("copy", m.model("writer"), "fixed", problems) };
-    if (attempt === 1 || left.length >= open.length || m.failure) return { ok: false, note: note("copy", m.model("writer"), "fail", [...problems, "after the rewrite:", ...left]) };
+    if (attempt === 1 || left.length >= open.length || m.failure) return trimmed(fixed, [...problems, "after the rewrite:", ...left]);
     current = fixed; open = left;
   }
-  return { ok: false, note: note("copy", m.model("writer"), "fail", problems) };
+  return trimmed(current, problems);
+
+  /** Cut the sentences that still fail; turn the event down only when that isn't enough. */
+  function trimmed(draft: Draft, why: string[]): Outcome<Draft> {
+    const t = trimDraft(draft, e);
+    if (!t) return { ok: false, note: note("copy", m.model("writer"), "fail", why) };
+    return { ok: true, value: t.draft, note: note("copy", m.model("writer"), "fixed", [...why, `trimmed ${t.cut.length} sentence(s) that still failed:`, ...t.cut.map(c => `cut: "${c.slice(0, 120)}"`)]) };
+  }
 }
 
 // ── standards editor ───────────────────────────────────────────────────────

@@ -248,13 +248,39 @@ export function draftFields(d: Draft): string[] {
  * Our words, not theirs: any run of 9 or more words shared with an outlet's
  * excerpt or headline (outside quotation marks) is too close to their writing.
  */
+/** Lowercase words without accents; a quoted passage becomes "|" so quoting an outlet is never "too close". */
+const normWords = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[“”«»"][^“”«»"]*[“”«»"]/g, " | ").split(/[^a-z0-9|]+/).filter(Boolean);
+const nGrams = (ws: string[], n: number) => {
+  const out = new Set<string>();
+  for (let i = 0; i + n <= ws.length; i++) { const g = ws.slice(i, i + n); if (!g.includes("|")) out.add(g.join(" ")); }
+  return out;
+};
+
+/** Sentences, with any [sN] marker after the full stop kept on its own sentence. */
+export const splitSentences = (t: string) => t.split(/(?<=[.!?]["”’)]?)\s+(?!\[)/).map(x => x.trim()).filter(Boolean);
+
+/** Every n-word run in the sources' wording (what overlapProblems compares against). */
+export function sourceGrams(sources: { text: string }[], n = 9): Set<string> {
+  const out = new Set<string>();
+  for (const s of sources) for (const g of nGrams(normWords(s.text), n)) out.add(g);
+  return out;
+}
+
+/** Indexes of the sentences of `text` that hold (part of) a run of n words found in `grams`. */
+export function overlappingSentences(text: string, grams: Set<string>, n = 9): number[] {
+  const words: string[] = [], owner: number[] = [];
+  splitSentences(text).forEach((sent, i) => { for (const w of normWords(stripAllMarkers(sent))) { words.push(w); owner.push(i); } });
+  const hit = new Set<number>();
+  for (let i = 0; i + n <= words.length; i++) {
+    const g = words.slice(i, i + n);
+    if (!g.includes("|") && grams.has(g.join(" "))) for (let k = i; k < i + n; k++) hit.add(owner[k]);
+  }
+  return [...hit].sort((a, b) => a - b);
+}
+
 export function overlapProblems(d: Draft, sources: { outlet: string; text: string }[], n = 9): string[] {
-  const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[“”«»"][^“”«»"]*[“”«»"]/g, " | ").split(/[^a-z0-9|]+/).filter(Boolean);
-  const grams = (ws: string[]) => {
-    const out = new Set<string>();
-    for (let i = 0; i + n <= ws.length; i++) { const g = ws.slice(i, i + n); if (!g.includes("|")) out.add(g.join(" ")); }
-    return out;
-  };
+  const norm = normWords;
+  const grams = (ws: string[]) => nGrams(ws, n);
   const ours = grams(norm(stripAllMarkers(draftFields(d).join(" | "))));
   const problems: string[] = [];
   for (const s of sources) {

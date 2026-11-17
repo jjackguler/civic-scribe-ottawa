@@ -102,6 +102,8 @@ directives file, morning Canadian AI Brief, Output watch issue).
   (0 turns it off), model `NEWSROOM_RESEARCH_MODEL` (default: the writer).
 - Cost: about $0.05-0.15 per researched event (search results are input tokens, plus $0.01 a search).
 
+**Copy desk trim (17 Nov 2026).** From 16 to 17 Nov the desk published nothing: every draft, researched or not, failed the copy desk on 9-word overlaps or one unsupported word, even after two rewrites. `trimDraft` (roles.ts) is now the last resort: it only removes. It cuts the sentences that still copy an outlet's wording, name something the sources don't, or deny what they don't deny, and drops paragraphs without a source marker. It gives up when the headline fails, when more than 6 sentences or a quarter of the article would go, or when a check still fails. Cuts are listed in the copy desk's note. research.ts also blocks a few content-farm domains.
+
 ## First five ledger drafts (14 Nov 2026)
 - `newsroom/ledger-drafts/OD-0001..0005.json`: Klarna, Amazon (Jassy), Shopify (Lütke), Salesforce
   (Benioff), IBM (Krishna). Not on the site. Valid records except the signature
