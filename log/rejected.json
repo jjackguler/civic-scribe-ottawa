@@ -1,5 +1,43 @@
 [
   {
+    "id": "1h7d8jo",
+    "at": "2026-11-18T10:46:50.517Z",
+    "stage": "copy",
+    "headline": "Google makes it easier to use Gemini without training AI on your data",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"The excerpt of the Ars Technica story is empty, so its details on data and AI tr\".",
+      "Too close to Ars Technica's wording (\"google makes it easier to use gemini without training…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to Google AI's wording (\"josh woodward vice president of labs gemini app and…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "rewrite: no reply"
+    ]
+  },
+  {
+    "id": "clxwiz",
+    "at": "2026-11-18T10:46:13.033Z",
+    "stage": "copy",
+    "headline": "Centres de données et IA : le moratoire de Mississauga attaqué devant les tribunaux",
+    "reasons": [
+      "Not in the sources (names or numbers): Land, 40-megawatt, September, Two.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to cbc.ca's wording (\"in his first one on one interview since his…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Land, September, Two.",
+      "Too close to cbc.ca's wording (\"his first one on one interview since his inauguration…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "vfwqtg",
+    "at": "2026-11-18T10:45:38.763Z",
+    "stage": "copy",
+    "headline": "En matière de climat, l’IA donnerait souvent raison à l’utilisateur sans égard aux faits",
+    "reasons": [
+      "Not in the sources (names or numbers): 33.8, Institute, Technology, English, French, Spanish, United, Nations.",
+      "Too close to news.un.org's wording (\"on climate was presented on monday at the cop31…\") in \"confirmed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to news.un.org's wording (\"the report can we trust ai on climate was…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1rfquj8",
     "at": "2026-11-18T02:28:48.039Z",
     "stage": "copy",
