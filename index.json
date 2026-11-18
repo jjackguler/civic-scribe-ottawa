@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-17T21:12:25.983Z",
+  "updatedAt": "2026-11-18T02:28:28.635Z",
   "items": [
+    {
+      "id": "ingc8c",
+      "slug": {
+        "en": "ai-medicine-microsoft-research-podcast",
+        "fr": "ia-medecine-podcast-microsoft-research"
+      },
+      "createdAt": "2026-11-18T02:28:28.633Z",
+      "updatedAt": "2026-11-18T02:28:28.633Z",
+      "topic": "health",
+      "format": "standard",
+      "outlets": [
+        "Microsoft Research"
+      ],
+      "times": [
+        "2026-11-17T16:52:17.000Z"
+      ],
+      "storyIds": [
+        "ingc8c"
+      ],
+      "cover": {
+        "color": "spruce",
+        "motif": "rules",
+        "en": {
+          "kicker": "Health and AI",
+          "big": "medicine",
+          "small": "Four experts on what must come first"
+        },
+        "fr": {
+          "kicker": "Santé et IA",
+          "big": "médecine",
+          "small": "Quatre experts sur ce qui doit venir d'abord"
+        }
+      },
+      "words": 147,
+      "en": {
+        "headline": "Microsoft Research podcast asks what AI could change in medicine and what must come first",
+        "dek": "Host Doug Burger talks with Ava Amini, Eric Horvitz and Eric Topol about AI-assisted diagnosis, medical imaging and scientific discovery, and why strong research often reaches patients slowly.",
+        "news": "Microsoft Research published a podcast episode in which four experts discuss how AI might shape medicine and what needs to happen before it does.",
+        "matters": "The sources describe a conversation, not a new medical tool or rule. Nothing in them says patients' care changes now."
+      },
+      "fr": {
+        "headline": "Microsoft Research : un podcast sur ce que l'IA pourrait changer en médecine",
+        "dek": "L'animateur Doug Burger s'entretient avec Ava Amini, Eric Horvitz et Eric Topol du diagnostic assisté par l'IA, de l'imagerie médicale et de la découverte scientifique, et de la lenteur avec laquelle la recherche atteint les patients.",
+        "news": "Microsoft Research a publié un épisode de podcast où quatre spécialistes discutent de la manière dont l'IA pourrait façonner la médecine et de ce qui doit se produire auparavant.",
+        "matters": "Les sources décrivent une conversation, et non un nouvel outil médical ou une nouvelle règle. Rien n'indique que les soins aux patients changent maintenant."
+      }
+    },
     {
       "id": "1aiaagw",
       "slug": {

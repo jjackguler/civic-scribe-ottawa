@@ -1,5 +1,28 @@
 [
   {
+    "id": "1rfquj8",
+    "at": "2026-11-18T02:28:48.039Z",
+    "stage": "copy",
+    "headline": "Put Gemini to work for you",
+    "reasons": [
+      "Too close to Google AI's wording (\"by switching the toggle from chat to task in…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to TechCrunch's wording (\"keep gemini chats for 2 months up from 72…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google AI's wording (\"on android or ios or forwarding emails to gemini…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to TechCrunch's wording (\"keep gemini chats for 2 months up from 72…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1tulsvt",
+    "at": "2026-11-18T02:27:13.310Z",
+    "stage": "translator",
+    "headline": "VeriSilicon Introduces Low-Power, High-Performance Wearable Subsystem Solution for Next-Generation AI/AR Glasses",
+    "reasons": [
+      "attempt 1: missing fields: matters (reply keys: headline,dek,news,thirty,confirmed,claimed,unknown,matters,article,plain,expert,timeline)",
+      "attempt 2: Not in the sources (names or numbers): denial not in the sources: \"Les extraits ne donnent aucun chiffre de performance, de consommation ou de fine\"."
+    ]
+  },
+  {
     "id": "mq0re8",
     "at": "2026-11-17T21:10:59.066Z",
     "stage": "standards",

@@ -1,0 +1,315 @@
+{
+  "version": 1,
+  "id": "ingc8c",
+  "slug": {
+    "en": "ai-medicine-microsoft-research-podcast",
+    "fr": "ia-medecine-podcast-microsoft-research"
+  },
+  "createdAt": "2026-11-18T02:28:28.633Z",
+  "updatedAt": "2026-11-18T02:28:28.633Z",
+  "topic": "health",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Microsoft Research",
+      "title": "Can AI help build a healthier future?",
+      "url": "https://www.microsoft.com/en-us/research/podcast/can-ai-help-build-a-healthier-future/",
+      "publishedAt": "2026-11-17T16:52:17.000Z",
+      "storyId": "ingc8c",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "spruce",
+    "motif": "rules",
+    "en": {
+      "kicker": "Health and AI",
+      "big": "medicine",
+      "small": "Four experts on what must come first"
+    },
+    "fr": {
+      "kicker": "Santé et IA",
+      "big": "médecine",
+      "small": "Quatre experts sur ce qui doit venir d'abord"
+    }
+  },
+  "en": {
+    "headline": "Microsoft Research podcast asks what AI could change in medicine and what must come first",
+    "news": "Microsoft Research published a podcast episode in which four experts discuss how AI might shape medicine and what needs to happen before it does.",
+    "thirty": [
+      "Microsoft Research released a podcast episode on AI and the future of medicine.",
+      "Host Doug Burger talks with Ava Amini, Eric Horvitz and Eric Topol.",
+      "Topics include diagnosis, imaging, drug discovery, and the need for real-world validation."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Microsoft Research says the episode covers AI-assisted medical diagnosis, medical imaging, whole-patient models, virtual cells and biological foundation models.",
+        "by": "Microsoft Research",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether the episode names any specific clinical tools or timelines.",
+      "When any of the discussed advances could reach patients."
+    ],
+    "matters": "The sources describe a conversation, not a new medical tool or rule. Nothing in them says patients' care changes now.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Microsoft's research arm released a podcast episode where experts talk about how AI, meaning computer systems that learn from data, might change medicine. [s1]",
+        "They discuss helping doctors diagnose illness, reading medical images, and finding new drugs. They also say good data and testing in real life are needed before patients benefit. [s1]"
+      ],
+      "standard": [
+        "Microsoft Research published an episode of its podcast The Shape of Things to Come titled \"Can AI help build a healthier future?\" [s1] The host is Doug Burger, a Microsoft Research leader. [s1]",
+        "He is joined by Ava Amini, a Microsoft Principal Research Manager, Eric Horvitz, Microsoft's Chief Scientific Officer, and Eric Topol, a physician-scientist and Microsoft AI health advisor at Scripps Research. [s1]",
+        "Only Microsoft Research, which produced the episode, describes it, so everything here is its own account. [s1]",
+        "Microsoft Research says the guests draw on machine learning, bioscience and clinical care. It lists AI-assisted diagnosis, medical imaging, whole-patient models, virtual cells and biological foundation models in scientific discovery as topics. [s1]",
+        "Microsoft Research says the central question affects every person: what medicine might look like with AI, and what has to happen first. [s1]",
+        "Microsoft Research says strong research often reaches patients slowly and that real-world validation is still needed. [s1]"
+      ],
+      "expert": [
+        "The episode lists AI-assisted diagnosis, medical imaging, whole-patient models, virtual cells and biological foundation models in scientific discovery as topics. [s1]"
+      ]
+    },
+    "seoTitle": "AI in medicine: Microsoft Research podcast",
+    "dek": "Host Doug Burger talks with Ava Amini, Eric Horvitz and Eric Topol about AI-assisted diagnosis, medical imaging and scientific discovery, and why strong research often reaches patients slowly.",
+    "metaDescription": "A Microsoft Research podcast episode discusses AI-assisted diagnosis, medical imaging and the real-world validation still needed before AI shapes care.",
+    "keywords": [
+      "ai in medicine",
+      "microsoft research podcast",
+      "ai diagnosis",
+      "medical imaging ai",
+      "eric topol ai"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Microsoft Research published an episode of its podcast The Shape of Things to Come titled \"Can AI help build a healthier future?\" [s1] The host is Doug Burger, a Microsoft Research leader. [s1]",
+          "He is joined by Ava Amini, a Microsoft Principal Research Manager, Eric Horvitz, Microsoft's Chief Scientific Officer, and Eric Topol, a physician-scientist and Microsoft AI health advisor at Scripps Research. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Only Microsoft Research, which produced the episode, describes it, so everything here is its own account. [s1]",
+          "Microsoft Research says the guests draw on machine learning, bioscience and clinical care. It lists AI-assisted diagnosis, medical imaging, whole-patient models, virtual cells and biological foundation models in scientific discovery as topics. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Microsoft Research says the central question affects every person: what medicine might look like with AI, and what has to happen first. [s1]",
+          "Microsoft Research says strong research often reaches patients slowly and that real-world validation is still needed. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Who hosts the episode?",
+        "a": "Doug Burger, a Microsoft Research leader, hosts the episode, which is titled \"Can AI help build a healthier future?\""
+      },
+      {
+        "q": "Which topics does the episode cover?",
+        "a": "Microsoft Research lists AI-assisted diagnosis, medical imaging, whole-patient models, virtual cells and biological foundation models in scientific discovery as topics."
+      },
+      {
+        "q": "What does the episode say must happen first?",
+        "a": "Microsoft Research says strong research often reaches patients slowly and that real-world validation is still needed."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/start-here",
+        "label": "Start here: what AI is"
+      },
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Microsoft Research : un podcast sur ce que l'IA pourrait changer en médecine",
+    "news": "Microsoft Research a publié un épisode de podcast où quatre spécialistes discutent de la manière dont l'IA pourrait façonner la médecine et de ce qui doit se produire auparavant.",
+    "thirty": [
+      "Microsoft Research a diffusé un épisode de podcast sur l'IA et l'avenir de la médecine.",
+      "L'animateur Doug Burger s'entretient avec Ava Amini, Eric Horvitz et Eric Topol.",
+      "Les sujets incluent le diagnostic, l'imagerie, la découverte de médicaments et le besoin de validation en situation réelle."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Microsoft Research affirme que l'épisode traite du diagnostic médical assisté par l'IA, de l'imagerie médicale, des modèles du patient entier, des cellules virtuelles et des modèles de fondation biologiques.",
+        "by": "Microsoft Research",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "On ignore si l'épisode nomme des outils cliniques ou des échéanciers précis.",
+      "On ignore quand les avancées évoquées pourraient atteindre les patients."
+    ],
+    "matters": "Les sources décrivent une conversation, et non un nouvel outil médical ou une nouvelle règle. Rien n'indique que les soins aux patients changent maintenant.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Le volet recherche de Microsoft a diffusé un épisode de podcast où des spécialistes parlent de la façon dont l'IA, soit des systèmes informatiques qui apprennent à partir de données, pourrait transformer la médecine. [s1]",
+        "Ils abordent l'aide au diagnostic, la lecture d'images médicales et la recherche de nouveaux médicaments. Ils soulignent aussi qu'il faut de bonnes données et des essais en situation réelle avant que les patients en profitent. [s1]"
+      ],
+      "standard": [
+        "Microsoft Research a publié un épisode de son podcast The Shape of Things to Come, intitulé « Can AI help build a healthier future? » [s1] L'animateur est Doug Burger, un dirigeant de Microsoft Research. [s1]",
+        "Il reçoit Ava Amini, Principal Research Manager chez Microsoft, Eric Horvitz, Chief Scientific Officer de Microsoft, et Eric Topol, médecin-chercheur et conseiller en santé IA de Microsoft à Scripps Research. [s1]",
+        "Seule Microsoft Research, qui a produit l'épisode, le décrit; tout ce qui suit relève donc de son propre compte rendu. [s1]",
+        "Microsoft Research indique que les invités s'appuient sur l'apprentissage automatique, les biosciences et les soins cliniques. Elle cite comme sujets le diagnostic assisté par l'IA, l'imagerie médicale, les modèles du patient entier, les cellules virtuelles et les modèles de fondation biologiques dans la découverte scientifique. [s1]",
+        "Microsoft Research affirme que la question centrale touche chaque personne: à quoi la médecine pourrait ressembler avec l'IA, et ce qui doit arriver d'abord. [s1]",
+        "Microsoft Research affirme que des recherches prometteuses atteignent souvent les patients lentement et que la validation en situation réelle demeure nécessaire. [s1]"
+      ],
+      "expert": [
+        "L'épisode énumère comme sujets le diagnostic assisté par l'IA, l'imagerie médicale, les modèles du patient entier, les cellules virtuelles et les modèles de fondation biologiques dans la découverte scientifique. [s1]"
+      ]
+    },
+    "seoTitle": "IA en médecine : le podcast de Microsoft Research",
+    "dek": "L'animateur Doug Burger s'entretient avec Ava Amini, Eric Horvitz et Eric Topol du diagnostic assisté par l'IA, de l'imagerie médicale et de la découverte scientifique, et de la lenteur avec laquelle la recherche atteint les patients.",
+    "metaDescription": "Un épisode de podcast de Microsoft Research aborde le diagnostic assisté par l'IA…",
+    "keywords": [
+      "ia en médecine",
+      "podcast microsoft research",
+      "diagnostic par ia",
+      "imagerie médicale ia",
+      "eric topol ia"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Microsoft Research a publié un épisode de son podcast The Shape of Things to Come, intitulé « Can AI help build a healthier future? » [s1] L'animateur est Doug Burger, un dirigeant de Microsoft Research. [s1]",
+          "Il reçoit Ava Amini, Principal Research Manager chez Microsoft, Eric Horvitz, Chief Scientific Officer de Microsoft, et Eric Topol, médecin-chercheur et conseiller en santé IA de Microsoft à Scripps Research. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Seule Microsoft Research, qui a produit l'épisode, le décrit; tout ce qui suit relève donc de son propre compte rendu. [s1]",
+          "Microsoft Research indique que les invités s'appuient sur l'apprentissage automatique, les biosciences et les soins cliniques. Elle cite comme sujets le diagnostic assisté par l'IA, l'imagerie médicale, les modèles du patient entier, les cellules virtuelles et les modèles de fondation biologiques dans la découverte scientifique. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Microsoft Research affirme que la question centrale touche chaque personne: à quoi la médecine pourrait ressembler avec l'IA, et ce qui doit arriver d'abord. [s1]",
+          "Microsoft Research affirme que des recherches prometteuses atteignent souvent les patients lentement et que la validation en situation réelle demeure nécessaire. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qui anime l'épisode ?",
+        "a": "Doug Burger, un dirigeant de Microsoft Research, anime l'épisode intitulé « Can AI help build a healthier future? »."
+      },
+      {
+        "q": "Quels sujets l'épisode aborde-t-il ?",
+        "a": "Microsoft Research cite le diagnostic assisté par l'IA, l'imagerie médicale, les modèles du patient entier, les cellules virtuelles et les modèles de fondation biologiques dans la découverte scientifique."
+      },
+      {
+        "q": "Que doit-il se passer en premier selon l'épisode ?",
+        "a": "Microsoft Research affirme que des recherches prometteuses atteignent souvent les patients lentement et que la validation en situation réelle demeure nécessaire."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/start-here",
+        "label": "Commencer ici : ce qu'est l'IA"
+      },
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 147,
+    "fr": 172
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-18T02:27:21.554Z",
+      "verdict": "done",
+      "notes": [
+        "216 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-18T02:27:41.742Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): denial not in the sources: \"The excerpt does not give the guests' specific conclusions, any figures, or a ti\", denial not in the sources: \"It describes a discussion, not a change in care today.\".",
+        "Too close to Microsoft Research's wording (\"with ramifications for every individual on the planet what…\") in \"article.matters\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to Microsoft Research's wording (\"and why better biological data and real world validation…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "trimmed 4 sentence(s) that still failed:",
+        "cut: \"Microsoft Research says the guests also ask why strong research findings often take a long time to get to patients, and \"",
+        "cut: \"Microsoft Research says the guests also cover AI-guided experiments and drug discovery, and that better biological data \"",
+        "cut: \"It adds that better biological data and real-world validation remain essential. [s1]\"",
+        "cut: \"It also says the group looks at how AI could guide experiments and drug discovery.\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-18T02:27:47.333Z",
+      "verdict": "pass",
+      "notes": [
+        "Every substantive claim is attributed to Microsoft Research, which produced the episode. Because the speakers are Microsoft staff or advisers, say plainly in the lead that this is the company's own podcast and that no independent party has assessed the claims.",
+        "The 'plain' and 'expert' passages say the guests 'discuss' and 'say' things. Keep to the episode's stated topics and avoid implying the guests reached conclusions the excerpt doesn't show.",
+        "The excerpt doesn't show what 'real-world validation' or 'better biological data' would involve. Either leave those phrases as the source's words or briefly note that the episode doesn't specify them.",
+        "State that no clinical tool, timeline or patient-facing change is described, as the 'unknown' section does, so readers don't take the episode as news of new medical capability.",
+        "Label the piece as AI-assisted if AI helped write or structure it, and note that it was checked against the Microsoft Research source."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-18T02:28:17.515Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): Balado.",
+        "172 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-18T02:28:25.902Z",
+      "verdict": "done",
+      "notes": [
+        "en: AI in medicine: Microsoft Research podcast (42)",
+        "fr: IA en médecine : le podcast de Microsoft Research (49)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-18T02:28:28.633Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: spruce/rules \"medicine\""
+      ]
+    }
+  ]
+}
