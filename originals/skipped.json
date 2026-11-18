@@ -1,5 +1,10 @@
 [
   {
+    "key": "article:1aiaagw",
+    "at": "2026-11-18T03:17:09.977Z",
+    "reason": "fact guard / layout check failed twice: not in the sources: ACTS"
+  },
+  {
     "key": "story:ty9v05",
     "at": "2026-11-17T19:58:14.328Z",
     "reason": "the writer declined: The sources are mostly headlines with two short excerpts. They don't say why Jensen Huang resigned, what the lawmakers' questioning is about, or who is alleged to have plotted against him. Without those facts, a fair 45-second explainer would mean guessing or repeating an unsupported claim about a named person."
