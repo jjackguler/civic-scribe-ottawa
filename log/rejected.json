@@ -1,5 +1,41 @@
 [
   {
+    "id": "1djismv",
+    "at": "2026-11-18T19:26:57.608Z",
+    "stage": "copy",
+    "headline": "The Gemini app is now available on lower-memory Android devices.",
+    "reasons": [
+      "Not in the sources (names or numbers): Readers, denial not in the sources: \"If the company's account holds, those users gain voice, camera and image tools t\".",
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Too close to Google AI's wording (\"is their everyday connection to the internet education and…\") in \"article.matters\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google AI's wording (\"personal ai assistant in the hands of hundreds of…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "ar7hem",
+    "at": "2026-11-18T19:25:34.963Z",
+    "stage": "copy",
+    "headline": "Why your fine-tuning job takes longer than the FLOPs say",
+    "reasons": [
+      "Not in the sources (names or numbers): 12.",
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Too close to Hugging Face's wording (\"took 272 real supervised fine tuning sft jobs from…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Hugging Face's wording (\"took 272 real supervised fine tuning sft jobs from…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "o8ftuj",
+    "at": "2026-11-18T19:24:56.927Z",
+    "stage": "translator",
+    "headline": "As decision model use skyrockets, is customization the next frontier?",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): denial not in the sources: \"article mentionne le réglage fin et la combinaison des résultats avec la logique\".",
+      "attempt 2: The headline must be 40 to 110 characters (it is 113)."
+    ]
+  },
+  {
     "id": "1h7d8jo",
     "at": "2026-11-18T10:46:50.517Z",
     "stage": "copy",

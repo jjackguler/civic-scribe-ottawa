@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-18T02:28:28.635Z",
+  "updatedAt": "2026-11-18T19:26:29.078Z",
   "items": [
+    {
+      "id": "1vp01ke",
+      "slug": {
+        "en": "google-deepmind-genie-4-project-genie",
+        "fr": "google-deepmind-genie-4-project-genie-2"
+      },
+      "createdAt": "2026-11-18T19:26:29.075Z",
+      "updatedAt": "2026-11-18T19:26:29.075Z",
+      "topic": "applications",
+      "format": "standard",
+      "outlets": [
+        "Google DeepMind"
+      ],
+      "times": [
+        "2026-11-18T18:13:42.000Z"
+      ],
+      "storyIds": [
+        "1vp01ke"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "grid",
+        "en": {
+          "kicker": "Product rollout",
+          "big": "Genie 4",
+          "small": "Rolling out to eligible Ultra subscribers"
+        },
+        "fr": {
+          "kicker": "Déploiement produit",
+          "big": "Genie 4",
+          "small": "Déploiement auprès des abonnés Ultra admissibles"
+        }
+      },
+      "words": 208,
+      "en": {
+        "headline": "Google DeepMind rolls out Genie 4 to Google AI Ultra subscribers in Project Genie",
+        "dek": "Google DeepMind says the update lets users edit environments in natural language, add native audio and share worlds in a community gallery. Google AI Pro members can join a waitlist.",
+        "news": "Google DeepMind says it is rolling out Genie 4 and other Project Genie upgrades to eligible Google AI Ultra subscribers, with a waitlist for Google AI Pro members.",
+        "matters": "For people who subscribe to Google AI Ultra, Google DeepMind says Project Genie now offers new ways to build and share interactive worlds. Others can only join a waitlist if they have Google AI Pro."
+      },
+      "fr": {
+        "headline": "Google DeepMind lance Genie 4 pour les abonnés Google AI Ultra dans Project Genie",
+        "dek": "Google DeepMind affirme que la mise à jour permet de modifier les environnements en langage naturel, d'ajouter de l'audio natif et de partager des mondes dans une galerie communautaire. Les membres Google AI Pro peuvent s'inscrire à une liste d'attente.",
+        "news": "Google DeepMind affirme déployer Genie 4 et d'autres améliorations de Project Genie auprès des abonnés admissibles à Google AI Ultra, avec une liste d'attente pour les membres Google AI Pro.",
+        "matters": "Pour les abonnés à Google AI Ultra, Google DeepMind affirme que Project Genie offre désormais de nouvelles façons de créer et de partager des mondes interactifs. Les autres ne peuvent que s'inscrire à une liste d'attente s'ils ont Google AI Pro."
+      }
+    },
     {
       "id": "ingc8c",
       "slug": {

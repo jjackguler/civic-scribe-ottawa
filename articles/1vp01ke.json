@@ -1,0 +1,331 @@
+{
+  "version": 1,
+  "id": "1vp01ke",
+  "slug": {
+    "en": "google-deepmind-genie-4-project-genie",
+    "fr": "google-deepmind-genie-4-project-genie-2"
+  },
+  "createdAt": "2026-11-18T19:26:29.075Z",
+  "updatedAt": "2026-11-18T19:26:29.075Z",
+  "topic": "applications",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Google DeepMind",
+      "title": "Genie 4 is now available",
+      "url": "https://deepmind.google/blog/genie-4-is-now-available/",
+      "publishedAt": "2026-11-18T18:13:42.000Z",
+      "storyId": "1vp01ke",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "night",
+    "motif": "grid",
+    "en": {
+      "kicker": "Product rollout",
+      "big": "Genie 4",
+      "small": "Rolling out to eligible Ultra subscribers"
+    },
+    "fr": {
+      "kicker": "Déploiement produit",
+      "big": "Genie 4",
+      "small": "Déploiement auprès des abonnés Ultra admissibles"
+    }
+  },
+  "en": {
+    "headline": "Google DeepMind rolls out Genie 4 to Google AI Ultra subscribers in Project Genie",
+    "news": "Google DeepMind says it is rolling out Genie 4 and other Project Genie upgrades to eligible Google AI Ultra subscribers, with a waitlist for Google AI Pro members.",
+    "thirty": [
+      "Genie 4 is reaching eligible Google AI Ultra subscribers, Google DeepMind says.",
+      "Users can edit worlds with text prompts, add audio and share creations.",
+      "Google AI Pro members can join a waitlist; canadian availability is not stated."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Google DeepMind says a new Project Genie agent helps users build custom worlds through conversation, and a community gallery lets people explore and remix creations.",
+        "by": "Google DeepMind",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether the rollout covers Canada and when Google AI Pro members will get access.",
+      "How much Google AI Ultra costs and what limits apply to usage.",
+      "How Genie 4 performs outside Google DeepMind's own description."
+    ],
+    "matters": "For people who subscribe to Google AI Ultra, Google DeepMind says Project Genie now offers new ways to build and share interactive worlds. Others can only join a waitlist if they have Google AI Pro.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Google DeepMind has an experimental tool called Project Genie that turns written descriptions into interactive digital worlds. The company says a new version, Genie 4, is now rolling out to people who pay for its Google AI Ultra plan. [s1]",
+        "Users can type changes, such as new weather or characters, and hear sound that adapts. They can also share their worlds in a gallery for others to remix. People on the Google AI Pro plan can join a waitlist. [s1]"
+      ],
+      "standard": [
+        "The company describes Project Genie as an experimental research prototype for generating and exploring interactive worlds. [s1]",
+        "The update includes first-time access to Genie 4, upgrades to Genie 3, a Project Genie agent and a community gallery, according to the company's announcement. [s1]",
+        "Only one source is available, and it is Google DeepMind itself, so every point below is the company's own claim. [s1]",
+        "It says users can edit environments in natural language and add native audio. [s1]",
+        "The company says the Project Genie agent helps people build complex environments through conversation. It also says users can publish their worlds to a community gallery for others to explore and remix. [s1]",
+        "It says early testers asked for deeper control and easier ways to build and share. [s1]",
+        "The excerpt does not give pricing, regional availability or independent test results. Google AI Pro members can join a waitlist, the company says. [s1]",
+        "For readers who want to try AI tools, the announcement points to a paid tier for access. Google DeepMind says Google AI Ultra subscribers can start building and sharing worlds. [s1]",
+        "Readers in Canada should check whether the service is offered to them, since the excerpt says nothing about location. Anyone sharing creations in a public gallery may also want to review what they publish. [s1]"
+      ],
+      "expert": [
+        "Google DeepMind describes Genie 4 as its most realistic and interactive world model, and says Project Genie pairs its world models with Gemini models. [s1]",
+        "The company lists Genie 3 updates: longer sessions, panorama grounding and linked world sequences. It also lists a Project Genie agent, real-time text editing and native audio. The excerpt gives no benchmarks or technical figures. [s1]"
+      ]
+    },
+    "seoTitle": "Google DeepMind rolls out Genie 4 in Project Genie",
+    "dek": "Google DeepMind says the update lets users edit environments in natural language, add native audio and share worlds in a community gallery. Google AI Pro members can join a waitlist.",
+    "metaDescription": "Google DeepMind says Genie 4 is rolling out to eligible Google AI Ultra subscribers, with a waitlist for Google AI Pro members.",
+    "keywords": [
+      "genie 4",
+      "project genie",
+      "google deepmind",
+      "google ai ultra",
+      "interactive world generation"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "The company describes Project Genie as an experimental research prototype for generating and exploring interactive worlds. [s1]",
+          "The update includes first-time access to Genie 4, upgrades to Genie 3, a Project Genie agent and a community gallery, according to the company's announcement. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Only one source is available, and it is Google DeepMind itself, so every point below is the company's own claim. [s1]",
+          "It says users can edit environments in natural language and add native audio. [s1]",
+          "The company says the Project Genie agent helps people build complex environments through conversation. It also says users can publish their worlds to a community gallery for others to explore and remix. [s1]",
+          "It says early testers asked for deeper control and easier ways to build and share. [s1]",
+          "The excerpt does not give pricing, regional availability or independent test results. Google AI Pro members can join a waitlist, the company says. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For readers who want to try AI tools, the announcement points to a paid tier for access. Google DeepMind says Google AI Ultra subscribers can start building and sharing worlds. [s1]",
+          "Readers in Canada should check whether the service is offered to them, since the excerpt says nothing about location. Anyone sharing creations in a public gallery may also want to review what they publish. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Who can access Genie 4?",
+        "a": "Google DeepMind says it is rolling out Genie 4 to eligible Google AI Ultra subscribers, and Google AI Pro members can join a waitlist."
+      },
+      {
+        "q": "What does the update add?",
+        "a": "According to the company, the update includes first-time access to Genie 4, upgrades to Genie 3, a Project Genie agent and a community gallery."
+      },
+      {
+        "q": "Is pricing or regional availability known?",
+        "a": "The excerpt does not give pricing, regional availability or independent test results."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Agents"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Google DeepMind lance Genie 4 pour les abonnés Google AI Ultra dans Project Genie",
+    "news": "Google DeepMind affirme déployer Genie 4 et d'autres améliorations de Project Genie auprès des abonnés admissibles à Google AI Ultra, avec une liste d'attente pour les membres Google AI Pro.",
+    "thirty": [
+      "Genie 4 arrive chez les abonnés admissibles à Google AI Ultra, selon Google DeepMind.",
+      "Les utilisateurs peuvent modifier des mondes par texte, ajouter de l'audio et partager leurs créations.",
+      "Les membres Google AI Pro peuvent s'inscrire à une liste d'attente; la disponibilité au canada n'est pas précisée."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Google DeepMind affirme qu'un nouvel agent Project Genie aide les utilisateurs à bâtir des mondes personnalisés par la conversation, et qu'une galerie communautaire permet d'explorer et de remixer des créations.",
+        "by": "Google DeepMind",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Si le déploiement vise le Canada et à quel moment les membres Google AI Pro auront accès.",
+      "Le prix de Google AI Ultra et les limites d'utilisation qui s'appliquent.",
+      "Le rendement de Genie 4 en dehors de la description qu'en fait Google DeepMind."
+    ],
+    "matters": "Pour les abonnés à Google AI Ultra, Google DeepMind affirme que Project Genie offre désormais de nouvelles façons de créer et de partager des mondes interactifs. Les autres ne peuvent que s'inscrire à une liste d'attente s'ils ont Google AI Pro.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Google DeepMind propose un outil expérimental, Project Genie, qui transforme des descriptions écrites en mondes numériques interactifs. L'entreprise affirme qu'une nouvelle version, Genie 4, est en cours de déploiement auprès des personnes abonnées à son forfait Google AI Ultra. [s1]",
+        "Les utilisateurs peuvent taper des changements, comme une nouvelle météo ou de nouveaux personnages, et entendre un son qui s'adapte. Ils peuvent aussi partager leurs mondes dans une galerie pour que d'autres les remixent. Les gens au forfait Google AI Pro peuvent s'inscrire à une liste d'attente. [s1]"
+      ],
+      "standard": [
+        "L'entreprise décrit Project Genie comme un prototype de recherche expérimental pour générer et explorer des mondes interactifs. [s1]",
+        "Selon l'annonce de l'entreprise, la mise à jour comprend un premier accès à Genie 4, des améliorations de Genie 3, un agent Project Genie et une galerie communautaire. [s1]",
+        "Une seule source est disponible, et il s'agit de Google DeepMind elle-même; chaque point ci-dessous relève donc des affirmations de l'entreprise. [s1]",
+        "Elle dit que les utilisateurs peuvent modifier les environnements en langage naturel et ajouter de l'audio natif. [s1]",
+        "L'entreprise affirme que l'agent Project Genie aide à bâtir des environnements complexes par la conversation. Elle ajoute que les utilisateurs peuvent publier leurs mondes dans une galerie communautaire pour que d'autres les explorent et les remixent. [s1]",
+        "Elle indique que les premiers testeurs réclamaient un contrôle plus poussé et des moyens plus simples de créer et de partager. [s1]",
+        "L'extrait ne donne ni prix, ni disponibilité par région, ni résultats de tests indépendants. Les membres Google AI Pro peuvent s'inscrire à une liste d'attente, selon l'entreprise. [s1]",
+        "Pour les lecteurs qui veulent essayer des outils d'IA, l'annonce renvoie à un forfait payant. Google DeepMind affirme que les abonnés à Google AI Ultra peuvent commencer à créer et à partager des mondes. [s1]",
+        "Les lecteurs au Canada devraient vérifier si le service leur est offert, car l'extrait ne dit rien sur le lieu. Quiconque partage des créations dans une galerie publique voudra peut-être aussi revoir ce qu'il publie. [s1]"
+      ],
+      "expert": [
+        "Google DeepMind décrit Genie 4 comme son modèle de monde le plus réaliste et le plus interactif, et dit que Project Genie associe ses modèles de monde à ses modèles Gemini. [s1]",
+        "L'entreprise énumère des améliorations de Genie 3: des séances plus longues, l'ancrage panoramique et des séquences de mondes reliés. Elle cite aussi un agent Project Genie, l'édition textuelle en temps réel et l'audio natif. L'extrait ne fournit ni référence de performance ni donnée technique. [s1]"
+      ]
+    },
+    "seoTitle": "Google DeepMind déploie Genie 4 dans Project Genie",
+    "dek": "Google DeepMind affirme que la mise à jour permet de modifier les environnements en langage naturel, d'ajouter de l'audio natif et de partager des mondes dans une galerie communautaire. Les membres Google AI Pro peuvent s'inscrire à une liste d'attente.",
+    "metaDescription": "Google DeepMind affirme déployer Genie 4 auprès des abonnés admissibles à Google AI Ultra, avec une liste d'attente pour les membres Google AI Pro.",
+    "keywords": [
+      "genie 4",
+      "project genie",
+      "google deepmind",
+      "google ai ultra",
+      "mondes interactifs"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "L'entreprise décrit Project Genie comme un prototype de recherche expérimental pour générer et explorer des mondes interactifs. [s1]",
+          "Selon l'annonce de l'entreprise, la mise à jour comprend un premier accès à Genie 4, des améliorations de Genie 3, un agent Project Genie et une galerie communautaire. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Une seule source est disponible, et il s'agit de Google DeepMind elle-même; chaque point ci-dessous relève donc des affirmations de l'entreprise. [s1]",
+          "Elle dit que les utilisateurs peuvent modifier les environnements en langage naturel et ajouter de l'audio natif. [s1]",
+          "L'entreprise affirme que l'agent Project Genie aide à bâtir des environnements complexes par la conversation. Elle ajoute que les utilisateurs peuvent publier leurs mondes dans une galerie communautaire pour que d'autres les explorent et les remixent. [s1]",
+          "Elle indique que les premiers testeurs réclamaient un contrôle plus poussé et des moyens plus simples de créer et de partager. [s1]",
+          "L'extrait ne donne ni prix, ni disponibilité par région, ni résultats de tests indépendants. Les membres Google AI Pro peuvent s'inscrire à une liste d'attente, selon l'entreprise. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les lecteurs qui veulent essayer des outils d'IA, l'annonce renvoie à un forfait payant. Google DeepMind affirme que les abonnés à Google AI Ultra peuvent commencer à créer et à partager des mondes. [s1]",
+          "Les lecteurs au Canada devraient vérifier si le service leur est offert, car l'extrait ne dit rien sur le lieu. Quiconque partage des créations dans une galerie publique voudra peut-être aussi revoir ce qu'il publie. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qui peut accéder à Genie 4?",
+        "a": "Google DeepMind affirme déployer Genie 4 auprès des abonnés admissibles à Google AI Ultra, et les membres Google AI Pro peuvent s'inscrire à une liste d'attente."
+      },
+      {
+        "q": "Que comprend la mise à jour?",
+        "a": "Selon l'entreprise, la mise à jour comprend un premier accès à Genie 4, des améliorations de Genie 3, un agent Project Genie et une galerie communautaire."
+      },
+      {
+        "q": "Le prix ou la disponibilité par région sont-ils connus?",
+        "a": "L'extrait ne donne ni prix, ni disponibilité par région, ni résultats de tests indépendants."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Les agents"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 208,
+    "fr": 236
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-18T19:25:44.886Z",
+      "verdict": "done",
+      "notes": [
+        "279 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-18T19:25:57.702Z",
+      "verdict": "fixed",
+      "notes": [
+        "Too close to Google DeepMind's wording (\"rolling out genie 4 to eligible google ai ultra…\") in \"thirty\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to Google DeepMind's wording (\"rolling out genie 4 to eligible google ai ultra…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "trimmed 6 sentence(s) that still failed:",
+        "cut: \"Google DeepMind says it is rolling out Genie 4 to eligible Google AI Ultra subscribers for creating interactive worlds.\"",
+        "cut: \"Google DeepMind says users can change weather, add characters and hear adaptive audio in real time by typing prompts.\"",
+        "cut: \"Google DeepMind says its updated Genie 3 model supports longer sessions, panorama grounding and linked world sequences.\"",
+        "cut: \"Google DeepMind says it is rolling out a new Project Genie experience to eligible Google AI Ultra subscribers.\"",
+        "cut: \"Google DeepMind says Genie 4 lets users change weather, add characters and hear adaptive audio in real time by typing pr\"",
+        "cut: \"Google DeepMind says the updated Genie 3 model supports longer sessions, panorama grounding and linked world sequences.\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-18T19:26:03.226Z",
+      "verdict": "pass",
+      "notes": [
+        "The headline states the rollout as fact. Consider attributing it, for example 'Google DeepMind rolls out Genie 4 to Google AI Ultra subscribers', since the only source is the company's own announcement.",
+        "'Others can only join a waitlist if they have Google AI Pro' goes beyond the source, which says only that Google AI Pro members can join the waitlist. Say who else is eligible or that the excerpt does not say.",
+        "The 'thirty' line has 'canadian' in lowercase; it should read 'Canadian'.",
+        "The 'matters' paragraph's advice to review what is published in the gallery is reasonable, but it should be framed as general guidance, not a risk the sources describe.",
+        "Every point rests on one official source. The article says so, which is good; keep that caveat in the lead or dek if space allows."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-18T19:26:18.444Z",
+      "verdict": "pass",
+      "notes": [
+        "236 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-18T19:26:26.278Z",
+      "verdict": "done",
+      "notes": [
+        "en: Google DeepMind rolls out Genie 4 in Project Genie (50)",
+        "fr: Google DeepMind déploie Genie 4 dans Project Genie (50)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-18T19:26:29.075Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: night/grid \"Genie 4\""
+      ]
+    }
+  ]
+}
