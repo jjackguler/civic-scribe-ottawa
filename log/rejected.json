@@ -1,5 +1,23 @@
 [
   {
+    "id": "h8vpdb",
+    "at": "2026-11-19T09:31:38.212Z",
+    "stage": "standards",
+    "headline": "Odaia raises $15-million Series C round, inks deal with US health agency",
+    "reasons": [
+      "The background paragraph cites [b1] for claims about RAII, Scale AI partner accelerators and the AI Compute Access Fund reopening. [b1] is not in the supplied sources, so the claim is unsourced and cannot be checked, which breaks the rule that every story names its source and facts come from evidenc"
+    ]
+  },
+  {
+    "id": "13gd1br",
+    "at": "2026-11-19T09:31:04.449Z",
+    "stage": "standards",
+    "headline": "The Adecco Group global study: AI delivers more value when people are involved in work redesign",
+    "reasons": [
+      "The headline states the company's causal conclusion as fact (\"AI works better when workers help redesign their jobs\"). The sources are a company-run survey reporting respondents' views, and the article's own 'matters' section says the results show correlation, not proven cause and effect."
+    ]
+  },
+  {
     "id": "5flagh",
     "at": "2026-11-19T01:32:03.174Z",
     "stage": "copy",
