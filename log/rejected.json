@@ -1,5 +1,56 @@
 [
   {
+    "id": "5flagh",
+    "at": "2026-11-19T01:32:03.174Z",
+    "stage": "copy",
+    "headline": "Introducing Gemini 4 Neon",
+    "reasons": [
+      "Not in the sources (names or numbers): Canada, 1.1, 56.3.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to Google DeepMind's wording (\"3 overall with a score of 61 on the…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google DeepMind's wording (\"a score of 61 on the artificial analysis intelligence…\") in \"expert\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "5r3o71",
+    "at": "2026-11-19T01:31:25.083Z",
+    "stage": "copy",
+    "headline": "Alberta proposes 600-metre buffer for AI data centres, new water standards",
+    "reasons": [
+      "Not in the sources (names or numbers): Outlets, Commission, 6 million, Reports.",
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "Too close to westernstandard.news's wording (\"bill 42 the energy environment and utilities statutes amendment…\") in \"confirmed\": say it in our own words, or quote and attribute it.",
+      "Too close to dailyhive.com's wording (\"the bill would protect around 14 million acres of…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Commission.",
+      "Too close to westernstandard.news's wording (\"bill 42 the energy environment and utilities statutes amendment…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to dailyhive.com's wording (\"bill 42 the energy environment and utilities statutes amendment…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1o1fgyo",
+    "at": "2026-11-19T01:30:45.157Z",
+    "stage": "copy",
+    "headline": "Why Canadian tech is standing against Bill C-22",
+    "reasons": [
+      "Not in the sources (names or numbers): House.",
+      "Too close to betakit.com's wording (\"to hear from tech leaders and civil liberties advocates…\") in \"timeline\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Speakers.",
+      "Too close to betakit.com's wording (\"to hear from tech leaders and civil liberties advocates…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "w5plwt",
+    "at": "2026-11-19T01:30:19.523Z",
+    "stage": "standards",
+    "headline": "New restrictions on data centres",
+    "reasons": [
+      "The plain-language summary says large data centres 'would have to use almost no water for cooling', which states a firm requirement. The source only says the province wants a provincewide standard to bring cooling water use 'close to zero', and the article's own unknowns say the standard's detail is"
+    ]
+  },
+  {
     "id": "1djismv",
     "at": "2026-11-18T19:26:57.608Z",
     "stage": "copy",
