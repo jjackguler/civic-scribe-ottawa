@@ -1,0 +1,362 @@
+{
+  "version": 1,
+  "id": "l004dj",
+  "slug": {
+    "en": "hugging-face-adapters-qwen-accuracy",
+    "fr": "hugging-face-adaptateurs-qwen-precision"
+  },
+  "createdAt": "2026-11-20T17:20:51.396Z",
+  "updatedAt": "2026-11-20T17:20:51.396Z",
+  "topic": "research",
+  "format": "numbers",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost",
+      "url": "https://huggingface.co/blog/harness-adapters-at-scale",
+      "publishedAt": "2026-11-20T00:00:00.000Z",
+      "storyId": "l004dj",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b1",
+      "path": "/labs/agents",
+      "title": {
+        "en": "Agents",
+        "fr": "Les agents"
+      }
+    }
+  ],
+  "cover": {
+    "color": "signal",
+    "motif": "bars",
+    "en": {
+      "kicker": "Model tuning",
+      "big": "55%"
+    },
+    "fr": {
+      "kicker": "Réglage de modèles",
+      "big": "55%",
+      "small": "Selon l'entreprise, score passé de 39%"
+    }
+  },
+  "en": {
+    "headline": "Hugging Face says small trained add-ons lift Qwen3.8-27B accuracy and cut token use",
+    "news": "Hugging Face says it trained small LoRA adapters for Qwen3.8-27B, one per agent harness, and that each beat the base model on accuracy and efficiency.",
+    "thirty": [
+      "Hugging Face describes 'harness adapters' for the Qwen3.8-27B model.",
+      "It says the adapters raised a terminal-Bench 2.1 score from 39% to 55%.",
+      "Average token use fell from 2.9K to 1.5K per task, it says."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says the Qwen3.8-27B base model scores 39% on Terminal-Bench 2.1 under the pi harness, using 2.9K tokens per task on average.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face says a frozen model with a custom RL-trained LoRA adapter reaches 55% pass@1 with 1.5K tokens on average.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether independent teams can reproduce the reported scores.",
+      "How the adapters perform on tasks outside the training distribution.",
+      "What the model actually learned to do, which the post lists as an open question."
+    ],
+    "matters": "The sources only describe a technical method. Hugging Face says it shares a reusable recipe and artifacts so others can adapt a model to their own harness and tasks.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Hugging Face says AI models are built to be good at many things, so they are not tuned for the exact tools and jobs you use. It says a small add-on, called a LoRA adapter, can be trained to fit one model to one setup. [s1]",
+        "The company reports that on a coding test the model went from 39% to 55% and used fewer tokens, which are the small pieces of text a model reads and writes. These are Hugging Face's own results. [s1]"
+      ],
+      "standard": [
+        "Hugging Face published a post introducing what it calls harness adapters. It says pairing reinforcement learning (RL) on a custom set of tasks with a chosen agent harness produces models that are more accurate and use fewer resources for that harness and those tasks. [s1]",
+        "The company says it trained one LoRA adapter for Qwen3.8-27B for each of three harnesses: pi, Hermes Agent and OpenCode. Training took place inside each harness itself. [s1]",
+        "Only Hugging Face, the publisher of the post, is the source here, so every figure is its own claim. It says the base model scores 39% on Terminal-Bench 2.1 with the pi harness, using 2.9K tokens per task on average. With the weights frozen and a custom RL-trained LoRA adapter added, it says the score rises to 55% pass@1 and token use falls to 1.5K. [s1]",
+        "It lists an open question in the post: what the model really learned to do. No outside check of the results appears in the excerpt. [s1]",
+        "The excerpt does not discuss effects on jobs or users. What changes is that Hugging Face says it has released a reusable recipe and artifacts, including adapters, GGUFs and RL tasks, so others can try the approach on their own model and harness combinations. [s1]",
+        "If the claims hold, the post suggests fewer tokens per task, which it presents as an efficiency gain. That has not been verified independently. [s1]",
+        "Agents are software that plans, uses tools and acts on its own. [b1]"
+      ],
+      "expert": [
+        "Hugging Face reports Qwen3.8-27B on Terminal-Bench 2.1 under the pi harness at 39% with 2.9K tokens per task on average, versus 55% pass@1 and 1.5K with a frozen-weight, RL-trained LoRA adapter. [s1]",
+        "Training used TRL's AsyncGRPOTrainer, OpenEnv and harbor, with one adapter per harness (pi, Hermes Agent, OpenCode) and a merged super adapter. It says earlier work covered data-analysis and code-building tasks. [s1]"
+      ]
+    },
+    "seoTitle": "Hugging Face LoRA adapters lift Qwen3.8-27B scores",
+    "dek": "In a post on its own site, Hugging Face says reinforcement learning inside an agent harness raised a Terminal-Bench 2.1 score from 39% to 55% while using fewer tokens. It shares a reusable recipe.",
+    "metaDescription": "Hugging Face says trained LoRA adapters raised Qwen3.8-27B's Terminal-Bench 2.1 score and cut token use. The claims are its own and not independently…",
+    "keywords": [
+      "hugging face",
+      "lora adapters",
+      "qwen3.8-27b",
+      "terminal-bench 2.1",
+      "agent harness"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face published a post introducing what it calls harness adapters. It says pairing reinforcement learning (RL) on a custom set of tasks with a chosen agent harness produces models that are more accurate and use fewer resources for that harness and those tasks. [s1]",
+          "The company says it trained one LoRA adapter for Qwen3.8-27B for each of three harnesses: pi, Hermes Agent and OpenCode. Training took place inside each harness itself. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Only Hugging Face, the publisher of the post, is the source here, so every figure is its own claim. It says the base model scores 39% on Terminal-Bench 2.1 with the pi harness, using 2.9K tokens per task on average. With the weights frozen and a custom RL-trained LoRA adapter added, it says the score rises to 55% pass@1 and token use falls to 1.5K. [s1]",
+          "It lists an open question in the post: what the model really learned to do. No outside check of the results appears in the excerpt. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The excerpt does not discuss effects on jobs or users. What changes is that Hugging Face says it has released a reusable recipe and artifacts, including adapters, GGUFs and RL tasks, so others can try the approach on their own model and harness combinations. [s1]",
+          "If the claims hold, the post suggests fewer tokens per task, which it presents as an efficiency gain. That has not been verified independently. [s1]"
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Agents are software that plans, uses tools and acts on its own. [b1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What does Hugging Face say changed in the test results?",
+        "a": "Hugging Face says the Terminal-Bench 2.1 score with the pi harness rose from 39% to 55% pass@1, and token use fell from 2.9K to 1.5K per task on average."
+      },
+      {
+        "q": "Have the results been checked by anyone outside Hugging Face?",
+        "a": "No. Hugging Face is the only source in the article, and no outside check of the results appears in the excerpt."
+      },
+      {
+        "q": "Can other developers try the approach?",
+        "a": "Yes. Hugging Face says it released a reusable recipe and artifacts, including adapters, GGUFs and RL tasks, for others to test on their own model and harness combinations."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Agents"
+      },
+      {
+        "path": "/labs/start-here",
+        "label": "Start here: what AI is"
+      },
+      {
+        "path": "/labs/build",
+        "label": "Build with AI APIs"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Hugging Face dit que de petits modules entraînés améliorent Qwen3.8-27B et réduisent l'usage de jetons",
+    "news": "Hugging Face dit avoir entraîné de petits adaptateurs LoRA pour Qwen3.8-27B, un par harnais d'agent, et affirme que chacun surpasse le modèle de base en précision et en efficacité.",
+    "thirty": [
+      "Hugging Face décrit des « harness adapters » pour le modèle Qwen3.8-27B.",
+      "Elle affirme qu'ils ont fait passer un score terminal-Bench 2.1 de 39 % à 55 %.",
+      "L'usage moyen de jetons est passé de 2,9 K à 1,5 K par tâche, selon l'entreprise."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face affirme que le modèle de base Qwen3.8-27B obtient 39 % sur Terminal-Bench 2.1 avec le harnais pi, en utilisant en moyenne 2,9 K jetons par tâche.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face affirme qu'un modèle figé, doté d'un adaptateur LoRA personnalisé entraîné par RL, atteint 55 % en pass@1 avec 1,5 K jetons en moyenne.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "On ignore si des équipes indépendantes peuvent reproduire les scores annoncés.",
+      "On ignore comment les adaptateurs se comportent sur des tâches hors de la distribution d'entraînement.",
+      "On ignore ce que le modèle a réellement appris à faire, une question que le billet dit ouverte."
+    ],
+    "matters": "Les sources décrivent seulement une méthode technique. Hugging Face dit partager une recette et des artéfacts réutilisables pour que d'autres adaptent un modèle à leur harnais et à leurs tâches.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Hugging Face dit que les modèles d'IA sont conçus pour être bons dans bien des domaines, sans être réglés pour les outils et les tâches précis que vous utilisez. Selon elle, un petit module complémentaire, appelé adaptateur LoRA, peut ajuster un modèle à une configuration donnée. [s1]",
+        "L'entreprise rapporte que, sur un test de programmation, le modèle est passé de 39 % à 55 % en utilisant moins de jetons, soit les petits morceaux de texte qu'un modèle lit et écrit. Ces résultats sont ceux de Hugging Face. [s1]"
+      ],
+      "standard": [
+        "Hugging Face a publié un billet présentant ce qu'elle appelle des « harness adapters ». Selon elle, combiner l'apprentissage par renforcement (RL) sur un ensemble de tâches personnalisé et un harnais d'agent choisi donne des modèles plus précis et plus économes pour ce harnais et ces tâches. [s1]",
+        "L'entreprise dit avoir entraîné un adaptateur LoRA pour Qwen3.8-27B pour chacun de trois harnais: pi, Hermes Agent et OpenCode. L'entraînement s'est déroulé dans chaque harnais. [s1]",
+        "Hugging Face, l'auteure du billet, est la seule source ici: tous les chiffres sont donc ses propres affirmations. Elle dit que le modèle de base obtient 39 % sur Terminal-Bench 2.1 avec le harnais pi, avec en moyenne 2,9 K jetons par tâche. Avec les poids figés et un adaptateur LoRA personnalisé entraîné par RL, le score monte à 55 % en pass@1 et l'usage de jetons descend à 1,5 K. [s1]",
+        "Le billet énonce une question ouverte: ce que le modèle a réellement appris à faire. L'extrait ne mentionne aucune vérification externe des résultats. [s1]",
+        "L'extrait ne traite pas des effets sur l'emploi ou sur les utilisateurs. Hugging Face dit toutefois avoir publié une recette et des artéfacts réutilisables, dont des adaptateurs, des GGUF et des tâches RL, pour que d'autres essaient l'approche avec leurs propres combinaisons de modèle et de harnais. [s1]",
+        "Si ces affirmations se confirment, le billet laisse entrevoir moins de jetons par tâche, ce qu'il présente comme un gain d'efficacité. Rien n'a été vérifié de façon indépendante. [s1]",
+        "Les agents sont des logiciels qui planifient, utilisent des outils et agissent seuls. [b1]"
+      ],
+      "expert": [
+        "Hugging Face rapporte pour Qwen3.8-27B sur Terminal-Bench 2.1 avec le harnais pi 39 % et 2,9 K jetons par tâche en moyenne, contre 55 % en pass@1 et 1,5 K avec un adaptateur LoRA entraîné par RL sur poids figés. [s1]",
+        "L'entraînement a utilisé AsyncGRPOTrainer de TRL, OpenEnv et harbor, avec un adaptateur par harnais (pi, Hermes Agent, OpenCode) et un super-adaptateur fusionné. L'entreprise dit que des travaux antérieurs portaient sur l'analyse de données et la création de code. [s1]"
+      ]
+    },
+    "seoTitle": "Des adaptateurs LoRA de Hugging Face améliorent Qwen",
+    "dek": "Dans un billet publié sur son site, Hugging Face affirme que l'apprentissage par renforcement dans un harnais d'agent a fait passer un score Terminal-Bench 2.1 de 39 % à 55 %, avec moins de jetons. Elle partage une recette réutilisable.",
+    "metaDescription": "Hugging Face affirme que des adaptateurs LoRA entraînés améliorent le score de Qwen3.8-27B sur Terminal-Bench 2.1. Ces chiffres sont ceux de l'entreprise…",
+    "keywords": [
+      "hugging face",
+      "adaptateurs lora",
+      "qwen3.8-27b",
+      "terminal-bench 2.1",
+      "harnais d'agent"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face a publié un billet présentant ce qu'elle appelle des « harness adapters ». Selon elle, combiner l'apprentissage par renforcement (RL) sur un ensemble de tâches personnalisé et un harnais d'agent choisi donne des modèles plus précis et plus économes pour ce harnais et ces tâches. [s1]",
+          "L'entreprise dit avoir entraîné un adaptateur LoRA pour Qwen3.8-27B pour chacun de trois harnais: pi, Hermes Agent et OpenCode. L'entraînement s'est déroulé dans chaque harnais. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face, l'auteure du billet, est la seule source ici: tous les chiffres sont donc ses propres affirmations. Elle dit que le modèle de base obtient 39 % sur Terminal-Bench 2.1 avec le harnais pi, avec en moyenne 2,9 K jetons par tâche. Avec les poids figés et un adaptateur LoRA personnalisé entraîné par RL, le score monte à 55 % en pass@1 et l'usage de jetons descend à 1,5 K. [s1]",
+          "Le billet énonce une question ouverte: ce que le modèle a réellement appris à faire. L'extrait ne mentionne aucune vérification externe des résultats. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "L'extrait ne traite pas des effets sur l'emploi ou sur les utilisateurs. Hugging Face dit toutefois avoir publié une recette et des artéfacts réutilisables, dont des adaptateurs, des GGUF et des tâches RL, pour que d'autres essaient l'approche avec leurs propres combinaisons de modèle et de harnais. [s1]",
+          "Si ces affirmations se confirment, le billet laisse entrevoir moins de jetons par tâche, ce qu'il présente comme un gain d'efficacité. Rien n'a été vérifié de façon indépendante. [s1]"
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Les agents sont des logiciels qui planifient, utilisent des outils et agissent seuls. [b1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Que dit Hugging Face des résultats du test?",
+        "a": "Hugging Face affirme que le score Terminal-Bench 2.1 avec le harnais pi est passé de 39 % à 55 % en pass@1, et que l'usage de jetons est descendu de 2,9 K à 1,5 K par tâche en moyenne."
+      },
+      {
+        "q": "Des personnes extérieures à Hugging Face ont-elles vérifié ces résultats?",
+        "a": "Non. Hugging Face est la seule source de l'article, et l'extrait ne mentionne aucune vérification externe des résultats."
+      },
+      {
+        "q": "D'autres développeurs peuvent-ils tester cette approche?",
+        "a": "Oui. Hugging Face dit avoir publié une recette et des artéfacts réutilisables, dont des adaptateurs, des GGUF et des tâches RL, à tester avec leurs propres combinaisons de modèle et de harnais."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Les agents"
+      },
+      {
+        "path": "/labs/start-here",
+        "label": "Commencer ici : ce qu'est l'IA"
+      },
+      {
+        "path": "/labs/build",
+        "label": "Créer avec les API d'IA"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 241,
+    "fr": 250
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-20T17:19:54.725Z",
+      "verdict": "done",
+      "notes": [
+        "312 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-20T17:20:07.935Z",
+      "verdict": "fixed",
+      "notes": [
+        "Too close to Hugging Face's wording (\"agent harness yields more accurate and efficient models for…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to Hugging Face's wording (\"on the hub in jobs using trl s asyncgrpotrainer…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+        "trimmed 5 sentence(s) that still failed:",
+        "cut: \"Hugging Face says each of the three harness adapters beats the base model under its own harness on both benchmarks, for \"",
+        "cut: \"Hugging Face says the three LoRAs were merged into one super adapter that runs unchanged under pi, Hermes Agent and Open\"",
+        "cut: \"It also says each adapter beats the base model under its own harness on both benchmarks, and that the three were merged \"",
+        "cut: \"The company says datasets, training and agent rollouts run on the Hub in Jobs, using TRL's AsyncGRPOTrainer, OpenEnv and\"",
+        "cut: \"Hugging Face says most of the gain comes from the model reasoning less, calling fewer tools and performing better on the\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-20T17:20:12.752Z",
+      "verdict": "pass",
+      "notes": [
+        "The background line cites [b1], which is not among the supplied sources. Either add that source or drop the citation, since the definition of an agent is general knowledge the reader does not need sourced.",
+        "Explain 'pass@1' and 'LoRA' on first use. The plain-language section explains tokens but not these two terms.",
+        "The headline and dek are properly attributed to Hugging Face, but the first paragraph of the news section could state the 39% to 55% figures with 'says' in the same sentence, so the claims are not separated from the sentence that frames them.",
+        "Keep the 'unknown' points (independent reproduction, out-of-distribution performance, what the model learned) visible in the final piece, as the draft already does, so the company's claims are not read as verified."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-20T17:20:41.479Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: The headline must be 40 to 110 characters (it is 114).",
+        "250 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-20T17:20:49.500Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face LoRA adapters lift Qwen3.8-27B scores (50)",
+        "fr: Des adaptateurs LoRA de Hugging Face améliorent Qwen (52)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-20T17:20:51.396Z",
+      "verdict": "done",
+      "notes": [
+        "format: numbers",
+        "cover: signal/bars \"55%\""
+      ]
+    }
+  ]
+}

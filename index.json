@@ -1,6 +1,52 @@
 {
-  "updatedAt": "2026-11-18T19:26:29.078Z",
+  "updatedAt": "2026-11-20T17:20:51.398Z",
   "items": [
+    {
+      "id": "l004dj",
+      "slug": {
+        "en": "hugging-face-adapters-qwen-accuracy",
+        "fr": "hugging-face-adaptateurs-qwen-precision"
+      },
+      "createdAt": "2026-11-20T17:20:51.396Z",
+      "updatedAt": "2026-11-20T17:20:51.396Z",
+      "topic": "research",
+      "format": "numbers",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-20T00:00:00.000Z"
+      ],
+      "storyIds": [
+        "l004dj"
+      ],
+      "cover": {
+        "color": "signal",
+        "motif": "bars",
+        "en": {
+          "kicker": "Model tuning",
+          "big": "55%"
+        },
+        "fr": {
+          "kicker": "Réglage de modèles",
+          "big": "55%",
+          "small": "Selon l'entreprise, score passé de 39%"
+        }
+      },
+      "words": 241,
+      "en": {
+        "headline": "Hugging Face says small trained add-ons lift Qwen3.8-27B accuracy and cut token use",
+        "dek": "In a post on its own site, Hugging Face says reinforcement learning inside an agent harness raised a Terminal-Bench 2.1 score from 39% to 55% while using fewer tokens. It shares a reusable recipe.",
+        "news": "Hugging Face says it trained small LoRA adapters for Qwen3.8-27B, one per agent harness, and that each beat the base model on accuracy and efficiency.",
+        "matters": "The sources only describe a technical method. Hugging Face says it shares a reusable recipe and artifacts so others can adapt a model to their own harness and tasks."
+      },
+      "fr": {
+        "headline": "Hugging Face dit que de petits modules entraînés améliorent Qwen3.8-27B et réduisent l'usage de jetons",
+        "dek": "Dans un billet publié sur son site, Hugging Face affirme que l'apprentissage par renforcement dans un harnais d'agent a fait passer un score Terminal-Bench 2.1 de 39 % à 55 %, avec moins de jetons. Elle partage une recette réutilisable.",
+        "news": "Hugging Face dit avoir entraîné de petits adaptateurs LoRA pour Qwen3.8-27B, un par harnais d'agent, et affirme que chacun surpasse le modèle de base en précision et en efficacité.",
+        "matters": "Les sources décrivent seulement une méthode technique. Hugging Face dit partager une recette et des artéfacts réutilisables pour que d'autres adaptent un modèle à leur harnais et à leurs tâches."
+      }
+    },
     {
       "id": "1vp01ke",
       "slug": {
