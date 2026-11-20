@@ -1,5 +1,51 @@
 [
   {
+    "id": "w8u0v6",
+    "at": "2026-11-20T23:23:23.938Z",
+    "stage": "standards",
+    "headline": "Welcome Inkling 2 Mini, Cutting-edge Performance for your Local Setup",
+    "reasons": [
+      "The headline and the plain-language summary state as fact that Thinking Machines Lab released Inkling 2 Mini. The only source is Hugging Face's own post, and the article's unknowns list says the company's own account of the release is not in the sources."
+    ]
+  },
+  {
+    "id": "1vi5n2h",
+    "at": "2026-11-20T23:22:42.154Z",
+    "stage": "copy",
+    "headline": "Depth Pro 2: Sharp and Temporally Consistent Metric Monocular Depth",
+    "reasons": [
+      "Too close to Apple Machine Learning Research's wording (\"peiyun hu marko mihajlovic lyndon duong lahav lipson wei…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Apple Machine Learning Research's wording (\"peiyun hu marko mihajlovic lyndon duong lahav lipson wei…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1ydm0c",
+    "at": "2026-11-20T23:22:19.671Z",
+    "stage": "copy",
+    "headline": "Hebbia sees improvements in financial research with GPT-6 Astra",
+    "reasons": [
+      "Not in the sources (names or numbers): ChatGPT, denial not in the sources: \"The results are Hebbia's own, not independently checked.\", denial not in the sources: \"The results come from the vendor's partner and have not been checked by others.\".",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to OpenAI's wording (\"finding the sources a question requires and building a…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to OpenAI's wording (\"turns the analysis into native powerpoint slides that follow…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "17xg4cy",
+    "at": "2026-11-20T23:21:47.034Z",
+    "stage": "copy",
+    "headline": "Ministers Miller and Solomon announce members of the Advisory Council on Artificial Intelligence and Culture",
+    "reasons": [
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to Government of Canada's wording (\"ai is changing how canadians create and experience culture…\") in \"article.matters\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Government of Canada's wording (\"national summit on artificial intelligence and culture held in…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1jchmfg",
     "at": "2026-11-20T17:19:42.540Z",
     "stage": "copy",
