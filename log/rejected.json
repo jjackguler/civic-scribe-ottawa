@@ -1,5 +1,23 @@
 [
   {
+    "id": "uxzyz6",
+    "at": "2026-11-20T00:58:21.601Z",
+    "stage": "standards",
+    "headline": "Les ministres Miller et Solomon annoncent la composition du Conseil consultatif sur l’intelligence artificielle et la culture",
+    "reasons": [
+      "The background paragraph cites [b1] for a claim that free AI training is committed to everyone in Canada. No source b1 was supplied, and only s1 is in the sources, so this claim cannot be verified and must be treated as unsupported."
+    ]
+  },
+  {
+    "id": "vrt6pi",
+    "at": "2026-11-20T00:57:54.989Z",
+    "stage": "standards",
+    "headline": "Ministers Miller and Solomon announce members of the Advisory Council on Artificial Intelligence and Culture",
+    "reasons": [
+      "The dek says the council \"held its first meeting on November 19, 2026\", but the source gives only the announcement date (GATINEAU, November 19, 2026) and says the ministers \"convened the council for its inaugural meeting\" without dating that meeting. The date is stated as fact without support."
+    ]
+  },
+  {
     "id": "1nm1ro",
     "at": "2026-11-19T18:42:59.386Z",
     "stage": "reporter",
