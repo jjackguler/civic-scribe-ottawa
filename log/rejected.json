@@ -1,5 +1,30 @@
 [
   {
+    "id": "wwrbxy",
+    "at": "2026-11-20T08:32:19.126Z",
+    "stage": "copy",
+    "headline": "Float Commits $5 Million to Québec Expansion",
+    "reasons": [
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Too close to fintech.ca's wording (\"open a montreal office in 2027 its first outside…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to betakit.com's wording (\"plans to hire a general manager for the region…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to Archynewsy's wording (\"rob khazzam chief executive and co founder of float…\"): say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to fintech.ca's wording (\"a year of its pro plan at no cost…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to betakit.com's wording (\"to hire a general manager for the region and…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to Archynewsy's wording (\"rob khazzam chief executive and co founder of float…\"): say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "nwa9te",
+    "at": "2026-11-20T08:31:42.811Z",
+    "stage": "standards",
+    "headline": "What Canadian startups risk when they rely on a single AI provider",
+    "reasons": [
+      "The background section states that Canada's privacy law already applies to personal information fed into AI tools, citing [b2]. No source b2 is supplied, so this factual claim has no evidence behind it, which breaks the charter's requirement that facts come only from the supplied sources."
+    ]
+  },
+  {
     "id": "uxzyz6",
     "at": "2026-11-20T00:58:21.601Z",
     "stage": "standards",
