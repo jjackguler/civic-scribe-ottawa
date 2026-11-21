@@ -10,6 +10,7 @@ import { NextWord } from "@/components/young/NextWord";
 import { PrivacyCheck } from "@/components/young/PrivacyCheck";
 import { ChatbotRules } from "@/components/young/ChatbotRules";
 import { Careers } from "@/components/young/Careers";
+import { GameEnd } from "@/components/young/GameEnd";
 import { SITE } from "@/lib/site";
 import { seoHead, absUrl, publisherRef } from "@/lib/seo";
 import { GROUP, activityById, type ActivityId } from "@/lib/young-lab";
@@ -69,6 +70,7 @@ function ActivityPage() {
       <div className="container-mw py-8 sm:py-10">
         <Game key={a.id} />
         <BigIdea a={a} />
+        <GameEnd a={a} />
         <div className="mt-6"><BackToGroup group={a.group} /></div>
       </div>
     </YoungShell>

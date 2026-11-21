@@ -328,3 +328,10 @@ Spotify or Apple Podcasts yet; the owner does that.
 3. One Sir Jack case per day from the newsroom's best story. Post it on every platform the
    same day.
 4. Find and filter the automated `/news` traffic so the visitor numbers mean something.
+
+## Young Lab game end (21 Nov 2026)
+- Every game page now ends with `src/components/young/GameEnd.tsx` under "The big idea": "Play next" (two games,
+  unstamped first, same age group first, read only from this browser's stamps) and a "For teachers and parents"
+  newsletter box. The box links to our `/subscribe` redirect with `utm_source=aibroadsheet&utm_medium=younglab&utm_campaign=<game id>`,
+  so beehiiv's acquisition source shows which game brought each sign-up. Marked "leaves AI Broadsheet" like every outside link.
+- Newsletter issue #1 is NOT to be sent yet: it waits for the owner's sponsor decision.
