@@ -1,5 +1,15 @@
 [
   {
+    "id": "qw99rg",
+    "at": "2026-11-21T20:06:50.821Z",
+    "stage": "translator",
+    "headline": "Allooloo Tops 100M Capital Markets AI Agent Traffic a Month",
+    "reasons": [
+      "attempt 1: missing fields: matters (reply keys: headline,dek,news,thirty,confirmed,claimed,unknown,matters,article,plain,expert,timeline)",
+      "attempt 2: no plain version"
+    ]
+  },
+  {
     "id": "x6d65w",
     "at": "2026-11-21T04:17:53.497Z",
     "stage": "reporter",
