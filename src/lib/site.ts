@@ -89,6 +89,12 @@ export const SITE = {
      * secret is missing).
      */
     url: "https://aibroadsheet.beehiiv.com",
+    /**
+     * beehiiv Subscribe Form shown on /newsletter: email, optional "School" (custom field,
+     * so we can write to schools) and beehiiv's consent checkbox. Edit it in beehiiv →
+     * Audience → Subscribe forms. Empty: /newsletter shows the plain button to beehiiv.
+     */
+    embedFormId: "8ecd3002-f5e0-402e-bc97-acc6c330d971",
   },
   /**
    * Google Analytics 4 measurement ID (account aibroadsheet@gmail.com). Opt-in only:
