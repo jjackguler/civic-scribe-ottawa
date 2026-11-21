@@ -18,6 +18,7 @@ import type { Locale } from "@/lib/i18n";
 
 // Certified Google CMP, with ad requests permanently paused during review.
 const GoogleConsent = lazy(() => import("@/components/GoogleConsent"));
+const StatsConsent = lazy(() => import("@/components/StatsConsent"));
 
 const useFr = () => useRouterState({ select: st => isFrPath(st.location.publicHref ?? st.location.href) });
 
@@ -133,6 +134,7 @@ function RootComponent() {
         <Outlet />
         <MobileRuntime />
         <Suspense fallback={null}><GoogleConsent /></Suspense>
+        <Suspense fallback={null}><StatsConsent /></Suspense>
       </LocaleProvider>
     </QueryClientProvider>
   );

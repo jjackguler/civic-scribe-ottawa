@@ -5,6 +5,13 @@ import { useLocale } from "@/lib/locale-context";
 import type { Bi } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { seoHead } from "@/lib/seo";
+import { StatsControls } from "@/components/StatsConsent";
+
+/** Shown under "Visitor statistics" while a GA measurement ID is set (src/lib/analytics.ts). */
+const GA_NOTE: Bi = {
+  en: "Only if you say yes, we also use Google Analytics to see which pages and games are read, for how long, and where visitors come from. It sets first-party cookies (_ga) and sends Google your visit, a shortened IP address used for an approximate location, and your device type. Google signals and ad personalisation are switched off, and the data is not used for advertising. Young Lab, our children's pages, is never measured. Until you agree nothing loads from Google, and a browser sending Global Privacy Control is never asked. You can change your mind here at any time; saying no removes the cookies.",
+  fr: "Seulement si vous acceptez, nous utilisons aussi Google Analytics pour savoir quelles pages et quels jeux sont consultés, pendant combien de temps, et d'où viennent les visiteurs. L'outil dépose des témoins internes (_ga) et transmet à Google votre visite, une adresse IP raccourcie servant à une localisation approximative, et le type d'appareil. Les signaux Google et la personnalisation publicitaire sont désactivés, et les données ne servent pas à la publicité. Young Lab, nos pages pour enfants, n'est jamais mesuré. Tant que vous n'acceptez pas, rien ne se charge depuis Google, et un navigateur qui envoie un signal Global Privacy Control n'est jamais sollicité. Vous pouvez changer d'avis ici en tout temps; refuser supprime les témoins.",
+};
 
 export const Route = createFileRoute("/privacy")({
   head: ({ match }) =>
@@ -28,6 +35,7 @@ function Privacy() {
       p: { en: "The Brief uses local browser storage for saved stories, preferences and local interactions, and a service-worker cache for offline use. These records stay on this device; clearing site data removes them. Privacy preferences may also be stored locally. Language is part of the page address (/fr for French).", fr: "The Brief utilise le stockage local du navigateur pour les articles enregistrés, les préférences et les interactions locales, ainsi qu'un cache de service worker pour l'accès hors ligne. Ces données restent sur cet appareil; effacer les données du site les supprime. Les choix de confidentialité peuvent aussi être conservés localement. La langue fait partie de l'adresse (/fr pour le français)." },
     },
     {
+      id: "statistics",
       h: { en: "Visitor statistics", fr: "Statistiques de visite" },
       p: SITE.cloudflareAnalyticsToken
         ? { en: "We use Cloudflare Web Analytics to count visits in aggregate (pages, countries, devices, referring sites). It uses no cookies, does not fingerprint you and does not track you across sites. We use the totals to see what readers find useful and to show advertisers real numbers.", fr: "Nous utilisons Cloudflare Web Analytics pour compter les visites de façon globale (pages, pays, appareils, sites d'origine). L'outil n'utilise aucun témoin, ne crée pas d'empreinte numérique et ne vous suit pas d'un site à l'autre. Nous utilisons ces totaux pour savoir ce qui est utile aux lecteurs et montrer de vrais chiffres aux annonceurs." }
@@ -78,6 +86,12 @@ function Privacy() {
           <section key={i.h.en} id={i.id} className="mb-8 scroll-mt-28">
             <h2 className="masthead-serif text-[1.5rem] leading-tight mb-2">{pick(i.h)}</h2>
             <p className="font-serif text-[1.12rem] leading-relaxed">{pick(i.p)}</p>
+            {i.id === "statistics" && SITE.gaMeasurementId && (
+              <>
+                <p className="font-serif text-[1.12rem] leading-relaxed mt-3">{pick(GA_NOTE)}</p>
+                <StatsControls fr={locale === "fr"} />
+              </>
+            )}
           </section>
         ))}
       </div>
