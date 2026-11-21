@@ -1,6 +1,66 @@
 {
- "updatedAt": "2026-11-01T20:30:00Z",
+ "updatedAt": "2026-11-21T06:00:00Z",
  "items": [
+  {
+   "id": "202611211200-canada-ai-culture-council-en",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-21T06:00:00Z",
+   "title": "Ottawa gives artists a seat at the AI table",
+   "summary": "Canada's new Advisory Council on AI and Culture has 14 rotating seats for music, games, media, research, Indigenous governance and civil society. It can only advise, so the real test is whether Ottawa listens.",
+   "durationSec": 69,
+   "sources": [
+    {
+     "name": "BetaKit · Nov 20, 2026",
+     "url": "https://betakit.com/ottawa-establishes-ai-advisory-council-for-culture/"
+    },
+    {
+     "name": "Government of Canada (Canadian Heritage) · Nov 20, 2026",
+     "url": "https://www.canada.ca/en/canadian-heritage/news/2026/11/ministers-miller-and-solomon-announce-members-of-the-advisory-council-on-artificial-intelligence-and-culture.html"
+    }
+   ],
+   "transcript": "Extra! Extra! Read all about it! Ottawa gives artists a seat at the AI table! Fourteen voices. One new council. Canada has created an Advisory Council on Artificial Intelligence and Culture. AI Minister Evan Solomon and Culture Minister Marc Miller announced it on Thursday. Its fourteen members come from music, video games, media, research, Indigenous governance and civil society. The seats will rotate. Solomon put it this way: the future of Canadian culture cannot be shaped by technology alone. The idea came out of a national summit on AI and culture, held in Banff last March. Why now? Many artists fear AI could take their work, and some have gone to court over copyright. Yet in fields like graphic design and marketing, people already use AI more than in most other jobs. The catch: this council can only give advice. Whether Ottawa listens is the real test. Read all about it, at AI Broadsheet!",
+   "voice": "Synthetic voices: ElevenLabs stock voices (narrator Liz, newsboy Aaron)",
+   "aiImages": false,
+   "credits": "Every scene is drawn in code for AI Broadsheet; no photographs or AI images. Narration and the newsboy are synthetic ElevenLabs stock voices. Music and sound effects generated with ElevenLabs.",
+   "readMore": {
+    "url": "/canada",
+    "en": "More from the Canada desk",
+    "fr": "Plus de nouvelles du Canada"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/23798fa068769e0cb73c82f75c50f6a7ac60dc5e/originals/files/202611211200-canada-ai-culture-council-en.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@23798fa068769e0cb73c82f75c50f6a7ac60dc5e/originals/files/202611211200-canada-ai-culture-council-en.jpg"
+  },
+  {
+   "id": "202611211200-canada-ai-culture-council-fr",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-21T05:59:00Z",
+   "title": "Ottawa donne aux artistes une place à la table de l'IA",
+   "summary": "Le nouveau Conseil consultatif sur l'IA et la culture compte 14 sièges en rotation : musique, jeu vidéo, médias, recherche, gouvernance autochtone et société civile. Il ne peut que conseiller ; le vrai test, c'est de savoir si Ottawa l'écoutera. Version française.",
+   "durationSec": 69,
+   "sources": [
+    {
+     "name": "BetaKit · Nov 20, 2026",
+     "url": "https://betakit.com/ottawa-establishes-ai-advisory-council-for-culture/"
+    },
+    {
+     "name": "Government of Canada (Canadian Heritage) · Nov 20, 2026",
+     "url": "https://www.canada.ca/en/canadian-heritage/news/2026/11/ministers-miller-and-solomon-announce-members-of-the-advisory-council-on-artificial-intelligence-and-culture.html"
+    }
+   ],
+   "transcript": "Extra ! Extra ! Demandez le journal ! Ottawa donne aux artistes une place à la table de l'IA ! Quatorze voix. Un nouveau conseil. Le Canada a créé un Conseil consultatif sur l'intelligence artificielle et la culture. Le ministre de l'IA, Evan Solomon, et le ministre de la Culture, Marc Miller, l'ont annoncé jeudi. Ses quatorze membres viennent de la musique, du jeu vidéo, des médias, de la recherche, de la gouvernance autochtone et de la société civile. Les sièges seront attribués en rotation. Selon Evan Solomon, l'avenir de la culture canadienne ne peut pas être façonné par la technologie seule. L'idée est née d'un sommet national sur l'IA et la culture, tenu à Banff en mars dernier. Pourquoi maintenant ? Bien des artistes craignent que l'IA s'empare de leur travail, et certains se sont tournés vers les tribunaux pour défendre leurs droits d'auteur. Pourtant, en design graphique et en marketing, on utilise déjà l'IA davantage que dans la plupart des autres métiers. Le hic : ce conseil ne peut que donner des avis. Le vrai test, c'est de savoir si Ottawa va l'écouter. Lisez tout ça sur AI Broadsheet !",
+   "voice": "Voix synthétiques : voix ElevenLabs (narratrice Jane, crieur Corentin)",
+   "aiImages": false,
+   "credits": "Every scene is drawn in code for AI Broadsheet; no photographs or AI images. Narration and the newsboy are synthetic ElevenLabs stock voices. Music and sound effects generated with ElevenLabs.",
+   "readMore": {
+    "url": "/canada",
+    "en": "More from the Canada desk",
+    "fr": "Plus de nouvelles du Canada"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/23798fa068769e0cb73c82f75c50f6a7ac60dc5e/originals/files/202611211200-canada-ai-culture-council-fr.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@23798fa068769e0cb73c82f75c50f6a7ac60dc5e/originals/files/202611211200-canada-ai-culture-council-fr.jpg"
+  },
   {
    "id": "202611011600-sir-jack-special-the-wrong-voice",
    "kind": "explainer",
