@@ -5,14 +5,15 @@
  *    yet come first, same age group first, in lab order after this one. Read
  *    only from this browser's own stamps (young-progress.ts); nothing is sent.
  * 2. "For teachers and parents": the weekly newsletter, signed up on beehiiv
- *    through our own /subscribe link. UTM tags say which game the sign-up came
+ *    through /newsletter (beehiiv form, optional school name). UTM tags say which game the sign-up came
  *    from (utm_source=aibroadsheet, utm_medium=younglab, utm_campaign=<game id>),
  *    so beehiiv's acquisition source shows which games bring teachers.
  *    Addressed to grown-ups and marked as leaving the site, like every outside link.
  */
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, GraduationCap } from "lucide-react";
-import { ACTIVITY_ICON, LeavesLink, toneClass, useT } from "@/components/YoungLab";
+import { ACTIVITY_ICON, toneClass, useT } from "@/components/YoungLab";
+import { useLocale } from "@/lib/locale-context";
 import { ACTIVITIES, GROUP, type Activity } from "@/lib/young-lab";
 import { useYoungProgress, type YoungState } from "@/lib/young-progress";
 import { useHydrated } from "@/lib/labs-progress";
@@ -28,17 +29,22 @@ export function pickNext(a: Activity, state: YoungState, count = 2): Activity[] 
     .map((p) => p.x);
 }
 
-/** The newsletter sign-up link for a game, with UTM tags. Goes through our /subscribe redirect. */
-export function teacherSignupUrl(gameId: string): string {
-  const u = new URL("/subscribe", `https://${SITE.domain}`);
-  u.searchParams.set("utm_source", "aibroadsheet");
-  u.searchParams.set("utm_medium", "younglab");
-  u.searchParams.set("utm_campaign", gameId);
-  return u.toString();
+/**
+ * The newsletter sign-up link for a game, with UTM tags. Goes to /newsletter, whose
+ * beehiiv form asks for an optional school name and passes the UTM tags on.
+ */
+export function teacherSignupUrl(gameId: string, fr = false): string {
+  const q = new URLSearchParams({
+    utm_source: "aibroadsheet",
+    utm_medium: "younglab",
+    utm_campaign: gameId,
+  });
+  return `${fr ? "/fr" : ""}/newsletter?${q.toString()}`;
 }
 
 export function GameEnd({ a }: { a: Activity }) {
   const { pick, t } = useT();
+  const { locale } = useLocale();
   const hydrated = useHydrated();
   const { state } = useYoungProgress();
   // Before hydration, pretend nothing is stamped so server and client agree.
@@ -99,17 +105,18 @@ export function GameEnd({ a }: { a: Activity }) {
           )}
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <LeavesLink href={teacherSignupUrl(a.id)} className="yl-tone-sun">
+          <a href={teacherSignupUrl(a.id, locale === "fr")} className="yl-btn yl-tone-sun">
             {t("Subscribe free", "M'abonner gratuitement")}
-          </LeavesLink>
+            <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+          </a>
           <Link to="/labs/young/classroom" className="yl-btn">
             {t("Classroom mode", "Mode classe")}
           </Link>
         </div>
         <p className="mt-3 text-[0.85rem] text-muted-ink">
           {t(
-            "Grown-ups only: sign-up is on beehiiv, our newsletter service. ",
-            "Réservé aux adultes : l'inscription se fait sur beehiiv, notre service d'infolettre. ",
+            "Grown-ups only: the sign-up form is beehiiv's, our newsletter service. ",
+            "Réservé aux adultes : le formulaire d'inscription est celui de beehiiv, notre service d'infolettre. ",
           )}
           <Link to="/privacy" hash="newsletter" className="underline underline-offset-4">
             {t("Privacy", "Confidentialité")}

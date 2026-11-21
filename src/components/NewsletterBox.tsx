@@ -5,6 +5,7 @@ import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { consentText, senderLine, unsubscribeText, validEmail } from "@/lib/forms";
 import { stripFr } from "@/lib/seo";
+import { BeehiivForm } from "@/components/BeehiivForm";
 
 type Variant = "band" | "card" | "inline" | "page";
 type Status = "idle" | "sending" | "done" | "closed" | "error" | "rate";
@@ -96,6 +97,38 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
 
   // With a hosted provider, the provider's own page takes the address and the consent once.
   // Our own form in front of it made readers type their email twice (owner, 15 Nov 2026).
+  if (provider && variant === "page" && SITE.newsletter.embedFormId) {
+    // /newsletter: beehiiv's own form, with an optional school name so we can write to schools.
+    return (
+      <div>
+        {intro}
+        <div className="mt-5">
+          <BeehiivForm
+            fallback={
+              <a
+                href={new URL("/subscribe", provider).toString()}
+                target="_blank"
+                rel="noopener"
+                className={`h-12 px-6 rounded-[4px] font-bold inline-flex items-center justify-center gap-2 ${tone.btn}`}
+              >
+                {fr ? "M'abonner gratuitement" : "Subscribe free"}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            }
+            note={
+              <p className={`text-[0.8rem] mt-3 leading-snug ${tone.small}`}>
+                {fr
+                  ? "Enseignant? Ajoutez le nom de votre école (facultatif) : nous pourrons vous envoyer les nouveaux jeux et fiches pour la classe. Le formulaire est celui de beehiiv, notre service d'infolettre. "
+                  : "Teacher? Add your school's name (optional) so we can send you new games and classroom sheets. The form is beehiiv's, our newsletter service. "}
+                {unsubscribeText(locale)}{" "}
+                <Link to="/privacy" hash="newsletter" className={tone.link}>{fr ? "Confidentialité" : "Privacy"}</Link>
+              </p>
+            }
+          />
+        </div>
+      </div>
+    );
+  }
   if (provider) {
     return (
       <div className={variant === "band" ? "grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] items-center" : ""}>

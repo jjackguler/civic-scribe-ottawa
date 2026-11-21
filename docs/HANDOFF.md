@@ -347,3 +347,12 @@ Spotify or Apple Podcasts yet; the owner does that.
   and has on/off controls; "off" deletes the _ga cookies.
 - So GA counts only readers who agree. Cloudflare Web Analytics (cookieless, everyone) remains the
   source for total visits. The owner was asked whether to count everyone instead; default is opt-in.
+
+## Newsletter school field (21 Nov 2026)
+- beehiiv Subscribe Form `8ecd3002-f5e0-402e-bc97-acc6c330d971` (Audience → Subscribe forms): email + optional
+  "School" (custom field, TEXT), no title/subtitle. `SITE.newsletter.embedFormId`; shown only on /newsletter
+  by `src/components/BeehiivForm.tsx`, with beehiiv's attribution.js so utm_* tags reach beehiiv. If the
+  script is blocked, the plain "Subscribe free" link to beehiiv shows instead.
+- Young Lab "For teachers and parents" button now goes to /newsletter?utm_source=aibroadsheet&utm_medium=younglab
+  &utm_campaign=<game id> (same tab), so teachers see the school field. Other sign-up buttons are unchanged.
+- To list schools: beehiiv → Subscribers, filter or export by the "School" field.
