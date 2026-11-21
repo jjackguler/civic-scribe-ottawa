@@ -1,0 +1,377 @@
+{
+  "version": 1,
+  "id": "1unccea",
+  "slug": {
+    "en": "openai-combatting-adversarial-distillation",
+    "fr": "openai-distillation-adversariale-defenses"
+  },
+  "createdAt": "2026-11-21T04:18:57.579Z",
+  "updatedAt": "2026-11-21T04:18:57.579Z",
+  "topic": "research",
+  "format": "numbers",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "OpenAI",
+      "title": "Combatting adversarial distillation",
+      "url": "https://openai.com/index/combatting-adversarial-distillation",
+      "publishedAt": "2026-11-20T10:00:00.000Z",
+      "storyId": "1unccea",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [
+    {
+      "key": "b3",
+      "path": "/learn/use-ai-safely",
+      "title": {
+        "en": "Use AI safely: accuracy, privacy and scams",
+        "fr": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    }
+  ],
+  "cover": {
+    "color": "signal",
+    "motif": "bars",
+    "en": {
+      "kicker": "Model security",
+      "big": "0.2%",
+      "small": "Attack success fell from 54.0%, OpenAI says"
+    },
+    "fr": {
+      "kicker": "Sécurité des modèles",
+      "big": "0,2 %",
+      "small": "Réussite passée de 54,0 %, selon OpenAI"
+    }
+  },
+  "en": {
+    "headline": "OpenAI outlines how it detects and disrupts adversarial distillation of its models",
+    "news": "OpenAI says it has strengthened safeguards against adversarial distillation, including extraction of protected reasoning, and shares lessons it says can help defenses across the industry.",
+    "thirty": [
+      "OpenAI published a post on adversarial distillation, its own account of the issue.",
+      "It says attackers copy model abilities and skip the original safety protections.",
+      "OpenAI reports attack success fell from 54.0% to 0.2% in internal tests."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "OpenAI says adversarial distillation lets bad actors reproduce frontier model capabilities without appropriate safeguards, for example to help carry out cyberattacks the original model would refuse.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI says its defense is layered. It uses testing against attackers, training of its models, classifiers and protections at the API level, and it also investigates coordinated efforts to pull out model abilities.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI says that in an internal adaptive evaluation, average attack success against protected reasoning fell from 54.0% on GPT‑6 Astra with original safeguards to 0.2% on GPT‑6.2 Astra with updated ones.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether independent testers can reproduce the 0.2% result.",
+      "How often adversarial distillation attempts occur against OpenAI's models.",
+      "Whether other AI developers will adopt the practices OpenAI describes."
+    ],
+    "matters": "OpenAI says unauthorized copying of model abilities can strip out safety protections, which raises risks such as cyberattacks. The sources give no direct effect on everyday users beyond that.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "AI companies build powerful models. Distillation means training one model on the answers of another. OpenAI says some people do this without permission to copy a model's skills while leaving its safety rules behind. [s1]",
+        "OpenAI says it has made this harder to do, especially for the hidden step-by-step thinking a model does before answering. In its own test, attacks that worked 54.0% of the time now work 0.2% of the time. [s1]"
+      ],
+      "standard": [
+        "OpenAI has published a post titled \"Combatting adversarial distillation\" on its own site. It describes how the company detects and disrupts the practice and what it says it has learned for strengthening safeguards across the industry. [s1]",
+        "OpenAI describes adversarial distillation as one party taking a frontier model's outputs without permission, training another model with similar abilities, and releasing it without comparable protections. [s1]",
+        "Only OpenAI, the company announcing its own work, is the source here, so every point below is its claim. [s1]",
+        "OpenAI says its defense mixes several tools: testing against attackers, model training, classifiers and API-level protections. It adds investigations into coordinated attempts to extract model capabilities. It says these safeguards now align more closely with those it uses for biology and cybersecurity. [s1]",
+        "The company puts particular emphasis on protecting the model's chain-of-thought, the intermediate steps it generates while working toward an answer. OpenAI says these traces can hold information the final answer leaves out, which makes them valuable training data for another model. [s1]",
+        "The excerpt does not say whether outside parties have checked these figures. [s1]",
+        "OpenAI frames distillation as a safety issue beyond intellectual property. It says a copied model could help carry out cyberattacks that the original would have refused or that its safeguards would have blocked. [s1]",
+        "The source describes no change to products people use today. It describes the company's own defensive work and its stated aim of helping the wider industry. [s1]",
+        "Our page on using AI safely covers accuracy, privacy and scams. [b3]"
+      ],
+      "expert": [
+        "OpenAI describes a layered defense: adversarial testing, model training, classifiers, API-level protections and investigations of coordinated extraction attempts. [s1]",
+        "The reported metric is average attack success rate in an internal adaptive evaluation with strong automated red-teaming, testing recovery of protected reasoning from an earlier prompt: 54.0% on GPT‑6 Astra with original safeguards versus 0.2% on GPT‑6.2 Astra. GPT‑6.2 Sol is also named as strengthened. [s1]"
+      ]
+    },
+    "seoTitle": "OpenAI's defences against adversarial distillation",
+    "dek": "In a post on its own site, OpenAI describes how it detects and disrupts adversarial distillation and protects model reasoning. These are OpenAI's own claims, and the source does not say outside parties have checked them.",
+    "metaDescription": "OpenAI explains how it detects and disrupts adversarial distillation, including attempts to extract protected chain-of-thought reasoning from its models.",
+    "keywords": [
+      "adversarial distillation",
+      "openai safeguards",
+      "model distillation",
+      "chain-of-thought protection",
+      "ai model security"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI has published a post titled \"Combatting adversarial distillation\" on its own site. It describes how the company detects and disrupts the practice and what it says it has learned for strengthening safeguards across the industry. [s1]",
+          "OpenAI describes adversarial distillation as one party taking a frontier model's outputs without permission, training another model with similar abilities, and releasing it without comparable protections. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Only OpenAI, the company announcing its own work, is the source here, so every point below is its claim. [s1]",
+          "OpenAI says its defense mixes several tools: testing against attackers, model training, classifiers and API-level protections. It adds investigations into coordinated attempts to extract model capabilities. It says these safeguards now align more closely with those it uses for biology and cybersecurity. [s1]",
+          "The company puts particular emphasis on protecting the model's chain-of-thought, the intermediate steps it generates while working toward an answer. OpenAI says these traces can hold information the final answer leaves out, which makes them valuable training data for another model. [s1]",
+          "The excerpt does not say whether outside parties have checked these figures. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "OpenAI frames distillation as a safety issue beyond intellectual property. It says a copied model could help carry out cyberattacks that the original would have refused or that its safeguards would have blocked. [s1]",
+          "The source describes no change to products people use today. It describes the company's own defensive work and its stated aim of helping the wider industry. [s1]"
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Our page on using AI safely covers accuracy, privacy and scams. [b3]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is adversarial distillation?",
+        "a": "OpenAI describes it as one party taking a frontier model's outputs without permission, training another model with similar abilities, and releasing it without comparable protections."
+      },
+      {
+        "q": "Has OpenAI's account been checked by outside parties?",
+        "a": "The source does not say whether outside parties have checked these figures, so every point is OpenAI's own claim."
+      },
+      {
+        "q": "Does this change products people use today?",
+        "a": "The source describes no change to products people use today. It describes the company's own defensive work and its stated aim of helping the wider industry."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "AI safety and responsible use"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Use AI safely: accuracy, privacy and scams"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "OpenAI détaille comment elle détecte et perturbe la distillation adversariale de ses modèles",
+    "news": "OpenAI affirme avoir renforcé ses mesures de protection contre la distillation adversariale, notamment l'extraction du raisonnement protégé, et partage des leçons qui, selon elle, peuvent aider les défenses de toute l'industrie.",
+    "thirty": [
+      "OpenAI a publié un billet sur la distillation adversariale, sa propre version du dossier.",
+      "Elle affirme que des attaquants copient les capacités d'un modèle et contournent ses protections de sécurité d'origine.",
+      "OpenAI indique que le taux de réussite des attaques est passé de 54,0 % à 0,2 % lors de tests internes."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "OpenAI affirme que la distillation adversariale permet à des acteurs malveillants de reproduire les capacités de modèles de pointe sans les protections appropriées, par exemple pour mener des cyberattaques que le modèle d'origine refuserait d'aider.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI affirme que sa défense est en couches. Elle combine des essais contre des attaquants, l'entraînement de ses modèles, des classificateurs et des protections au niveau de l'API, et elle enquête aussi sur les efforts coordonnés pour extraire les capacités ",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "OpenAI affirme que, dans une évaluation adaptative interne, le taux moyen de réussite des attaques contre le raisonnement protégé est passé de 54,0 % pour GPT‑6 Astra avec ses protections d'origine à 0,2 % pour GPT‑6.2 Astra avec ses protections mises à jour.",
+        "by": "OpenAI",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Des testeurs indépendants peuvent-ils reproduire le résultat de 0,2 % ?",
+      "À quelle fréquence des tentatives de distillation adversariale visent-elles les modèles d'OpenAI ?",
+      "D'autres développeurs d'IA adopteront-ils les pratiques décrites par OpenAI ?"
+    ],
+    "matters": "OpenAI affirme que la copie non autorisée des capacités d'un modèle peut éliminer ses protections de sécurité, ce qui accroît des risques comme les cyberattaques. Les sources n'indiquent aucun effet direct sur les utilisateurs ordinaires au-delà de cela.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Les entreprises d'IA construisent des modèles puissants. La distillation consiste à entraîner un modèle à partir des réponses d'un autre. OpenAI affirme que certaines personnes le font sans permission pour copier les compétences d'un modèle tout en laissant de côté ses règles de sécurité. [s1]",
+        "OpenAI dit avoir rendu cela plus difficile, surtout pour la réflexion cachée, étape par étape, qu'un modèle effectue avant de répondre. Selon son propre test, les attaques qui réussissaient 54,0 % du temps ne réussissent plus que 0,2 % du temps. [s1]"
+      ],
+      "standard": [
+        "OpenAI a publié sur son site un billet intitulé « Combatting adversarial distillation ». Elle y décrit comment elle détecte et perturbe cette pratique, et ce qu'elle dit avoir appris pour renforcer les protections dans toute l'industrie. [s1]",
+        "OpenAI décrit la distillation adversariale comme le fait, pour une partie, de prendre sans permission les réponses d'un modèle de pointe, d'entraîner un autre modèle aux capacités semblables, puis de le diffuser sans protections comparables. [s1]",
+        "La seule source ici est OpenAI, qui présente son propre travail. Chacun des points ci-dessous est donc une affirmation de l'entreprise. [s1]",
+        "OpenAI affirme que sa défense réunit plusieurs outils: essais contre des attaquants, entraînement des modèles, classificateurs et protections au niveau de l'API. Elle y ajoute des enquêtes sur les tentatives coordonnées d'extraction des capacités. Elle dit que ces mesures s'apparentent désormais davantage à celles qu'elle applique en biologie et en cybersécurité. [s1]",
+        "L'entreprise insiste particulièrement sur la protection de la chaîne de raisonnement du modèle, soit les étapes intermédiaires qu'il génère en cherchant une réponse. Selon OpenAI, ces traces peuvent contenir des renseignements que la réponse finale omet, ce qui les rend précieuses pour entraîner un autre modèle. [s1]",
+        "L'extrait ne précise pas si des tiers ont vérifié ces chiffres. [s1]",
+        "OpenAI présente la distillation comme un enjeu de sécurité, au-delà de la propriété intellectuelle. Elle affirme qu'un modèle copié pourrait aider à mener des cyberattaques que l'original aurait refusé d'aider ou que ses protections auraient bloquées. [s1]",
+        "La source ne décrit aucun changement aux produits que les gens utilisent aujourd'hui. Elle décrit le travail défensif de l'entreprise et son objectif déclaré d'aider l'ensemble de l'industrie. [s1]",
+        "Notre page sur l'utilisation sécuritaire de l'IA aborde l'exactitude, la vie privée et les fraudes. [b3]"
+      ],
+      "expert": [
+        "OpenAI décrit une défense en couches: essais adversariaux, entraînement des modèles, classificateurs, protections au niveau de l'API et enquêtes sur les tentatives coordonnées d'extraction. [s1]",
+        "La mesure rapportée est le taux moyen de réussite des attaques dans une évaluation adaptative interne, avec un red-teaming automatisé robuste, qui vérifie la récupération d'un raisonnement protégé produit en réponse à une requête antérieure: 54,0 % pour GPT‑6 Astra avec ses protections d'origine contre 0,2 % pour GPT‑6.2 Astra. GPT‑6.2 Sol est aussi cité parmi les modèles renforcés. [s1]"
+      ]
+    },
+    "seoTitle": "Les défenses d'OpenAI contre la distillation adversariale",
+    "dek": "Dans un billet publié sur son site, OpenAI décrit comment elle détecte et perturbe la distillation adversariale et protège le raisonnement de ses modèles. Ce sont ses propres affirmations, et l'extrait ne dit pas que des tiers les ont vérifiées.",
+    "metaDescription": "OpenAI explique comment elle détecte et perturbe la distillation adversariale…",
+    "keywords": [
+      "distillation adversariale",
+      "sécurité des modèles d'ia",
+      "protections openai",
+      "chaîne de raisonnement",
+      "extraction de modèles ia"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "OpenAI a publié sur son site un billet intitulé « Combatting adversarial distillation ». Elle y décrit comment elle détecte et perturbe cette pratique, et ce qu'elle dit avoir appris pour renforcer les protections dans toute l'industrie. [s1]",
+          "OpenAI décrit la distillation adversariale comme le fait, pour une partie, de prendre sans permission les réponses d'un modèle de pointe, d'entraîner un autre modèle aux capacités semblables, puis de le diffuser sans protections comparables. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "La seule source ici est OpenAI, qui présente son propre travail. Chacun des points ci-dessous est donc une affirmation de l'entreprise. [s1]",
+          "OpenAI affirme que sa défense réunit plusieurs outils: essais contre des attaquants, entraînement des modèles, classificateurs et protections au niveau de l'API. Elle y ajoute des enquêtes sur les tentatives coordonnées d'extraction des capacités. Elle dit que ces mesures s'apparentent désormais davantage à celles qu'elle applique en biologie et en cybersécurité. [s1]",
+          "L'entreprise insiste particulièrement sur la protection de la chaîne de raisonnement du modèle, soit les étapes intermédiaires qu'il génère en cherchant une réponse. Selon OpenAI, ces traces peuvent contenir des renseignements que la réponse finale omet, ce qui les rend précieuses pour entraîner un autre modèle. [s1]",
+          "L'extrait ne précise pas si des tiers ont vérifié ces chiffres. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "OpenAI présente la distillation comme un enjeu de sécurité, au-delà de la propriété intellectuelle. Elle affirme qu'un modèle copié pourrait aider à mener des cyberattaques que l'original aurait refusé d'aider ou que ses protections auraient bloquées. [s1]",
+          "La source ne décrit aucun changement aux produits que les gens utilisent aujourd'hui. Elle décrit le travail défensif de l'entreprise et son objectif déclaré d'aider l'ensemble de l'industrie. [s1]"
+        ]
+      },
+      {
+        "kind": "background",
+        "paras": [
+          "Notre page sur l'utilisation sécuritaire de l'IA aborde l'exactitude, la vie privée et les fraudes. [b3]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qu'est-ce que la distillation adversariale?",
+        "a": "OpenAI la décrit comme le fait, pour une partie, de prendre sans permission les réponses d'un modèle de pointe, d'entraîner un autre modèle aux capacités semblables, puis de le diffuser sans protections comparables."
+      },
+      {
+        "q": "Des tiers ont-ils vérifié le récit d'OpenAI?",
+        "a": "L'extrait ne précise pas si des tiers ont vérifié ces chiffres, donc chaque point reste une affirmation de l'entreprise."
+      },
+      {
+        "q": "Cela change-t-il les produits utilisés aujourd'hui?",
+        "a": "La source ne décrit aucun changement aux produits que les gens utilisent aujourd'hui. Elle décrit le travail défensif de l'entreprise et son objectif déclaré d'aider l'ensemble de l'industrie."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/safety",
+        "label": "Sécurité et usage responsable de l'IA"
+      },
+      {
+        "path": "/learn/use-ai-safely",
+        "label": "Utiliser l'IA en toute sécurité : exactitude, vie privée et fraudes"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 246,
+    "fr": 278
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-21T04:18:04.996Z",
+      "verdict": "done",
+      "notes": [
+        "308 words",
+        "news → known → matters → background"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-21T04:18:23.649Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Canada, Readers.",
+        "Paragraph 5 of \"known\" has no [sN] source marker.",
+        "Too close to OpenAI's wording (\"a frontier model s outputs without authorization to train…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to OpenAI's wording (\"in gpt 6 2 astra and gpt 6 2…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+        "trimmed 2 sentence(s) that still failed:",
+        "cut: \"OpenAI says it strengthened defenses in GPT‑6.2 Astra and GPT‑6.2 Sol.\"",
+        "cut: \"In an internal adaptive evaluation using strong automated red-teaming, the average attack success rate fell from 54.0% a\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-21T04:18:28.322Z",
+      "verdict": "pass",
+      "notes": [
+        "The headline and dek present an internal, company-run test as a result. Consider adding \"in internal tests\" to the headline so the 0.2% figure is not read as independently verified.",
+        "The 0.2% and 54.0% figures come only from OpenAI's internal evaluation. The 'plain' section states them as 'In its own test'; keep that attribution in every restatement.",
+        "The 'background' item cites [b3], which is not among the supplied sources. Verify it or remove it before publication.",
+        "The article is built on one self-interested source. Keep the 'only OpenAI is the source' caveat prominent, and say plainly that no independent check is reported.",
+        "The source excerpt cuts off mid-sentence ('Through adversarial distillation, a second'). Check the full OpenAI post before publishing, in case it changes the safety claims.",
+        "The structure is duplicated (the same points appear in 'thirty', 'news', 'known' and 'expert'). Tidy this before publication; it does not affect the verdict."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-21T04:18:45.666Z",
+      "verdict": "pass",
+      "notes": [
+        "278 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-21T04:18:54.727Z",
+      "verdict": "done",
+      "notes": [
+        "en: OpenAI's defences against adversarial distillation (50)",
+        "fr: Les défenses d'OpenAI contre la distillation adversariale (57)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-21T04:18:57.578Z",
+      "verdict": "done",
+      "notes": [
+        "format: numbers",
+        "cover: signal/bars \"0.2%\""
+      ]
+    }
+  ]
+}

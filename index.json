@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-20T17:20:51.398Z",
+  "updatedAt": "2026-11-21T04:18:57.581Z",
   "items": [
+    {
+      "id": "1unccea",
+      "slug": {
+        "en": "openai-combatting-adversarial-distillation",
+        "fr": "openai-distillation-adversariale-defenses"
+      },
+      "createdAt": "2026-11-21T04:18:57.579Z",
+      "updatedAt": "2026-11-21T04:18:57.579Z",
+      "topic": "research",
+      "format": "numbers",
+      "outlets": [
+        "OpenAI"
+      ],
+      "times": [
+        "2026-11-20T10:00:00.000Z"
+      ],
+      "storyIds": [
+        "1unccea"
+      ],
+      "cover": {
+        "color": "signal",
+        "motif": "bars",
+        "en": {
+          "kicker": "Model security",
+          "big": "0.2%",
+          "small": "Attack success fell from 54.0%, OpenAI says"
+        },
+        "fr": {
+          "kicker": "Sécurité des modèles",
+          "big": "0,2 %",
+          "small": "Réussite passée de 54,0 %, selon OpenAI"
+        }
+      },
+      "words": 246,
+      "en": {
+        "headline": "OpenAI outlines how it detects and disrupts adversarial distillation of its models",
+        "dek": "In a post on its own site, OpenAI describes how it detects and disrupts adversarial distillation and protects model reasoning. These are OpenAI's own claims, and the source does not say outside parties have checked them.",
+        "news": "OpenAI says it has strengthened safeguards against adversarial distillation, including extraction of protected reasoning, and shares lessons it says can help defenses across the industry.",
+        "matters": "OpenAI says unauthorized copying of model abilities can strip out safety protections, which raises risks such as cyberattacks. The sources give no direct effect on everyday users beyond that."
+      },
+      "fr": {
+        "headline": "OpenAI détaille comment elle détecte et perturbe la distillation adversariale de ses modèles",
+        "dek": "Dans un billet publié sur son site, OpenAI décrit comment elle détecte et perturbe la distillation adversariale et protège le raisonnement de ses modèles. Ce sont ses propres affirmations, et l'extrait ne dit pas que des tiers les ont vérifiées.",
+        "news": "OpenAI affirme avoir renforcé ses mesures de protection contre la distillation adversariale, notamment l'extraction du raisonnement protégé, et partage des leçons qui, selon elle, peuvent aider les défenses de toute l'industrie.",
+        "matters": "OpenAI affirme que la copie non autorisée des capacités d'un modèle peut éliminer ses protections de sécurité, ce qui accroît des risques comme les cyberattaques. Les sources n'indiquent aucun effet direct sur les utilisateurs ordinaires au-delà de cela."
+      }
+    },
     {
       "id": "l004dj",
       "slug": {
