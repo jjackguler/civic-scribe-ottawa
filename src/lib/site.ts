@@ -90,6 +90,11 @@ export const SITE = {
      */
     url: "https://aibroadsheet.beehiiv.com",
   },
+  /**
+   * Google Analytics 4 measurement ID (account aibroadsheet@gmail.com). Opt-in only:
+   * nothing loads until a reader says yes. See src/lib/analytics.ts. Empty turns GA off.
+   */
+  gaMeasurementId: "G-WZ36E9TFRJ",
   /** Cloudflare Web Analytics (cookieless), installed manually to avoid duplicate beacons. */
   cloudflareAnalyticsToken: "9a828408ce894cf0865655bda68a0d73",
   /** Social profiles. An icon appears only when its URL is set. */

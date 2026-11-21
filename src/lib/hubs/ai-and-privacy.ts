@@ -127,8 +127,8 @@ export const HUB: Hub = {
       h: { en: "How AI Broadsheet handles your privacy", fr: "Comment AI Broadsheet protège votre vie privée" },
       blocks: [
         { k: "p", t: {
-          en: "We practise what we report. You can read everything without an account; our analytics are cookieless; ads are non-personalised unless you agree; Young Lab collects nothing about children. Details are on our [privacy page](/privacy).",
-          fr: "Nous appliquons ce que nous rapportons. Vous pouvez tout lire sans compte; notre mesure d'audience n'utilise pas de témoins; les annonces ne sont pas personnalisées sans votre accord; le Jeune Labo ne recueille rien sur les enfants. Les détails se trouvent sur notre [page de confidentialité](/privacy).",
+          en: "We practise what we report. You can read everything without an account; our visit counts are cookieless, and Google Analytics runs only if you agree; ads are non-personalised unless you agree; Young Lab collects nothing about children. Details are on our [privacy page](/privacy).",
+          fr: "Nous appliquons ce que nous rapportons. Vous pouvez tout lire sans compte; notre comptage des visites n'utilise pas de témoins, et Google Analytics ne fonctionne qu'avec votre accord; les annonces ne sont pas personnalisées sans votre accord; le Jeune Labo ne recueille rien sur les enfants. Les détails se trouvent sur notre [page de confidentialité](/privacy).",
         } },
       ],
     },

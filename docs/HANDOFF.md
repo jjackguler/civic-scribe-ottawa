@@ -335,3 +335,15 @@ Spotify or Apple Podcasts yet; the owner does that.
   newsletter box. The box links to our `/subscribe` redirect with `utm_source=aibroadsheet&utm_medium=younglab&utm_campaign=<game id>`,
   so beehiiv's acquisition source shows which game brought each sign-up. Marked "leaves AI Broadsheet" like every outside link.
 - Newsletter issue #1 is NOT to be sent yet: it waits for the owner's sponsor decision.
+
+## Google Analytics 4, opt-in only (21 Nov 2026)
+- GA4 account "AI Broadsheet" under **aibroadsheet@gmail.com** (not the owner's personal Google account),
+  property "aibroadsheet.com" (Toronto time, CAD), web stream "AI Broadsheet web", Measurement ID
+  **G-WZ36E9TFRJ** in `SITE.gaMeasurementId`. Optional Google data sharing was switched off at setup.
+- `src/lib/analytics.ts` + `src/components/StatsConsent.tsx`: a small bar asks "May we count your visit
+  with Google Analytics?". Nothing loads from Google until the reader says yes. Never on Young Lab,
+  editor tools, /app, previews (only on the aibroadsheet.com host), or for Global Privacy Control.
+  Google signals and ad personalisation off; ad consent stays denied. /privacy#statistics explains it
+  and has on/off controls; "off" deletes the _ga cookies.
+- So GA counts only readers who agree. Cloudflare Web Analytics (cookieless, everyone) remains the
+  source for total visits. The owner was asked whether to count everyone instead; default is opt-in.
