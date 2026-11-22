@@ -1,5 +1,23 @@
 [
   {
+    "id": "1w1z71j",
+    "at": "2026-11-22T07:28:36.627Z",
+    "stage": "standards",
+    "headline": "The manufacturing data gap holding back physical AI",
+    "reasons": [
+      "The headline states the CTO's opinion as established fact: \"data gaps, not data volume, hold back physical AI.\" The source is a single executive's byline argument, so the headline needs attribution, such as \"argues\" or \"says,\" to match the body."
+    ]
+  },
+  {
+    "id": "1ijv6xo",
+    "at": "2026-11-22T07:28:12.821Z",
+    "stage": "reporter",
+    "headline": "Data center industry news, analysis, and opinion",
+    "reasons": [
+      "skip: Sources give only a headline and a truncated excerpt (an industry-views piece on emissions monitoring for data center turbines); there are no facts to support a 120-word summary."
+    ]
+  },
+  {
     "id": "utdioe",
     "at": "2026-11-22T00:20:47.541Z",
     "stage": "copy",
