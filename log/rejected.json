@@ -1,5 +1,14 @@
 [
   {
+    "id": "1f47r48",
+    "at": "2026-11-22T21:19:28.617Z",
+    "stage": "standards",
+    "headline": "Perplexity and Intelligence",
+    "reasons": [
+      "The 'background' section states that most assistants have a setting to stop chats being used for training, citing [b3]. No source b3 was supplied, and the sole source (s1) says nothing about this, so the claim is unsupported."
+    ]
+  },
+  {
     "id": "1uac4r5",
     "at": "2026-11-22T15:42:34.656Z",
     "stage": "copy",
