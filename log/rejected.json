@@ -1,5 +1,24 @@
 [
   {
+    "id": "1uac4r5",
+    "at": "2026-11-22T15:42:34.656Z",
+    "stage": "copy",
+    "headline": "AI prompt study exposes secret leaks across breached third party hosting providers",
+    "reasons": [
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to arynews.tv's wording (\"team sent about two million prompts to popular ai…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to thehackernews.com's wording (\"are now working with about a dozen providers and…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to martincid.com's wording (\"phala said an attacker took control of one of…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to Notebookcheck News's wording (\"in the largest case a couple hundred aws keys…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to arynews.tv's wording (\"the experiment found active breaches at three hosting providers…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to martincid.com's wording (\"one of its inference servers and could see requests…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "Too close to Notebookcheck News's wording (\"within hours and then used for tens of thousands…\") in \"matters\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1w1z71j",
     "at": "2026-11-22T07:28:36.627Z",
     "stage": "standards",
