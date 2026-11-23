@@ -366,7 +366,7 @@ Spotify or Apple Podcasts yet; the owner does that.
   It **cannot be embedded**: tested in an iframe on aibroadsheet.com, it loads signed out and Google
   says a Google AI Ultra plan is needed. Readers without that plan cannot play it at all; the page says so.
 - Tour videos (EN and FR labels, 101 s, no sound) and poster are on the `media` branch,
-  `labs/canada-field-guide/`, pinned via jsDelivr (`MEDIA_SHA`; 360 showcase (720p, under jsDelivr's 20 MB per-file limit) added 23 Nov at `5cdabf5e`, old tour files kept) (`MEDIA_SHA` in the data file). Built from
+  `labs/canada-field-guide/`, pinned via jsDelivr (`MEDIA_SHA`; 360 showcase (720p, under jsDelivr's 20 MB per-file limit) added 23 Nov at `5cdabf5e`; Journey version (360° turn then canoe ride, dinosaur tracking; `canada-field-guide-journey*.mp4`) at `fe5bccd6`, older files kept) (`MEDIA_SHA` in the data file). Built from
   "Video Only" downloads of the owner's Genie sessions; the invented camper who walks in near the end
   of the camp session was cut. Card stills in `public/labs/canada-field-guide/` are frames from the same
   sessions (canoe: the scene's start image, because the canoe never stays in view).
