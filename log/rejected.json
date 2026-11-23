@@ -1,5 +1,35 @@
 [
   {
+    "id": "n8y6ph",
+    "at": "2026-11-23T01:59:56.065Z",
+    "stage": "copy",
+    "headline": "NVIDIA: AI Agents Rarely Need Long Context Windows",
+    "reasons": [
+      "Not in the sources (names or numbers): Two, 5.2, 5.6, denial not in the sources: \"NVIDIA researchers have posted a preprint titled \"You don't need long context\", \", denial not in the sources: \"The proposed semantic state space models (SSSM) are not shown as a fully trained\".",
+      "Too close to i10X News's wording (\"that claude opus 4 5 and gpt 5 6…\") in \"expert\": say it in our own words, or quote and attribute it.",
+      "Too close to the-decoder.com's wording (\"need their full context windows which are slow expensive…\") in \"confirmed\": say it in our own words, or quote and attribute it.",
+      "Too close to gptunnel.ru's wording (\"the paper does not present a fully trained standalone…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): denial not in the sources: \"NVIDIA researchers have posted a preprint called \"You don't need long context\", \".",
+      "Too close to i10X News's wording (\"claude opus 4 5 and gpt 5 6 sol…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1vd498m",
+    "at": "2026-11-23T01:59:19.664Z",
+    "stage": "copy",
+    "headline": "Nations agree to ‘elaborate’ on rules for AI-run ‘killer robots’ by 2028",
+    "reasons": [
+      "Not in the sources (names or numbers): UN-backed.",
+      "Too close to aljazeera.com's wording (\"key arms producing nations including the united states russia…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to npr.org's wording (\"backed talks in geneva ended saturday with an agreement…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to africa.dailynewsegypt.com's wording (\"the seventh review conference of the convention on certain…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to aljazeera.com's wording (\"stop killer robots a coalition of 300 organisations opposed…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to africa.dailynewsegypt.com's wording (\"held at the palais des nations from 16 november…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1f47r48",
     "at": "2026-11-22T21:19:28.617Z",
     "stage": "standards",
