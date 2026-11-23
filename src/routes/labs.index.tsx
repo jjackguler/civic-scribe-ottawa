@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Award } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Award } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { ContinueCard, FrenchTag, LengthLabel, LessonOne, PathPicker, PriceTag, ProviderTag, RouteMap, ofText } from "@/components/Labs";
 import { YoungLabCard } from "@/components/YoungLab";
+import { EPISODES, SERIES } from "@/lib/history-series";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, absUrl, publisherRef } from "@/lib/seo";
@@ -51,7 +52,7 @@ export const Route = createFileRoute("/labs/")({
 });
 
 function LabsPage() {
-  const { locale } = useLocale();
+  const { locale, pick } = useLocale();
   const fr = locale === "fr";
   const [picked, setPicked] = useState<string | undefined>();
 
@@ -109,6 +110,19 @@ function LabsPage() {
       {/* Young Lab: the youth wing */}
       <section className="container-mw" aria-label={fr ? "Jeune Labo, pour les 8 à 17 ans" : "Young Lab, for ages 8 to 17"}>
         <YoungLabCard />
+      </section>
+
+      {/* Series: History, rebuilt by AI */}
+      <section className="container-mw mt-6" aria-label={pick(SERIES.title)}>
+        <Link to="/labs/history" className="group grid gap-5 rounded-[10px] bg-night text-white p-5 sm:p-7 sm:grid-cols-[220px_1fr_auto] sm:items-center">
+          <img src={EPISODES[0].poster} alt="" className="w-full sm:w-[220px] aspect-video object-cover rounded-[6px]" />
+          <span className="min-w-0">
+            <span className="block text-[0.9rem] font-semibold text-brass">{fr ? "Nouvelle série · générée par IA, vérifiée par la rédaction" : "New series · made with AI, checked by the newsroom"}</span>
+            <span className="block masthead-serif text-[1.8rem] sm:text-[2.1rem] leading-[1.05] mt-1">{pick(SERIES.title)}</span>
+            <span className="block mt-2 text-[1.02rem] leading-relaxed text-white/80">{fr ? `Épisode 1 : ${EPISODES[0].title.fr}.` : `Episode 1: ${EPISODES[0].title.en}.`}</span>
+          </span>
+          <span className="justify-self-start inline-flex items-center gap-2 rounded-[5px] bg-signal text-signal-ink font-bold px-4 py-2.5">{fr ? "Voir la série" : "See the series"} <ArrowRight className="h-5 w-5" aria-hidden="true" /></span>
+        </Link>
       </section>
 
       <PathsIndex />
