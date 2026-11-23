@@ -5,6 +5,8 @@ import { PageShell } from "@/components/PageShell";
 import { ContinueCard, FrenchTag, LengthLabel, LessonOne, PathPicker, PriceTag, ProviderTag, RouteMap, ofText } from "@/components/Labs";
 import { YoungLabCard } from "@/components/YoungLab";
 import { EPISODES, SERIES } from "@/lib/history-series";
+import { FIELD_GUIDE } from "@/lib/canada-field-guide";
+import { BookShelf } from "@/components/BookShelf";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, absUrl, publisherRef } from "@/lib/seo";
@@ -125,6 +127,19 @@ function LabsPage() {
         </Link>
       </section>
 
+      {/* Playable lesson: Canada Field Guide */}
+      <section className="container-mw mt-6" aria-label={pick(FIELD_GUIDE.title)}>
+        <Link to="/labs/canada-field-guide" className="group grid gap-5 rounded-[10px] border-2 border-night p-5 sm:p-7 sm:grid-cols-[220px_1fr_auto] sm:items-center hover:bg-ice transition-colors">
+          <img src="/labs/canada-field-guide/snowshoes.jpg" alt="" className="w-full sm:w-[220px] aspect-video object-cover rounded-[6px]" />
+          <span className="min-w-0">
+            <span className="block text-[0.9rem] font-semibold text-brass-ink">{fr ? "Nouveau · leçon jouable créée avec l'IA" : "New · a playable lesson made with AI"}</span>
+            <span className="block masthead-serif text-[1.8rem] sm:text-[2.1rem] leading-[1.05] mt-1">{pick(FIELD_GUIDE.title)}</span>
+            <span className="block mt-2 text-[1.02rem] leading-relaxed text-muted-ink">{fr ? "Neuf cartes, trois ailes, un quiz et un passeport à tampons. Innovations autochtones, inventions canadiennes et dinosaures de l'Alberta." : "Nine cards, three wings, a quiz and a stamp passport. Indigenous innovations, Canadian inventions and Alberta's dinosaurs."}</span>
+          </span>
+          <span className="justify-self-start inline-flex items-center gap-2 rounded-[5px] bg-signal text-signal-ink font-bold px-4 py-2.5">{fr ? "Jouer" : "Play"} <ArrowRight className="h-5 w-5" aria-hidden="true" /></span>
+        </Link>
+      </section>
+
       <PathsIndex />
       <Catalogue />
 
@@ -140,6 +155,16 @@ function LabsPage() {
           </div>
           <p className="mt-6"><Link to="/corrections" className="text-lake font-semibold hover:underline">{fr ? "Signaler une erreur" : "Report a problem"}</Link></p>
         </div>
+      </section>
+
+      {/* From the editor's shelf */}
+      <section className="container-mw mt-16" aria-labelledby="shelf-title">
+        <div className="relative pt-3 border-t-[3px] border-night">
+          <span className="absolute left-0 -top-[3px] h-[3px] w-14 bg-signal" aria-hidden="true" />
+          <p className="kicker mt-1">{fr ? "À lire avec les labos" : "Read alongside Labs"}</p>
+          <h2 id="shelf-title" className="masthead-serif text-[1.75rem] sm:text-[2.05rem] mt-1">{fr ? "De l'étagère de l'éditeur" : "From the editor's shelf"}</h2>
+        </div>
+        <BookShelf />
       </section>
     </PageShell>
   );

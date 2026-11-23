@@ -73,6 +73,7 @@ import { Route as ImmersiveIndexRouteImport } from './routes/immersive.index'
 import { Route as ImmersiveSlugRouteImport } from './routes/immersive.$slug'
 import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as LabsPathRouteImport } from './routes/labs.$path'
+import { Route as LabsCanadaFieldGuideRouteImport } from './routes/labs.canada-field-guide'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as LedgerIndexRouteImport } from './routes/ledger.index'
@@ -413,6 +414,11 @@ const LabsPathRoute = LabsPathRouteImport.update({
   path: '/labs/$path',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsCanadaFieldGuideRoute = LabsCanadaFieldGuideRouteImport.update({
+  id: '/labs/canada-field-guide',
+  path: '/labs/canada-field-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnIndexRoute = LearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
@@ -567,6 +573,7 @@ export interface FileRoutesByFullPath {
   '/guides/$slug': typeof GuidesSlugRoute
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
+  '/labs/canada-field-guide': typeof LabsCanadaFieldGuideRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -652,6 +659,7 @@ export interface FileRoutesByTo {
   '/guides/$slug': typeof GuidesSlugRoute
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
+  '/labs/canada-field-guide': typeof LabsCanadaFieldGuideRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -738,6 +746,7 @@ export interface FileRoutesById {
   '/guides/$slug': typeof GuidesSlugRoute
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
+  '/labs/canada-field-guide': typeof LabsCanadaFieldGuideRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -825,6 +834,7 @@ export interface FileRouteTypes {
     | '/guides/$slug'
     | '/immersive/$slug'
     | '/labs/$path'
+    | '/labs/canada-field-guide'
     | '/learn/$slug'
     | '/ledger/$id'
     | '/og/quiz.png'
@@ -910,6 +920,7 @@ export interface FileRouteTypes {
     | '/guides/$slug'
     | '/immersive/$slug'
     | '/labs/$path'
+    | '/labs/canada-field-guide'
     | '/learn/$slug'
     | '/ledger/$id'
     | '/og/quiz.png'
@@ -995,6 +1006,7 @@ export interface FileRouteTypes {
     | '/guides/$slug'
     | '/immersive/$slug'
     | '/labs/$path'
+    | '/labs/canada-field-guide'
     | '/learn/$slug'
     | '/ledger/$id'
     | '/og/quiz.png'
@@ -1081,6 +1093,7 @@ export interface RootRouteChildren {
   GuidesSlugRoute: typeof GuidesSlugRoute
   ImmersiveSlugRoute: typeof ImmersiveSlugRoute
   LabsPathRoute: typeof LabsPathRoute
+  LabsCanadaFieldGuideRoute: typeof LabsCanadaFieldGuideRoute
   LearnSlugRoute: typeof LearnSlugRoute
   LedgerIdRoute: typeof LedgerIdRoute
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
@@ -1559,6 +1572,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabsPathRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/canada-field-guide': {
+      id: '/labs/canada-field-guide'
+      path: '/labs/canada-field-guide'
+      fullPath: '/labs/canada-field-guide'
+      preLoaderRoute: typeof LabsCanadaFieldGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn/': {
       id: '/learn/'
       path: '/learn'
@@ -1753,6 +1773,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuidesSlugRoute: GuidesSlugRoute,
   ImmersiveSlugRoute: ImmersiveSlugRoute,
   LabsPathRoute: LabsPathRoute,
+  LabsCanadaFieldGuideRoute: LabsCanadaFieldGuideRoute,
   LearnSlugRoute: LearnSlugRoute,
   LedgerIdRoute: LedgerIdRoute,
   OgQuizDotpngRoute: OgQuizDotpngRoute,

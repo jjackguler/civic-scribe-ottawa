@@ -129,6 +129,7 @@ export async function buildSitemap(): Promise<string> {
   // Young Lab (the passport is personal and noindex, so it stays out).
   for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/classroom", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });
+  entries.push({ path: "/labs/canada-field-guide", changefreq: "monthly", priority: "0.6" });
   entries.push({ path: "/labs/history", changefreq: "monthly", priority: "0.6" });
   for (const e of EPISODES) entries.push({ path: `/labs/history/${e.slug}`, changefreq: "monthly", priority: "0.6" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });

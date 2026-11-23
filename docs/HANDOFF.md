@@ -354,6 +354,28 @@ Spotify or Apple Podcasts yet; the owner does that.
   "AI Broadsheet Labs — Genie 4 world model lesson". The Labs mark there is a draft and is not used on
   the site: the shared Logo stays as is.
 
+## Labs "Canada Field Guide" (23 Nov 2026, branch `claude/labs-canada-field-guide`)
+- **Owner decision (23 Nov 2026):** the generated-imagery exception above also covers this page, with
+  the same rules (labelled AI-generated, no real person's face).
+- `/labs/canada-field-guide`, data in `src/lib/canada-field-guide.ts` (EN/FR): 9 cards in 3 wings
+  (Indigenous innovations, Canada's gifts, Canada's dinosaurs), 3 checked facts and a 3-question quiz
+  each, sources on every card. The page has a free "field passport" anyone can play (stamps in
+  localStorage, answers shuffled every attempt). Card on `/labs`; URL in the sitemap.
+- The full 3D version is a Project Genie experience, owner's account, **Unlisted, remixing off**:
+  `labs.google/fx/projectgenie/tools/projectgenie/e?experienceId=d6babe95-05ea-4e34-a23e-7db8a1336664`.
+  It **cannot be embedded**: tested in an iframe on aibroadsheet.com, it loads signed out and Google
+  says a Google AI Ultra plan is needed. Readers without that plan cannot play it at all; the page says so.
+- Tour videos (EN and FR labels, 101 s, no sound) and poster are on the `media` branch,
+  `labs/canada-field-guide/`, pinned at `a359d104` via jsDelivr (`MEDIA_SHA` in the data file). Built from
+  "Video Only" downloads of the owner's Genie sessions; the invented camper who walks in near the end
+  of the camp session was cut. Card stills in `public/labs/canada-field-guide/` are frames from the same
+  sessions (canoe: the scene's start image, because the canoe never stays in view).
+- **Open:** the three Indigenous cards should be reviewed by Algonquin Anishinaabe and Haudenosaunee
+  educators; the page says this review is wanted.
+- "From the editor's shelf" (`src/components/BookShelf.tsx`, The New Cave) now appears on `/labs` and on
+  this page at the owner's request; `src/lib/books.ts` notes the change. Same rules as /books: says the
+  editor wrote it, no ratings or superlatives, no commission.
+
 ## Google Analytics 4, opt-in only (21 Nov 2026)
 - GA4 account "AI Broadsheet" under **aibroadsheet@gmail.com** (not the owner's personal Google account),
   property "aibroadsheet.com" (Toronto time, CAD), web stream "AI Broadsheet web", Measurement ID

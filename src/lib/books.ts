@@ -3,7 +3,8 @@
  *
  * An editor's page, not advertising: the page says plainly that the editor wrote the book,
  * shows only facts from the book's own listing (no ratings, no reviews, no superlatives), and
- * is linked from the footer, /about and /editor only, never from the news pages.
+ * is linked from the footer, /about and /editor, and from Labs (owner decision, 23 Nov 2026:
+ * "From the editor's shelf" on /labs and /labs/canada-field-guide). Never from the news pages.
  */
 import type { Bi } from "./i18n";
 
