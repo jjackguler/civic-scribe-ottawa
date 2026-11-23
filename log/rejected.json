@@ -1,5 +1,53 @@
 [
   {
+    "id": "1lgvs0f",
+    "at": "2026-11-23T22:40:12.481Z",
+    "stage": "copy",
+    "headline": "RoboTrack: Point tracking for real-world robotic manipulation",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"The excerpt is cut off, so further results are not available.\".",
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Too close to Hugging Face's wording (\"robotrack a benchmark and training data suite for point…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Hugging Face's wording (\"307 human annotated videos from droid ego exo4d molmoact…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "10zsnf",
+    "at": "2026-11-23T22:39:38.226Z",
+    "stage": "standards",
+    "headline": "A more tailored Google Search that’s uniquely yours",
+    "reasons": [
+      "The 'matters' section states 'Nothing changes for those who do not connect these apps,' a consequence the sources do not state.",
+      "The 'background' section cites sources b1 and b3 on training-data settings and Canada's privacy law. Neither appears in the supplied sources, so these claims are unsupported.",
+      "The 'unknown' list raises availability in Canada, which no supplied source mentions, so the story introduces a country-specific frame the evidence does not support."
+    ]
+  },
+  {
+    "id": "zsgxar",
+    "at": "2026-11-23T22:39:00.921Z",
+    "stage": "copy",
+    "headline": "La tarification algorithmique et la Loi sur la concurrence",
+    "reasons": [
+      "Not in the sources (names or numbers): Competition, MPs, Deputy, Commissioner, House, Commons, Government, Branch, Standing, Committee, Access, Ethics, Senior, denial not in the sources: \"The excerpt stops while describing work the Bureau did in 2024, so its findings \".",
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): Competition, Government, House, Commons, denial not in the sources: \"The excerpt ends before it describes the Bureau's 2024 work, so that work is not\"."
+    ]
+  },
+  {
+    "id": "11njcex",
+    "at": "2026-11-23T22:38:25.299Z",
+    "stage": "copy",
+    "headline": "OpenAI and Cisco introduce Shirudo",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to OpenAI's wording (\"an open source runtime that helps teams protect linux…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to OpenAI's wording (\"because an exploit and a legitimate request may rely…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "jzaeld",
     "at": "2026-11-23T10:47:11.892Z",
     "stage": "copy",
