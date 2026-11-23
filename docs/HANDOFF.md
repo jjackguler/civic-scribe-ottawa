@@ -336,6 +336,24 @@ Spotify or Apple Podcasts yet; the owner does that.
   so beehiiv's acquisition source shows which game brought each sign-up. Marked "leaves AI Broadsheet" like every outside link.
 - Newsletter issue #1 is NOT to be sent yet: it waits for the owner's sponsor decision.
 
+## Labs series "History, rebuilt by AI" (22 Nov 2026, branch `claude/labs-history-ep1`)
+- **Owner decision (22 Nov 2026):** this series is the one exception to "Generative imagery withdrawn"
+  (29 Oct). Generated video and stills are allowed here only: always labelled AI-generated, never
+  presented as archival, never a real person's face (the people are invented and the page says so).
+  Everything else on the site keeps the 29 Oct rule.
+- Each episode rebuilds one moment from history with an AI tool, shows how it was made, and checks it
+  against the record ("What the record says" vs "What the AI invented"), with a classroom task.
+- `/labs/history` (series) and `/labs/history/<slug>` (episode) read from `src/lib/history-series.ts`
+  (EN/FR). Card on `/labs` under Young Lab; both URLs are in the sitemap.
+- Episode 1 `toronto-1921`: Genie 4 (Project Genie) tour of a 1921 lab and street, recorded 22 Nov.
+  Stills in `public/labs/history/toronto-1921/` are screen grabs from the session.
+  **Open:** the session video ("Video Only" download, in the owner's Downloads) is not on the site yet.
+  Put it on the `media` branch, then set `video` on the episode (jsDelivr URL pinned to that commit).
+  When `video` is empty the page shows the still and "The tour video will be added here."
+- Design drafts (logo set, thumbnail, story explorer): Claude Design canvas
+  "AI Broadsheet Labs — Genie 4 world model lesson". The Labs mark there is a draft and is not used on
+  the site: the shared Logo stays as is.
+
 ## Google Analytics 4, opt-in only (21 Nov 2026)
 - GA4 account "AI Broadsheet" under **aibroadsheet@gmail.com** (not the owner's personal Google account),
   property "aibroadsheet.com" (Toronto time, CAD), web stream "AI Broadsheet web", Measurement ID

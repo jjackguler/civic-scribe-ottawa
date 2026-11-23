@@ -81,6 +81,8 @@ import { Route as OgQuizDotpngRouteImport } from './routes/og.quiz[.]png'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as VideoSlugRouteImport } from './routes/video.$slug'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
+import { Route as LabsHistoryIndexRouteImport } from './routes/labs.history.index'
+import { Route as LabsHistoryEpisodeRouteImport } from './routes/labs.history.$episode'
 import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
 import { Route as LabsYoungActivityRouteImport } from './routes/labs.young.$activity'
 import { Route as LabsYoungClassroomRouteImport } from './routes/labs.young.classroom'
@@ -451,6 +453,16 @@ const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
   path: '/api/dispatch-audio/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsHistoryIndexRoute = LabsHistoryIndexRouteImport.update({
+  id: '/labs/history/',
+  path: '/labs/history/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsHistoryEpisodeRoute = LabsHistoryEpisodeRouteImport.update({
+  id: '/labs/history/$episode',
+  path: '/labs/history/$episode',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LabsYoungIndexRoute = LabsYoungIndexRouteImport.update({
   id: '/labs/young/',
   path: '/labs/young/',
@@ -570,6 +582,7 @@ export interface FileRoutesByFullPath {
   '/learn/': typeof LearnIndexRoute
   '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/history/$episode': typeof LabsHistoryEpisodeRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/classroom': typeof LabsYoungClassroomRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
@@ -578,6 +591,7 @@ export interface FileRoutesByFullPath {
   '/labs/young/passport': typeof LabsYoungPassportRoute
   '/og/article/$id': typeof OgArticleIdRoute
   '/og/section/$name': typeof OgSectionNameRoute
+  '/labs/history/': typeof LabsHistoryIndexRoute
   '/labs/young/': typeof LabsYoungIndexRoute
 }
 export interface FileRoutesByTo {
@@ -653,6 +667,7 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnIndexRoute
   '/ledger': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/history/$episode': typeof LabsHistoryEpisodeRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/classroom': typeof LabsYoungClassroomRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
@@ -661,6 +676,7 @@ export interface FileRoutesByTo {
   '/labs/young/passport': typeof LabsYoungPassportRoute
   '/og/article/$id': typeof OgArticleIdRoute
   '/og/section/$name': typeof OgSectionNameRoute
+  '/labs/history': typeof LabsHistoryIndexRoute
   '/labs/young': typeof LabsYoungIndexRoute
 }
 export interface FileRoutesById {
@@ -737,6 +753,7 @@ export interface FileRoutesById {
   '/learn/': typeof LearnIndexRoute
   '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/history/$episode': typeof LabsHistoryEpisodeRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/classroom': typeof LabsYoungClassroomRoute
   '/labs/young/explorers': typeof LabsYoungExplorersRoute
@@ -745,6 +762,7 @@ export interface FileRoutesById {
   '/labs/young/passport': typeof LabsYoungPassportRoute
   '/og/article/$id': typeof OgArticleIdRoute
   '/og/section/$name': typeof OgSectionNameRoute
+  '/labs/history/': typeof LabsHistoryIndexRoute
   '/labs/young/': typeof LabsYoungIndexRoute
 }
 export interface FileRouteTypes {
@@ -822,6 +840,7 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/ledger/'
     | '/api/dispatch-audio/$id'
+    | '/labs/history/$episode'
     | '/labs/young/$activity'
     | '/labs/young/classroom'
     | '/labs/young/explorers'
@@ -830,6 +849,7 @@ export interface FileRouteTypes {
     | '/labs/young/passport'
     | '/og/article/$id'
     | '/og/section/$name'
+    | '/labs/history/'
     | '/labs/young/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -905,6 +925,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/ledger'
     | '/api/dispatch-audio/$id'
+    | '/labs/history/$episode'
     | '/labs/young/$activity'
     | '/labs/young/classroom'
     | '/labs/young/explorers'
@@ -913,6 +934,7 @@ export interface FileRouteTypes {
     | '/labs/young/passport'
     | '/og/article/$id'
     | '/og/section/$name'
+    | '/labs/history'
     | '/labs/young'
   id:
     | '__root__'
@@ -988,6 +1010,7 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/ledger/'
     | '/api/dispatch-audio/$id'
+    | '/labs/history/$episode'
     | '/labs/young/$activity'
     | '/labs/young/classroom'
     | '/labs/young/explorers'
@@ -996,6 +1019,7 @@ export interface FileRouteTypes {
     | '/labs/young/passport'
     | '/og/article/$id'
     | '/og/section/$name'
+    | '/labs/history/'
     | '/labs/young/'
   fileRoutesById: FileRoutesById
 }
@@ -1072,6 +1096,7 @@ export interface RootRouteChildren {
   LearnIndexRoute: typeof LearnIndexRoute
   LedgerIndexRoute: typeof LedgerIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
+  LabsHistoryEpisodeRoute: typeof LabsHistoryEpisodeRoute
   LabsYoungActivityRoute: typeof LabsYoungActivityRoute
   LabsYoungClassroomRoute: typeof LabsYoungClassroomRoute
   LabsYoungExplorersRoute: typeof LabsYoungExplorersRoute
@@ -1080,6 +1105,7 @@ export interface RootRouteChildren {
   LabsYoungPassportRoute: typeof LabsYoungPassportRoute
   OgArticleIdRoute: typeof OgArticleIdRoute
   OgSectionNameRoute: typeof OgSectionNameRoute
+  LabsHistoryIndexRoute: typeof LabsHistoryIndexRoute
   LabsYoungIndexRoute: typeof LabsYoungIndexRoute
 }
 
@@ -1589,6 +1615,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDispatchAudioIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/history/': {
+      id: '/labs/history/'
+      path: '/labs/history'
+      fullPath: '/labs/history/'
+      preLoaderRoute: typeof LabsHistoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/history/$episode': {
+      id: '/labs/history/$episode'
+      path: '/labs/history/$episode'
+      fullPath: '/labs/history/$episode'
+      preLoaderRoute: typeof LabsHistoryEpisodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/labs/young/': {
       id: '/labs/young/'
       path: '/labs/young'
@@ -1728,6 +1768,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnIndexRoute: LearnIndexRoute,
   LedgerIndexRoute: LedgerIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
+  LabsHistoryEpisodeRoute: LabsHistoryEpisodeRoute,
   LabsYoungActivityRoute: LabsYoungActivityRoute,
   LabsYoungClassroomRoute: LabsYoungClassroomRoute,
   LabsYoungExplorersRoute: LabsYoungExplorersRoute,
@@ -1736,6 +1777,7 @@ const rootRouteChildren: RootRouteChildren = {
   LabsYoungPassportRoute: LabsYoungPassportRoute,
   OgArticleIdRoute: OgArticleIdRoute,
   OgSectionNameRoute: OgSectionNameRoute,
+  LabsHistoryIndexRoute: LabsHistoryIndexRoute,
   LabsYoungIndexRoute: LabsYoungIndexRoute,
 }
 export const routeTree = rootRouteImport
