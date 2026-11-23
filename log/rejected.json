@@ -1,5 +1,43 @@
 [
   {
+    "id": "jzaeld",
+    "at": "2026-11-23T10:47:11.892Z",
+    "stage": "copy",
+    "headline": "Why data centers have become a flashpoint in the Big Tech backlash",
+    "reasons": [
+      "Not in the sources (names or numbers): Canada.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to mezha.net's wording (\"local effects help explain why opposition crosses political lines…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "House red line (partisan): the charter does not allow it.",
+      "after the rewrite:",
+      "Too close to mezha.net's wording (\"in the dalles oregon google disclosed that its data…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "p5n1dl",
+    "at": "2026-11-23T10:46:38.194Z",
+    "stage": "translator",
+    "headline": "Vertiv Holdings Co. - Vertiv Introduces Medium-Voltage Power System to Help AI Data Centers Connect to the Grid Faster and Free Indoor Space for Compute",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): mi-2027, Bologne, 12.",
+      "attempt 2: Not in the sources (names or numbers): 12."
+    ]
+  },
+  {
+    "id": "lc6ei8",
+    "at": "2026-11-23T10:45:15.020Z",
+    "stage": "copy",
+    "headline": "Pazhou Algorithm Competition: Turning AI Innovation into Real-World Impact",
+    "reasons": [
+      "Not in the sources (names or numbers): Organizers, denial not in the sources: \"The release does not mention Canada.\".",
+      "Paragraph 4 of \"known\" has no [sN] source marker.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to GlobeNewswire's wording (\"competition will open on november 25 in haizhu district…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to GlobeNewswire's wording (\"baidu alibaba tencent and volcano engine jointly launched industry…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "n8y6ph",
     "at": "2026-11-23T01:59:56.065Z",
     "stage": "copy",
