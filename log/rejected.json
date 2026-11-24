@@ -1,5 +1,47 @@
 [
   {
+    "id": "ajt1ke",
+    "at": "2026-11-24T18:23:02.636Z",
+    "stage": "copy",
+    "headline": "How Gemini is changing the game for Golden State's organization and fans.",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to Google AI's wording (\"gemini the official ai assistant partner and official generative…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Google AI's wording (\"the official ai assistant partner and official generative ai…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "9jiuhh",
+    "at": "2026-11-24T18:22:36.812Z",
+    "stage": "standards",
+    "headline": "Microduck Obstacle Avoidance: A Sim2Real Workflow with Isaac Lab and Newton",
+    "reasons": [
+      "The 'matters' section says the guide benefits developers and hobbyists 'including those in Canada'. Nothing in the source (s1) mentions Canada or any audience location, so this is an invented detail about who is affected."
+    ]
+  },
+  {
+    "id": "1iylfq4",
+    "at": "2026-11-24T18:21:56.448Z",
+    "stage": "translator",
+    "headline": "All proceeds from a proposed deal with Nocera (NCRA) would go to building BitRock’s first AI data center.",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): Asie.",
+      "attempt 2: Not in the sources (names or numbers): Asie."
+    ]
+  },
+  {
+    "id": "lze3r6",
+    "at": "2026-11-24T18:20:43.146Z",
+    "stage": "copy",
+    "headline": "How Canada’s Pharmacy Shift Prepared MedMe for the US Market",
+    "reasons": [
+      "Too close to betakit.com's wording (\"to serve over 40 percent of the canadian pharmacy…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to betakit.com's wording (\"shown in canada what pharmacists can do once they…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "v4nvrd",
     "at": "2026-11-24T06:27:14.402Z",
     "stage": "copy",
