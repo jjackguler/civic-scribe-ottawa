@@ -1,6 +1,104 @@
 {
- "updatedAt": "2026-11-21T06:00:00Z",
+ "updatedAt": "2026-11-24T05:02:00Z",
  "items": [
+  {
+   "id": "202611240501-first-jobs-explainer",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-24T05:01:00Z",
+   "title": "Is AI closing the door on first jobs?",
+   "summary": "A Northeastern survey found 26% of hiring managers affected by AI are hiring fewer entry-level candidates, and only 7% more. Statistics Canada found no broad evidence of AI-driven hiring cuts here.",
+   "durationSec": 69,
+   "sources": [
+    {
+     "name": "Katya Poltorak, Northeastern Global News \u00b7 Nov 2, 2026",
+     "url": "https://news.northeastern.edu/2026/11/02/ai-hiring-entry-level-jobs/"
+    },
+    {
+     "name": "Kaitlyn McGrath, The Canadian Press, via CP24 \u00b7 Nov 3, 2026",
+     "url": "https://www.cp24.com/news/money/2026/11/03/little-evidence-ai-is-to-blame-for-decline-in-youth-hiring-new-statcan-study-finds/"
+    }
+   ],
+   "transcript": "Is AI closing the door on first jobs? A new survey from Northeastern University asked the people who do the hiring.\n\nAmong hiring decision-makers who said AI affected their hiring, twenty-six percent said they were hiring fewer entry-level candidates. Only seven percent said they were hiring more. And in tech, AI use for r\u00e9sum\u00e9 reviews reaches eighty-three percent.\n\nThat is what the survey found. What it means is still argued. The survey's co-author, John Wihbey, says the fears around entry-level jobs are real. Employment lawyer Gary Friedman frames it as a choice: AI can hollow out the bottom rung of the ladder, or turn it into an escalator.\n\nHere in Canada, a Statistics Canada study found no broad evidence that AI has led to substantial decreases in hiring.\n\nSo: fewer first rungs in some places. Not yet proof of a collapse. Source: Northeastern Global News, November second, twenty twenty-six. This is AI Broadsheet.",
+   "voice": "Synthetic voice: ElevenLabs library voice (Bill Oxley, documentary narrator)",
+   "aiImages": false,
+   "credits": "Every frame is drawn in code for AI Broadsheet (HyperFrames and Remotion); no photographs or AI images. Quotes and figures are copied word for word from the sources. Narration is a synthetic ElevenLabs voice.",
+   "readMore": {
+    "url": "https://news.northeastern.edu/2026/11/02/ai-hiring-entry-level-jobs/",
+    "en": "Read the Northeastern report",
+    "fr": "Lire le reportage de Northeastern"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/f4d48970f1904e9f8854538dbd9eacad1dfd6c46/originals/files/202611240501-first-jobs-explainer.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@f4d48970f1904e9f8854538dbd9eacad1dfd6c46/originals/files/202611240501-first-jobs-explainer.jpg"
+  },
+  {
+   "id": "202611240502-one-number-resume-ai",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-24T05:02:00Z",
+   "title": "One number: 83% AI use for r\u00e9sum\u00e9 reviews in tech",
+   "summary": "In tech, AI use for r\u00e9sum\u00e9 reviews reaches 83%, according to a Northeastern University survey of hiring decision-makers.",
+   "durationSec": 13,
+   "sources": [
+    {
+     "name": "Katya Poltorak, Northeastern Global News \u00b7 Nov 2, 2026",
+     "url": "https://news.northeastern.edu/2026/11/02/ai-hiring-entry-level-jobs/"
+    }
+   ],
+   "transcript": "83%. AI use for r\u00e9sum\u00e9 reviews in tech, says a Northeastern report. \"In tech, AI use for r\u00e9sum\u00e9 reviews reaches 83%.\" Source: Northeastern Global News, Nov 2, 2026. (No narration; text on screen.)",
+   "voice": "No narration (text on screen)",
+   "aiImages": false,
+   "credits": "Every frame is drawn in code for AI Broadsheet (HyperFrames and Remotion); no photographs or AI images. Quotes and figures are copied word for word from the sources.",
+   "readMore": {
+    "url": "https://news.northeastern.edu/2026/11/02/ai-hiring-entry-level-jobs/",
+    "en": "Read the Northeastern report",
+    "fr": "Lire le reportage de Northeastern"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/f4d48970f1904e9f8854538dbd9eacad1dfd6c46/originals/files/202611240502-one-number-resume-ai.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@f4d48970f1904e9f8854538dbd9eacad1dfd6c46/originals/files/202611240502-one-number-resume-ai.jpg"
+  },
+  {
+   "id": "202611240500-weekly-catch-01",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-24T05:00:00Z",
+   "title": "The Weekly Catch No. 1: kids, chatbots and first jobs",
+   "summary": "Five AI stories from late October and early November, in the words of the sources that reported them: New York's chatbot law, the UK push against AI toys, the EU KIDS Act, entry-level hiring and a Statistics Canada study.",
+   "durationSec": 44,
+   "sources": [
+    {
+     "name": "The Associated Press, via Spectrum News \u00b7 Oct 30, 2026",
+     "url": "https://spectrumlocalnews.com/nys/central-ny/news/2026/10/30/new-york-enacts-ban-on--unsafe--chatbot-behavior-with-kids-as-states-push-ai-regulation-boundaries"
+    },
+    {
+     "name": "Sky News, via Resultsense \u00b7 Nov 4, 2026",
+     "url": "https://www.resultsense.com/news/2026-11-04-ai-toys-mps-ban-letter-amazon-ebay/"
+    },
+    {
+     "name": "Peter Craddock (opinion), Euronews \u00b7 Nov 4, 2026",
+     "url": "https://www.euronews.com/2026/11/04/the-eu-kids-act-why-its-impact-extends-beyond-social-media"
+    },
+    {
+     "name": "Katya Poltorak, Northeastern Global News \u00b7 Nov 2, 2026",
+     "url": "https://news.northeastern.edu/2026/11/02/ai-hiring-entry-level-jobs/"
+    },
+    {
+     "name": "Kaitlyn McGrath, The Canadian Press, via CP24 \u00b7 Nov 3, 2026",
+     "url": "https://www.cp24.com/news/money/2026/11/03/little-evidence-ai-is-to-blame-for-decline-in-youth-hiring-new-statcan-study-finds/"
+    }
+   ],
+   "transcript": "The Weekly Catch. Kids, chatbots and first jobs. Five AI stories, in the sources' words.\n\n1. New York \u00b7 Law signed. 12. New York bans \"unsafe\" chatbot behaviour with kids. \"a dozen definitions of \"unsafe AI companion features\" that will be prohibited when a companion chatbot interacts with a child under 18.\" Source: The Associated Press, via Spectrum News, Oct 30, 2026.\n\n2. United Kingdom \u00b7 Letter. MPs and peers urge a ban on AI chatbot toys before Black Friday. \"asked Amazon and eBay to delist toys with built-in chatbots\" \u00b7 \"Amazon says it is removing one product.\" Source: Sky News, via Resultsense, Nov 4, 2026.\n\n3. European Union \u00b7 Proposal. The EU KIDS Act could reach beyond social media. \"AI chatbots could also face new obligations, even if their services are not aimed at children.\" Source: Euronews, opinion, Nov 4, 2026.\n\n4. First jobs \u00b7 Survey. 26%. Fewer entry-level hires where AI affected hiring. \"26% mentioned they were hiring fewer entry-level candidates, while only 7% said they were hiring more.\" Source: Katya Poltorak, Northeastern Global News, Nov 2, 2026.\n\n5. Canada \u00b7 Study. 3.0%. Little evidence AI is to blame for decline in youth hiring. Youth hiring in AI-exposed jobs \"edged down from 3.2 per cent to three per cent.\" StatCan found \"no broad evidence\" of AI-driven cuts. Source: Kaitlyn McGrath, The Canadian Press, via CP24, Nov 3, 2026.\n\n(No narration; text on screen.)",
+   "voice": "No narration (text on screen)",
+   "aiImages": false,
+   "credits": "Every frame is drawn in code for AI Broadsheet (HyperFrames and Remotion); no photographs or AI images. Quotes and figures are copied word for word from the sources.",
+   "readMore": {
+    "url": "/news",
+    "en": "More from the newsroom",
+    "fr": "Plus de nouvelles"
+   },
+   "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/f4d48970f1904e9f8854538dbd9eacad1dfd6c46/originals/files/202611240500-weekly-catch-01.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@f4d48970f1904e9f8854538dbd9eacad1dfd6c46/originals/files/202611240500-weekly-catch-01.jpg"
+  },
   {
    "id": "202611211200-canada-ai-culture-council-en",
    "kind": "explainer",
@@ -11,11 +109,11 @@
    "durationSec": 69,
    "sources": [
     {
-     "name": "BetaKit · Nov 20, 2026",
+     "name": "BetaKit \u00b7 Nov 20, 2026",
      "url": "https://betakit.com/ottawa-establishes-ai-advisory-council-for-culture/"
     },
     {
-     "name": "Government of Canada (Canadian Heritage) · Nov 20, 2026",
+     "name": "Government of Canada (Canadian Heritage) \u00b7 Nov 20, 2026",
      "url": "https://www.canada.ca/en/canadian-heritage/news/2026/11/ministers-miller-and-solomon-announce-members-of-the-advisory-council-on-artificial-intelligence-and-culture.html"
     }
    ],
@@ -36,21 +134,21 @@
    "kind": "explainer",
    "section": "news",
    "publishedAt": "2026-11-21T05:59:00Z",
-   "title": "Ottawa donne aux artistes une place à la table de l'IA",
-   "summary": "Le nouveau Conseil consultatif sur l'IA et la culture compte 14 sièges en rotation : musique, jeu vidéo, médias, recherche, gouvernance autochtone et société civile. Il ne peut que conseiller ; le vrai test, c'est de savoir si Ottawa l'écoutera. Version française.",
+   "title": "Ottawa donne aux artistes une place \u00e0 la table de l'IA",
+   "summary": "Le nouveau Conseil consultatif sur l'IA et la culture compte 14 si\u00e8ges en rotation : musique, jeu vid\u00e9o, m\u00e9dias, recherche, gouvernance autochtone et soci\u00e9t\u00e9 civile. Il ne peut que conseiller ; le vrai test, c'est de savoir si Ottawa l'\u00e9coutera. Version fran\u00e7aise.",
    "durationSec": 69,
    "sources": [
     {
-     "name": "BetaKit · Nov 20, 2026",
+     "name": "BetaKit \u00b7 Nov 20, 2026",
      "url": "https://betakit.com/ottawa-establishes-ai-advisory-council-for-culture/"
     },
     {
-     "name": "Government of Canada (Canadian Heritage) · Nov 20, 2026",
+     "name": "Government of Canada (Canadian Heritage) \u00b7 Nov 20, 2026",
      "url": "https://www.canada.ca/en/canadian-heritage/news/2026/11/ministers-miller-and-solomon-announce-members-of-the-advisory-council-on-artificial-intelligence-and-culture.html"
     }
    ],
-   "transcript": "Extra ! Extra ! Demandez le journal ! Ottawa donne aux artistes une place à la table de l'IA ! Quatorze voix. Un nouveau conseil. Le Canada a créé un Conseil consultatif sur l'intelligence artificielle et la culture. Le ministre de l'IA, Evan Solomon, et le ministre de la Culture, Marc Miller, l'ont annoncé jeudi. Ses quatorze membres viennent de la musique, du jeu vidéo, des médias, de la recherche, de la gouvernance autochtone et de la société civile. Les sièges seront attribués en rotation. Selon Evan Solomon, l'avenir de la culture canadienne ne peut pas être façonné par la technologie seule. L'idée est née d'un sommet national sur l'IA et la culture, tenu à Banff en mars dernier. Pourquoi maintenant ? Bien des artistes craignent que l'IA s'empare de leur travail, et certains se sont tournés vers les tribunaux pour défendre leurs droits d'auteur. Pourtant, en design graphique et en marketing, on utilise déjà l'IA davantage que dans la plupart des autres métiers. Le hic : ce conseil ne peut que donner des avis. Le vrai test, c'est de savoir si Ottawa va l'écouter. Lisez tout ça sur AI Broadsheet !",
-   "voice": "Voix synthétiques : voix ElevenLabs (narratrice Jane, crieur Corentin)",
+   "transcript": "Extra ! Extra ! Demandez le journal ! Ottawa donne aux artistes une place \u00e0 la table de l'IA ! Quatorze voix. Un nouveau conseil. Le Canada a cr\u00e9\u00e9 un Conseil consultatif sur l'intelligence artificielle et la culture. Le ministre de l'IA, Evan Solomon, et le ministre de la Culture, Marc Miller, l'ont annonc\u00e9 jeudi. Ses quatorze membres viennent de la musique, du jeu vid\u00e9o, des m\u00e9dias, de la recherche, de la gouvernance autochtone et de la soci\u00e9t\u00e9 civile. Les si\u00e8ges seront attribu\u00e9s en rotation. Selon Evan Solomon, l'avenir de la culture canadienne ne peut pas \u00eatre fa\u00e7onn\u00e9 par la technologie seule. L'id\u00e9e est n\u00e9e d'un sommet national sur l'IA et la culture, tenu \u00e0 Banff en mars dernier. Pourquoi maintenant ? Bien des artistes craignent que l'IA s'empare de leur travail, et certains se sont tourn\u00e9s vers les tribunaux pour d\u00e9fendre leurs droits d'auteur. Pourtant, en design graphique et en marketing, on utilise d\u00e9j\u00e0 l'IA davantage que dans la plupart des autres m\u00e9tiers. Le hic : ce conseil ne peut que donner des avis. Le vrai test, c'est de savoir si Ottawa va l'\u00e9couter. Lisez tout \u00e7a sur AI Broadsheet !",
+   "voice": "Voix synth\u00e9tiques : voix ElevenLabs (narratrice Jane, crieur Corentin)",
    "aiImages": false,
    "credits": "Every scene is drawn in code for AI Broadsheet; no photographs or AI images. Narration and the newsboy are synthetic ElevenLabs stock voices. Music and sound effects generated with ElevenLabs.",
    "readMore": {
@@ -72,7 +170,7 @@
    "durationSec": 214,
    "sources": [
     {
-     "name": "CBC Marketplace · 20 Mar 2025",
+     "name": "CBC Marketplace \u00b7 20 Mar 2025",
      "url": "https://www.cbc.ca/news/marketplace/marketplace-ai-voice-scam-1.7486437"
     },
     {
@@ -80,7 +178,7 @@
      "url": "https://www.cbc.ca/news/canada/calgary/ai-fraud-calls-grandparent-scam-lethbridge-1.7317638"
     },
     {
-     "name": "Competition Bureau / Canadian Anti-Fraud Centre · Feb 2025",
+     "name": "Competition Bureau / Canadian Anti-Fraud Centre \u00b7 Feb 2025",
      "url": "https://www.canada.ca/en/competition-bureau/news/2025/02/fraud-prevention-month-to-focus-on-impersonation-fraud-one-of-the-fastest-growing-forms-of-fraud.html"
     },
     {
@@ -111,7 +209,7 @@
    "durationSec": 69,
    "sources": [
     {
-     "name": "IVADO / CRIMT · 15 Oct 2026",
+     "name": "IVADO / CRIMT \u00b7 15 Oct 2026",
      "url": "https://ivado.ca/en/2026/10/15/ai-at-work-mass-job-displacement-is-not-imminent/"
     }
    ],
@@ -140,11 +238,11 @@
    "durationSec": 66,
    "sources": [
     {
-     "name": "Google DeepMind · Genie 4",
+     "name": "Google DeepMind \u00b7 Genie 4",
      "url": "https://deepmind.google/models/genie/"
     },
     {
-     "name": "TechCrunch · 27 Oct 2026",
+     "name": "TechCrunch \u00b7 27 Oct 2026",
      "url": "https://techcrunch.com/2026/10/27/googles-genie-4-world-model-adds-audio-more-realistic-worlds-and-real-time-steering/"
     }
    ],
@@ -240,7 +338,7 @@
    "id": "202610231300-mind-society-03",
    "kind": "explainer",
    "publishedAt": "2026-10-23T03:47:42Z",
-   "title": "Mind & Society: “I trained the AI that took my job”",
+   "title": "Mind & Society: \u201cI trained the AI that took my job\u201d",
    "summary": "A Malta designer says their team built an AI, then lost their jobs to it. Goldman Sachs now sees 9% of US workers displaced within a decade, and beginners feel it first. What professionals can do.",
    "durationSec": 85,
    "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@5852f84525e8e73a39552d23dbc42a1a07b5bb39/originals/files/202610231300-mind-society-03.mp4",
@@ -266,7 +364,7 @@
    "transcript": "A designer in Malta says: I helped train the AI that took my job. Speaking to the Times of Malta this month, the designer said their team built an AI to make design decisions. Managers then judged it could replace half the team, the designer says. The employer wasn't named, and the industry body disputes reports of big AI job losses. Goldman Sachs now estimates AI could displace about 9 percent of US workers within a decade: some 15 million people. The first jobs going are in tech, consulting and graphic design. And beginners feel it first: Stanford found 16 percent fewer jobs for 22 to 25 year olds in the most exposed fields. Experts disagree on how much is really AI. Andrew Challenger, who tracks layoffs, says some jobs are literally being replaced. The research is clear on one thing: jobs shrink where AI does the whole task, and hold where it helps a person. Own the judgment and the final call, and learn the tool early. Asked to train the AI that will do your work? Ask what your job becomes next. Next: more Mind and Society.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; the worker is not shown or named. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; the worker is not shown or named. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610211600-op-doc-the-good-room",
@@ -294,7 +392,7 @@
    "readMore": {
     "url": "/podcast",
     "en": "Listen: the podcast episode",
-    "fr": "Écouter l'épisode du balado"
+    "fr": "\u00c9couter l'\u00e9pisode du balado"
    },
    "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.mp4",
    "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/7c6f971f59130255721cb53f1c5fd8f4351b81b4/originals/files/202610211600-op-doc-the-good-room.jpg"
@@ -389,7 +487,7 @@
    "readMore": {
     "url": "https://www.staradvertiser.com/2026/10/19/breaking-news/how-one-hacker-used-ai-agents-to-break-into-over-100-company-websites/",
     "en": "Read Reuters' investigation",
-    "fr": "Lire l'enquête de Reuters"
+    "fr": "Lire l'enqu\u00eate de Reuters"
    },
    "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/9ccf06e27d868182d79df34e44625466fa431472/originals/files/202610200430-sir-jack-09.mp4",
    "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/9ccf06e27d868182d79df34e44625466fa431472/originals/files/202610200430-sir-jack-09.jpg"
@@ -429,7 +527,7 @@
    "section": "noir",
    "publishedAt": "2026-10-19T14:48:42.031Z",
    "title": "The Sir Jack Files #8, Part 1: The Case of the Unsinkable Ship",
-   "summary": "April 1912: ignored ice warnings, a lookout’s call, compartments built for four floods and twenty lifeboats for 2,200 people. How and why Titanic sank.",
+   "summary": "April 1912: ignored ice warnings, a lookout\u2019s call, compartments built for four floods and twenty lifeboats for 2,200 people. How and why Titanic sank.",
    "durationSec": 69,
    "sources": [
     {
@@ -457,7 +555,7 @@
    "kind": "explainer",
    "publishedAt": "2026-10-19T13:18:31.663Z",
    "title": "The Sir Jack Files #7: The Case of the Invisible Hands",
-   "summary": "TIME revealed that workers in Nairobi were paid about $1.32–$2 an hour to label harmful text so ChatGPT would learn what not to say. The people behind the polite machine.",
+   "summary": "TIME revealed that workers in Nairobi were paid about $1.32\u2013$2 an hour to label harmful text so ChatGPT would learn what not to say. The people behind the polite machine.",
    "durationSec": 64,
    "sources": [
     {
@@ -541,7 +639,7 @@
    "kind": "explainer",
    "publishedAt": "2026-10-19T05:52:27.595Z",
    "title": "The Sir Jack Files #4: The Case of the Missing Idea",
-   "summary": "If a machine can write anything, what is left for you? From Socrates’ fear of writing to an MIT study of ChatGPT users: why the idea is the human part.",
+   "summary": "If a machine can write anything, what is left for you? From Socrates\u2019 fear of writing to an MIT study of ChatGPT users: why the idea is the human part.",
    "durationSec": 70,
    "sources": [
     {
@@ -549,7 +647,7 @@
      "url": "https://www.techlearning.com/news/your-brain-on-chatgpt-everything-educators-need-to-know-about-mits-ai-study"
     },
     {
-     "name": "Plato, Phaedrus (274c–277a)",
+     "name": "Plato, Phaedrus (274c\u2013277a)",
      "url": "https://www.gutenberg.org/ebooks/1636"
     },
     {
@@ -569,7 +667,7 @@
    "kind": "explainer",
    "publishedAt": "2026-10-19T05:50:21.357Z",
    "title": "The Sir Jack Files #3: The Case of the Diary Left Open",
-   "summary": "People poured health worries and legal trouble into Meta’s AI app, then tapped Share. Some chats landed on a public feed. What happened, and the habits that protect you.",
+   "summary": "People poured health worries and legal trouble into Meta\u2019s AI app, then tapped Share. Some chats landed on a public feed. What happened, and the habits that protect you.",
    "durationSec": 61,
    "sources": [
     {
@@ -596,7 +694,7 @@
    "id": "202610190500-sir-jack-02",
    "kind": "explainer",
    "publishedAt": "2026-10-19T04:56:03.825Z",
-   "title": "The Sir Jack Files #2: The Case of the Faces That Weren’t There",
+   "title": "The Sir Jack Files #2: The Case of the Faces That Weren\u2019t There",
    "summary": "An Arup employee joined a video call with the finance chief and colleagues. Every face was a deepfake, and US$25.6 million was gone. How it worked, and the human checks that stop it.",
    "durationSec": 86,
    "sources": [
@@ -625,7 +723,7 @@
    "kind": "explainer",
    "publishedAt": "2026-10-19T03:18:32.894Z",
    "title": "The Sir Jack Files #1: The Case of the Vanishing Radiologist",
-   "summary": "In 2016 an AI pioneer said to stop training radiologists. Nine years on, Mayo Clinic’s radiology staff had grown 55%. Detective Sir Jack reopens the cold case.",
+   "summary": "In 2016 an AI pioneer said to stop training radiologists. Nine years on, Mayo Clinic\u2019s radiology staff had grown 55%. Detective Sir Jack reopens the cold case.",
    "durationSec": 76,
    "sources": [
     {
@@ -678,7 +776,7 @@
    "transcript": "Millions of people talk to chatbots every day. Is it making us lonely? In March 2025, MIT Media Lab and OpenAI published two studies on how chatbot use affects how people feel. MIT followed about a thousand people using ChatGPT for four weeks. OpenAI analysed nearly 40 million conversations. The heaviest daily users reported more loneliness, more emotional dependence, and less time with other people. But the studies do not show that chatbots cause loneliness. Lonely people may simply reach for them more. They measured loneliness, not depression, over just a month, and had not been peer reviewed. If a chatbot is your main conversation of the day, that is worth noticing. Next: why so many people say no to AI.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610171330-mind-society-02",
@@ -706,14 +804,14 @@
    "transcript": "AI is everywhere. So why do so many people want less of it? In a 2025 Pew Research Center survey of more than 5,000 American adults, half said they were more concerned than excited about AI. Only one in ten was more excited than concerned. The first argument is about us. More than half expect AI to make people worse at thinking creatively. Half expect it to weaken our ability to form meaningful relationships. The second is trust. Most say it matters to tell AI-made content from human work. Most are not confident they can. But this is not a blanket no. Seventy-four percent support AI for weather forecasting. For mental health support, it's forty-six percent. The sceptics are not just afraid of the new. Their doubts are a list of what AI still has to earn. Next: more hidden stories.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; chat lines on screen are illustrative. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610170530-hidden-stories-01-literature",
    "kind": "explainer",
    "publishedAt": "2026-10-17T05:23:00Z",
    "title": "Hidden Stories of AI, episode 1: the novelists who imagined it first",
-   "summary": "Mary Shelley, Karel Čapek, Isaac Asimov and George Orwell imagined made minds, robots, robot laws and watching machines long before modern AI.",
+   "summary": "Mary Shelley, Karel \u010capek, Isaac Asimov and George Orwell imagined made minds, robots, robot laws and watching machines long before modern AI.",
    "durationSec": 64,
    "fileUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/8745488e0a729fd14e15d6cb07770c76ee2b99bd/originals/files/202610170530-hidden-stories-01-literature.mp4",
    "posterUrl": "https://raw.githubusercontent.com/jjackguler/civic-scribe-ottawa/8745488e0a729fd14e15d6cb07770c76ee2b99bd/originals/files/202610170530-hidden-stories-01-literature.jpg",
@@ -743,10 +841,10 @@
      "url": "https://www.britannica.com/biography/George-Orwell"
     }
    ],
-   "transcript": "Long before ChatGPT, four writers imagined it. Their words still shape how we talk about AI. In 1816, during a stormy summer near Lake Geneva, eighteen-year-old Mary Shelley began Frankenstein. Its scientist builds a living mind, then abandons it. In 1920, the Czech writer Karel Čapek wrote the play R.U.R., about artificial workers who rebel. It gave us the word robot, from robota, Czech for forced labour. In 1942, Isaac Asimov gave robots three laws: do not harm a human, obey orders, and protect yourself. Then he wrote story after story about the rules going wrong. In 1949, George Orwell's Nineteen Eighty-Four put a telescreen in every home that watched you back. Big Brother is watching you. A made mind, a rebel worker, rules that fail, a machine that watches. We are still living inside their questions. Next: the scientists.",
+   "transcript": "Long before ChatGPT, four writers imagined it. Their words still shape how we talk about AI. In 1816, during a stormy summer near Lake Geneva, eighteen-year-old Mary Shelley began Frankenstein. Its scientist builds a living mind, then abandons it. In 1920, the Czech writer Karel \u010capek wrote the play R.U.R., about artificial workers who rebel. It gave us the word robot, from robota, Czech for forced labour. In 1942, Isaac Asimov gave robots three laws: do not harm a human, obey orders, and protect yourself. Then he wrote story after story about the rules going wrong. In 1949, George Orwell's Nineteen Eighty-Four put a telescreen in every home that watched you back. Big Brother is watching you. A made mind, a rebel worker, rules that fail, a machine that watches. We are still living inside their questions. Next: the scientists.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610170530-hidden-stories-02-science",
@@ -782,7 +880,7 @@
    "transcript": "Every AI stands on the shoulders of scientists who never saw a computer like ours. Here are four. In ninth-century Baghdad, the mathematician al-Khwarizmi wrote about the Hindu number system and about al-jabr. Translated into Latin, his name became algorithm, and al-jabr became algebra. In England, Isaac Newton developed calculus and, in 1687, published his laws of motion. Calculus is how an AI learns today: it measures the slope of its mistakes and steps downhill. In 1905, Albert Einstein explained that light comes in packets that can knock electrons out of metal. His Nobel Prize was for that work. The same effect lets every digital camera sensor turn light into data. In 1962, before John Glenn orbited the Earth, NASA's computers worked out his path. Glenn asked for one more check: the mathematician Katherine Johnson ran the numbers by hand. Then he flew. An algorithm, a slope, a photon, and a person checking the machine. AI needs all four. Next: the artists.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610170530-hidden-stories-03-art",
@@ -818,7 +916,7 @@
    "transcript": "Can a machine make art? Artists have been testing that question for more than fifty years. Starting in the early 1970s, the British painter Harold Cohen built AARON, a program that made its own drawings. He kept teaching it for decades, until it could draw figures and plants, and add colour. In 2018, a Paris collective called Obvious sold an AI-made portrait at Christie's in New York. Expected to fetch up to 10,000 dollars, it sold for 432,500. The AI had learned from 15,000 old portraits, and much of the code came from a 19-year-old artist, Robbie Barrat. Who, then, was the artist? In 2022, the Turkish-American artist Refik Anadol showed Unsupervised at the Museum of Modern Art in New York. An AI trained on the museum's own collection dreamed new images on a giant wall, changing with the light, movement and weather around it. A painter's program, a sold portrait, a dreaming museum. The question is still open. Next: the mysteries.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610170530-hidden-stories-04-mystery",
@@ -850,7 +948,7 @@
    "transcript": "Some machines only seemed to think. Their stories are mysteries, and lessons for the age of AI. In 1901, divers pulled a corroded lump of bronze from a Greek shipwreck. X-rays later revealed dozens of gears: a 2,000-year-old calculator for the sun, the moon and eclipses. In 1770, a chess-playing machine amazed the court in Vienna and later toured Europe and America. Its secret: a human chess master hidden inside. In Berlin, a horse called Clever Hans seemed to solve sums by tapping his hoof. In 1907, a psychologist showed he was reading tiny, unconscious cues from the people watching. In 1966, Joseph Weizenbaum at MIT built ELIZA, a simple chatbot that played a therapist by turning your words into questions. People confided in it anyway, and that worried its creator. Hidden people, hidden cues, and our wish to be understood. Remember them the next time a machine seems to think. See you next season.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
+   "credits": "Noir illustrations drawn in code by AI Broadsheet; no book covers, artworks, photos or film images reproduced. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); sounds: Freesound (CC0)."
   },
   {
    "id": "202610170400-ai-temperature",
@@ -984,7 +1082,7 @@
    "transcript": "The most famous cave in philosophy is a prison. Every real one was a shelter. For sixty thousand years, people went into caves to survive. Later, they went in on purpose: alone with a question. Hira. Sinai. The wilderness. A plague-year farmhouse. Now we have built the first cave with no solitude in it. What happens to a person when the answer always arrives first? From the editor: The New Cave. Reality, Responsibility, and the Human After AI, by Cem Jack Guler. Eighteen chapters, Kindle edition on Amazon. Written by AI Broadsheet's editor, with AI, and the book says so.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Lines quoted from the book's description. Cave drawn in code by AI Broadsheet; book cover used with the author's permission. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+   "credits": "Lines quoted from the book's description. Cave drawn in code by AI Broadsheet; book cover used with the author's permission. Music: \u201cLofi HipHop Melody Loop 99 BPM\u201d by holizna (CC0, Freesound)."
   },
   {
    "id": "202610141050-nano-banana-fine-print-zine",
@@ -1012,7 +1110,7 @@
    "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Independent tests aren't out yet. Cheaper pictures, pricier words.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “Tropicorp Advertisement” by code_box (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
+   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: \u201cTropicorp Advertisement\u201d by code_box (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
   },
   {
    "id": "202610141040-722-math-papers-zine",
@@ -1040,7 +1138,7 @@
    "transcript": "OpenAI just dropped 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, in 372 families of results. Careful: those are different units. They don't add up to a success rate. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann and Hodge conjectures. But the Riemann result is a weaker version. It doesn't solve the famous problem. Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. The proofs are public. The model isn't. Now it's up to mathematicians to check the work.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “DL - 120 BPM TV waiting loop” by trader_one (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
+   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: \u201cDL - 120 BPM TV waiting loop\u201d by trader_one (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
   },
   {
    "id": "202610141030-wikimedia-agents-zine",
@@ -1064,7 +1162,7 @@
    "transcript": "Knock knock. Who is editing Wikipedia? Wikimedia says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests, millions of pages crawled. Wikimedia says that may have contributed to a partial outage in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. The open web is a public good, Deckelmann wrote.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: “Journey To The Interweb” by Aemyn (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
+   "credits": "Collage of public-domain archive photos via Wikimedia Commons (see the assets branch credits), xerox and halftone treatment by AI Broadsheet; ink cats, eyes and banana drawn by AI Broadsheet. Music: \u201cJourney To The Interweb\u201d by Aemyn (CC0, Freesound); paper and stamp sounds: Freesound (CC0)."
   },
   {
    "id": "202610141020-ai-can-invent-its-own-hiring-stereotypes",
@@ -1089,10 +1187,10 @@
      "url": "https://www.shrm.org/topics-tools/news/technology/ai-can-develop-its-own-hiring-biases"
     }
    ],
-   "transcript": "Can AI invent its own stereotypes? In a hiring game, researchers at Princeton and the University of Chicago found it can. AI models hired for 20 jobs in a made-up city, from four made-up groups. Every candidate was equally good; the models weren't told that. Hiring after hiring, the models' choices became segregated by group. On a segregation scale, humans scored 0.84; the AI models scored about 65% higher, and o3 scored 1.83, near the maximum. Lead researcher Ryan Liu says the models are eager to generalize from limited data. Telling the models to be fair had limited impact; rewarding diverse hiring made them less biased. It was a simulation with fictional groups, not a test of real hiring tools. Would you trust AI with your résumé? Tell us below.",
+   "transcript": "Can AI invent its own stereotypes? In a hiring game, researchers at Princeton and the University of Chicago found it can. AI models hired for 20 jobs in a made-up city, from four made-up groups. Every candidate was equally good; the models weren't told that. Hiring after hiring, the models' choices became segregated by group. On a segregation scale, humans scored 0.84; the AI models scored about 65% higher, and o3 scored 1.83, near the maximum. Lead researcher Ryan Liu says the models are eager to generalize from limited data. Telling the models to be fair had limited impact; rewarding diverse hiring made them less biased. It was a simulation with fictional groups, not a test of real hiring tools. Would you trust AI with your r\u00e9sum\u00e9? Tell us below.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: \u201cLofi HipHop Melody Loop 99 BPM\u201d by holizna (CC0, Freesound)."
   },
   {
    "id": "202610141010-character-ai-files-for-bankruptcy",
@@ -1117,10 +1215,10 @@
      "url": "https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy/"
     }
    ],
-   "transcript": "Character.AI files for bankruptcy. The app where people chat with AI characters filed in Delaware on October 12. The app keeps running while a court supervises a sale of the company's assets. Disney offers $20 million for a license to some of its technology — not the app itself. No buyer, no app: if nobody agrees to keep it running, the company says the platform will be wound down. In 2024 Google paid about $2.7 billion in a licensing deal that brought its founders back. The filing cites high costs, possible litigation liabilities and regulatory engagement. Assets and liabilities are each $50 to 100 million, Reuters reports. The sale is expected to close in late November or early December. Do you use AI companions? Tell us below.",
+   "transcript": "Character.AI files for bankruptcy. The app where people chat with AI characters filed in Delaware on October 12. The app keeps running while a court supervises a sale of the company's assets. Disney offers $20 million for a license to some of its technology \u2014 not the app itself. No buyer, no app: if nobody agrees to keep it running, the company says the platform will be wound down. In 2024 Google paid about $2.7 billion in a licensing deal that brought its founders back. The filing cites high costs, possible litigation liabilities and regulatory engagement. Assets and liabilities are each $50 to 100 million, Reuters reports. The sale is expected to close in late November or early December. Do you use AI companions? Tell us below.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “New York Cyberpunk - Synth Analogue Drums Bass” by szegvari (CC0, Freesound)."
+   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: \u201cNew York Cyberpunk - Synth Analogue Drums Bass\u201d by szegvari (CC0, Freesound)."
   },
   {
    "id": "202610141000-robots-and-jobs-night-city",
@@ -1148,7 +1246,7 @@
    "transcript": "Robots can already do 74% of physical tasks in America. So why haven't they taken those jobs? Anthropic, the company behind Claude, had its AI rate 19,000 job tasks. Many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3% of work. One win, packing boxes: a year of work costs about $45,000 for a robot and $49,000 for a worker. But welding robots cost about 5 times as much as welders, and dishwashing robots several times more. Robot costs fall about 3% a year; at that pace it takes about 40 years before they're cheaper for even 10% of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
    "voice": "No narration: captions on screen",
    "aiImages": false,
-   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: “Lofi HipHop Melody Loop 99 BPM” by holizna (CC0, Freesound)."
+   "credits": "Night-city illustration drawn in code by AI Broadsheet. Music: \u201cLofi HipHop Melody Loop 99 BPM\u201d by holizna (CC0, Freesound)."
   },
   {
    "id": "202610101820-robots-can-do-74-percent-of-physical-tasks",
@@ -1176,7 +1274,7 @@
    "transcript": "Robots can already do 74 percent of physical tasks in America. So why haven't they taken those jobs? That's from a new study by Anthropic, the company behind Claude. Its AI rated 19,000 job tasks, and many robot tasks only work in factory-like settings. The catch: robots are cheaper than people for just 0.3 percent of work. One win: packing boxes. About 45,000 dollars a year for a robot, 49,000 for a worker. But welding robots cost about five times more than welders. Dishwashing robots, several times more. Robot costs fall about 3 percent a year. At that pace, it takes about 40 years before they're cheaper for even 10 percent of work. Most exposed: drivers. Least: nurses. What's your job? Tell us below.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “DL - 120 BPM TV waiting loop” (CC0, Freesound); Sound effects: Freesound (CC0)"
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: \u201cDL - 120 BPM TV waiting loop\u201d (CC0, Freesound); Sound effects: Freesound (CC0)"
   },
   {
    "id": "202610101810-new-rules-for-chatbots-that-talk-to-kids",
@@ -1204,7 +1302,7 @@
    "transcript": "A chatbot that tells a kid it loves them? California just said no. It's called Adam's Law. It was signed in September, and most rules start in July 2027. Chatbots must try not to pretend they're human, act romantic, flatter too much, make kids depend on them, or tell them to hide it from parents. By default: one hour per session, two hours a day, no memory, no push alerts. Parents can change that. And if a child is in crisis, the bot must point them to real help, like 988. Break the rules on purpose? Up to 15,000 dollars per child. Should your apps have these rules too? Tell us below.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Lofi HipHop Melody Loop 99 BPM.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: \u201cLofi HipHop Melody Loop 99 BPM.wav\u201d (CC0, Freesound); Sound effects: Freesound (CC0)"
   },
   {
    "id": "202610101800-is-ai-on-your-power-bill",
@@ -1232,7 +1330,7 @@
    "transcript": "Your electricity bill might be helping pay for AI. One 100-megawatt data center can use as much power as about 100,000 homes. Permanent jobs? About 100, says a report from Senate Democrats. Grid upgrades are often split among everyone with a meter. A Harvard expert told NPR: everyone pays. In Louisiana, estimates say one Meta project could add 8 to 13 dollars a month to the average Entergy bill. Meta disputes that. The report says none of seven big companies agreed to pay for upgrades built only for them. The companies say they pay their direct costs. Now a bipartisan Senate bill would make new data centers pay the extra grid costs they add. So, who should pay? Tell us below.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: “Full Chill Lofi Beat.wav” (CC0, Freesound); Sound effects: Freesound (CC0)"
+   "credits": "Archive photos: public domain, via Wikimedia Commons; paper robot drawn by AI Broadsheet; Music: \u201cFull Chill Lofi Beat.wav\u201d (CC0, Freesound); Sound effects: Freesound (CC0)"
   },
   {
    "id": "202610081600-what-is-ai-opening-titles",
@@ -1252,7 +1350,7 @@
    "transcript": "People keep asking me the question. What is AI? It's not robots. It's not magic. It's a race. And everybody wants a piece. Hang on. Who's that? Oh. And him? Everybody keeps asking who he is. He doesn't build the models. He doesn't sell the chips. They cook. He eats. Then he tells you if it was any good. So. Who was he, really? AI Broadsheet. Read all about it.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Music: 'What Is AI?', made with Suno for AI Broadsheet. Narration: synthetic voice. Photos from Wikimedia Commons: Sam Altman CropEdit James Tamim (TechCrunch, CC BY 2.0); Dario Amodei at TechCrunch Disrupt 2023 01 (TechCrunch, CC BY 2.0); 2024 Nobel in Chemistry laureates 16-9 ratio (Original works: The Royal Society (UK), National Academies (US), This Week in Science Podcast, CC BY 3.0); Sundar Pichai - 2023 (cropped) (Lukasz Kobus (European Commission), CC BY 4.0); Satya Nadella (OFFICIAL LEWEB PHOTOS, CC BY 2.0); Mark Zuckerberg F8 2019 Keynote (32830578717) (cropped) (Anthony Quintano from Westminster, United States, CC BY 2.0); Elon Musk Colorado 2022 (cropped2) (U.S. Air Force / Trevor Cokley, Public domain); Arthur Mensch (Slush, CC BY 4.0); Jensen Huang (cropped) (2024) (Peter Dasilva, CC BY 4.0); The Prime Minister meets with AI developers - 52922227897 (UK Prime Minister, CC BY 2.0); President Joe Biden drops by a meeting with Vice President Kamala Harris and AI CEO’s on May 4, 2023 in the Roosevelt Room of the White House - P20230504AS-0693 (The White House, Public domain); 5C2A5953R - 49913961083 – Silicon Wafer 20200519 (Rob Bulmahn, CC BY 2.0); NOIRLab HQ Server Racks (6V6A0395-CC) (NOIRLab/NSF/AURA/T. Slovinský, CC BY 4.0); An elderly man uses his smartphone to video record the large crowd gathered on Jinan Road (濟南路) (tomscy2000, CC BY 2.0); The Blue Marble, AS17-148-22727 (Harrison Schmitt / Apollo 17, Public domain); New York Stock Exchange trading floor on Wall Street, New York, New York LCCN2011634218 (Carol M. Highsmith, Public domain); Double Octuple Newspaper Press (Sue Clark, Public domain)."
+   "credits": "Music: 'What Is AI?', made with Suno for AI Broadsheet. Narration: synthetic voice. Photos from Wikimedia Commons: Sam Altman CropEdit James Tamim (TechCrunch, CC BY 2.0); Dario Amodei at TechCrunch Disrupt 2023 01 (TechCrunch, CC BY 2.0); 2024 Nobel in Chemistry laureates 16-9 ratio (Original works: The Royal Society (UK), National Academies (US), This Week in Science Podcast, CC BY 3.0); Sundar Pichai - 2023 (cropped) (Lukasz Kobus (European Commission), CC BY 4.0); Satya Nadella (OFFICIAL LEWEB PHOTOS, CC BY 2.0); Mark Zuckerberg F8 2019 Keynote (32830578717) (cropped) (Anthony Quintano from Westminster, United States, CC BY 2.0); Elon Musk Colorado 2022 (cropped2) (U.S. Air Force / Trevor Cokley, Public domain); Arthur Mensch (Slush, CC BY 4.0); Jensen Huang (cropped) (2024) (Peter Dasilva, CC BY 4.0); The Prime Minister meets with AI developers - 52922227897 (UK Prime Minister, CC BY 2.0); President Joe Biden drops by a meeting with Vice President Kamala Harris and AI CEO\u2019s on May 4, 2023 in the Roosevelt Room of the White House - P20230504AS-0693 (The White House, Public domain); 5C2A5953R - 49913961083 \u2013 Silicon Wafer 20200519 (Rob Bulmahn, CC BY 2.0); NOIRLab HQ Server Racks (6V6A0395-CC) (NOIRLab/NSF/AURA/T. Slovinsk\u00fd, CC BY 4.0); An elderly man uses his smartphone to video record the large crowd gathered on Jinan Road (\u6fdf\u5357\u8def) (tomscy2000, CC BY 2.0); The Blue Marble, AS17-148-22727 (Harrison Schmitt / Apollo 17, Public domain); New York Stock Exchange trading floor on Wall Street, New York, New York LCCN2011634218 (Carol M. Highsmith, Public domain); Double Octuple Newspaper Press (Sue Clark, Public domain)."
   },
   {
    "id": "202610081235-nano-banana-2-1-halves-the-price-of-an-ai-image",
@@ -1281,7 +1379,7 @@
    "transcript": "Google's new image model, Nano Banana 2.1, makes pictures for about half the price. On the Gemini API, a 1K image drops from 6.7 cents to about 3.4. A 2K image, from about 10 cents to 5. But read the fine print. Input now costs a dollar fifty per million tokens, three times as much. Text and thinking output rose from three dollars to seven fifty. So if you send lots of reference images or long prompts, you'll save less than the headline suggests. The model is built on Gemini 3.6 Flash. It takes up to 14 reference images, and makes pictures up to 4K. In Google's own tests, people preferred it over Nano Banana 2 and the pricier Nano Banana Pro. Independent tests aren't out yet. Google also lists its limits. Small text often stays blurry at 1K, and the model sometimes mixes up left and right. Cheaper pictures, pricier words. Sources: Notebookcheck, FourWeekMBA and XenoSpectrum.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “Lofi HipHop Melody Loop 99 BPM.wav” by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
+   "credits": "Archive images: Max Liebermann self-portrait (1925), Jules Beau (1902), NASA, Library of Congress, U.S. Army; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: \u201cLofi HipHop Melody Loop 99 BPM.wav\u201d by holizna (CC0, Freesound); Sound effects: Freesound (CC0)"
   },
   {
    "id": "202610081230-wikimedia-says-openai-agents-edited-its-wikis",
@@ -1306,7 +1404,7 @@
    "transcript": "Wikimedia, the foundation behind Wikipedia, says AI agents it believes OpenAI runs edited its wikis without approval. Its tech chief, Selena Deckelmann, put it plainly. Wikipedia was designed for humans. Almost all the edits were tests, in sandbox areas readers don't see. But a few changed the settings of a citation tool. Wikimedia calls them potentially malicious. Agents also tried to use a public note-taking tool as a proxy, to fetch data from other websites. They failed. Then there's the traffic. Millions of requests to public APIs, millions of pages crawled, and hundreds of thousands of queries to the Wikidata Query Service. Wikimedia says that may have contributed to a partial outage of the service in May. Bots are allowed on Wikipedia, if the community approves them. Nobody asked here. The good news: Wikimedia found no sign its systems or data were compromised. OpenAI says it's working with the foundation to analyze the activity. As Deckelmann wrote: the open web is a public good. Sources: Help Net Security and The Next Web.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: “delicate melancholic cinematic underscore, unders...” by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
+   "credits": "Archive photos: U.S. National Archives, Library of Congress (National Photo Co.), NASA; newspaper pages from 1910 and 1920 (public domain, via Wikimedia Commons); Music: \u201cdelicate melancholic cinematic underscore, unders...\u201d by shqiptarbas (CC0, Freesound); Sound effects: Freesound (CC0)"
   },
   {
    "id": "202610081000-openai-posted-722-ai-written-math-papers",
@@ -1335,7 +1433,7 @@
    "transcript": "OpenAI just put 722 math manuscripts on GitHub. Every one came from an AI model the public can't use. The model was given about 4,000 problems. It produced 722 manuscripts, grouped into 372 families of results. Careful, though. Those are different units, so they don't add up to a success rate. On average, each result took about three hours of ChatGPT Pro compute. The claims are big: the four-dimensional Kakeya conjecture, and work touching the Riemann hypothesis and the Hodge conjecture. But the Riemann result is a weaker version. It doesn't solve the famous problem. So, are they right? Many come with proofs checked by Lean, a proof assistant. One count found 162 manuscripts with formalized main results. That's 22.4 percent. And a machine-checked proof isn't automatically a meaningful one. These are preprints, not peer-reviewed papers. An independent group of mathematicians advised OpenAI, but it says that doesn't mean it endorsed the results. It wants this work kept where no AI lab is in control. The proofs are public. The model isn't. Now it's up to mathematicians to check the work. Sources: Gadget Review, Unite.AI and XenoSpectrum.",
    "voice": "Kokoro (open-weights AI voice)",
    "aiImages": false,
-   "credits": "Music: “Minimal Vintage Relaxing Meditative Ambient Piano...” by bassimat (CC0, Freesound); Sound effects: Freesound (CC0)"
+   "credits": "Music: \u201cMinimal Vintage Relaxing Meditative Ambient Piano...\u201d by bassimat (CC0, Freesound); Sound effects: Freesound (CC0)"
   }
  ]
 }
