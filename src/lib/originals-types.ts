@@ -84,7 +84,25 @@ export type Original = {
   correction?: string;
 };
 
-export type OriginalsManifest = { updatedAt: string; items: Original[] };
+export type OriginalsManifest = {
+  updatedAt: string;
+  items: Original[];
+  /** Set on a trimmed copy (no transcripts, at most three source names): the browser fetches the full manifest at once. */
+  slim?: boolean;
+};
+
+/**
+ * A light copy for pages that only show cards (the front page): transcripts and full source
+ * lists are dropped, so they are not embedded in the HTML. Cards need at most three source names.
+ */
+export function slimOriginals(m: OriginalsManifest | null): OriginalsManifest | null {
+  if (!m) return m;
+  return {
+    updatedAt: m.updatedAt,
+    slim: true,
+    items: m.items.map(o => ({ ...o, transcript: "", sources: o.sources.slice(0, 3).map(x => ({ name: x.name, url: "" })) })),
+  };
+}
 
 /** Readable address of an original's own page: /video/<slug of its title>. */
 export const videoSlug = (o: { title: string }) => slugify(o.title, { max: 80 });

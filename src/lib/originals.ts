@@ -33,6 +33,8 @@ export function useOriginals(initial?: OriginalsManifest | null) {
     queryKey: ["originals"],
     queryFn: () => getOriginals(),
     initialData: initial ?? undefined,
+    // A trimmed copy from the loader counts as stale, so the full manifest replaces it right after hydration.
+    initialDataUpdatedAt: initial?.slim ? 0 : undefined,
     staleTime: 5 * 60_000,
     refetchInterval: 15 * 60_000,
   });

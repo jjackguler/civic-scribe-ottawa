@@ -396,3 +396,10 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Young Lab "For teachers and parents" button now goes to /newsletter?utm_source=aibroadsheet&utm_medium=younglab
   &utm_campaign=<game id> (same tab), so teachers see the school field. Other sign-up buttons are unchanged.
 - To list schools: beehiiv → Subscribers, filter or export by the "School" field.
+
+## Front-page speed (24 Nov 2026)
+- Measured from a real browser: server answers in 0.04–1.4 s, LCP 0.3 s. Cloudflare Web Analytics' "TTFB P75 55 s"
+  is not what visitors get (low traffic, background tabs and automated loads skew it); verify before chasing it.
+- The front page's loader now embeds a slim originals manifest (`slimOriginals`: no transcripts, three source names),
+  about 100 KB less HTML; `useOriginals` refetches the full manifest right after hydration.
+- `loadFrontPageNews` waits 300 ms (was 1 s) before serving the stored desk; a full build takes about 2 s anyway.
