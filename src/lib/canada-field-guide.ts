@@ -12,7 +12,7 @@
 import type { Bi } from "./i18n";
 
 /** Pinned commit on the `media` branch that holds the tour videos and poster. */
-const MEDIA_SHA = "a359d104ce2ba3ab599f4a477ce7875a0f292bd4";
+const MEDIA_SHA = "fe5bccd62fb278d0d4ac011a87382e3cd2c4a5f0";
 const media = (file: string) =>
   `https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@${MEDIA_SHA}/labs/canada-field-guide/${file}`;
 
@@ -25,8 +25,8 @@ export const FIELD_GUIDE = {
   } as Bi,
   genieUrl: "https://labs.google/fx/projectgenie/tools/projectgenie/e?experienceId=d6babe95-05ea-4e34-a23e-7db8a1336664",
   recorded: "2026-11-23",
-  video: { en: media("canada-field-guide-tour.mp4"), fr: media("canada-field-guide-tour-fr.mp4") } as Bi,
-  poster: media("poster.jpg"),
+  video: { en: media("canada-field-guide-journey.mp4"), fr: media("canada-field-guide-journey-fr.mp4") } as Bi,
+  poster: media("poster-360.jpg"),
   /** Local share image (the poster lives on the CDN; social cards want a same-site file). */
   share: "/labs/canada-field-guide/snowshoes.jpg",
 };
