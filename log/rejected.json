@@ -1,5 +1,46 @@
 [
   {
+    "id": "v4nvrd",
+    "at": "2026-11-24T06:27:14.402Z",
+    "stage": "copy",
+    "headline": "Richpanel helps companies automate 50% of support in 30 days",
+    "reasons": [
+      "Not in the sources (names or numbers): QA.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to OpenAI's wording (\"richpanel helps companies automate 50 of support in 30…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to OpenAI's wording (\"richpanel uses gpt 6 astra and gpt 6 1…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "hbw0r3",
+    "at": "2026-11-24T06:26:46.722Z",
+    "stage": "copy",
+    "headline": "Feds to buy stake in Cohere via planned $7-billion Series E at $36-billion valuation",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"AI and digital innovation minister Evan Solomon told BetaKit it will be staged a\".",
+      "Too close to betakit.com's wording (\"federal investment in cohere on the first day of…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to ncfacanada.org's wording (\"must keep its canadian incorporation and headquarters create at…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): denial not in the sources: \"AI and digital innovation minister Evan Solomon told BetaKit it will be \"staged\"\".",
+      "Too close to betakit.com's wording (\"federal investment in cohere on the first day of…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to ncfacanada.org's wording (\"at least 1 000 new canadian technical jobs by…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "xcx6p8",
+    "at": "2026-11-24T06:26:21.981Z",
+    "stage": "copy",
+    "headline": "Dohop Launches One of the First ChatGPT Plugins for Bookable Direct Flights and Multi-Carrier Itineraries",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to prnewswire.com's wording (\"the plugin is live for waya dohop s consumer…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to prnewswire.com's wording (\"the plugin is live for waya dohop s consumer…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1lgvs0f",
     "at": "2026-11-23T22:40:12.481Z",
     "stage": "copy",
