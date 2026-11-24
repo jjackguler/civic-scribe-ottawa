@@ -1,5 +1,10 @@
 [
   {
+    "key": "story:1hm3dte",
+    "at": "2026-11-24T05:29:39.080Z",
+    "reason": "the writer declined: The sources are three headlines and one short excerpt. They give no numbers, no quotations, no detail on how Claude Ship works or how it is checked, and no information about the impact on people. That is too little for a fair 45-second explainer without adding facts that are not in the text."
+  },
+  {
     "key": "article:1vp01ke",
     "at": "2026-11-20T02:32:52.589Z",
     "reason": "fact guard / layout check failed twice: scene 8 (outro): \"say\" needs 1-3 sentences; not in the sources: Everything"
