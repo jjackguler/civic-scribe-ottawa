@@ -10,7 +10,7 @@ import { NewsletterBox } from "@/components/NewsletterBox";
 import { OriginalCard } from "@/components/Originals";
 import { LiveHero, ownDate, type HeroSlide, type OwnItem } from "@/components/LiveHero";
 import { TodayLauncher } from "@/components/Today";
-import { originalSection } from "@/lib/originals-types";
+import { originalSection, slimOriginals } from "@/lib/originals-types";
 import { DispatchRail } from "@/components/Dispatch";
 import { NewsroomLead } from "@/components/NewsroomLead";
 import { FromOurDesk } from "@/components/StudioCards";
@@ -49,7 +49,8 @@ export const Route = createFileRoute("/")({
       getFrontPageNews().catch(() => null), getPulseFast(150), getOriginalsFast(150),
       getDispatchesFast(150), getDailyQuizFast(150), getNewsroomFast(150),
     ]);
-    return { news, pulse, originals, dispatches, quiz, newsroom };
+    // Cards only: transcripts and full source lists stay out of the HTML (about 100 KB on 24 Nov 2026).
+    return { news, pulse, originals: slimOriginals(originals), dispatches, quiz, newsroom };
   },
   head: ({ match }) =>
     seoHead(match, {

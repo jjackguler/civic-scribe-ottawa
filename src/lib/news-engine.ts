@@ -541,7 +541,9 @@ async function devFixture(): Promise<NewsPayload> {
 const EMPTY = (): NewsPayload => ({ stories: [], sources: [], fetchedAt: new Date().toISOString() });
 
 /** A bounded first edition. Full aggregation continues under Workers waitUntil. */
-export async function loadFrontPageNews(ms = 1000): Promise<NewsPayload> {
+// 300 ms, not 1 s (24 Nov 2026): a full build takes about 2 s, so a longer wait rarely got a fresh desk
+// and only held every cold visit to the front page for a second before serving the stored copy anyway.
+export async function loadFrontPageNews(ms = 300): Promise<NewsPayload> {
   if (process.env["AIB_NEWS_FIXTURE"] === "1" && import.meta.env?.DEV) return devFixture();
   const full = loadNews();
   keepAlive(full);
