@@ -1,5 +1,28 @@
 [
   {
+    "id": "13lvg9u",
+    "at": "2026-11-25T12:51:40.787Z",
+    "stage": "copy",
+    "headline": "An Indic Voice Agent with CUGA",
+    "reasons": [
+      "Not in the sources (names or numbers): Indian, English-language, CUGA-based.",
+      "Too close to Hugging Face's wording (\"a farmer asks a question aloud in their own…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Not in the sources (names or numbers): English-language.",
+      "Too close to Hugging Face's wording (\"turns the speech into text searches a 154 page…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "13jubnh",
+    "at": "2026-11-25T12:51:16.971Z",
+    "stage": "translator",
+    "headline": "Dell AI Backlog Hits $132bn as Revenue Doubles to $54.9bn",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): États-Unis.",
+      "attempt 2: Not in the sources (names or numbers): Washington."
+    ]
+  },
+  {
     "id": "16stees",
     "at": "2026-11-25T02:49:28.899Z",
     "stage": "copy",
