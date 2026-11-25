@@ -1,5 +1,57 @@
 [
   {
+    "id": "16stees",
+    "at": "2026-11-25T02:49:28.899Z",
+    "stage": "copy",
+    "headline": "Clay helps sales teams win with Codex and ChatGPT",
+    "reasons": [
+      "Too close to OpenAI's wording (\"gpt 6 astra gpt 6 sol and other models…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to OpenAI's wording (\"gpt 6 astra gpt 6 sol and other models…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "mzpxu8",
+    "at": "2026-11-25T02:49:05.103Z",
+    "stage": "copy",
+    "headline": "How iFood scales coding agents across 15,000 repositories",
+    "reasons": [
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to OpenAI's wording (\"in a remote sandbox and the result comes back…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to OpenAI's wording (\"engineering tasks into api calls teams delegate the work…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "qpjob6",
+    "at": "2026-11-25T02:48:45.820Z",
+    "stage": "copy",
+    "headline": "Databricks has “very strong growth plans” for Canada",
+    "reasons": [
+      "Not in the sources (names or numbers): 500-plus, 000-person.",
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "Too close to betakit.com's wording (\"databricks has around 300 employees at its vancouver research…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "Too close to Databricks's wording (\"more than 50 000 people in data and ai…\") in \"headline\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Databricks's wording (\"has grown its canadian business more than 125 over…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "ssmqca",
+    "at": "2026-11-25T02:48:13.055Z",
+    "stage": "copy",
+    "headline": "Why an international advocacy group is bringing its fight for safer social media to Canada",
+    "reasons": [
+      "Not in the sources (names or numbers): under-16s.",
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "Too close to betakit.com's wording (\"recently rebranded from the center for countering digital hate…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "Too close to The Globe and Mail's wording (\"wants the law to hold tech executives personally responsible…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to betakit.com's wording (\"the bill aims to create a new digital super…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "ajt1ke",
     "at": "2026-11-24T18:23:02.636Z",
     "stage": "copy",
