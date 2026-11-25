@@ -1,5 +1,35 @@
 [
   {
+    "id": "1ojwp5l",
+    "at": "2026-11-25T22:31:32.701Z",
+    "stage": "reporter",
+    "headline": "Q&A: Why nanotech research is booming in Alberta",
+    "reasons": [
+      "skip: Only one outlet (BetaKit, listed twice), with a truncated excerpt and the interviewee's name cut off. The topic is nanotech, not AI, and the excerpt is too thin to support a 120-word summary."
+    ]
+  },
+  {
+    "id": "b2e2dx",
+    "at": "2026-11-25T22:31:29.331Z",
+    "stage": "translator",
+    "headline": "Le gouvernement du Canada fera une annonce sur la capacité de calcul pour l’intelligence artificielle",
+    "reasons": [
+      "attempt 1: Not in the sources (names or numbers): denial not in the sources: \"avis ne donne aucun détail sur la mesure elle-même.\", denial not in the sources: \"Aucun détail a encore été donné.\". Too close to Ministre de l'IA et de l'Innovation numérique's wording (\"de l intelligence artificielle et de l innovation numerique…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "attempt 2: Not in the sources (names or numbers): denial not in the sources: \"avis ne fournit pas encore de détails.\". Too close to Ministre de l'IA et de l'Innovation numérique's wording (\"fera une annonce sur la capacite de calcul pour…\") in \"plain\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1ebxsjl",
+    "at": "2026-11-25T22:30:36.849Z",
+    "stage": "copy",
+    "headline": "Government of Canada to make announcement on AI compute",
+    "reasons": [
+      "Too close to Minister of AI and Digital Innovation's wording (\"evan solomon minister of artificial intelligence and digital innovation…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Minister of AI and Digital Innovation's wording (\"minister responsible for the federal economic development agency for…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "13lvg9u",
     "at": "2026-11-25T12:51:40.787Z",
     "stage": "copy",
