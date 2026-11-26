@@ -1,5 +1,55 @@
 [
   {
+    "id": "kxfzcp",
+    "at": "2026-11-26T23:20:46.628Z",
+    "stage": "copy",
+    "headline": "Tech leaders urge to build more data centres in Canada",
+    "reasons": [
+      "Not in the sources (names or numbers): Thirty-five.",
+      "Too close to bnnbloomberg.ca's wording (\"canadian tech leaders gathered by policy group build canada…\") in \"news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to bnnbloomberg.ca's wording (\"signed by shopify inc president harley finkelstein neo financial…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1sia5o6",
+    "at": "2026-11-26T23:20:21.491Z",
+    "stage": "copy",
+    "headline": "Une première Chaire de recherche du Canada de niveau 1 à l'Université TÉLUQ sur l'intelligence des données en santé",
+    "reasons": [
+      "Not in the sources (names or numbers): denial not in the sources: \"Les extraits ne disent pas quand ces outils pourraient servir en pratique.\".",
+      "Paragraph 3 of \"known\" has no [sN] source marker.",
+      "Too close to Les Affaires's wording (\"premiere chaire de recherche du canada de niveau 1…\") in \"headline\": say it in our own words, or quote and attribute it.",
+      "Too close to newswire.ca's wording (\"premiere chaire de recherche du canada de niveau 1…\") in \"headline\": say it in our own words, or quote and attribute it.",
+      "Too close to Gouvernement du Québec's wording (\"premiere chaire de recherche du canada de niveau 1…\") in \"headline\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Les Affaires's wording (\"directrice de l institut d intelligence artificielle appliquee i2a…\") in \"confirmed\": say it in our own words, or quote and attribute it.",
+      "Too close to newswire.ca's wording (\"directrice de l institut d intelligence artificielle appliquee i2a…\") in \"confirmed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1wmkuct",
+    "at": "2026-11-26T23:19:45.747Z",
+    "stage": "copy",
+    "headline": "Le gouvernement du Canada stimule l’innovation en IA au sein des PME canadiennes grâce à un investissement supplémentaire de 700 millions de dollars dans le Fonds d’accès à une capacité de calcul pour l’IA",
+    "reasons": [
+      "Too close to Ministre de l'IA et de l'Innovation numérique's wording (\"le fonds d acces a une capacite de calcul…\") in \"news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Ministre de l'IA et de l'Innovation numérique's wording (\"le fonds d acces a une capacite de calcul…\") in \"expert\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "1yv4t8m",
+    "at": "2026-11-26T23:19:18.675Z",
+    "stage": "copy",
+    "headline": "Government of Canada boosts AI innovation from Canadian SMEs with $700 million expansion of the AI Compute Access Fund",
+    "reasons": [
+      "Too close to Minister of AI and Digital Innovation's wording (\"700 million expansion of the ai compute access fund…\") in \"news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Minister of AI and Digital Innovation's wording (\"700 million expansion of the ai compute access fund…\") in \"expert\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "11n1do9",
     "at": "2026-11-26T14:32:47.468Z",
     "stage": "copy",
