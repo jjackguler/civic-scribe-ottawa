@@ -1,5 +1,40 @@
 [
   {
+    "id": "11n1do9",
+    "at": "2026-11-26T14:32:47.468Z",
+    "stage": "copy",
+    "headline": "Swarms, Flocks, Gangs: How to build, train, and evaluate multi-agent systems",
+    "reasons": [
+      "Not in the sources (names or numbers): 000-agent, 100-agent.",
+      "Paragraph 2 of \"matters\" has no [sN] source marker.",
+      "Too close to Hugging Face's wording (\"how to build train and evaluate multi agent systems…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Hugging Face's wording (\"example takes about five hours on two h200s which…\") in \"claimed\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "105asio",
+    "at": "2026-11-26T14:30:35.093Z",
+    "stage": "copy",
+    "headline": "Introducing the llama.cpp benchmark dashboard for AMD Ryzen and Radeon",
+    "reasons": [
+      "Too close to Hugging Face's wording (\"llama cpp benchmark dashboard for amd ryzen and radeon…\") in \"headline\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to Hugging Face's wording (\"track prompt processing and text generation performance across llama…\") in \"article.news\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
+    "id": "nkxvng",
+    "at": "2026-11-26T14:30:11.102Z",
+    "stage": "copy",
+    "headline": "Council approves governance changes for the 2026-2030 Term of Council",
+    "reasons": [
+      "Too close to City of Ottawa's wording (\"parks recreation and culture committee to oversee new community…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+      "after the rewrite:",
+      "Too close to City of Ottawa's wording (\"council created a new parks recreation and culture committee…\") in \"article.known\": say it in our own words, or quote and attribute it."
+    ]
+  },
+  {
     "id": "1ojwp5l",
     "at": "2026-11-25T22:31:32.701Z",
     "stage": "reporter",

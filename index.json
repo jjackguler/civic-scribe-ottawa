@@ -1,6 +1,53 @@
 {
-  "updatedAt": "2026-11-21T04:18:57.581Z",
+  "updatedAt": "2026-11-26T14:32:09.446Z",
   "items": [
+    {
+      "id": "1mkmuv5",
+      "slug": {
+        "en": "hugging-face-nemotron-3-5-parse-datasets",
+        "fr": "hugging-face-donnees-nemotron-3-5-parse"
+      },
+      "createdAt": "2026-11-26T14:32:09.445Z",
+      "updatedAt": "2026-11-26T14:32:09.445Z",
+      "topic": "data",
+      "format": "explainer",
+      "outlets": [
+        "Hugging Face"
+      ],
+      "times": [
+        "2026-11-26T05:05:36.000Z"
+      ],
+      "storyIds": [
+        "1mkmuv5"
+      ],
+      "cover": {
+        "color": "night",
+        "motif": "grid",
+        "en": {
+          "kicker": "Open datasets",
+          "big": "Parse",
+          "small": "Three synthetic datasets and a fine-tuning recipe released."
+        },
+        "fr": {
+          "kicker": "Jeux ouverts",
+          "big": "Parse",
+          "small": "Trois jeux synthétiques et une méthode ouverts."
+        }
+      },
+      "words": 309,
+      "en": {
+        "headline": "Hugging Face releases three datasets and a fine-tuning recipe for NVIDIA's Nemotron 3.5 Parse",
+        "dek": "Hugging Face says it is open-sourcing three synthetic datasets used to train Parse 3.5, a compact model that turns document page images into structured data, plus a fine-tuning recipe and a DFlash2 speculator.",
+        "news": "Hugging Face says it is open-sourcing three synthetic datasets used to train NVIDIA Nemotron 3.5 Parse, plus a fine-tuning recipe and a DFlash2 speculator.",
+        "matters": "The sources say the datasets and recipe can be used to fine-tune document models for a target document type or language. They give no wider impact for ordinary users. [s1]"
+      },
+      "fr": {
+        "headline": "Hugging Face publie trois jeux de données et une méthode de mise au point pour Nemotron 3.5 Parse de NVIDIA",
+        "dek": "Hugging Face dit ouvrir le code de trois jeux de données synthétiques ayant servi à entraîner Parse 3.5, un modèle compact qui transforme des images de pages en données structurées, avec une méthode de mise au point et un speculator DFlash2.",
+        "news": "Hugging Face dit rendre open source trois jeux de données synthétiques utilisés pour entraîner NVIDIA Nemotron 3.5 Parse, ainsi qu'une méthode de mise au point et un speculator DFlash2.",
+        "matters": "Selon la source, les jeux de données et la méthode peuvent servir à affiner des modèles documentaires pour un type de document ou une langue précise. Elle ne décrit aucune incidence plus large pour les utilisateurs ordinaires. [s1]"
+      }
+    },
     {
       "id": "1unccea",
       "slug": {

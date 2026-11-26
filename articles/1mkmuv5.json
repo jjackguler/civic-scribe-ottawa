@@ -1,0 +1,348 @@
+{
+  "version": 1,
+  "id": "1mkmuv5",
+  "slug": {
+    "en": "hugging-face-nemotron-3-5-parse-datasets",
+    "fr": "hugging-face-donnees-nemotron-3-5-parse"
+  },
+  "createdAt": "2026-11-26T14:32:09.445Z",
+  "updatedAt": "2026-11-26T14:32:09.445Z",
+  "topic": "data",
+  "format": "explainer",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "Hugging Face",
+      "title": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+      "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+      "publishedAt": "2026-11-26T05:05:36.000Z",
+      "storyId": "1mkmuv5",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "night",
+    "motif": "grid",
+    "en": {
+      "kicker": "Open datasets",
+      "big": "Parse",
+      "small": "Three synthetic datasets and a fine-tuning recipe released."
+    },
+    "fr": {
+      "kicker": "Jeux ouverts",
+      "big": "Parse",
+      "small": "Trois jeux synthétiques et une méthode ouverts."
+    }
+  },
+  "en": {
+    "headline": "Hugging Face releases three datasets and a fine-tuning recipe for NVIDIA's Nemotron 3.5 Parse",
+    "news": "Hugging Face says it is open-sourcing three synthetic datasets used to train NVIDIA Nemotron 3.5 Parse, plus a fine-tuning recipe and a DFlash2 speculator.",
+    "thirty": [
+      "Hugging Face builds on its NVIDIA Nemotron 3.5 Parse document model release.",
+      "It says it is open-sourcing three synthetic datasets, a fine-tuning recipe and a faster-inference tool.",
+      "Parse reads charts and tables from page images into structured data."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face says it is open-sourcing three Parse 3.5 training datasets: Synthetic Charts V1 (9.98M examples), Synthetic Tables V1 (1M examples) and OCR Synthetic Multilingual v2 (7.9M examples).",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face says this version of Parse reads charts and tables better, including bar charts with no marked values, where it infers numbers from axes and bar height.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "How Parse 3.5 performs against other document models, since the excerpt gives no benchmark figures.",
+      "How much faster the DFlash2 speculator makes inference."
+    ],
+    "matters": "The sources say the datasets and recipe can be used to fine-tune document models for a target document type or language. They give no wider impact for ordinary users. [s1]",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Hugging Face has shared more about a model called NVIDIA Nemotron 3.5 Parse. The model looks at a picture of a document page and turns it into organized data a computer can use, such as tables and chart values. [s1]",
+        "The company says it is giving away the synthetic (computer-made) examples it used for training, plus a recipe for adapting the model. It says this lets others build their own versions for different document types or languages. [s1]"
+      ],
+      "standard": [
+        "Hugging Face, in a post on its own site, says it is building on its earlier release of NVIDIA Nemotron 3.5 Parse. It describes Parse as a small model that reads images of pages and outputs structured data for AI search tools and agents (programs that act on a user's behalf). [s1]",
+        "It also says it is sharing how it trained Parse 3.5. [s1]",
+        "Only Hugging Face, the announcing party, is the source here, so every point below is its own account. It says Parse pulls content from document pages in reading order, labels it as headings, paragraphs, tables or charts, and returns bounding boxes that show where the content sits. [s1]",
+        "Hugging Face says tables and charts become structured records for downstream document applications. It says the latest version is better at difficult cases, such as bar charts without numeric labels, where the model infers values from the axes and bar height. It notes that a shifted row or column in a table can change its meaning. [s1]",
+        "The company says it is open-sourcing three datasets: Synthetic Charts V1 with 9.98M examples, Synthetic Tables V1 with 1M examples, and OCR Synthetic Multilingual v2 with 7.9M examples. It says each comes with images, annotations, generation documentation and the training format. [s1]",
+        "Hugging Face says the gains came largely from synthetic data: charts and tables rendered with known correct answers, then used to train the model to reverse the process. It says training used supervised fine-tuning first, then reinforcement learning. The excerpt does not give test results. [s1]",
+        "Hugging Face says people can use the released pairs to fine-tune document models, or to create new variations for a particular document type or language. That could matter to anyone building tools that read forms, reports or multilingual pages. [s1]",
+        "The excerpt says nothing about effects on workers, privacy or users in any country, so none are claimed here. [s1]"
+      ],
+      "expert": [
+        "Hugging Face says Parse outputs reading-order content, content classes (headings, paragraphs, tables, charts) and bounding boxes, with tables and charts as structured records. [s1]",
+        "Released datasets: Synthetic Charts V1 (9.98M), Synthetic Tables V1 (1M, HTML tables preserving rows, columns, headers and cell relations) and OCR Synthetic Multilingual v2 (7.9M). It also names a DFlash2 speculator for faster inference. [s1]",
+        "Training is described as supervised fine-tuning followed by RLVR for consistency. The excerpt cuts off before the details and gives no benchmark numbers. [s1]"
+      ]
+    },
+    "seoTitle": "Hugging Face opens datasets for NVIDIA Nemotron 3.5 Parse",
+    "dek": "Hugging Face says it is open-sourcing three synthetic datasets used to train Parse 3.5, a compact model that turns document page images into structured data, plus a fine-tuning recipe and a DFlash2 speculator.",
+    "metaDescription": "Hugging Face is releasing three synthetic datasets, a fine-tuning recipe and a DFlash2 speculator for NVIDIA's Nemotron 3.5 Parse…",
+    "keywords": [
+      "nemotron 3.5 parse",
+      "hugging face datasets",
+      "synthetic document datasets",
+      "fine-tuning recipe",
+      "document ai model"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face, in a post on its own site, says it is building on its earlier release of NVIDIA Nemotron 3.5 Parse. It describes Parse as a small model that reads images of pages and outputs structured data for AI search tools and agents (programs that act on a user's behalf). [s1]",
+          "It also says it is sharing how it trained Parse 3.5. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Only Hugging Face, the announcing party, is the source here, so every point below is its own account. It says Parse pulls content from document pages in reading order, labels it as headings, paragraphs, tables or charts, and returns bounding boxes that show where the content sits. [s1]",
+          "Hugging Face says tables and charts become structured records for downstream document applications. It says the latest version is better at difficult cases, such as bar charts without numeric labels, where the model infers values from the axes and bar height. It notes that a shifted row or column in a table can change its meaning. [s1]",
+          "The company says it is open-sourcing three datasets: Synthetic Charts V1 with 9.98M examples, Synthetic Tables V1 with 1M examples, and OCR Synthetic Multilingual v2 with 7.9M examples. It says each comes with images, annotations, generation documentation and the training format. [s1]",
+          "Hugging Face says the gains came largely from synthetic data: charts and tables rendered with known correct answers, then used to train the model to reverse the process. It says training used supervised fine-tuning first, then reinforcement learning. The excerpt does not give test results. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Hugging Face says people can use the released pairs to fine-tune document models, or to create new variations for a particular document type or language. That could matter to anyone building tools that read forms, reports or multilingual pages. [s1]",
+          "The excerpt says nothing about effects on workers, privacy or users in any country, so none are claimed here. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "What did Hugging Face release?",
+        "a": "Hugging Face says it is open-sourcing three synthetic datasets used to train Nemotron 3.5 Parse, along with a fine-tuning recipe and a DFlash2 speculator."
+      },
+      {
+        "q": "What does Parse do?",
+        "a": "According to Hugging Face, Parse reads images of document pages and returns structured headings, paragraphs, tables and charts, with bounding boxes showing where each item sits."
+      },
+      {
+        "q": "Does the article report test results for the model?",
+        "a": "No. The source excerpt does not give test results."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Agents"
+      },
+      {
+        "path": "/labs/build",
+        "label": "Build with AI APIs"
+      },
+      {
+        "path": "/labs/start-here",
+        "label": "Start here: what AI is"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Hugging Face publie trois jeux de données et une méthode de mise au point pour Nemotron 3.5 Parse de NVIDIA",
+    "news": "Hugging Face dit rendre open source trois jeux de données synthétiques utilisés pour entraîner NVIDIA Nemotron 3.5 Parse, ainsi qu'une méthode de mise au point et un speculator DFlash2.",
+    "thirty": [
+      "Hugging Face poursuit sur sa lancée après la sortie du modèle documentaire NVIDIA Nemotron 3.5 Parse.",
+      "L'entreprise dit ouvrir trois jeux de données synthétiques, une méthode de mise au point et un outil d'inférence plus rapide.",
+      "Parse lit les graphiques et les tableaux d'images de pages et les convertit en données structurées."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "Hugging Face dit ouvrir trois jeux de données d'entraînement de Parse 3.5 : Synthetic Charts V1 (9,98 M d'exemples), Synthetic Tables V1 (1 M d'exemples) et OCR Synthetic Multilingual v2 (7,9 M d'exemples).",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      },
+      {
+        "text": "Hugging Face dit que cette version de Parse lit mieux les graphiques et les tableaux, y compris les diagrammes à barres sans valeurs indiquées, dont il déduit les chiffres à partir des axes et de la hauteur des barres.",
+        "by": "Hugging Face",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Les résultats de Parse 3.5 par rapport à d'autres modèles documentaires : l'extrait ne donne aucun chiffre d'évaluation.",
+      "Le gain de vitesse que procure le speculator DFlash2 à l'inférence."
+    ],
+    "matters": "Selon la source, les jeux de données et la méthode peuvent servir à affiner des modèles documentaires pour un type de document ou une langue précise. Elle ne décrit aucune incidence plus large pour les utilisateurs ordinaires. [s1]",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Hugging Face a donné plus de détails sur un modèle appelé NVIDIA Nemotron 3.5 Parse. Le modèle regarde l'image d'une page de document et la transforme en données organisées qu'un ordinateur peut utiliser, comme des tableaux et des valeurs de graphiques. [s1]",
+        "L'entreprise dit offrir les exemples synthétiques (produits par ordinateur) qui ont servi à l'entraînement, ainsi qu'une méthode pour adapter le modèle. Elle affirme que d'autres pourront ainsi créer leurs propres versions pour d'autres types de documents ou d'autres langues. [s1]"
+      ],
+      "standard": [
+        "Hugging Face, dans un billet publié sur son propre site, dit poursuivre sur la lancée de la sortie de NVIDIA Nemotron 3.5 Parse. Elle décrit Parse comme un petit modèle qui lit des images de pages et produit des données structurées pour les outils de recherche en IA et les agents (des programmes qui agissent au nom d'un utilisateur). [s1]",
+        "Elle dit aussi expliquer comment Parse 3.5 a été entraîné. [s1]",
+        "Hugging Face, la partie qui annonce, est la seule source ici: tout ce qui suit relève donc de son propre récit. Elle dit que Parse extrait le contenu des pages dans l'ordre de lecture, l'étiquette comme titre, paragraphe, tableau ou graphique, et renvoie des cadres de délimitation qui situent le contenu. [s1]",
+        "Hugging Face dit que les tableaux et les graphiques deviennent des enregistrements structurés pour les applications de traitement de documents. Elle affirme que la dernière version gère mieux les cas difficiles, comme les diagrammes à barres sans étiquettes numériques, dont le modèle déduit les valeurs à partir des axes et de la hauteur des barres. Elle note qu'un décalage d'une ligne ou d'une colonne peut changer le sens d'un tableau. [s1]",
+        "L'entreprise dit ouvrir trois jeux de données: Synthetic Charts V1 avec 9,98 M d'exemples, Synthetic Tables V1 avec 1 M d'exemples et OCR Synthetic Multilingual v2 avec 7,9 M d'exemples. Chacun est accompagné d'images, d'annotations, de documentation sur la génération et du format d'entraînement. [s1]",
+        "Hugging Face dit que les progrès viennent en grande partie de données synthétiques: des graphiques et des tableaux produits avec des réponses connues, puis utilisés pour apprendre au modèle à faire le chemin inverse. Elle indique que l'entraînement a commencé par un réglage supervisé, suivi d'un apprentissage par renforcement. L'extrait ne donne pas de résultats de tests. [s1]",
+        "Hugging Face dit que ces paires peuvent servir à affiner des modèles documentaires ou à créer de nouvelles variantes pour un type de document ou une langue donnée. Cela peut intéresser quiconque conçoit des outils qui lisent des formulaires, des rapports ou des pages multilingues. [s1]",
+        "L'extrait ne dit rien des effets sur les travailleurs, la vie privée ou les utilisateurs d'un pays en particulier: aucun n'est donc avancé ici. [s1]"
+      ],
+      "expert": [
+        "Hugging Face dit que Parse produit du contenu en ordre de lecture, des classes de contenu (titres, paragraphes, tableaux, graphiques) et des cadres de délimitation, les tableaux et graphiques étant des enregistrements structurés. [s1]",
+        "Jeux de données publiés: Synthetic Charts V1 (9,98 M), Synthetic Tables V1 (1 M, tableaux HTML préservant lignes, colonnes, en-têtes et relations entre cellules) et OCR Synthetic Multilingual v2 (7,9 M). Elle mentionne aussi un speculator DFlash2 pour accélérer l'inférence. [s1]",
+        "L'entraînement est décrit comme un réglage supervisé suivi de RLVR pour la cohérence. L'extrait s'interrompt avant les détails et ne donne aucun chiffre d'évaluation. [s1]"
+      ]
+    },
+    "seoTitle": "Hugging Face publie des données pour Nemotron 3.5 Parse",
+    "dek": "Hugging Face dit ouvrir le code de trois jeux de données synthétiques ayant servi à entraîner Parse 3.5, un modèle compact qui transforme des images de pages en données structurées, avec une méthode de mise au point et un speculator DFlash2.",
+    "metaDescription": "Hugging Face publie trois jeux de données synthétiques, une méthode de mise au point et un speculator DFlash2 pour Nemotron 3.5 Parse de NVIDIA.",
+    "keywords": [
+      "nemotron 3.5 parse",
+      "jeux de données hugging face",
+      "données synthétiques documents",
+      "mise au point modèle",
+      "ia de traitement de documents"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Hugging Face, dans un billet publié sur son propre site, dit poursuivre sur la lancée de la sortie de NVIDIA Nemotron 3.5 Parse. Elle décrit Parse comme un petit modèle qui lit des images de pages et produit des données structurées pour les outils de recherche en IA et les agents (des programmes qui agissent au nom d'un utilisateur). [s1]",
+          "Elle dit aussi expliquer comment Parse 3.5 a été entraîné. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Hugging Face, la partie qui annonce, est la seule source ici: tout ce qui suit relève donc de son propre récit. Elle dit que Parse extrait le contenu des pages dans l'ordre de lecture, l'étiquette comme titre, paragraphe, tableau ou graphique, et renvoie des cadres de délimitation qui situent le contenu. [s1]",
+          "Hugging Face dit que les tableaux et les graphiques deviennent des enregistrements structurés pour les applications de traitement de documents. Elle affirme que la dernière version gère mieux les cas difficiles, comme les diagrammes à barres sans étiquettes numériques, dont le modèle déduit les valeurs à partir des axes et de la hauteur des barres. Elle note qu'un décalage d'une ligne ou d'une colonne peut changer le sens d'un tableau. [s1]",
+          "L'entreprise dit ouvrir trois jeux de données: Synthetic Charts V1 avec 9,98 M d'exemples, Synthetic Tables V1 avec 1 M d'exemples et OCR Synthetic Multilingual v2 avec 7,9 M d'exemples. Chacun est accompagné d'images, d'annotations, de documentation sur la génération et du format d'entraînement. [s1]",
+          "Hugging Face dit que les progrès viennent en grande partie de données synthétiques: des graphiques et des tableaux produits avec des réponses connues, puis utilisés pour apprendre au modèle à faire le chemin inverse. Elle indique que l'entraînement a commencé par un réglage supervisé, suivi d'un apprentissage par renforcement. L'extrait ne donne pas de résultats de tests. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Hugging Face dit que ces paires peuvent servir à affiner des modèles documentaires ou à créer de nouvelles variantes pour un type de document ou une langue donnée. Cela peut intéresser quiconque conçoit des outils qui lisent des formulaires, des rapports ou des pages multilingues. [s1]",
+          "L'extrait ne dit rien des effets sur les travailleurs, la vie privée ou les utilisateurs d'un pays en particulier: aucun n'est donc avancé ici. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qu'a publié Hugging Face ?",
+        "a": "Hugging Face dit ouvrir le code de trois jeux de données synthétiques utilisés pour entraîner Nemotron 3.5 Parse, ainsi qu'une méthode de mise au point et un speculator DFlash2."
+      },
+      {
+        "q": "À quoi sert Parse ?",
+        "a": "Selon Hugging Face, Parse lit des images de pages de documents et renvoie des titres, paragraphes, tableaux et graphiques structurés, avec des cadres qui indiquent où se trouve chaque élément."
+      },
+      {
+        "q": "L'article présente-t-il des résultats de tests du modèle ?",
+        "a": "Non. L'extrait source ne donne pas de résultats de tests."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/agents",
+        "label": "Les agents"
+      },
+      {
+        "path": "/labs/build",
+        "label": "Créer avec les API d'IA"
+      },
+      {
+        "path": "/labs/start-here",
+        "label": "Commencer ici : ce qu'est l'IA"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 309,
+    "fr": 360
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-26T14:30:46.720Z",
+      "verdict": "done",
+      "notes": [
+        "319 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-26T14:31:14.550Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Canadian.",
+        "Paragraph 2 of \"matters\" has no [sN] source marker.",
+        "Too close to Hugging Face's wording (\"a compact document model that turns page images into…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to Hugging Face's wording (\"synthetic training datasets a fine tuning recipe and a…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+        "trimmed 3 sentence(s) that still failed:",
+        "cut: \"Hugging Face says each dataset release includes images, annotations, generation documentation and the training format.\"",
+        "cut: \"Hugging Face says it trained Parse 3.5 first with supervised fine-tuning, then with reinforcement learning to improve ac\"",
+        "cut: \"The company says the new release adds synthetic training datasets, a fine-tuning recipe and a DFlash2 speculator for fas\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-26T14:31:20.759Z",
+      "verdict": "pass",
+      "notes": [
+        "The dek calls DFlash2 a 'faster-inference speculator' and the body says 'faster inference'. The sources give no speed figure, so say the speedup is unknown, as the article's own unknowns section does.",
+        "The headline and the 30-second summary state Hugging Face's capabilities and releases as plain fact. Attribute them, for example 'Hugging Face says it is releasing…', since the only source is the announcing company.",
+        "The 'matters' paragraph and the dataset descriptions read close to the vendor's own post. Add a line that the claims are unverified by independent testing, since the excerpt gives no benchmark results.",
+        "Keep the 'confirmed' list populated only with items independently checked. It is currently empty, so every point rests on Hugging Face's own account."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-26T14:31:53.433Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): denial not in the sources: \"Comment Parse 3.5 se compare aux autres modèles documentaires, extrait ne donnan\".",
+        "360 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-26T14:32:04.656Z",
+      "verdict": "done",
+      "notes": [
+        "en: Hugging Face opens datasets for NVIDIA Nemotron 3.5 Parse (57)",
+        "fr: Hugging Face publie des données pour Nemotron 3.5 Parse (55)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-26T14:32:09.445Z",
+      "verdict": "done",
+      "notes": [
+        "format: explainer",
+        "cover: night/grid \"Parse\""
+      ]
+    }
+  ]
+}
