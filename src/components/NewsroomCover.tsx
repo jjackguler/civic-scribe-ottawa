@@ -59,13 +59,15 @@ function Motif({ motif, color }: { motif: CoverMotif; color: string }) {
  * `size`: "hero" on the article page and the homepage lead, "card" in grids,
  * "thumb" for the small square next to a headline in a list.
  */
-export function NewsroomCover({ cover, locale, size = "card", className = "", animate = false }: {
+export function NewsroomCover({ cover, locale, size = "card", className = "", animate = false, label }: {
   cover: Cover;
   locale: Locale;
   size?: "hero" | "card" | "thumb";
   className?: string;
   /** Let the big word rise in once (the article page). */
   animate?: boolean;
+  /** Footer line in place of "AI Broadsheet · Newsroom summary" (a designed card for another outlet's story). */
+  label?: string;
 }) {
   const t = TONE[cover.color] ?? TONE.night;
   const c = cover[locale];
@@ -101,7 +103,7 @@ export function NewsroomCover({ cover, locale, size = "card", className = "", an
             )}
           </div>
           <p className="flex items-center justify-between gap-2 font-semibold leading-none" style={{ color: t.soft, fontSize: "clamp(0.6rem, 2.2cqw, 0.78rem)" }}>
-            <span>AI Broadsheet · {fr ? "Résumé de la rédaction" : "Newsroom summary"}</span>
+            <span>{label ?? `AI Broadsheet · ${fr ? "Résumé de la rédaction" : "Newsroom summary"}`}</span>
             {illustration && <span className="rounded-full border px-[1.2cqw] py-[0.4cqw]" style={{ borderColor: t.soft }}>{fr ? "Illustration IA" : "AI illustration"}</span>}
           </p>
         </div>

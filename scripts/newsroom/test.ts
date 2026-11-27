@@ -177,7 +177,11 @@ test("a paragraph with no source marker is dropped by the trim", () => {
 test("the trim gives up when the headline fails or too much would go", () => {
   assert.equal(trimDraft({ ...trimBase([P, P, P, P, P, P, P]), headline: "Northwind Labs opens an office in Halifax for Aurora-2" , dek: "x [s1]. It was built in Halifax [s1]." }, TRIM_EVENT), null);
   const copied = `${P} The model runs on a single laptop GPU with 16 GB of memory, the company said [s1].`;
-  assert.equal(trimDraft(trimBase([copied, copied, copied, copied, copied, P, P]), TRIM_EVENT), null);
+  // more than 10 sentences to cut
+  assert.equal(trimDraft(trimBase([...Array(11).fill(copied), P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P]), TRIM_EVENT), null);
+  // more than a third of the words
+  const heavy = `${P} The model runs on a single laptop GPU with 16 GB of memory, the company said, and companies with more than 50 employees need a commercial licence to use it at work [s1].`;
+  assert.equal(trimDraft(trimBase([heavy, heavy, heavy, heavy, P, P]), TRIM_EVENT), null);
 });
 
 console.log("slugs");
@@ -393,6 +397,38 @@ test("a thin report with no other outlet on the same event is still skipped, and
   const { events, skipped } = pickEvents([a, c], SEEN(), NOW, DIR);
   assert.equal(events.length, 0);
   assert.match(skipped.find(s => s.id === "t1")!.why, /no other outlet found; needs 450/);
+});
+console.log("26 Nov fixes: guard false alarms, official wording, one lab per 72 h");
+test("numbers glued to words, spelled-out tens and English-language pass when the sources have them", () => {
+  const src = "Acme trained 1,000 agents. Users under 16 are excluded. There are 35 teams and 500 partners. The CUGA toolkit ships today.";
+  assert.deepEqual(factGuard(["Acme tested a 1,000-agent swarm [s1].", "Thirty-five teams joined, with 500-plus partners [s1].", "It is closed to under-16s [s1].", "An English-language CUGA-based agent is out [s1]."], src), []);
+  // still a miss when the number is not there
+  assert.ok(factGuard(["Acme tested a 2,000-agent swarm [s1]."], src).length > 0);
+  assert.ok(factGuard(["Forty-two teams joined [s1]."], src).includes("42"));
+});
+test("French place names in a translation are supported by the English source", () => {
+  assert.deepEqual(factGuard(["Les puces viennent de Chine et des États-Unis, pour l'Asie [s1]."], "Chips come from China and the U.S. for buyers in Asia."), []);
+});
+test("an 'excerpts do not say' line is an honest unknown, not an invented denial", () => {
+  assert.deepEqual(factGuard(["Les extraits ne disent pas quand ces outils seront offerts [s1]."], "Les outils seront offerts aux chercheurs."), []);
+});
+test("an official release's long programme names need 12 shared words, other outlets 9", () => {
+  const release = "Minister of Artificial Intelligence and Digital Innovation announces a 700 million expansion of the AI Compute Access Fund for small firms";
+  const d = draft("The Minister of Artificial Intelligence and Digital Innovation announces a bigger fund [s1].");
+  assert.deepEqual(overlapProblems(d, [{ outlet: "Government of Canada", official: true, text: release }]), []);
+  assert.equal(overlapProblems(d, [{ outlet: "Maple Tech Review", text: release }]).length, 1);
+});
+test("one lone announcement per lab in 72 hours, and one per run", () => {
+  const body = `${LONG("Hugging Face released a new open dataset for robot training, with code and a model card, on its blog today.")} ${LONG("The dataset has thousands of short clips, a licence for research and commercial use, and a leaderboard for teams.")}`;
+  const a = story({ id: "hf1", source: "Hugging Face", lab: true, title: "Hugging Face releases a robot dataset", summary: body });
+  const b = story({ id: "hf2", source: "Hugging Face", lab: true, title: "Hugging Face ships a fine-tuning recipe for parsers", summary: body.replace("robot training", "document parsing") });
+  const fresh = pickEvents([a, b], SEEN(), NOW, DIR);
+  assert.equal(fresh.events.length, 1, JSON.stringify(fresh.skipped));
+  assert.match(fresh.skipped.find(s => s.id === "hf2")?.why ?? "", /already had its own announcement/);
+  const recent = pickEvents([a], { ...SEEN(), loneOutlets: new Map([["Hugging Face", hAgo(20)]]) }, NOW, DIR);
+  assert.equal(recent.events.length, 0);
+  const old = pickEvents([a], { ...SEEN(), loneOutlets: new Map([["Hugging Face", hAgo(80)]]) }, NOW, DIR);
+  assert.equal(old.events.length, 1);
 });
 console.log("web research (research.ts)");
 const RESEARCH_CONTENT = [

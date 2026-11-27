@@ -86,7 +86,9 @@ const lowerGenericStarts = (s: string) => s.replace(/(^|[.!?:;]\s+|\s[—–-]\s
  */
 const ACRONYMS = (
   "ai ia agi ml nlp llm llms gpu gpus cpu cpus tpu tpus npu npus api apis ui ux os pc pcs it iot vr ar xr ceo ceos cto cfo coo " +
-  "ipo ipos saas faq faqs pdf pdfs url urls sms gps cloud rd pme pmes ong ia-g"
+  "ipo ipos saas faq faqs pdf pdfs url urls sms gps cloud rd pme pmes ong ia-g qa sdk sdks hr kpi kpis b2b b2c " +
+  // The site's own two languages: "English-language", "French-speaking" name no fact.
+  "english french anglais francais"
 ).split(" ");
 
 /**
@@ -165,7 +167,18 @@ const PLACES: string[][] = [
   ["Japan", "Japanese"], ["India", "Indian"], ["Korea", "Korean", "South Korea", "South Korean"],
   ["Australia", "Australian"], ["Taiwan", "Taiwanese"], ["Italy", "Italian"], ["Spain", "Spanish"],
   ["Mexico", "Mexican"], ["Brazil", "Brazilian"], ["Quebec", "Québec", "Quebecer", "Québécois"],
+  ["Asia", "Asian", "Asie", "asiatique", "asiatiques"], ["Africa", "African", "Afrique", "africain", "africaine"],
 ];
+/** The French translator's names for the same places: a source in English supports them too. */
+const FR_PLACES: Record<string, string[]> = {
+  China: ["Chine", "chinois", "chinoise", "chinoises"], America: ["États-Unis", "Amérique", "américain", "américaine", "américains", "américaines"],
+  Canada: ["canadien", "canadienne", "canadiens", "canadiennes"], Europe: ["européen", "européenne", "européens", "européennes", "UE", "Union européenne"],
+  Britain: ["Royaume-Uni", "britannique", "britanniques"], France: ["français", "française"], Germany: ["Allemagne", "allemand", "allemande"],
+  Japan: ["Japon", "japonais", "japonaise"], India: ["Inde", "indien", "indienne"], Korea: ["Corée", "Corée du Sud", "coréen", "coréenne"],
+  Australia: ["Australie", "australien", "australienne"], Italy: ["Italie", "italien", "italienne"], Spain: ["Espagne", "espagnol", "espagnole"],
+  Mexico: ["Mexique", "mexicain", "mexicaine"], Brazil: ["Brésil", "brésilien", "brésilienne"],
+};
+for (const g of PLACES) g.push(...(FR_PLACES[g[0]] ?? []));
 const withPlaces = (src: string) => {
   const extra = PLACES.filter(group => group.some(n => new RegExp(`(^|[^\\p{L}])${n.replace(/\./g, "\\.")}(?![\\p{L}])`, "u").test(src)));
   return extra.length ? `${src}\n${extra.flat().join(". ")}.` : src;
@@ -177,6 +190,31 @@ const unElide = (s: string) => s.replace(/(^|[\s«“"(])(?:[LDJMNSTC]|Qu|Jusqu|
 /** French ordinals ("9e", "12e année", "1er", "2nde") are the number itself: check the number. */
 const unOrdinal = (s: string) => s.replace(/(\d)(?:er|re|ère|e|es|ème|eme|nde?)(?![\p{L}\p{N}])/gu, "$1");
 
+/**
+ * Numbers glued to ordinary words are the number, not a name: "1,000-agent" → "1,000 agent",
+ * "500-plus" → "500 plus", "under-16s" → "under 16", "1990s" → "1990". The number itself is still
+ * checked. A capitalised word joined to an ordinary one ("English-language", "CUGA-based") is
+ * checked on its own capitalised part.
+ */
+const unCompound = (s: string) => s
+  .replace(/(\d)-(?=\p{Ll})/gu, "$1 ")
+  .replace(/(\p{Ll})-(?=\d)/gu, "$1 ")
+  .replace(/(\d)s(?![\p{L}\p{N}])/gu, "$1")
+  .replace(/(\p{Lu}[\p{L}\p{N}]*)-(?=\p{Ll}+(?![\p{L}-]))/gu, "$1 ");
+
+/** A number spelled out at the start of a sentence ("Thirty-five", "Twelve") is the number: check its digits. */
+const UNITS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const spelled = (w: string): number | null => {
+  const [a, b] = w.toLowerCase().split("-");
+  const t = TENS.indexOf(a), u = UNITS.indexOf(a);
+  if (b === undefined) return t >= 2 ? t * 10 : u >= 0 ? u : null;
+  const u2 = UNITS.indexOf(b);
+  return t >= 2 && u2 >= 1 && u2 <= 9 ? t * 10 + u2 : null;
+};
+// Only the hyphenated tens ("Thirty-five"): single number words are dictionary words and already pass.
+const unSpell = (s: string) => s.replace(/(?<![\p{L}-])(\p{Lu}\p{Ll}+-\p{Ll}+)(?![\p{L}-])/gu, (m, w: string) => { const n = spelled(w); return n === null ? m : String(n); });
+
 /** Names and numbers in `fields` that `sourceText` doesn't contain, plus any denial the sources don't make. Empty = passes. */
 export function factGuard(fields: string[], sourceText: string): string[] {
   const src = withPlaces(unElide(sourceText));
@@ -184,7 +222,7 @@ export function factGuard(fields: string[], sourceText: string): string[] {
   const names = midSentenceNames(fields);
   for (const f of fields) {
     if (!f) continue;
-    const text = lowerDictionaryStarts(lowerAiCompounds(lowerGenericStarts(lowerConnectives(unOrdinal(unElide(stripAllMarkers(f)))))), names);
+    const text = lowerDictionaryStarts(lowerAiCompounds(lowerGenericStarts(lowerConnectives(unCompound(unSpell(unOrdinal(unElide(stripAllMarkers(f)))))))), names);
     for (const w of unsupported(text, src, [...STARTERS, ...HOUSE, ...ACRONYMS])) bad.add(w);
   }
   for (const p of negationProblems(fields, sourceText)) bad.add(p);
@@ -194,7 +232,7 @@ export function factGuard(fields: string[], sourceText: string): string[] {
 // ── meaning, not just names: a sentence that says "did not" must have a source that says so ──
 const NEG = /\b(?:not|never|no longer|none|neither|nor|denied|denies|deny|refused|refuses|declined|declines|rejected|rejects)\b|n['’]t\b|\bne\b[^.!?]{0,40}\b(?:pas|jamais|plus|aucun|aucune|rien)\b|\b(?:jamais|aucun|aucune|nie|nié|refuse|refusé|rejette|rejeté)\b/i;
 const NAME = /(?<![.!?]\s)(?<=\s|^)[A-Z][\p{L}\d-]{2,}/gu;
-const ABOUT_REPORTING = /\b(?:reports?|reporting|reported|sources?|outlets?|says?|said|specif(?:y|ies|ied)|disclos\w*|confirm\w*|known|unclear|announced|names?|named|rapports?|médias?|nomm\w*|sources?|dit|précis\w*|indiqu\w*|confirm\w*|connu\w*|annonc\w*)\b/i;
+const ABOUT_REPORTING = /\b(?:reports?|reporting|reported|sources?|outlets?|excerpts?|extraits?|disent|says?|said|specif(?:y|ies|ied)|disclos\w*|confirm\w*|known|unclear|announced|names?|named|rapports?|médias?|nomm\w*|sources?|dit|précis\w*|indiqu\w*|confirm\w*|connu\w*|annonc\w*)\b/i;
 const sentences = (t: string) => t.split(/(?<=[.!?])\s+/).map(x => x.trim()).filter(Boolean);
 
 /**
@@ -278,12 +316,32 @@ export function overlappingSentences(text: string, grams: Set<string>, n = 9): n
   return [...hit].sort((a, b) => a - b);
 }
 
-export function overlapProblems(d: Draft, sources: { outlet: string; text: string }[], n = 9): string[] {
+/**
+ * How many shared words count as copying. An official announcement (the lab, company or
+ * government itself) names programmes, titles and products in long fixed phrases
+ * ("Minister of Artificial Intelligence and Digital Innovation", "AI Compute Access Fund"),
+ * so its bar is 12 words; any other outlet's writing stays at 9.
+ */
+export const OFFICIAL_RUN = 12;
+export const runFor = (s: { official?: boolean }, n = 9) => (s.official ? Math.max(n, OFFICIAL_RUN) : n);
+
+/** Indexes of the sentences of `text` that copy any source, each source at its own bar. */
+export function copiedSentences(text: string, sources: { text: string; official?: boolean }[], n = 9): number[] {
+  const hit = new Set<number>();
+  for (const run of new Set(sources.map(s => runFor(s, n)))) {
+    const grams = sourceGrams(sources.filter(s => runFor(s, n) === run), run);
+    for (const i of overlappingSentences(text, grams, run)) hit.add(i);
+  }
+  return [...hit].sort((a, b) => a - b);
+}
+
+export function overlapProblems(d: Draft, sources: { outlet: string; text: string; official?: boolean }[], n = 9): string[] {
   const norm = normWords;
-  const grams = (ws: string[]) => nGrams(ws, n);
-  const ours = grams(norm(stripAllMarkers(draftFields(d).join(" | "))));
   const problems: string[] = [];
   for (const s of sources) {
+    const run = runFor(s, n);
+    const grams = (ws: string[]) => nGrams(ws, run);
+    const ours = grams(norm(stripAllMarkers(draftFields(d).join(" | "))));
     const hit = [...grams(norm(s.text))].find(g => ours.has(g));
     if (!hit) continue;
     // Name the field: the phrase is often in "claimed", "expert" or "thirty", not in the article the editor looks at first.

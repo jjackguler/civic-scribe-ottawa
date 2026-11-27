@@ -1087,4 +1087,7 @@ html.theme-swap, html.theme-swap * { transition: background-color 280ms ease, co
 /* 88 seconds (src/components/EightyEight.tsx): each slide fades up as it arrives. */
 @keyframes eighty-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .eighty-in { animation: eighty-in 420ms cubic-bezier(.2,.7,.2,1) both; }
-@media (prefers-reduced-motion: reduce) { .eighty-in { animation: none; } }
+/* 88 seconds: a picture drifts slowly while its slide plays (never for reduced motion). */
+@keyframes eighty-drift { from { transform: scale(1); } to { transform: scale(1.07) translate(-1%, -1%); } }
+.eighty-drift { animation: eighty-drift 14s ease-out both; transform-origin: 60% 40%; }
+@media (prefers-reduced-motion: reduce) { .eighty-in, .eighty-drift { animation: none; } }
