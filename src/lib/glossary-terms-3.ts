@@ -32,8 +32,8 @@ export const TERMS: GlossaryTerm[] = [
         fr: "Prompt (requête) en IA : définition et exemples",
       },
       description: {
-        en: "A prompt is what you type to an AI tool like ChatGPT, Claude or Gemini. See what makes a good prompt, with a before-and-after example.",
-        fr: "Un prompt (requête) est ce que vous écrivez à un outil d'IA comme ChatGPT ou Claude. Ce qui fait un bon prompt, avec un exemple avant-après.",
+        en: "A prompt is what you type to an AI tool like ChatGPT, Claude, Gemini or Cohere. See what makes a good prompt, with a before-and-after example.",
+        fr: "Un prompt (requête) est ce que vous écrivez à un outil d'IA comme ChatGPT, Claude ou Cohere. Ce qui fait un bon prompt, avec un exemple avant-après.",
       },
     },
   },
