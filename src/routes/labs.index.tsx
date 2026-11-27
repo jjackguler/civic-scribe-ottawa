@@ -6,6 +6,7 @@ import { ContinueCard, FrenchTag, LengthLabel, LessonOne, PathPicker, PriceTag, 
 import { YoungLabCard } from "@/components/YoungLab";
 import { EPISODES, SERIES } from "@/lib/history-series";
 import { FIELD_GUIDE } from "@/lib/canada-field-guide";
+import { FIELD_TRIPS } from "@/lib/field-trips";
 import { BookShelf } from "@/components/BookShelf";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
@@ -138,6 +139,39 @@ function LabsPage() {
           </span>
           <span className="justify-self-start inline-flex items-center gap-2 rounded-[5px] bg-signal text-signal-ink font-bold px-4 py-2.5">{fr ? "Jouer" : "Play"} <ArrowRight className="h-5 w-5" aria-hidden="true" /></span>
         </Link>
+      </section>
+
+      {/* Playable lessons made with a world model */}
+      <section className="container-mw mt-6" aria-label={fr ? "Sorties scientifiques IA et jeux de classe" : "AI Field Trips and classroom games"}>
+        <div className="grid gap-5 md:grid-cols-3">
+          {[
+            {
+              to: "/labs/field-trips" as const,
+              kicker: fr ? "Nouveau · 3 leçons jouables" : "New · 3 playable lessons",
+              title: pick(FIELD_TRIPS.title),
+              body: fr ? "Mars, le monde des fourmis et des abeilles, le port d'Archimède. Bâties dans Genie 4, vérifiées par la rédaction, avec les erreurs de la machine à repérer." : "Mars, the world of ants and bees, Archimedes' harbour. Built in Genie 4, checked by the newsroom, with the machine's mistakes to spot.",
+            },
+            {
+              to: "/labs/world-model" as const,
+              kicker: fr ? "Nouveau · explication interactive" : "New · interactive explainer",
+              title: fr ? "Dans un modèle de monde" : "Inside a world model",
+              body: fr ? "Tournez-vous dans un petit monde généré et voyez pourquoi une IA oublie ce qui est derrière vous." : "Turn around in a tiny generated world and see why an AI forgets what is behind you.",
+            },
+            {
+              to: "/labs/teach-the-machine" as const,
+              kicker: fr ? "Nouveau · jeu de classe, 30 min" : "New · classroom game, 30 min",
+              title: fr ? "Apprenez à la machine" : "Teach the machine",
+              body: fr ? "Flotte ou coule? Donnez des exemples à une petite IA, regardez-la se tromper, puis trouvez la règle." : "Float or sink? Give a tiny AI examples, watch it get things wrong, then find the rule.",
+            },
+          ].map(c => (
+            <Link key={c.to} to={c.to} className="group flex flex-col rounded-[10px] border-2 border-night p-5 sm:p-6 hover:bg-ice transition-colors">
+              <span className="block text-[0.9rem] font-semibold text-brass-ink">{c.kicker}</span>
+              <span className="block masthead-serif text-[1.6rem] leading-[1.08] mt-1">{c.title}</span>
+              <span className="block mt-2 text-[1rem] leading-relaxed text-muted-ink flex-1">{c.body}</span>
+              <span className="mt-4 inline-flex items-center gap-2 font-bold text-lake">{fr ? "Ouvrir" : "Open"} <ArrowRight className="h-5 w-5" aria-hidden="true" /></span>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <PathsIndex />

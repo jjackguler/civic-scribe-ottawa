@@ -74,6 +74,8 @@ import { Route as ImmersiveSlugRouteImport } from './routes/immersive.$slug'
 import { Route as LabsIndexRouteImport } from './routes/labs.index'
 import { Route as LabsPathRouteImport } from './routes/labs.$path'
 import { Route as LabsCanadaFieldGuideRouteImport } from './routes/labs.canada-field-guide'
+import { Route as LabsTeachTheMachineRouteImport } from './routes/labs.teach-the-machine'
+import { Route as LabsWorldModelRouteImport } from './routes/labs.world-model'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnSlugRouteImport } from './routes/learn.$slug'
 import { Route as LedgerIndexRouteImport } from './routes/ledger.index'
@@ -82,6 +84,8 @@ import { Route as OgQuizDotpngRouteImport } from './routes/og.quiz[.]png'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 import { Route as VideoSlugRouteImport } from './routes/video.$slug'
 import { Route as ApiDispatchAudioIdRouteImport } from './routes/api.dispatch-audio.$id'
+import { Route as LabsFieldTripsIndexRouteImport } from './routes/labs.field-trips.index'
+import { Route as LabsFieldTripsTripRouteImport } from './routes/labs.field-trips.$trip'
 import { Route as LabsHistoryIndexRouteImport } from './routes/labs.history.index'
 import { Route as LabsHistoryEpisodeRouteImport } from './routes/labs.history.$episode'
 import { Route as LabsYoungIndexRouteImport } from './routes/labs.young.index'
@@ -419,6 +423,16 @@ const LabsCanadaFieldGuideRoute = LabsCanadaFieldGuideRouteImport.update({
   path: '/labs/canada-field-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsTeachTheMachineRoute = LabsTeachTheMachineRouteImport.update({
+  id: '/labs/teach-the-machine',
+  path: '/labs/teach-the-machine',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsWorldModelRoute = LabsWorldModelRouteImport.update({
+  id: '/labs/world-model',
+  path: '/labs/world-model',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnIndexRoute = LearnIndexRouteImport.update({
   id: '/learn/',
   path: '/learn/',
@@ -457,6 +471,16 @@ const VideoSlugRoute = VideoSlugRouteImport.update({
 const ApiDispatchAudioIdRoute = ApiDispatchAudioIdRouteImport.update({
   id: '/api/dispatch-audio/$id',
   path: '/api/dispatch-audio/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsFieldTripsIndexRoute = LabsFieldTripsIndexRouteImport.update({
+  id: '/labs/field-trips/',
+  path: '/labs/field-trips/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsFieldTripsTripRoute = LabsFieldTripsTripRouteImport.update({
+  id: '/labs/field-trips/$trip',
+  path: '/labs/field-trips/$trip',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabsHistoryIndexRoute = LabsHistoryIndexRouteImport.update({
@@ -574,6 +598,8 @@ export interface FileRoutesByFullPath {
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/labs/canada-field-guide': typeof LabsCanadaFieldGuideRoute
+  '/labs/teach-the-machine': typeof LabsTeachTheMachineRoute
+  '/labs/world-model': typeof LabsWorldModelRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -589,6 +615,7 @@ export interface FileRoutesByFullPath {
   '/learn/': typeof LearnIndexRoute
   '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/field-trips/$trip': typeof LabsFieldTripsTripRoute
   '/labs/history/$episode': typeof LabsHistoryEpisodeRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/classroom': typeof LabsYoungClassroomRoute
@@ -598,6 +625,7 @@ export interface FileRoutesByFullPath {
   '/labs/young/passport': typeof LabsYoungPassportRoute
   '/og/article/$id': typeof OgArticleIdRoute
   '/og/section/$name': typeof OgSectionNameRoute
+  '/labs/field-trips/': typeof LabsFieldTripsIndexRoute
   '/labs/history/': typeof LabsHistoryIndexRoute
   '/labs/young/': typeof LabsYoungIndexRoute
 }
@@ -660,6 +688,8 @@ export interface FileRoutesByTo {
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/labs/canada-field-guide': typeof LabsCanadaFieldGuideRoute
+  '/labs/teach-the-machine': typeof LabsTeachTheMachineRoute
+  '/labs/world-model': typeof LabsWorldModelRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -675,6 +705,7 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnIndexRoute
   '/ledger': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/field-trips/$trip': typeof LabsFieldTripsTripRoute
   '/labs/history/$episode': typeof LabsHistoryEpisodeRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/classroom': typeof LabsYoungClassroomRoute
@@ -684,6 +715,7 @@ export interface FileRoutesByTo {
   '/labs/young/passport': typeof LabsYoungPassportRoute
   '/og/article/$id': typeof OgArticleIdRoute
   '/og/section/$name': typeof OgSectionNameRoute
+  '/labs/field-trips': typeof LabsFieldTripsIndexRoute
   '/labs/history': typeof LabsHistoryIndexRoute
   '/labs/young': typeof LabsYoungIndexRoute
 }
@@ -747,6 +779,8 @@ export interface FileRoutesById {
   '/immersive/$slug': typeof ImmersiveSlugRoute
   '/labs/$path': typeof LabsPathRoute
   '/labs/canada-field-guide': typeof LabsCanadaFieldGuideRoute
+  '/labs/teach-the-machine': typeof LabsTeachTheMachineRoute
+  '/labs/world-model': typeof LabsWorldModelRoute
   '/learn/$slug': typeof LearnSlugRoute
   '/ledger/$id': typeof LedgerIdRoute
   '/og/quiz.png': typeof OgQuizDotpngRoute
@@ -762,6 +796,7 @@ export interface FileRoutesById {
   '/learn/': typeof LearnIndexRoute
   '/ledger/': typeof LedgerIndexRoute
   '/api/dispatch-audio/$id': typeof ApiDispatchAudioIdRoute
+  '/labs/field-trips/$trip': typeof LabsFieldTripsTripRoute
   '/labs/history/$episode': typeof LabsHistoryEpisodeRoute
   '/labs/young/$activity': typeof LabsYoungActivityRoute
   '/labs/young/classroom': typeof LabsYoungClassroomRoute
@@ -771,6 +806,7 @@ export interface FileRoutesById {
   '/labs/young/passport': typeof LabsYoungPassportRoute
   '/og/article/$id': typeof OgArticleIdRoute
   '/og/section/$name': typeof OgSectionNameRoute
+  '/labs/field-trips/': typeof LabsFieldTripsIndexRoute
   '/labs/history/': typeof LabsHistoryIndexRoute
   '/labs/young/': typeof LabsYoungIndexRoute
 }
@@ -835,6 +871,8 @@ export interface FileRouteTypes {
     | '/immersive/$slug'
     | '/labs/$path'
     | '/labs/canada-field-guide'
+    | '/labs/teach-the-machine'
+    | '/labs/world-model'
     | '/learn/$slug'
     | '/ledger/$id'
     | '/og/quiz.png'
@@ -850,6 +888,7 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/ledger/'
     | '/api/dispatch-audio/$id'
+    | '/labs/field-trips/$trip'
     | '/labs/history/$episode'
     | '/labs/young/$activity'
     | '/labs/young/classroom'
@@ -859,6 +898,7 @@ export interface FileRouteTypes {
     | '/labs/young/passport'
     | '/og/article/$id'
     | '/og/section/$name'
+    | '/labs/field-trips/'
     | '/labs/history/'
     | '/labs/young/'
   fileRoutesByTo: FileRoutesByTo
@@ -921,6 +961,8 @@ export interface FileRouteTypes {
     | '/immersive/$slug'
     | '/labs/$path'
     | '/labs/canada-field-guide'
+    | '/labs/teach-the-machine'
+    | '/labs/world-model'
     | '/learn/$slug'
     | '/ledger/$id'
     | '/og/quiz.png'
@@ -936,6 +978,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/ledger'
     | '/api/dispatch-audio/$id'
+    | '/labs/field-trips/$trip'
     | '/labs/history/$episode'
     | '/labs/young/$activity'
     | '/labs/young/classroom'
@@ -945,6 +988,7 @@ export interface FileRouteTypes {
     | '/labs/young/passport'
     | '/og/article/$id'
     | '/og/section/$name'
+    | '/labs/field-trips'
     | '/labs/history'
     | '/labs/young'
   id:
@@ -1007,6 +1051,8 @@ export interface FileRouteTypes {
     | '/immersive/$slug'
     | '/labs/$path'
     | '/labs/canada-field-guide'
+    | '/labs/teach-the-machine'
+    | '/labs/world-model'
     | '/learn/$slug'
     | '/ledger/$id'
     | '/og/quiz.png'
@@ -1022,6 +1068,7 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/ledger/'
     | '/api/dispatch-audio/$id'
+    | '/labs/field-trips/$trip'
     | '/labs/history/$episode'
     | '/labs/young/$activity'
     | '/labs/young/classroom'
@@ -1031,6 +1078,7 @@ export interface FileRouteTypes {
     | '/labs/young/passport'
     | '/og/article/$id'
     | '/og/section/$name'
+    | '/labs/field-trips/'
     | '/labs/history/'
     | '/labs/young/'
   fileRoutesById: FileRoutesById
@@ -1094,6 +1142,8 @@ export interface RootRouteChildren {
   ImmersiveSlugRoute: typeof ImmersiveSlugRoute
   LabsPathRoute: typeof LabsPathRoute
   LabsCanadaFieldGuideRoute: typeof LabsCanadaFieldGuideRoute
+  LabsTeachTheMachineRoute: typeof LabsTeachTheMachineRoute
+  LabsWorldModelRoute: typeof LabsWorldModelRoute
   LearnSlugRoute: typeof LearnSlugRoute
   LedgerIdRoute: typeof LedgerIdRoute
   OgQuizDotpngRoute: typeof OgQuizDotpngRoute
@@ -1109,6 +1159,7 @@ export interface RootRouteChildren {
   LearnIndexRoute: typeof LearnIndexRoute
   LedgerIndexRoute: typeof LedgerIndexRoute
   ApiDispatchAudioIdRoute: typeof ApiDispatchAudioIdRoute
+  LabsFieldTripsTripRoute: typeof LabsFieldTripsTripRoute
   LabsHistoryEpisodeRoute: typeof LabsHistoryEpisodeRoute
   LabsYoungActivityRoute: typeof LabsYoungActivityRoute
   LabsYoungClassroomRoute: typeof LabsYoungClassroomRoute
@@ -1118,6 +1169,7 @@ export interface RootRouteChildren {
   LabsYoungPassportRoute: typeof LabsYoungPassportRoute
   OgArticleIdRoute: typeof OgArticleIdRoute
   OgSectionNameRoute: typeof OgSectionNameRoute
+  LabsFieldTripsIndexRoute: typeof LabsFieldTripsIndexRoute
   LabsHistoryIndexRoute: typeof LabsHistoryIndexRoute
   LabsYoungIndexRoute: typeof LabsYoungIndexRoute
 }
@@ -1579,6 +1631,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabsCanadaFieldGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs/teach-the-machine': {
+      id: '/labs/teach-the-machine'
+      path: '/labs/teach-the-machine'
+      fullPath: '/labs/teach-the-machine'
+      preLoaderRoute: typeof LabsTeachTheMachineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/world-model': {
+      id: '/labs/world-model'
+      path: '/labs/world-model'
+      fullPath: '/labs/world-model'
+      preLoaderRoute: typeof LabsWorldModelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn/': {
       id: '/learn/'
       path: '/learn'
@@ -1633,6 +1699,20 @@ declare module '@tanstack/react-router' {
       path: '/api/dispatch-audio/$id'
       fullPath: '/api/dispatch-audio/$id'
       preLoaderRoute: typeof ApiDispatchAudioIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/field-trips/': {
+      id: '/labs/field-trips/'
+      path: '/labs/field-trips'
+      fullPath: '/labs/field-trips/'
+      preLoaderRoute: typeof LabsFieldTripsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs/field-trips/$trip': {
+      id: '/labs/field-trips/$trip'
+      path: '/labs/field-trips/$trip'
+      fullPath: '/labs/field-trips/$trip'
+      preLoaderRoute: typeof LabsFieldTripsTripRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/labs/history/': {
@@ -1774,6 +1854,8 @@ const rootRouteChildren: RootRouteChildren = {
   ImmersiveSlugRoute: ImmersiveSlugRoute,
   LabsPathRoute: LabsPathRoute,
   LabsCanadaFieldGuideRoute: LabsCanadaFieldGuideRoute,
+  LabsTeachTheMachineRoute: LabsTeachTheMachineRoute,
+  LabsWorldModelRoute: LabsWorldModelRoute,
   LearnSlugRoute: LearnSlugRoute,
   LedgerIdRoute: LedgerIdRoute,
   OgQuizDotpngRoute: OgQuizDotpngRoute,
@@ -1789,6 +1871,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnIndexRoute: LearnIndexRoute,
   LedgerIndexRoute: LedgerIndexRoute,
   ApiDispatchAudioIdRoute: ApiDispatchAudioIdRoute,
+  LabsFieldTripsTripRoute: LabsFieldTripsTripRoute,
   LabsHistoryEpisodeRoute: LabsHistoryEpisodeRoute,
   LabsYoungActivityRoute: LabsYoungActivityRoute,
   LabsYoungClassroomRoute: LabsYoungClassroomRoute,
@@ -1798,6 +1881,7 @@ const rootRouteChildren: RootRouteChildren = {
   LabsYoungPassportRoute: LabsYoungPassportRoute,
   OgArticleIdRoute: OgArticleIdRoute,
   OgSectionNameRoute: OgSectionNameRoute,
+  LabsFieldTripsIndexRoute: LabsFieldTripsIndexRoute,
   LabsHistoryIndexRoute: LabsHistoryIndexRoute,
   LabsYoungIndexRoute: LabsYoungIndexRoute,
 }
