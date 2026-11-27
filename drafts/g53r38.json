@@ -1,0 +1,400 @@
+{
+  "version": 1,
+  "id": "g53r38",
+  "slug": {
+    "en": "canada-tech-leaders-data-centres-letter",
+    "fr": "leaders-techno-canadiens-centres-donnees-lettre"
+  },
+  "createdAt": "2026-11-27T05:23:17.011Z",
+  "updatedAt": "2026-11-27T05:23:17.011Z",
+  "topic": "infrastructure",
+  "format": "standard",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "bnnbloomberg.ca",
+      "title": "Tech leaders urge to build more data centres in Canada",
+      "url": "https://www.bnnbloomberg.ca/business/technology/2026/11/26/tech-leaders-urge-canada-to-build-data-centres-here-or-risk-renting-abroad/",
+      "publishedAt": "2026-11-26T15:57:38.000Z",
+      "storyId": "web-15qd6k4",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "ctvnews.ca",
+      "title": "Tech leaders urge Canada to build data centres here or risk renting abroad",
+      "url": "https://www.ctvnews.ca/business/article/tech-leaders-urge-canada-to-build-data-centres-here-or-risk-renting-abroad/",
+      "publishedAt": "2026-11-26T15:57:38.000Z",
+      "storyId": "web-15dvw44",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "cp24.com",
+      "title": "Tech leaders urge Canada to build data centres here or risk renting abroad",
+      "url": "https://www.cp24.com/news/money/2026/11/26/tech-leaders-urge-canada-to-build-data-centres-here-or-risk-renting-abroad/",
+      "publishedAt": "2026-11-26T15:57:38.000Z",
+      "storyId": "web-1jatl4y",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s4",
+      "outlet": "Canadian Manufacturing",
+      "title": "Tech Leaders Urge Canada To Build Data Centres Here Or Risk Renting Abroad",
+      "url": "https://www.canadianmanufacturing.com/financing/tech-leaders-urge-canada-to-build-data-centres-here-or-risk-renting-abroad-323112/",
+      "publishedAt": "2026-11-26T15:57:38.000Z",
+      "storyId": "web-1firxe3",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s5",
+      "outlet": "beloud.com",
+      "title": "Tech leaders urge Canada to build data centres here or risk renting abroad Beloud",
+      "url": "https://www.beloud.com/news/149420355",
+      "publishedAt": "2026-11-26T15:57:38.000Z",
+      "storyId": "web-1ukmyu4",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s6",
+      "outlet": "The Globe and Mail",
+      "title": "Tech leaders urge Canada to build data centres here or risk renting abroad",
+      "url": "https://www.theglobeandmail.com/business/technology/article-tech-leaders-urge-canada-to-build-data-centres-here-or-risk-renting/",
+      "publishedAt": "2026-11-26T15:57:38.000Z",
+      "storyId": "g53r38",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "lake",
+    "motif": "grid",
+    "en": {
+      "kicker": "Data centres",
+      "big": "Canada",
+      "small": "Tech leaders urge more domestic capacity"
+    },
+    "fr": {
+      "kicker": "Centres de données",
+      "big": "Canada",
+      "small": "Des leaders urgent à bâtir plus au pays"
+    }
+  },
+  "en": {
+    "headline": "Canadian tech leaders sign open letter urging more data centres built in Canada",
+    "news": "Thirty-five Canadian tech leaders signed an open letter, gathered by Build Canada, urging the country to build more data centres at home or risk renting abroad.",
+    "thirty": [
+      "Build Canada gathered 35 tech leaders to sign an open letter.",
+      "The letter urges Canada to build more data centres domestically.",
+      "The signatories warn Canada could end up renting capacity from other countries."
+    ],
+    "confirmed": [
+      {
+        "text": "An open letter from Canadian tech leaders calls for more data centres in Canada. Build Canada, a policy group, gathered the 35 signatories.",
+        "src": [
+          "s3",
+          "s2"
+        ]
+      },
+      {
+        "text": "The signatories say that if Canada stays out, other countries will build the capacity and Canada will pay to use it.",
+        "src": [
+          "s2",
+          "s3"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "The letter says demand for computing capacity is growing, and that the figure it cites is 16 times what Canada has now.",
+        "by": "Build Canada",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Which specific projects or locations the letter wants built.",
+      "Whether the federal government will respond to the letter.",
+      "How the letter defines the capacity it says is needed."
+    ],
+    "matters": "The letter enters a debate over where data centres should be built in Canada [s1]. The sources do not say how it would change costs or services for people.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "A data centre is a large building full of computers that store data and run AI tools. A group of 35 Canadian tech leaders signed a letter asking Canada to build more of them. [s3]",
+        "They say that if Canada does not build them, other countries will, and Canada will have to pay to use theirs. [s2]"
+      ],
+      "standard": [
+        "Canadian tech leaders have put their names to an open letter that calls for more data centres in Canada, according to CP24. Build Canada, a policy group, gathered the 35 signatories [s3].",
+        "CTV News reports that the signatories say other countries will build data centres if Canada does not, leaving Canada to rent capacity from them [s2].",
+        "BNN Bloomberg reports that the letter says demand for more computing capacity is here and that data centres will be built. It cites a figure 16 times what Canada has now [s1].",
+        "Canadian Manufacturing reports that the signatories cite documents the federal AI minister received in January [s4]. Beloud notes that the brief announcement does not name specific projects or locations [s5].",
+        "The letter adds to a public argument over data centres, which face opposition in some places. According to BNN Bloomberg, it addresses water, noise and power bills directly [s1].",
+        "The sources do not say what the letter would mean for households or workers. Readers should treat its figures and comparisons as the signatories' claims [s1]."
+      ],
+      "expert": [
+        "The open letter, organized by Build Canada with 35 signatories, argues for domestic compute capacity and cites a figure 16 times current capacity [s3] [s1].",
+        "Canadian Manufacturing says the signatories cite documents the federal AI minister received in January [s4]. Beloud notes that no specific projects or locations are named [s5]."
+      ]
+    },
+    "seoTitle": "Canadian tech leaders urge more data centres in Canada",
+    "dek": "Thirty-five signatories gathered by policy group Build Canada say Canada risks renting computing capacity from other countries if it does not build its own, according to CP24 and CTV News.",
+    "metaDescription": "35 Canadian tech leaders, gathered by Build Canada, urge more data centres at home. What the letter claims, and what sources leave unclear.",
+    "keywords": [
+      "data centres canada",
+      "build canada",
+      "open letter tech leaders",
+      "canada ai computing capacity",
+      "canadian data centres"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Canadian tech leaders have put their names to an open letter that calls for more data centres in Canada, according to CP24. Build Canada, a policy group, gathered the 35 signatories [s3].",
+          "CTV News reports that the signatories say other countries will build data centres if Canada does not, leaving Canada to rent capacity from them [s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "BNN Bloomberg reports that the letter says demand for more computing capacity is here and that data centres will be built. It cites a figure 16 times what Canada has now [s1].",
+          "Canadian Manufacturing reports that the signatories cite documents the federal AI minister received in January [s4]. Beloud notes that the brief announcement does not name specific projects or locations [s5]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The letter adds to a public argument over data centres, which face opposition in some places. According to BNN Bloomberg, it addresses water, noise and power bills directly [s1].",
+          "The sources do not say what the letter would mean for households or workers. Readers should treat its figures and comparisons as the signatories' claims [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Who gathered the signatories to the open letter?",
+        "a": "Build Canada, a policy group, gathered the 35 signatories, according to CP24."
+      },
+      {
+        "q": "What do the signatories warn will happen if Canada does not build data centres?",
+        "a": "According to CTV News, the signatories say other countries will build data centres and Canada would then have to rent capacity from them."
+      },
+      {
+        "q": "Does the letter name specific projects or locations?",
+        "a": "No. Beloud notes that the brief announcement does not name specific projects or locations."
+      }
+    ],
+    "links": [
+      {
+        "path": "/learn/ai-in-everyday-life",
+        "label": "What AI can do for your everyday life"
+      },
+      {
+        "path": "/standards",
+        "label": "How we write and check our newsroom summaries"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Des leaders canadiens de la techno signent une lettre ouverte pour plus de centres de données au pays",
+    "news": "Trente-cinq leaders canadiens de la techno ont signé une lettre ouverte, réunie par Build Canada, qui presse le pays de construire plus de centres de données chez lui, sous peine de louer à l'étranger.",
+    "thirty": [
+      "Build Canada a réuni 35 leaders de la techno autour d'une lettre ouverte.",
+      "La lettre demande au Canada de construire plus de centres de données au pays.",
+      "Les signataires préviennent que le Canada pourrait finir par louer de la capacité à d'autres pays."
+    ],
+    "confirmed": [
+      {
+        "text": "Une lettre ouverte de leaders canadiens de la techno réclame plus de centres de données au Canada. Build Canada, un groupe de politiques publiques, a réuni les 35 signataires.",
+        "src": [
+          "s3",
+          "s2"
+        ]
+      },
+      {
+        "text": "Les signataires affirment que, si le Canada reste en retrait, d'autres pays bâtiront la capacité et le Canada paiera pour l'utiliser.",
+        "src": [
+          "s2",
+          "s3"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "La lettre affirme que la demande de capacité de calcul augmente et cite un chiffre équivalant à 16 fois ce que le Canada possède actuellement.",
+        "by": "Build Canada",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Les projets ou les emplacements précis que la lettre souhaite voir se réaliser.",
+      "Si le gouvernement fédéral répondra à la lettre.",
+      "La façon dont la lettre définit la capacité qu'elle juge nécessaire."
+    ],
+    "matters": "La lettre s'inscrit dans un débat sur l'endroit où construire des centres de données au Canada [s1]. Les sources ne précisent pas comment elle changerait les coûts ou les services pour la population.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "Un centre de données est un grand bâtiment rempli d'ordinateurs qui stockent des données et font fonctionner des outils d'IA. Un groupe de 35 leaders canadiens de la techno a signé une lettre pour demander au Canada d'en construire davantage. [s3]",
+        "Ils affirment que, si le Canada n'en construit pas, d'autres pays le feront, et le Canada devra payer pour utiliser les leurs. [s2]"
+      ],
+      "standard": [
+        "Des leaders canadiens de la techno ont signé une lettre ouverte qui réclame plus de centres de données au Canada, selon CP24. Build Canada, un groupe de politiques publiques, a réuni les 35 signataires [s3].",
+        "CTV News rapporte que, selon les signataires, d'autres pays construiront des centres de données si le Canada ne le fait pas, et le Canada devra alors leur louer de la capacité [s2].",
+        "BNN Bloomberg indique que la lettre affirme que la demande pour plus de capacité de calcul est bien réelle et que des centres de données seront construits. Elle cite un chiffre équivalant à 16 fois ce que le Canada possède actuellement [s1].",
+        "Canadian Manufacturing rapporte que les signataires s'appuient sur des documents reçus en janvier par le ministre fédéral de l'IA [s4]. Beloud note que la brève annonce ne nomme ni projets ni emplacements précis [s5].",
+        "La lettre s'ajoute à un débat public sur les centres de données, qui suscitent de l'opposition à certains endroits. Selon BNN Bloomberg, elle aborde directement les questions de l'eau, du bruit et des factures d'électricité [s1].",
+        "Les sources ne disent pas ce que la lettre signifierait pour les ménages ou les travailleurs. Il faut considérer ses chiffres et ses comparaisons comme les affirmations des signataires [s1]."
+      ],
+      "expert": [
+        "La lettre ouverte, organisée par Build Canada et signée par 35 personnes, plaide pour une capacité de calcul nationale et cite un chiffre équivalant à 16 fois la capacité actuelle [s3] [s1].",
+        "Canadian Manufacturing indique que les signataires s'appuient sur des documents reçus en janvier par le ministre fédéral de l'IA [s4]. Beloud note qu'aucun projet ni emplacement précis n'est nommé [s5]."
+      ]
+    },
+    "seoTitle": "Techno canadienne réclame plus de centres de données",
+    "dek": "Trente-cinq signataires réunis par Build Canada affirment que le Canada risque de louer de la capacité de calcul à l'étranger s'il ne construit pas la sienne, selon CP24 et CTV News.",
+    "metaDescription": "35 leaders canadiens de la techno, réunis par Build Canada, appellent à plus de centres de données au pays. Ce que dit la lettre et ce qui reste flou.",
+    "keywords": [
+      "centres de données canada",
+      "build canada",
+      "lettre ouverte leaders techno",
+      "capacité de calcul canada",
+      "centres de données au canada"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Des leaders canadiens de la techno ont signé une lettre ouverte qui réclame plus de centres de données au Canada, selon CP24. Build Canada, un groupe de politiques publiques, a réuni les 35 signataires [s3].",
+          "CTV News rapporte que, selon les signataires, d'autres pays construiront des centres de données si le Canada ne le fait pas, et le Canada devra alors leur louer de la capacité [s2]."
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "BNN Bloomberg indique que la lettre affirme que la demande pour plus de capacité de calcul est bien réelle et que des centres de données seront construits. Elle cite un chiffre équivalant à 16 fois ce que le Canada possède actuellement [s1].",
+          "Canadian Manufacturing rapporte que les signataires s'appuient sur des documents reçus en janvier par le ministre fédéral de l'IA [s4]. Beloud note que la brève annonce ne nomme ni projets ni emplacements précis [s5]."
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "La lettre s'ajoute à un débat public sur les centres de données, qui suscitent de l'opposition à certains endroits. Selon BNN Bloomberg, elle aborde directement les questions de l'eau, du bruit et des factures d'électricité [s1].",
+          "Les sources ne disent pas ce que la lettre signifierait pour les ménages ou les travailleurs. Il faut considérer ses chiffres et ses comparaisons comme les affirmations des signataires [s1]."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qui a réuni les signataires de la lettre ouverte ?",
+        "a": "Build Canada, un groupe de politiques publiques, a réuni les 35 signataires, selon CP24."
+      },
+      {
+        "q": "Que disent les signataires qui arriverait si le Canada ne construit pas de centres de données ?",
+        "a": "Selon CTV News, les signataires affirment que d'autres pays construiront des centres de données et que le Canada devrait alors leur louer de la capacité."
+      },
+      {
+        "q": "La lettre nomme-t-elle des projets ou des emplacements précis ?",
+        "a": "Non. Beloud note que la brève annonce ne nomme ni projets ni emplacements précis."
+      }
+    ],
+    "links": [
+      {
+        "path": "/learn/ai-in-everyday-life",
+        "label": "Ce que l'IA peut faire au quotidien"
+      },
+      {
+        "path": "/standards",
+        "label": "Comment nous rédigeons et vérifions les résumés de notre rédaction"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 167,
+    "fr": 202
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-27T05:22:29.352Z",
+      "verdict": "done",
+      "notes": [
+        "240 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-27T05:22:46.822Z",
+      "verdict": "fixed",
+      "notes": [
+        "Paragraph 2 of \"matters\" has no [sN] source marker.",
+        "Too close to bnnbloomberg.ca's wording (\"the letter comes as several data centre projects including…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+        "Too close to ctvnews.ca's wording (\"argue that if canada does not build data centres…\") in \"confirmed\": say it in our own words, or quote and attribute it.",
+        "Too close to cp24.com's wording (\"canadian tech leaders have signed an open letter urging…\") in \"article.news\": say it in our own words, or quote and attribute it.",
+        "Too close to Canadian Manufacturing's wording (\"the signatories point to documents received by the federal…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to bnnbloomberg.ca's wording (\"data centres use less water than a golf course…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "trimmed 3 sentence(s) that still failed:",
+        "cut: \"Build Canada's letter says data centres use less water than a golf course, are about as loud as a refrigerator and only \"",
+        "cut: \"It reports that the letter makes three points: data centres use less water than a golf course, make about as much noise \"",
+        "cut: \"BNN Bloomberg also says several data centre projects, including some linked to Meta and Anthropic, are planned in Canada\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-27T05:22:53.009Z",
+      "verdict": "pass",
+      "notes": [
+        "The 'confirmed' list includes the signatories' prediction that other countries will build capacity and Canada will pay to use it. That is a claim by the signatories, not a confirmed fact, so it should move to the 'claimed' list.",
+        "The headline states the 'renting abroad' risk without attribution. Consider adding 'warn' or 'say' so the risk reads as the signatories' view.",
+        "The 16-times figure is attributed to the letter, which is correct, but the sources don't say what is being measured. Keep the caveat that the metric is undefined.",
+        "BNN Bloomberg reports the letter's claims that data centres use less water than a golf course and are about as loud as a refrigerator. These are useful for balance, and the article could report them with attribution and note that the sources give no independent evidence for them.",
+        "Government response and critics' views are missing. Add a line noting that no response was reported, or that the sources don't say whether critics were approached."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-27T05:23:05.485Z",
+      "verdict": "pass",
+      "notes": [
+        "202 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-27T05:23:14.234Z",
+      "verdict": "done",
+      "notes": [
+        "en: Canadian tech leaders urge more data centres in Canada (54)",
+        "fr: Techno canadienne réclame plus de centres de données (52)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-27T05:23:17.011Z",
+      "verdict": "done",
+      "notes": [
+        "format: standard",
+        "cover: lake/grid \"Canada\""
+      ]
+    }
+  ]
+}

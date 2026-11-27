@@ -1,0 +1,333 @@
+{
+  "version": 1,
+  "id": "4n6wmw",
+  "slug": {
+    "en": "silicon-photonics-ai-data-centers",
+    "fr": "photonique-silicium-centres-donnees-ia"
+  },
+  "createdAt": "2026-11-22T15:41:55.509Z",
+  "updatedAt": "2026-11-22T15:41:55.509Z",
+  "topic": "infrastructure",
+  "format": "numbers",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "DCD",
+      "title": "Why the next phase of the data center buildout runs on light",
+      "url": "https://www.datacenterdynamics.com/en/opinions/why-the-next-phase-of-the-data-center-buildout-runs-on-light/",
+      "publishedAt": "2026-11-22T15:00:32.000Z",
+      "storyId": "web-4n6wmw",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "DatacenterDynamics",
+      "title": "Why the next phase of the data center buildout runs on light",
+      "url": "https://www.datacenterdynamics.com/en/opinions/why-the-next-phase-of-the-data-center-buildout-runs-on-light/",
+      "publishedAt": "2026-11-22T15:00:32.000Z",
+      "storyId": "4n6wmw",
+      "official": false,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "signal",
+    "motif": "bars",
+    "en": {
+      "kicker": "Data centers",
+      "big": "$75 billion",
+      "small": "Annual construction pace, according to DCD"
+    },
+    "fr": {
+      "kicker": "Centres de données",
+      "big": "$75 billion",
+      "small": "Rythme annuel de construction, selon DCD"
+    }
+  },
+  "en": {
+    "headline": "DCD says silicon photonics is key to the next stage of AI data center growth",
+    "news": "DCD reports that silicon photonics and co-packaged optics could help AI data centers overcome signal-reach and power limits as construction spending climbs.",
+    "thirty": [
+      "DCD says AI data center construction spending passed an annual pace of $75 billion.",
+      "Power is a top constraint, along with energy use and cooling.",
+      "Silicon photonics sends data as light, which DCD says removes copper's reach limit."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "DCD says spending on building data centers has risen to a yearly rate above $75 billion.",
+        "by": "DCD",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "How much power or cost the approach would save in real deployments.",
+      "When co-packaged optics will be widely used in data centers.",
+      "What the full article says beyond the short excerpt available."
+    ],
+    "matters": "The sources say nothing about direct effects on ordinary people. What they describe is a technical shift in how AI data centers move data, as power becomes a main constraint.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "DCD, a data center news outlet, says the computers that run AI need faster ways to move data. Over copper wire, signals only travel short distances at high speeds. [s1]",
+        "Silicon photonics sends data as light through tiny channels etched into silicon chips. DCD says this removes the distance limit and could help as power becomes a big constraint. [s1]"
+      ],
+      "standard": [
+        "DCD published a piece arguing that the next phase of the AI data center buildout depends on light-based data transfer. It names silicon photonics as the key to meeting current demand. [s1]",
+        "DatacenterDynamics carries the same headline, but its excerpt contains no text. The details below come from DCD's excerpt only. [s2]",
+        "According to DCD, spending on data center construction has risen to a yearly rate above $75 billion. It says power has become a top constraint, alongside energy use and cooling, and that a new constraint is emerging inside the racks. [s1]",
+        "It adds that co-packaged optics goes further by putting the optical engine in the same package as the switch or accelerator, cutting most lossy elements. DCD also says CMOS compatibility drove the change. [s1]",
+        "The excerpt does not give cost, power savings or a deployment timeline. These claims come from one outlet's excerpt and are not independently confirmed here. [s1]",
+        "The sources do not describe effects on people. They show that the industry treats power and signal reach as limits on building AI infrastructure, and that DCD sees light-based links as a response. [s1]"
+      ],
+      "expert": [
+        "DCD cites Marvell CEO Matt Murphy at Computex 2026: copper reaches about five meters at 100Gbps per lane, and shorter at higher rates. [s1]",
+        "DCD says silicon photonics uses infrared light in silicon waveguides, and co-packaged optics integrates the optical engine in the switch or accelerator package, removing most lossy electrical elements. It cites CMOS compatibility as the driver. [s1]",
+        "The DatacenterDynamics excerpt is empty, so only DCD's text is available. [s2]"
+      ]
+    },
+    "seoTitle": "Silicon photonics for AI data centers: DCD report",
+    "dek": "DCD reports that power is now a top constraint for data centers, and that moving data as light instead of over copper removes a limit on reach inside racks.",
+    "metaDescription": "DCD reports silicon photonics could ease power and signal-reach limits in AI data centers. The excerpt gives no cost or timeline.",
+    "keywords": [
+      "silicon photonics",
+      "co-packaged optics",
+      "ai data centers",
+      "data center power"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "DCD published a piece arguing that the next phase of the AI data center buildout depends on light-based data transfer. It names silicon photonics as the key to meeting current demand. [s1]",
+          "DatacenterDynamics carries the same headline, but its excerpt contains no text. The details below come from DCD's excerpt only. [s2]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "According to DCD, spending on data center construction has risen to a yearly rate above $75 billion. It says power has become a top constraint, alongside energy use and cooling, and that a new constraint is emerging inside the racks. [s1]",
+          "It adds that co-packaged optics goes further by putting the optical engine in the same package as the switch or accelerator, cutting most lossy elements. DCD also says CMOS compatibility drove the change. [s1]",
+          "The excerpt does not give cost, power savings or a deployment timeline. These claims come from one outlet's excerpt and are not independently confirmed here. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "The sources do not describe effects on people. They show that the industry treats power and signal reach as limits on building AI infrastructure, and that DCD sees light-based links as a response. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "How much is being spent on data center construction?",
+        "a": "According to DCD, spending on data center construction has risen to a yearly rate above $75 billion."
+      },
+      {
+        "q": "What does co-packaged optics change?",
+        "a": "According to DCD, it places the optical engine in the same package as the switch or accelerator, cutting most lossy elements."
+      },
+      {
+        "q": "Does the excerpt give cost or a timeline?",
+        "a": "No. The excerpt does not give cost, power savings or a deployment timeline."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/start-here",
+        "label": "Start here: what AI is"
+      },
+      {
+        "path": "/standards",
+        "label": "How we write and check our newsroom summaries"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "DCD : la photonique sur silicium serait la clé de la prochaine étape des centres de données d'IA",
+    "news": "DCD rapporte que la photonique sur silicium et l'optique co-emballée pourraient aider les centres de données d'IA à surmonter les limites de portée du signal et de consommation d'énergie, alors que les dépenses de construction augmentent.",
+    "thirty": [
+      "DCD affirme que les dépenses de construction de centres de données d'IA ont dépassé un rythme annuel de 75 milliards de dollars.",
+      "L'alimentation électrique est une contrainte majeure, avec la consommation d'énergie et le refroidissement.",
+      "La photonique sur silicium transmet les données sous forme de lumière, ce qui, selon DCD, supprime la limite de portée du cuivre."
+    ],
+    "confirmed": [],
+    "claimed": [
+      {
+        "text": "DCD affirme que les dépenses de construction de centres de données ont atteint un rythme annuel supérieur à 75 milliards de dollars.",
+        "by": "DCD",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "L'économie d'énergie ou de coûts que cette approche permettrait dans des déploiements réels.",
+      "Le moment où l'optique co-emballée sera largement utilisée dans les centres de données.",
+      "Ce que contient l'article complet au-delà du court extrait disponible."
+    ],
+    "matters": "Les sources ne disent rien des effets directs sur la population. Elles décrivent un changement technique dans la façon dont les centres de données d'IA déplacent les données, alors que l'alimentation électrique devient une contrainte principale.",
+    "timeline": [],
+    "body": {
+      "plain": [
+        "DCD, un média spécialisé dans les centres de données, affirme que les ordinateurs qui font fonctionner l'IA ont besoin de moyens plus rapides pour déplacer les données. Sur un fil de cuivre, les signaux à haute vitesse ne parcourent que de courtes distances. [s1]",
+        "La photonique sur silicium transmet les données sous forme de lumière dans de minuscules canaux gravés dans des puces de silicium. Selon DCD, cela supprime la limite de distance et pourrait aider, alors que l'alimentation électrique devient une contrainte importante. [s1]"
+      ],
+      "standard": [
+        "DCD a publié un texte selon lequel la prochaine phase de la construction de centres de données d'IA repose sur le transfert de données par la lumière. Le média désigne la photonique sur silicium comme la clé pour répondre à la demande actuelle. [s1]",
+        "DatacenterDynamics reprend le même titre, mais son extrait ne contient aucun texte. Les détails ci-dessous proviennent uniquement de l'extrait de DCD. [s2]",
+        "Selon DCD, les dépenses de construction de centres de données ont grimpé à un rythme annuel supérieur à 75 milliards de dollars. Le média indique que l'alimentation électrique est devenue une contrainte majeure, avec la consommation d'énergie et le refroidissement, et qu'une nouvelle contrainte apparaît à l'intérieur des baies. [s1]",
+        "DCD ajoute que l'optique co-emballée va plus loin: elle place le moteur optique dans le même boîtier que le commutateur ou l'accélérateur, ce qui élimine la plupart des éléments causant des pertes. Le média affirme aussi que la compatibilité CMOS a motivé ce changement. [s1]",
+        "L'extrait ne fournit ni coût, ni économie d'énergie, ni échéancier de déploiement. Ces affirmations proviennent de l'extrait d'un seul média et ne sont pas confirmées de façon indépendante ici. [s1]",
+        "Les sources ne décrivent pas d'effets sur les gens. Elles montrent que l'industrie considère l'alimentation électrique et la portée du signal comme des limites à la construction d'infrastructures d'IA, et que DCD voit dans les liens optiques une réponse possible. [s1]"
+      ],
+      "expert": [
+        "DCD cite le chef de la direction de Marvell, Matt Murphy, à Computex 2026: le cuivre porte un signal sur environ cinq mètres à 100Gbps par voie, et sur une distance plus courte à des débits plus élevés. [s1]",
+        "DCD indique que la photonique sur silicium utilise la lumière infrarouge dans des guides d'ondes en silicium, et que l'optique co-emballée intègre le moteur optique dans le boîtier du commutateur ou de l'accélérateur, ce qui retire la plupart des éléments électriques causant des pertes. Le média cite la compatibilité CMOS comme moteur du changement. [s1]",
+        "L'extrait de DatacenterDynamics est vide: seul le texte de DCD est disponible. [s2]"
+      ]
+    },
+    "seoTitle": "Photonique sur silicium pour les centres de données d'IA",
+    "dek": "DCD rapporte que l'alimentation électrique est devenue une contrainte majeure pour les centres de données, et que le transport des données sous forme de lumière plutôt que sur du cuivre lève une limite de portée dans les baies.",
+    "metaDescription": "DCD rapporte que la photonique sur silicium pourrait alléger les limites d'énergie et de portée du signal des centres de données d'IA.",
+    "keywords": [
+      "photonique sur silicium",
+      "optique co-emballée",
+      "centres de données ia",
+      "consommation énergie centres de données"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "DCD a publié un texte selon lequel la prochaine phase de la construction de centres de données d'IA repose sur le transfert de données par la lumière. Le média désigne la photonique sur silicium comme la clé pour répondre à la demande actuelle. [s1]",
+          "DatacenterDynamics reprend le même titre, mais son extrait ne contient aucun texte. Les détails ci-dessous proviennent uniquement de l'extrait de DCD. [s2]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Selon DCD, les dépenses de construction de centres de données ont grimpé à un rythme annuel supérieur à 75 milliards de dollars. Le média indique que l'alimentation électrique est devenue une contrainte majeure, avec la consommation d'énergie et le refroidissement, et qu'une nouvelle contrainte apparaît à l'intérieur des baies. [s1]",
+          "DCD ajoute que l'optique co-emballée va plus loin: elle place le moteur optique dans le même boîtier que le commutateur ou l'accélérateur, ce qui élimine la plupart des éléments causant des pertes. Le média affirme aussi que la compatibilité CMOS a motivé ce changement. [s1]",
+          "L'extrait ne fournit ni coût, ni économie d'énergie, ni échéancier de déploiement. Ces affirmations proviennent de l'extrait d'un seul média et ne sont pas confirmées de façon indépendante ici. [s1]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Les sources ne décrivent pas d'effets sur les gens. Elles montrent que l'industrie considère l'alimentation électrique et la portée du signal comme des limites à la construction d'infrastructures d'IA, et que DCD voit dans les liens optiques une réponse possible. [s1]"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Combien est dépensé pour la construction de centres de données?",
+        "a": "Selon DCD, les dépenses de construction de centres de données ont grimpé à un rythme annuel supérieur à 75 milliards de dollars."
+      },
+      {
+        "q": "Que change l'optique co-emballée?",
+        "a": "Selon DCD, elle place le moteur optique dans le même boîtier que le commutateur ou l'accélérateur, ce qui élimine la plupart des éléments causant des pertes."
+      },
+      {
+        "q": "L'extrait donne-t-il un coût ou un échéancier?",
+        "a": "Non. L'extrait ne fournit ni coût, ni économie d'énergie, ni échéancier de déploiement."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/start-here",
+        "label": "Commencer ici : ce qu'est l'IA"
+      },
+      {
+        "path": "/standards",
+        "label": "Comment nous rédigeons et vérifions les résumés de notre rédaction"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 181,
+    "fr": 226
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-22T15:41:20.044Z",
+      "verdict": "done",
+      "notes": [
+        "230 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-22T15:41:27.396Z",
+      "verdict": "fixed",
+      "notes": [
+        "Too close to DCD's wording (\"data center construction spending jumped to an annual pace…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "after the rewrite:",
+        "Too close to DCD's wording (\"at computex 2026 copper carries a signal about five…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "trimmed 6 sentence(s) that still failed:",
+        "cut: \"DCD says Marvell CEO Matt Murphy gave rough numbers at Computex 2026: copper carries a signal about five meters at 100Gb\"",
+        "cut: \"DCD says silicon photonics moves data as infrared light through waveguides etched into silicon, which removes the reach \"",
+        "cut: \"DCD says co-packaged optics places the optical engine inside the same package as the switch or accelerator.\"",
+        "cut: \"DCD says Marvell CEO Matt Murphy gave rough figures at Computex 2026.\"",
+        "cut: \"Copper carries a signal about five meters at 100Gbps per lane, and a shorter distance at higher speeds. [s1]\"",
+        "cut: \"DCD says silicon photonics removes the reach limit by sending data as infrared light through waveguides etched into sili\""
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-22T15:41:33.513Z",
+      "verdict": "pass",
+      "notes": [
+        "The dek states the reach claim as a plain fact after 'that'. It is attributed to DCD by the opening 'DCD reports', but the body's 'removes the reach constraint outright' should stay attributed in every place it appears.",
+        "The dek says the limit is 'inside racks'. The excerpt ties the emerging constraint to the racks, but it does not say light removes a reach limit specifically inside them. Keep the wording close to the source.",
+        "All technical and cost claims rest on one outlet's excerpt, and the second source is empty. Say so plainly near the top, not only at the end of the 'known' section.",
+        "The 'plain' section's explanation of copper reach is supported by the Marvell figures, but it should attribute those figures to the Marvell CEO as DCD reports them.",
+        "If this text was written or drafted with AI, label it and check it against the DCD excerpt before publication, per the charter."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-22T15:41:45.031Z",
+      "verdict": "pass",
+      "notes": [
+        "226 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-22T15:41:52.454Z",
+      "verdict": "done",
+      "notes": [
+        "en: Silicon photonics for AI data centers: DCD report (49)",
+        "fr: Photonique sur silicium pour les centres de données d'IA (56)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-22T15:41:55.509Z",
+      "verdict": "done",
+      "notes": [
+        "format: numbers",
+        "cover: signal/bars \"$75 billion\""
+      ]
+    },
+    {
+      "role": "editor",
+      "note": "Approved by the editor (approved.json)."
+    }
+  ]
+}

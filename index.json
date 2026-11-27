@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T14:32:09.446Z",
+  "updatedAt": "2026-11-27T05:22:06.619Z",
   "items": [
     {
       "id": "1mkmuv5",
@@ -46,6 +46,56 @@
         "dek": "Hugging Face dit ouvrir le code de trois jeux de données synthétiques ayant servi à entraîner Parse 3.5, un modèle compact qui transforme des images de pages en données structurées, avec une méthode de mise au point et un speculator DFlash2.",
         "news": "Hugging Face dit rendre open source trois jeux de données synthétiques utilisés pour entraîner NVIDIA Nemotron 3.5 Parse, ainsi qu'une méthode de mise au point et un speculator DFlash2.",
         "matters": "Selon la source, les jeux de données et la méthode peuvent servir à affiner des modèles documentaires pour un type de document ou une langue précise. Elle ne décrit aucune incidence plus large pour les utilisateurs ordinaires. [s1]"
+      }
+    },
+    {
+      "id": "4n6wmw",
+      "slug": {
+        "en": "silicon-photonics-ai-data-centers",
+        "fr": "photonique-silicium-centres-donnees-ia"
+      },
+      "createdAt": "2026-11-22T15:41:55.509Z",
+      "updatedAt": "2026-11-22T15:41:55.509Z",
+      "topic": "infrastructure",
+      "format": "numbers",
+      "outlets": [
+        "DCD",
+        "DatacenterDynamics"
+      ],
+      "times": [
+        "2026-11-22T15:00:32.000Z",
+        "2026-11-22T15:00:32.000Z"
+      ],
+      "storyIds": [
+        "web-4n6wmw",
+        "4n6wmw"
+      ],
+      "cover": {
+        "color": "signal",
+        "motif": "bars",
+        "en": {
+          "kicker": "Data centers",
+          "big": "$75 billion",
+          "small": "Annual construction pace, according to DCD"
+        },
+        "fr": {
+          "kicker": "Centres de données",
+          "big": "$75 billion",
+          "small": "Rythme annuel de construction, selon DCD"
+        }
+      },
+      "words": 181,
+      "en": {
+        "headline": "DCD says silicon photonics is key to the next stage of AI data center growth",
+        "dek": "DCD reports that power is now a top constraint for data centers, and that moving data as light instead of over copper removes a limit on reach inside racks.",
+        "news": "DCD reports that silicon photonics and co-packaged optics could help AI data centers overcome signal-reach and power limits as construction spending climbs.",
+        "matters": "The sources say nothing about direct effects on ordinary people. What they describe is a technical shift in how AI data centers move data, as power becomes a main constraint."
+      },
+      "fr": {
+        "headline": "DCD : la photonique sur silicium serait la clé de la prochaine étape des centres de données d'IA",
+        "dek": "DCD rapporte que l'alimentation électrique est devenue une contrainte majeure pour les centres de données, et que le transport des données sous forme de lumière plutôt que sur du cuivre lève une limite de portée dans les baies.",
+        "news": "DCD rapporte que la photonique sur silicium et l'optique co-emballée pourraient aider les centres de données d'IA à surmonter les limites de portée du signal et de consommation d'énergie, alors que les dépenses de construction augmentent.",
+        "matters": "Les sources ne disent rien des effets directs sur la population. Elles décrivent un changement technique dans la façon dont les centres de données d'IA déplacent les données, alors que l'alimentation électrique devient une contrainte principale."
       }
     },
     {
@@ -139,6 +189,62 @@
         "dek": "Dans un billet publié sur son site, Hugging Face affirme que l'apprentissage par renforcement dans un harnais d'agent a fait passer un score Terminal-Bench 2.1 de 39 % à 55 %, avec moins de jetons. Elle partage une recette réutilisable.",
         "news": "Hugging Face dit avoir entraîné de petits adaptateurs LoRA pour Qwen3.8-27B, un par harnais d'agent, et affirme que chacun surpasse le modèle de base en précision et en efficacité.",
         "matters": "Les sources décrivent seulement une méthode technique. Hugging Face dit partager une recette et des artéfacts réutilisables pour que d'autres adaptent un modèle à leur harnais et à leurs tâches."
+      }
+    },
+    {
+      "id": "1oqxmnz",
+      "slug": {
+        "en": "everful-raises-series-a-ai-sourcing",
+        "fr": "everful-serie-a-approvisionnement-ia"
+      },
+      "createdAt": "2026-11-19T18:42:57.242Z",
+      "updatedAt": "2026-11-19T18:42:57.242Z",
+      "topic": "business",
+      "format": "numbers",
+      "outlets": [
+        "techcrunch.com",
+        "prnewswire.com",
+        "FourWeekMBA",
+        "Newswire.ca"
+      ],
+      "times": [
+        "2026-11-19T18:00:00.000Z",
+        "2026-11-19T18:00:00.000Z",
+        "2026-11-19T18:00:00.000Z",
+        "2026-11-19T18:00:00.000Z"
+      ],
+      "storyIds": [
+        "web-3ywd86",
+        "web-1n14ilj",
+        "web-1o4wgq1",
+        "1oqxmnz"
+      ],
+      "cover": {
+        "color": "brass",
+        "motif": "bars",
+        "en": {
+          "kicker": "Series A funding",
+          "big": "$48.5 million",
+          "small": "AI sourcing tools for retailers and Chinese factories"
+        },
+        "fr": {
+          "kicker": "Série A",
+          "big": "48,5 millions ",
+          "small": "Outils d'IA d'approvisionnement pour détaillants"
+        }
+      },
+      "words": 287,
+      "en": {
+        "headline": "Everful raises $48.5M Series A to link retailers with Chinese factories using AI",
+        "dek": "The startup, co-founded by former Alibaba executive Sisi Song, plans to expand in the U.S. and Europe. TechCrunch says U.S.-China tariffs bear directly on its business.",
+        "news": "Everful says it raised a $48.5 million Series A to build AI and data tools for sourcing goods from Chinese factories, with growth planned in the U.S. and Europe.",
+        "matters": "The sources say little about direct effects on consumers. They show a startup using AI to replace the overseas sourcing teams that only larger retailers once hired. TechCrunch says trade tensions between the U.S. and China, and tariffs, are a direct factor for the business."
+      },
+      "fr": {
+        "headline": "Everful lève 48,5 M$ en série A pour relier détaillants et usines chinoises grâce à l'IA",
+        "dek": "La jeune pousse, cofondée par Sisi Song, ancienne dirigeante d'Alibaba, vise une expansion aux U.S. et en Europe. Selon TechCrunch, les tarifs douaniers entre les U.S. et la Chine touchent directement ses activités.",
+        "news": "Everful affirme avoir levé 48,5 millions $ en série A pour bâtir des outils d'IA et de données d'approvisionnement auprès d'usines chinoises, avec une croissance prévue aux U.S. et en Europe.",
+        "matters": "Les sources disent peu de chose sur les effets directs pour les consommateurs. Elles montrent une jeune pousse qui utilise l'IA pour remplacer les équipes d'approvisionnement à l'étranger que seules les grandes entreprises pouvaient embaucher. Selon TechCrunch, les tensions commerciales et les tarifs douaniers entre les U.S. et la Chine pèsent directement sur l'entreprise."
       }
     },
     {

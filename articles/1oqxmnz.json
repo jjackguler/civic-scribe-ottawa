@@ -1,0 +1,411 @@
+{
+  "version": 1,
+  "id": "1oqxmnz",
+  "slug": {
+    "en": "everful-raises-series-a-ai-sourcing",
+    "fr": "everful-serie-a-approvisionnement-ia"
+  },
+  "createdAt": "2026-11-19T18:42:57.242Z",
+  "updatedAt": "2026-11-19T18:42:57.242Z",
+  "topic": "business",
+  "format": "numbers",
+  "sources": [
+    {
+      "key": "s1",
+      "outlet": "techcrunch.com",
+      "title": "Former Alibaba exec's Everful raises $48.5M to connect retailers with Chinese factories",
+      "url": "https://techcrunch.com/2026/11/19/former-alibaba-execs-everful-raises-48-5m-to-connect-retailers-with-chinese-factories/",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "storyId": "web-3ywd86",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s2",
+      "outlet": "prnewswire.com",
+      "title": "Everful Raises $48.5 Million Series A to Build the AI Infrastructure Layer for Global Commerce",
+      "url": "https://www.prnewswire.com/news-releases/everful-raises-48-5-million-series-a-to-build-the-ai-infrastructure-layer-for-global-commerce-302945927.html",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "storyId": "web-1n14ilj",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s3",
+      "outlet": "FourWeekMBA",
+      "title": "Everful Raises $48.5M, Eyes $100M Run-Rate With 70 Staff",
+      "url": "https://fourweekmba.com/ai-everful-raises-48-5m-eyes-100m-run-rate-with-70-staff/",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "storyId": "web-1o4wgq1",
+      "official": false,
+      "lang": "en"
+    },
+    {
+      "key": "s4",
+      "outlet": "Newswire.ca",
+      "title": "Everful Raises $48.5 Million Series A to Build the AI Infrastructure Layer for Global Commerce",
+      "url": "https://www.newswire.ca/news-releases/everful-raises-48-5-million-series-a-to-build-the-ai-infrastructure-layer-for-global-commerce-802210816.html",
+      "publishedAt": "2026-11-19T18:00:00.000Z",
+      "storyId": "1oqxmnz",
+      "official": true,
+      "lang": "en"
+    }
+  ],
+  "background": [],
+  "cover": {
+    "color": "brass",
+    "motif": "bars",
+    "en": {
+      "kicker": "Series A funding",
+      "big": "$48.5 million",
+      "small": "AI sourcing tools for retailers and Chinese factories"
+    },
+    "fr": {
+      "kicker": "Série A",
+      "big": "48,5 millions ",
+      "small": "Outils d'IA d'approvisionnement pour détaillants"
+    }
+  },
+  "en": {
+    "headline": "Everful raises $48.5M Series A to link retailers with Chinese factories using AI",
+    "news": "Everful says it raised a $48.5 million Series A to build AI and data tools for sourcing goods from Chinese factories, with growth planned in the U.S. and Europe.",
+    "thirty": [
+      "Everful has raised a $48.5 million Series A round.",
+      "It connects retailers and brands with Chinese factories.",
+      "TechCrunch says U.S.-China tariffs bear directly on its business."
+    ],
+    "confirmed": [
+      {
+        "text": "Everful raised a $48.5 million Series A round, with plans to build AI and data infrastructure for sourcing.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Everful says it now sends over 5 million items each month to retailers and brands across more than 60 countries.",
+        "by": "Everful",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Sisi Song, co-founder and CEO, says AI lets the company turn an overseas sourcing team into software.",
+        "by": "Sisi Song, Everful",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "According to TechCrunch, Everful plans to put the round toward growth in the U.S. and Europe, with the U.K., France and Italy named as focus markets.",
+        "by": "Everful",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Whether Everful will reach the revenue target mentioned in one outlet's headline.",
+      "How U.S.-China tariffs will affect its prices and growth.",
+      "Which investors led the round."
+    ],
+    "matters": "The sources say little about direct effects on consumers. They show a startup using AI to replace the overseas sourcing teams that only larger retailers once hired. TechCrunch says trade tensions between the U.S. and China, and tariffs, are a direct factor for the business.",
+    "timeline": [
+      {
+        "when": "2024",
+        "text": "Sisi Song and Kevin Han co-founded Everful, according to TechCrunch.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Everful is a young company that helps shops and brands buy products directly from factories in China. It has raised $48.5 million from investors to grow. [s1,s2]",
+        "It says it uses AI, meaning software that learns patterns, to do work that once needed a team of people overseas. It also says it ships over 5 million items a month. [s2]"
+      ],
+      "standard": [
+        "Everful, a sourcing startup, has raised a $48.5 million Series A round, according to TechCrunch and a PR Newswire release. [s1,s2] The company says it is building AI and data infrastructure for global commerce. [s2]",
+        "TechCrunch reports that Everful was co-founded in 2024 by Sisi Song, a former Alibaba executive, and Kevin Han, who sold an earlier company to Amazon. [s1]",
+        "Both TechCrunch and the release confirm the size of the round. [s1,s2] The release says existing investors Square Peg and Lightspeed also took part. [s2] TechCrunch says the company began as a jewelry wholesale business and became a multi-category, factory-direct sourcing platform. [s1]",
+        "Everful says it now sends over 5 million items each month to retailers and brands across more than 60 countries. It adds that this happened within about two and a half years of its launch. [s2] FourWeekMBA says it found no Everful press release. It says the round, the revenue target and the shipping figures reach it from the founders through TechCrunch. [s3] These figures are the company's own claims.",
+        "TechCrunch says Everful will use the money to grow in the U.S. and Europe, with the U.K., France and Italy named, and to invest in AI. [s1] It employs about 70 full-time staff, 45 of them in research and development. [s1] Song says big firms once hired teams overseas to source goods, and that AI lets Everful turn that team into software. [s2]",
+        "For retailers, the pitch is that sourcing from factories abroad may no longer need a dedicated overseas team. This is Everful's claim, not a tested result. [s2]",
+        "TechCrunch notes that because Everful buys from Chinese factories, trade tensions and tariffs between the U.S. and China affect its business directly. [s1] The sources do not say what this means for prices or for shoppers."
+      ],
+      "expert": [
+        "The round is a $48.5 million Series A, with Square Peg and Lightspeed participating as existing investors. [s2] Everful describes itself as an AI and data infrastructure layer for commerce. [s2]",
+        "TechCrunch reports about 70 full-time staff, 45 in R&D, and expansion targets in the U.K., France and Italy. [s1] FourWeekMBA says the revenue target and shipping figures trace back to the founders via TechCrunch, with no Everful press release found. [s3] A Newswire.ca copy of the release carries no excerpt. [s4]"
+      ]
+    },
+    "seoTitle": "Everful raises $48.5M to source from Chinese factories",
+    "dek": "The startup, co-founded by former Alibaba executive Sisi Song, plans to expand in the U.S. and Europe. TechCrunch says U.S.-China tariffs bear directly on its business.",
+    "metaDescription": "Everful says it raised a $48.5M Series A for AI sourcing from Chinese factories, with U.S. and Europe growth planned. Figures are company claims.",
+    "keywords": [
+      "everful",
+      "ai sourcing startup",
+      "series a funding",
+      "chinese factory sourcing",
+      "ai supply chain"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Everful, a sourcing startup, has raised a $48.5 million Series A round, according to TechCrunch and a PR Newswire release. [s1,s2] The company says it is building AI and data infrastructure for global commerce. [s2]",
+          "TechCrunch reports that Everful was co-founded in 2024 by Sisi Song, a former Alibaba executive, and Kevin Han, who sold an earlier company to Amazon. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "Both TechCrunch and the release confirm the size of the round. [s1,s2] The release says existing investors Square Peg and Lightspeed also took part. [s2] TechCrunch says the company began as a jewelry wholesale business and became a multi-category, factory-direct sourcing platform. [s1]",
+          "Everful says it now sends over 5 million items each month to retailers and brands across more than 60 countries. It adds that this happened within about two and a half years of its launch. [s2] FourWeekMBA says it found no Everful press release. It says the round, the revenue target and the shipping figures reach it from the founders through TechCrunch. [s3] These figures are the company's own claims.",
+          "TechCrunch says Everful will use the money to grow in the U.S. and Europe, with the U.K., France and Italy named, and to invest in AI. [s1] It employs about 70 full-time staff, 45 of them in research and development. [s1] Song says big firms once hired teams overseas to source goods, and that AI lets Everful turn that team into software. [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "For retailers, the pitch is that sourcing from factories abroad may no longer need a dedicated overseas team. This is Everful's claim, not a tested result. [s2]",
+          "TechCrunch notes that because Everful buys from Chinese factories, trade tensions and tariffs between the U.S. and China affect its business directly. [s1] The sources do not say what this means for prices or for shoppers."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "How much did Everful raise?",
+        "a": "Everful says it raised a $48.5 million Series A round, and both TechCrunch and a PR Newswire release confirm the size of the round."
+      },
+      {
+        "q": "Who co-founded Everful?",
+        "a": "TechCrunch reports that Everful was co-founded in 2024 by Sisi Song, a former Alibaba executive, and Kevin Han, who sold an earlier company to Amazon."
+      },
+      {
+        "q": "Where does Everful plan to expand?",
+        "a": "TechCrunch says Everful will use the money to grow in the U.S. and Europe, with the U.K., France and Italy named."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/work",
+        "label": "AI at work"
+      },
+      {
+        "path": "/standards",
+        "label": "How we write and check our newsroom summaries"
+      }
+    ]
+  },
+  "fr": {
+    "headline": "Everful lève 48,5 M$ en série A pour relier détaillants et usines chinoises grâce à l'IA",
+    "news": "Everful affirme avoir levé 48,5 millions $ en série A pour bâtir des outils d'IA et de données d'approvisionnement auprès d'usines chinoises, avec une croissance prévue aux U.S. et en Europe.",
+    "thirty": [
+      "Everful a levé une série A de 48,5 millions $.",
+      "L'entreprise met en relation détaillants et marques avec des usines chinoises.",
+      "Selon TechCrunch, les tarifs douaniers entre les U.S. et la chine touchent directement ses activités."
+    ],
+    "confirmed": [
+      {
+        "text": "Everful a levé une série A de 48,5 millions $ et prévoit bâtir une infrastructure d'IA et de données pour l'approvisionnement.",
+        "src": [
+          "s1",
+          "s2"
+        ]
+      }
+    ],
+    "claimed": [
+      {
+        "text": "Everful affirme expédier désormais plus de 5 millions d'articles par mois à des détaillants et à des marques dans plus de 60 pays.",
+        "by": "Everful",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Sisi Song, cofondatrice et CEO, affirme que l'IA permet à l'entreprise de transformer une équipe d'approvisionnement à l'étranger en logiciel.",
+        "by": "Sisi Song, Everful",
+        "src": [
+          "s2"
+        ]
+      },
+      {
+        "text": "Selon TechCrunch, Everful compte consacrer ces fonds à sa croissance aux U.S. et en Europe, avec le U.K., la France et Italy comme marchés ciblés.",
+        "by": "Everful",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "unknown": [
+      "Si Everful atteindra l'objectif de revenus évoqué dans le titre d'un média.",
+      "L'effet des tarifs douaniers entre les U.S. et la Chine sur ses prix et sa croissance.",
+      "Les investisseurs qui ont mené la ronde."
+    ],
+    "matters": "Les sources disent peu de chose sur les effets directs pour les consommateurs. Elles montrent une jeune pousse qui utilise l'IA pour remplacer les équipes d'approvisionnement à l'étranger que seules les grandes entreprises pouvaient embaucher. Selon TechCrunch, les tensions commerciales et les tarifs douaniers entre les U.S. et la Chine pèsent directement sur l'entreprise.",
+    "timeline": [
+      {
+        "when": "2024",
+        "text": "Sisi Song et Kevin Han ont cofondé Everful, selon TechCrunch.",
+        "src": [
+          "s1"
+        ]
+      }
+    ],
+    "body": {
+      "plain": [
+        "Everful est une jeune entreprise qui aide des boutiques et des marques à acheter des produits directement auprès d'usines en Chine. Elle a obtenu 48,5 millions $ d'investisseurs pour croître. [s1,s2]",
+        "Elle dit recourir à l'IA, c'est-à-dire à des logiciels qui repèrent des tendances dans les données, pour accomplir un travail qui exigeait autrefois une équipe à l'étranger. Elle affirme aussi expédier plus de 5 millions d'articles par mois. [s2]"
+      ],
+      "standard": [
+        "Everful, une entreprise d'approvisionnement, a levé une série A de 48,5 millions $, selon TechCrunch et un communiqué de PR Newswire. [s1,s2] L'entreprise dit bâtir une infrastructure d'IA et de données pour le commerce mondial. [s2]",
+        "TechCrunch rapporte qu'Everful a été cofondée en 2024 par Sisi Song, ancienne dirigeante d'Alibaba, et Kevin Han, qui a vendu une entreprise antérieure à Amazon. [s1]",
+        "TechCrunch et le communiqué confirment tous deux le montant de la ronde. [s1,s2] Selon le communiqué, les investisseurs actuels Square Peg et Lightspeed y ont aussi participé. [s2] TechCrunch indique que l'entreprise a débuté comme grossiste en bijoux avant de devenir une plateforme d'approvisionnement multicatégorie, directement auprès des usines. [s1]",
+        "Everful affirme expédier plus de 5 millions d'articles par mois à des détaillants et à des marques dans plus de 60 pays. Elle ajoute y être parvenue en moins de deux ans et demi après son lancement. [s2] FourWeekMBA dit n'avoir trouvé aucun communiqué d'Everful. Selon ce média, la ronde, l'objectif de revenus et les chiffres d'expédition lui viennent des fondateurs par l'entremise de TechCrunch. [s3] Ces chiffres sont des affirmations de l'entreprise.",
+        "Selon TechCrunch, Everful utilisera les fonds pour croître aux U.S. et en Europe, avec le U.K., la France et Italy comme marchés nommés, et pour investir dans l'IA. [s1] Elle compte environ 70 employés à temps plein, dont 45 en recherche et développement. [s1] Sisi Song explique que les grandes entreprises embauchaient autrefois des équipes à l'étranger pour s'approvisionner, et que l'IA permet à Everful de transformer cette équipe en logiciel. [s2]",
+        "Pour les détaillants, l'argument est que s'approvisionner auprès d'usines étrangères pourrait ne plus exiger d'équipe dédiée à l'étranger. C'est l'affirmation d'Everful, non un résultat vérifié. [s2]",
+        "TechCrunch souligne que, comme Everful achète auprès d'usines chinoises, les tensions commerciales et les tarifs douaniers entre les U.S. et la Chine touchent directement ses activités. [s1] Les sources ne disent pas ce que cela change pour les prix ou pour les consommateurs."
+      ],
+      "expert": [
+        "La ronde est une série A de 48,5 millions $, avec la participation de Square Peg et de Lightspeed, investisseurs actuels. [s2] Everful se décrit comme une couche d'infrastructure d'IA et de données pour le commerce. [s2]",
+        "TechCrunch fait état d'environ 70 employés à temps plein, dont 45 en recherche et développement, et de cibles d'expansion que sont le U.K., la France et Italy. [s1] FourWeekMBA dit que l'objectif de revenus et les chiffres d'expédition remontent aux fondateurs par TechCrunch, sans communiqué d'Everful trouvé. [s3] Une copie du communiqué sur Newswire.ca reprend le même titre que celui de PR Newswire. [s4]"
+      ]
+    },
+    "seoTitle": "Everful lève 48,5 M$ pour s'approvisionner en Chine",
+    "dek": "La jeune pousse, cofondée par Sisi Song, ancienne dirigeante d'Alibaba, vise une expansion aux U.S. et en Europe. Selon TechCrunch, les tarifs douaniers entre les U.S. et la Chine touchent directement ses activités.",
+    "metaDescription": "Everful affirme avoir levé 48,5 M$ en série A pour l'approvisionnement par IA auprès d'usines chinoises…",
+    "keywords": [
+      "everful",
+      "startup approvisionnement ia",
+      "série a",
+      "approvisionnement usines chinoises",
+      "ia chaîne d'approvisionnement"
+    ],
+    "sections": [
+      {
+        "kind": "news",
+        "paras": [
+          "Everful, une entreprise d'approvisionnement, a levé une série A de 48,5 millions $, selon TechCrunch et un communiqué de PR Newswire. [s1,s2] L'entreprise dit bâtir une infrastructure d'IA et de données pour le commerce mondial. [s2]",
+          "TechCrunch rapporte qu'Everful a été cofondée en 2024 par Sisi Song, ancienne dirigeante d'Alibaba, et Kevin Han, qui a vendu une entreprise antérieure à Amazon. [s1]"
+        ]
+      },
+      {
+        "kind": "known",
+        "paras": [
+          "TechCrunch et le communiqué confirment tous deux le montant de la ronde. [s1,s2] Selon le communiqué, les investisseurs actuels Square Peg et Lightspeed y ont aussi participé. [s2] TechCrunch indique que l'entreprise a débuté comme grossiste en bijoux avant de devenir une plateforme d'approvisionnement multicatégorie, directement auprès des usines. [s1]",
+          "Everful affirme expédier plus de 5 millions d'articles par mois à des détaillants et à des marques dans plus de 60 pays. Elle ajoute y être parvenue en moins de deux ans et demi après son lancement. [s2] FourWeekMBA dit n'avoir trouvé aucun communiqué d'Everful. Selon ce média, la ronde, l'objectif de revenus et les chiffres d'expédition lui viennent des fondateurs par l'entremise de TechCrunch. [s3] Ces chiffres sont des affirmations de l'entreprise.",
+          "Selon TechCrunch, Everful utilisera les fonds pour croître aux U.S. et en Europe, avec le U.K., la France et Italy comme marchés nommés, et pour investir dans l'IA. [s1] Elle compte environ 70 employés à temps plein, dont 45 en recherche et développement. [s1] Sisi Song explique que les grandes entreprises embauchaient autrefois des équipes à l'étranger pour s'approvisionner, et que l'IA permet à Everful de transformer cette équipe en logiciel. [s2]"
+        ]
+      },
+      {
+        "kind": "matters",
+        "paras": [
+          "Pour les détaillants, l'argument est que s'approvisionner auprès d'usines étrangères pourrait ne plus exiger d'équipe dédiée à l'étranger. C'est l'affirmation d'Everful, non un résultat vérifié. [s2]",
+          "TechCrunch souligne que, comme Everful achète auprès d'usines chinoises, les tensions commerciales et les tarifs douaniers entre les U.S. et la Chine touchent directement ses activités. [s1] Les sources ne disent pas ce que cela change pour les prix ou pour les consommateurs."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Combien Everful a-t-elle levé?",
+        "a": "Everful affirme avoir levé une série A de 48,5 millions $, et TechCrunch comme un communiqué de PR Newswire confirment le montant de la ronde."
+      },
+      {
+        "q": "Qui a cofondé Everful?",
+        "a": "Selon TechCrunch, Everful a été cofondée en 2024 par Sisi Song, ancienne dirigeante d'Alibaba, et Kevin Han, qui a vendu une entreprise antérieure à Amazon."
+      },
+      {
+        "q": "Où Everful prévoit-elle s'étendre?",
+        "a": "Selon TechCrunch, Everful utilisera les fonds pour croître aux U.S. et en Europe, avec le U.K., la France et Italy comme marchés nommés."
+      }
+    ],
+    "links": [
+      {
+        "path": "/labs/work",
+        "label": "L'IA au travail"
+      },
+      {
+        "path": "/standards",
+        "label": "Comment nous rédigeons et vérifions les résumés de notre rédaction"
+      }
+    ]
+  },
+  "model": "claude",
+  "words": {
+    "en": 287,
+    "fr": 312
+  },
+  "lens": [],
+  "roles": [
+    {
+      "role": "reporter",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-19T18:41:37.484Z",
+      "verdict": "done",
+      "notes": [
+        "275 words",
+        "news → known → matters"
+      ]
+    },
+    {
+      "role": "copy",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-19T18:41:57.999Z",
+      "verdict": "fixed",
+      "notes": [
+        "Not in the sources (names or numbers): Canada.",
+        "Too close to techcrunch.com's wording (\"in the u s and europe particularly the u…\") in \"claimed\": say it in our own words, or quote and attribute it.",
+        "Too close to prnewswire.com's wording (\"less than two and a half years after launch…\") in \"article.known\": say it in our own words, or quote and attribute it.",
+        "Too close to FourWeekMBA's wording (\"the round revenue target and shipping figures come from…\") in \"article.known\": say it in our own words, or quote and attribute it."
+      ]
+    },
+    {
+      "role": "standards",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-19T18:42:04.431Z",
+      "verdict": "pass",
+      "notes": [
+        "The headline states \"using AI\" as fact. The AI capability is the company's own claim, so consider \"says it uses AI\" or attributing it in the dek.",
+        "The 5-million-items figure and the 60-country reach are company claims. The article already labels them that way, which is correct. Keep that attribution wherever the figures reappear.",
+        "The source says the company shipped its volume \"less than\" two and a half years after launch. The article's \"within about two and a half years\" is close enough, but matching the source's wording would be more exact.",
+        "The article's own \"matters\" section says the sources do not show effects on prices or shoppers. Keep that caveat if the story is updated, and avoid implying consumer impact from the tariff point alone."
+      ]
+    },
+    {
+      "role": "translator",
+      "model": "claude-sonnet-5-5",
+      "at": "2026-11-19T18:42:47.055Z",
+      "verdict": "fixed",
+      "notes": [
+        "attempt 1: Not in the sources (names or numbers): États-Unis, PDG, Royaume-Uni, Italie, R-D, denial not in the sources: \"Une copie du communiqué sur Newswire.ca ne comporte aucun extrait.\".",
+        "312 mots"
+      ]
+    },
+    {
+      "role": "seo",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-19T18:42:54.960Z",
+      "verdict": "done",
+      "notes": [
+        "en: Everful raises $48.5M to source from Chinese factories (54)",
+        "fr: Everful lève 48,5 M$ pour s'approvisionner en Chine (51)"
+      ]
+    },
+    {
+      "role": "designer",
+      "model": "claude-haiku-5-5",
+      "at": "2026-11-19T18:42:57.241Z",
+      "verdict": "done",
+      "notes": [
+        "format: numbers",
+        "cover: brass/bars \"$48.5 million\""
+      ]
+    },
+    {
+      "role": "editor",
+      "note": "Approved by the editor (approved.json)."
+    }
+  ]
+}
