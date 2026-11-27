@@ -1,6 +1,92 @@
 {
- "updatedAt": "2026-11-26T20:30:24.485Z",
+ "updatedAt": "2026-11-27T05:10:00.000Z",
  "items": [
+  {
+   "id": "202611270502-new-york-bans-ai-companion-toys",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-27T05:02:00Z",
+   "title": "New York bans AI companion toys. Just not this Christmas.",
+   "summary": "A short cartoon sketch: New York signed a five-year ban on toys with built-in AI companions for children 12 and under. It starts Feb. 22, 2027, so they can still be sold this holiday season.",
+   "durationSec": 62,
+   "sources": [
+    {
+     "name": "Olivia Tauber, Mashable, via Yahoo News · Nov 26, 2026",
+     "url": "https://www.yahoo.com/news/us/articles/york-banning-ai-chatbot-toys-024125332.html"
+    },
+    {
+     "name": "Parenting Patch, via Yahoo News · Nov 26, 2026",
+     "url": "https://www.yahoo.com/news/politics/articles/york-bans-ai-chatbot-toys-170000053.html"
+    }
+   ],
+   "readMore": {
+    "en": "Read the Mashable report",
+    "fr": "Lire le reportage de Mashable",
+    "url": "https://www.yahoo.com/news/us/articles/york-banning-ai-chatbot-toys-024125332.html"
+   },
+   "transcript": "Look what I found for Lily. A teddy bear with AI inside.\n\nWhat does it do?\n\nIt remembers what she tells it. It even asks how she's feeling.\n\nEvery day?\n\nEvery day.\n\nThen read this first. On November twenty-fourth, New York Governor Kathy Hochul signed a five-year ban on toys with built-in AI companions.\n\nIt covers toys made for children twelve and under, if they remember past chats, ask about feelings and keep a relationship going.\n\nAnd a doll that plays a few recorded phrases?\n\nNot covered.\n\nSo these are off the shelves?\n\nNot yet. The ban starts February twenty-second, twenty twenty-seven. This holiday season, they can still be sold.\n\nAfter that, the attorney general can seek fines of up to fifteen thousand dollars a day for each violation.\n\nSo the law arrives after the holidays.\n\nThe questions don't have to wait.\n\nThen I'll ask them before Lily does.",
+   "voice": "Synthetic voices: Kokoro, a free open-source text-to-speech model",
+   "aiImages": false,
+   "credits": "Characters and scenes are drawn in code for AI Broadsheet; invented characters, no real people, no photographs or AI images. A dramatised sketch: the facts come from the sources, the dialogue is ours. Music and sound effects are synthesised in code.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@46f18c536d369555589af4f8e0a716aff92e718b/originals/files/202611270502-new-york-bans-ai-companion-toys.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@46f18c536d369555589af4f8e0a716aff92e718b/originals/files/202611270502-new-york-bans-ai-companion-toys.jpg"
+  },
+  {
+   "id": "202611270501-canada-ai-compute-fund-whiteboard",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-27T05:01:00Z",
+   "title": "Canada's $700 million for AI computing, on the whiteboard",
+   "summary": "Ottawa added $700 million to its AI Compute Access Fund, bringing it to $1 billion, to help small and medium-sized firms pay for computing power. The first new call is for health and life sciences.",
+   "durationSec": 68,
+   "sources": [
+    {
+     "name": "Government of Canada (Innovation, Science and Economic Development) · Nov 26, 2026",
+     "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/11/government-of-canada-boosts-the-ai-compute-access-fund-with-700-million-expansion.html"
+    }
+   ],
+   "readMore": {
+    "en": "Read the government announcement",
+    "fr": "Lire l'annonce du gouvernement",
+    "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/11/government-of-canada-boosts-the-ai-compute-access-fund-with-700-million-expansion.html"
+   },
+   "transcript": "Canada just added seven hundred million dollars to help small companies pay for AI computing power.\n\nMeet Priya. She runs a small health startup.\n\nHer AI idea needs powerful computers, and renting them is expensive.\n\nThat's what the AI Compute Access Fund is for. It helps Canadian small and medium-sized businesses cover the cost of high-performance computing.\n\nIt started with three hundred million dollars. The new seven hundred million brings it to one billion.\n\nSo far, the government says it has committed more than one hundred and eighteen million dollars to eighty-nine companies.\n\nThe first new call is for health and life sciences. Applications are open now.\n\nAI Minister Evan Solomon put it this way.\n\nCanadian ideas need Canadian computing power.\n\nThe fund encourages computing power that is owned, operated and governed in Canada.\n\nThe real test is simple. Can a small company like Priya's actually get the money, and fast?\n\nSource: Government of Canada, November twenty-sixth. This is AI Broadsheet.",
+   "voice": "Synthetic voice: Kokoro, a free open-source text-to-speech model",
+   "aiImages": false,
+   "credits": "Hand-drawn whiteboard animation made in code for AI Broadsheet; Priya is an invented character. No photographs or AI images. Music and sound effects are synthesised in code.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@46f18c536d369555589af4f8e0a716aff92e718b/originals/files/202611270501-canada-ai-compute-fund-whiteboard.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@46f18c536d369555589af4f8e0a716aff92e718b/originals/files/202611270501-canada-ai-compute-fund-whiteboard.jpg"
+  },
+  {
+   "id": "202611270500-replaced-by-ai-then-asked-back",
+   "kind": "explainer",
+   "section": "news",
+   "publishedAt": "2026-11-27T05:00:00Z",
+   "title": "Replaced by AI, then asked back",
+   "summary": "In an SHL survey of 2,036 U.S. and U.K. workers, 16% said they were replaced by AI and later asked to return (19% in the U.S.). Only 8% would refuse; most would want more pay, guarantees or transparency.",
+   "durationSec": 59,
+   "sources": [
+    {
+     "name": "Mara Sugue, IT Brief UK · Oct 29, 2026 (SHL survey)",
+     "url": "https://itbrief.co.uk/story/shl-survey-finds-ai-replaced-workers-are-being-rehired"
+    },
+    {
+     "name": "Mikaela Cohen, HR Brew · Nov 17, 2026",
+     "url": "https://www.hr-brew.com/stories/some-employers-are-recruiting-workers-they-laid-off-for-ai"
+    }
+   ],
+   "readMore": {
+    "en": "Read the IT Brief report",
+    "fr": "Lire le reportage d'IT Brief",
+    "url": "https://itbrief.co.uk/story/shl-survey-finds-ai-replaced-workers-are-being-rehired"
+   },
+   "transcript": "Imagine losing your job to AI.\n\nThen your old boss calls.\n\nHey. Any chance you could come back?\n\nIt happens. In a survey by SHL, a company that sells workplace assessments, sixteen percent of workers in the U.S. and U.K. said they'd been replaced by AI, then asked back.\n\nIn the U.S., nineteen percent.\n\nAmong eighteen to twenty-four year olds, twenty-four percent.\n\nSo, would they go back? Only eight percent said never.\n\nBut fifty-one percent would want a big pay rise. Forty-two percent, job security in writing. Forty percent, full transparency on how AI will be used.\n\nIt's one survey of about two thousand workers, and the answers are self-reported.\n\nStill, replacing people is easy to announce. Bringing them back comes with conditions.\n\nSource: SHL, via IT Brief UK. This is AI Broadsheet.",
+   "voice": "Synthetic voice: Kokoro, a free open-source text-to-speech model",
+   "aiImages": false,
+   "credits": "Stick-figure animation drawn in code for AI Broadsheet; invented characters, no photographs or AI images. Music and sound effects are synthesised in code.",
+   "fileUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@46f18c536d369555589af4f8e0a716aff92e718b/originals/files/202611270500-replaced-by-ai-then-asked-back.mp4",
+   "posterUrl": "https://cdn.jsdelivr.net/gh/jjackguler/civic-scribe-ottawa@46f18c536d369555589af4f8e0a716aff92e718b/originals/files/202611270500-replaced-by-ai-then-asked-back.jpg"
+  },
   {
    "id": "202611262030-hugging-face-opens-three-datasets-behind-nemotron-3-5-parse",
    "kind": "explainer",
