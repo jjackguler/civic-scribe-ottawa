@@ -423,3 +423,17 @@ Spotify or Apple Podcasts yet; the owner does that.
 - The front page's loader now embeds a slim originals manifest (`slimOriginals`: no transcripts, three source names),
   about 100 KB less HTML; `useOriginals` refetches the full manifest right after hydration.
 - `loadFrontPageNews` waits 300 ms (was 1 s) before serving the stored desk; a full build takes about 2 s anyway.
+
+## 88 seconds with pictures, more of our own stories (27 Nov 2026, branch `claude/88-visuals-own-stories`)
+- Owner: the 88 seconds band was text only and the newsroom read like Hugging Face's press office (9 of the
+  latest 15 pieces). Every slide now has a picture (`SlideVisual` in `EightyEight.tsx`): our explainer video
+  on the same story first (linked by `readMore`, or 3+ shared title words within 4 days; plays muted while
+  the slide plays), else the newsroom piece's house cover, else a publisher photo only where `rights.ts`
+  allows it, else a designed desk card (desk colours, one big number or name). The side list and the
+  "You're up to date" card show thumbnails. Still no other publisher's photo without leave, no generated images.
+- Newsroom output (1 piece in 6 days): nearly every draft failed the copy desk on false alarms. Fixed in
+  `guard.ts`: numbers glued to words ("1,000-agent", "500-plus", "under-16s"), spelled tens ("Thirty-five"),
+  "English-language", French place names (Chine, États-Unis, Asie), QA/SDK/HR acronyms, "the excerpts don't
+  say" lines. Official releases need 12 shared words to count as copying (others 9). `trimDraft` may cut up
+  to 10 sentences or a third (was 6 / a quarter).
+- `pick.ts`: one lone-source announcement per outlet in 72 h and one per run (`LONE_OUTLET_HOURS`).

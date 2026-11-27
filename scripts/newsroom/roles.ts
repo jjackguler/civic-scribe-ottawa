@@ -17,7 +17,7 @@ import {
 } from "../../src/lib/newsroom-types";
 import type { Models } from "./models";
 import { alignFrench, markerKeys, mergeRewrite, shapeDraft, toRaw, type Draft, type RawDraft } from "./shape";
-import { draftFields, factGuard, overlappingSentences, overlapProblems, sourceGrams, splitSentences, styleProblems } from "./guard";
+import { copiedSentences, draftFields, factGuard, overlapProblems, splitSentences, styleProblems } from "./guard";
 import type { LinkOption, Passage } from "./library";
 import { DEFAULT_DIRECTIVES, directivesPrompt, type Directives } from "./directives";
 
@@ -172,7 +172,7 @@ ${HOUSE_VOICE}`;
 /** Every mechanical check the copy desk runs on a draft. */
 export function copyProblems(d: Draft, e: Event, lang: "en" | "fr"): { facts: string[]; style: string[] } {
   const facts = factGuard(draftFields(d), sourceText(e));
-  const style = [...styleProblems(d, lang), ...overlapProblems(d, e.sources.map((s, i) => ({ outlet: s.outlet, text: `${s.title}. ${e.excerpts[i] ?? ""}` })))];
+  const style = [...styleProblems(d, lang), ...overlapProblems(d, e.sources.map((s, i) => ({ outlet: s.outlet, official: !!s.official, text: `${s.title}. ${e.excerpts[i] ?? ""}` })))];
   const gate = editorialGate({ title: d.headline, summary: draftFields(d).join(" ") });
   if (!gate.ok) style.push(`House red line (${gate.reason}): the charter does not allow it.`);
   return { facts, style };
@@ -191,12 +191,11 @@ const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
  * outlet's wording, that name something the sources don't, or that deny what the
  * sources don't deny; paragraphs without their source marker; list items left
  * empty. Gives up (null) when the headline itself fails, when it would cut more
- * than 6 sentences or a quarter of the article, or when the result still fails a check.
+ * than 10 sentences or a third of the article, or when the result still fails a check.
  */
 export function trimDraft(d: Draft, e: Event): { draft: Draft; cut: string[] } | null {
-  const sources = e.sources.map((s, i) => ({ outlet: s.outlet, text: `${s.title}. ${e.excerpts[i] ?? ""}` }));
-  const grams = sourceGrams(sources);
-  if (overlappingSentences(d.headline, grams).length || factGuard([d.headline], sourceText(e)).length) return null;
+  const sources = e.sources.map((s, i) => ({ outlet: s.outlet, official: !!s.official, text: `${s.title}. ${e.excerpts[i] ?? ""}` }));
+  if (copiedSentences(d.headline, sources).length || factGuard([d.headline], sourceText(e)).length) return null;
   const bad = factGuard(draftFields(d), sourceText(e));
   const denials = bad.filter(b => b.startsWith("denial not in the sources: ")).map(b => b.replace(/^denial not in the sources: "/, "").replace(/"$/, "").slice(0, 60));
   const words = bad.filter(b => !b.startsWith("denial not in the sources: ")).map(w => new RegExp(`(^|[^\\p{L}\\p{N}])${escapeRe(w)}(?![\\p{L}\\p{N}])`, "u"));
@@ -204,7 +203,7 @@ export function trimDraft(d: Draft, e: Event): { draft: Draft; cut: string[] } |
   const fails = (sent: string) => { const plain = stripAllMarkers(sent); return words.some(r => r.test(plain)) || denials.some(p => p && plain.includes(p)); };
   const trim = (t: string) => {
     const sents = splitSentences(t ?? "");
-    const copied = new Set(overlappingSentences(t ?? "", grams));
+    const copied = new Set(copiedSentences(t ?? "", sources));
     return sents.filter((s, i) => { const drop = copied.has(i) || fails(s); if (drop) cut.push(s); return !drop; }).join(" ");
   };
   const list = (xs: string[]) => xs.map(trim).filter(Boolean);
@@ -229,7 +228,8 @@ export function trimDraft(d: Draft, e: Event): { draft: Draft; cut: string[] } |
     })).filter(s => s.paras.length),
   };
   if (!cut.length || !out.dek || !out.news || !out.matters) return null;
-  if (cut.length > 6 || countWords(out.sections.flatMap(s => s.paras)) < before * 0.75) return null;
+  // Up to 10 sentences or a third of the article (was 6 / a quarter: on 24-26 Nov nearly every draft was turned down for one or two words).
+  if (cut.length > 10 || countWords(out.sections.flatMap(s => s.paras)) < before * (2 / 3)) return null;
   const left = copyProblems(out, e, "en");
   return left.facts.length || left.style.length ? null : { draft: out, cut };
 }

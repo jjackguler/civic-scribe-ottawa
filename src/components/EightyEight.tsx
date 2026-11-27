@@ -34,12 +34,32 @@ import {
 } from "@/lib/news";
 import type { Locale } from "@/lib/i18n";
 import { deskOf, deskOfSummary, deskLabel, type DeskId } from "@/lib/desks";
+import { NewsroomCover } from "./NewsroomCover";
+import type { Cover, CoverColor, CoverMotif } from "@/lib/newsroom-types";
+import {
+  originalPublishable,
+  videoSlug,
+  youtubePlayable,
+  type Original,
+} from "@/lib/originals-types";
 
 const TOTAL_MS = 88_000;
 const MAX_SLIDES = 8;
 const TICK_MS = 100;
 
 type Flag = "breaking" | "developing" | null;
+
+/**
+ * What the slide shows beside the words (owner, 27 Nov 2026: "no picture, no video, it looks bad").
+ * Our own explainer video on the same story first; then the newsroom piece's house cover; then a
+ * photo only where the publisher's terms allow it (rights.ts keeps `image` for those alone);
+ * otherwise a designed card in the desk's colours. Never another publisher's photo without leave,
+ * never a generated picture.
+ */
+export type Visual =
+  | { kind: "video"; original: Original }
+  | { kind: "cover"; cover: Cover; label?: string }
+  | { kind: "photo"; url: string; outlet: string };
 
 export type Slide = {
   id: string;
@@ -53,6 +73,7 @@ export type Slide = {
   matters: string;
   outlets: string[];
   at: string;
+  visual: Visual;
   /** Article slug (ours) or story id (watch). */
   target: { to: "/article/$slug"; slug: string } | { to: "/story/$id"; id: string };
 };
@@ -122,38 +143,142 @@ const firstSentence = (t: string, max = 220) => {
   return s.length <= max ? s : s.slice(0, s.lastIndexOf(" ", max)).replace(/[,;:\s]+$/, "") + "…";
 };
 
+const VIDEO_STOP = new Set(
+  "about after again against also among because been being from have into its more most over said says than that their them then there these they this those through under what when where which while will with would your ai".split(
+    " ",
+  ),
+);
+const titleWords = (t: string) =>
+  new Set(
+    t
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .split(/[^a-z0-9]+/)
+      .filter((w) => w.length >= 4 && !VIDEO_STOP.has(w)),
+  );
+
+/** Our explainer video on this story: it links to the article, or it is recent and shares 3+ title words. */
+function videoFor(
+  headline: string,
+  slug: string | null,
+  originals: Original[],
+  now: number,
+): Original | undefined {
+  const playable = originals.filter(
+    (o) => originalPublishable(o) && (o.fileUrl || youtubePlayable(o)),
+  );
+  if (slug) {
+    const linked = playable.find((o) =>
+      [o.readMore?.url, o.readMore?.urlFr].some((u) => u?.includes(`/article/${slug}`)),
+    );
+    if (linked) return linked;
+  }
+  const want = titleWords(headline);
+  return playable.find((o) => {
+    if (now - Date.parse(o.publishedAt) > 4 * 86_400_000) return false;
+    const have = titleWords(o.title);
+    return [...want].filter((w) => have.has(w)).length >= 3;
+  });
+}
+
+const DESK_LOOK: Record<DeskId, { color: CoverColor; motif: CoverMotif }> = {
+  canada: { color: "signal", motif: "rules" },
+  ai: { color: "night", motif: "grid" },
+  robotics: { color: "spruce", motif: "bars" },
+  tech: { color: "lake", motif: "dots" },
+  people: { color: "brass", motif: "rings" },
+};
+const BIG_SKIP = new Set(
+  "a an the how why what who when where new after as at by for from in into of on over to with and but or is are was were it its this that these those le la les un une des du de et en au aux pour par sur dans".split(
+    " ",
+  ),
+);
+
+/** The one number or name in a headline worth setting huge: "$700M", "80%", "1 million", "Nvidia". */
+function bigWord(headline: string): string {
+  const num = headline.match(
+    /\$?\d[\d,.]*(?:\s?(?:%|percent|per cent|pour cent|million|billion|milliards?|millions?|[MBK]\b))?/i,
+  );
+  if (num) {
+    return num[0]
+      .replace(/\s?(percent|per cent|pour cent)/i, "%")
+      .replace(/\s?millions?/i, "M")
+      .replace(/\s?(billion|milliards?)/i, "B")
+      .replace(/[.,]+$/, "")
+      .trim();
+  }
+  const words = headline.match(/[\p{L}\p{N}][\p{L}\p{N}&'’.-]*/gu) ?? [];
+  const cap = (w?: string) => !!w && /^\p{Lu}/u.test(w) && !BIG_SKIP.has(w.toLowerCase());
+  const at = words.findIndex((w) => cap(w));
+  if (at < 0) return "AI";
+  const one = words[at].replace(/['’]s$/i, "");
+  // Two-word names ("Hugging Face", "Google DeepMind") when they still fit.
+  const two = cap(words[at + 1]) ? `${one} ${words[at + 1].replace(/['’]s$/i, "")}` : "";
+  return (two && two.length <= 14 ? two : one).slice(0, 14);
+}
+
+/** A designed card for a story we have no picture for: desk colours, one big word, the outlets. */
+function deskCover(desk: DeskId, headline: string, outlets: string[], locale: Locale): Cover {
+  const look = DESK_LOOK[desk] ?? DESK_LOOK.ai;
+  const big = bigWord(headline);
+  const small = outlets.slice(0, 2).join(" · ");
+  return {
+    ...look,
+    en: { kicker: deskLabel(desk, "en"), big, small },
+    fr: { kicker: deskLabel(desk, "fr"), big, small },
+  };
+}
+
 /** Pick the reel: breaking first, then our newsroom, then other outlets only to fill. */
 function buildSlides(
   summaries: NewsroomSummary[],
   stories: Story[],
   locale: Locale,
   now: number,
+  originals: Original[] = [],
 ): Slide[] {
   const ageH = (iso: string) => (now - Date.parse(iso)) / 3600_000;
-  const fromSummary = (a: NewsroomSummary, flag: Flag): Slide => ({
-    id: a.id,
-    source: "ours",
-    desk: deskOfSummary(a),
-    flag,
-    headline: a[locale].headline,
-    what: firstSentence(a[locale].dek || a[locale].news),
-    matters: firstSentence(a[locale].matters ?? ""),
-    outlets: a.outlets,
-    at: a.createdAt,
-    target: { to: "/article/$slug", slug: a.slug[locale] },
-  });
+  const fromSummary = (a: NewsroomSummary, flag: Flag): Slide => {
+    const video = videoFor(a.en.headline, a.slug.en, originals, now);
+    return {
+      id: a.id,
+      source: "ours",
+      desk: deskOfSummary(a),
+      flag,
+      headline: a[locale].headline,
+      what: firstSentence(a[locale].dek || a[locale].news),
+      matters: firstSentence(a[locale].matters ?? ""),
+      outlets: a.outlets,
+      at: a.createdAt,
+      visual: video ? { kind: "video", original: video } : { kind: "cover", cover: a.cover },
+      target: { to: "/article/$slug", slug: a.slug[locale] },
+    };
+  };
   const fromStory = (s: Story, outlets: string[], at: string, flag: Flag): Slide => {
     const d = display(s, locale);
+    const desk = deskOf(s);
+    const video = videoFor(s.title, null, originals, now);
+    const visual: Visual = video
+      ? { kind: "video", original: video }
+      : s.image
+        ? { kind: "photo", url: s.image, outlet: s.source }
+        : {
+            kind: "cover",
+            cover: deskCover(desk, d.title, outlets, locale),
+            label: `AI Broadsheet · ${COPY[locale].watch}`,
+          };
     return {
       id: s.id,
       source: "watch",
-      desk: deskOf(s),
+      desk,
       flag,
       headline: d.title,
       what: d.summary ? firstSentence(d.summary) : "",
       matters: "",
       outlets,
       at,
+      visual,
       target: { to: "/story/$id", id: s.id },
     };
   };
@@ -243,10 +368,13 @@ function useOnScreen(ref: React.RefObject<HTMLElement | null>) {
 export function EightyEight({
   initialNews,
   initialNewsroom,
+  originals = [],
   className = "",
 }: {
   initialNews?: NewsPayload | null;
   initialNewsroom?: NewsroomList | null;
+  /** Our explainer videos: a slide plays the one made from its story. */
+  originals?: Original[];
   className?: string;
 }) {
   const { locale } = useLocale();
@@ -258,9 +386,11 @@ export function EightyEight({
   // Rebuild only when the data change, so a refresh never yanks the slide being read.
   const slides = useMemo(
     () =>
-      now == null ? [] : buildSlides(nr?.items ?? [], news?.stories ?? [], locale, Date.now()),
+      now == null
+        ? []
+        : buildSlides(nr?.items ?? [], news?.stories ?? [], locale, Date.now(), originals),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [nr, news, locale, now == null],
+    [nr, news, locale, now == null, originals],
   );
   const n = slides.length;
   const per = n > 0 ? TOTAL_MS / n : TOTAL_MS;
@@ -414,7 +544,7 @@ export function EightyEight({
                 ))}
               </ol>
 
-              <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+              <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)]">
                 <div
                   className="min-h-[15rem] sm:min-h-[13rem]"
                   aria-live={playing ? "off" : "polite"}
@@ -423,6 +553,20 @@ export function EightyEight({
                     <div className="eighty-in">
                       <p className="hl text-[2rem] sm:text-[2.4rem] leading-tight">{c.done}</p>
                       <p className="mt-2 text-white/80">{c.doneSub(n, oursCount)}</p>
+                      <ul className="mt-5 grid grid-cols-4 gap-2 max-w-[34rem]" aria-label={c.list}>
+                        {slides.slice(0, 8).map((x, k) => (
+                          <li key={x.id}>
+                            <button
+                              type="button"
+                              onClick={() => go(k)}
+                              className="block w-full overflow-hidden ring-1 ring-white/15 hover:ring-brass focus-visible:ring-brass"
+                              aria-label={`${k + 1}/${n}: ${x.headline}`}
+                            >
+                              <SlideVisual s={x} active={false} compact />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
                       <div className="mt-5 flex flex-wrap gap-3">
                         <button
                           type="button"
@@ -441,7 +585,7 @@ export function EightyEight({
                       </div>
                     </div>
                   ) : (
-                    s && <SlideView key={s.id} s={s} index={i} total={n} />
+                    s && <SlideView key={s.id} s={s} index={i} total={n} playing={playing} />
                   )}
                 </div>
 
@@ -457,6 +601,9 @@ export function EightyEight({
                           className={`tabular-nums text-[0.8rem] font-bold pt-0.5 w-5 shrink-0 ${x.flag === "breaking" ? "text-live" : "text-brass"}`}
                         >
                           {k + 1}
+                        </span>
+                        <span className="w-16 shrink-0 overflow-hidden" aria-hidden="true">
+                          <SlideVisual s={x} active={false} compact />
                         </span>
                         <span className="text-[0.95rem] leading-snug line-clamp-2 group-hover:underline">
                           {x.headline}
@@ -476,7 +623,17 @@ export function EightyEight({
   );
 }
 
-function SlideView({ s, index, total }: { s: Slide; index: number; total: number }) {
+function SlideView({
+  s,
+  index,
+  total,
+  playing,
+}: {
+  s: Slide;
+  index: number;
+  total: number;
+  playing: boolean;
+}) {
   const { locale } = useLocale();
   const c = COPY[locale];
   const now = useNow();
@@ -484,61 +641,194 @@ function SlideView({ s, index, total }: { s: Slide; index: number; total: number
     s.outlets.slice(0, 3).join(", ") + (s.outlets.length > 3 ? ` +${s.outlets.length - 3}` : "");
   return (
     <article
-      className="eighty-in"
+      className="eighty-in grid gap-5 sm:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] sm:items-start"
       aria-roledescription="slide"
       aria-label={`${index + 1} / ${total}`}
     >
-      <p className="flex flex-wrap items-center gap-2 text-[0.75rem] font-bold uppercase tracking-[0.08em]">
-        {s.flag && (
-          <span
-            className={`px-2 py-0.5 ${s.flag === "breaking" ? "bg-live text-white" : "bg-white text-night"}`}
-          >
-            {s.flag === "breaking" ? c.breaking : c.developing}
+      <SlideVisual s={s} active={playing} />
+      <div className="min-w-0">
+        <p className="flex flex-wrap items-center gap-2 text-[0.75rem] font-bold uppercase tracking-[0.08em]">
+          {s.flag && (
+            <span
+              className={`px-2 py-0.5 ${s.flag === "breaking" ? "bg-live text-white" : "bg-white text-night"}`}
+            >
+              {s.flag === "breaking" ? c.breaking : c.developing}
+            </span>
+          )}
+          <span className="text-white">{deskLabel(s.desk, locale)}</span>
+          <span className={s.source === "ours" ? "text-brass" : "text-white/70"}>
+            {s.source === "ours" ? c.ours : c.watch}
           </span>
-        )}
-        <span className="text-white">{deskLabel(s.desk, locale)}</span>
-        <span className={s.source === "ours" ? "text-brass" : "text-white/70"}>
-          {s.source === "ours" ? c.ours : c.watch}
-        </span>
-        {s.source === "ours" && <AiBadge kind="summary" dark />}
-        <span className="text-white/50 font-semibold normal-case tracking-normal">
-          ·{" "}
-          <time dateTime={s.at} suppressHydrationWarning>
-            {timeAgo(s.at, now, locale)}
-          </time>
-        </span>
-      </p>
-      <SlideLink s={s} className="group block mt-3">
-        <h3 className="hl text-[1.65rem] sm:text-[2.2rem] lg:text-[2.5rem] leading-[1.08] group-hover:underline decoration-1 underline-offset-4">
-          {s.headline}
-        </h3>
-      </SlideLink>
-      {s.what && (
-        <p className="mt-3 font-serif text-[1.08rem] sm:text-[1.18rem] leading-snug text-white/85 max-w-[62ch]">
-          {s.what}
-        </p>
-      )}
-      {s.matters && (
-        <p className="mt-3 text-[0.98rem] leading-snug max-w-[62ch]">
-          <span className="font-bold text-brass">{c.matters}: </span>
-          <span className="text-white/85">{s.matters}</span>
-        </p>
-      )}
-      <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.85rem] text-white/65">
-        {s.outlets.length > 0 && (
-          <span>
-            {c.from} <span className="font-semibold text-white/85">{outletLine}</span>
+          {s.source === "ours" && <AiBadge kind="summary" dark />}
+          <span className="text-white/50 font-semibold normal-case tracking-normal">
+            ·{" "}
+            <time dateTime={s.at} suppressHydrationWarning>
+              {timeAgo(s.at, now, locale)}
+            </time>
           </span>
-        )}
-        <SlideLink
-          s={s}
-          className="inline-flex items-center gap-1 font-semibold text-brass hover:underline"
-        >
-          {s.source === "ours" ? c.read : c.source}{" "}
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </p>
+        <SlideLink s={s} className="group block mt-3">
+          <h3 className="hl text-[1.55rem] sm:text-[1.8rem] lg:text-[2.1rem] leading-[1.08] group-hover:underline decoration-1 underline-offset-4">
+            {s.headline}
+          </h3>
         </SlideLink>
-      </p>
+        {s.what && (
+          <p className="mt-3 font-serif text-[1.05rem] sm:text-[1.12rem] leading-snug text-white/85 max-w-[62ch]">
+            {s.what}
+          </p>
+        )}
+        {s.matters && (
+          <p className="mt-3 text-[0.96rem] leading-snug max-w-[62ch]">
+            <span className="font-bold text-brass">{c.matters}: </span>
+            <span className="text-white/85">{s.matters}</span>
+          </p>
+        )}
+        <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.85rem] text-white/65">
+          {s.outlets.length > 0 && (
+            <span>
+              {c.from} <span className="font-semibold text-white/85">{outletLine}</span>
+            </span>
+          )}
+          <SlideLink
+            s={s}
+            className="inline-flex items-center gap-1 font-semibold text-brass hover:underline"
+          >
+            {s.source === "ours" ? c.read : c.source}{" "}
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </SlideLink>
+        </p>
+      </div>
     </article>
+  );
+}
+
+const mmss = (sec: number) =>
+  `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, "0")}`;
+
+/**
+ * The slide's picture. `active`: the reel is playing this slide, so our video plays (muted, looping)
+ * and covers drift slowly. `compact`: a small thumbnail (list, end card), still and without labels.
+ */
+function SlideVisual({
+  s,
+  active,
+  compact = false,
+}: {
+  s: Slide;
+  active: boolean;
+  compact?: boolean;
+}) {
+  const { locale } = useLocale();
+  const fr = locale === "fr";
+  const v = s.visual;
+  const vid = useRef<HTMLVideoElement>(null);
+  const o = v.kind === "video" ? v.original : null;
+  const poster = o
+    ? youtubePlayable(o) && !o.posterUrl
+      ? `https://i.ytimg.com/vi/${o.youtubeId}/hqdefault.jpg`
+      : o.posterUrl
+    : undefined;
+  const plays = !!o?.fileUrl && !compact;
+
+  useEffect(() => {
+    const el = vid.current;
+    if (!el) return;
+    if (active) el.play().catch(() => {});
+    else el.pause();
+  }, [active]);
+
+  const box = `relative block aspect-video w-full overflow-hidden bg-black ${compact ? "" : "ring-1 ring-white/10"}`;
+
+  if (v.kind === "video" && o) {
+    return (
+      <figure className={box}>
+        {poster && (
+          <img
+            src={poster}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover scale-110 blur-xl opacity-60"
+          />
+        )}
+        {plays ? (
+          <video
+            ref={vid}
+            src={o.fileUrl}
+            poster={poster}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={o.title}
+            className="relative h-full w-full object-contain"
+          />
+        ) : (
+          poster && (
+            <img
+              src={poster}
+              alt={compact ? "" : o.title}
+              loading="lazy"
+              className="relative h-full w-full object-contain"
+            />
+          )
+        )}
+        {!compact && (
+          <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/85 to-transparent p-3 pt-8 text-[0.8rem] font-semibold">
+            <span className="inline-flex items-center gap-2">
+              <span className="bg-brass px-1.5 py-0.5 text-night font-bold uppercase tracking-[0.06em] text-[0.68rem]">
+                {fr ? "Notre vidéo" : "Our video"}
+              </span>
+              <span className="tabular-nums text-white/85">{mmss(o.durationSec)}</span>
+            </span>
+            <Link
+              to="/video/$slug"
+              params={{ slug: videoSlug(o) }}
+              className="inline-flex items-center gap-1 text-white hover:text-brass"
+            >
+              <Play className="h-3.5 w-3.5" aria-hidden="true" />
+              {fr ? "Regarder avec le son" : "Watch with sound"}
+            </Link>
+          </figcaption>
+        )}
+        {compact && (
+          <span className="absolute bottom-1 left-1 grid h-5 w-5 place-items-center rounded-full bg-brass text-night">
+            <Play className="h-3 w-3" aria-hidden="true" />
+          </span>
+        )}
+      </figure>
+    );
+  }
+
+  if (v.kind === "photo") {
+    return (
+      <figure className={box}>
+        <img
+          src={v.url}
+          alt=""
+          loading="lazy"
+          className={`h-full w-full object-cover ${active ? "eighty-drift" : ""}`}
+        />
+        {!compact && (
+          <figcaption className="absolute bottom-0 right-0 bg-black/70 px-2 py-1 text-[0.7rem] text-white/80">
+            Photo: {v.outlet}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
+
+  if (v.kind !== "cover") return null;
+  return (
+    <div className={box}>
+      <NewsroomCover
+        cover={v.cover}
+        locale={locale}
+        size={compact ? "thumb" : "hero"}
+        label={v.label}
+        className={`h-full w-full ${compact ? "!aspect-video" : ""} ${active ? "eighty-drift" : ""}`}
+      />
+    </div>
   );
 }
 

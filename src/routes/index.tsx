@@ -179,7 +179,7 @@ function Home() {
       )}
 
       {/* 88 seconds (owner request, 10 Nov 2026): the AI day in 88 s, our newsroom first. */}
-      <EightyEight initialNews={initial} initialNewsroom={newsroom} className="container-mw my-8" />
+      <EightyEight initialNews={initial} initialNewsroom={newsroom} originals={ownAll} className="container-mw my-8" />
 
       {/* The stage: our own videos and articles, the first edition's hero. */}
       {slides.length === 0 ? (

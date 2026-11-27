@@ -20,7 +20,14 @@ import { pickBackground } from "./library";
 import type { Event } from "./roles";
 import { DEFAULT_DIRECTIVES, bannedBy, focusHits, torontoClock, type Directives } from "./directives";
 
-export type Seen = { ids: Set<string>; storyIds: Set<string>; killed: Set<string>; rejectedAt: Map<string, string> };
+/**
+ * `loneOutlets`: for each outlet, when we last published an article built from that outlet alone
+ * (createdAt). A lab's own blog posts every day; without a cap the front page becomes its
+ * press office (Hugging Face was 9 of our 15 latest pieces on 26 Nov 2026).
+ */
+export type Seen = { ids: Set<string>; storyIds: Set<string>; killed: Set<string>; rejectedAt: Map<string, string>; loneOutlets?: Map<string, string> };
+/** One lone-source official announcement per outlet in this many hours. */
+export const LONE_OUTLET_HOURS = 72;
 /** `lead` is set when the event was skipped for thin reporting, so a run can research it (research.ts). */
 export type Skip = { id: string; title: string; why: string; lead?: Story };
 
@@ -183,7 +190,19 @@ export function pickEvents(stories: Story[], seen: Seen, now = Date.now(), d: Di
     ...govFresh.filter(s => !joined.has(s.id)).map(s => ({ id: s.id, lead: s, group: [s] })),
   ].sort((a, b) => b.lead.publishedAt.localeCompare(a.lead.publishedAt));
   // One source has to carry a whole article (120+ words): thin blog excerpts only burn a model call and get turned down.
-  for (const o of official) consider(o.id, o.lead, o.group, 600);
+  // At most one lone announcement per outlet in LONE_OUTLET_HOURS, and one per run: our own picks, not one lab's press office.
+  const loneThisRun = new Set<string>();
+  for (const o of official) {
+    const outlet = o.lead.source;
+    const last = seen.loneOutlets?.get(outlet);
+    if (loneThisRun.has(outlet) || (last && now - new Date(last).getTime() < LONE_OUTLET_HOURS * 3600_000)) {
+      skipped.push({ id: o.id, title: o.lead.title, why: `${outlet} already had its own announcement on our front page in the last ${LONE_OUTLET_HOURS} hours` });
+      continue;
+    }
+    const before = events.length;
+    consider(o.id, o.lead, o.group, 600);
+    if (events.length > before && new Set(events[events.length - 1].sources.map(x => x.outlet)).size === 1) loneThisRun.add(outlet);
+  }
   // 3. One newsroom's own detailed report (owner's decision, 2026-10-17): written with that outlet named as the source.
   //    Never trending links, and never rumours, leaks or "reportedly" stories; thin excerpts can't carry an article.
   for (const c of clusters) if (c.sources === 1 && !c.lead.lab) {

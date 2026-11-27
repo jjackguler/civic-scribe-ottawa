@@ -246,6 +246,9 @@ async function main() {
     storyIds: new Set(store.index.items.filter(i => !i.id.startsWith("brief-")).flatMap(i => i.storyIds)),
     killed: store.killed,
     rejectedAt: new Map(store.rejected.map(r => [r.id, r.at] as const)),
+    // Newest first wins: the latest lone-source article per outlet (pick.ts caps one per outlet in 72 h).
+    loneOutlets: new Map([...store.index.items].filter(i => !i.id.startsWith("brief-") && i.outlets.length === 1)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map(i => [i.outlets[0], i.createdAt] as const)),
   };
   let { events, skipped } = pickEvents(stories, seen, Date.now(), directives);
   log(`store: ${STORE} (${store.index.items.length} published, ${store.rejected.length} on record as turned down)`);
