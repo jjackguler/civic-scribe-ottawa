@@ -104,6 +104,17 @@ export function slimOriginals(m: OriginalsManifest | null): OriginalsManifest | 
   };
 }
 
+const FR_WORDS = /\b(le|la|les|des|du|une|est|et|pour|dans|qui|que|aux|sur|avec|pas|ce|cette|vous|nous)\b/gi;
+const EN_WORDS = /\b(the|of|and|to|is|for|in|that|with|on|are|your|it|what|how|why|who)\b/gi;
+
+/** The language an original is narrated in, guessed from its title and summary (the manifest has no language field). */
+export function originalLang(o: { title: string; summary?: string }): "en" | "fr" {
+  const text = `${o.title} ${o.summary ?? ""}`;
+  const fr = (text.match(FR_WORDS) ?? []).length + (text.match(/[àâçéèêëîïôûùœ]/gi) ?? []).length / 3;
+  const en = (text.match(EN_WORDS) ?? []).length;
+  return fr > en ? "fr" : "en";
+}
+
 /** Readable address of an original's own page: /video/<slug of its title>. */
 export const videoSlug = (o: { title: string }) => slugify(o.title, { max: 80 });
 

@@ -399,6 +399,17 @@ export const TERMS: GlossaryTerm[] = [
     },
     related: ["pipeda", "personal-information", "automated-decision-making", "explainability"],
     links: [{ hub: "ai-and-privacy" }],
+    // Search Console, Nov 2026: /fr/glossary/law-25 showed ~148 times for "loi 25" searches with no clicks.
+    seo: {
+      title: {
+        en: "Québec's Law 25 explained: privacy rules in plain words",
+        fr: "Loi 25 au Québec : résumé clair des obligations",
+      },
+      description: {
+        en: "Law 25 in brief: a person in charge of privacy, impact assessments, incident reports, clear consent, tracking off by default, and rules on AI decisions.",
+        fr: "La Loi 25 en bref : responsable de la vie privée, EFVP, incidents, consentement clair, suivi désactivé par défaut et décisions automatisées par l'IA.",
+      },
+    },
   },
   {
     slug: "pipeda",

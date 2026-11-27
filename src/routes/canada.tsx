@@ -21,6 +21,7 @@ import { useLocale } from "@/lib/locale-context";
 import { t } from "@/lib/i18n";
 import { SITE } from "@/lib/site";
 import { seoHead, absUrl } from "@/lib/seo";
+import { setPageStatus } from "@/lib/http-status";
 
 /**
  * AI in Canada: the evergreen hub. Everything here comes from data already on
@@ -30,7 +31,13 @@ import { seoHead, absUrl } from "@/lib/seo";
 const CANADA_GUIDES = ["ai-and-jobs-in-canada", "ai-and-privacy", "ai-for-small-business"];
 
 export const Route = createFileRoute("/canada")({
-  loader: () => getAiNewsFast(),
+  loader: async () => {
+    const payload = await getAiNewsFast();
+    // Google reported /canada as a soft 404 when it was rendered with "Loading…" in every news
+    // column. While the desk is still loading, answer a temporary 503 instead of a thin 200.
+    if (!payload || payload.stories.length === 0) setPageStatus(503, 120);
+    return payload;
+  },
   head: ({ match }) =>
     seoHead(match, {
       title: {

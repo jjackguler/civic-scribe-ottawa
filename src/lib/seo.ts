@@ -102,6 +102,12 @@ export type PageSeo = {
   canonicalSearch?: string;
   /** Set false when a page exists in one language only (no hreflang pair). */
   alternates?: boolean;
+  /**
+   * The language the content is actually in, when it exists in one language only
+   * (an English video shown under /fr/video/...). The canonical then points at that
+   * language's address on both, so Google indexes one page instead of two copies.
+   */
+  canonicalLocale?: Locale;
   publishedTime?: string;
   modifiedTime?: string;
   /** article:section, e.g. "Glossary". */
@@ -156,11 +162,12 @@ export function seoHead(match: MatchLike, page: PageSeo) {
     ...(page.section ? [{ property: "article:section", content: txt(page.section, locale) }] : []),
   ];
 
+  const canonical = page.canonicalLocale ? absUrl(path, page.canonicalLocale) : url;
   const links = page.noindex
     ? []
     : [
-        { rel: "canonical", href: url },
-        ...(page.alternates === false
+        { rel: "canonical", href: canonical },
+        ...(page.alternates === false || page.canonicalLocale
           ? []
           : [
               { rel: "alternate", hrefLang: LANG_TAG.en, href: absUrl(path, "en") },
