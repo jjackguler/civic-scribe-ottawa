@@ -1,5 +1,15 @@
 [
   {
+    "id": "1drzt7e",
+    "at": "2026-11-27T15:37:01.538Z",
+    "stage": "standards",
+    "headline": "Canada opens expanded AI compute fund with $700 million top-up",
+    "reasons": [
+      "The 'background' item cites a guide [b1] that is not among the supplied sources and claims the fund 'reopens' for start-ups; the sources do not support either point.",
+      "The $1 billion total comes only from api.finexus.net [s3], and the 'raised subsidy' point comes only from ai.info [s1]. The headline and the news lead state both as settled fact without attribution, which presents single-source claims as certain."
+    ]
+  },
+  {
     "id": "o4t5s6",
     "at": "2026-11-27T05:23:58.616Z",
     "stage": "standards",
