@@ -376,6 +376,26 @@ Spotify or Apple Podcasts yet; the owner does that.
   this page at the owner's request; `src/lib/books.ts` notes the change. Same rules as /books: says the
   editor wrote it, no ratings or superlatives, no commission.
 
+## Labs: Field Trips, world model, Teach the Machine (27 Nov 2026, branch `claude/labs-field-trips`)
+- Owner asked for meaningful edutainment in the Lab: Genie Interactive-Story-style lessons on space
+  (Mars), the micro world (ants and bees) and physics (buoyancy). The earlier "first fire" video was
+  rejected by the owner and is not published.
+- `/labs/field-trips` + `/labs/field-trips/<slug>` (`mars`, `ant-sized`, `archimedes-harbour`), data in
+  `src/lib/field-trips.ts` (EN/FR): 3-stage quiz, a true/false "spot the mistakes" game (each sentence
+  says whether Genie or we wrote it), "What the machine got wrong" (only errors seen in our own
+  sessions), classroom questions, sources. Works without a Genie account. `video`/`poster` fields are
+  empty until the session recordings are on the `media` branch.
+- `/labs/world-model`: toy world-model explainer (memory slider, re-imagined views). Runs client-side.
+- `/labs/teach-the-machine`: float-or-sink classroom game. Students label 8 objects, a nearest-neighbour
+  "machine" guesses 6 new ones (usually 3/6 right with correct teaching), then the density = 1 g/cm³
+  line is shown. Printable lesson plan. Values are approximate and the page says so.
+- Shared bits: `src/components/LabBits.tsx` (SectionHead, SourceList), `src/components/FieldTrips.tsx`
+  (line-drawn horizons, no animals or people). Cards on `/labs`; all URLs in the sitemap.
+- The Genie experiences (owner's account, private): Mars, Ant-Sized (`312af6c0-a085-4d5c-bd03-395a8984a5b9`),
+  Archimedes' Harbour. On short browser windows Genie squeezes the question card into a small scroll box.
+- **Open:** download the three Genie recordings ("Video Only"), cut, put them on `media`, fill `video`
+  and `poster`.
+
 ## Google Analytics 4, opt-in only (21 Nov 2026)
 - GA4 account "AI Broadsheet" under **aibroadsheet@gmail.com** (not the owner's personal Google account),
   property "aibroadsheet.com" (Toronto time, CAD), web stream "AI Broadsheet web", Measurement ID

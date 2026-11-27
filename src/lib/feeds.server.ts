@@ -10,6 +10,7 @@ import type { Locale } from "./i18n";
 import { GUIDES } from "./guides";
 import { PATHS } from "./labs";
 import { EPISODES } from "./history-series";
+import { TRIPS } from "./field-trips";
 import { ACTIVITIES as YOUNG_ACTIVITIES } from "./young-lab";
 import { EDITORIALS } from "./editorials";
 import { DESK_IDS } from "./desks";
@@ -130,6 +131,8 @@ export async function buildSitemap(): Promise<string> {
   for (const path of ["/labs/young", "/labs/young/explorers", "/labs/young/makers", "/labs/young/classroom", "/labs/young/grown-ups"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
   for (const a of YOUNG_ACTIVITIES) entries.push({ path: `/labs/young/${a.id}`, changefreq: "monthly", priority: "0.5" });
   entries.push({ path: "/labs/canada-field-guide", changefreq: "monthly", priority: "0.6" });
+  for (const path of ["/labs/world-model", "/labs/teach-the-machine", "/labs/field-trips"]) entries.push({ path, changefreq: "monthly", priority: "0.6" });
+  for (const t of TRIPS) entries.push({ path: `/labs/field-trips/${t.slug}`, changefreq: "monthly", priority: "0.6" });
   entries.push({ path: "/labs/history", changefreq: "monthly", priority: "0.6" });
   for (const e of EPISODES) entries.push({ path: `/labs/history/${e.slug}`, changefreq: "monthly", priority: "0.6" });
   for (const e of EDITORIALS) entries.push({ path: `/editor/${e.slug}`, changefreq: "monthly", priority: "0.5", lastmod: e.date });
