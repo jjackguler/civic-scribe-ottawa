@@ -164,7 +164,7 @@ export function SiteHeader() {
             <p className="hidden md:block mt-1.5 font-serif italic text-[0.95rem] text-muted-ink">{SITE.openDesk.subtitle[locale].replace(/^./, c => c.toUpperCase())} · {fr ? "les promesses de l'IA, consignées et vérifiées" : "AI claims, recorded and tested"}</p>
           </div>
           <div className="flex justify-end">
-            <Link to="/newsletter" className="inline-flex items-center h-10 sm:h-11 px-2.5 sm:px-4 rounded-[4px] bg-ink text-white text-[0.8rem] sm:text-[0.9rem] font-bold hover:bg-lake whitespace-nowrap">
+            <Link to="/newsletter" className="press inline-flex items-center h-10 sm:h-11 px-2.5 sm:px-4 rounded-[4px] bg-ink text-white text-[0.8rem] sm:text-[0.9rem] font-bold hover:bg-lake whitespace-nowrap">
               {fr ? "S'abonner" : "Subscribe"}<span className="hidden lg:inline">&nbsp;{fr ? "gratuitement" : "free"}</span>
             </Link>
           </div>
@@ -172,12 +172,12 @@ export function SiteHeader() {
       </header>
 
       {/* Section bar: sticky, one row; scrolls sideways on phones. */}
-      <nav aria-label={fr ? "Sections" : "Sections"} className="sticky top-0 z-40 bg-night text-white shadow-[0_1px_0_rgba(0,0,0,0.25)]">
+      <nav aria-label={fr ? "Sections" : "Sections"} className="section-bar sticky top-0 z-40 bg-night text-white shadow-[0_1px_0_rgba(0,0,0,0.25)]">
         <div className="container-mw relative">
           <ul className="flex items-stretch h-11 overflow-x-auto no-scrollbar -mx-2 sm:mx-0">
             {BAR.map(n => (
               <li key={pick(n.label)} className="shrink-0">
-                <L n={n} className={`relative h-full inline-flex items-center px-2.5 sm:px-3 text-[0.9rem] font-semibold whitespace-nowrap ${isActive(n) ? "text-white after:absolute after:inset-x-2.5 after:bottom-0 after:h-[3px] after:bg-brass" : "text-white/80 hover:text-white"}`}>
+                <L n={n} className={`navlink relative h-full inline-flex items-center px-2.5 sm:px-3 text-[0.9rem] font-semibold whitespace-nowrap ${isActive(n) ? "text-white" : "text-white/80 hover:text-white"}`}>
                   {pick(n.label)}
                 </L>
               </li>

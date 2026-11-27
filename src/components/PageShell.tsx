@@ -3,16 +3,18 @@ import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { KeeperLauncher } from "./Keeper";
 import { MobileNav } from "./MobileApp";
-import { RevealObserver } from "./Motion";
+import { ReadingProgress, RevealObserver, RouteProgress } from "./Motion";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col app-shell">
       <SiteHeader />
+      <ReadingProgress />
       <main id="main" className="flex-1">{children}</main>
       <SiteFooter />
       <MobileNav />
       <RevealObserver />
+      <RouteProgress />
       {/* On phones the floating Keeper competed with the story; it lives in the menu there. */}
       <div className="hidden md:block"><KeeperLauncher /></div>
     </div>

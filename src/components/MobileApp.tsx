@@ -29,7 +29,7 @@ export function MobileNav() {
   ];
   return <nav className="mobile-nav" aria-label={locale === 'fr' ? 'Navigation de l’application' : 'App navigation'}>
     {links.map(l => { const active = path === l.to; return <Link key={l.to} to={l.to as never} className={active ? 'active' : ''} aria-current={active ? 'page' : undefined}>
-      <span className="relative"><l.icon size={21} strokeWidth={active ? 2.4 : 1.7} aria-hidden="true" />{l.to === '/saved' && items.length > 0 && <span className="saved-count">{items.length}</span>}</span>
+      <span className="relative"><l.icon size={21} strokeWidth={active ? 2.4 : 1.7} aria-hidden="true" />{l.to === '/saved' && items.length > 0 && <span key={items.length} className="saved-count count-bump">{items.length}</span>}</span>
       <span>{locale === 'fr' ? l.fr : l.en}</span>
     </Link>; })}
   </nav>;
@@ -78,7 +78,7 @@ export function ArticleTools({ title, summary = '', source = '', publishedAt = '
   };
   return <div className="article-tools">
     <div className="flex flex-wrap gap-2 items-center">
-      <button className="app-button" onClick={toggle} disabled={!ready} aria-pressed={saved}>{saved ? <Check size={18} /> : <Bookmark size={18} />}{saved ? (fr ? 'Enregistré' : 'Saved') : (fr ? 'Enregistrer' : 'Save story')}</button>
+      <button className="app-button press" onClick={toggle} disabled={!ready} aria-pressed={saved}>{saved ? <Check key="saved" size={18} className="pop-in" /> : <Bookmark key="save" size={18} />}{saved ? (fr ? 'Enregistré' : 'Saved') : (fr ? 'Enregistrer' : 'Save story')}</button>
       <button className="app-button" onClick={share}><Share2 size={18} />{fr ? 'Partager' : 'Share'}</button>
       <ReaderSize />
     </div>

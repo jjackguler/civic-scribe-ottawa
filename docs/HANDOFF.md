@@ -70,7 +70,18 @@ directives file, morning Canadian AI Brief, Output watch issue).
   Data refresh by themselves (news 90 s, newsroom 15 min). Sits below the story bubbles/breaking strip, above the hero.
   Each slide shows its desk (Canada, AI, Robotics, Tech, Human stakes) via `deskOfSummary` / `deskOf`.
 
-## Search status codes (9 Nov 2026)
+## Micro-interactions, round 2 (27 Nov 2026, branch `claude/micro-interactions`)
+- Builds on PR #58 (stamps, markers, lift, counters). All in `src/styles.css` ("Micro-interactions" block) and
+  `src/components/Motion.tsx`; every one stops under prefers-reduced-motion; no new packages.
+- Story-card headlines draw an underline from the left on hover/keyboard focus (`headline-sweep`); section bar:
+  a brass mark slides in under the current section and follows the pointer (`.navlink`); a brass line at the top
+  while a page loads (`RouteProgress`, only after 160 ms); a reading-progress hairline under the section bar on
+  story, article, dispatch, learn, guide, editor, book, ledger and desk pages (`ReadingProgress`, pure CSS
+  scroll timeline, hidden where unsupported); the section bar gains a soft shadow once the page scrolls.
+- Buttons press in (`press`: Subscribe, share, copy, newsletter, Save story); ticks pop on copy/subscribe/save;
+  the Saved counter bumps; lazy photos fade in when they arrive (`StoryImage`, browser-only `data-fade`, eager
+  photos never held back); links in story text firm their underline on hover. No mascots or characters.
+
 - Google reported "Soft 404": pages that say "not available" or "withdrawn" but answer 200. Now a
   withdrawn article answers 410, an unknown dispatch id 404, and a page whose data lookup failed or
   timed out 503 with Retry-After. Routes call `setPageStatus()` (`src/lib/http-status.ts`);

@@ -94,7 +94,7 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
     return (
       <article className="group py-2.5 border-b border-line last:border-0">
         <StoryLink s={s} className="block">
-          <h3 className="hl-sm text-[1.04rem] text-ink group-hover:underline decoration-1 underline-offset-2" title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
+          <h3 className="hl-sm text-[1.04rem] text-ink" title={d.translated || d.ai ? d.original : undefined}><span className="headline-sweep headline-sweep--thin">{d.title}</span></h3>
           {(d.translated || d.ai) && <TranslatedNote ai={!!d.ai} original={d.original} compact />}
           <StoryMeta s={s} className="mt-1" />
         </StoryLink>
@@ -134,7 +134,7 @@ export function StoryCard({ s, variant = "card", showTopic = true, eager = false
               {showTopic && <span className="topic">{storyKicker(s, locale)}</span>}
             </p>
           )}
-          <h3 className={`hl ${titleSize} text-ink group-hover:underline decoration-1 underline-offset-4`} title={d.translated || d.ai ? d.original : undefined}>{d.title}</h3>
+          <h3 className={`hl ${titleSize} text-ink`} title={d.translated || d.ai ? d.original : undefined}><span className={`headline-sweep ${v === "hero" ? "" : "headline-sweep--thin"}`}>{d.title}</span></h3>
           {(d.translated || d.ai) && <TranslatedNote ai={!!d.ai} original={d.original} />}
           {(v === "hero" || v === "text") && d.summary && (
             <p className={`dek mt-2 ${v === "hero" ? "text-[1.15rem] line-clamp-3" : "line-clamp-2 text-[0.98rem]"}`}>{d.summary}</p>

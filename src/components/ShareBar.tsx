@@ -75,7 +75,7 @@ export function ShareBar({ url, title, text, campaign, tone = "light", heading =
           </a>
         ))}
         <button type="button" onClick={copy} className={btn}>
-          {status ? <Check className="h-4 w-4" aria-hidden="true" /> : <Link2 className="h-4 w-4" aria-hidden="true" />}
+          {status ? <Check key="ok" className="h-4 w-4 pop-in" aria-hidden="true" /> : <Link2 className="h-4 w-4" aria-hidden="true" />}
           {status ? T.copied : T.copy}
         </button>
       </div>

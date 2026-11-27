@@ -10,7 +10,19 @@ import { useState } from "react";
  * halftone screen — so pictures from many publishers read as one newspaper.
  * Hover or focus brings the original colour back. The picture itself is not
  * altered or cropped beyond the frame, and the credit stays with the publisher.
+ *
+ * Lazy photos that are still downloading when they mount fade in once they arrive instead of
+ * popping in (data-fade, set only from the browser, so server HTML and no-JS readers always
+ * see the picture). Eager (above-the-fold) photos are never held back.
  */
+function fadeWhenLoaded(el: HTMLImageElement | null) {
+  if (!el || el.complete || el.dataset.fade) return;
+  el.dataset.fade = "wait";
+  const done = () => { el.dataset.fade = "in"; };
+  el.addEventListener("load", done, { once: true });
+  el.addEventListener("error", done, { once: true });
+}
+
 export function StoryImage({
   src, alt, className = "", eager = false, onFail, plain = false,
 }: { src: string; alt: string; className?: string; eager?: boolean; onFail?: () => void; plain?: boolean }) {
@@ -23,6 +35,7 @@ export function StoryImage({
       loading={eager ? "eager" : "lazy"}
       fetchPriority={eager ? "high" : undefined}
       decoding="async"
+      ref={eager ? undefined : fadeWhenLoaded}
       referrerPolicy="no-referrer"
       className={`${className} ${plain ? "" : "house-photo"}`}
       onError={() => { setFailed(true); onFail?.(); }}
