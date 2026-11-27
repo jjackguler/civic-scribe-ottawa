@@ -73,7 +73,7 @@ export function NewsroomCover({ cover, locale, size = "card", className = "", an
   const c = cover[locale];
   const big = c.big || "AI";
   // The big word fills the cover's width: shorter words are set larger (container query units).
-  const bigSize = size === "thumb" ? Math.min(44, 150 / Math.max(2.4, big.length)) : Math.min(size === "hero" ? 30 : 34, 135 / Math.max(2.6, big.length));
+  const bigSize = size === "thumb" ? Math.min(40, 115 / Math.max(2.4, big.length)) : Math.min(size === "hero" ? 30 : 34, 135 / Math.max(2.6, big.length));
   const illustration = cover.illustration && size !== "thumb" ? cover.illustration : null;
   const fr = locale === "fr";
   return (
