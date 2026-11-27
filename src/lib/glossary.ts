@@ -50,6 +50,11 @@ export type GlossaryTerm = {
   /** Related term slugs (must exist). */
   related: string[];
   links?: TermLink[];
+  /**
+   * Search-result title and description, when the default ("What is X? AI glossary")
+   * does not match what people search for. Title up to 60 characters, description up to 155.
+   */
+  seo?: { title?: Bi; description?: Bi };
 };
 
 /** One term in one language, as the pages need it. */

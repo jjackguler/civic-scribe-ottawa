@@ -25,6 +25,17 @@ export const TERMS: GlossaryTerm[] = [
     },
     related: ["prompt-engineering", "system-prompt", "few-shot-prompting", "context-window"],
     links: [{ labs: "prompting" }, { learn: "start-in-30-minutes" }, { hub: "use-ai-assistants-safely" }],
+    // Search Console, Nov 2026: "prompt" and "prompt ai" showed this page ~136 times a week with no clicks.
+    seo: {
+      title: {
+        en: "What is a prompt in AI? Meaning, examples and tips",
+        fr: "Prompt (requête) en IA : définition et exemples",
+      },
+      description: {
+        en: "A prompt is what you type to an AI tool like ChatGPT, Claude or Gemini. See what makes a good prompt, with a before-and-after example.",
+        fr: "Un prompt (requête) est ce que vous écrivez à un outil d'IA comme ChatGPT ou Claude. Ce qui fait un bon prompt, avec un exemple avant-après.",
+      },
+    },
   },
   {
     slug: "prompt-engineering",

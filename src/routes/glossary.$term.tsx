@@ -17,8 +17,8 @@ export const Route = createFileRoute("/glossary/$term")({
     const d = loaderData;
     if (!d) return seoHead(match, { title: SITE.name, description: SITE.description, noindex: true });
     return seoHead(match, {
-      title: { en: `What is ${d.en.term}? AI glossary — ${SITE.name}`, fr: `${d.fr.term} : définition — ${SITE.name}` },
-      description: { en: d.en.short, fr: d.fr.short },
+      title: d.t.seo?.title ?? { en: `What is ${d.en.term}? AI glossary — ${SITE.name}`, fr: `${d.fr.term} : définition — ${SITE.name}` },
+      description: d.t.seo?.description ?? { en: d.en.short, fr: d.fr.short },
       modifiedTime: GLOSSARY_UPDATED,
       breadcrumbs: [{ name: { en: "Glossary", fr: "Glossaire" }, path: "/glossary" }, { name: { en: d.en.term, fr: d.fr.term }, path: `/glossary/${d.t.slug}` }],
       jsonLd: (locale, url) => [{

@@ -7,7 +7,7 @@ import { getOriginalsFast } from "@/lib/originals";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { deskLabel, deskOfOriginal } from "@/lib/desks";
-import { caseName, isSirJack, originalPublishable, originalSection, videoLd, videoSlug, type Original } from "@/lib/originals-types";
+import { caseName, isSirJack, originalLang, originalPublishable, originalSection, videoLd, videoSlug, type Original } from "@/lib/originals-types";
 import { seoHead, publisherRef } from "@/lib/seo";
 
 /**
@@ -35,6 +35,8 @@ export const Route = createFileRoute("/video/$slug")({
       imageWidth: o.posterUrl ? (o.aspect === "16:9" ? 1920 : 1080) : undefined,
       imageHeight: o.posterUrl ? (o.aspect === "16:9" ? 1080 : 1920) : undefined,
       publishedTime: o.publishedAt,
+      // One narration language per video: /en and /fr pages are the same video, so both name one canonical.
+      canonicalLocale: originalLang(o),
       breadcrumbs: [
         isSirJack(o) ? { name: { en: "The Sir Jack Files", fr: "Les dossiers Sir Jack" }, path: "/sir-jack" } : { name: { en: "Explainers", fr: "Explicatifs" }, path: "/originals" },
         { name: { en: name, fr: name }, path: `/video/${videoSlug(o)}` },
