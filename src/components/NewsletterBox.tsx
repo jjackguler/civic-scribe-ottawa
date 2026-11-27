@@ -85,8 +85,8 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
     return (
       <div className={variant === "band" ? "grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-center" : ""}>
         {intro}
-        <p role="status" className={`mt-4 flex items-start gap-3 font-semibold ${dark ? "text-white" : "text-ink"}`}>
-          <Check className="h-5 w-5 mt-0.5 shrink-0" aria-hidden="true" />
+        <p role="status" className={`enter mt-4 flex items-start gap-3 font-semibold ${dark ? "text-white" : "text-ink"}`}>
+          <Check className="h-5 w-5 mt-0.5 shrink-0 pop-in" aria-hidden="true" />
           <span>{provider
             ? (fr ? "Terminez votre inscription dans l'onglet du fournisseur qui vient de s'ouvrir." : "Finish signing up in the provider's tab that just opened.")
             : (fr ? "C'est noté. Surveillez votre boîte : le premier numéro vous dira comment confirmer ou vous désabonner." : "You're on the list. Watch your inbox: the first issue explains how to confirm or unsubscribe.")}</span>
@@ -175,7 +175,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
             placeholder={fr ? "vous@exemple.ca" : "you@example.ca"}
             className={`flex-1 min-w-0 h-12 px-4 rounded-[4px] border ${tone.input}`}
           />
-          <button type="submit" disabled={status === "sending"} className={`h-12 px-5 rounded-[4px] font-bold inline-flex items-center justify-center gap-2 disabled:opacity-70 ${tone.btn}`}>
+          <button type="submit" disabled={status === "sending"} className={`press h-12 px-5 rounded-[4px] font-bold inline-flex items-center justify-center gap-2 disabled:opacity-70 ${tone.btn}`}>
             {status === "sending" ? (fr ? "Envoi…" : "Sending…") : (fr ? "M'abonner" : "Subscribe")}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>

@@ -82,7 +82,7 @@ export function CopyButton({ text, label, done, className = "" }: { text: string
   return (
     <button
       type="button"
-      className={`inline-flex items-center gap-1.5 font-semibold text-lake hover:underline ${className}`}
+      className={`press inline-flex items-center gap-1.5 font-semibold text-lake hover:underline ${className}`}
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(text);
@@ -128,4 +128,38 @@ export function CountUp({ to, className = "" }: { to: number; className?: string
     };
   }, [to]);
   return <span ref={ref} className={`tabular-nums ${className}`}>{n.toLocaleString()}</span>;
+}
+
+/**
+ * A thin brass line at the very top while a page is on its way (only when loading takes longer
+ * than a blink, so fast clicks show nothing). It finishes with a quick sweep and fades.
+ */
+export function RouteProgress() {
+  const pending = useRouterState({ select: (s) => s.status === "pending" || s.isLoading });
+  const [phase, setPhase] = useState<"idle" | "run" | "done">("idle");
+  useEffect(() => {
+    if (pending) {
+      const t = window.setTimeout(() => setPhase("run"), 160);
+      return () => window.clearTimeout(t);
+    }
+    setPhase((p) => (p === "run" ? "done" : "idle"));
+  }, [pending]);
+  useEffect(() => {
+    if (phase !== "done") return;
+    const t = window.setTimeout(() => setPhase("idle"), 420);
+    return () => window.clearTimeout(t);
+  }, [phase]);
+  if (phase === "idle") return null;
+  return <div className={`route-progress is-${phase}`} aria-hidden="true" />;
+}
+
+/**
+ * How far down the story the reader is: a hairline under the section bar that fills as they
+ * scroll. Pure CSS (a scroll-driven animation); browsers without it simply show nothing.
+ */
+const READING = /^\/(?:fr\/)?(?:article|dispatch|story|learn|guides|editor|books|ledger|desk)\/[^/]+/;
+export function ReadingProgress() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  if (!READING.test(path)) return null;
+  return <div className="reading-progress" aria-hidden="true" />;
 }

@@ -247,7 +247,10 @@
   .press:active { transform: scale(0.97); }
   /* Headline underline that draws in from the left on hover/focus */
   .headline-sweep { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 3px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size 380ms cubic-bezier(.2,.7,.2,1); padding-bottom: 2px; }
-  .group:hover .headline-sweep, .group:focus-visible .headline-sweep { background-size: 100% 3px; }
+  .group:hover .headline-sweep, .group:focus-visible .headline-sweep, .group:has(:focus-visible) .headline-sweep { background-size: 100% 3px; }
+  /* Thinner line for card and list headlines (the hero keeps the 3px one). */
+  .headline-sweep--thin { background-size: 0% 2px; }
+  .group:hover .headline-sweep--thin, .group:focus-visible .headline-sweep--thin, .group:has(:focus-visible) .headline-sweep--thin { background-size: 100% 2px; }
   /* Play button: a ring that breathes outward, only while it waits */
   @keyframes play-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 60%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
   .play-ring { animation: play-ring 2.2s ease-out infinite; }
@@ -1036,12 +1039,49 @@ html.theme-swap, html.theme-swap * { transition: background-color 280ms ease, co
   /* Desk walkthrough: the active step's dot pulses once. */
   .pulse-once { animation: pulse-once 700ms ease-out; }
   @keyframes pulse-once { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--lake) 55%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+
+  /* Section bar: a brass mark slides in under the current section; a lighter one follows the pointer. */
+  .navlink::after { content: ""; position: absolute; left: 0.625rem; right: 0.625rem; bottom: 0; height: 3px; background: var(--brass); opacity: 0.5; transform: scaleX(0); transform-origin: left; transition: transform 240ms cubic-bezier(.2,.7,.2,1), opacity 240ms ease; }
+  .navlink:hover::after, .navlink:focus-visible::after { transform: scaleX(1); }
+  .navlink[aria-current="page"]::after { opacity: 1; transform: scaleX(1); animation: navmark 420ms cubic-bezier(.2,.8,.2,1.1) both; }
+  @keyframes navmark { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* Page on its way: a brass line creeps across the top, then sweeps to the end and fades (Motion.tsx RouteProgress). */
+  .route-progress { position: fixed; top: 0; left: 0; right: 0; z-index: 70; height: 3px; background: var(--brass); transform-origin: left; pointer-events: none; }
+  .route-progress.is-run { animation: route-run 8s cubic-bezier(.1,.7,.2,1) forwards; }
+  .route-progress.is-done { animation: route-done 420ms ease-out forwards; }
+  @keyframes route-run { from { transform: scaleX(0); } to { transform: scaleX(0.9); } }
+  @keyframes route-done { 0% { transform: scaleX(0.9); opacity: 1; } 60% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+
+  /* Story pages: a hairline under the section bar fills as the reader scrolls (no JavaScript). */
+  .reading-progress { display: none; }
+  @supports (animation-timeline: scroll()) {
+    .reading-progress { display: block; position: sticky; top: 2.75rem; z-index: 39; height: 2px; margin-bottom: -2px; background: var(--brass); transform-origin: left; transform: scaleX(0); animation: reading-fill linear both; animation-timeline: scroll(root block); }
+    @keyframes reading-fill { to { transform: scaleX(1); } }
+    /* The section bar gains a soft shadow once the page moves under it. */
+    .section-bar { animation: bar-lift linear both; animation-timeline: scroll(root block); animation-range: 0 160px; }
+    @keyframes bar-lift { to { box-shadow: 0 1px 0 rgba(0,0,0,0.25), 0 8px 18px -10px rgba(0,0,0,0.5); } }
+  }
+
+  /* Links in story text: the underline firms up under the pointer. */
+  :is(.prose-mw, .article-body) a { text-decoration-thickness: 1px; transition: text-decoration-thickness 160ms ease, text-underline-offset 160ms ease, color 160ms ease; }
+  :is(.prose-mw, .article-body) a:hover { text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+  /* Lazy photos fade in once they arrive (StoryImage sets data-fade from the browser only). */
+  img[data-fade="wait"] { opacity: 0; }
+  img[data-fade="in"] { animation: img-in 420ms ease-out both; }
+  @keyframes img-in { from { opacity: 0; } to { opacity: 1; } }
 }
 @media (prefers-reduced-motion: reduce) {
   .stamp[data-reveal], .rise[data-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   .marker { transition: none; background-size: 100% 38%; }
   .lift, .lift:hover { transition: none; transform: none; }
   .spin-in, .pop-in, .pulse-once, .enter { animation: none; }
+  .navlink::after, .navlink[aria-current="page"]::after { animation: none; transition: none; }
+  .route-progress.is-run { animation: none; transform: scaleX(1); opacity: 0.6; }
+  .route-progress.is-done { display: none; }
+  .section-bar { animation: none; }
+  img[data-fade] { opacity: 1; animation: none; }
   html.theme-swap, html.theme-swap * { transition: none !important; }
 }
 
