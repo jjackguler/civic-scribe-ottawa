@@ -171,8 +171,9 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
   const upset = upsettingReasons(`${article.en.headline} ${article.en.dek ?? ""} ${article.en.news ?? ""}`);
   if (upset.length && REVIEW !== "off") return stop("house rule", { role: "standards", model: "rules", at: new Date().toISOString(), verdict: "fail", notes: [`could upset or harm people: ${upset.join(", ")}`] });
   // Health, money and other sensitive-but-useful topics publish automatically; NEWSROOM_REVIEW=hold restores the human check.
-  // Articles built from web research wait for the editor until the owner switches that off (NEWSROOM_RESEARCH_REVIEW=off).
-  if (e.researched && env("NEWSROOM_RESEARCH_REVIEW").toLowerCase() !== "off") {
+  // Articles built from web research publish like the rest (owner's decision, 27 Nov 2026). They pass the same
+  // desks; NEWSROOM_RESEARCH_REVIEW=on (or hold) puts them back in front of the editor first.
+  if (e.researched && ["on", "hold"].includes(env("NEWSROOM_RESEARCH_REVIEW").toLowerCase())) {
     await store.hold(article, ["built from web research: the editor reads it first"]);
     log(`  ⏸ draft for the editor (web research, ${e.researched} page(s)): add "${article.id}" to approved.json on the newsroom branch to publish`);
     return "held";

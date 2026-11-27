@@ -437,3 +437,8 @@ Spotify or Apple Podcasts yet; the owner does that.
   say" lines. Official releases need 12 shared words to count as copying (others 9). `trimDraft` may cut up
   to 10 sentences or a third (was 6 / a quarter).
 - `pick.ts`: one lone-source announcement per outlet in 72 h and one per run (`LONE_OUTLET_HOURS`).
+
+## Researched articles publish on their own (27 Nov 2026)
+- Owner's decision (27 Nov 2026, replaces the 16 Nov "drafts first" rule): articles built from web research
+  publish like every other article once they pass the desks. `NEWSROOM_RESEARCH_REVIEW=on` (or `hold`) as a
+  GitHub Actions variable puts them back in drafts. The two waiting drafts (4n6wmw, 1oqxmnz) were approved.
