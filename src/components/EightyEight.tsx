@@ -515,7 +515,15 @@ export function EightyEight({
             )}
           </header>
 
-          {n === 0 ? (
+          {now == null ? (
+            // Server render and first paint: the slides are built in the browser (they depend on the
+            // clock), so show a quiet placeholder instead of the "being put together" empty message,
+            // which search engines were indexing as the front page's lead text.
+            <div className="mt-6 space-y-3" aria-hidden="true">
+              <div className="h-1 w-full bg-white/10" />
+              <div className="h-48 w-full bg-white/5 sm:h-64" />
+            </div>
+          ) : n === 0 ? (
             <p className="mt-6 text-white/80">{c.empty}</p>
           ) : (
             <>
