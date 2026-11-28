@@ -1,5 +1,15 @@
 [
   {
+    "id": "12i2lpy",
+    "at": "2026-11-28T07:45:38.635Z",
+    "stage": "translator",
+    "headline": "What SpaceX's FCC Approval for 1 Million Satellites Means for the Future of AI: Key Takeaways",
+    "reasons": [
+      "attempt 1: missing fields: thirty (2 lines) (reply keys: headline,dek,news,thirty,confirmed,claimed,unknown,matters,article,plain,expert,timeline)",
+      "attempt 2: missing fields: thirty (2 lines) (reply keys: headline,dek,news,thirty,confirmed,claimed,unknown,matters,article,plain,expert,timeline)"
+    ]
+  },
+  {
     "id": "1mazan2",
     "at": "2026-11-27T23:46:34.284Z",
     "stage": "reporter",
