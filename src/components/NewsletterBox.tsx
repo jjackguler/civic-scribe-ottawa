@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, Check, Mail } from "lucide-react";
 import { useLocale } from "@/lib/locale-context";
@@ -34,6 +35,8 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
   const dark = variant === "band" || variant === "card";
   const name = SITE.newsletter.name[locale];
   const provider = SITE.newsletter.url;
+  // GA4 (opt-in readers only): which placement sends readers to sign up. No address is ever sent.
+  const signupClick = () => trackEvent("newsletter_signup_click", { placement: variant, page });
   // On /newsletter the brief's name is the page title.
   const Heading = variant === "page" ? "h1" : "h2";
 
@@ -48,6 +51,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
       const url = new URL("/subscribe", provider);
       url.searchParams.set("email", email.trim());
       window.open(url.toString(), "_blank", "noopener");
+      signupClick();
       setStatus("done");
       return;
     }
@@ -58,7 +62,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ email: email.trim(), consent: true, locale, page, website }),
       });
-      if (res.ok) { setStatus("done"); setEmail(""); setConsent(false); return; }
+      if (res.ok) { trackEvent("sign_up", { method: "newsletter", placement: variant, page }); setStatus("done"); setEmail(""); setConsent(false); return; }
       setStatus(res.status === 503 ? "closed" : res.status === 429 ? "rate" : "error");
     } catch {
       setStatus("error");
@@ -109,6 +113,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
                 href={new URL("/subscribe", provider).toString()}
                 target="_blank"
                 rel="noopener"
+                onClick={signupClick}
                 className={`h-12 px-6 rounded-[4px] font-bold inline-flex items-center justify-center gap-2 ${tone.btn}`}
               >
                 {fr ? "M'abonner gratuitement" : "Subscribe free"}
@@ -138,6 +143,7 @@ export function NewsletterBox({ variant = "band" }: { variant?: Variant }) {
             href={new URL("/subscribe", provider).toString()}
             target="_blank"
             rel="noopener"
+            onClick={signupClick}
             className={`h-12 px-6 rounded-[4px] font-bold inline-flex items-center justify-center gap-2 ${tone.btn}`}
           >
             {fr ? "M'abonner gratuitement" : "Subscribe free"}

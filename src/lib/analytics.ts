@@ -97,6 +97,18 @@ export function startStats() {
   document.head.appendChild(s);
 }
 
+/**
+ * One GA4 event, only when the reader said yes, gtag.js is loaded and the page is measured.
+ * Never on children's pages (STATS_FREE), so Young Lab stays unmeasured: its sign-ups are
+ * counted by beehiiv's UTM source instead. Parameters must never hold anything a reader typed.
+ */
+export function trackEvent(name: string, params: Record<string, string | number> = {}) {
+  if (typeof window === "undefined" || !SITE.gaMeasurementId || !statsHost()) return;
+  if (!statsAllowedPath(window.location.pathname) || !statsAllowed(readStats())) return;
+  if (!document.getElementById(SCRIPT_ID)) return;
+  gtag("event", name, params);
+}
+
 /** Stops further hits in this page and deletes GA's first-party cookies. */
 export function stopStats() {
   const id = SITE.gaMeasurementId;
