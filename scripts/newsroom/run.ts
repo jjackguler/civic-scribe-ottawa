@@ -32,7 +32,7 @@ import { pickBrief, pickEvents, type Skip } from "./pick";
 import { loadResearchLog, NOT_AN_EVENT, researchEvent, saveResearchLog } from "./research";
 import { writeDraftsPreview } from "./preview";
 import type { Story } from "../../src/lib/news-engine";
-import { copyEditor, pageDesigner, reporter, seoEditor, standardsEditor, translator, useDirectives, type Event, type Seo, type SeoCopy } from "./roles";
+import { copyEditor, pageDesigner, reporter, seoEditor, standardsEditor, standardsRewrite, translator, useDirectives, type Event, type Seo, type SeoCopy } from "./roles";
 import { focusHits, loadDirectives, targetRoom, type Directives } from "./directives";
 import type { Draft } from "./shape";
 import { openStore, type Store } from "./store";
@@ -116,10 +116,22 @@ async function writeOne(m: Models, store: Store, e: Event): Promise<"published" 
   roles.push(copy.note);
   log(`  copy: ${copy.note.verdict}${copy.note.verdict === "fixed" ? ` (${copy.note.notes.length} problems fixed)` : ""}`);
 
-  const std = await standardsEditor(m, e, copy.value);
+  let article0 = copy.value;
+  let std = await standardsEditor(m, e, article0);
+  // One rewrite on the standards editor's reasons, then a second reading (fixable points no longer kill the story).
+  if (!std.ok && std.note.model !== "mechanical" && !m.failure) {
+    const fix = await standardsRewrite(m, e, article0, std.note.notes);
+    if (fix.ok) {
+      roles.push(fix.note);
+      log(`  standards: rewritten (${std.note.notes.length} point(s))`);
+      article0 = fix.value;
+      std = await standardsEditor(m, e, article0, 1);
+    }
+  }
   if (!std.ok) return stop("standards", std.note);
   roles.push(std.note);
   log(`  standards: pass`);
+  copy.value = article0;
 
   const fr = await translator(m, e, copy.value);
   if (!fr.ok) return stop("translator", fr.note);
