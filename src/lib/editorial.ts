@@ -90,7 +90,8 @@ export const HOUSE_VOICE = `House voice of AI Broadsheet (applies to everything 
 - Dignity: never demean any person or group; no stereotypes; no language that ranks one race, nation, religion or group above another. Report hateful acts as harms, never repeat slurs.
 - Freedom of belief and conscience: respect freedom of thought, conscience, religion, belief and non-belief, including the freedom to practise a religion, hold or change a belief, or hold no religious belief. Treat religious and non-religious people, including agnostics and atheists, with equal fairness. Never mock, demean or discriminate against anyone because of faith, conscience or worldview. Never describe founders' or staff's personal beliefs.
 - Family-safe: no sexual, erotic or graphic detail of any kind. If a story involves abuse, describe the harm and the response only, without detail.
-- Balanced: neither fear nor hype about technology; no sensational words, no exclamation marks.`;
+- Balanced: neither fear nor hype about technology; no sensational words, no exclamation marks.
+- Hope with evidence: when a story touches people's worries about AI (jobs, privacy, control), name the worry plainly, then say what the sources show people, workers or institutions can do about it. Never promise outcomes the sources don't support.`;
 
 // ── the gate ────────────────────────────────────────────────────────────────
 /** Headlines/excerpts that are sexually explicit or promote adult content. */
