@@ -12,7 +12,9 @@ import { originalSection } from "../../src/lib/originals-types";
 import { mergeRewrite, shapeDraft, unwrapDraft, type Draft } from "./shape";
 import { editorialGate } from "../../src/lib/editorial";
 import { upsettingReasons } from "./upsetting";
-import { clip, publishedWords, sourceText, briefPrompt, trimDraft, copyProblems, type Event } from "./roles";
+import { clip, publishedWords, sourceText, briefPrompt, trimDraft, copyProblems, standardsEditor, standardsRewrite, type Event } from "./roles";
+import { cannedModels } from "./models";
+import { toRaw } from "./shape";
 import { DEFAULT_DIRECTIVES, parseDirectives, directivesPrompt, matchesTopic, bannedBy, targetRoom, torontoClock, loadDirectives } from "./directives";
 import { pickBrief, pickEvents, splitForReporting } from "./pick";
 import { parseJson } from "./models";
@@ -597,6 +599,25 @@ test("only first-party pages on the source's own site are candidates; third-part
   assert.ok(onOwnSite("https://www.canada.ca/en/innovation/news/2026/11/x.html", "https://www.canada.ca/en/news.html"));
 });
 const asyncTests: [string, () => Promise<void>][] = [
+  ["a standards failure gets one rewrite, then a second reading; background passages reach the standards desk", async () => {
+    const base = { ...trimBase([P, P, P, P, P, P]), thirty: ["Aurora-2 works in English and French [s1].", "It runs on one laptop GPU [s1].", "Firms with more than 50 employees need a licence [s1]."],
+      confirmed: [{ text: "Northwind Labs released Aurora-2 [s1].", src: ["s1"] }], body: { plain: ["Aurora-2 is a small open model for English and French [s1]."], expert: [] } };
+    const fixed = toRaw({ ...base, dek: "The model is small enough for one laptop, Northwind Labs says [s1]." });
+    let seen = "";
+    const m = cannedModels({ [TRIM_EVENT.id]: {
+      standards: [{ pass: false, reasons: ["The dek states the company's claim as fact."], notes: [] }, { pass: true, reasons: [], notes: [] }],
+      copy: [null, null, fixed],
+    } });
+    const json = m.json.bind(m);
+    m.json = (async (role, tier, system, user, ctx, max) => { if (role === "standards") seen = user; return json(role, tier, system, user, ctx, max); }) as typeof m.json;
+    const first = await standardsEditor(m, TRIM_EVENT, base);
+    assert.equal(first.ok, false);
+    assert.match(seen, /"background"/);
+    const r = await standardsRewrite(m, TRIM_EVENT, base, first.note.notes);
+    assert.ok(r.ok, JSON.stringify(r.note));
+    assert.match(r.value.dek, /Northwind Labs says/);
+    assert.equal((await standardsEditor(m, TRIM_EVENT, r.value, 1)).ok, true);
+  }],
   ["a short official excerpt is replaced by its own page's text, and then clears the length bar", async () => {
     const s = official({});
     const calls: string[] = [];

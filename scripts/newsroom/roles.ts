@@ -267,6 +267,8 @@ const STANDARDS = `You are the standards editor at the AI Broadsheet Newsroom. Y
 Our charter:
 ${CHARTER}
 
+"background" holds passages from our own evergreen pages. A sentence marked [bN] is supported when background passage bN says it; it needs no outlet. Only sources [sN] and background [bN] count as evidence.
+
 FAIL the article (pass: false) if ANY of these is true:
 - it demeans a person or group, uses a stereotype, or ranks one race, nation, religion or group above another;
 - it mocks religion, belief or God, or its voice dismisses faith;
@@ -281,14 +283,43 @@ Return {"pass": true|false, "reasons": ["why it fails, one line each"], "notes":
 
 ${HOUSE_VOICE}`;
 
-export async function standardsEditor(m: Models, e: Event, d: Draft): Promise<Outcome<null>> {
+export async function standardsEditor(m: Models, e: Event, d: Draft, attempt = 0): Promise<Outcome<null>> {
   const gate = editorialGate({ title: d.headline, summary: draftFields(d).join(" ") });
   if (!gate.ok) return { ok: false, note: note("standards", "mechanical", "fail", [`${gate.reason} (editorialGate)`]) };
-  const r = await m.json<{ pass?: unknown; reasons?: unknown; notes?: unknown }>("standards", "checker", STANDARDS + directivesPrompt(DIRECTIVES, "standards"), JSON.stringify({ article: toRaw(d), sources: sourcesFor(e) }), { id: e.id, attempt: 0 }, 1200);
+  const r = await m.json<{ pass?: unknown; reasons?: unknown; notes?: unknown }>("standards", "checker", STANDARDS + directivesPrompt(DIRECTIVES, "standards"), JSON.stringify({ article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt }, 1200);
   if (!r || typeof r.pass !== "boolean") return { ok: false, note: note("standards", m.model("checker"), "fail", ["no verdict from the standards desk"]) };
   const list = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string").map(x => x.slice(0, 300)) : []);
   if (!r.pass) return { ok: false, note: note("standards", m.model("checker"), "fail", list(r.reasons).length ? list(r.reasons) : ["failed without a reason"]) };
   return { ok: true, value: null, note: note("standards", m.model("checker"), "pass", list(r.notes)) };
+}
+
+const STANDARDS_FIX = `You are the copy editor at the AI Broadsheet Newsroom. The standards editor turned this article down for the reasons listed in "problems". Fix exactly those problems and return the whole article in the same JSON shape. Only ever remove or reword; never add a fact that is not in the sources or background.
+- A figure, promise or forecast from one party: say whose it is ("the department says", "according to <outlet>").
+- Sources that disagree (one says 44, another 45): say so plainly in the headline or lead ("44 or 45 companies; the two documents differ"), or use the figure they share.
+- A consequence or impact no source states: cut it.
+- A [bN] sentence the background does not support: cut it.
+- Keep every [sN] / [bN] marker on the sentence it supports. Keep the structure.
+
+${RULES}
+
+${HOUSE_VOICE}`;
+
+/**
+ * One rewrite after a standards failure, before the event is turned down (27 Nov 2026: Canadian
+ * funding stories failed on fixable points, e.g. "44 or 45 companies" stated as one figure).
+ * The rewrite must pass the copy desk's mechanical checks and then the standards desk again.
+ */
+export async function standardsRewrite(m: Models, e: Event, d: Draft, reasons: string[]): Promise<Outcome<Draft>> {
+  const raw = await m.json<RawDraft>("copy", "writer", STANDARDS_FIX + directivesPrompt(DIRECTIVES, "copy"), JSON.stringify({ problems: reasons, article: toRaw(d), sources: sourcesFor(e), background: backgroundFor(e, "en") }), { id: e.id, attempt: 2 }, 6000);
+  const fixed = raw ? shapeDraft(mergeRewrite(raw, toRaw(d)), e.sources, e.background.map(b => b.key), e.sources.map((x, i) => `${x.title}. ${e.excerpts[i] ?? ""}`).join("\n")) : "no reply";
+  if (typeof fixed === "string") return { ok: false, note: note("standards", m.model("writer"), "fail", [...reasons, `rewrite: ${fixed}`]) };
+  const p = copyProblems(fixed, e, "en");
+  if (p.facts.length || p.style.length) {
+    const t = trimDraft(fixed, e);
+    if (!t) return { ok: false, note: note("standards", m.model("writer"), "fail", [...reasons, "after the rewrite:", ...describe(p)]) };
+    return { ok: true, value: t.draft, note: note("standards", m.model("writer"), "fixed", [...reasons, `trimmed ${t.cut.length} sentence(s)`]) };
+  }
+  return { ok: true, value: fixed, note: note("standards", m.model("writer"), "fixed", reasons) };
 }
 
 // ── translator ─────────────────────────────────────────────────────────────

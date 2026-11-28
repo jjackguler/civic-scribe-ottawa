@@ -453,3 +453,10 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Owner's decision (27 Nov 2026, replaces the 16 Nov "drafts first" rule): articles built from web research
   publish like every other article once they pass the desks. `NEWSROOM_RESEARCH_REVIEW=on` (or `hold`) as a
   GitHub Actions variable puts them back in drafts. The two waiting drafts (4n6wmw, 1oqxmnz) were approved.
+
+## Standards desk: background passages and one rewrite (28 Nov 2026)
+- The standards desk now gets our background passages (`background`), so a [bN] sentence is no longer failed as
+  "not among the sources" (it killed every Canadian compute-fund story on 27 Nov).
+- A standards failure (not the mechanical gate) gets one rewrite on its reasons (`standardsRewrite` in roles.ts:
+  attribute one party's figures, say when sources disagree, cut unsupported consequences, never add facts),
+  which must pass the copy desk's checks, then a second standards reading. Fail again and the event is turned down.
