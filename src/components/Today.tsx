@@ -128,7 +128,7 @@ export function TodayStack({ initialNews, initialDispatches, startId }: {
   const { locale } = useLocale();
   const { stories, dispatches, loading, now } = useToday(initialNews, initialDispatches);
   const items = useMemo(() => (now == null ? [] : buildToday(stories, dispatches, locale, now)), [stories, dispatches, locale, now]);
-  if (now == null || (loading && items.length === 0)) return <StackFrame><div className="grid h-full place-items-center"><span className="live-dot" aria-hidden="true" /></div></StackFrame>;
+  if (now == null || (loading && items.length === 0)) return <StackFrame><h1 className="sr-only">{COPY[locale].title}</h1><div className="grid h-full place-items-center"><span className="live-dot" aria-hidden="true" /></div></StackFrame>;
   if (items.length === 0) return <EmptyStack />;
   return <StackPlayer items={items} startId={startId} />;
 }

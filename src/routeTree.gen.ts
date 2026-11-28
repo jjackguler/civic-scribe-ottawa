@@ -68,6 +68,7 @@ import { Route as EditorSlugRouteImport } from './routes/editor.$slug'
 import { Route as EditorToolsRouteImport } from './routes/editor.tools'
 import { Route as GlossaryIndexRouteImport } from './routes/glossary.index'
 import { Route as GlossaryTermRouteImport } from './routes/glossary.$term'
+import { Route as GuidesIndexRouteImport } from './routes/guides.index'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as ImmersiveIndexRouteImport } from './routes/immersive.index'
 import { Route as ImmersiveSlugRouteImport } from './routes/immersive.$slug'
@@ -393,6 +394,11 @@ const GlossaryTermRoute = GlossaryTermRouteImport.update({
   path: '/glossary/$term',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesSlugRoute = GuidesSlugRouteImport.update({
   id: '/guides/$slug',
   path: '/guides/$slug',
@@ -610,6 +616,7 @@ export interface FileRoutesByFullPath {
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
+  '/guides/': typeof GuidesIndexRoute
   '/immersive/': typeof ImmersiveIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
@@ -700,6 +707,7 @@ export interface FileRoutesByTo {
   '/dispatch': typeof DispatchIndexRoute
   '/editor': typeof EditorIndexRoute
   '/glossary': typeof GlossaryIndexRoute
+  '/guides': typeof GuidesIndexRoute
   '/immersive': typeof ImmersiveIndexRoute
   '/labs': typeof LabsIndexRoute
   '/learn': typeof LearnIndexRoute
@@ -791,6 +799,7 @@ export interface FileRoutesById {
   '/dispatch/': typeof DispatchIndexRoute
   '/editor/': typeof EditorIndexRoute
   '/glossary/': typeof GlossaryIndexRoute
+  '/guides/': typeof GuidesIndexRoute
   '/immersive/': typeof ImmersiveIndexRoute
   '/labs/': typeof LabsIndexRoute
   '/learn/': typeof LearnIndexRoute
@@ -883,6 +892,7 @@ export interface FileRouteTypes {
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
+    | '/guides/'
     | '/immersive/'
     | '/labs/'
     | '/learn/'
@@ -973,6 +983,7 @@ export interface FileRouteTypes {
     | '/dispatch'
     | '/editor'
     | '/glossary'
+    | '/guides'
     | '/immersive'
     | '/labs'
     | '/learn'
@@ -1063,6 +1074,7 @@ export interface FileRouteTypes {
     | '/dispatch/'
     | '/editor/'
     | '/glossary/'
+    | '/guides/'
     | '/immersive/'
     | '/labs/'
     | '/learn/'
@@ -1154,6 +1166,7 @@ export interface RootRouteChildren {
   DispatchIndexRoute: typeof DispatchIndexRoute
   EditorIndexRoute: typeof EditorIndexRoute
   GlossaryIndexRoute: typeof GlossaryIndexRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
   ImmersiveIndexRoute: typeof ImmersiveIndexRoute
   LabsIndexRoute: typeof LabsIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
@@ -1589,6 +1602,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GlossaryTermRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides/$slug': {
       id: '/guides/$slug'
       path: '/guides/$slug'
@@ -1866,6 +1886,7 @@ const rootRouteChildren: RootRouteChildren = {
   DispatchIndexRoute: DispatchIndexRoute,
   EditorIndexRoute: EditorIndexRoute,
   GlossaryIndexRoute: GlossaryIndexRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
   ImmersiveIndexRoute: ImmersiveIndexRoute,
   LabsIndexRoute: LabsIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
