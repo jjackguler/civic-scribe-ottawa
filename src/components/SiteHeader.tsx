@@ -8,6 +8,7 @@ import { DESKS, type SectionId } from "@/lib/news";
 import { SITE } from "@/lib/site";
 import { ThemeToggle } from "./Motion";
 import { STUDIO } from "@/lib/studio";
+import { LEDGER } from "@/lib/ledger";
 import { localePath } from "@/lib/seo";
 import type { Bi } from "@/lib/i18n";
 
@@ -17,8 +18,9 @@ type Item = { label: Bi; to: string; section?: SectionId; hash?: string };
  * The section bar (CNA-style: one row, every desk a tap away, swipeable on phones).
  * News desks first, then our own journalism, then learning.
  */
+// The Ledger joins the bar once it holds a record: an empty list as the first tab reads as an empty site.
 const BAR: Item[] = [
-  { label: { en: "The Ledger", fr: "Le registre" }, to: "/ledger" },
+  ...(LEDGER.length ? [{ label: { en: "The Ledger", fr: "Le registre" }, to: "/ledger" }] : []),
   { label: { en: "Open Desk", fr: "Open Desk" }, to: "/open-desk" },
   { label: { en: "Latest", fr: "En continu" }, to: "/news" },
   { label: { en: "The week", fr: "La semaine" }, to: "/week" },
@@ -35,7 +37,7 @@ const GROUPS: { title: Bi; items: Item[] }[] = [
   {
     title: { en: "News", fr: "Actualités" },
     items: [
-      { label: SITE.openDesk.ledger, to: "/ledger" },
+      ...(LEDGER.length ? [{ label: SITE.openDesk.ledger, to: "/ledger" }] : []),
       { label: { en: "What is Open Desk?", fr: "Qu'est-ce qu'Open Desk?" }, to: "/open-desk" },
       { label: { en: "Latest AI news", fr: "Dernières nouvelles" }, to: "/news" },
       { label: { en: "The week in AI, robotics and tech", fr: "La semaine en IA, robotique et techno" }, to: "/week" },

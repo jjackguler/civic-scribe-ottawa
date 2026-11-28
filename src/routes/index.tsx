@@ -16,6 +16,7 @@ import { NewsroomLead } from "@/components/NewsroomLead";
 import { FromOurDesk } from "@/components/StudioCards";
 import { TrustBar } from "@/components/Trust";
 import { LedgerFront, OpenDeskBand } from "@/components/Ledger";
+import { LEDGER } from "@/lib/ledger";
 import { LabsBand } from "@/components/Labs";
 import { AskKeeperBand } from "@/components/Keeper";
 import { QuizCard } from "@/components/Quiz";
@@ -197,7 +198,8 @@ function Home() {
       <WeekSheetBand className="container-mw mt-12" />
 
       {/* Open Desk: the ledger of recorded and tested claims, right under our own work. */}
-      <LedgerFront className="container-mw mt-12" />
+      {/* Hidden until the first record is signed: "The first records open soon" was the front page's most visible empty state. */}
+      {LEDGER.length > 0 && <LedgerFront className="container-mw mt-12" />}
       <OpenDeskBand className="container-mw mt-10" />
 
       <div className="container-mw mt-8"><TrustBar /></div>
