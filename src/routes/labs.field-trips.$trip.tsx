@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, RotateCcw, X } from "lucide
 import { PageShell } from "@/components/PageShell";
 import { SectionHead, SourceList } from "@/components/LabBits";
 import { TripBand } from "@/components/FieldTrips";
+import { TripPlayer } from "@/components/TripPlayer";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
 import { seoHead, publisherRef } from "@/lib/seo";
@@ -93,18 +94,14 @@ function TripPage() {
         </section>
       )}
 
-      {t.video && (
-        <section className="container-mw mt-10" aria-label={fr ? "Enregistrement de la séance Genie" : "Genie session recording"}>
-          <figure>
-            <video src={t.video} poster={t.poster} controls playsInline preload="metadata" className="w-full rounded-[8px] bg-night aspect-video" />
-            <figcaption className="meta mt-2">{fr ? "Images générées par IA (Genie 4). Ce n'est pas une vraie prise de vue." : "AI-generated footage (Genie 4). Not real camera footage."}</figcaption>
-          </figure>
-        </section>
-      )}
 
       <section className="container-mw mt-12 sm:mt-16" aria-labelledby="quiz-title">
         <SectionHead id="quiz-title" kicker={fr ? "À vous" : "Your turn"} title={fr ? "Trois étapes, trois questions" : "Three stages, three questions"} />
-        <Quiz key={t.slug} questions={t.questions} />
+        {t.video && t.stops ? (
+          <TripPlayer key={t.slug} src={t.video} poster={t.poster} questions={t.questions} stops={t.stops} glitches={t.glitches ?? []} />
+        ) : (
+          <Quiz key={t.slug} questions={t.questions} />
+        )}
       </section>
 
       <section className="container-mw mt-14 sm:mt-20" aria-labelledby="spot-title">

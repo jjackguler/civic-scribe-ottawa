@@ -11,6 +11,8 @@ export type Choice = { text: Bi; correct?: boolean };
 export type Question = { stage: Bi; scene: Bi; q: Bi; choices: Choice[]; why: Bi };
 /** A sentence for the spot-the-mistake game. `machine` marks the ones Genie produced; `wrong` marks the false ones. */
 export type Claim = { text: Bi; machine: boolean; wrong: boolean; note: Bi };
+/** A stretch of the recording where the machine gets something wrong, for the catch-the-glitch game. Seconds. */
+export type Glitch = { from: number; to: number; label: Bi };
 export type TripSource = { title: string; url: string; covers: Bi };
 
 export type Trip = {
@@ -35,6 +37,9 @@ export type Trip = {
   /** Filled in once the Genie session recording is on our CDN. */
   video?: string;
   poster?: string;
+  /** Seconds where each question opens in the recording. */
+  stops?: number[];
+  glitches?: Glitch[];
   recorded: Bi;
 };
 
