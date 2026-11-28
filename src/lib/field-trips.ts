@@ -30,6 +30,8 @@ export type Trip = {
   classroom: Bi[];
   tryAtHome?: Bi;
   sources: TripSource[];
+  /** Unlisted Project Genie experience (remixing off). Playing it needs Google's Project Genie access. */
+  genie?: string;
   /** Filled in once the Genie session recording is on our CDN. */
   video?: string;
   poster?: string;
@@ -39,6 +41,7 @@ export type Trip = {
 export const TRIPS: Trip[] = [
   {
     slug: "mars",
+    genie: "https://labs.google/fx/projectgenie/tools/projectgenie/e?experienceId=14435f1f-7c7d-4728-b4a8-f852c483813f",
     n: 1,
     title: { en: "A day on Mars", fr: "Une journée sur Mars" },
     place: { en: "Gale Crater, Mars", fr: "Cratère Gale, Mars" },
@@ -135,6 +138,7 @@ export const TRIPS: Trip[] = [
   },
   {
     slug: "ant-sized",
+    genie: "https://labs.google/fx/projectgenie/tools/projectgenie/e?experienceId=312af6c0-a085-4d5c-bd03-395a8984a5b9",
     n: 2,
     title: { en: "Ant-sized: a day on the forest floor", fr: "À taille de fourmi : une journée au ras du sol" },
     place: { en: "A forest floor, from 5 mm up", fr: "Un sous-bois, vu à 5 mm du sol" },
@@ -230,6 +234,7 @@ export const TRIPS: Trip[] = [
   },
   {
     slug: "archimedes-harbour",
+    genie: "https://labs.google/fx/projectgenie/tools/projectgenie/e?experienceId=1c040672-191a-4b98-9fae-e29bbcf1848b",
     n: 3,
     title: { en: "Archimedes' harbour", fr: "Le port d'Archimède" },
     place: { en: "A Mediterranean harbour, about 250 BCE", fr: "Un port méditerranéen, vers 250 av. J.-C." },
@@ -427,6 +432,7 @@ export const TRIPS: Trip[] = [
   },
   {
     slug: "bastille-1789",
+    genie: "https://labs.google/fx/projectgenie/tools/projectgenie/e?experienceId=86fd9176-bda8-4425-bbb5-bc6ecc911dfa",
     n: 5,
     title: { en: "Paris, 1789: the day the Bastille fell", fr: "Paris, 1789 : le jour où la Bastille est tombée" },
     place: { en: "Paris and Versailles, summer 1789", fr: "Paris et Versailles, été 1789" },

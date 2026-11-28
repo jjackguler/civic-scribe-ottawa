@@ -396,6 +396,8 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Added 28 Nov (owner's idea): `leonardos-workshop` (Genie `d091c1e1-039b-43dd-bcdd-9840980e92ff`) and
   `bastille-1789` (Genie `86fd9176-bda8-4425-bbb5-bc6ecc911dfa`). Owner rules for these: period sound only, no
   modern sounds; slow 360-degree look-around. No real person's face (Leonardo only from behind).
+- Genie links (Unlisted, remixing off, 28 Nov) are in `genie` on each trip; Leonardo stays Private until its
+  cover image (an invented face from the first build) is replaced.
 - **Open:** download the five Genie recordings ("Video Only"), cut, put them on `media`, fill `video`
   and `poster`.
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Check, RotateCcw, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, RotateCcw, X } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { SectionHead, SourceList } from "@/components/LabBits";
 import { TripBand } from "@/components/FieldTrips";
@@ -74,6 +74,24 @@ function TripPage() {
             : "We first built this lesson in Project Genie, Google's world model. The questions and explanations below were rewritten and checked by the newsroom against the sources listed. What the machine got wrong is listed further down."}
         </p>
       </div>
+
+      {t.genie && (
+        <section className="container-mw mt-8" aria-labelledby="genie-title">
+          <div className="grid gap-4 rounded-[10px] bg-night text-white p-5 sm:p-7 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <h2 id="genie-title" className="masthead-serif text-[1.5rem] sm:text-[1.75rem]">{fr ? "Vivez-la en 3D dans Project Genie" : "Live it in 3D in Project Genie"}</h2>
+              <p className="mt-1.5 text-[0.98rem] leading-relaxed text-white/75 max-w-2xl">
+                {fr
+                  ? "Marchez dans le monde que nous avons créé et répondez aux questions sur place. Il faut un compte Google ayant accès à Project Genie (offert avec Google AI Ultra). Sans accès, le quiz ci-dessous suffit."
+                  : "Walk through the world we built and answer the questions inside it. You need a Google account with access to Project Genie (part of Google AI Ultra). No access? The quiz below covers the same lesson."}
+              </p>
+            </div>
+            <a href={t.genie} target="_blank" rel="noopener noreferrer" className="justify-self-start inline-flex items-center gap-2 rounded-[5px] bg-signal text-signal-ink font-bold px-4 py-2.5">
+              {fr ? "Ouvrir dans Genie" : "Open in Genie"} <ArrowUpRight className="h-5 w-5" aria-hidden="true" /><span className="sr-only">{fr ? " (nouvel onglet)" : " (opens in a new tab)"}</span>
+            </a>
+          </div>
+        </section>
+      )}
 
       {t.video && (
         <section className="container-mw mt-10" aria-label={fr ? "Enregistrement de la séance Genie" : "Genie session recording"}>
