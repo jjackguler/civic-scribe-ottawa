@@ -453,3 +453,9 @@ Spotify or Apple Podcasts yet; the owner does that.
 - Owner's decision (27 Nov 2026, replaces the 16 Nov "drafts first" rule): articles built from web research
   publish like every other article once they pass the desks. `NEWSROOM_RESEARCH_REVIEW=on` (or `hold`) as a
   GitHub Actions variable puts them back in drafts. The two waiting drafts (4n6wmw, 1oqxmnz) were approved.
+
+## Empty Ledger off the front (28 Nov 2026, branch `claude/hide-empty-ledger`)
+- Owner approved (site audit, 28 Nov): while `src/content/ledger/` holds no record, "The Ledger" is left out of the
+  section bar and the full menu, and `LedgerFront` is not shown on the front page. Everything comes back on its
+  own when the first OD record is committed. /ledger itself, the footer link and the Open Desk band stay.
+- Audit and plan: `AI-Broadsheet/reports/rakip-kiyas-ve-duzeltme-plani-2026-11-28.md` in the AI News project files.
