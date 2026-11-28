@@ -23,7 +23,7 @@ export type Trip = {
   ages: Bi;
   minutes: number;
   /** Background tone for the trip's cover band. */
-  tone: "mars" | "forest" | "harbour";
+  tone: "mars" | "forest" | "harbour" | "workshop" | "paris";
   questions: Question[];
   claims: Claim[];
   gotWrong: Bi[];
@@ -326,6 +326,179 @@ export const TRIPS: Trip[] = [
       { title: "Scientific American, “Bring Science Home: How metal boats float”", url: "https://www.scientificamerican.com/article/bring-science-home-how-metal-boats-float/", covers: { en: "A floating object displaces its own weight of water; the foil boat experiment", fr: "Un objet qui flotte déplace son propre poids d'eau; l'expérience du bateau d'aluminium" } },
     ],
   },
+  {
+    slug: "leonardos-workshop",
+    n: 4,
+    title: { en: "Leonardo's workshop", fr: "L'atelier de Léonard" },
+    place: { en: "Milan, about 1495", fr: "Milan, vers 1495" },
+    dek: {
+      en: "Step into a Renaissance workshop full of sketches, gears and a flying machine hanging from the beams. Read a backwards notebook and find out why the machine never flew.",
+      fr: "Entrez dans un atelier de la Renaissance plein d'esquisses, d'engrenages et d'une machine volante suspendue aux poutres. Lisez un carnet écrit à l'envers et découvrez pourquoi la machine n'a jamais volé.",
+    },
+    subject: { en: "History of science", fr: "Histoire des sciences" },
+    ages: { en: "Ages 9 and up", fr: "9 ans et plus" },
+    minutes: 10,
+    tone: "workshop",
+    recorded: { en: "Built in Project Genie (Genie 4), November 2026", fr: "Créé dans Project Genie (Genie 4), novembre 2026" },
+    questions: [
+      {
+        stage: { en: "Stage 1 · The notebook", fr: "Étape 1 · Le carnet" },
+        scene: { en: "You lean over an open notebook packed with tiny handwriting that seems to run the wrong way.", fr: "Vous vous penchez sur un carnet ouvert, couvert d'une écriture minuscule qui semble aller dans le mauvais sens." },
+        q: { en: "How did Leonardo write in his notebooks?", fr: "Comment Léonard écrivait-il dans ses carnets?" },
+        choices: [
+          { text: { en: "In a secret code made of numbers", fr: "Dans un code secret fait de chiffres" } },
+          { text: { en: "In mirror writing, from right to left", fr: "En écriture miroir, de droite à gauche" }, correct: true },
+          { text: { en: "Only in pictures, never in words", fr: "Seulement en images, jamais en mots" } },
+        ],
+        why: {
+          en: "His notes run from right to left with every letter reversed. The painter and writer Giorgio Vasari said they could only be read with a mirror. Hold a mirror to the page and the words turn the right way round.",
+          fr: "Ses notes vont de droite à gauche, chaque lettre inversée. Le peintre et écrivain Giorgio Vasari disait qu'on ne pouvait les lire qu'avec un miroir. Placez un miroir devant la page et les mots se remettent à l'endroit.",
+        },
+      },
+      {
+        stage: { en: "Stage 2 · The birds", fr: "Étape 2 · Les oiseaux" },
+        scene: { en: "Pages of wing sketches cover the table. A pigeon lands on the windowsill.", fr: "Des pages d'ailes dessinées couvrent la table. Un pigeon se pose sur le rebord de la fenêtre." },
+        q: { en: "What did Leonardo study most closely to understand flight?", fr: "Qu'est-ce que Léonard a étudié de plus près pour comprendre le vol?" },
+        choices: [
+          { text: { en: "Birds: how they balance, steer, dive and climb", fr: "Les oiseaux : comment ils s'équilibrent, virent, plongent et remontent" }, correct: true },
+          { text: { en: "Falling leaves", fr: "Les feuilles qui tombent" } },
+          { text: { en: "Paper kites", fr: "Les cerfs-volants de papier" } },
+        ],
+        why: {
+          en: "Around 1505, Leonardo filled a small notebook, now called the Codex on the Flight of Birds, with notes and drawings on how birds balance, steer, dive and climb.",
+          fr: "Vers 1505, Léonard a rempli un petit carnet, aujourd'hui appelé Codex sur le vol des oiseaux, de notes et de dessins sur la façon dont les oiseaux s'équilibrent, virent, plongent et remontent.",
+        },
+      },
+      {
+        stage: { en: "Stage 3 · The machine", fr: "Étape 3 · La machine" },
+        scene: { en: "You walk under a wooden model with bat-like wings hanging from the ceiling beam.", fr: "Vous passez sous une maquette de bois aux ailes de chauve-souris, suspendue à la poutre." },
+        q: { en: "Could a person fly by flapping wings like these with their own muscles?", fr: "Une personne pourrait-elle voler en battant de telles ailes avec ses propres muscles?" },
+        choices: [
+          { text: { en: "Yes, Leonardo flew one over Milan", fr: "Oui, Léonard en a fait voler une au-dessus de Milan" } },
+          { text: { en: "Yes, but only for a minute", fr: "Oui, mais seulement une minute" } },
+          { text: { en: "No: human muscles are not strong enough to fly like a bird", fr: "Non : nos muscles ne sont pas assez forts pour voler comme un oiseau" }, correct: true },
+        ],
+        why: {
+          en: "We simply do not have enough muscle power to fly like a bird with our arms. Few of Leonardo's machines were ever built, and the first controlled glider flight came centuries later, in 1853.",
+          fr: "Nous n'avons tout simplement pas assez de force musculaire pour voler comme un oiseau avec nos bras. Peu des machines de Léonard ont été construites, et le premier vol plané contrôlé n'a eu lieu que des siècles plus tard, en 1853.",
+        },
+      },
+    ],
+    claims: [
+      {
+        text: { en: "Leonardo's notes run right to left with the letters reversed.", fr: "Les notes de Léonard vont de droite à gauche, lettres inversées." },
+        machine: false, wrong: false,
+        note: { en: "True, according to the Library of Congress.", fr: "Vrai, selon la Bibliothèque du Congrès." },
+      },
+      {
+        text: { en: "Leonardo's flapping-wing machine carried him over the rooftops of Milan.", fr: "La machine à ailes battantes de Léonard l'a porté au-dessus des toits de Milan." },
+        machine: false, wrong: true,
+        note: { en: "False: a myth you will find online. Human muscles cannot power flapping flight.", fr: "Faux : un mythe qu'on trouve en ligne. Nos muscles ne peuvent pas assurer un vol à ailes battantes." },
+      },
+      {
+        text: { en: "The Codex on the Flight of Birds dates from around 1505–06.", fr: "Le Codex sur le vol des oiseaux date d'environ 1505-1506." },
+        machine: false, wrong: false,
+        note: { en: "True, according to the Library of Congress and the Smithsonian.", fr: "Vrai, selon la Bibliothèque du Congrès et le Smithsonian." },
+      },
+    ],
+    gotWrong: [],
+    classroom: [
+      { en: "Write your name in mirror writing, then check it with a mirror. Why might someone write this way?", fr: "Écrivez votre nom en écriture miroir, puis vérifiez avec un miroir. Pourquoi écrirait-on ainsi?" },
+      { en: "Watch a pigeon or gull for two minutes. Sketch three wing positions. What changes when it turns?", fr: "Observez un pigeon ou un goéland deux minutes. Dessinez trois positions d'ailes. Qu'est-ce qui change quand il vire?" },
+      { en: "Leonardo's machine never flew, but his notes on birds were careful and useful. Is a failed invention a waste?", fr: "La machine de Léonard n'a jamais volé, mais ses notes sur les oiseaux étaient précises et utiles. Une invention ratée est-elle inutile?" },
+    ],
+    sources: [
+      { title: "Library of Congress, “Codex on the Flight of Birds” (facsimile record)", url: "https://www.loc.gov/item/2021668201/", covers: { en: "Mirror writing, notes on bird flight, 1505–06", fr: "Écriture miroir, notes sur le vol des oiseaux, 1505-1506" } },
+      { title: "Smithsonian Magazine, “Leonardo da Vinci's studies on the science of flight come to the Air and Space Museum”", url: "https://www.smithsonianmag.com/smithsonian-institution/leonardo-da-vincis-studies-on-the-science-of-flight-come-to-the-air-and-space-museum-25855594/", covers: { en: "Date of the codex and its observations on flight", fr: "Date du codex et ses observations sur le vol" } },
+      { title: "The Conversation, “Leonardo da Vinci's helicopter: 15th-century flight of fancy led to modern aeronautics”", url: "https://theconversation.com/leonardo-da-vincis-helicopter-15th-century-flight-of-fancy-led-to-modern-aeronautics-116241", covers: { en: "Not enough muscle power to fly like a bird; first controlled glider flight in 1853", fr: "Pas assez de force pour voler comme un oiseau; premier vol plané contrôlé en 1853" } },
+    ],
+  },
+  {
+    slug: "bastille-1789",
+    n: 5,
+    title: { en: "Paris, 1789: the day the Bastille fell", fr: "Paris, 1789 : le jour où la Bastille est tombée" },
+    place: { en: "Paris, 14 July and 26 August 1789", fr: "Paris, 14 juillet et 26 août 1789" },
+    dek: {
+      en: "Stand in the crowd outside an old fortress on the morning the French Revolution boiled over, then hear the new rights read out six weeks later. Three questions about how a revolution starts.",
+      fr: "Tenez-vous dans la foule devant une vieille forteresse, le matin où la Révolution française éclate, puis écoutez les nouveaux droits proclamés six semaines plus tard. Trois questions sur le début d'une révolution.",
+    },
+    subject: { en: "History and civics", fr: "Histoire et éducation civique" },
+    ages: { en: "Ages 11 and up", fr: "11 ans et plus" },
+    minutes: 12,
+    tone: "paris",
+    recorded: { en: "Built in Project Genie (Genie 4), November 2026", fr: "Créé dans Project Genie (Genie 4), novembre 2026" },
+    questions: [
+      {
+        stage: { en: "Stage 1 · The crowd", fr: "Étape 1 · La foule" },
+        scene: { en: "Morning, 14 July 1789. A crowd fills the street in front of the Bastille's high stone towers.", fr: "Matin du 14 juillet 1789. Une foule remplit la rue devant les hautes tours de pierre de la Bastille." },
+        q: { en: "What were many in the crowd looking for at the Bastille?", fr: "Que cherchaient beaucoup de gens de la foule à la Bastille?" },
+        choices: [
+          { text: { en: "Gunpowder and ammunition", fr: "De la poudre et des munitions" }, correct: true },
+          { text: { en: "Gold hidden by the king", fr: "De l'or caché par le roi" } },
+          { text: { en: "Food stored for the army", fr: "Des vivres stockés pour l'armée" } },
+        ],
+        why: {
+          en: "Troops were gathering around Paris and people feared an attack. The crowd had muskets but lacked ammunition, and the Bastille held powder. The old fortress was also hated as a symbol of royal tyranny.",
+          fr: "Des troupes se massaient autour de Paris et la population craignait une attaque. La foule avait des fusils mais manquait de munitions, et la Bastille gardait de la poudre. La vieille forteresse était aussi un symbole détesté de la tyrannie royale.",
+        },
+      },
+      {
+        stage: { en: "Stage 2 · Inside the walls", fr: "Étape 2 · Derrière les murs" },
+        scene: { en: "The drawbridge falls. People pour into the courtyard and open the cells.", fr: "Le pont-levis tombe. La foule envahit la cour et ouvre les cellules." },
+        q: { en: "How many prisoners were found inside?", fr: "Combien de prisonniers a-t-on trouvés à l'intérieur?" },
+        choices: [
+          { text: { en: "About 700", fr: "Environ 700" } },
+          { text: { en: "Seven", fr: "Sept" }, correct: true },
+          { text: { en: "Seventy", fr: "Soixante-dix" } },
+        ],
+        why: {
+          en: "Only seven: four forgers, a man described as insane, a young aristocrat held at his family's request and a man who had plotted against King Louis XV. The fortress mattered more as a symbol than as a prison.",
+          fr: "Seulement sept : quatre faussaires, un homme jugé fou, un jeune aristocrate enfermé à la demande de sa famille et un homme qui avait comploté contre le roi Louis XV. La forteresse comptait plus comme symbole que comme prison.",
+        },
+      },
+      {
+        stage: { en: "Stage 3 · The new rights", fr: "Étape 3 · Les nouveaux droits" },
+        scene: { en: "26 August 1789. In a crowded hall, a new declaration is read out.", fr: "26 août 1789. Dans une salle bondée, on lit une nouvelle déclaration." },
+        q: { en: "Which ideas did the Declaration of the Rights of Man and of the Citizen put forward?", fr: "Quelles idées la Déclaration des droits de l'homme et du citoyen a-t-elle proclamées?" },
+        choices: [
+          { text: { en: "The king's word is law", fr: "La parole du roi fait loi" } },
+          { text: { en: "Only nobles may make the laws", fr: "Seuls les nobles font les lois" } },
+          { text: { en: "Liberty, equality, property and the right to resist oppression", fr: "La liberté, l'égalité, la propriété et le droit de résister à l'oppression" }, correct: true },
+        ],
+        why: {
+          en: "The National Assembly adopted it on 26 August 1789. Its principles were liberty, equality, the inviolability of property and the right to resist oppression. Ideas like these still sit at the heart of democratic constitutions today.",
+          fr: "L'Assemblée nationale l'a adoptée le 26 août 1789. Ses principes : la liberté, l'égalité, l'inviolabilité de la propriété et le droit de résister à l'oppression. Ces idées restent au cœur des constitutions démocratiques d'aujourd'hui.",
+        },
+      },
+    ],
+    claims: [
+      {
+        text: { en: "Hundreds of political prisoners were freed from the Bastille.", fr: "Des centaines de prisonniers politiques ont été libérés de la Bastille." },
+        machine: false, wrong: true,
+        note: { en: "False, though films and games often suggest it: there were seven prisoners.", fr: "Faux, même si films et jeux le laissent souvent croire : il y avait sept prisonniers." },
+      },
+      {
+        text: { en: "The Bastille was stormed on 14 July 1789.", fr: "La Bastille a été prise le 14 juillet 1789." },
+        machine: false, wrong: false,
+        note: { en: "True. France's national holiday falls on that date.", fr: "Vrai. La fête nationale française tombe à cette date." },
+      },
+      {
+        text: { en: "The Declaration of the Rights of Man was adopted on 26 August 1789.", fr: "La Déclaration des droits de l'homme a été adoptée le 26 août 1789." },
+        machine: false, wrong: false,
+        note: { en: "True, according to Britannica.", fr: "Vrai, selon Britannica." },
+      },
+    ],
+    gotWrong: [],
+    classroom: [
+      { en: "The Bastille held seven prisoners, yet its fall became a national holiday. Why do symbols matter so much in history?", fr: "La Bastille ne comptait que sept prisonniers, mais sa chute est devenue une fête nationale. Pourquoi les symboles comptent-ils tant en histoire?" },
+      { en: "The Declaration speaks of the rights of “man”. Who was left out in 1789? Find out what Olympe de Gouges wrote in reply.", fr: "La Déclaration parle des droits de « l'homme ». Qui était exclu en 1789? Cherchez ce qu'Olympe de Gouges a écrit en réponse." },
+      { en: "Compare one article of the 1789 Declaration with Canada's Charter of Rights and Freedoms. What is the same, and what is new?", fr: "Comparez un article de la Déclaration de 1789 avec la Charte canadienne des droits et libertés. Qu'est-ce qui est pareil, qu'est-ce qui est nouveau?" },
+    ],
+    sources: [
+      { title: "Encyclopaedia Britannica, “French Revolution: Events of 1789”", url: "https://www.britannica.com/event/French-Revolution/Events-of-1789", covers: { en: "Troops around Paris, the Bastille as a symbol, the Declaration's principles", fr: "Troupes autour de Paris, la Bastille comme symbole, principes de la Déclaration" } },
+      { title: "World History Encyclopedia, “Storming of the Bastille”", url: "https://www.worldhistory.org/Storming_of_the_Bastille/", covers: { en: "Ammunition and powder, the seven prisoners, 14 July 1789", fr: "Munitions et poudre, les sept prisonniers, 14 juillet 1789" } },
+    ],
+  },
 ];
 
 export const tripBySlug = (slug: string) => TRIPS.find(t => t.slug === slug);
@@ -333,7 +506,7 @@ export const tripBySlug = (slug: string) => TRIPS.find(t => t.slug === slug);
 export const FIELD_TRIPS = {
   title: { en: "AI Field Trips", fr: "Sorties scientifiques IA" } as Bi,
   dek: {
-    en: "Three short lessons we built inside a world model: Mars, the forest floor and an ancient harbour. Play the questions here, then spot what the machine got wrong.",
-    fr: "Trois courtes leçons créées dans un modèle de monde : Mars, le ras du sol et un port antique. Répondez aux questions ici, puis repérez les erreurs de la machine.",
+    en: "Short lessons we built inside a world model: Mars, the forest floor, an ancient harbour, Leonardo's workshop and Paris in 1789. Play the questions here, then spot what the machine got wrong.",
+    fr: "De courtes leçons créées dans un modèle de monde : Mars, le ras du sol, un port antique, l'atelier de Léonard et Paris en 1789. Répondez aux questions ici, puis repérez les erreurs de la machine.",
   } as Bi,
 };

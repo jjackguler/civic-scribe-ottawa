@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type Tone = "mars" | "forest" | "harbour";
+type Tone = "mars" | "forest" | "harbour" | "workshop" | "paris";
 
 /** Night band with a quiet line-drawn horizon for each trip. No illustrations of animals or people: just the land. */
 export function TripBand({ tone, children }: { tone: Tone; children: ReactNode }) {
@@ -13,7 +13,7 @@ export function TripBand({ tone, children }: { tone: Tone; children: ReactNode }
 }
 
 export function Horizon({ tone, className }: { tone: Tone; className?: string }) {
-  const stroke = tone === "mars" ? "var(--brass)" : tone === "forest" ? "var(--lake)" : "var(--ice)";
+  const stroke = tone === "mars" || tone === "workshop" ? "var(--brass)" : tone === "forest" ? "var(--lake)" : "var(--ice)";
   return (
     <svg viewBox="0 0 400 120" preserveAspectRatio="none" className={className} aria-hidden="true">
       {tone === "mars" && (
@@ -40,6 +40,23 @@ export function Horizon({ tone, className }: { tone: Tone; className?: string })
           ))}
           <path d="M250 82 L330 82 L318 94 L262 94 Z" fill="none" stroke="var(--brass)" strokeWidth="1.1" />
           <path d="M290 82 L290 40 M290 44 L314 76 L290 76" fill="none" stroke="var(--brass)" strokeWidth="1" />
+        </>
+      )}
+      {tone === "workshop" && (
+        <>
+          {/* Ceiling beam, a hanging wing and gears */}
+          <path d="M0 18 L400 18" fill="none" stroke={stroke} strokeWidth="1" opacity="0.6" />
+          <path d="M250 18 L250 34 M190 46 Q220 30 250 38 Q280 30 310 46 Q280 40 250 44 Q220 40 190 46 Z" fill="none" stroke={stroke} strokeWidth="1.1" />
+          <circle cx="80" cy="92" r="16" fill="none" stroke={stroke} strokeWidth="1" strokeDasharray="3 3" />
+          <circle cx="108" cy="100" r="9" fill="none" stroke={stroke} strokeWidth="1" strokeDasharray="2 2" />
+          <path d="M0 112 L400 112" fill="none" stroke={stroke} strokeWidth="1" opacity="0.7" />
+        </>
+      )}
+      {tone === "paris" && (
+        <>
+          {/* A fortress skyline: eight round towers */}
+          <path d={"M0 112 " + Array.from({ length: 8 }, (_, i) => { const x = 120 + i * 30; return `L${x} 112 L${x} 70 L${x + 16} 70 L${x + 16} 84`; }).join(" ") + " L400 84 L400 112"} fill="none" stroke={stroke} strokeWidth="1" />
+          <path d="M0 116 L400 116" fill="none" stroke="var(--brass)" strokeWidth="1" opacity="0.7" />
         </>
       )}
     </svg>

@@ -99,6 +99,7 @@ function TripPage() {
         <SpotTheMistake key={t.slug} claims={t.claims} />
       </section>
 
+      {t.gotWrong.length > 0 && (
       <section className="container-mw mt-14 sm:mt-20" aria-labelledby="wrong-title">
         <SectionHead id="wrong-title" kicker={fr ? "Carnet de bord" : "Field notes"} title={fr ? "Ce que la machine a mal fait" : "What the machine got wrong"} />
         <ul className="mt-5 border-t-2 border-ink">
@@ -116,6 +117,7 @@ function TripPage() {
           {" "}<Link to="/labs/world-model" className="text-lake font-semibold hover:underline">{fr ? "Pourquoi il oublie" : "Why it forgets"}</Link>
         </p>
       </section>
+      )}
 
       <section className="container-mw mt-14 sm:mt-20" aria-labelledby="class-title">
         <div className="bg-signal text-signal-ink rounded-[10px] p-6 sm:p-9">

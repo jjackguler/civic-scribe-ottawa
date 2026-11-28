@@ -6,7 +6,7 @@ import { ContinueCard, FrenchTag, LengthLabel, LessonOne, PathPicker, PriceTag, 
 import { YoungLabCard } from "@/components/YoungLab";
 import { EPISODES, SERIES } from "@/lib/history-series";
 import { FIELD_GUIDE } from "@/lib/canada-field-guide";
-import { FIELD_TRIPS } from "@/lib/field-trips";
+import { FIELD_TRIPS, TRIPS } from "@/lib/field-trips";
 import { BookShelf } from "@/components/BookShelf";
 import { useLocale } from "@/lib/locale-context";
 import { SITE } from "@/lib/site";
@@ -147,9 +147,9 @@ function LabsPage() {
           {[
             {
               to: "/labs/field-trips" as const,
-              kicker: fr ? "Nouveau · 3 leçons jouables" : "New · 3 playable lessons",
+              kicker: fr ? `Nouveau · ${TRIPS.length} leçons jouables` : `New · ${TRIPS.length} playable lessons`,
               title: pick(FIELD_TRIPS.title),
-              body: fr ? "Mars, le monde des fourmis et des abeilles, le port d'Archimède. Bâties dans Genie 4, vérifiées par la rédaction, avec les erreurs de la machine à repérer." : "Mars, the world of ants and bees, Archimedes' harbour. Built in Genie 4, checked by the newsroom, with the machine's mistakes to spot.",
+              body: fr ? "Mars, fourmis et abeilles, Archimède, l'atelier de Léonard, Paris en 1789. Bâties dans Genie 4, vérifiées par la rédaction, avec les erreurs de la machine à repérer." : "Mars, ants and bees, Archimedes, Leonardo's workshop, Paris in 1789. Built in Genie 4, checked by the newsroom, with the machine's mistakes to spot.",
             },
             {
               to: "/labs/world-model" as const,

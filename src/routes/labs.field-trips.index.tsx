@@ -11,7 +11,7 @@ import { FIELD_TRIPS, TRIPS } from "@/lib/field-trips";
 export const Route = createFileRoute("/labs/field-trips/")({
   head: ({ match }) =>
     seoHead(match, {
-      title: { en: `${FIELD_TRIPS.title.en}: Mars, ants and Archimedes — ${SITE.name} Labs`, fr: `${FIELD_TRIPS.title.fr} : Mars, fourmis et Archimède — ${SITE.name} Labs` },
+      title: { en: `${FIELD_TRIPS.title.en}: Mars, ants, Archimedes, Leonardo and 1789 — ${SITE.name} Labs`, fr: `${FIELD_TRIPS.title.fr} : Mars, fourmis, Archimède, Léonard et 1789 — ${SITE.name} Labs` },
       description: FIELD_TRIPS.dek,
       jsonLd: (locale, url) => [{
         "@context": "https://schema.org",
@@ -48,7 +48,7 @@ function FieldTripsPage() {
             AI Broadsheet Labs <span className="text-white/50">·</span> <span className="text-white/70">{fr ? "faites avec l'IA, vérifiées par la rédaction" : "made with AI, checked by the newsroom"}</span>
           </p>
           <h1 className="masthead-serif text-[2.6rem] sm:text-[3.6rem] leading-[0.98] mt-3 max-w-[18ch] hero-in">
-            {fr ? <>Trois sorties dans un monde <span className="text-signal">qu'une IA a imaginé</span>.</> : <>Three field trips into a world <span className="text-signal">an AI imagined</span>.</>}
+            {fr ? <>Des sorties dans des mondes <span className="text-signal">qu'une IA a imaginés</span>.</> : <>Field trips into worlds <span className="text-signal">an AI imagined</span>.</>}
           </h1>
           <p className="font-serif text-[1.15rem] sm:text-[1.3rem] leading-relaxed text-white/75 mt-5 max-w-[42rem]">{pick(FIELD_TRIPS.dek)}</p>
         </div>
