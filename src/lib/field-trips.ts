@@ -400,8 +400,19 @@ export const TRIPS: Trip[] = [
         machine: false, wrong: false,
         note: { en: "True, according to the Library of Congress and the Smithsonian.", fr: "Vrai, selon la Bibliothèque du Congrès et le Smithsonian." },
       },
+      {
+        text: { en: "A Mona Lisa hangs on the wall of Leonardo's Milan workshop in 1495.", fr: "En 1495, une Joconde est accrochée au mur de l'atelier milanais de Léonard." },
+        machine: true, wrong: true,
+        note: { en: "Genie drew this. The Mona Lisa was begun around 1503, years later, in Florence.", fr: "Genie a dessiné cela. La Joconde a été commencée vers 1503, des années plus tard, à Florence." },
+      },
     ],
-    gotWrong: [],
+    gotWrong: [
+      { en: "We asked for the artist to be seen only from behind. The first build sat him facing the camera, with an invented face.", fr: "Nous avions demandé de ne montrer l'artiste que de dos. La première version l'a assis face à la caméra, avec un visage inventé." },
+      { en: "It hung the Mona Lisa on the workshop wall. In 1495 it did not exist yet: Leonardo began it around 1503.", fr: "Elle a accroché la Joconde au mur de l'atelier. En 1495, elle n'existait pas encore : Léonard l'a commencée vers 1503." },
+      { en: "After the fix, a second and then a third bearded man in the same cap appeared beside the one at the desk.", fr: "Après correction, un deuxième puis un troisième homme barbu au même bonnet sont apparus à côté de celui du bureau." },
+      { en: "Instead of our explanations, its answer cards said things like “Leonardo smiles broadly” and “Leonardo agrees”: scenes no source records.", fr: "Au lieu de nos explications, ses cartes-réponses disaient « Léonard sourit largement » ou « Léonard approuve » : des scènes qu'aucune source ne rapporte." },
+      { en: "In the last stage, the flying machine we asked to walk under was nowhere to be seen.", fr: "À la dernière étape, la machine volante sous laquelle nous devions passer n'était nulle part." },
+    ],
     classroom: [
       { en: "Write your name in mirror writing, then check it with a mirror. Why might someone write this way?", fr: "Écrivez votre nom en écriture miroir, puis vérifiez avec un miroir. Pourquoi écrirait-on ainsi?" },
       { en: "Watch a pigeon or gull for two minutes. Sketch three wing positions. What changes when it turns?", fr: "Observez un pigeon ou un goéland deux minutes. Dessinez trois positions d'ailes. Qu'est-ce qui change quand il vire?" },
@@ -410,6 +421,7 @@ export const TRIPS: Trip[] = [
     sources: [
       { title: "Library of Congress, “Codex on the Flight of Birds” (facsimile record)", url: "https://www.loc.gov/item/2021668201/", covers: { en: "Mirror writing, notes on bird flight, 1505–06", fr: "Écriture miroir, notes sur le vol des oiseaux, 1505-1506" } },
       { title: "Smithsonian Magazine, “Leonardo da Vinci's studies on the science of flight come to the Air and Space Museum”", url: "https://www.smithsonianmag.com/smithsonian-institution/leonardo-da-vincis-studies-on-the-science-of-flight-come-to-the-air-and-space-museum-25855594/", covers: { en: "Date of the codex and its observations on flight", fr: "Date du codex et ses observations sur le vol" } },
+      { title: "Encyclopaedia Britannica, “Mona Lisa”", url: "https://www.britannica.com/topic/Mona-Lisa-painting", covers: { en: "Painted between 1503 and 1519, in Florence", fr: "Peinte entre 1503 et 1519, à Florence" } },
       { title: "The Conversation, “Leonardo da Vinci's helicopter: 15th-century flight of fancy led to modern aeronautics”", url: "https://theconversation.com/leonardo-da-vincis-helicopter-15th-century-flight-of-fancy-led-to-modern-aeronautics-116241", covers: { en: "Not enough muscle power to fly like a bird; first controlled glider flight in 1853", fr: "Pas assez de force pour voler comme un oiseau; premier vol plané contrôlé en 1853" } },
     ],
   },
@@ -417,7 +429,7 @@ export const TRIPS: Trip[] = [
     slug: "bastille-1789",
     n: 5,
     title: { en: "Paris, 1789: the day the Bastille fell", fr: "Paris, 1789 : le jour où la Bastille est tombée" },
-    place: { en: "Paris, 14 July and 26 August 1789", fr: "Paris, 14 juillet et 26 août 1789" },
+    place: { en: "Paris and Versailles, summer 1789", fr: "Paris et Versailles, été 1789" },
     dek: {
       en: "Stand in the crowd outside an old fortress on the morning the French Revolution boiled over, then hear the new rights read out six weeks later. Three questions about how a revolution starts.",
       fr: "Tenez-vous dans la foule devant une vieille forteresse, le matin où la Révolution française éclate, puis écoutez les nouveaux droits proclamés six semaines plus tard. Trois questions sur le début d'une révolution.",
@@ -458,7 +470,7 @@ export const TRIPS: Trip[] = [
       },
       {
         stage: { en: "Stage 3 · The new rights", fr: "Étape 3 · Les nouveaux droits" },
-        scene: { en: "26 August 1789. In a crowded hall, a new declaration is read out.", fr: "26 août 1789. Dans une salle bondée, on lit une nouvelle déclaration." },
+        scene: { en: "26 August 1789, Versailles. The National Assembly still sits there, beside the royal court. A new declaration is read out.", fr: "26 août 1789, Versailles. L'Assemblée nationale y siège encore, à côté de la cour royale. On lit une nouvelle déclaration." },
         q: { en: "Which ideas did the Declaration of the Rights of Man and of the Citizen put forward?", fr: "Quelles idées la Déclaration des droits de l'homme et du citoyen a-t-elle proclamées?" },
         choices: [
           { text: { en: "The king's word is law", fr: "La parole du roi fait loi" } },
@@ -488,14 +500,18 @@ export const TRIPS: Trip[] = [
         note: { en: "True, according to Britannica.", fr: "Vrai, selon Britannica." },
       },
     ],
-    gotWrong: [],
+    gotWrong: [
+      { en: "Stage 2 was meant to be inside the fortress courtyard. Even after we asked again, the view stayed outside the walls.", fr: "L'étape 2 devait se passer dans la cour de la forteresse. Même après une nouvelle demande, la vue est restée à l'extérieur des murs." },
+      { en: "The jump to stage 3, the assembly hall, crashed the stream on our first try. The simpler hall it drew next looks like a village meeting room, not the Assembly.", fr: "Le passage à l'étape 3, la salle de l'Assemblée, a fait planter le flux au premier essai. La salle plus simple dessinée ensuite ressemble à une salle de village, pas à l'Assemblée." },
+      { en: "We asked for no close-up faces. While we answered the last question, the camera drifted forward on its own and stopped on an invented man's face at the speaker's desk.", fr: "Nous avions demandé qu'il n'y ait aucun gros plan de visage. Pendant que nous répondions à la dernière question, la caméra a glissé toute seule vers un homme inventé, au pupitre de l'orateur." },
+    ],
     classroom: [
       { en: "The Bastille held seven prisoners, yet its fall became a national holiday. Why do symbols matter so much in history?", fr: "La Bastille ne comptait que sept prisonniers, mais sa chute est devenue une fête nationale. Pourquoi les symboles comptent-ils tant en histoire?" },
       { en: "The Declaration speaks of the rights of “man”. Who was left out in 1789? Find out what Olympe de Gouges wrote in reply.", fr: "La Déclaration parle des droits de « l'homme ». Qui était exclu en 1789? Cherchez ce qu'Olympe de Gouges a écrit en réponse." },
       { en: "Compare one article of the 1789 Declaration with Canada's Charter of Rights and Freedoms. What is the same, and what is new?", fr: "Comparez un article de la Déclaration de 1789 avec la Charte canadienne des droits et libertés. Qu'est-ce qui est pareil, qu'est-ce qui est nouveau?" },
     ],
     sources: [
-      { title: "Encyclopaedia Britannica, “French Revolution: Events of 1789”", url: "https://www.britannica.com/event/French-Revolution/Events-of-1789", covers: { en: "Troops around Paris, the Bastille as a symbol, the Declaration's principles", fr: "Troupes autour de Paris, la Bastille comme symbole, principes de la Déclaration" } },
+      { title: "Encyclopaedia Britannica, “French Revolution: Events of 1789”", url: "https://www.britannica.com/event/French-Revolution/Events-of-1789", covers: { en: "Troops around Paris, the Bastille as a symbol, the Declaration's principles, the Assembly at Versailles until October", fr: "Troupes autour de Paris, la Bastille comme symbole, principes de la Déclaration, l'Assemblée à Versailles jusqu'en octobre" } },
       { title: "World History Encyclopedia, “Storming of the Bastille”", url: "https://www.worldhistory.org/Storming_of_the_Bastille/", covers: { en: "Ammunition and powder, the seven prisoners, 14 July 1789", fr: "Munitions et poudre, les sept prisonniers, 14 juillet 1789" } },
     ],
   },

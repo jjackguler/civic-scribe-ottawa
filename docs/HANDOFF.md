@@ -393,7 +393,10 @@ Spotify or Apple Podcasts yet; the owner does that.
   (line-drawn horizons, no animals or people). Cards on `/labs`; all URLs in the sitemap.
 - The Genie experiences (owner's account, private): Mars, Ant-Sized (`312af6c0-a085-4d5c-bd03-395a8984a5b9`),
   Archimedes' Harbour. On short browser windows Genie squeezes the question card into a small scroll box.
-- **Open:** download the three Genie recordings ("Video Only"), cut, put them on `media`, fill `video`
+- Added 28 Nov (owner's idea): `leonardos-workshop` (Genie `d091c1e1-039b-43dd-bcdd-9840980e92ff`) and
+  `bastille-1789` (Genie `86fd9176-bda8-4425-bbb5-bc6ecc911dfa`). Owner rules for these: period sound only, no
+  modern sounds; slow 360-degree look-around. No real person's face (Leonardo only from behind).
+- **Open:** download the five Genie recordings ("Video Only"), cut, put them on `media`, fill `video`
   and `poster`.
 
 ## Google Analytics 4, opt-in only (21 Nov 2026)
