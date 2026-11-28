@@ -1,13 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Coins, Landmark, Wrench } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { ArrowRight, Landmark } from "lucide-react";
+import { useMemo } from "react";
 import { PageShell, ZoneHead } from "@/components/PageShell";
 import { LatestRail } from "@/components/LatestRail";
 import { StoryCard, StoryLink, CoverageBadge } from "@/components/StoryCard";
 import { AdSlot } from "@/components/AdSlot";
-import { VideoPlayer, VideoTile, InterviewCard, AudioEpisode, MediaMeta } from "@/components/Media";
 import { NewsletterBox } from "@/components/NewsletterBox";
-import { OriginalCard } from "@/components/Originals";
 import { LiveHero, ownDate, type HeroSlide, type OwnItem } from "@/components/LiveHero";
 import { TodayLauncher } from "@/components/Today";
 import { originalSection, slimOriginals } from "@/lib/originals-types";
@@ -17,23 +15,17 @@ import { FromOurDesk } from "@/components/StudioCards";
 import { TrustBar } from "@/components/Trust";
 import { LedgerFront, OpenDeskBand } from "@/components/Ledger";
 import { LabsBand } from "@/components/Labs";
-import { AskKeeperBand } from "@/components/Keeper";
-import { QuizCard } from "@/components/Quiz";
 import { YoungLabBand } from "@/components/YoungLab";
 import { WeekSheetBand } from "@/components/WeekSheet";
 import { EightyEight } from "@/components/EightyEight";
 import { usePulse, getPulseFast, trendMatch, type PulsePayload } from "@/lib/pulse";
 import { useOriginals, getOriginalsFast } from "@/lib/originals";
 import { getDispatchesFast } from "@/lib/dispatch";
-import { getDailyQuizFast } from "@/lib/youth";
 import { getNewsroomFast, useNewsroom } from "@/lib/newsroom";
 import {
   getFrontPageNews, useAiNews, byLocale, diversify, clusterStories, useRefinedClusters, isDeveloping, isBreaking, isFrontPool, display,
   type Story, type SectionId,
 } from "@/lib/news";
-import { useMedia, type MediaItem } from "@/lib/media";
-import { GUIDES } from "@/lib/guides";
-import { TOOLS } from "@/lib/tools";
 import { PROGRAMS } from "@/lib/funding";
 import { HUBS } from "@/lib/hubs";
 import { EDITORIALS } from "@/lib/editorials";
@@ -45,12 +37,12 @@ import { seoHead, organizationLd, websiteLd } from "@/lib/seo";
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Secondary desks hydrate through their own hooks; none can delay first paint.
-    const [news, pulse, originals, dispatches, quiz, newsroom] = await Promise.all([
+    const [news, pulse, originals, dispatches, newsroom] = await Promise.all([
       getFrontPageNews().catch(() => null), getPulseFast(150), getOriginalsFast(150),
-      getDispatchesFast(150), getDailyQuizFast(150), getNewsroomFast(150),
+      getDispatchesFast(150), getNewsroomFast(150),
     ]);
     // Cards only: transcripts and full source lists stay out of the HTML (about 100 KB on 24 Nov 2026).
-    return { news, pulse, originals: slimOriginals(originals), dispatches, quiz, newsroom };
+    return { news, pulse, originals: slimOriginals(originals), dispatches, newsroom };
   },
   head: ({ match }) =>
     seoHead(match, {
@@ -79,11 +71,10 @@ function take(pool: Story[], used: Set<string>, n: number, pred: (s: Story) => b
 const CANADA_HUBS = ["ai-and-jobs-in-canada", "ai-and-privacy"];
 
 function Home() {
-  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches, quiz, newsroom } = Route.useLoaderData();
+  const { news: initial, pulse: initialPulse, originals: initialOriginals, dispatches, newsroom } = Route.useLoaderData();
   const { data: originals } = useOriginals(initialOriginals);
   const { data, isError } = useAiNews(initial);
   const { data: pulse } = usePulse(initialPulse);
-  const { data: media } = useMedia();
   const { data: nrData } = useNewsroom(newsroom);
   const { locale, pick } = useLocale();
   const fr = locale === "fr";
@@ -144,12 +135,6 @@ function Home() {
     ...columnVideos.slice(0, 6 - columnArticles.length).map(o => ({ kind: "original" as const, original: o })),
   ].sort((x, y) => ownDate(y).localeCompare(ownDate(x)));
 
-  const ownVideos = ownAll.slice(0, 8);
-  const items = media?.items ?? [];
-  const videos = items.filter(m => m.type === "video");
-  const watchList = [...videos.filter(v => v.newsroom && !v.interview).slice(0, 3), ...videos.filter(v => !v.newsroom && !v.interview).slice(0, 2)].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
-  const interviews = items.filter(m => m.interview).slice(0, 3);
-  const episodes = items.filter(m => m.type === "audio" && !interviews.includes(m)).slice(0, 4);
   const editorial = EDITORIALS[0];
   const openPrograms = PROGRAMS.filter(p => p.status === "open" || p.status === "ongoing").length;
   const loading = !data && !isError;
@@ -196,6 +181,11 @@ function Home() {
       {/* The week in AI, robotics and tech: the editor's picks in the house format (docs/editorial-concept.md). */}
       <WeekSheetBand className="container-mw mt-12" />
 
+      {/* Newsletter right after the week (28 Nov 2026 audit): the best AI news brands ask for the email early. */}
+      <section className="mt-12 bg-night text-white">
+        <div className="container-mw py-12"><NewsletterBox variant="band" /></div>
+      </section>
+
       {/* Open Desk: the ledger of recorded and tested claims, right under our own work. */}
       <LedgerFront className="container-mw mt-12" />
       <OpenDeskBand className="container-mw mt-10" />
@@ -211,18 +201,6 @@ function Home() {
       <div className="mt-14"><YoungLabBand /></div>
       {/* Dispatches are listed only until the newsroom publishes (their pages then redirect to its articles). */}
       {articles.length === 0 && <DispatchRail initial={dispatches} className="container-mw mt-12" />}
-
-      {/* Video strip: our own explainers. */}
-      {ownVideos.length > 0 && (
-        <section className="mt-14 bg-night text-white" aria-labelledby="watch-ours">
-          <div className="container-mw py-10">
-            <ZoneHead dark id="watch-ours" title={fr ? "Nos vidéos explicatives" : "Our explainer videos"} sub={fr ? "Une histoire de l'actualité expliquée en environ une minute. Sources et transcription sur chaque page." : "One story from the news, explained in about a minute. Sources and transcript on every page."} action={<MoreLink to="/originals" dark />} />
-            <ul className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-              {ownVideos.map(o => <li key={o.id} className={`snap-start shrink-0 ${o.aspect === "16:9" ? "w-[300px] sm:w-[400px]" : "w-[170px] sm:w-[200px]"}`}><OriginalCard o={o} /></li>)}
-            </ul>
-          </div>
-        </section>
-      )}
 
       {/* AI in Canada: the live desk, the ministry record and the evergreen hubs. */}
       <section className="container-mw mt-14" aria-labelledby="ai-canada">
@@ -266,14 +244,7 @@ function Home() {
         </section>
       )}
 
-      <section className="mt-14 bg-night text-white">
-        <div className="container-mw py-12"><NewsletterBox variant="band" /></div>
-      </section>
-
-      <AdSlot size="leaderboard" placement="home-top" className="container-mw mt-14" />
-
-      <div className="container-mw mt-14 mb-14 grid gap-8 lg:grid-cols-2 items-start">
-        <QuizCard initial={quiz} />
+      <div className="container-mw mt-14 mb-14 max-w-3xl">
         {editorial && (
           <section aria-labelledby="eds-desk">
             <ZoneHead id="eds-desk" title={t("editorsDesk", locale)} action={<MoreLink to="/editor" />} />
@@ -289,40 +260,6 @@ function Home() {
 
       <LabsBand />
 
-      {watchList.length > 0 && <WatchBand videos={watchList} />}
-
-      {interviews.length > 0 && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={fr ? "Entrevues" : "Interviews"} action={<MoreLink to="/interviews" />} />
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="md:col-span-2"><InterviewCard m={interviews[0]} large /></div>
-              {interviews.slice(1).map(m => <InterviewCard key={m.id} m={m} />)}
-            </div>
-            <AdSlot size="halfpage" placement="home-interviews" className="hidden lg:flex" />
-          </div>
-        </section>
-      )}
-
-      {episodes.length > 0 && (
-        <section className="container-mw mt-14">
-          <ZoneHead title={fr ? "À écouter" : "Listen"} action={<MoreLink to="/listen" />} />
-          <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">{episodes.map(a => <AudioEpisode key={a.id} a={a} compact />)}</div>
-        </section>
-      )}
-
-      <AdSlot size="billboard" placement="home-mid" className="container-mw mt-14" />
-
-      <div className="mt-14"><AskKeeperBand /></div>
-
-      <section className="container-mw mt-14">
-        <ZoneHead title={t("resources", locale)} />
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Resource to="/learn" icon={<BookOpen className="h-5 w-5" />} title={t("startHere", locale)} text={fr ? `${GUIDES.length} guides simples pour bien commencer avec l'IA.` : `${GUIDES.length} plain-language guides to get started with AI.`} />
-          <Resource to="/tools" icon={<Wrench className="h-5 w-5" />} title={t("bestTools", locale)} text={fr ? `${TOOLS.length} outils classés selon ce que vous voulez faire.` : `${TOOLS.length} tools, grouped by what you want to get done.`} />
-          <Resource to="/funding" icon={<Coins className="h-5 w-5" />} title={t("moneyForAi", locale)} text={fr ? `${openPrograms} programmes canadiens ouverts ou continus, vérifiés sur les pages officielles.` : `${openPrograms} open or ongoing Canadian programs, checked against official pages.`} />
-        </div>
-      </section>
     </PageShell>
   );
 }
@@ -336,42 +273,6 @@ function HubLink({ to, params, kicker, title, text }: { to: "/funding" | "/guide
         <span className="block text-[0.9rem] text-muted-ink mt-1 leading-snug line-clamp-2">{text}</span>
       </Link>
     </li>
-  );
-}
-
-/** Dark broadcast band: one player, a running list beside it (publishers' own players). */
-function WatchBand({ videos }: { videos: MediaItem[] }) {
-  const { locale } = useLocale();
-  const [current, setCurrent] = useState(0);
-  const v = videos[Math.min(current, videos.length - 1)];
-  return (
-    <section className="mt-14 bg-night text-white">
-      <div className="container-mw py-10">
-        <ZoneHead dark title={locale === "fr" ? "À voir ailleurs" : "Watch: from other channels"} action={<MoreLink to="/watch" dark />} sub={locale === "fr" ? "Les reportages IA des grandes chaînes, des laboratoires et des créateurs, dans le lecteur de l'éditeur." : "AI reports from broadcasters, labs and explainers, in each publisher's own player."} />
-        <div className="grid gap-7 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
-          <div>
-            <VideoPlayer key={v.id} v={v} />
-            <h3 className="hl text-[1.5rem] sm:text-[1.8rem] mt-4">{v.title}</h3>
-            <MediaMeta m={v} dark className="mt-2" />
-          </div>
-          <ul className="grid gap-4 content-start">
-            {videos.map((x, i) => <li key={x.id}><VideoTile v={x} dark active={i === current} onSelect={() => setCurrent(i)} /></li>)}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Resource({ to, icon, title, text }: { to: "/learn" | "/tools" | "/funding"; icon: ReactNode; title: string; text: string }) {
-  return (
-    <Link to={to} className="group flex gap-3 items-start border border-line bg-surface p-4 hover:border-ink">
-      <span className="mt-0.5 text-lake" aria-hidden="true">{icon}</span>
-      <span>
-        <span className="block font-bold group-hover:underline">{title}</span>
-        <span className="block text-[0.92rem] text-muted-ink leading-snug mt-0.5">{text}</span>
-      </span>
-    </Link>
   );
 }
 

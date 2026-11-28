@@ -36,11 +36,19 @@ export default function StatsConsent() {
       aria-label={fr ? "Statistiques de visite" : "Visitor statistics"}
       className="fixed inset-x-0 bottom-0 z-[60] border-t-[3px] border-brass bg-night text-white shadow-[0_-8px_24px_rgba(0,0,0,0.25)]"
     >
-      <div className="container-mw py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="container-mw py-3 sm:py-4 flex flex-col gap-2 sm:gap-3 md:flex-row md:items-center md:justify-between">
         <p className="text-[0.95rem] leading-snug max-w-[70ch]">
-          {fr
-            ? "Pouvons-nous compter votre visite avec Google Analytics? Cela nous aide à savoir quels articles et jeux sont utiles. L'outil utilise des témoins; aucune publicité, rien n'est vendu. Rien ne se charge si vous refusez."
-            : "May we count your visit with Google Analytics? It shows us which stories and games are useful. It uses cookies; no ads, nothing sold. Nothing loads if you say no."}{" "}
+          {/* Phones get the short version: the long one covered a third of the first screen (28 Nov 2026 audit). */}
+          <span className="sm:hidden">
+            {fr
+              ? "Pouvons-nous compter votre visite avec Google Analytics? Témoins, aucune publicité, rien n'est vendu."
+              : "May we count your visit with Google Analytics? Cookies, no ads, nothing sold."}
+          </span>
+          <span className="hidden sm:inline">
+            {fr
+              ? "Pouvons-nous compter votre visite avec Google Analytics? Cela nous aide à savoir quels articles et jeux sont utiles. L'outil utilise des témoins; aucune publicité, rien n'est vendu. Rien ne se charge si vous refusez."
+              : "May we count your visit with Google Analytics? It shows us which stories and games are useful. It uses cookies; no ads, nothing sold. Nothing loads if you say no."}
+          </span>{" "}
           <Link
             to="/privacy"
             hash="statistics"
